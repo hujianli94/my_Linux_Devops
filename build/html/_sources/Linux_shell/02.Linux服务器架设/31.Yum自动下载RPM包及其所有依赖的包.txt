@@ -1,0 +1,32 @@
+.. contents::
+   :depth: 3
+..
+
+Yum自动下载RPM包及其所有依赖的包
+================================
+
+两个Yum自动下载RPM包及其所有依赖的包的工具
+------------------------------------------
+
+工具1 方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   yum install yum-plugin-downloadonly　　
+   yum install --downloadonly --downloaddir=<directory> <package-name>
+   例子：
+   yum install --downloadonly --downloaddir=/root/mypackages/  nginx
+   yum install --downloadonly --downloaddir=/root/mypackages/ httpd-2.2.6-40.el7
+   #此外，你也可以如下一次性下载多个包：
+   yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
+
+工具2 使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   yum install yum-utils
+   yumdownloader --resolve --destdir=/root/mypackages/ httpd
+
+参考文献 https://www.cnblogs.com/guigujun/p/7868748.html

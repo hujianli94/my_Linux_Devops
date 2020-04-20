@@ -1,0 +1,261 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>网络存储应用篇 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="01.IP网络存储iSCSI" href="01.IP网络存储iSCSI.html" />
+    <link rel="prev" title="03.ext3文件系统反删除利器ext3grep" href="../02.数据备份恢复篇/03.ext3文件系统反删除利器ext3grep.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">高性能Linux服务构建实战</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Web应用篇/index.html">Web应用篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.数据备份恢复篇/index.html">数据备份恢复篇</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">网络存储应用篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html">01.IP网络存储iSCSI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.分布式存储系统MFS.html">02.分布式存储系统MFS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.运维监控与性能优化篇/index.html">运维监控与性能优化篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.集群高级应用篇/index.html">集群高级应用篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">高性能Linux服务构建实战</a> &raquo;</li>
+        
+      <li>网络存储应用篇</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_Cluster_combat/03.网络存储应用篇/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>网络存储应用篇<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.IP网络存储iSCSI.html">01.IP网络存储iSCSI</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.IP网络存储iSCSI.html#id1">存储的概念与术语</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#scsi">SCSI介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#fc">FC介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#das">DAS介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#nas">NAS介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.IP网络存储iSCSI.html#san">SAN介绍</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#iscsi">iSCSI的优势主要表现为：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.IP网络存储iSCSI.html#fc-sanip-san">FC SAN与IP SAN</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.IP网络存储iSCSI.html#id2">iSCSI的组成</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.分布式存储系统MFS.html">02.分布式存储系统MFS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.分布式存储系统MFS.html#id1">MFS概论</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.分布式存储系统MFS.html#id2">MFS组成及运行原理图</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.分布式存储系统MFS.html#id3">MFS文件系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.分布式存储系统MFS.html#id4">MFS的编译与安装实例</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.IP网络存储iSCSI.html" class="btn btn-neutral float-right" title="01.IP网络存储iSCSI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../02.数据备份恢复篇/03.ext3文件系统反删除利器ext3grep.html" class="btn btn-neutral float-left" title="03.ext3文件系统反删除利器ext3grep" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

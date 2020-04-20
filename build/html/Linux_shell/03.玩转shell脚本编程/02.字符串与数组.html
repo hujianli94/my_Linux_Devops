@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.2. 二、字符串与数组 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.3. 三、运算符" href="03.运算符.html" />
+    <link rel="prev" title="3.1. 一、基础知识" href="01.基础知识.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.基础知识.html">3.1. 一、基础知识</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.2. 二、字符串与数组</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.2.1. 一、字符串常用操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">3.2.2. 二、数组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">3.2.3. 三、字符显示颜色</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 七、三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.2. 二、字符串与数组</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/02.字符串与数组.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id16">二、字符串与数组</a><ul>
+<li><a class="reference internal" href="#id2" id="id17">一、字符串常用操作</a><ul>
+<li><a class="reference internal" href="#id3" id="id18">1.1 获取字符串长度</a></li>
+<li><a class="reference internal" href="#id4" id="id19">1.2 字符串切片</a></li>
+<li><a class="reference internal" href="#id5" id="id20">1.3 字符串替换</a></li>
+<li><a class="reference internal" href="#id6" id="id21">1.4 字符串删除</a></li>
+<li><a class="reference internal" href="#id7" id="id22">1.5 字符串截取</a></li>
+<li><a class="reference internal" href="#id8" id="id23">1.6 变量状态赋值</a></li>
+<li><a class="reference internal" href="#shell" id="id24">Shell变量操作</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id25">二、数组</a><ul>
+<li><a class="reference internal" href="#id12" id="id26">2.1 数组定义</a></li>
+<li><a class="reference internal" href="#id13" id="id27">2.2 数组元素读取</a></li>
+<li><a class="reference internal" href="#id14" id="id28">2.3定义关联数组</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id15" id="id29">三、字符显示颜色</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id16">3.2. 二、字符串与数组</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id17">3.2.1. 一、字符串常用操作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id18">1.1 获取字符串长度</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>利用<code class="docutils literal"><span class="pre">${#var}</span></code>来获取字符串长度</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&#39;abcstring&#39;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${#var}</span>
+<span class="mi">9</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id19">1.2 字符串切片</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>格式：</p>
+<p>${parameter:offset} ${parameter:offset:length}</p>
+<p>截取从 offset 个字符开始，向后 length 个字符。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:0}</span>
+<span class="n">hello</span> <span class="n">shell</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:0:5}</span>
+<span class="n">hello</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:6:5}</span>
+<span class="n">shell</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:(-1)}</span>
+<span class="n">l</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:(-2)}</span>
+<span class="n">ll</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:(-5):2}</span>
+<span class="n">sh</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id20">1.3 字符串替换</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>格式：${parameter/pattern/string}</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>${PARAMETER/PATTERN/STRING}
+${PARAMETER//PATTERN/STRING}
+${PARAMETER/PATTERN}
+${PARAMETER//PATTERN}
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>操作符“/”表示只替换一个匹配的字符串，而操作符“//”表示替换所有匹配的字符串。
+如果没有指定替换字符串STRING，那么匹配的内容将被替换为空字符串，即被删除。
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var/shell/world}</span>
+<span class="n">hello</span> <span class="n">world</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm</span><span class="o">-</span><span class="n">manager2</span> <span class="n">Test</span><span class="p">]</span><span class="c1"># MYSTRING=&quot;This is used for replacing string or removing string&quot;</span>
+<span class="c1">#替换字符串中一个匹配</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm</span><span class="o">-</span><span class="n">manager2</span> <span class="n">Test</span><span class="p">]</span><span class="c1"># echo ${MYSTRING/string/characters}</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">used</span> <span class="k">for</span> <span class="n">replacing</span> <span class="n">characters</span> <span class="ow">or</span> <span class="n">removing</span> <span class="n">string</span>
+
+<span class="c1">##替换所有匹配</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm</span><span class="o">-</span><span class="n">manager2</span> <span class="n">Test</span><span class="p">]</span><span class="c1"># echo ${MYSTRING//string/characters}</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">used</span> <span class="k">for</span> <span class="n">replacing</span> <span class="n">characters</span> <span class="ow">or</span> <span class="n">removing</span> <span class="n">characters</span>
+
+<span class="c1"># 删除一个匹配</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm</span><span class="o">-</span><span class="n">manager2</span> <span class="n">Test</span><span class="p">]</span><span class="c1"># echo ${MYSTRING/string/}</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">used</span> <span class="k">for</span> <span class="n">replacing</span>  <span class="ow">or</span> <span class="n">removing</span> <span class="n">string</span>
+
+<span class="c1"># 删除所有匹配</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm</span><span class="o">-</span><span class="n">manager2</span> <span class="n">Test</span><span class="p">]</span><span class="c1"># echo ${MYSTRING//string/}</span>
+<span class="n">This</span> <span class="ow">is</span> <span class="n">used</span> <span class="k">for</span> <span class="n">replacing</span>  <span class="ow">or</span> <span class="n">removing</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id21">1.4 字符串删除</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ hujianli=&quot;hello fred，/home/fred, this is test var fred&quot;
+
+# 删除变量中匹配到1次的元素     /元素
+$ echo ${hujianli/fred}
+hello ，/home/fred, this is test var fred
+
+
+# 删除变量中开头匹配到的元素   /#元素
+$ echo ${hujianli/#fred}
+hello fred，/home/fred, this is test var fred
+
+# 删除变量中结尾匹配到的元素    /%元素
+$ echo ${hujianli/%fred}
+hello fred，/home/fred, this is test var
+
+# 删除变量中所有匹配到的元素     //元素
+$ echo ${hujianli//fred}
+hello ，/home/, this is test var
+</pre></div>
+</div>
+<p>字符串变量大小写转换</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ echo ${hujianli^^}
+HELLO FRED，/HOME/FRED, THIS IS TEST VAR FRED
+
+$ echo ${hujianli,,}
+hello fred，/home/fred, this is test var fred
+</pre></div>
+</div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id22">1.5 字符串截取</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>格式：</p>
+<p>${parameter#word} # 删除匹配前缀</p>
+<p>${parameter##word}</p>
+<p>${parameter%word} # 删除匹配后缀</p>
+<p>${parameter%%word}</p>
+<p># 去掉左边，最短匹配模式，##最长匹配模式。</p>
+<p>% 去掉右边，最短匹配模式，%%最长匹配模式。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># url=&quot;https://www.baidu.com/index.html&quot;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url#*/}</span>
+<span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">baidu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url##*/}</span>
+<span class="n">index</span><span class="o">.</span><span class="n">html</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url%/*}</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">baidu</span><span class="o">.</span><span class="n">com</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url%%/*}</span>
+<span class="n">https</span><span class="p">:</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id23">1.6 变量状态赋值</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>${VAR:-string} 如果 VAR 变量为空则返回 string</p>
+<p>${VAR:+string} 如果 VAR 变量不为空则返回 string</p>
+<p>${VAR:=string} 如果 VAR 变量为空则重新赋值 VAR 变量值为 string</p>
+<p>${VAR:?string} 如果 VAR 变量为空则将 string 输出到 stderr</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@xuel-tmp-shell ~]# url=&quot;https://www.baidu.com/index.html&quot;
+[root@xuel-tmp-shell ~]# echo ${url:-&quot;string&quot;}
+https://www.baidu.com/index.html
+[root@xuel-tmp-shell ~]# echo ${url:+&quot;string&quot;}
+string
+[root@xuel-tmp-shell ~]# unset url
+[root@xuel-tmp-shell ~]# echo $url
+
+[root@xuel-tmp-shell ~]# echo ${url:-&quot;string&quot;}
+string
+[root@xuel-tmp-shell ~]# echo ${url:+&quot;string&quot;}
+
+
+找出/etc/group下的所有组名称
+for i in `cat /etc/group`;do echo ${i%%:*};done
+</pre></div>
+</div>
+</div>
+<div class="section" id="shell">
+<h3><a class="toc-backref" href="#id24">Shell变量操作</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h4>1.变量替换扩展<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p><img alt="image0" src="../../_images/shell_var0001.png" /></p>
+</div>
+<div class="section" id="id10">
+<h4>2.变量字符串操作<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<p><img alt="image1" src="../../_images/shell_var0002.png" /></p>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id25">3.2.2. 二、数组</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>bash支持一维数组（不支持多维数组），并且没有限定数组的大小。数组是相同类型的元素按一定顺序排列的集合。
+类似与 C 语言，数组元素的下标由 0
+开始编号。获取数组中的元素要利用下标，下标可以是整数或算术表达式，其值应大于或等于
+0。</p>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id26">2.1 数组定义</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>在 Shell 中，用括号来表示数组，数组元素用“空格”符号分割开</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># args1=(aa bb cc 1123)</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo $args1</span>
+<span class="n">aa</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${args1[@]}</span>
+<span class="n">aa</span> <span class="n">bb</span> <span class="n">cc</span> <span class="mi">1123</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id27">2.2 数组元素读取</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># args1=(aa bb cc 1123)</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${#args1[@]}     #获取数组元素个数</span>
+<span class="mi">4</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${args1[0]}</span>
+<span class="n">aa</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${args1[1]}</span>
+<span class="n">bb</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@monitor</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># filelist=($(ls))</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@monitor</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># echo ${filelist[*]}</span>
+<span class="n">check_url_for</span><span class="o">.</span><span class="n">sh</span> <span class="n">check_url_while01</span><span class="o">.</span><span class="n">sh</span> <span class="n">check_url_while02</span><span class="o">.</span><span class="n">sh</span> <span class="n">func01</span><span class="o">.</span><span class="n">sh</span> <span class="n">func02</span><span class="o">.</span><span class="n">sh</span> <span class="n">func03</span><span class="o">.</span><span class="n">sh</span> <span class="n">urllist</span><span class="o">.</span><span class="n">txt</span>
+
+<span class="n">获取数组元素的下标</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@monitor</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># echo ${!filelist[@]}</span>
+<span class="mi">0</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span>
+</pre></div>
+</div>
+<p>遍历文件</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>filelist=($(ls));for i in ${!filelist[@]};do echo ${filelist[$i]};done
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id28">2.3定义关联数组</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>关联数组必须以大写的declare -A命令来进行声明</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ declare -A array_example
+$ array_example=([0]=centos7
+                 [1]=centos6
+                 [2]=ubuntu
+                 [3]=redhat
+                 [4]=suse
+                 [5]=windows)
+
+$ echo ${array_example[3]}
+redhat
+
+$ echo ${array_example[*]}
+centos7 centos6 ubuntu redhat suse windows
+
+$ echo ${array_example[@]}
+centos7 centos6 ubuntu redhat suse windows
+
+$ echo ${#array_example[@]}
+6
+
+# 显示所有的index下标
+$ echo ${!array_example[*]}
+0 1 2 3 4 5
+</pre></div>
+</div>
+<p>举例说明</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>declare -A projects=(
+    [test_chatsrv-frontend]=&quot;172.20.20.3&quot;
+    [test_chatsrv-core]=&quot;172.20.20.5&quot;
+    [test_chatsrv-storage]=&quot;172.20.20.5&quot;
+    [test_chatsrv-push]=&quot;172.20.20.5&quot;
+)
+
+token=&quot;xxxxxxxxx&quot;
+
+for project in ${!projects[@]}; do
+    client=&quot;${projects[${project}]}&quot;
+    curl -w &#39;\n&#39; &#39;http://deploy.ixiaochuan.cn/deploy&#39; -H &quot;Cookie: remember_token=${token};&quot; --data &quot;operation=update&amp;project=${project}&amp;client=${client}&quot; --compressed --silent
+done
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+# @Author: hujianli
+# @Date:   2018-11-18 15:03:18
+# @Last Modified by:   hujianli
+# @Last Modified time: 2018-11-18 15:15:13
+
+: &lt;&lt;EOF
+符号*是把原数组中的所有元素（除了用于区别元素的分隔符，通常是空格）当成一个元素复制到新数组中，生的新数组只有一个元素
+符号@的含义是把原数组的内容复制到一个新数组中，生成的新数组和原来的是一样的
+EOF
+
+declare -a      #显示当前所有的数组
+declare -ar BASH_VERSION=&#39;([0]=&quot;2&quot;
+                           [1]=&quot;05b&quot;
+                           [2]=&quot;0&quot;
+                           [3]=&quot;1&quot;
+                           [4]=&quot;release&quot;
+                           [5]=&quot;i386-redhat-linux-gnu&quot;)&#39;
+declare -a DIRSTACK=&#39;()&#39;
+declare -a GROUPS=&#39;()&#39;
+declare -a PIPESTATUS=&#39;([0]=&quot;0&quot;)&#39;
+declare -a student=&#39;([0]=&quot;张三&quot;
+    [1]=&quot;李四&quot;
+    [2]=&quot;王小二&quot;
+    [3]=&quot;李晓明&quot;
+    [4]=&quot;张四宝&quot;)&#39;
+declare -a score=&#39;([0]=&quot;66&quot;
+    [1]=&quot;70&quot;
+    [2]=&quot;80&quot;
+    [3]=&quot;90&quot;
+    [4]=&quot;98&quot;)&#39;
+
+echo ${student[@]}
+echo ${student[*]}
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+# @Author: hujianli
+# @Date:   2018-11-18 13:59:12
+# @Last Modified by:   hujianli
+# @Last Modified time: 2018-11-18 14:04:47
+student=(&quot;张三&quot; &quot;李四&quot; &quot;王五&quot; &quot;李晓明&quot; &quot;胡建力&quot;)
+score=(66 70 80 84 99)
+
+N=${#student[*]}        #计算数组的个数总和,赋值给变量N
+echo &quot;学生总数为:$N&quot;
+i=0
+while [[ $i -lt $N ]]; do
+    echo -e &quot;\tstudent $[i]的考试成绩为:${score[$i]}&quot;
+    i=$(($i+1))
+done
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id15">
+<h2><a class="toc-backref" href="#id29">3.2.3. 三、字符显示颜色</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>字体颜色           字体背景颜色            显示方式
+30：黑                40：黑
+31：红                41：深红              0：终端默认设置
+32：绿                42：绿                   1：高亮显示
+33：黄                43：黄色              4：下划线
+34：蓝色            44：蓝色             5：闪烁
+35：紫色            45：紫色             7：反白显示
+36：深绿            46：深绿             8：隐藏
+37：白色            47：白色
+格式：
+\033[1;31;40m|  # 1 是显示方式，可选。31 是字体颜色。40m 是字体背景颜色。
+\033[0m | # 恢复终端默认颜色，即取消颜色设置。
+</pre></div>
+</div>
+<ul class="simple">
+<li>显示方式</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="mi">8</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;31;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>字体颜色</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">30.</span><span class="o">.</span><span class="mi">37</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>背景颜色</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">40.</span><span class="o">.</span><span class="mi">47</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[47;$</span><span class="si">{i}</span><span class="s2">m hello world! </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:xxx.sh
+# 文本颜色是由对应的色彩码来描述的。其中包括：重置=0，黑色=30，红色=31，绿色=32，
+#  黄色=33，蓝色=34，洋红=35，青色=36，白色=37。
+echo -e &quot;\e[1;31m This is red text \e[0m&quot;
+echo -e &quot;\e[1;32m This is red text \e[0m&quot;
+echo -e &quot;\e[1;33m This is red text \e[0m&quot;
+echo -e &quot;\e[1;34m This is red text \e[0m&quot;
+echo -e &quot;\e[1;35m This is red text \e[0m&quot;
+echo -e &quot;\e[1;36m This is red text \e[0m&quot;
+echo -e &quot;\e[1;37m This is red text \e[0m&quot;
+echo
+echo
+#对于彩色背景，经常使用的颜色码是：重置=0，黑色=40，红色=41，绿色=42，黄色=43，
+# 蓝色=44，洋红=45，青色=46，白色=47。
+echo -e &quot;\e[1;41m Green Background \e[0m&quot;
+echo -e &quot;\e[1;42m Green Background \e[0m&quot;
+echo -e &quot;\e[1;43m Green Background \e[0m&quot;
+echo -e &quot;\e[1;44m Green Background \e[0m&quot;
+echo -e &quot;\e[1;45m Green Background \e[0m&quot;
+echo -e &quot;\e[1;46m Green Background \e[0m&quot;
+echo -e &quot;\e[1;47m Green Background \e[0m&quot;
+
+
+#定义一个颜色的函数
+echo_color (){
+    local color=$1
+    local info=$2
+    case &quot;$color&quot; in
+    red)
+        echo -e &quot;\e[1;31m ${info} \e[0m&quot;
+       ;;
+    green)
+        echo -e &quot;\e[1;32m ${info} \e[0m&quot;
+       ;;
+    yellow)
+        echo -e &quot;\e[1;33m ${info} \e[0m&quot;
+       ;;
+    blue)
+        echo -e &quot;\e[1;34m ${info} \e[0m&quot;
+       ;;
+    Magenta)
+        echo -e &quot;\e[1;35m ${info} \e[0m&quot;
+    ;;
+    cyan-blue)
+        echo -e &quot;\e[1;36m ${info} \e[0m&quot;
+    ;;
+    esac
+
+}
+echo_color red &quot;哈哈哈哈哈哈哈&quot;
+echo_color green &quot;哈哈哈哈哈哈哈&quot;
+echo_color yellow &quot;哈哈哈哈哈哈哈&quot;
+echo_color blue &quot;哈哈哈哈哈哈&quot;
+echo_color Magenta &quot;哈哈哈哈哈哈&quot;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="03.运算符.html" class="btn btn-neutral float-right" title="3.3. 三、运算符" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01.基础知识.html" class="btn btn-neutral float-left" title="3.1. 一、基础知识" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

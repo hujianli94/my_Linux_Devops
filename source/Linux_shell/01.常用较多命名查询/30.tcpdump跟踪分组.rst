@@ -1,0 +1,56 @@
+.. contents::
+   :depth: 3
+..
+
+tcpdump跟踪分组
+===============
+
+``只是知道哪个应用程序在使用特定的端口并不足以跟踪到问题所在。有时候还需要检查传输 的数据。 常用于Linux上的抓包``
+
+安装tcpdum
+----------
+
+``yum -y install tcpdump``
+
+``$ sudo apt-get install tcpdump``
+
+``$ sudo yum install libpcaptcpdump``
+
+默认情况下tcpdump
+会一直执行并嗅探网络分组，直到按下Ctrl-C或发送SIGTERM信号。
+
+``选项 -c 可以限制嗅探的分组数：``
+
+::
+
+   # tcpdump -w /tmp/tcpdump.raw -c 50
+
+1. 只显示HTTP分组
+~~~~~~~~~~~~~~~~~
+
+::
+
+   # tcpdump -r /tmp/tcpdump.raw port http
+
+2.只显示本机生成的HTTP分组
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   # tcpdump -r /tmp/tcpdump.rawsrc port http
+
+3.查看分组载荷（payload）以及头部
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   # tcpdump -X -r /tmp/tcpdump.raw host noucorp.com and port http
+
+::
+
+   tcpdump 可用于跟踪过载网段的问题源、产生异常流量的主机、网络环路、网卡故障、恶意分组等。
+
+
+   利用选项 -w 和 -r ， tcpdump 可以将分组数据以原始格式保存，允许随后以普通用户身份查
+   看。举例来说，如果在凌晨3点出现了大量网络分组冲突，你可以设置一项 cron 作业，安排在凌
+   晨3点的时候运行 tcpdump ，然后对比检查正常时段的网络分组。

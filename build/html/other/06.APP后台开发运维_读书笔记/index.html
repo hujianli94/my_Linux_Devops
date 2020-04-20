@@ -1,0 +1,504 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. APP后台开发运维_读书笔记 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="6.1. APP后台入门" href="01.APP后台入门.html" />
+    <link rel="prev" title="5.1. 实用工具网站1" href="../05.程序员实用工具网站/01.实用工具网站1.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git入门到熟练/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.构建自己的写书博客/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim教程/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server学习/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. APP后台开发运维_读书笔记</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html">6.1. APP后台入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP后台应用最广泛的系统.html">6.4. Linux-APP后台应用最广泛的系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html">6.5. Nginx—App后台HTTP服务的利器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html">6.8. MongoDB—App后台新兴的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.架构选型的要点.html">6.9. 架构选型的要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Other</a> &raquo;</li>
+        
+      <li>6. APP后台开发运维_读书笔记</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="app">
+<h1>6. APP后台开发运维_读书笔记<a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.APP后台入门.html">6.1. APP后台入门</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#appapp">6.1.1. App和App后台的通信</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#http">1．用HTTP协议还是私有协议？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id1">2．App和App后台通信使用长连接还是短连接？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id2">3．App和后端是怎么通信的？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#api">4．后端是返回给API的数据格式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#appweb">6.1.2. App后台和Web后端的区别</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#app-api">1．App后台要慎重考虑网络传输的流量，主要在API设计、图片处理上</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id3">2．移动手机弱网络环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id4">3．手机电量有限</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#id5">6.1.3. 选择服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#idc">1．是选择传统的IDC还是云服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id8">建议</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#id9">6.1.4. 选择编程语言</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id10">1．每种编程语言都有自己擅长的业务场景和性能特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id11">2．选择开发效率最高的编程语言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id12">3.一个大忌是用两套不同的编程语言维护一个相同的业务逻辑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id13">4．一个系统中，不同的业务逻辑可以用不同的编程语言实现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#id14">6.1.5. 快速入门新技术</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id15">4种快速入门新技术的方法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#id16">6.1.6. App是怎样炼成的</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id17">1.项目启动阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id18">2.研发阶段</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.APP后台入门.html#id19">3.测试阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.APP后台入门.html#id20">6.1.7. 3.正式推出阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.APP后台基础技术.html">6.2. APP后台基础技术</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.APP后台基础技术.html#id1">6.2.1. 如何选择合适的数据库产品</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#redis-mongodb-mysql">Redis，MongoDB，MySQL读写数据的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id2">Redis，MongoDB，MySQL查找数据的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id3">Redis，MongoDB，MySQL适用场景</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.APP后台基础技术.html#id4">6.2.2. 如何选择消息队列软件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id5">为什么要用消息队列？</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id6">消息队列的工作流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id7">常见的一些消息队列产品</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.APP后台基础技术.html#id9">6.2.3. 使用分布式服务实现业务的复用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id10">巨无霸系统的危害</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id14">远程服务的优点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id15">远程服务的实现</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#prc">2．PRC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#rpc">3．开源的RPC库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.APP后台基础技术.html#id16">6.2.4. 搜索技术入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id17">常见的开源搜索软件介绍</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.APP后台基础技术.html#id18">6.2.5. 定时任务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#linuxcrontab">Linux定时任务Crontab</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP后台基础技术.html#id19">在后台轻松管理各种各样的定时任务</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.APP后台核心技术.html">6.3. APP后台核心技术</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id1">6.3.1. 用户验证方案</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#https">使用HTTPS协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id2">基本的用户登录方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id3">App通信安全</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id4">6.3.2. 短信服务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id5">建立可靠的短信服务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id6">6.3.3. 处理表情的一些技巧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#mysql">表情在MySQL的存储</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id7">6.3.4. 高效更新数据</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id8">内容的推拉</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id9">6.3.5. 图片处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id10">6.3.6. 视频处理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#ffmpeg">FFmpeg简介</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#id11">6.3.7. 文件系统</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id12">架设文件系统</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#elk">6.3.8. ELK日志分析平台</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.APP后台核心技术.html#id15">基本模块</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.APP后台核心技术.html#docker">6.3.9. Docker构建一致的开发环境</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.Linux-APP后台应用最广泛的系统.html">6.4. Linux-APP后台应用最广泛的系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.Linux-APP后台应用最广泛的系统.html#superivisor">6.4.1. 进程管理利器——superivisor</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP后台应用最广泛的系统.html#supervisor">使用supervisor管理进程有如下的优点。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html">6.5. Nginx—App后台HTTP服务的利器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id1">6.5.1. 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id2">6.5.2. 基本原理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id3">6.5.3. 工作模型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id4">6.5.4. 进程解析</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id5">6.5.5. 常用配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#nginx">1.Nginx的全局配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#event">2.event配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#http">3.http配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id6">4.负载均衡配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#server">5.server虚拟主机配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#location">6.location配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#https">7.HTTPS的配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#app">8.下载App的配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id7">9.生产环境中修改配置的良好习惯</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id10">10.性能统计</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id11">6.5.6. 实现负载均衡的方案</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#nginx-keepalived">针对创业团队采用方案（Nginx+Keepalived）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#slb">大公司使用云上负载均衡器（SLB）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx—App后台HTTP服务的利器.html#id12">6.5.7. 用Nginx处理业务逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html">6.6. MySQL—App后台最常用的数据库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id1">6.6.1. 基本架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id2">6.6.2. 选择版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id3">6.6.3. 配置文件详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id4">6.6.4. 软件优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#myisaminnodb">正确使用MyISAM和InnoDB存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id5">正确使用索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#seiect-select">避免使用seIect* 使用“select*”有下面的坏处：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#not-null">字段尽可能地设置为NOT NULL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id6">6.6.5. 硬件优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id7">增加物理内存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id8">增加应用缓存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id9">用固态硬盘代替机械硬盘</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#ssd-sata">SSD硬盘+SATA硬盘混合存储方案</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id10">6.6.6. 架构优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id11">分表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id12">读写分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id13">分库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#sql">6.6.7. SQL慢查询分析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#mysql">方法一，通过命令行设置，立即生效，但是在MySQL服务重启后失效。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#etc-my-conf-mysql">方法二，在/etc/my.conf中增加下面的配置选项，重启MySQL服务后生效。</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id14">6.6.8. 云数据库简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id15">6.6.9. 灵活的存储结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id16">6.6.10. 故障排除案例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL—App后台最常用的数据库.html#id17">性能低下的查询引起的故障</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html">6.7. Redis—App后台高性能的缓存系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#redis">6.7.1. Redis简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id1">6.7.2. Redis的常用数据结构及应用场景</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#string">string——存储简单的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#hash">hash——存储对象的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#list">list——模拟队列操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#set">set——无序且不重复的元素集合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#sorted-set">sorted set——有序且不重复的元素集合</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id31">6.7.3. 内存优化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id32">监控内存使用的状况</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id33">优化存储结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id34">限制使用的最大内存</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id35">设置过期时间</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id36">6.7.4. 集群</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id37">1.客户端分片</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#twemproxy">2.Twemproxy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#codis">3.Codis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#redis-3-0">4.Redis 3.0集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id38">5.云服务器上的集群服务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id43">6.7.5. 持久化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#rdb">RDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#aof">AOF</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id44">6.7.6. 故障排除案例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis—App后台高性能的缓存系统.html#id45">Redis崩溃的故障</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html">6.8. MongoDB—App后台新兴的数据库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id1">6.8.1. 1.简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id2">6.8.2. 2.核心机制解析</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#mmap">MMAP（内存文件映射）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#journal">Journal日志</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id3">6.8.3. 3.入门</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id4">基本操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id9">数组操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#mysqlmongodb">实例演示MySQL和MongoDB设计数据库的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#mysql">1.使用MySQL的例子</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#mongodb">2.使用MongoDB的例子</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id10">6.8.4. 4.高可用集群</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id11">主从</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id12">副本集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id13">分片</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#lbs">6.8.5. 5.LBS—地理位置查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#mongodb-3-0">6.8.6. 6.MongoDB 3.0版本的改进</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id14">灵活的存储架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id15">性能提升7～10倍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id16">存储空间最多减少80%</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB—App后台新兴的数据库.html#id17">运维成本最多降低95%</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.架构选型的要点.html">6.9. 架构选型的要点</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.架构选型的要点.html#id2">6.9.1. 用成熟稳定的开源软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.架构选型的要点.html#id3">6.9.2. 尽可能使用云服务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="09.架构选型的要点.html#id4">列举两个提供这类服务的网站。</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="09.架构选型的要点.html#id5">6.9.3. 架构的演进</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="09.架构选型的要点.html#id6">单机部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.架构选型的要点.html#id7">分布式部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.架构选型的要点.html#id8">服务化</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.APP后台入门.html" class="btn btn-neutral float-right" title="6.1. APP后台入门" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../05.程序员实用工具网站/01.实用工具网站1.html" class="btn btn-neutral float-left" title="5.1. 实用工具网站1" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

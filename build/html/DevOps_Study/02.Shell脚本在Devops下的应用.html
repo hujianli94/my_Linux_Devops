@@ -1,0 +1,413 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. 02.Shell脚本在Devops下的应用 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3. 03.Python在Devops与自动化运维中的应用" href="03.Python在Devops与自动化运维中的应用.html" />
+    <link rel="prev" title="1. 01.Devops与自动化运维的意义" href="01.Devops与自动化运维的意义.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps与自动化运维</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html">1. 01.Devops与自动化运维的意义</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. 02.Shell脚本在Devops下的应用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#shell">2.1. 2.1 Shell脚本的基本元素</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">2.2. 2.2 Shell基础正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">2.3. 2.3 Shell特殊字符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.4. 2.4 运行、调试Shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test">2.5. 2.5 test语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.6. 2.6 Shell应用于Devops开发中音掌握的系统知识点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.7. 2.7 理解并行和并发</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">DevOps与自动化运维</a> &raquo;</li>
+        
+      <li>2. 02.Shell脚本在Devops下的应用</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/DevOps_Study/02.Shell脚本在Devops下的应用.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#shelldevops" id="id6">02.Shell脚本在Devops下的应用</a><ul>
+<li><a class="reference internal" href="#shell" id="id7">2.1 Shell脚本的基本元素</a></li>
+<li><a class="reference internal" href="#id1" id="id8">2.2 Shell基础正则表达式</a></li>
+<li><a class="reference internal" href="#id2" id="id9">2.3 Shell特殊字符</a></li>
+<li><a class="reference internal" href="#id3" id="id10">2.4 运行、调试Shell脚本</a></li>
+<li><a class="reference internal" href="#test" id="id11">2.5 test语句</a></li>
+<li><a class="reference internal" href="#id4" id="id12">2.6 Shell应用于Devops开发中音掌握的系统知识点</a></li>
+<li><a class="reference internal" href="#id5" id="id13">2.7 理解并行和并发</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="shelldevops">
+<h1><a class="toc-backref" href="#id6">2. 02.Shell脚本在Devops下的应用</a><a class="headerlink" href="#shelldevops" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="shell">
+<h2><a class="toc-backref" href="#id7">2.1. 2.1 Shell脚本的基本元素</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<p>单行注释</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash     //第一行</span>
+<span class="c1">#               // 表示单行注释</span>
+</pre></div>
+</div>
+<p>多行注释</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">&lt;&lt;</span><span class="n">BLOCK</span>
+<span class="n">中间部分为要省略的内容</span>
+<span class="n">BLOCK</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id8">2.2. 2.2 Shell基础正则表达式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>参考玩转shell脚本编程的 <code class="docutils literal"><span class="pre">正则表达式章节</span></code></p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id9">2.3. 2.3 Shell特殊字符</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image0" src="../_images/shell-teshustr.PNG" /></p>
+<p>关于位置参数shift的常见用法，例如，脚本publis-hconf依次对后面的IP进行操作，代码如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+if [ &quot;$#&quot; &gt;=3 ]; then
+    shift 1
+#    echo &quot;此次需要更新的机器IP为$@&quot;
+    for flat in $@ ; do
+           echo &quot;此次需要更新的机器IP为$flat&quot;
+           # 操作动作
+    done
+
+fi
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">2.4. 2.4 运行、调试Shell脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>调试Shell脚本</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>· -n: 不会执行该脚本，仅查询脚本语法是否有问题，并给出错误提示。
+· -v：在执行脚本时，先将脚本的内容输出到屏幕上，然后执行脚本。如果有错误，也会给出错误提示。
+· -x:  将执行的脚本内容输出显示到屏幕上，这是对调试很有用的参数。
+
+
+bash -x 调试Shell脚本，bash会先打印出每行脚本，再打印出每行脚本的执行结果，如果只调试其中几行脚本，
+可以采用“set -x”和“set +x”把要测试的部分包含进来。示例代码如下：
+
+set -x
+脚本部分内容
+set +x
+</pre></div>
+</div>
+<p>set命令最大的优点是，与“bash -x”相比，“set
+-x”可以缩小调试的作用域，这个功能在工作中是非常有用的功能，可以帮助我们调试变量，
+找出Bug的位置并打印。</p>
+</div>
+<div class="section" id="test">
+<h2><a class="toc-backref" href="#id11">2.5. 2.5 test语句</a><a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<p>文件测试运算符常见代码举例如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>BACKDIR=/data/backup
+
+[ -d ${BACKDIR} ] || mkdir -p ${BACKDIR}
+[ -d ${BACKDIR}/${DATE} ] || mkdir -p ${BACKDIR}/${DATE}
+[ ! -d ${BACKDIR}/${OLDDATE} ] || rm -rf ${BACKDIR}/${OLDDATE}
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id12">2.6. 2.6 Shell应用于Devops开发中音掌握的系统知识点</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>默认情况下，Shell脚本中的命令是串行执行的，必须等到前一条命令执行完毕之后才执行接下来的命令，
+但是如果有一大批的命令需要执行，而且相互之间没有影响的情况下，此时就要使用命令的并发执行了。</p>
+<p>正常的程序<code class="docutils literal"><span class="pre">echo_hello.sh</span></code>代码如下所示：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="k">for</span> <span class="p">((</span> <span class="n">VAR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">VAR</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">VAR</span><span class="o">++</span> <span class="p">));</span> <span class="n">do</span>
+    <span class="p">{</span>
+    <span class="n">sleep</span> <span class="mi">3</span>
+    <span class="n">echo</span> <span class="s2">&quot;hello,world&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">aa</span> <span class="o">&amp;</span> <span class="n">echo</span> <span class="s2">&quot;done!&quot;</span>
+    <span class="p">}</span>
+<span class="n">done</span>
+
+<span class="n">cat</span> <span class="n">aa</span> <span class="o">|</span><span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">rm</span> <span class="n">aa</span>
+</pre></div>
+</div>
+<p>使用time计算脚本的执行时间，命令结果如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ time sh echo_hello.sh
+done!
+done!
+done!
+done!
+done!
+5
+
+real    0m18.873s
+user    0m0.091s
+sys     0m0.214s
+</pre></div>
+</div>
+<p>并发执行的代码如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="k">for</span> <span class="p">((</span> <span class="n">VAR</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">VAR</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">;</span> <span class="n">VAR</span><span class="o">++</span> <span class="p">));</span> <span class="n">do</span>
+    <span class="p">{</span>
+    <span class="n">sleep</span> <span class="mi">3</span>
+    <span class="n">echo</span> <span class="s2">&quot;hello,world&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">aa</span> <span class="o">&amp;</span> <span class="n">echo</span> <span class="s2">&quot;done!&quot;</span>
+    <span class="p">}</span> <span class="o">&amp;</span>
+<span class="n">done</span>
+<span class="c1"># wait 命令有一个很重要的用途就是在Shell的并发编程中，可以在Shell脚本中启动多个后台进程（使用“&amp;”），然后调用wait命令，等待所有后台进程都运行完毕，</span>
+<span class="c1"># shell脚本再继续向下执行，</span>
+<span class="n">wait</span>
+<span class="n">cat</span> <span class="n">aa</span> <span class="o">|</span><span class="n">wc</span> <span class="o">-</span><span class="n">l</span>
+<span class="n">rm</span> <span class="n">aa</span>
+</pre></div>
+</div>
+<p>使用time计算脚本执行时间，如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ time sh echo_hello2.sh
+done!
+done!
+done!
+done!
+done!
+5
+
+real    0m5.689s
+user    0m0.062s
+sys     0m0.244s
+</pre></div>
+</div>
+<p>当多个进程可能会对同样的数据执行操作时，这些进程需要保证其他进程没有在操作，
+以免损坏数据，通常，这样的进程会使用一个“锁文件”，也就是创建一个文件告诉别的进程之间在运行，
+如果检测到这个文件存在，就认为操作同样数据的进程在工作。这样做有个问题，当进程不小心意外死亡了，没有清理掉那个文件，
+只能由用户手工的去清理了。</p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id13">2.7. 2.7 理解并行和并发</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>目前大部分语言都能瞒住并发执行，当多核CPU出现后，多CPU的场景下开始产生并行的概念。</p>
+<p>（1）总体概念</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>在单CPU系统中，系统调度在某一时刻只能让一个线程运行，虽然这种调试机制具有多种形式（大多数是以时间片轮询为主），
+但无论如何，需要通过不断切换需要运行的线程让其运行的方式就称为并发(concurrent)。
+
+在多CPU系统中，可以让两个以上的线程同时运行，这种可以让两个以上的线程同时运行的方式称为并行(parallel)。
+</pre></div>
+</div>
+<p>CPU到了多核时代，那么就出现了新的概念：并行。</p>
+<p>并行是真正细粒度上的同时进行，即同一时间点上同时发生着多个并发；更加确切并且简单地讲就是，每个CPU上运行一个程序，
+以达到同一时间点上各个CPU上均在运行一个程序。</p>
+<p><strong>并行和并发的具体区别</strong></p>
+<p>1）并行是指两个或者多个事件在同一时刻发生，而并发是指两个或多个事件在同一时间间隔发生。</p>
+<p>2）并行是在不同实体上的多个事件，而并发是在同一实体上的多个事件。</p>
+<p>3）在一台处理器上“同时”处理多个任务，在多台处理器上同时处理多个任务。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="03.Python在Devops与自动化运维中的应用.html" class="btn btn-neutral float-right" title="3. 03.Python在Devops与自动化运维中的应用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01.Devops与自动化运维的意义.html" class="btn btn-neutral float-left" title="1. 01.Devops与自动化运维的意义" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

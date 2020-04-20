@@ -1,0 +1,529 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.7. 使用iSCSI服务部署网络存储 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.8. 远程登录Linux系统" href="7.远程登录Linux系统.html" />
+    <link rel="prev" title="2.6. Apache服务源码搭建" href="5.Apache服务搭建.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.7. 使用iSCSI服务部署网络存储</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raid">2.7.1. 创建RAID磁盘阵列</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#iscsi-target-initiator">2.7.2. iSCSI技术在工作形式上分为服务端（target）与客户端（initiator）。</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#windows">2.7.3. 　配置Windows客户端</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Linux服务器架设</a> &raquo;</li>
+        
+      <li>2.7. 使用iSCSI服务部署网络存储</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/6.使用iSCSI服务部署网络存储.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#iscsi" id="id1">使用iSCSI服务部署网络存储</a><ul>
+<li><a class="reference internal" href="#raid" id="id2">创建RAID磁盘阵列</a></li>
+<li><a class="reference internal" href="#iscsi-target-initiator" id="id3">iSCSI技术在工作形式上分为服务端（target）与客户端（initiator）。</a></li>
+<li><a class="reference internal" href="#windows" id="id4">　配置Windows客户端</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="iscsi">
+<h1><a class="toc-backref" href="#id1">2.7. 使用iSCSI服务部署网络存储</a><a class="headerlink" href="#iscsi" title="Permalink to this headline">¶</a></h1>
+<p>硬盘接口类型主要有IDE、SCSI和SATA</p>
+<ul class="simple">
+<li>IDE是一种成熟稳定、价格便宜的并行传输接口。</li>
+<li>SATA是一种传输速度更快、数据校验更完整的串行传输接口。</li>
+<li>SCSI是一种用于计算机和硬盘、光驱等设备之间系统级接口的通用标准，具有系统资源占用率低、转速高、传输速度快等优点。</li>
+</ul>
+<div class="section" id="raid">
+<h2><a class="toc-backref" href="#id2">2.7.1. 创建RAID磁盘阵列</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>添加4块新硬盘，用于创建RAID 5磁盘阵列和备份盘
+</pre></div>
+</div>
+</div>
+<div class="section" id="iscsi-target-initiator">
+<h2><a class="toc-backref" href="#id3">2.7.2. iSCSI技术在工作形式上分为服务端（target）与客户端（initiator）。</a><a class="headerlink" href="#iscsi-target-initiator" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>iSCSI服务端即用于存放硬盘存储资源的服务器，它作为前面创建的RAID磁盘阵列的存储端，
+能够为用户提供可用的存储资源。iSCSI客户端则是用户使用的软件，用于访问远程服务端的存储资源。
+
+
+[root@localhost ~]# mdadm -Cv /dev/md0 -n 3 -l 5 -x 1 /dev/sdb /dev/sdc /dev/sdd /dev/sde
+
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   40G  0 disk
+├─sda1            8:1    0  600M  0 part  /boot
+└─sda2            8:2    0 39.4G  0 part
+  ├─centos-root 253:0    0 37.4G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sdc               8:32   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sdd               8:48   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sde               8:64   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sr0              11:0    1 1024M  0 rom
+
+[root@localhost ~]# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Mon Feb 11 19:11:50 2019
+        Raid Level : raid5
+        Array Size : 41908224 (39.97 GiB 42.91 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Mon Feb 11 19:12:56 2019
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : b4b2db91:e75feb5b:a4a007ec:128f0def
+            Events : 18
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      spare   /dev/sde
+</pre></div>
+</div>
+<p>第1步：配置好Yum软件仓库后安装iSCSI服务端程序以及配置命令工具</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>yum -y install targetd targetcli
+
+安装完成后启动iSCSI的服务端程序targetd，然后把这个服务程序加入到开机启动项中，以便下次在服务器重启后依然能够为用户提供iSCSI共享存储资源服务：
+[root@localhost ~]# systemctl start targetd
+[root@localhost ~]# systemctl enable targetd
+</pre></div>
+</div>
+<p>第2步：配置iSCSI服务端共享资源。</p>
+<p>targetcli是用于管理iSCSI服务端存储资源的专用配置命令，
+它能够提供类似于fdisk命令的交互式配置功能，将iSCSI共享资源的配置内容抽象成“目录”的形式，
+我们只需将各类配置信息填入到相应的“目录”中即可。这里的难点主要在于认识每个“参数目录”的作用。
+当把配置参数正确地填写到“目录”中后，iSCSI服务端也可以提供共享资源服务了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#/backstores/block是iSCSI服务端配置共享设备的位置</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zeco591qzg5mo135djsZ</span> <span class="o">~</span><span class="p">]</span><span class="c1"># targetcli</span>
+<span class="n">targetcli</span> <span class="n">shell</span> <span class="n">version</span> <span class="mf">2.1</span><span class="o">.</span><span class="n">fb46</span>
+<span class="n">Copyright</span> <span class="mi">2011</span><span class="o">-</span><span class="mi">2013</span> <span class="n">by</span> <span class="n">Datera</span><span class="p">,</span> <span class="n">Inc</span> <span class="ow">and</span> <span class="n">others</span><span class="o">.</span>
+<span class="n">For</span> <span class="n">help</span> <span class="n">on</span> <span class="n">commands</span><span class="p">,</span> <span class="nb">type</span> <span class="s1">&#39;help&#39;</span><span class="o">.</span>
+
+<span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="n">block</span> <span class="o">......................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">/</span>
+<span class="o">/&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="o">/</span> <span class="o">.........................................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">backstores</span> <span class="o">..............................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">block</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">fileio</span> <span class="o">.................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">pscsi</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">ramdisk</span> <span class="o">................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">iscsi</span> <span class="o">............................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">loopback</span> <span class="o">.........................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="o">/&gt;</span> <span class="n">cd</span> <span class="n">backstores</span><span class="o">/</span>
+<span class="o">/</span><span class="n">backstores</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="n">block</span>
+
+<span class="c1">#创建磁盘</span>
+<span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">disk0</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span>
+<span class="n">Created</span> <span class="n">block</span> <span class="n">storage</span> <span class="nb">object</span> <span class="n">disk0</span> <span class="n">using</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span><span class="o">.</span>
+<span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">&gt;</span>
+
+
+<span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">/</span>
+<span class="o">/&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="o">/</span> <span class="o">.........................................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">backstores</span> <span class="o">..............................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">block</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">disk0</span> <span class="o">.........................................................................</span> <span class="p">[</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span> <span class="p">(</span><span class="mf">30.0</span><span class="n">GiB</span><span class="p">)</span> <span class="n">write</span><span class="o">-</span><span class="n">thru</span> <span class="n">deactivated</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span>   <span class="n">o</span><span class="o">-</span> <span class="n">alua</span> <span class="o">...................................................................................................</span> <span class="p">[</span><span class="n">ALUA</span> <span class="n">Groups</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span>     <span class="n">o</span><span class="o">-</span> <span class="n">default_tg_pt_gp</span> <span class="o">.......................................................................</span> <span class="p">[</span><span class="n">ALUA</span> <span class="n">state</span><span class="p">:</span> <span class="n">Active</span><span class="o">/</span><span class="n">optimized</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">fileio</span> <span class="o">.................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">pscsi</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">ramdisk</span> <span class="o">................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">iscsi</span> <span class="o">............................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">loopback</span> <span class="o">.........................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="o">/&gt;</span>
+</pre></div>
+</div>
+<p>第3步：创建iSCSI target名称及配置共享资源。</p>
+<p>iSCSI
+target名称是由系统自动生成的，这是一串用于描述共享资源的唯一字符串。
+稍后用户在扫描iSCSI服务端时即可看到这个字符串，因此我们不需要记住它。
+系统在生成这个target名称后，还会在/iscsi参数目录中创建一个与其字符串同名的新“目录”用来存放共享资源。
+我们需要把前面加入到iSCSI共享资源池中的硬盘设备添加到这个新目录中，这样用户在登录iSCSI服务端后，
+即可默认使用这硬盘设备提供的共享存储资源了。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/&gt;</span> <span class="n">cd</span> <span class="n">iscsi</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">&gt;</span> <span class="n">create</span>
+<span class="n">Created</span> <span class="n">target</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span><span class="o">.</span>
+<span class="n">Created</span> <span class="n">TPG</span> <span class="mf">1.</span>
+<span class="n">Global</span> <span class="n">pref</span> <span class="n">auto_add_default_portal</span><span class="o">=</span><span class="n">true</span>
+<span class="n">Created</span> <span class="n">default</span> <span class="n">portal</span> <span class="n">listening</span> <span class="n">on</span> <span class="nb">all</span> <span class="n">IPs</span> <span class="p">(</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">),</span> <span class="n">port</span> <span class="mf">3260.</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span><span class="o">.</span>
+<span class="n">No</span> <span class="n">such</span> <span class="n">path</span> <span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span><span class="o">.</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">...</span><span class="mi">9</span><span class="n">d355b25c9be</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span> <span class="o">.............................................</span> <span class="p">[</span><span class="n">TPGs</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">tpg1</span> <span class="o">...................................................................................................</span> <span class="p">[</span><span class="n">no</span><span class="o">-</span><span class="n">gen</span><span class="o">-</span><span class="n">acls</span><span class="p">,</span> <span class="n">no</span><span class="o">-</span><span class="n">auth</span><span class="p">]</span>
+    <span class="n">o</span><span class="o">-</span> <span class="n">acls</span> <span class="o">..............................................................................................................</span> <span class="p">[</span><span class="n">ACLs</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">o</span><span class="o">-</span> <span class="n">luns</span> <span class="o">..............................................................................................................</span> <span class="p">[</span><span class="n">LUNs</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">o</span><span class="o">-</span> <span class="n">portals</span> <span class="o">........................................................................................................</span> <span class="p">[</span><span class="n">Portals</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+      <span class="n">o</span><span class="o">-</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">3260</span> <span class="o">.........................................................................................................</span> <span class="p">[</span><span class="n">OK</span><span class="p">]</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">...</span><span class="mi">9</span><span class="n">d355b25c9be</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="n">tpg1</span><span class="o">/</span><span class="n">luns</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">..</span><span class="mi">9</span><span class="n">be</span><span class="o">/</span><span class="n">tpg1</span><span class="o">/</span><span class="n">luns</span><span class="o">&gt;</span> <span class="n">create</span> <span class="o">/</span><span class="n">backstores</span><span class="o">/</span><span class="n">block</span><span class="o">/</span><span class="n">disk0</span>
+<span class="n">Created</span> <span class="n">LUN</span> <span class="mf">0.</span>
+</pre></div>
+</div>
+<p>第4步：设置访问控制列表（ACL）。</p>
+<p>iSCSI协议是通过客户端名称进行验证的，也就是说，用户在访问存储共享资源时不需要输入密码，
+只要iSCSI客户端的名称与服务端中设置的访问控制列表中某一名称条目一致即可，
+因此需要在iSCSI服务端的配置文件中写入一串能够验证用户信息的名称。
+acls参数目录用于存放能够访问iSCSI服务端共享存储资源的客户端名称。
+建议在后面追加上类似于:client的参数，这样既能保证客户端的名称具有唯一性，又非常便于管理和阅读：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">..</span><span class="mi">9</span><span class="n">be</span><span class="o">/</span><span class="n">tpg1</span><span class="o">/</span><span class="n">luns</span><span class="o">&gt;</span> <span class="n">cd</span> <span class="o">../</span><span class="n">acls</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">..</span><span class="mi">9</span><span class="n">be</span><span class="o">/</span><span class="n">tpg1</span><span class="o">/</span><span class="n">acls</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span>
+<span class="n">Created</span> <span class="n">Node</span> <span class="n">ACL</span> <span class="k">for</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span>
+<span class="n">Created</span> <span class="n">mapped</span> <span class="n">LUN</span> <span class="mf">0.</span>
+</pre></div>
+</div>
+<p>第5步：设置iSCSI服务端的监听IP地址和端口号。</p>
+<p>位于生产环境中的服务器上可能有多块网卡，
+那么到底是由哪个网卡或IP地址对外提供共享存储资源呢？
+这就需要我们在配置文件中手动定义iSCSI服务端的信息，即在portals参数目录中写上服务器的IP地址。
+接下来将由系统自动开启服务器172.17.0.124s的3260端口将向外提供iSCSI共享存储资源服务：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">create</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.124</span>
+<span class="n">Using</span> <span class="n">default</span> <span class="n">IP</span> <span class="n">port</span> <span class="mi">3260</span>
+<span class="n">Could</span> <span class="ow">not</span> <span class="n">create</span> <span class="n">NetworkPortal</span> <span class="ow">in</span> <span class="n">configFS</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="n">portals</span> <span class="o">............................................................................................................</span> <span class="p">[</span><span class="n">Portals</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">3260</span> <span class="o">.............................................................................................................</span> <span class="p">[</span><span class="n">OK</span><span class="p">]</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">delete</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="mi">3260</span>
+<span class="n">Deleted</span> <span class="n">network</span> <span class="n">portal</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">3260</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">create</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.124</span>
+<span class="n">Using</span> <span class="n">default</span> <span class="n">IP</span> <span class="n">port</span> <span class="mi">3260</span>
+<span class="n">Created</span> <span class="n">network</span> <span class="n">portal</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.124</span><span class="p">:</span><span class="mf">3260.</span>
+</pre></div>
+</div>
+<p>第6步：配置妥当后检查配置信息，重启iSCSI服务端程序并配置防火墙策略。</p>
+<p>在参数文件配置妥当后，可以浏览刚刚配置的信息，确保与下面的信息基本一致。
+在确认信息无误后输入exit命令来退出配置。注意，千万不要习惯性地按Ctrl +
+C组合键结束进程， 这样不会保存配置文件，我们的工作也就白费了。
+最后重启iSCSI服务端程序，再设置firewalld防火墙策略，使其放行3260/tcp端口号的流量。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">ls</span>
+<span class="n">o</span><span class="o">-</span> <span class="n">portals</span> <span class="o">............................................................................................................</span> <span class="p">[</span><span class="n">Portals</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.124</span><span class="p">:</span><span class="mi">3260</span> <span class="o">........................................................................................................</span> <span class="p">[</span><span class="n">OK</span><span class="p">]</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">ls</span> <span class="o">/</span>
+<span class="n">o</span><span class="o">-</span> <span class="o">/</span> <span class="o">.........................................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">backstores</span> <span class="o">..............................................................................................................</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">block</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">disk0</span> <span class="o">...........................................................................</span> <span class="p">[</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span> <span class="p">(</span><span class="mf">30.0</span><span class="n">GiB</span><span class="p">)</span> <span class="n">write</span><span class="o">-</span><span class="n">thru</span> <span class="n">activated</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span>   <span class="n">o</span><span class="o">-</span> <span class="n">alua</span> <span class="o">...................................................................................................</span> <span class="p">[</span><span class="n">ALUA</span> <span class="n">Groups</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span> <span class="o">|</span>     <span class="n">o</span><span class="o">-</span> <span class="n">default_tg_pt_gp</span> <span class="o">.......................................................................</span> <span class="p">[</span><span class="n">ALUA</span> <span class="n">state</span><span class="p">:</span> <span class="n">Active</span><span class="o">/</span><span class="n">optimized</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">fileio</span> <span class="o">.................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">pscsi</span> <span class="o">..................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">ramdisk</span> <span class="o">................................................................................................</span> <span class="p">[</span><span class="n">Storage</span> <span class="n">Objects</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">iscsi</span> <span class="o">............................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span><span class="o">.</span><span class="n">x8664</span><span class="p">:</span><span class="n">sn</span><span class="o">.</span><span class="mi">9</span><span class="n">d355b25c9be</span> <span class="o">.........................................</span> <span class="p">[</span><span class="n">TPGs</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span>   <span class="n">o</span><span class="o">-</span> <span class="n">tpg1</span> <span class="o">...............................................................................................</span> <span class="p">[</span><span class="n">no</span><span class="o">-</span><span class="n">gen</span><span class="o">-</span><span class="n">acls</span><span class="p">,</span> <span class="n">no</span><span class="o">-</span><span class="n">auth</span><span class="p">]</span>
+  <span class="o">|</span>     <span class="n">o</span><span class="o">-</span> <span class="n">acls</span> <span class="o">..........................................................................................................</span> <span class="p">[</span><span class="n">ACLs</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span>     <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">iqn</span><span class="o">.</span><span class="mi">2003</span><span class="o">-</span><span class="mf">01.</span><span class="n">org</span><span class="o">.</span><span class="n">linux</span><span class="o">-</span><span class="n">iscsi</span><span class="o">.</span><span class="n">iz2zeco591qzg5mo135djsz</span> <span class="o">..................................................</span> <span class="p">[</span><span class="n">Mapped</span> <span class="n">LUNs</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span>     <span class="o">|</span>   <span class="n">o</span><span class="o">-</span> <span class="n">mapped_lun0</span> <span class="o">.................................................................................</span> <span class="p">[</span><span class="n">lun0</span> <span class="n">block</span><span class="o">/</span><span class="n">disk0</span> <span class="p">(</span><span class="n">rw</span><span class="p">)]</span>
+  <span class="o">|</span>     <span class="n">o</span><span class="o">-</span> <span class="n">luns</span> <span class="o">..........................................................................................................</span> <span class="p">[</span><span class="n">LUNs</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span>     <span class="o">|</span> <span class="n">o</span><span class="o">-</span> <span class="n">lun0</span> <span class="o">......................................................................</span> <span class="p">[</span><span class="n">block</span><span class="o">/</span><span class="n">disk0</span> <span class="p">(</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span><span class="p">)</span> <span class="p">(</span><span class="n">default_tg_pt_gp</span><span class="p">)]</span>
+  <span class="o">|</span>     <span class="n">o</span><span class="o">-</span> <span class="n">portals</span> <span class="o">....................................................................................................</span> <span class="p">[</span><span class="n">Portals</span><span class="p">:</span> <span class="mi">1</span><span class="p">]</span>
+  <span class="o">|</span>       <span class="n">o</span><span class="o">-</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.124</span><span class="p">:</span><span class="mi">3260</span> <span class="o">................................................................................................</span> <span class="p">[</span><span class="n">OK</span><span class="p">]</span>
+  <span class="n">o</span><span class="o">-</span> <span class="n">loopback</span> <span class="o">.........................................................................................................</span> <span class="p">[</span><span class="n">Targets</span><span class="p">:</span> <span class="mi">0</span><span class="p">]</span>
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span>
+
+<span class="o">/</span><span class="n">iscsi</span><span class="o">/</span><span class="n">iqn</span><span class="o">.</span><span class="mf">20.</span><span class="o">../</span><span class="n">tpg1</span><span class="o">/</span><span class="n">portals</span><span class="o">&gt;</span> <span class="n">exit</span>
+<span class="n">Global</span> <span class="n">pref</span> <span class="n">auto_save_on_exit</span><span class="o">=</span><span class="n">true</span>
+<span class="n">Last</span> <span class="mi">10</span> <span class="n">configs</span> <span class="n">saved</span> <span class="ow">in</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">backup</span><span class="o">/.</span>
+<span class="n">Configuration</span> <span class="n">saved</span> <span class="n">to</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">saveconfig</span><span class="o">.</span><span class="n">json</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zeco591qzg5mo135djsZ</span> <span class="o">~</span><span class="p">]</span><span class="c1"># systemctl restart targetd</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zeco591qzg5mo135djsZ</span> <span class="o">~</span><span class="p">]</span><span class="c1"># firewall-cmd --permanent --add-port=3260/tcp</span>
+<span class="n">FirewallD</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">running</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zeco591qzg5mo135djsZ</span> <span class="o">~</span><span class="p">]</span><span class="c1"># firewall-cmd --reload</span>
+<span class="n">FirewallD</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">running</span>
+</pre></div>
+</div>
+<p>iSCSI服务端的配置至此全部完成。</p>
+</div>
+<div class="section" id="windows">
+<h2><a class="toc-backref" href="#id4">2.7.3. 　配置Windows客户端</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image0" src="../../_images/iSCSI.PNG" /> <img alt="image1" src="../../_images/iSCSI2.PNG" /></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>由于在iSCSI服务端程序上设置了ACL，
+使得只有客户端名称与ACL策略中的名称保持一致时才能使用远程存储资源，
+因此需要在“配置”选项卡中单击“更改”按钮，
+把iSCSI发起程序的名称修改为服务端ACL所定义的名称
+</pre></div>
+</div>
+<p><img alt="image2" src="../../_images/iSCSI3.PNG" /></p>
+<p><img alt="image3" src="../../_images/iSCSI5.PNG" /></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="7.远程登录Linux系统.html" class="btn btn-neutral float-right" title="2.8. 远程登录Linux系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="5.Apache服务搭建.html" class="btn btn-neutral float-left" title="2.6. Apache服务源码搭建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

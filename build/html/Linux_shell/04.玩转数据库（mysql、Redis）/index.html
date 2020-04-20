@@ -1,0 +1,358 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>4. 玩转数据库(mysql、Redis) &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="4.1. Redis的使用" href="01.Redis数据库.html" />
+    <link rel="prev" title="3.52. 老男孩Shell中的一些脚本" href="../03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. 玩转数据库(mysql、Redis)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html">4.1. Redis的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html">4.2. mysql入门到精通</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html">4.3. Linux运维之mysql必会知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Navicat把csv数据导入mysql操作方法.html">4.4. Navicat把csv数据导入mysql操作方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.数据库总结(350个数据库,14个分类).html">4.5. 数据库总结(350个数据库,14个分类)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+      <li>4. 玩转数据库(mysql、Redis)</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/04.玩转数据库（mysql、Redis）/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="mysqlredis">
+<h1>4. 玩转数据库(mysql、Redis)<a class="headerlink" href="#mysqlredis" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.Redis数据库.html">4.1. Redis的使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id1">4.1.1. 概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id2">4.1.2. Redis有以下的特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id3">4.1.3. 使用场景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#reidsmemcached">4.1.4. reids和memcached的比较</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id4">4.1.5. 安装与启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id5">4.1.6. redis的操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#id6">字符串操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#id7">列表操作</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id8">4.1.7. 集合操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#id9">哈希操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#id10">事务操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#id11">发布和订阅</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Redis数据库.html#rdbaof">RDB和AOF的两种数据持久化机制</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id12">4.1.8. 设置redis的连接密码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id13">4.1.9. Redis常用配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#pythonredis">4.1.10. python操作redis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Redis数据库.html#id14">4.1.11. Redis数据库集群主从复制的基本原理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.Mysql入门到精通.html">4.2. mysql入门到精通</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#id1">4.2.1. MySQL版本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#id2">4.2.2. Mysql的优势</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#sql4">4.2.3. SQL包含以下4个部分</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#mysql-5-6">4.2.4. Mysql-5.6二进制部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#id3">4.2.5. 数据库基础操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#windows">windows 上启动关闭命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id4">mysql常用的图形管理工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id5">基础操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#linuxmysqlroot">Linux下修改mysql的root密码</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#id6">4.2.6. 数据库操作命令</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id7">1.创建数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id8">2.删除数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id9">3.mysql忘记密码后，跳过密码进入数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id12">MySQL查看和修改表的存储引擎</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql入门到精通.html#id13">4.2.7. 数据库表的基本操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id14">创建数据库表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql入门到精通.html#id24">查看数据库表结构</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html">4.3. Linux运维之mysql必会知识</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#mysql">4.3.1. MySQL概述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id1">MySQL 简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id2">MySQL 相关链接</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id3">4.3.2. Mysql数据库安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id4">4.3.3. 1.基础操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id5">4.3.4. 2.数据库操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id6">3.mysql忘记密码后，跳过密码进入数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id7">4.mysql的各种权限管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id8">5.表的操作</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id12">4.3.5. 数据的操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id13">1.增</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id14">2.删</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id15">3.改</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id16">4.查</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id25">4.3.6. 1.显示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id26">4.3.7. 2.创建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id27">4.3.8. 3.删除</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id29">4.3.9. 4.使用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id30">4.3.10. 5.用户管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id31">4.3.11. 6.用户授权</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id32">4.3.12. 7.忘记密码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id33">4.3.13. 8.Mysql数据类型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id34">1.数值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id35">2.日期和时间类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id36">3.字符串类型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id37">4.3.14. 9.mysql存储引擎</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#myisam-innodb">1.MyISAM 和 InnoDB的适用场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id38">MyISAM 和 InnoDB的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id39">如何选择存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id40">Mysql事务</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id43">4.3.15. Mysql 慢查询日志配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id44">4.3.16. 数据的备份与恢复</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id45">1.导入外部数据文本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id46">2.备份数据库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id47">4.3.17. Mysql 整理错误</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id48">4.3.18. Mysql 主从复制搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id49">4.3.19. Mysql 主主复制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id50">4.3.20. Mysql 二进制日志备份还原</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#id51">Mysql数据库的优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux运维之Mysql必会知识.html#django">Django访问数据库</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.Navicat把csv数据导入mysql操作方法.html">4.4. Navicat把csv数据导入mysql操作方法</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.数据库总结(350个数据库,14个分类).html">4.5. 数据库总结(350个数据库,14个分类)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.数据库总结(350个数据库,14个分类).html#id2">4.5.1. 参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.Redis数据库.html" class="btn btn-neutral float-right" title="4.1. Redis的使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html" class="btn btn-neutral float-left" title="3.52. 老男孩Shell中的一些脚本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

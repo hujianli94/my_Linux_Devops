@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.35. 使用tar命令进行本地备份scripts &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="1.36. 配置Yum软件仓库" href="42.配置Yum软件仓库.html" />
+    <link rel="prev" title="1.34. Linux初始化系统安全设置" href="40.Linux初始化系统安全设置.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.正则表达式.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget和curl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.运算符.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc命令.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su命令与sudo服务.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.34. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.35. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">1. 常用较多命名查询</a> &raquo;</li>
+        
+      <li>1.35. 使用tar命令进行本地备份scripts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/41.使用tar命令进行本地备份scripts.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#tarscripts" id="id1">使用tar命令进行本地备份scripts</a></li>
+</ul>
+</div>
+<div class="section" id="tarscripts">
+<h1><a class="toc-backref" href="#id1">1.35. 使用tar命令进行本地备份scripts</a><a class="headerlink" href="#tarscripts" title="Permalink to this headline">¶</a></h1>
+<p>##tar命令进行本地备份</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+BAKDATE=&#39;date +%y%m%d&#39;
+DATA3=&#39;date -d &quot;3 days ago&quot; +%y%m%d&#39;
+osdata=/disk1
+userdata=/disk2
+echo  &quot;backup  OS  data  starting&quot;
+tar -zcvf /$osdata/etc.data/etc_$BAKDATE.tar.gz  /etc
+tar -zcvf /$osdata/boot.data/boot_$BAKDATE.tar.gz /boot
+tar -zcvf /$osdata/home.data/home_$BAKDATE.tar.gz /home
+tar -zcvf /$osdata/root.data/root_$BAKDATE.tar.gz /root
+tar -zcvf /$userdata/usr_data/usrlocal_$BAKDATE.tar.gz  /usr/local
+tar -zcvf /$userdata/var_www/www_$BAKDATE.tar.gz  /var/www
+cp –r  /$osdata/*  /$userdata
+cp –r  /$userdata/* /$osdata
+echo  &quot;Backup  OS  data  complete!&quot;
+echo  &quot;delete  OS  data  3  days  ago&quot;
+rm -rf /$osdata/etc.data/etc_$DATA3.tar.gz
+rm –rf /$osdata/boot.data/boot_$DATA3.tar.gz
+rm –rf /$osdata/home.data/home_$DATA3.tar.gz
+rm –rf  /$osdata/root.data/root_$DATA3.tar.gz
+rm –rf  /$osdata/usr_data/usrlocal_$DATA3.tar.gz
+rm –rf  /$osdata/var_www/www_$DATA3.tar.gz
+rm -rf  /$userdata/etc.data/etc_$DATA3.tar.gz
+rm –rf  /$userdata/boot.data/boot_$DATA3.tar.gz
+rm –rf  /$userdata/home.data/home_$DATA3.tar.gz
+rm –rf  /$userdata/root.data/root_$DATA3.tar.gz
+rm –rf  /$userdata/usr_data/usrlocal_$DATA3.tar.gz
+rm –rf  /$userdata/var_www/www_$DATA3.tar.gz
+echo  &quot;delete  cws  ok!&quot;
+
+
+上面这段脚本完成的工作是：
+将系统与用户的备份数据分别保存在两个不同的本地磁盘disk1和disk2中，
+并且保留最近三天的数据，三天前的数据自动删除。
+主要备份的数据有/etc目录、/boot目录、/home目录、/root目录、/usr/local目录和/var/www目录。
+当然，这里只是举个例子，凡是存放数据的重要目录，都需要进行备份。
+将此脚步放到系统守护进程（类似于 Windows 下的计划任务）crontab 下，设定备份时间，即可实现定时系统备份。
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="42.配置Yum软件仓库.html" class="btn btn-neutral float-right" title="1.36. 配置Yum软件仓库" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="40.Linux初始化系统安全设置.html" class="btn btn-neutral float-left" title="1.34. Linux初始化系统安全设置" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

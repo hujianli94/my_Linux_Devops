@@ -1,0 +1,268 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>7. 07.最强的王者篇 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="7.1. 01.MySQL面试宝典" href="01.MySQL面试宝典.html" />
+    <link rel="prev" title="6.2. 02.MySQL版本升级" href="../06.至尊的星耀篇/02.MySQL版本升级.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.倔强的青铜篇/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.秩序的白银篇/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.荣耀的黄金篇/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.尊贵的铂金篇/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.永恒的钻石篇/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.至尊的星耀篇/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. 07.最强的王者篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html">7.1. 01.MySQL面试宝典</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+        
+      <li>7. 07.最强的王者篇</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Mysql/07.最强的王者篇/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>7. 07.最强的王者篇<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.MySQL面试宝典.html">7.1. 01.MySQL面试宝典</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.MySQL面试宝典.html#id1">7.1.1. 自我介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.MySQL面试宝典.html#id2">7.1.2. 技术问答</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#mysql-mysql">问题1 <code class="docutils literal"><span class="pre">你目前接触的MySQL</span> <span class="pre">版本是什么？</span> <span class="pre">除了官方版本，</span> <span class="pre">还接触过其他的MySQL</span> <span class="pre">分支版本吗？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#mysqlmyisaminnodb">问题2 <code class="docutils literal"><span class="pre">MySQL主要的存储引擎MyISAM和InnoDB的不同之处？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id3">问题3 <code class="docutils literal"><span class="pre">数据表类型有哪些</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id4">问题4 <code class="docutils literal"><span class="pre">如何设计一个高并发的系统</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#myql">问题5 <code class="docutils literal"><span class="pre">Myql中的事务回滚机制概述</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#sql">问题6 <code class="docutils literal"><span class="pre">SQL语言包括哪几部分？每部分都有哪些操作关键字？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#innodb">问题7 <code class="docutils literal"><span class="pre">介绍一下InnoDB的体系结构</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id5">问题8 <code class="docutils literal"><span class="pre">MySQL有哪些索引类型？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#mysql-binlog">问题9 <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">binlog有几种格式？</span> <span class="pre">生产中你用哪种？各自有什么特点？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id6">问题10 <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">主从复制的具体原理是什么？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id7">问题11 <code class="docutils literal"><span class="pre">MySQL</span> <span class="pre">主从延迟的原理是什么？</span> <span class="pre">如何监控主从延迟，如何解决主从延迟问题？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id8">问题12 <code class="docutils literal"><span class="pre">数据库中的双一是什么？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#ddl">问题13 <code class="docutils literal"><span class="pre">如果实施大表DDL语句才能把性能影响降到最低？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id9">问题14 <code class="docutils literal"><span class="pre">为什么要为InnoDB表设置自增列做主键？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id10">问题15 <code class="docutils literal"><span class="pre">如何优化一条慢SQL语句？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id11">问题16 <code class="docutils literal"><span class="pre">服务器负载过高或者网页打开缓慢，简单说说你的优化思路？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id12">问题17 <code class="docutils literal"><span class="pre">你接触过哪些MySQL的主流架构？架构应用中有哪些问题需要考虑？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id13">问题17 <code class="docutils literal"><span class="pre">什么是死锁？锁等待？通过数据库哪些表可以监控？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id14">问题18 <code class="docutils literal"><span class="pre">你之前处理过MySQL的哪些案例？</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id15">问题19 <code class="docutils literal"><span class="pre">对MySQL的锁了解吗?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id16">问题20 <code class="docutils literal"><span class="pre">MySQL都有哪些锁呢?像上面的例子进行锁定岂不是有点阻碍并发效率了?</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.MySQL面试宝典.html#id17">问题21 <code class="docutils literal"><span class="pre">一条sql执行过长的时间，你如何优化，从哪些方面？</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.MySQL面试宝典.html" class="btn btn-neutral float-right" title="7.1. 01.MySQL面试宝典" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../06.至尊的星耀篇/02.MySQL版本升级.html" class="btn btn-neutral float-left" title="6.2. 02.MySQL版本升级" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

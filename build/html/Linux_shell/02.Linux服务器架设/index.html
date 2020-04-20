@@ -1,0 +1,495 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. Linux服务器架设 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.1. RPM软件包管理" href="0.1RPM红帽软件包管理.html" />
+    <link rel="prev" title="1.38. Linux 服务器故障排查顺序" href="../01.常用较多命名查询/44.Linux服务器故障排查顺序.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. Linux服务器架设</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+      <li>2. Linux服务器架设</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="linux">
+<h1>2. Linux服务器架设<a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l1"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid">2.2.1. RAID 技术</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid0">RAID0</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid1">RAID1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid5">RAID5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid10">RAID10</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id1">2.2.2. 创建管理RAID实例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid-raid0raid5">2.2.3. 创建Raid（ 创建Raid0和Raid5）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id2">2.2.4. Raid性能测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id3">2.2.5. Raid故障模拟</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid-10">2.2.6. 制作一个RAID 10磁盘阵列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#raid-5">2.2.7. 磁盘阵列+备份盘 (RAID 5)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#lvm">2.2.8. LVM逻辑卷概述</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id4">2.2.9. 创建LVM分区实例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id5">2.2.10. 修改LVM分区容量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html#id6">2.2.11. 删除LVM分区</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="2.NFS共享服务器搭建.html#nfs-centos7-6">2.3.1. 安装NFS服务（Centos7.6）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2.NFS共享服务器搭建.html#id1">2.3.2. nfs搭建 方式二</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="3.Vsftpd服务器搭建.html#id1">2.4.1. 匿名用户登录配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.Vsftpd服务器搭建.html#id2">2.4.2. 系统用户登录配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3.Vsftpd服务器搭建.html#id3">2.4.3. Vsftpd虚拟用户实战</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="4.挂载硬盘mount命令.html#mount">2.5.1. mount命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.挂载硬盘mount命令.html#fdisk">2.5.2. fdisk命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4.挂载硬盘mount命令.html#id2">2.5.3. 添加交换分区</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="5.Apache服务搭建.html#id1">2.6.1. Apache 的特点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.Apache服务搭建.html#id2">2.6.2. Apache 源码安装编译配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.Apache服务搭建.html#yumapache">2.6.3. yum安装apache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html#id3">建立网站目录，保存首页</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="5.Apache服务搭建.html#id4">2.6.4. 基于端口号访问虚拟主机网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5.Apache服务搭建.html#id5">2.6.5. Apache的访问控制</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html">2.7. 使用iSCSI服务部署网络存储</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html#raid">2.7.1. 创建RAID磁盘阵列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html#iscsi-target-initiator">2.7.2. iSCSI技术在工作形式上分为服务端（target）与客户端（initiator）。</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html#windows">2.7.3. 　配置Windows客户端</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="7.远程登录Linux系统.html#id1">2.8.1. 1.使用密钥认证登录</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#windowslinux">windows上使用密钥登录Linux系统</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="7.远程登录Linux系统.html#id3">2.8.2. 2.两台Linux之间互访</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#linuxa">Linux主机A</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#linuxb">Linux主机B</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#id4">实现免密码登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#scp">scp远程传输命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html#id5">免密登录转为密码登录</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="8.Samba服务器的搭建.html#id1">2.9.1. Samba的概念和功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8.Samba服务器的搭建.html#id2">2.9.2. Samba的安装与配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#id3">1.安装Samba</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#id4">2.Samba服务的组成与使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#id5">4.建立共享目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#smb">5.重启SMB服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#id6">6.访问Samba服务器的共享文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#sambalinux">7将Samba服务器共享的目录挂载到一个Linux客户端，操作过程如下所示。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html#id7">8.授权登录samba服务器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="9.rsync数据同步.html#arsync">2.10.1. A系统rsync服务器端配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html#id1">启动rsync服务并检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html#id2">加入开机自启动</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="9.rsync数据同步.html#brsync">2.10.2. B系统rsync客户端</a></li>
+<li class="toctree-l2"><a class="reference internal" href="9.rsync数据同步.html#id3">2.10.3. 使用 rsync 备份系统快照</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html#id4">补充内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html#id5">举例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10.iptables与firewalld防火墙.html#iptables">2.11.1. iptables中的常用参数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.iptables与firewalld防火墙.html#id1">2.11.2. iptables配置文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id1">2.12.1. 安装tomcat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#jdk">安装JDK</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#tomcat-1">2.12.2. 安装Tomcat</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id3">Tomcat目录介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#webapps">webapps目录介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id4">Tomcat的管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id5">Tomcat管理功能使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id6">2.12.3. 配置tomcat</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#jpress">2.12.4. 部署开源站点（jpress）</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id7">第一个里程碑：安装配置数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id8">第二个里程碑：jpress站点上线</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id9">2.12.5. Tomcat多实例配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id10">2.12.6. Tomcat反向代理集群</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id11">负载均衡器说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html#id12">配置负载均衡器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#id1">2.15.1. Jenkins持续集成企两种网站部署的流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#id2">2.15.2. Jenkins持续集成简介及安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#id3">Jenkins安装部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#dockerjenkins">使用Docker部署Jenkins</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#id4">2.15.3. Jenkins相关概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14.Jenkins持续集成企业实战.html#id5">2.15.4. Jenkins平台设置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html#id1">2.16.1. 前提:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html#xrdp">2.16.2. 安装xrdp</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id1">2.17.1. 简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id2">2.17.2. 安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id3">2.17.3. 配置(自己创建)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id4">2.17.4. 负载均衡算法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#acl">2.17.5. ACL规则定义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#haproxy-cfg">2.17.6. haproxy.cfg文件配置示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id5">用于4层端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id6">用于7层负载均衡和反向代理</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id7">2.17.7. 负载均衡的示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id8">2.17.8. 启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html#id9">2.17.9. 查看状态</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html#id1">2.19.1. 开始操作前准备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html#vnc">2.19.2. 安装VNC服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html#vps">2.19.3. 手动网络重装VPS</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html#id2">查看网络信息</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html#python-http">2.21.1. 用 Python 快速实现 HTTP 服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html#windows">Windows上终止占用端口的进程</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html#python-ftp">2.21.2. 用 Python 快速实现 FTP 服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html#ftp">创建一个有认证可写的<code class="docutils literal"><span class="pre">ftp</span></code>服务器，可以使用类似以下指令</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html#id1">2.22.1. 双网卡绑定</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html#id1">2.23.1. 环境介绍</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html#id2">2.23.2. 准备工作，安装基础包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html#openssl">2.23.3. 升级openssl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html#openssh">2.23.4. 升级openssh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html#id1">2.26.1. 参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="29.目前流行的开源监控框架.html#id2">2.27.1. 参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#rpmbuildrpm-mariadb">2.28.1. rpmbuild打包成rpm包(mariadb示例)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#rpmbuild-spec">2.28.2. 示例：rpmbuild.spec</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#rpmbuildrpm-mysql">2.28.3. rpmbuild打包成rpm包(mysql示例)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#mariadbrpm">2.28.4. mariadb定制rpm包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#linuxrpmapache">2.28.5. 烂泥：Linux源码包制作RPM包之Apache</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.源码包制作成rpm包.html#centos7rpmbuildrpm">2.28.6. centos7使用rpmbuild制作rpm包</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html#id1">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html#downloadonly-rpm">工具1 方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html#yumdownloader-rpm">工具2 使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="0.1RPM红帽软件包管理.html" class="btn btn-neutral float-right" title="2.1. RPM软件包管理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../01.常用较多命名查询/44.Linux服务器故障排查顺序.html" class="btn btn-neutral float-left" title="1.38. Linux 服务器故障排查顺序" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

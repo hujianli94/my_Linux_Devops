@@ -1,0 +1,352 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.9. Nginx location 深入解析 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="5.10. Nginx实战-动静分离配置" href="10.Nginx实战-动静分离配置.html" />
+    <link rel="prev" title="5.8. nginx反向代理做下载文件" href="08.nginx反向代理做下载文件.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Nginx学习</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.nginx入门简介.html">5.1. nginx入门简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.nginx常用命令管理.html">5.2. nginx常用命令管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.nginx版本升级.html">5.3. nginx版本升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.nginx配置文件优化一.html">5.4. nginx配置文件优化一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.nginx配置文件优化二.html">5.5. nginx配置文件优化二</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.nginx多站点配置.html">5.6. nginx多站点配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.nginx负载均衡配置+健康检查.html">5.7. nginx负载均衡配置+健康检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.nginx反向代理做下载文件.html">5.8. nginx反向代理做下载文件</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.9. Nginx location 深入解析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.Nginx实战-动静分离配置.html">5.10. Nginx实战-动静分离配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.14. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Nginx学习</a> &raquo;</li>
+        
+      <li>5.9. Nginx location 深入解析</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/05.Nginx学习/09.Nginx-location深入解析.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#nginx-location" id="id1">Nginx location 深入解析</a></li>
+</ul>
+</div>
+<div class="section" id="nginx-location">
+<h1><a class="toc-backref" href="#id1">5.9. Nginx location 深入解析</a><a class="headerlink" href="#nginx-location" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default"><div class="highlight"><pre><span></span>  Nginx由内核和模块组成，其中内核的设计非常微小和简洁，完成的工作也非常简单，仅是通过查找配置文件将客户端
+的请求映射到一个location block,而location是Nginx配置的一个指令，用于访问的URL匹配，而在这个location中所配置的每个指令将会启动不同的模块去完成相应的工作。
+</pre></div>
+</div>
+<p>默认nginx.conf配置文件中至少存在一个location
+/，即表示客户端浏览器请求的URL为域名+“/”，如果location
+/newindex/,则表示客户端浏览器请求的URL为域名+“/newindex/”。
+常见location匹配URL的方式如下：</p>
+<ul class="simple">
+<li>= ：字面精确匹配。</li>
+<li>^~ ：最大前缀匹配。</li>
+<li>/: 不带任何前缀。</li>
+<li>~：大小写相关的正则匹配。</li>
+<li>~*：大小写无关的正则匹配。</li>
+<li>&#64;：location内部重定向的变量。</li>
+</ul>
+<p>其中location = 、^~、/属于普通字符串匹配，location ~、 ~ *
+属于正则表达式匹配，location的优先级与其在nginx.conf配置文件中的先后顺序无关</p>
+<p>location =
+精确匹配会第一个被处理，如果发现精确匹配，Nginx则停止搜索其他任何location的匹配。</p>
+<p>普通字符匹配，正则表达式规则和长的块规则将被优先和查询匹配，也就是说如果该项匹配
+还需去看有没有正则表达式匹配和更长的匹配。</p>
+<p>^~ 则只匹配该规则，nginx 停止搜索其他匹配，否则 nginx 会继续处理其他
+location 指令。
+最后匹配理带有&#8221;<sub>“和”</sub>*&#8221;的指令，如果找到相应的匹配，则 nginx
+停止搜索其他匹配；当
+没有正则表达式或者没有正则表达式被匹配的情况下，那么匹配程度最高的逐字匹配指令会
+被使用。</p>
+<p>eg</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>location = / {
+#  只匹配&quot;/&quot;.
+[ configuration A ]
+}
+location / {
+#  匹配任何请求，因为所有请求都是以&quot;/&quot; 开始
+#  但是更长字符匹配或者正则表达式匹配会优先匹配
+[ configuration B ]
+}
+location = /images/ {
+#  匹配任何以 /images/  开始的请求，并停止匹配  其它 location
+[ configuration C ]
+root /tmp/;
+}
+location ~* \.(gif|jpg|jpeg)$ {
+#  匹配以 gif, jpg, or jpeg  结尾的请求.
+#  但是所有 /images/  目录的请求将由 [Configuration C] 处理.
+[ configuration D ]
+Root /var/www/html/
+}
+</pre></div>
+</div>
+<p>请求 URI 例子:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>  / -&gt; 符合 configuration A
+  /documents/document.html -&gt; 符合 configuration B
+  /images/1.gif -&gt; 符合 configuration C
+/documents/1.jpg -&gt;符合 configuration D
+</pre></div>
+</div>
+<p>正常的优先级别为： (location =) &gt; (location 完整路径 &gt;) &gt;(location ^~
+路径) &gt;(location ~* 正 正 则 则) &gt;(location 路径)</p>
+<p>生产环境中无需在Nginx.conf配置文件中同时添加五种规则匹配，如下为企业生产环境Nginx
+Location部分配置代码：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#匹配/,优先级最低
+location /
+{
+    root /var/www/html/；
+ expires      60d；
+}
+#匹配静态页面，由本地解析
+location ~ .*\.(gif|jpg|jpeg|bmp|png|ico|txt|js|css)$
+{
+ root /var/www/html/；
+ expires      60d；
+}
+#匹配动态页面，交给后端服务器
+location ~ .*\.(jsp|php|cgi|do)$
+{
+    root /var/www/html/；
+    proxy_pass http://linux_web；
+    proxy_http_version 1.1；
+    proxy_set_header Connection &quot;&quot;；
+    proxy_set_header Host  $host；
+    proxy_set_header X-Real-IP $remote_addr；
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for；
+}
+#直接匹配newindex.html，优先级最高
+location =/newindex.html
+{
+    root /var/www/newwww/；
+ expires      60d；
+}
+</pre></div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="10.Nginx实战-动静分离配置.html" class="btn btn-neutral float-right" title="5.10. Nginx实战-动静分离配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="08.nginx反向代理做下载文件.html" class="btn btn-neutral float-left" title="5.8. nginx反向代理做下载文件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

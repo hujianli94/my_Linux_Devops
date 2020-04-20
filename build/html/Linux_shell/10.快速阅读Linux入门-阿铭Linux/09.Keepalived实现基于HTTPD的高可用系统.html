@@ -1,0 +1,621 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>10.9. Keepalived实现基于HTTPD的高可用系统 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="10.10. 搭建HAProxy+Keepalived高可用负载均衡系统" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html" />
+    <link rel="prev" title="10.8. 虚拟化与集群应用篇" href="08.虚拟化与集群应用篇.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">10. 快速阅读Linux入门-阿铭Linux</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.awk练习题测试.html">10.1. awk练习题测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.sed练习题测试.html">10.2. sed练习题测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.xargs与exec.html">10.3. xargs与exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Nginx系列.html">10.4. Nginx系列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html">10.7. Keepalived实现MySQL双主高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">10.9. Keepalived实现基于HTTPD的高可用系统</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#keepalived">10.9.1. Keepalived高可用集群环境部署说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">10.9.2. 环境准备</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keepalived-master">10.9.3. keepalived_master</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keepalived-backup">10.9.4. keepalived_backup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vrrp-script">10.9.5. 通过vrrp_script实现对集群资源的监控</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keepalivedmasterbackup">10.9.6. Keepalived集群中Master和Backup角色选举策略</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html">10.10. 搭建HAProxy+Keepalived高可用负载均衡系统</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">10. 快速阅读Linux入门-阿铭Linux</a> &raquo;</li>
+        
+      <li>10.9. Keepalived实现基于HTTPD的高可用系统</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/10.快速阅读Linux入门-阿铭Linux/09.Keepalived实现基于HTTPD的高可用系统.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#keepalivedhttpd" id="id5">Keepalived实现基于HTTPD的高可用系统</a><ul>
+<li><a class="reference internal" href="#keepalived" id="id6">Keepalived高可用集群环境部署说明</a></li>
+<li><a class="reference internal" href="#id1" id="id7">环境准备</a></li>
+<li><a class="reference internal" href="#keepalived-master" id="id8">keepalived_master</a></li>
+<li><a class="reference internal" href="#keepalived-backup" id="id9">keepalived_backup</a><ul>
+<li><a class="reference internal" href="#httpd" id="id10">在主机上停止httpd</a></li>
+<li><a class="reference internal" href="#id2" id="id11">备机切换成主机</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#vrrp-script" id="id12">通过vrrp_script实现对集群资源的监控</a><ul>
+<li><a class="reference internal" href="#killall" id="id13">1.通过killall命令监控服务运行状态</a></li>
+<li><a class="reference internal" href="#id3" id="id14">2.检测端口运行状态</a></li>
+<li><a class="reference internal" href="#shell" id="id15">3.通过shell语句进行状态监控</a></li>
+<li><a class="reference internal" href="#id4" id="id16">4.通过脚本进行服务状态监控</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#keepalivedmasterbackup" id="id17">Keepalived集群中Master和Backup角色选举策略</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="keepalivedhttpd">
+<h1><a class="toc-backref" href="#id5">10.9. Keepalived实现基于HTTPD的高可用系统</a><a class="headerlink" href="#keepalivedhttpd" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="keepalived">
+<h2><a class="toc-backref" href="#id6">10.9.1. Keepalived高可用集群环境部署说明</a><a class="headerlink" href="#keepalived" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="19%" />
+<col width="23%" />
+<col width="13%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">主机名</th>
+<th class="head">主机IP地址</th>
+<th class="head">集群角色</th>
+<th class="head">集群服务</th>
+<th class="head">MySQL VIP</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>keepalived-master</td>
+<td>192.168.0.128</td>
+<td>Master(主节点)</td>
+<td>HTTPD</td>
+<td>192.168.0.130</td>
+</tr>
+<tr class="row-odd"><td>keepalived-backup</td>
+<td>192.168.0.129</td>
+<td>Backup(备用节点)</td>
+<td>HTTP</td>
+<td>192.168.0.130</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id7">10.9.2. 环境准备</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">keepalived-master</span></code>和<code class="docutils literal"><span class="pre">keepalived-backup</span></code>上安装httpd服务。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">httpd</span>
+<span class="n">echo</span> <span class="s2">&quot;&lt;h1&gt; hello hujianli web1&lt;h1&gt;&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span>
+
+<span class="n">systemctl</span> <span class="n">disable</span> <span class="n">firewalld</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">stop</span> <span class="n">firewalld</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>检查http安装后的状态。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span> <span class="n">hello</span> <span class="n">hujianli</span> <span class="n">web1</span><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span> <span class="n">hello</span> <span class="n">hujianli</span> <span class="n">web1</span><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keepalived-master">
+<h2><a class="toc-backref" href="#id8">10.9.3. keepalived_master</a><a class="headerlink" href="#keepalived-master" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">/etc/keepalived/keepalived.conf</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost
+    }
+    notification_email_from keepalived@localhost
+    smtp_server 127.0.0.1
+    smtp_connect_timeout 30
+    script_user root
+    enable_script_security
+    route_id httpd_keep
+}
+vrrp_script chk_httpd
+{
+    script  &quot;/usr/bin/killall -0 httpd&quot;
+    interval 5
+}
+
+vrrp_instance VI_1 {
+    state MASTER
+    interface ens32
+    virtual_router_id 151
+    priority 100
+    nopreempt
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+    notify_master &quot;/etc/keepalived/master.sh &quot;
+    notify_backup &quot;/etc/keepalived/backup.sh&quot;
+    notify_fault &quot;/etc/keepalived/fault.sh&quot;
+    track_script {
+        chk_httpd
+    }
+    virtual_ipaddress {
+        192.168.0.130/24
+    }
+
+}
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">/etc/keepalived/master.sh</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+LOGFILE=/var/log/keepalived-mysql-state.log
+echo  &quot;[Master]&quot;  &gt;&gt;  $LOGFILE
+date  &gt;&gt;  $LOGFILE
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">/etc/keepalived/backup.sh</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+LOGFILE=/var/log/keepalived-mysql-state.log
+echo  &quot;[Backup]&quot;  &gt;&gt;  $LOGFILE
+date  &gt;&gt;  $LOGFILE
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">/etc/keepalived/fault.sh</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+LOGFILE=/var/log/keepalived-mysql-state.log
+echo  &quot;[FAULT]&quot;  &gt;&gt;  $LOGFILE
+date  &gt;&gt;  $LOGFILE
+</pre></div>
+</div>
+</div>
+<div class="section" id="keepalived-backup">
+<h2><a class="toc-backref" href="#id9">10.9.4. keepalived_backup</a><a class="headerlink" href="#keepalived-backup" title="Permalink to this headline">¶</a></h2>
+<p>keepalived-backup节点上的keepalived.conf配置文件内容与keepalived-master节点上的基本相同，
+需要修改的地方有两个。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>将“state MASTER”更改为“state BACKUP”。
+将priority 100更改为一个较小的值，这里改为“priority 80”。
+</pre></div>
+</div>
+<p>将配置好的
+<code class="docutils literal"><span class="pre">keepalived.conf</span></code>文件及<code class="docutils literal"><span class="pre">master.sh</span></code>、<code class="docutils literal"><span class="pre">backup.sh</span></code>、<code class="docutils literal"><span class="pre">fault.sh</span></code>三个文件一起复制到keepalived-backup
+备用节点对应的路径下，</p>
+<p>Keepalived启动过程分析</p>
+<p>主机</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">ens32</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">c</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">6</span><span class="n">e</span><span class="p">:</span><span class="mi">3</span><span class="n">d</span><span class="p">:</span><span class="n">f6</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.128</span><span class="o">/</span><span class="mi">24</span> <span class="n">brd</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">noprefixroute</span> <span class="n">dynamic</span> <span class="n">ens32</span>
+       <span class="n">valid_lft</span> <span class="mi">84056</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">84056</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.130</span><span class="o">/</span><span class="mi">24</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">ens32</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+    <span class="n">inet6</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">14</span><span class="n">d7</span><span class="p">:</span><span class="mi">407</span><span class="n">e</span><span class="p">:</span><span class="n">aeb6</span><span class="p">:</span><span class="mi">6</span><span class="n">a42</span><span class="o">/</span><span class="mi">64</span> <span class="n">scope</span> <span class="n">link</span> <span class="n">tentative</span> <span class="n">noprefixroute</span> <span class="n">dadfailed</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+    <span class="n">inet6</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">44</span><span class="n">c2</span><span class="p">:</span><span class="mi">32</span><span class="n">ba</span><span class="p">:</span><span class="n">d50e</span><span class="p">:</span><span class="mi">44</span><span class="n">c3</span><span class="o">/</span><span class="mi">64</span> <span class="n">scope</span> <span class="n">link</span> <span class="n">noprefixroute</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<span class="p">[</span><span class="n">Master</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">13</span><span class="p">:</span><span class="mi">42</span><span class="p">:</span><span class="mi">07</span> <span class="n">CST</span>
+</pre></div>
+</div>
+<p>备机</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<span class="p">[</span><span class="n">Backup</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">13</span><span class="p">:</span><span class="mi">42</span><span class="p">:</span><span class="mi">11</span> <span class="n">CST</span>
+</pre></div>
+</div>
+<div class="section" id="httpd">
+<h3><a class="toc-backref" href="#id10">在主机上停止httpd</a><a class="headerlink" href="#httpd" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<span class="p">[</span><span class="n">Master</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">03</span> <span class="n">CST</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># systemctl stop httpd</span>
+
+
+<span class="c1">#### 主机进入fault的状态</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<span class="p">[</span><span class="n">Master</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">03</span> <span class="n">CST</span>
+<span class="p">[</span><span class="n">Fault</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">34</span> <span class="n">CST</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id11">备机切换成主机</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">ens32</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">c</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="n">f6</span><span class="p">:</span><span class="mi">8</span><span class="n">a</span><span class="p">:</span><span class="mi">13</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.129</span><span class="o">/</span><span class="mi">24</span> <span class="n">brd</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">noprefixroute</span> <span class="n">dynamic</span> <span class="n">ens32</span>
+       <span class="n">valid_lft</span> <span class="mi">81044</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">81044</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.130</span><span class="o">/</span><span class="mi">24</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">ens32</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+    <span class="n">inet6</span> <span class="n">fe80</span><span class="p">::</span><span class="mi">14</span><span class="n">d7</span><span class="p">:</span><span class="mi">407</span><span class="n">e</span><span class="p">:</span><span class="n">aeb6</span><span class="p">:</span><span class="mi">6</span><span class="n">a42</span><span class="o">/</span><span class="mi">64</span> <span class="n">scope</span> <span class="n">link</span> <span class="n">noprefixroute</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<span class="p">[</span><span class="n">Backup</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">08</span> <span class="n">CST</span>
+<span class="p">[</span><span class="n">Master</span><span class="p">]</span>
+<span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">35</span> <span class="n">CST</span>
+</pre></div>
+</div>
+<p>主机上启动httpd服务后，状态立马变成backup状态</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># systemctl start httpd</span>
+</pre></div>
+</div>
+<p>日志信息</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">54</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Starting</span> <span class="n">The</span> <span class="n">Apache</span> <span class="n">HTTP</span> <span class="n">Server</span><span class="o">...</span>
+<span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">58</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">11022</span><span class="p">]:</span> <span class="n">VRRP_Script</span><span class="p">(</span><span class="n">chk_httpd</span><span class="p">)</span> <span class="n">succeeded</span>
+<span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">59</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">11022</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">BACKUP</span> <span class="n">STATE</span>
+<span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">01</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">httpd</span><span class="p">:</span> <span class="n">AH00558</span><span class="p">:</span> <span class="n">httpd</span><span class="p">:</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">reliably</span> <span class="n">determine</span> <span class="n">the</span> <span class="n">server</span><span class="s1">&#39;s fully qualified domain name, using fe80::44c2:32ba:d50e:44c3.</span>
+<span class="n">Set</span> <span class="n">the</span> <span class="s1">&#39;ServerName&#39;</span> <span class="n">directive</span> <span class="n">globally</span> <span class="n">to</span> <span class="n">suppress</span> <span class="n">this</span> <span class="n">messageMar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">03</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Started</span> <span class="n">The</span> <span class="n">Apache</span> <span class="n">HTTP</span> <span class="n">Server</span><span class="o">.</span>
+<span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">40</span><span class="p">:</span><span class="mi">01</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Started</span> <span class="n">Session</span> <span class="mi">23</span> <span class="n">of</span> <span class="n">user</span> <span class="n">root</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>Keepalived配置中的一个通知机制，也是Keepalived包含的4种状态。下面介绍每个选项的含义。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>notify_master：指定当Keepalived进入Master状态时要执行的脚本，这个脚本可以是一个状态报警脚本，也可以是一个服务管理脚本。Keepalived允许脚本传入参数，因此灵活性很强。
+
+notify_backup：指定当Keepalived进入Backup状态时要执行的脚本，同理，这个脚本可以是一个状态报警脚本，也可以是一个服务管理脚本。
+
+notify_fault：指定当Keepalived进入Fault状态时要执行的脚本，脚本功能与前两个类似。
+
+notify_stop：指定当Keepalived程序终止时需要执行的脚本。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="vrrp-script">
+<h2><a class="toc-backref" href="#id12">10.9.5. 通过vrrp_script实现对集群资源的监控</a><a class="headerlink" href="#vrrp-script" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="killall">
+<h3><a class="toc-backref" href="#id13">1.通过killall命令监控服务运行状态</a><a class="headerlink" href="#killall" title="Permalink to this headline">¶</a></h3>
+<p>这里要用到的信号为0，代号为0的信号并不表示要关闭某个程序，而表示对程序（进程）的运行状态进行监控，
+如果发现进程关闭或其他异常，将返回状态码1，反之，如果发现进程运行正常，将返回状态码0。vrrp_script模块正是利用了killall命令的这个特性，变相地实现了对服务运行状态的监控。下面看一个实例。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">check_mysqld</span> <span class="p">{</span>
+      <span class="n">script</span>  <span class="s2">&quot;killall  -0  mysqld&quot;</span>
+      <span class="n">interval</span>  <span class="mi">2</span>
+      <span class="p">}</span>
+  <span class="n">track_script</span> <span class="p">{</span>
+      <span class="n">check_mysqld</span>
+      <span class="p">}</span>
+</pre></div>
+</div>
+<p>rrp_script模块其实并不关注监控脚本或监控命令是如何实现的，它仅仅通过监控脚本的返回状态码来识别集群服务是否正常，如果返回的状态码为
+0，那么就认为服务正常，如果返回的状态码为 1，则认为服务故障。</p>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id14">2.检测端口运行状态</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>检测端口的运行状态，也是最常见的服务监控方式。在Keepalived的vrrp_script模块中可以通过如下方式对本机的端口进行检测。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>    vrrp_script check_httpd {
+        script &quot;&lt;/dev/tcp/127.0.0.1/80&quot;
+        interval  2
+
+    vrrp_script check_mysqld {
+        script  &quot;killall  -0  mysqld&quot;
+        interval  2
+        }
+    track_script {
+        check_mysqld
+        }
+在这个例子中，定义了一个服务监控模块check_mysqld，其采用的监控方式是通过“killall-0 mysqld”，其中“interval”选项用于设置检查的时间间隔，即2秒钟执行一次检测。
+
+在mysql服务运行正常的情况下，通过killall命令检测的结果如下。
+
+
+    [root@keepalived-master ～]# killall -0 mysqld
+    [root@keepalived-master ～]# echo $?
+    0
+这里通过“echo $?”方式显示了上个命令返回的状态码，mysql服务运行正常，因此返回的状态码为0，此时check_mysqld模块将返回服务检测正常的提示。接着将mysql服务关闭，再次执行检测，结果如下。
+
+
+    [root@keepalived-master ～]#   killall -0 mysqld
+    mysqld:  no  process  killed
+    [root@keepalived-master ～]# echo $?
+    1
+由于mysql服务被关闭，因此返回的状态码为1，此时check_mysqld模块将返回服务检测失败的提示。然后根据vrrp_script模块中设定的“weight”值重新设置Keepalived主、备节点的优先级，进而引发主、备节点发生切换。
+
+从这个过程可以看到，vrrp_script模块其实并不关注监控脚本或监控命令是如何实现的，它仅仅通过监控脚本的返回状态码来识别集群服务是否正常，如果返回的状态码为 0，那么就认为服务正常，如果返回的状态码为 1，则认为服务故障。明白了这个原理之后，在进行自定义监控脚本的时候，只需按照这个原则来编写即可。
+
+2.检测端口运行状态
+
+检测端口的运行状态，也是最常见的服务监控方式。在Keepalived的vrrp_script模块中可以通过如下方式对本机的端口进行检测。
+
+
+    vrrp_script check_httpd {
+        script &quot;&lt;/dev/tcp/127.0.0.1/80&quot;
+        interval  2
+        fall    2
+        rise    1
+        }
+    track_script {
+        check_httpd
+        }
+</pre></div>
+</div>
+<p>其中，“fall”选项表示检测到失败的最大次数。也就是说，如果请求失败两次，就认为此节点资源发生故障，将进行切换操作；“rise”表示如果请求一次成功，就认为此节点资源恢复正常。</p>
+</div>
+<div class="section" id="shell">
+<h3><a class="toc-backref" href="#id15">3.通过shell语句进行状态监控</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
+<p>在Keepalived的vrrp_script模块中甚至可以直接引用shell语句进行状态监控。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_httpd</span> <span class="p">{</span>
+    <span class="n">script</span> <span class="s2">&quot;if [ -f /var/run/httpd/httpd.pid ]; then exit 0; else exit 1; fi&quot;</span>
+    <span class="n">interval</span>  <span class="mi">2</span>
+    <span class="n">fall</span>    <span class="mi">1</span>
+    <span class="n">rise</span>    <span class="mi">1</span>
+    <span class="p">}</span>
+<span class="n">track_script</span> <span class="p">{</span>
+    <span class="n">chk_httpd</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id16">4.通过脚本进行服务状态监控</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>这是最常见的监控方式，其监控过程类似于Nagios的执行方式。不同的是，这里只有0、1两种返回状态。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_mysqld</span> <span class="p">{</span>
+    <span class="n">script</span> <span class="s2">&quot;/etc/keepalived/check_mysqld.sh&quot;</span>
+    <span class="n">interval</span>  <span class="mi">2</span>
+    <span class="p">}</span>
+    <span class="n">track_script</span> <span class="p">{</span>
+    <span class="n">chk_mysqld</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>check_mysqld.sh的内容如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+MYSQL=/usr/bin/mysql
+MYSQL_HOST=localhost
+MYSQL_USER=root
+MYSQL_PASSWORD=&#39;xxxxxx&#39;
+$MYSQL -h $MYSQL_HOST -u $MYSQL_USER -p$MYSQL_PASSWORD -e &quot;show status;&quot; &gt; /dev/null 2&gt;&amp;1
+if  [  $?  =  0  ]  ;then
+    MYSQL_STATUS=0
+else
+    MYSQL_STATUS=1
+fi
+    exit $MYSQL_STATUS
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="keepalivedmasterbackup">
+<h2><a class="toc-backref" href="#id17">10.9.6. Keepalived集群中Master和Backup角色选举策略</a><a class="headerlink" href="#keepalivedmasterbackup" title="Permalink to this headline">¶</a></h2>
+<p>在Keepalived集群中，其实并没有严格意义上的主、备节点，虽然可以在Keepalived配置文件中设置“state”选项为“MASTER”状态，但是这并不意味着此节点一直就是Master角色。控制节点角色的选项是Keepalived配置文件中的“priority”值，但并它并不控制所有节点的角色。另一个能改变节点角色的选项是在
+vrrp_script 模块中设置的“weight”值。</p>
+<p>对于“weight”值的设置，有一个简单的标准，即“weight”值的绝对值要大于
+Master和Backup节点的“priority”值之差。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html" class="btn btn-neutral float-right" title="10.10. 搭建HAProxy+Keepalived高可用负载均衡系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="08.虚拟化与集群应用篇.html" class="btn btn-neutral float-left" title="10.8. 虚拟化与集群应用篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

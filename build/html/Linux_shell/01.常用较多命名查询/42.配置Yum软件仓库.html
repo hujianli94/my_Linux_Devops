@@ -1,0 +1,684 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.36. 配置Yum软件仓库 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="1.37. Vim编辑器学习" href="43.Vim编辑器学习.html" />
+    <link rel="prev" title="1.35. 使用tar命令进行本地备份scripts" href="41.使用tar命令进行本地备份scripts.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.正则表达式.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget和curl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.运算符.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc命令.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su命令与sudo服务.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.34. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.36. 配置Yum软件仓库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#centos7yum">1.36.1. Centos7使用互联网yum</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.36.2. Yum的特点与基本用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#isoyum">1.36.3. 基于ISO镜像构建本地Yum软件仓库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#centos7httpyum">1.36.4. Centos7基于HTTP构建局域网yum源</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.36.5. YUM源软件包扩展</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.36.6. 同步外网yum源</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.36.7. 几个不错的yum源</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">1. 常用较多命名查询</a> &raquo;</li>
+        
+      <li>1.36. 配置Yum软件仓库</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/42.配置Yum软件仓库.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#yum" id="id6">配置Yum软件仓库</a><ul>
+<li><a class="reference internal" href="#centos7yum" id="id7">Centos7使用互联网yum</a></li>
+<li><a class="reference internal" href="#id1" id="id8">Yum的特点与基本用法</a></li>
+<li><a class="reference internal" href="#isoyum" id="id9">基于ISO镜像构建本地Yum软件仓库</a><ul>
+<li><a class="reference internal" href="#id2" id="id10">配置本地yum步骤</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#centos7httpyum" id="id11">Centos7基于HTTP构建局域网yum源</a></li>
+<li><a class="reference internal" href="#id3" id="id12">YUM源软件包扩展</a></li>
+<li><a class="reference internal" href="#id4" id="id13">同步外网yum源</a></li>
+<li><a class="reference internal" href="#id5" id="id14">几个不错的yum源</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="yum">
+<h1><a class="toc-backref" href="#id6">1.36. 配置Yum软件仓库</a><a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="centos7yum">
+<h2><a class="toc-backref" href="#id7">1.36.1. Centos7使用互联网yum</a><a class="headerlink" href="#centos7yum" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#更换阿里源国内源</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="p">{,</span><span class="o">.</span><span class="n">bak</span><span class="p">}</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+
+<span class="c1">#在国内安装包会很慢，可以改为aliyun的epel源,先备份epel本身的源</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>  <span class="c1">#可选</span>
+<span class="c1">#生成缓存</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span> <span class="o">&amp;&amp;</span> <span class="n">yum</span> <span class="n">makecache</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id8">1.36.2. Yum的特点与基本用法</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum的基本用法</span>
+
+<span class="n">yum</span> <span class="nb">list</span>                                    <span class="c1"># 所有软件列表</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">包名</span>                            <span class="c1"># 安装包和依赖包</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">update</span>                               <span class="c1"># 升级所有包版本,依赖关系，系统版本内核都升级</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">update</span> <span class="n">软件包名</span>                      <span class="c1"># 升级指定的软件包</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">ss</span> <span class="o">-</span><span class="n">tnl</span><span class="o">|</span> <span class="n">grep</span> <span class="mi">3306</span>                   <span class="c1"># 不改变软件设置更新软件，系统版本升级，内核不改变</span>
+<span class="n">yum</span> <span class="n">search</span> <span class="n">mail</span>                              <span class="c1"># yum搜索相关包</span>
+<span class="n">yum</span> <span class="n">grouplist</span>                                <span class="c1"># 软件包组</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">groupinstall</span> <span class="s2">&quot;Virtualization&quot;</span>         <span class="c1"># 安装软件包组</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">ql</span> <span class="n">gstreamer</span>                            <span class="c1"># 不安装软件查看包含文件</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>                                <span class="c1"># 清除var下缓存</span>
+
+<span class="n">yum</span> <span class="n">repolist</span> <span class="nb">all</span>                <span class="c1">#列出所有仓库</span>
+<span class="n">yum</span> <span class="nb">list</span> <span class="nb">all</span>                    <span class="c1">#列出仓库中所有软件包</span>
+<span class="n">yum</span> <span class="n">info</span>                        <span class="c1">#查看软件包信息</span>
+<span class="n">yum</span> <span class="n">install</span>                     <span class="c1">#安装软件包</span>
+<span class="n">yum</span> <span class="n">reinstall</span>                   <span class="c1">#重新安装软件包</span>
+<span class="n">yum</span> <span class="n">update</span>                      <span class="c1">#升级软件包</span>
+<span class="n">yum</span> <span class="n">remove</span>                      <span class="c1">#移除软件包</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>                   <span class="c1">#清除所有仓库缓存</span>
+<span class="n">yum</span> <span class="n">check</span><span class="o">-</span><span class="n">update</span>                <span class="c1">#检查可更新的软件包</span>
+<span class="n">yum</span> <span class="n">grouplist</span>                   <span class="c1">#查看系统中已经安装的软件包组</span>
+<span class="n">yum</span> <span class="n">groupinstall</span>                <span class="c1">#安装指定的软件包组</span>
+<span class="n">yum</span> <span class="n">groupremove</span>                 <span class="c1">#移除指定的软件包组</span>
+<span class="n">yum</span> <span class="n">groupinfo</span>                   <span class="c1">#查询指定的软件包组信息</span>
+<span class="n">yum</span> <span class="n">provides</span> <span class="n">screen</span>             <span class="c1">#根据命令查询yum包中的名称</span>
+
+
+<span class="n">yum</span> <span class="n">makecache</span>   <span class="c1">#重新做缓存</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span> [root@localhost ～]#yum list extras
+
+注：也就是通过其他网站下载安装的rpm包。
+要列出资源库中所有可以安装或更新的rpm包，命令如下。
+    [root@localhost ～]#yum list
+
+要列出资源库中特定的可以安装或更新以及已经安装的rpm包，命令如下。
+    [root@localhost ～]#yum list sendmail
+    [root@localhost ～]#yum list gcc*
+
+注意
+可以在rpm包名中使用匹配符，如上面的例子列出所有以gcc开头的rpm包。
+要搜索匹配特定字符的rpm包的详细信息，命令如下。
+    [root@localhost ～]#yum search wget
+
+要搜索包含特定文件名的rpm包，命令如下。
+    [root@localhost ～]#yum provides realplay
+
+（4）通过yum操作暂存信息（/var/cache/yum）要清除暂存的rpm包文件，命令如下。
+    [root@localhost ～]#yum clean packages
+
+要清除暂存的rpm头文件，命令如下。
+    [root@localhost ～]#yum clean headers
+
+要清除暂存中旧的rpm头文件，命令如下。
+    [root@localhost ～]#yum clean oldheaders
+
+要清除暂存中旧的rpm头文件和包文件，命令如下。
+    [root@localhost ～]#yum clean 或
+    [root@localhost ～]#yum clean all
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#下载对应版本 repo 文件, 放入 /etc/yum.repos.d/ (操作前请做好相应备份)</span>
+<span class="n">cp</span> <span class="o">-</span><span class="n">rf</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="p">{,</span><span class="n">_bak</span><span class="p">}</span>
+
+
+<span class="c1"># 163的Centos5~6~7 yum源下载地址</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span><span class="o">/.</span><span class="n">help</span><span class="o">/</span><span class="n">centos</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="isoyum">
+<h2><a class="toc-backref" href="#id9">1.36.3. 基于ISO镜像构建本地Yum软件仓库</a><a class="headerlink" href="#isoyum" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id10">配置本地yum步骤</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@pxe-server ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sr0              11:0    1  4.3G  0 rom
+
+创建挂载点后进行挂载操作，并设置成开机自动挂载
+
+[root@pxe-server ~]# mount /dev/sr0 /mnt/
+mount: /dev/sr0 写保护，将以只读方式挂载
+
+[root@linuxprobe yum.repos.d]# vim /etc/fstab
+/dev/cdrom /mnt/ iso9660 defaults 0 0
+
+[root@pxe-server ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   60G  0 disk
+sr0              11:0    1  4.3G  0 rom  /mnt
+
+[root@pxe-server ~]# cp -rf /etc/yum.repos.d/CentOS-Base.repo{,._BAK}
+
+[root@pxe-server yum.repos.d]# cat &gt; /etc/yum.repos.d/CentOS-Base.repo &lt;&lt;EOF
+[yum]
+name=Centos7
+baseurl=file:///mnt
+enabled=1
+gpgcheck=1
+gpgkey=file:///mnt/RPM-GPG-KEY-CentOS-7
+EOF
+
+[root@pxe-server yum.repos.d]# yum clean all        #清空YUM cache
+
+
+[root@pxe-server yum.repos.d]# yum install screen -y
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="centos7httpyum">
+<h2><a class="toc-backref" href="#id11">1.36.4. Centos7基于HTTP构建局域网yum源</a><a class="headerlink" href="#centos7httpyum" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>由于ISO镜像中的软件包太少、太老，所以我的实验使用的yum源是阿里云镜像源；
+但是阿里云镜像源必须要连接外网才可以使用，做实验时倒无所谓；
+但是在公司部署大量服务器时会占用出口带宽。另外有些特殊的镜像源架设在国外，使用起来很不稳定。
+所以本地yum源仓库时必要的
+</pre></div>
+</div>
+<p>下面是我在部署公司本地yum仓库时的具体部署步骤（以epel-7源为例）：</p>
+<p>1、部署环境：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>系统：Centos7 x86_64
+应用服务：httpd、createrepo、reposync
+镜像源：https://mirrors.aliyun.com/repo/epel-7.repo
+</pre></div>
+</div>
+<p>2、现在阿里云镜像源repo文件到本地：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span> <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+</pre></div>
+</div>
+<p>3、安装httpd服务，用于提供存放yum源：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ~] yum install httpd -y
+使用默认配置即可，如果有特殊需求可以修改配置文件/etc/httpd/conf/httpd.conf
+http默认家目录/var/www/html
+</pre></div>
+</div>
+<p>4、安装yum-utils提供reporsync服务：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>5、选择指定仓库标识作为本地yum源：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">执行yum</span> <span class="n">repolist命令查看yum仓库标识</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># yum repolist</span>
+<span class="n">Loaded</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">fastestmirror</span>
+<span class="n">Loading</span> <span class="n">mirror</span> <span class="n">speeds</span> <span class="kn">from</span> <span class="nn">cached</span> <span class="n">hostfile</span>
+ <span class="o">*</span> <span class="n">base</span><span class="p">:</span> <span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span>
+ <span class="o">*</span> <span class="n">epel</span><span class="p">:</span> <span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span>
+ <span class="o">*</span> <span class="n">extras</span><span class="p">:</span> <span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span>
+ <span class="o">*</span> <span class="n">updates</span><span class="p">:</span> <span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span>
+<span class="n">repo</span> <span class="nb">id</span>                                                                                               <span class="n">repo</span> <span class="n">name</span>                                                                                                                            <span class="n">status</span>
+<span class="n">base</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span>                                                                                         <span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span> <span class="o">-</span> <span class="n">Base</span>                                                                                                                       <span class="mi">9</span><span class="p">,</span><span class="mi">363</span>
+<span class="n">epel</span><span class="o">/</span><span class="n">x86_64</span>                                                                                           <span class="n">Extra</span> <span class="n">Packages</span> <span class="k">for</span> <span class="n">Enterprise</span> <span class="n">Linux</span> <span class="mi">7</span> <span class="o">-</span> <span class="n">x86_64</span>                                                                                       <span class="mi">11</span><span class="p">,</span><span class="mi">681</span>
+<span class="n">extras</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span>                                                                                       <span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span> <span class="o">-</span> <span class="n">Extras</span>                                                                                                                       <span class="mi">380</span>
+<span class="n">updates</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span>                                                                                      <span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span> <span class="o">-</span> <span class="n">Updates</span>                                                                                                                    <span class="mi">1</span><span class="p">,</span><span class="mi">838</span>
+<span class="n">repolist</span><span class="p">:</span> <span class="mi">23</span><span class="p">,</span><span class="mi">262</span>
+</pre></div>
+</div>
+<p>我使用epel作为本地yum源，用/var/www/html作为yum仓库根目录</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ~]# reposync -r epel -p /var/www/html/
+　　命令执行完毕后，会将阿里云中的epel源同步到本地/var/www/html中；在/var/www/html中自动创建epel目录用于存放rpm包；第一次同步是时间可能较长，大概1W多个rpm包。
+
+
+                                                                                                                                                                        |  19 kB  00:00:00
+(11680/11681): zvbi-fonts-0.2.35-1.el7.noarch.rpm                                                                                                                                                                         | 116 kB  00:00:00
+(11681/11681): xonotic-data-0.8.2-1.el7.noarch.rpm                                                                                                                                                                        | 873 MB  00:14:38
+[root@localhost ~]#
+[root@localhost ~]#
+[root@localhost ~]# ll /var/www/html/
+total 4
+drwxr-xr-x. 31 root root 4096 May 27 23:50 epel
+</pre></div>
+</div>
+<p>6、createrepo 命令创对/var/www/html/epel下的 rpm 包 创建为本地的 YUM
+仓库，目的是为生成repodata目录并自动创建索引信息</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># createrepo -pdo /var/www/html/epel/ /var/www/html/epel/　　#第一个目录是repodata存放目录，第二个目录是需要生成索引信息yum源仓库目录</span>
+<span class="n">Spawning</span> <span class="n">worker</span> <span class="mi">0</span> <span class="k">with</span> <span class="mi">5841</span> <span class="n">pkgs</span>
+<span class="n">Spawning</span> <span class="n">worker</span> <span class="mi">1</span> <span class="k">with</span> <span class="mi">5840</span> <span class="n">pkgs</span>
+<span class="n">Workers</span> <span class="n">Finished</span>
+<span class="n">Saving</span> <span class="n">Primary</span> <span class="n">metadata</span>
+<span class="n">Saving</span> <span class="n">file</span> <span class="n">lists</span> <span class="n">metadata</span>
+<span class="n">Saving</span> <span class="n">other</span> <span class="n">metadata</span>
+<span class="n">Generating</span> <span class="n">sqlite</span> <span class="n">DBs</span>
+<span class="n">Sqlite</span> <span class="n">DBs</span> <span class="n">complete</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /var/www/html/epel/repodata/</span>
+<span class="n">total</span> <span class="mi">34824</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">2950038</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="mi">458</span><span class="n">c248cc2fc1f9be754a7fd20f576c4acd231e32a49dfe26ba441d9ef1e8196</span><span class="o">-</span><span class="n">other</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">bz2</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">9980489</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="mi">691</span><span class="n">ac5899b99b6a7d6de2c03f8706ab40a4104ffa95169837cd53860be9bd08c</span><span class="o">-</span><span class="n">filelists</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">bz2</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">9029887</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="mi">9</span><span class="n">efa5c655cbaa93cfe74fa88f1521a00cdd7575a1ee537b3285c2f739470cd78</span><span class="o">-</span><span class="n">filelists</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">6186568</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="n">b833e13dd3f617ae5c2f228991fcaecaf5b2602844da466fae2b6eef2578e64e</span><span class="o">-</span><span class="n">primary</span><span class="o">.</span><span class="n">sqlite</span><span class="o">.</span><span class="n">bz2</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">3369194</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="n">f5dc4532b7ee4bc249b397e441842f684dc9df3b6b37cfb709080802c4fe9fce</span><span class="o">-</span><span class="n">primary</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">2101964</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="n">f9f0522ce0356e3e95b0849e59ebfe35870c4359a8d1c6447b1d017a23ececbe</span><span class="o">-</span><span class="n">other</span><span class="o">.</span><span class="n">xml</span><span class="o">.</span><span class="n">gz</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">3012</span> <span class="n">May</span> <span class="mi">28</span> <span class="mi">02</span><span class="p">:</span><span class="mi">09</span> <span class="n">repomd</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>7、验证本地yum源是否能正常使用：</p>
+<p>　　登录其他内网其他服务器，要能与yum源服务器通信；编写repo文件：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo内容如下</span>
+
+<span class="p">[</span><span class="n">epel</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="n">local</span> <span class="n">epel</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">yum源服务器IP</span><span class="o">/</span><span class="n">epel</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>备份其他repo文件至/etc/yum.repos.d/repobak目录下，以防影响测试：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost yum.repos.d]# ll /etc/yum.repos.d/
+total 8
+-rw-r--r--. 1 root root   79 May 28 17:26 epel.repo
+drwxr-xr-x. 2 root root 4096 May 28 17:25 repobak
+　　执行yum clean all、yum makecache：
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="p">]</span><span class="c1"># yum clean all</span>
+<span class="n">Loaded</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">fastestmirror</span>
+<span class="n">Cleaning</span> <span class="n">repos</span><span class="p">:</span> <span class="n">epel</span>
+<span class="n">Cleaning</span> <span class="n">up</span> <span class="n">everything</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="p">]</span><span class="c1"># yum makecache</span>
+<span class="n">Loaded</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">fastestmirror</span>
+<span class="n">epel</span>                                                                                                                                                                                                                      <span class="o">|</span> <span class="mf">2.9</span> <span class="n">kB</span>  <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="mi">3</span><span class="p">):</span> <span class="n">epel</span><span class="o">/</span><span class="n">primary_db</span>                                                                                                                                                                                                    <span class="o">|</span> <span class="mf">5.9</span> <span class="n">MB</span>  <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="p">(</span><span class="mi">2</span><span class="o">/</span><span class="mi">3</span><span class="p">):</span> <span class="n">epel</span><span class="o">/</span><span class="n">filelists_db</span>                                                                                                                                                                                                  <span class="o">|</span> <span class="mf">9.5</span> <span class="n">MB</span>  <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="p">(</span><span class="mi">3</span><span class="o">/</span><span class="mi">3</span><span class="p">):</span> <span class="n">epel</span><span class="o">/</span><span class="n">other_db</span>                                                                                                                                                                                                      <span class="o">|</span> <span class="mf">2.8</span> <span class="n">MB</span>  <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+<span class="n">Determining</span> <span class="n">fastest</span> <span class="n">mirrors</span>
+<span class="n">Metadata</span> <span class="n">Cache</span> <span class="n">Created</span>
+<span class="c1">#上面信息表明本地epel源被正常缓存；表明配置成功。</span>
+</pre></div>
+</div>
+<p>7、为保证本地yum源能和阿里云镜像源同步，可以通过脚本定时任务实现：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>vim /root/yum-update.sh
+#!/bin/bash
+datetime=`date +&quot;%Y-%m-%d&quot;`
+exec &gt; /var/log/epel.log #同步日志输出
+reposync -d -r epel -p /var/www/html/  #同步镜像源
+if [ $? -eq 0 ];then
+    createrepo --update  /var/www/html/epel #每次添加新的rpm时,必须更新epel索引信息
+    echo &quot;SUCESS: $datetime epel update successful&quot;else
+    echo &quot;ERROR: $datetime epel update failed&quot;fi
+#定时任务：每周六凌晨三点同步yum源
+crontab -e
+0 3 * * 6 /bin/bash /root/yum-update.sh
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id12">1.36.5. YUM源软件包扩展</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>当要使用挂载移动硬盘时需要使用ntfs-3g软件包支持，而光盘镜像中没有该软件包，此时需要往YUM源端添加ntfs-3g软件包
+添加方式如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>（1）切换到/var/www/html/centos目录，官网下载ntfs-3g软件包
+cd /var/www/html/centos/
+wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/n/ntfs-3g-2017.3.23-11.el7.x86_64.rpm
+wget https://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/n/ntfs-3g-devel-2017.3.23-11.el7.x86_64.rpm
+
+（2）createrepo命令更新软件包，如下新增其他软件包,把软件包下载到本地，然后通过createrepo更新即可。
+createrepo -- update centos/
+
+（3）客户端YUM进行验证，安装ntfs-3g软件包。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id13">1.36.6. 同步外网yum源</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>把外网yum源中所有软件包同步到本地，完善本地yum源的软件包数量以及完整性。</p>
+<p>reposync可以同步几乎所有的YUM源，下面以reporsync为案例，同步外网YUM源软件至本地。步骤如下：</p>
+<p>①：下载CentOS源文件到/etc/yum.repos.d/，安装reposync命令工具</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mv</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="o">.</span><span class="n">backup</span>
+<span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span><span class="o">/.</span><span class="n">help</span><span class="o">/</span><span class="n">CentOS7</span><span class="o">-</span><span class="n">Base</span><span class="o">-</span><span class="mf">163.</span><span class="n">repo</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span> <span class="n">createrepo</span>
+<span class="n">yum</span> <span class="n">repolist</span>
+</pre></div>
+</div>
+<p>先安装局域网yum (服务器端 192.168.20.200)</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mkdir -p /var/www/html/centos
+mount /dev/sr0 /mnt/
+cp -rf /mnt/Packages/* /var/www/html/centos
+
+yum -y install createrepo*
+cd /var/www/html/
+createrepo centos/
+yum install httpd-devel -y
+useradd apache -g apache
+systemctl restart httpd.service
+setenforce 0
+systemctl stop firewalld.service
+
+[root@pxe-server html]# ps -ef| grep httpd
+root       8499      1  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache     8500   8499  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache     8501   8499  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache     8502   8499  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache     8503   8499  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+apache     8504   8499  0 10:59 ?        00:00:00 /usr/sbin/httpd -DFOREGROUND
+root       8545   7306  0 11:01 pts/0    00:00:00 grep --color=auto httpd
+</pre></div>
+</div>
+<p>yum客户端配置：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">rules</span><span class="o">.</span><span class="n">d</span><span class="p">]</span><span class="c1"># cat &gt; /etc/yum.repos.d/CentOS-Base.repo &lt;&lt;EOF</span>
+<span class="p">[</span><span class="n">base</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="s2">&quot;CentOS7 HTTP YUM&quot;</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">20.200</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">[</span><span class="n">updates</span><span class="p">]</span>
+<span class="n">name</span><span class="o">=</span><span class="s2">&quot;CentOS7 HTTP YUM&quot;</span>
+<span class="n">baseurl</span><span class="o">=</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">20.200</span><span class="o">/</span><span class="n">centos</span>
+<span class="n">gpgcheck</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">enabled</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">EOF</span>
+
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>           <span class="c1"># 清空YUM cache</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">ntpd</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">nginx</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>②通过reposync 命令工具获取外网YUM 源所有软件包， -r 指定repolist id ，
+默认不 加-r 表示获取外网所有YUM 软件包， -P 参数表示指定下载软件的路径。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">reposync</span> <span class="o">-</span><span class="n">r</span> <span class="n">base</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span>
+<span class="n">reposync</span> <span class="o">-</span><span class="n">r</span> <span class="n">updates</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>③
+通过reposync工具下载完所有的软件包之后，需要执行createrepo更新本地YUM仓库。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">createrepo</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">centos</span>
+</pre></div>
+</div>
+<p>至此本地局域网YUM就同步完成互联网的yum源信息了。后续的新包可以直接安装使用了。</p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id14">1.36.7. 几个不错的yum源</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>CentOS 自带的官方
+yum源中由于去除了很多有版权争议的软件，因此可使用的软件种类并不丰富，
+而且软件版本都普遍较低，对于软件bug修复、更新也很慢，当需要使用最新稳定版本的软件时，
+可能需要手动进行软件更新，操作比较麻烦。下面介绍几个不错的yum源，以供软件升级和漏洞修复使用。</p>
+<p>EPEL（Extra Pockages for Enterprise Linux，企业版Linux附加软件包），
+是一个由特别兴趣小组创建、维护并管理，针对红帽企业版Linux（RHEL）及其衍生发行版
+（例如CentOS、Scientific Linux）的一个高质量附加软件包项目。
+其官方网址为：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>http://fedoraproject.org/wiki/EPEL/zh-cn，
+EPEL的软件包不会与企业版Linux官方源中的软件包发生冲突，或者互相替换文件。因此可以放心使用。
+</pre></div>
+</div>
+<p>EPEL包含一个叫做“epel-release”的包，这个包包含了EPEL源的gpg密钥和软件源信息。
+可以通过yum命令将这个软件包安装到企业级Linux发行版上。这样就可以使用最全面、最稳定的Linux软件包了。
+除了epel-release源之外，还有一个叫做“epel-testing”的源，这个源包含最新的测试软件包，
+其版本很新但是安装有风险，可以根据情况自行斟酌使用。</p>
+<p>相关的EPEL可以从EPEL官方网站下载到，针对CentOS系统，有EL5、EL6、EL7三个版本，
+分别针对CentOS 5.x、CentOS 6.x、CentOS 7.x三个系列版本。</p>
+<p>读者可根据系统环境进行下载使用。</p>
+<p>RPMForge是一个第三方软件源仓库，也是CentOS官方社区推荐的第三方yum源，
+它为CentOS系统提供了超过10000个软件包，被CentOS社区认为是最安全也是最稳定的一个软件仓库。
+但是由于这个安装源不是CentOS本身的组成部分，因此要使用RPMForge，需要手动下载并安装。</p>
+<p>RPMForge的官方网站是</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">repoforge</span><span class="o">.</span><span class="n">org</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>可以在</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">pkgs</span><span class="o">.</span><span class="n">repoforge</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">rpmforge</span><span class="o">-</span><span class="n">release</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>下载 RHEL/CentOS
+各个版本的“rpmforge-release”包，这样就可以使用RPMForge提供的丰富软件了。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="43.Vim编辑器学习.html" class="btn btn-neutral float-right" title="1.37. Vim编辑器学习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="41.使用tar命令进行本地备份scripts.html" class="btn btn-neutral float-left" title="1.35. 使用tar命令进行本地备份scripts" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

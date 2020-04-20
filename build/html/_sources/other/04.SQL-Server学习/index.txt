@@ -1,0 +1,11 @@
+.. three title documentation master file
+
+
+SQL-Server学习
+==========================================
+
+.. toctree::
+    :maxdepth: 3
+
+    01.SQL-Server安装最佳实践
+    02.利用HAProxy代理SQL-Server的AlwaysOn辅助副本

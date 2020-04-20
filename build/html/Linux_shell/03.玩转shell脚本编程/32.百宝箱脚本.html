@@ -1,0 +1,497 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.32. 百宝箱脚本 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.33. 使用python脚本安装MongoDB" href="33.deploy_mongo.html" />
+    <link rel="prev" title="3.31. Centos6x开机性能优化" href="31.Centos6开机性能优化.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.基础知识.html">3.1. 一、基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 二、字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 七、三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.32. 百宝箱脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shell">3.32.1. Shell 实践、常用脚本进阶</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shell-2">3.32.2. Shell 脚本进阶2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.32.3. Shell 实践、常用脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#docker">3.32.4. 备份所有docker镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.32.5. 批量加载镜像</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.32.6. 批量杀死僵尸进程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginx">3.32.7. nginx启动脚本示例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#python">3.32.8. Python颜色打印</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.32. 百宝箱脚本</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/32.百宝箱脚本.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id5">百宝箱脚本</a><ul>
+<li><a class="reference internal" href="#shell" id="id6">Shell 实践、常用脚本进阶</a></li>
+<li><a class="reference internal" href="#shell-2" id="id7">Shell 脚本进阶2</a></li>
+<li><a class="reference internal" href="#id2" id="id8">Shell 实践、常用脚本</a></li>
+<li><a class="reference internal" href="#docker" id="id9">备份所有docker镜像</a></li>
+<li><a class="reference internal" href="#id3" id="id10">批量加载镜像</a></li>
+<li><a class="reference internal" href="#id4" id="id11">批量杀死僵尸进程</a></li>
+<li><a class="reference internal" href="#nginx" id="id12">nginx启动脚本示例</a></li>
+<li><a class="reference internal" href="#python" id="id13">Python颜色打印</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id5">3.32. 百宝箱脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="shell">
+<h2><a class="toc-backref" href="#id6">3.32.1. Shell 实践、常用脚本进阶</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8289899.html">https://www.cnblogs.com/xiangsikai/p/8289899.html</a></p>
+</div>
+<div class="section" id="shell-2">
+<h2><a class="toc-backref" href="#id7">3.32.2. Shell 脚本进阶2</a><a class="headerlink" href="#shell-2" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8929807.html">https://www.cnblogs.com/xiangsikai/p/8929807.html</a></p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id8">3.32.3. Shell 实践、常用脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8289746.html">https://www.cnblogs.com/xiangsikai/p/8289746.html</a></p>
+</div>
+<div class="section" id="docker">
+<h2><a class="toc-backref" href="#id9">3.32.4. 备份所有docker镜像</a><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mkdir -p images &amp;&amp; cd images
+for image in `docker images | grep -v REPOSITORY | awk &#39;{print $1&quot;:&quot;$2}&#39;`; do
+    echo &quot;saving the image of ${image}&quot;
+    docker save ${image} &gt;  ${image////-}.tar
+    echo -e &quot;finished saving the image of \033[32m ${image} \033[0m&quot;
+done
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">3.32.5. 批量加载镜像</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>for image in `ls *.tar`; do
+    echo &quot;loading the image of ${image}&quot;
+    docker load &lt; ${image}
+    echo -e &quot;finished loading the image of \033[32m ${image} \033[0m&quot;
+done
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id11">3.32.6. 批量杀死僵尸进程</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ps</span> <span class="o">-</span><span class="n">A</span> <span class="o">-</span><span class="n">o</span> <span class="n">stat</span><span class="p">,</span><span class="n">ppid</span><span class="p">,</span><span class="n">pid</span><span class="p">,</span><span class="n">cmd</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;^[Zz]&#39;</span> <span class="o">|</span> <span class="n">awk</span> <span class="s1">&#39;{print $2}&#39;</span> <span class="o">|</span> <span class="n">xargs</span> <span class="n">kill</span> <span class="o">-</span><span class="mi">9</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nginx">
+<h2><a class="toc-backref" href="#id12">3.32.7. nginx启动脚本示例</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+
+# source function library
+. /etc/rc.d/init.d/functions
+# Source networking configuration.
+. /etc/sysconfig/network
+# Check that networking is up.
+[ ${NETWORKING} = &quot;no&quot; ] &amp;&amp; exit 0
+
+RETVAL=0
+prog=&quot;nginx&quot;
+
+nginxDir=/usr/local/nginx
+nginxd=$nginxDir/sbin/nginx
+nginxConf=$nginxDir/conf/nginx.conf
+nginxPid=$nginxDir/nginx.pid
+
+nginx_check()
+{
+    if [[ -e $nginxPid ]]; then
+        ps aux |grep -v grep |grep -q nginx
+        if  (( $? == 0 )); then
+            echo &quot;$prog already running...&quot;
+            exit 1
+        else
+            rm -rf $nginxPid &amp;&gt; /dev/null
+        fi
+    fi
+}
+
+start()
+{
+    nginx_check
+    if (( $? != 0 )); then
+        true
+    else
+        echo -n $&quot;Starting $prog:&quot;
+        daemon $nginxd -c $nginxConf
+        RETVAL=$?
+        echo
+        [ $RETVAL = 0 ] &amp;&amp; touch /var/lock/subsys/nginx
+        return $RETVAL
+    fi
+}
+
+stop()
+{
+    echo -n $&quot;Stopping $prog:&quot;
+    killproc $nginxd
+    RETVAL=$?
+    echo
+    [ $RETVAL = 0 ] &amp;&amp; rm -f /var/lock/subsys/nginx $nginxPid
+}
+
+reload()
+{
+    echo -n $&quot;Reloading $prog:&quot;
+    killproc $nginxd -HUP
+    RETVAL=$?
+    echo
+}
+
+monitor()
+{
+    status $prog &amp;&gt; /dev/null
+    if (( $? == 0 )); then
+        RETVAL=0
+    else
+        RETVAL=7
+    fi
+}
+
+case &quot;$1&quot; in
+        start)
+                start
+                ;;
+        stop)
+                stop
+                ;;
+        restart)
+                stop
+                start
+                ;;
+        reload)
+                reload
+                ;;
+        status)
+                status $prog
+                RETVAL=$?
+                ;;
+        monitor)
+                monitor
+                ;;
+        *)
+                echo $&quot;Usage: $0 {start|stop|restart|reload|status|monitor}&quot;
+                RETVAL=1
+esac
+exit $RETVA
+</pre></div>
+</div>
+</div>
+<div class="section" id="python">
+<h2><a class="toc-backref" href="#id13">3.32.8. Python颜色打印</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf8 -*-</span>
+<span class="c1"># auther; 18793</span>
+<span class="c1"># Date：2020/3/1 17:57</span>
+<span class="c1"># filename: ColorPrint.py</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<span class="k">class</span> <span class="nc">ColorPrint</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">color</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cPrint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">color</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">msg</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">cPrint</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;black&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[30m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;red&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[31m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;green&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[32m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;yellow&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[33m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;blue&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[34m</span><span class="si">%s</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;white&#39;</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\033</span><span class="s1">[37m%</span><span class="se">\033</span><span class="s1">[0m&#39;</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">color</span> <span class="ow">in</span> <span class="n">colors</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">message</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">color</span><span class="p">]</span> <span class="o">%</span> <span class="n">msg</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># cp = ColorPrint(sys.argv[1], sys.argv[2])</span>
+    <span class="n">cp</span> <span class="o">=</span> <span class="n">ColorPrint</span><span class="p">(</span><span class="s2">&quot;red&quot;</span><span class="p">,</span> <span class="s2">&quot;I am red color&quot;</span><span class="p">)</span>
+    <span class="n">cp2</span> <span class="o">=</span> <span class="n">ColorPrint</span><span class="p">(</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="s2">&quot;I am red green&quot;</span><span class="p">)</span>
+    <span class="n">cp3</span> <span class="o">=</span> <span class="n">ColorPrint</span><span class="p">(</span><span class="s2">&quot;yellow&quot;</span><span class="p">,</span> <span class="s2">&quot;I am red yellow&quot;</span><span class="p">)</span>
+    <span class="n">cp4</span> <span class="o">=</span> <span class="n">ColorPrint</span><span class="p">(</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="s2">&quot;I am red blue&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="33.deploy_mongo.html" class="btn btn-neutral float-right" title="3.33. 使用python脚本安装MongoDB" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="31.Centos6开机性能优化.html" class="btn btn-neutral float-left" title="3.31. Centos6x开机性能优化" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

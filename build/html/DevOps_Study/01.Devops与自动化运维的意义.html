@@ -1,0 +1,356 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 01.Devops与自动化运维的意义 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2. 02.Shell脚本在Devops下的应用" href="02.Shell脚本在Devops下的应用.html" />
+    <link rel="prev" title="DevOps与自动化运维" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps与自动化运维</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 01.Devops与自动化运维的意义</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 为什么企业需要自动化运维</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 为什么要前后端分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#restful">1.3. 什么是RESTful</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web">1.4. Web编程相关体系知识点</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.4.1. 同步和异步、阻塞与非阻塞的区别</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">1.5. 从事Devops应该掌握的语言</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html">2. 02.Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">DevOps与自动化运维</a> &raquo;</li>
+        
+      <li>1. 01.Devops与自动化运维的意义</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/DevOps_Study/01.Devops与自动化运维的意义.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#devops" id="id5">01.Devops与自动化运维的意义</a><ul>
+<li><a class="reference internal" href="#id1" id="id6">为什么企业需要自动化运维</a></li>
+<li><a class="reference internal" href="#id2" id="id7">为什么要前后端分离</a></li>
+<li><a class="reference internal" href="#restful" id="id8">什么是RESTful</a></li>
+<li><a class="reference internal" href="#web" id="id9">Web编程相关体系知识点</a><ul>
+<li><a class="reference internal" href="#id3" id="id10">同步和异步、阻塞与非阻塞的区别</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id4" id="id11">从事Devops应该掌握的语言</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="devops">
+<h1><a class="toc-backref" href="#id5">1. 01.Devops与自动化运维的意义</a><a class="headerlink" href="#devops" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id6">1.1. 为什么企业需要自动化运维</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>总结一下自动化运维可能带来的好处？</p>
+<p><strong>消除无效率</strong>：
+运维工作的手动工作，如果可以实现自动化，将显著提升效率水平</p>
+<p><strong>减少错误</strong>：使用自动化运维工具来完成常规操作可以将错误率大大降低</p>
+<p><strong>最大化员工使用</strong>：避免雇佣更多的员工来应对工作量增加的需求，同样一批人有自动化运维，就有更大的能量创造价值。</p>
+<p><strong>提高满意度水平</strong>:
+自动化运维工具帮助IT运维，可以为内部员工和外部客户提供高水平支持，更好地拥抱SLA。</p>
+<p><strong>降低成本</strong>：系统中断、人为错误、重复工作，会导致不菲的费用和代价，而自动化运维几乎可以将这些成本完全消除。</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id7">1.2. 为什么要前后端分离</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>如果从软件开发的层面上来理解，则前端与后端分别处理如下内容：</p>
+<p><strong>前端</strong>:负责View和Controller层</p>
+<p><strong>后端</strong>:只负责Model层，进行业务处理和数据处理</p>
+<p>当公司存在着PHP/Java技术团队，另外还有GO/python后端研发团队和移动端开发团队。这几个团队虽然是在做不同的产品，但是存在大量重复性的开发，团队就需要思考这样一个方案：</p>
+<p>如果前端实现与后端技术无关，那么页面呈现的部分就可以共用了，不同的后端技术只需要实现各自的后端业务逻辑就好。</p>
+<p>主要解决的根本问题是将数据和页面剥离开来。</p>
+<p>前端采用静态页面相关的技术：HTML+CSS+JavaScrips，通过AJAX技术调用后端提供的业务接口(主要是PHP研发团队负责).前后端协商好接口方式，通过HTTP来提供实现，统一使用POST提交数据。接口数据结构使用JSON实现，前端jQuery解析Json很方便，后端处理JSON的工具就跟多了。</p>
+<p>前后端分离之后，两端的开发人员都可以轻松不少，由于技术和业务变得更加专注，因此开发效率也得到了提高。分离带来的好处如下：</p>
+<p><strong>(1)前后职责分离</strong></p>
+<p>前端倾向于呈现，着重处理用户体验相关的问题；</p>
+<p>后端则倾向于处理业务逻辑、数据处理和持久化等相关的问题。在设计清晰的情况下，后端只需要以数据为中心对业务处理算法负责，并按约定为前端提供API；而前端则使用这些接口对用户体验负责即可。</p>
+<p><strong>(2)前后技术分离</strong></p>
+<p>前端只需要会HTML+CSS+JavaScript，不需要关注后端的开发技术</p>
+<p>后端只需关注后端开发技术和Web API即可，不用考虑特别复杂的数据组织和呈现</p>
+<p><strong>(3)前后分离带来了用户体验和业务处理解耦</strong></p>
+<p>前端的需求改版对后端毫无影响；</p>
+<p>后端的业务逻辑升级、数据持久方案变更，只要不影响接口，前端也毫无知情，</p>
+<p>当然需要变更引起了接口变化，那么前后端又需要在一起进行信息同步了。</p>
+<p><strong>（4）前后分离，可以分别归约两端的设计</strong></p>
+<p>后端只提供API而不用考虑页面呈现的问题，实现SOA架构的API可以服务于各种前端，而不仅仅是Web前端，可以做到一套服务各端使用。</p>
+</div>
+<div class="section" id="restful">
+<h2><a class="toc-backref" href="#id8">1.3. 什么是RESTful</a><a class="headerlink" href="#restful" title="Permalink to this headline">¶</a></h2>
+<p>参考：</p>
+<p><a class="reference external" href="https://python3-cookbook.readthedocs.io/zh_CN/latest/c11/p05_creating_simple_rest_based_interface.html#id2">https://python3-cookbook.readthedocs.io/zh_CN/latest/c11/p05_creating_simple_rest_based_interface.html#id2</a></p>
+</div>
+<div class="section" id="web">
+<h2><a class="toc-backref" href="#id9">1.4. Web编程相关体系知识点</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id10">1.4.1. 同步和异步、阻塞与非阻塞的区别</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>(1)同步与异步</p>
+<p>所谓的同步，就是在发出一个“调用”时，在没有得到结果之前，该“调用”不返回；
+但是一旦调用返回，就会得到返回值了。换句话来说就是“调用者”主动等待这个“调用”的结果。</p>
+<p>而异步则正好相反，在发出“调用”之后这个“调用”就直接返回了，所以没有返回结果。</p>
+<p>换句话说当一个异步过程发出“调用”之后，“调用者”不会立即得到结果，而是在“调用”发出之后，
+“被调用者”通过状态、通知来通知调用者，或通过回调函数来处理这个调用。</p>
+<p>举例：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>同步：
+     你打电话去报刊亭买报纸，你问报刊亭的老板,有抖音相关的报纸吗？老板就跟你说：我去查阅一下，你在电话这边一直等着。
+然后老板开始找报纸，找报纸的过程可能是1个小时，也可能是1天，期间你一直等待着。老板找到后告诉你找到了，让你过来买。
+
+
+异步：
+     你去报刊亭买报纸，你问报刊亭的老板,有抖音相关的报纸吗？老板就跟你说：你回去等我电话，我找到了就打你电话，就挂了电话，给了你一个通知，
+老板找到后主动给你打电话，让你带钱过来拿报纸。
+</pre></div>
+</div>
+<p>（2）阻塞与非阻塞</p>
+<p>阻塞与非阻塞关注的是程序在等待调用结果（消息、返回值）时的状态。</p>
+<p>阻塞调用是指调用结果返回之前，当前线程会被挂起，调用线程只有在得到结果之后才返回。</p>
+<p>非阻塞调用是指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
+<p>还是上面的例子：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>阻塞： 当你打电话到报刊亭问有没有抖音相关的报纸的时候，你会一直把自己“挂起”，知道得到有没有这本书的结果。
+
+非阻塞： 你不用考虑老板有没有找到报纸，你自己先去做别的事，当然偶尔过几分钟也会来检查老板有没有返回结果，这里的阻塞与非阻塞与是否同步异步无关，也与老板回答你结果的方式无关。
+期间你是可以处理其他事情的。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id11">1.5. 从事Devops应该掌握的语言</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li>shell</li>
+<li>Python</li>
+<li>Go</li>
+</ol>
+<p>比较Python与Go，看看Go语言的优势在哪里：</p>
+<p><strong>1）部署简单</strong>：Go语言编译生成一个静态可执行文件，除了glibc之外再没有其他的外部依赖，这也是部署变得异常方便：目标机器上只需要一个基础的系统和必要的管理、监控工具，完全不用操心应用所需的各种包、库的依赖关系，大大减轻了维护的负担。</p>
+<p><strong>2）并发性好，天生支持高并发</strong>：Goroutine和Channel使得编写高并发的服务端软件变得相当容易，很多情况下完全不需要考虑锁机制以及由此带来的各种问题。</p>
+<p>单个Go应用也能有效地利用多个CPU核，其并行执行能力很好。是Python不能相比的，多线程和多进程的服务编写起来并不简单，而且由于Python全局锁GIL的原因，多线程并不能有效利用多核，只能用多进程的方式进行部署，在很多场景下这并不能有效的利用计算机资源，这也是饱受Python爱好者诟病的地方。</p>
+<p><strong>3）良好的语言设计</strong>：有其他语言基础能迅速上手，有大量标准库和三方库。Go自带完善的工具链。</p>
+<p><strong>4)执行性能好</strong>:
+Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量级的，适合编写一些瓶颈业务，内存占用也非常低。</p>
+<p>Go语言的应用场景:</p>
+<ol class="arabic simple">
+<li>服务器编程，如果之前使用C或者C++进行服务器编程，那么使用Go来做也很合适。例如日志处理系统、数据打包、虚拟机处理、文件系统等</li>
+<li>分布式存储、数据库代理器等</li>
+<li>Key-Value存储，例如工作中常见的etcd</li>
+<li>网络编程，目前这一块应用最广，包括Web应用、API应用、下载应用等</li>
+<li>内存数据库、前一段时间google开发groupcache等。</li>
+<li>游戏服务端的开发。</li>
+<li>云平台，目前国内很多云平台都使用Go开发，例如国外的CloudFoundy、Apcera云平台和国内的青云、七牛云等。</li>
+</ol>
+<p>平常的Devops中，除了使用Python之外，还可以使用Go语言来编写某些项目需求，或自动化运维的API。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02.Shell脚本在Devops下的应用.html" class="btn btn-neutral float-right" title="2. 02.Shell脚本在Devops下的应用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="DevOps与自动化运维" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

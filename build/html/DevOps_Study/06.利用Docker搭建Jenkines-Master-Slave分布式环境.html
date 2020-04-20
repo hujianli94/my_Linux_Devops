@@ -1,0 +1,344 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="next" title="高性能Linux服务构建实战" href="../Linux_Cluster_combat/index.html" />
+    <link rel="prev" title="5. 05.工作中的Python脚本分享" href="05.工作中的Python脚本分享.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps与自动化运维</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html">1. 01.Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html">2. 02.Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dockerfi">6.1. Dockerfi文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-compose">6.2. 利用docker-compose编排多容器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">DevOps与自动化运维</a> &raquo;</li>
+        
+      <li>6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/DevOps_Study/06.利用Docker搭建Jenkines-Master-Slave分布式环境.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#dockerjenkines-master-slave" id="id1">06.利用Docker搭建Jenkines-Master-Slave分布式环境</a><ul>
+<li><a class="reference internal" href="#dockerfi" id="id2">Dockerfi文件</a></li>
+<li><a class="reference internal" href="#docker-compose" id="id3">利用docker-compose编排多容器</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="dockerjenkines-master-slave">
+<h1><a class="toc-backref" href="#id1">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a><a class="headerlink" href="#dockerjenkines-master-slave" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="dockerfi">
+<h2><a class="toc-backref" href="#id2">6.1. Dockerfi文件</a><a class="headerlink" href="#dockerfi" title="Permalink to this headline">¶</a></h2>
+<p>Jenkins/ssh-slave的Dockerfile文件，内容如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>FROM openjdk:8-jdk
+LABEL MAINTAINER=&quot;Nicolas De Loof &lt;nicolas.deloof@gmail.com&gt;&quot;
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG JENKINS_AGENT_HOME=/home/${user}
+ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
+
+RUN groupadd -g ${gid} ${group} \
+    &amp;&amp; useradd -d &quot;${JENKINS_AGENT_HOME}&quot; -u &quot;${uid}&quot; -g &quot;${gid}&quot; -m -s /bin/bash &quot;${user}&quot;
+# setup SSH server
+RUN apt-get update \
+    &amp;&amp; apt-get install --no-install-recommends -y openssh-server \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+RUN sed -i /etc/ssh/sshd_config \
+        -e &#39;s/#PermitRootLogin.*/PermitRootLogin no/&#39; \
+        -e &#39;s/#RSAAuthentication.*/RSAAuthentication yes/&#39;  \
+        -e &#39;s/#PasswordAuthentication.*/PasswordAuthentication no/&#39; \
+        -e &#39;s/#SyslogFacility.*/SyslogFacility AUTH/&#39; \
+        -e &#39;s/#LogLevel.*/LogLevel INFO/&#39; &amp;&amp; \
+    mkdir /var/run/sshd
+
+VOLUME &quot;${JENKINS_AGENT_HOME}&quot; &quot;/tmp&quot; &quot;/run&quot; &quot;/var/run&quot;
+
+WORKDIR &quot;${JENKINS_AGENT_HOME}&quot;
+COPY setup-sshd /usr/local/bin/setup-sshd
+EXPOSE 22
+ENTRYPOINT [&quot;setup-sshd&quot;]
+</pre></div>
+</div>
+</div>
+<div class="section" id="docker-compose">
+<h2><a class="toc-backref" href="#id3">6.2. 利用docker-compose编排多容器</a><a class="headerlink" href="#docker-compose" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span>
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">master</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">jenkins</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">master</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;8080:8080&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">jenkins_master</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">jmeter</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2226:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">maven</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2222:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2224:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">networks</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">default</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+</pre></div>
+</div>
+<p>在master上部署使用<code class="docutils literal"><span class="pre">jenkins-master</span></code>部分yml内容，若在Slave机器上部署则去掉<code class="docutils literal"><span class="pre">jenkins-master</span></code>部分内容。</p>
+<p>配置成功后，我们在相关物理机上执行如下命令，来启动这些容器。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Linux_Cluster_combat/index.html" class="btn btn-neutral float-right" title="高性能Linux服务构建实战" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="05.工作中的Python脚本分享.html" class="btn btn-neutral float-left" title="5. 05.工作中的Python脚本分享" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

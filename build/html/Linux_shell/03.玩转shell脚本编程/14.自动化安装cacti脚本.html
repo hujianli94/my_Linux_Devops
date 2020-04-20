@@ -1,0 +1,485 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.14. 自动化安装cacti服务器 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.15. 自动化安装MongoDB" href="15.自动安装MongoDB脚本.html" />
+    <link rel="prev" title="3.13. 自动化安装zabbix" href="13.自动安装zabbix服务器脚本.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.基础知识.html">3.1. 一、基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 二、字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 七、三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.14. 自动化安装cacti服务器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-cacti-sh">3.14.1. install_cacti.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.14. 自动化安装cacti服务器</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/14.自动化安装cacti脚本.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#cacti" id="id1">自动化安装cacti服务器</a><ul>
+<li><a class="reference internal" href="#install-cacti-sh" id="id2">install_cacti.sh</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="cacti">
+<h1><a class="toc-backref" href="#id1">3.14. 自动化安装cacti服务器</a><a class="headerlink" href="#cacti" title="Permalink to this headline">¶</a></h1>
+<p>一、目的</p>
+<p>1.1 监控目的</p>
+<p>目前我们已经有zabbix监控系统，但是有客户需求需要流量报表，因此应此类客户的需求，部署Cacti流量监控系统，来监控客户服务器或交换机端口，为客户提供流量报表截图。</p>
+<p>1.2 本文目的</p>
+<p>快速部署Cacti流量监控系统，为后期相关工程师部署此系统提供借鉴与参考。</p>
+<p>二、理论基础</p>
+<p>2.1 相关理论</p>
+<p>Cacti是用php语言实现的一套基于PHP,MySQL,SNMP及RRDTool开发的网络流量监测图形分析工具。snmp服务获取数据，然后用rrdtool储存和更新数据，当用户需要查看数据的时候用rrdtool生成图表呈现给用户。</p>
+<div class="section" id="install-cacti-sh">
+<h2><a class="toc-backref" href="#id2">3.14.1. install_cacti.sh</a><a class="headerlink" href="#install-cacti-sh" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+[ $(id -u) != &quot;0&quot; ] &amp;&amp; echo &quot;Error: You must be root to run this script&quot; &amp;&amp; exit 1
+export PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;  /etc/selinux/config
+setenforce 0
+which  ntpdate
+yum install wget -y
+if [ $? -eq 0 ];then
+    /usr/sbin/ntpdate time1.aliyun.com
+    echo &quot;*/5 * * * * /usr/sbin/ntpdate -s time1.aliyun.com&quot;&gt;&gt;/var/spool/cron/root
+else
+    yum install ntpdate -y
+    /usr/sbin/ntpdate time1.aliyun.com
+    echo &quot;*/5 * * * * /usr/sbin/ntpdate -s time1.aliyun.com&quot;&gt;&gt;/var/spool/cron/root
+fi
+clear
+echo &quot;##########################################&quot;
+echo &quot;#       Auto Install Cacti.             ##&quot;
+echo &quot;#       Press Ctrl + C to cancel        ##&quot;
+echo &quot;#       Any key to continue             ##&quot;
+echo &quot;##########################################&quot;
+echo &quot;(1) Install Cacti-1.0.1&quot;
+echo &quot;(2) Install Cacti-1.0.2&quot;
+echo &quot;(3) Install Cacti-1.0.3&quot;
+echo &quot;(4) EXIT&quot;
+read -p &quot;Please input your choice:&quot; NUM
+case $NUM in
+1)
+    URL=&quot;http://www.cacti.net/downloads/cacti-1.0.1.tar.gz&quot;
+    VER=cacti-1.0.1
+;;
+2)
+    URL=&quot;http://www.cacti.net/downloads/cacti-1.0.2.tar.gz&quot;
+    VER=cacti-1.0.2
+;;
+3)
+    URL=&quot;http://www.cacti.net/downloads/cacti-1.0.3.tar.gz&quot;
+    VER=cacti-1.0.3
+;;
+4)
+    echo -e &quot;\033[41;37m You choice channel! \033[0m&quot; &amp;&amp; exit 0
+;;
+*)
+    echo -e &quot;\033[41;37m Input Error! Place input{1|2|3} \033[0m&quot; &amp;&amp; exit 1
+;;
+esac
+clear
+echo -e &quot;\033[32m You choice install $VER.Install\033[0m&quot;
+echo -e &quot;\033[5m Press any key to start install $VER... \033[0m&quot;
+read -n 1
+################################################################
+TDIR=/tools
+IP=`ifconfig eth0 | grep &quot;inet addr&quot; | awk -F&quot;[: ]+&quot; &#39;{print $4}&#39;`
+yum remove php* -y
+rpm -Uvh http://mirror.webtatic.com/yum/el6/latest.rpm
+ls /etc/yum.repos.d/webtatic.repo
+if [ $? -eq 0 ];then
+    yum -y install `yum list|grep php55w|awk &#39;{printf (&quot;%s &quot;,$1)}&#39;` --skip-broken
+fi
+PHPCONF=&quot;/etc/php.ini&quot;
+if [ -f $PHPCONF ];then
+    echo &quot;date.timezone = Asia/Shanghai&quot; &gt;&gt;$PHPCONF
+fi
+service php-fpm start /tmp/php-install.log 2&gt;&amp;1
+STAT=`echo $?`
+PORT=`netstat -lntup|grep php-fpm|wc -l`
+if [ $STAT -eq 0 ] &amp;&amp; [ $PORT -eq 1 ];then
+    echo -e &quot;\033[32m PHP is install success! \033[0m&quot;
+else
+    echo -e &quot;\033[32m PHP install file.please check /tmp/php-install.log \033[0m&quot;
+fi
+############################################################
+yum install httpd net-snmp net-snmp-devel net-snmp-utils rrdtool -y
+RRDTVER=`yum list|grep ^rrdtool.x86_64|awk -F&quot; &quot; &#39;{print $2}&#39;`
+WEBVER=`yum list|grep ^httpd.x86_64|awk -F&quot; &quot; &#39;{print $2}&#39;|cut -d- -f1`
+if [ -d /var/www/html ];then
+    cd /var/www/html
+else
+    mkdir -p /var/www/html &amp;&amp; cd /var/www/html
+fi
+wget -c -O /var/www/html/$VER.tar.gz  http://www.cacti.net/downloads/$VER.tar.gz
+tar -zxvf $VER.tar.gz
+mv $VER cacti
+cd cacti
+chown -R apache.root *
+useradd cacti
+echo &quot;cacti&quot; | passwd --stdin cacti
+echo &quot;*/1 * * * * /usr/bin/php /var/www/html/cacti/poller.php &gt;/dev/null 2&gt;&amp;1&quot;&gt;&gt;/var/spool/cron/root
+service httpd start
+chkconfig httpd on
+###################################################################
+SNMPFILE=/etc/snmp/snmpd.conf
+if [ -f &quot;$SNMPFILE&quot; ]
+        then
+        cp $SNMPFILE /etc/snmp/snmpd.conf.bak
+fi
+cat &gt; $SNMPFILE &lt;&lt; EOF
+com2sec notConfigUser  default       public
+group   notConfigGroup v1           notConfigUser
+group   notConfigGroup v2c           notConfigUser
+view    systemview    included   .1
+view    systemview    included   .1.3.6.1.2.1.1
+view    systemview    included   .1.3.6.1.2.1.25.1.1
+access  notConfigGroup &quot;&quot;      any       noauth    exact  all  none none
+view all    included  .1                               80
+syslocation Unknown (edit /etc/snmp/snmpd.conf)
+syscontact Root &lt;root@localhost&gt; (configure /etc/snmp/snmp.local.conf)
+dontLogTCPWrappersConnects yes
+proc mountd
+proc ntalkd 4
+net-snmp-utils rrdtoolproc senmail 10 1
+exec echotest /bin/echo hello world
+disk / 10000
+EOF
+service snmpd start
+chkconfig snmpd on
+###############################################################
+SQLNEW=&quot;WWW.51idc.com&quot;
+yum install mysql-server mysql -y
+service mysqld start
+mysqladmin -uroot password &quot;$SQLNEW&quot;
+mysql -uroot &quot;-p$SQLNEW&quot; -e &quot;create database cacti character set utf8;&quot;
+mysql -uroot &quot;-p$SQLNEW&quot; cacti&lt;/var/www/html/cacti/cacti.sql
+mysql -uroot &quot;-p$SQLNEW&quot; -e &quot;CREATE USER &#39;cacti&#39;@&#39;localhost&#39; IDENTIFIEDBY \&quot;&quot;$SQLNEW&quot;\&quot;;&quot;
+mysql -uroot &quot;-p$SQLNEW&quot; -e &quot;grant all privileges on cacti.* to cacti@&#39;localhost&#39; identified by \&quot;&quot;$SQLNEW&quot;\&quot;;&quot;
+mysql -uroot &quot;-p$SQLNEW&quot; -e &quot;grant select on mysql.time_zone_name to &#39;cacti&#39;@&#39;localhost&#39;;&quot;
+mysql -uroot &quot;-p$SQLNEW&quot; -e &quot;flush privileges;&quot;
+/usr/bin/mysql_tzinfo_to_sql /usr/share/zoneinfo|mysql -uroot -p&quot;$SQLNEW&quot; mysql
+cat&gt;&gt;/etc/my.cnf&lt;&lt;EOF
+max_heap_table_size=100M
+max_allowed_packet=16777216
+tmp_table_size=64M
+join_buffer_size=64M
+innodb_buffer_pool_size=458M
+innodb_doublewrite=OFF
+innodb_flush_log_at_timeout=4
+innodb_read_io_threads=32
+innodb_write_io_threads=16
+EOF
+PHPCONF=/var/www/html/cacti/include/config.php
+if [ -f $PHPCONF ];then
+cat &gt;$PHPCONF&lt;&lt;EOF
+&lt;?php
+\$database_type = &quot;mysql&quot;;
+\$database_default = &quot;cacti&quot;;
+\$database_hostname = &quot;localhost&quot;;
+\$database_username = &quot;cacti&quot;;
+\$database_password = &quot;$SQLNEW&quot;;
+\$database_port = &quot;3306&quot;;
+?&gt;
+EOF
+fi
+clear
+service mysqld restart
+#############################################################
+/etc/init.d/iptables status &gt;/dev/null 2&gt;&amp;1
+if [ $? -eq 0 ];then
+    iptables -I INPUT -p tcp --dport 80 -j ACCEPT &amp;&amp;
+#iptables -I INPUT -p tcp --dport 3306 -j ACCEPT &amp;&amp;
+    service iptables save &gt;/dev/null 2&gt;&amp;1
+    /etc/init.d/iptables restart
+else
+    echo -e &quot;\033[32m iptables is stopd\033[0m&quot;
+fi
+clear
+echo -e &quot;\033[42;37m Mysql:5.7 rrdtool:$RRDTVER PHP:5.5 apche:$WEBVER\033[0m&quot;
+echo -e &quot;\033[42;37m MySql Username:root Password:$SQLNEW \033[0m&quot;
+echo -e &quot;\033[42;37m URL:http://$IP/cacti \033[0m&quot;
+echo -e &quot;\033[42;37m $VER is Install Success,Username:Admin Password:admin \033[0m&quot;
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="15.自动安装MongoDB脚本.html" class="btn btn-neutral float-right" title="3.15. 自动化安装MongoDB" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="13.自动安装zabbix服务器脚本.html" class="btn btn-neutral float-left" title="3.13. 自动化安装zabbix" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

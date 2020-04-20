@@ -1,0 +1,963 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.23. install_vsftpd_or_nfs脚本 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.24. install_mysql5.7" href="24.install_mysql5.7.html" />
+    <link rel="prev" title="3.22. 自动Autoinstall_ELK_V1.3脚本" href="22.自动Autoinstall_ELK_V1.3.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.基础知识.html">3.1. 一、基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 二、字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 七、三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.23. install_vsftpd_or_nfs脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.23. install_vsftpd_or_nfs脚本</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/23.install_vsftpd脚本.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#install-vsftpd-or-nfs" id="id1">install_vsftpd_or_nfs脚本</a><ul>
+<li><a class="reference internal" href="#install-vsftpd-sh" id="id2">install_vsftpd.sh</a></li>
+<li><a class="reference internal" href="#install-nsf-sh" id="id3">install_nsf.sh</a></li>
+<li><a class="reference internal" href="#vsftp" id="id4">vsftp主动和被动模式脚本</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="install-vsftpd-or-nfs">
+<h1><a class="toc-backref" href="#id1">3.23. install_vsftpd_or_nfs脚本</a><a class="headerlink" href="#install-vsftpd-or-nfs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="install-vsftpd-sh">
+<h2><a class="toc-backref" href="#id2">3.23.1. install_vsftpd.sh</a><a class="headerlink" href="#install-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:xxx.sh
+
+#VAR Set
+IP_INFO=$(/usr/sbin/ifconfig| grep inet|sed 1q|awk &#39;{print $2}&#39;)
+#Server=$(ps -ef| grep vsftpd | grep -v &quot;grep&quot;|wc -l)
+CONF_FILE=`rpm -qc vsftpd|more| grep vsftpd.conf`
+Save_text=&quot;user.txt&quot;
+DATE=$(date +%F_%T)
+
+function Base_init {
+#close selinux
+echo &quot;Close selinux.......&quot;
+setenforce 0 &amp;&gt;/dev/null
+sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/&quot; /etc/selinux/config
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+}
+
+
+function unstall_vsftpd {
+    # unstall vsftpd
+    rpm -qa|grep vsftpd | xargs rpm -e --nodeps &amp;&gt; /dev/null
+    rm -rf /etc/vsftpd/*
+    echo -e &quot;\033[32m begin uninstall vsftpd.....！\033[0m&quot;
+    for (( VAR=0; VAR&lt;=20; VAR++ )); do sleep 0.1;echo -n &quot;#&quot;;done
+    echo
+}
+
+
+function install_vsftpd {
+
+#install vsftpd
+/usr/bin/yum -y install vsftpd*
+
+# config_file_fix
+echo &quot;vsftpd conf file is -----------&gt;  $CONF_FILE&quot;
+echo &quot;backup $CONF_FILE  --------&gt; ${CONF_FILE}.bak&quot;
+cp -rf $CONF_FILE{,.bak}
+
+if systemctl enable vsftpd.service &amp;&gt;/dev/null; then
+    echo &quot;设置开机自动启动vsftpd服务..... OK&quot;
+else
+    echo &quot;设置开机自动启动vsftpd服务..... fail...&quot;
+fi
+
+
+
+if systemctl start vsftpd.service &amp;&gt;/dev/null;then
+   echo &quot;启动vsftpd服务..... OK&quot;
+else
+   echo &quot;启动vsftpd服务..... fail ...&quot;
+fi
+
+}
+
+
+function echo_color {
+    if [[ $1 == &quot;green&quot; ]]; then
+        echo -e &quot;\033[32m$2\033[0m&quot;
+    elif [[ $1 == &quot;red&quot; ]]; then
+        echo -e &quot;\033[31m$2\033[0m&quot;
+    elif [[ $1 == &quot;yellow&quot; ]];then
+        echo -e &quot;\033[33m$2\033[0m&quot;
+    else
+        echo -e &quot;\033[32m$1\033[0m&quot;
+    fi
+}
+
+
+function conf_file_fix {
+    echo
+    echo &quot;-------------------------------------------------------&quot;
+    echo &quot;开始配置config文件&quot;
+    echo &quot;-------------------------------------------------------&quot;
+    echo
+}
+
+
+function Restart_ftp {
+echo_color &quot;配置完毕，重启vsftpd服务.....&quot;
+systemctl restart vsftpd
+if test $? -eq 0; then
+    echo_color &quot;vsftpd重启完毕...........&quot;
+    echo_color yellow &quot;请访问:  ftp://${IP_INFO}&quot;
+else
+    echo_color red &quot;vsftpd启动失败.....&quot;
+    exit 1
+fi
+}
+
+
+function Anonymous {
+
+# 先检测是否安装vsftpd，如果安装，卸载掉之后重新安装
+if rpm -qa|grep vsftpd &gt;/dev/null 2&gt;&amp;1; then
+    echo -e &quot;\033[32m It was detected that vsftpd was installed.！\033[0m&quot;
+    unstall_vsftpd
+fi
+install_vsftpd
+
+
+local PUB_dir=&quot;/var/ftp/pub&quot;
+
+if [ ! -d $PUB_dir ]; then
+    mkdir -p $PUB_dir
+fi
+
+conf_file_fix
+echo_color green &quot;vsftp的匿名用户上传下载目录为: $PUB_dir&quot;
+chown -R ftp /var/ftp/pub/
+chmod 755 /var/ftp/pub/
+
+cat &gt;${CONF_FILE} &lt;&lt;EOF
+anonymous_enable=YES
+anon_umask=022
+anon_mkdir_write_enable=YES
+anon_upload_enable=YES
+anon_other_write_enable=YES
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=YES
+anon_upload_enable=YES
+anon_other_write_enable=YES
+listen=NO
+listen_ipv6=YES
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+EOF
+Restart_ftp
+
+
+}
+
+
+function check_pass {
+echo_color green &quot;请输入密码：&quot;
+read -s passwd
+if [ -n &quot;$passwd&quot; ]; then
+    echo_color green &quot;密码设置成功，密码为:$passwd&quot;
+else
+    echo_color red &quot;密码设置错误......&quot;
+    check_pass
+fi
+
+}
+
+
+function add_user {
+label=1
+while [[ $label == 1 ]]; do
+    read -p &quot;输入用户名：&quot; name
+    if /usr/sbin/useradd $name &amp;&gt;/dev/null ; then
+        echo &quot;创建用户 $name 成功...&quot;
+        check_pass
+        echo &quot;$passwd&quot; | passwd --stdin $name
+        if [ &quot;$?&quot; -eq 0 ]; then
+            echo  -e &quot;您创建的用户为 $name \t 密码为 $passwd&quot;
+            echo -e &quot;$name \t $passwd&quot; &gt;&gt; $Save_text
+        fi
+        echo &quot;是否退出,y退出，n继续？【y|n】&quot;
+        read  -p &quot;Please input ：&quot; input
+            if [[ $input == &quot;y&quot; ]]; then
+                echo &quot;用户名和密码保存在 $Save_text 文件中......&quot;
+                label=2
+            fi
+    else
+        echo_color red &quot;用户已经存在.....&quot;
+    fi
+done
+
+
+# chomod 777 dir
+cat $Save_text|while read line; do
+    user_info=$line|awk &#39;{print $1}&#39;
+    chmod -R 777 /home/$user_info
+done
+
+}
+
+
+function  System_user_config {
+touch /etc/vsftpd/chroot_list
+conf_file_fix
+cat &gt; $CONF_FILE &lt;&lt;-&quot;EOF&quot;
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=YES
+ascii_upload_enable=YES
+ascii_download_enable=YES
+chroot_local_user=YES
+chroot_list_enable=YES
+chroot_list_file=/etc/vsftpd/chroot_list
+listen=NO
+listen_ipv6=YES
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+allow_writeable_chroot=YES
+EOF
+
+for (( VAR = 0; VAR &lt;20; ++VAR )); do sleep 0.2; echo -n &quot;#&quot;;done
+echo_color &quot;开始重启Vsftpd服务......&quot;
+Restart_ftp
+
+cat $Save_text |awk -F&quot; &quot; &#39;{print &quot;用户名：&quot;$1,&quot;密码：&quot;$2}&#39;
+
+}
+
+
+function System_user_memu {
+
+echo &quot;请问是新增系统用户还是修改配置文件支持系统用户登录？&quot;
+echo
+echo &quot;1.新增系统用户,使用新增的用户访问&quot;
+echo &quot;2.修改配置文件支持系统用户用户名/密码登录，使用系统自带的用户访问&quot;
+echo
+read -p &quot;输入choice：&quot; choice
+
+case &quot;$choice&quot; in
+1)
+    add_user
+    System_user_config
+   ;;
+2)
+    System_user_config
+   ;;
+*)
+    echo_color red &quot; Input error, re-enter......&quot;
+   ;;
+esac
+
+}
+
+
+function Virtual_user {
+unstall_vsftpd
+install_vsftpd
+
+#安装 FTP 虚拟用户需要用到的软件及认证模块
+yum install pam* libdb-utils libdb* --skip-broken -y
+
+cat &gt; /etc/vsftpd/ftpusers.txt&lt;&lt;-&quot;EOF&quot;
+hujianli1
+admin#123
+hujianli2
+admin#123
+EOF
+
+#查看虚拟用户信息
+echo_color &quot;Virtual user information is as follows&quot;
+local count=1
+
+# 定义数组来装vsftpd的账号
+declare -a Account
+while read LINE; do
+    i=$(($count %2))
+    if [[ $i -eq 1 ]]; then
+        echo_color &quot;vsftpd登录账号：$LINE&quot;
+        Account[$count]=$LINE
+    else
+        echo_color &quot;vsftpd登录密码：$LINE&quot;
+        echo &quot;---------------------------&quot;
+        echo
+    fi
+    count=$((count +1))
+done &lt;/etc/vsftpd/ftpusers.txt
+
+local vsftp_login_DIR=&quot;/etc/pam.d/vsftpd&quot;
+sed -i &#39;5 i auth  sufficient  /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login&#39; $vsftp_login_DIR
+sed -i &#39;6 i account  sufficient  /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login&#39; $vsftp_login_DIR
+
+useradd -s /sbin/nologin ftpuser
+cat &gt; $CONF_FILE &lt;&lt;-&quot;EOF&quot;
+anonymous_enable=NO
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_file=/var/log/vsftpd.log
+xferlog_std_format=YES
+ascii_upload_enable=YES
+ascii_download_enable=YES
+listen=YES
+guest_enable=YES
+guest_username=ftpuser
+pam_service_name=vsftpd
+user_config_dir=/etc/vsftpd/vsftpd_user_conf
+virtual_use_local_privs=YES
+EOF
+
+
+mkdir -p /etc/vsftpd/vsftpd_user_conf
+for i in ${!Account[@]} ; do
+    mkdir -p /home/ftpuser/${Account[$i]}
+    chown -R ftpuser:ftpuser /home/ftpuser/
+
+    cat &gt;/etc/vsftpd/vsftpd_user_conf/${Account[$i]} &lt;&lt;-EOF
+local_root=/home/ftpuser/${Account[$i]}
+write_enable=YES
+anon_world_readable_only=YES
+anon_upload_enable=YES
+anon_mkdir_write_enable=YES
+anon_other_write_enable=YES
+EOF
+done
+
+Restart_ftp
+}
+
+
+
+
+
+function main {
+Base_init
+
+Flag=&quot;&quot;
+while [[ $Flag ==  &quot;&quot; ]]; do
+    echo_color  &quot;---------------------------------------------------------------------------------------&quot;
+    echo_color  &quot;#################### Wellcom to vsftpd install memu #####################################&quot;
+    echo_color  &quot;---------------------------------------------------------------------------------------&quot;
+
+
+cat &lt;&lt; EOF
+1.匿名用户登录设置
+2.系统用户登录配置
+3.虚拟用户登录配置
+4.卸载Vsftd
+5.退出exit
+EOF
+
+read -p &quot;Please input you choice：&quot; input
+case &quot;$input&quot; in
+1)
+    echo_color &quot;安装匿名用户的vsftpd....................&quot;
+    Anonymous
+    Flag=1
+   ;;
+2)
+    echo_color &quot;安装系统用户的vsftpd....................&quot;
+    System_user_memu
+    Flag=1
+   ;;
+3)
+    echo_color &quot;安装虚拟用户的vsftpd....................&quot;
+    Virtual_user
+    Flag=1
+   ;;
+4)
+    echo_color &quot;开始卸载vsftpd....................&quot;
+    unstall_vsftpd
+    Flag=1
+   ;;
+5)
+    echo_color &quot;退出.......&quot;
+    Flag=1
+   ;;
+*)
+    echo_color red &quot;-----------------------&quot;
+    echo_color red &quot;Input error, re-enter......&quot;
+    echo_color red &quot;-----------------------&quot;
+
+   ;;
+esac
+
+done
+}
+
+main
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-nsf-sh">
+<h2><a class="toc-backref" href="#id3">3.23.2. install_nsf.sh</a><a class="headerlink" href="#install-nsf-sh" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+# auto_install_nfs_server
+# author:hujl
+
+Share_DIR=&quot;/data/&quot;
+IP_INFO=`/sbin/ifconfig | grep &quot;inet &quot;|head -1|awk -F&quot; &quot; &#39;{print $2}&#39;`
+
+update_yum(){
+
+# 关闭防火墙和SELINUX
+setenforce 0
+sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/&quot; /etc/selinux/config
+systemctl stop firewalld.service
+systemctl disable firewalld
+
+#更换阿里源国内源
+cp -rf /etc/yum.repos.d/CentOS-Base.repo{,.bak}
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+#在国内安装包会很慢，可以改为aliyun的epel源,先备份epel本身的源
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo  #可选
+#生成缓存
+yum clean all &amp;&amp; yum makecache
+if [ $? -eq 0 ]; then
+    echo -e &quot;\033[32m network yum base update successful! \033[0m&quot;
+else
+    echo -e &quot;\033[31m network yum base update Fail!!\033[0m&quot;
+    exit 1
+fi
+}
+
+install_nfs_server() {
+# 安装NFS文件服务器
+yum -y install nfs*
+if [ $? -eq 0 ]; then
+    echo -e &quot;\033[32m NFS_Server install successful! \033[0m&quot;
+else
+    echo -e &quot;\033[31m NFS_Server install Fail!!\033[0m&quot;
+    exit 1
+fi
+}
+
+[ ! -d $Share_DIR ] &amp;&amp; mkdir -p $Share_DIR || echo &quot;$Share_DIR already exist！&quot;
+cat &gt;&gt; /etc/exports &lt;&lt;EOF
+$Share_DIR         *(rw,no_root_squash,no_all_squash,sync)
+EOF
+
+
+
+main(){
+update_yum
+install_nfs_server
+/usr/sbin/service nfs restart
+if [ $? -eq 0 ]; then
+    echo -e &quot;\033[32m NFS start successful! \033[0m&quot;
+else
+    echo -e &quot;\033[31m NFS start Fail!!\033[0m&quot;
+    exit 1
+fi
+
+}
+
+
+main
+echo &quot;***********************************************&quot;
+echo &quot;************** nfs info **********************&quot;
+exportfs
+echo &quot;***********************************************&quot;
+
+DIR=`showmount --exports | awk &#39;NR==2&#39;|cut -d&quot; &quot; -f1`
+
+echo -e &quot;Usage method 【 mount -t nfs ${IP_INFO}:${Share_DIR} Local path 】&quot;
+echo -e &quot;\033[32m For example: \033[0m&quot;
+echo -e &quot;Usage method 【 mount -t nfs ${IP_INFO}:${Share_DIR} /mount 】&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="vsftp">
+<h2><a class="toc-backref" href="#id4">3.23.3. vsftp主动和被动模式脚本</a><a class="headerlink" href="#vsftp" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+# author：hujianli
+# by:2019-10-06
+# use : minni install vsftpd
+
+
+if [ &quot;$#&quot; -ne 1 ]; then
+    echo &quot;*****************************&quot;
+    echo -e &quot;\033[32m1.vsftpd 主动模式：21端口建立连接，20端口传输数据\033[1m&quot;
+    echo -e &quot;2.vsftpd 主动模式: &gt;1024端口传输数据&quot;
+    echo -e &quot;\033[33mUsage: bash `basename $0` 1 or 2\033[0m&quot;
+    echo &quot;*****************************&quot;
+    exit 1
+fi
+
+
+check_Root() {
+    if [ &quot;$(id -u)&quot; -ne 0 ] ; then
+        echo &quot;You must run this script as root. Sorry!&quot;
+        exit 1
+    fi
+}
+
+simple_jindutiao(){
+    for((i=1;i&lt;=10;i++));do echo -n &quot;#&quot;;sleep 0.5;done
+    echo
+
+}
+
+
+VSFTPD_initiative() {
+#yum 安装vsftpd,如果有安装，先卸载掉
+if rpm -qa| grep vsftpd &gt; /dev/null; then
+    yum -y remove vsftpd*
+fi
+yum -y install vsftpd*
+
+local CONF=`rpm -qc vsftpd | grep vsftpd.conf`
+cp -rf $CONF{,.bak}
+
+echo &quot;vsftpd的配置文件如下：&quot;
+# 查看配置文件
+rpm -ql vsftpd | grep /etc*
+
+# 启动vsftpd服务，查看进程
+systemctl restart vsftpd.service
+if [ $? -eq 0 ]; then
+    echo -e &quot;\033[32m Start vsftp  Successful!...\033[0m&quot;
+else
+    echo -e &quot;\033[31m Start vsftp  fail!...\033[0m&quot;
+fi
+
+ps -ef| grep vsftpd
+
+echo -e &quot;\033[32m begin Configure Vsftpd 主动模式.......\033[0m&quot;
+
+cat &gt;$CONF &lt;&lt;EOF
+anonymous_enable=YES
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+connect_from_port_20=YES
+xferlog_std_format=YES
+listen=NO
+listen_ipv6=YES
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+EOF
+
+echo -e &quot;\033[32m vsftpd 主动模式配置文件写入信息如下：\033[0m&quot;
+cat &lt;&lt;EOF
+anonymous_enable=YES        #开启匿名用户访问
+local_enable=YES            # 启用本地系统用户访问
+write_enable=YES            # 本地系统用户写入权限
+local_umask=022             # 本地用户创建文件及目录默认权限掩码
+dirmessage_enable=YES       # 打印目录显示信息，通常用于用户第一次访问目录时，信息提示
+xferlog_enable=YES          # 启用上传/下载日志记录
+connect_from_port_20=YES    # FTP使用20端口进行数据传输，主动模式
+xferlog_std_format=YES      # 日志文件将根据xferlog的标准格式写入
+listen=NO                   # vsftpd不以独立的服务启动，通过Xinetd服务管理，建议改成yes
+listen_ipv6=YES             # 启用IPv6监听
+pam_service_name=vsftpd     # 登录FTP服务器，依据/etc/pam.d/vsftpd中内容进行认证
+userlist_enable=YES         # vsftpd.user_list 和ftpusers配置文件里用户禁止访问FTP
+tcp_wrappers=YES            # 设置访问控制，通过该hosts.allow和/etc/hosts.deny中设置来判断是否允许访问
+EOF
+
+echo -e &quot;\033[32m Restart vsftpd.......\033[0m&quot;
+simple_jindutiao
+systemctl restart vsftpd.service
+[ &quot;$?&quot; -eq 0 ] &amp;&amp; echo -e &quot;\033[32mSuccessful execution！\033[0m&quot; || echo -e &quot;\033[31m fail execution!\033[0m&quot;
+
+}
+
+
+VSFTPD_passive() {
+#yum 安装vsftpd,如果有安装，先卸载掉
+if rpm -qa| grep vsftpd &gt; /dev/null; then
+    yum -y remove vsftpd*
+fi
+yum -y install vsftpd*
+
+local CONF=`rpm -qc vsftpd | grep vsftpd.conf`
+cp -rf $CONF{,.bak}
+
+echo &quot;\033[32m vsftpd被动模式的配置文件如下：\033[0m&quot;
+echo
+# 查看配置文件
+rpm -ql vsftpd | grep /etc*
+
+# 启动vsftpd服务，查看进程
+systemctl restart vsftpd.service
+if [ $? -eq 0 ]; then
+    echo -e &quot;\033[32m Start vsftp  Successful!...\033[0m&quot;
+else
+    echo -e &quot;\033[31m Start vsftp  fail!...\033[0m&quot;
+fi
+
+ps -ef| grep vsftpd
+
+echo -e &quot;\033[32m begin Configure Vsftpd 被动模式.......\033[0m&quot;
+echo
+cat &gt;$CONF &lt;&lt;EOF
+anonymous_enable=YES
+local_enable=YES
+write_enable=YES
+local_umask=022
+dirmessage_enable=YES
+xferlog_enable=YES
+xferlog_std_format=YES
+listen=NO
+listen_ipv6=YES
+pam_service_name=vsftpd
+userlist_enable=YES
+tcp_wrappers=YES
+pasv_enable=YES
+pasv_min_port=60000
+pasv_max_port=60100
+EOF
+
+echo -e &quot;\033[32m vsftpd被动模式配置文件写入信息如下：\033[0m&quot;
+echo
+cat &lt;&lt;EOF
+anonymous_enable=YES        #开启匿名用户访问
+local_enable=YES            # 启用本地系统用户访问
+write_enable=YES            # 本地系统用户写入权限
+local_umask=022             # 本地用户创建文件及目录默认权限掩码
+dirmessage_enable=YES       # 打印目录显示信息，通常用于用户第一次访问目录时，信息提示
+xferlog_enable=YES          # 启用上传/下载日志记录
+xferlog_std_format=YES      # 日志文件将根据xferlog的标准格式写入
+listen=NO                   # vsftpd不以独立的服务启动，通过Xinetd服务管理，建议改成yes
+listen_ipv6=YES             # 启用IPv6监听
+pam_service_name=vsftpd     # 登录FTP服务器，依据/etc/pam.d/vsftpd中内容进行认证
+userlist_enable=YES         # vsftpd.user_list 和ftpusers配置文件里用户禁止访问FTP
+tcp_wrappers=YES            # 设置访问控制，通过该hosts.allow和/etc/hosts.deny中设置来判断是否允许访问
+pasv_enable=YES             # 开启被动模式
+pasv_min_port=60000         # 被动连接的端口范围
+pasv_max_port=60100
+EOF
+
+echo -e &quot;\033[32m Restart vsftpd.......\033[0m&quot;
+simple_jindutiao
+systemctl restart vsftpd.service
+[ &quot;$?&quot; -eq 0 ] &amp;&amp; echo -e &quot;\033[32mSuccessful execution！\033[0m&quot; || echo -e &quot;\033[31m fail execution!\033[0m&quot;
+}
+
+
+Usage_choice() {
+    if [[ &quot;$1&quot; -eq &quot;1&quot; ]]; then
+        VSFTPD_initiative
+    elif [[ &quot;$1&quot; -eq &quot;2&quot; ]]; then
+        VSFTPD_passive
+    else
+        echo -e &quot;\033[33mUsage: bash `basename $0` 1 or 2\033[0m&quot;
+
+    fi
+
+}
+
+
+check_Root
+Usage_choice $1
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="24.install_mysql5.7.html" class="btn btn-neutral float-right" title="3.24. install_mysql5.7" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="22.自动Autoinstall_ELK_V1.3.html" class="btn btn-neutral float-left" title="3.22. 自动Autoinstall_ELK_V1.3脚本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

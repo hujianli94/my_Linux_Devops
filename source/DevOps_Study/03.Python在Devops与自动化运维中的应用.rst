@@ -1,0 +1,152 @@
+.. contents::
+   :depth: 3
+..
+
+03.Python在Devops与自动化运维中的应用
+=====================================
+
+Python基础知识进阶
+------------------
+
+1.正则表达式应用
+~~~~~~~~~~~~~~~~
+
+正则表达式中有许多特殊的字符（也称元字符），这些特殊字符是构成正则表达式的要素。
+
+Python元字符及其作用说明 |image0|
+
+(1)原子
+原子是正则表达式中最基本的组成单位，每个正则表达式中至少要包含一个原子，常见的原子是由普通字符或通用字符和原子表构成的。
+
+原子表示由一组地位平等的原子组成，匹配的时候会获取该原子表中的任意一个原子来进行匹配。
+在Python中，原子表由“[]”表示，“[xyz]”就是一个原子表，这个原子表中定义了3个原子，这3个原子的地位是平等的。
+
+如果我们要对正则表达式进行嵌套，就需要使用分组“()”，即我们可以使用“
+()”将一些原子组合成一个大原子使用，
+小括号括起来的那部分会被当做一个整体来使用。
+
+(2) 贪婪模式与懒惰模式
+
+::
+
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2019/5/21 17:31
+   # filename: 贪婪匹配和懒惰匹配.py
+   import re
+
+   # 使用贪婪匹配
+   m = re.search(r'\d{5,8}', '87654321')
+   print(m)            #<_sre.SRE_Match object; span=(0, 8), match='87654321'>
+   print(m.group())    #87654321
+
+   # 使用惰性匹配
+   m = re.search(r'\d{5,8}?', '87654321')      #<_sre.SRE_Match object; span=(0, 5), match='87654'>
+   print(m)
+   print(m.group())                            #87654
+
+对3位数字重复3次，可以使用下面的正则表达式。命令如下：
+
+::
+
+   {\d\d\d}{2}
+
+::
+
+   \d\d\d{2}这个表达式相当于"\d\d\d\d",匹配的结果为"1234"和"5678"
+
+**使用re模块处理正则表达式** |image1|
+
+re模块中的很多函数中都有一个flags标志位，该参数用于设置匹配的附加选项。例如，是否忽略大小写、是否支持多行匹配。
+
+|image2|
+
+2.使用Python解析JSON
+~~~~~~~~~~~~~~~~~~~~
+
+|image3|
+
+使用\ ``dumps()``\ 编码举例：
+
+::
+
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/1/19 10:26
+   # filename: json_sample0.py
+   import json
+
+   data = [{'a': 1, 'b': 2, 'c': 3, 'd': 4, 'e': 5}]
+   j = json.dumps(data, indent=4)
+   print(j)
+
+   '''
+   [
+       {
+           "d": 4,
+           "a": 1,
+           "b": 2,
+           "c": 3,
+           "e": 5
+       }
+   ]
+
+   '''
+
+使用\ ``loads()``\ 解码举例：
+
+::
+
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/1/19 10:30
+   # filename: json_sample1.py
+
+   import json
+
+   data = '{"a":1,"b":2,"c":3,"d":4,"e":5}'
+   text = json.loads(data)
+   print(text)
+
+   '''
+   {'e': 5, 'b': 2, 'd': 4, 'c': 3, 'a': 1}
+   '''
+
+|image4|
+
+3.Python多进程
+~~~~~~~~~~~~~~
+
+::
+
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/1/20 15:12
+   # filename: 多个子进程.py
+
+   import multiprocessing
+   import time
+
+
+   def func(msg):
+       print(multiprocessing.current_process().name + "-" + msg)
+
+
+   if __name__ == '__main__':
+       pool = multiprocessing.Pool(processes=4)
+       for i in range(100):
+           msg = "hello %d" % (i)
+           pool.apply_async(func, (msg,))
+       pool.close()        # 关闭进程池表示不能再往进程池中添加进程
+       pool.join()         # 等待进程池中所有的进程执行完毕，必须在close()之后调用
+       print("Sub-process(es) done.")
+
+.. |image0| image:: ../_static/devops_re_python.png
+.. |image1| image:: ../_static/re_math0001.png
+.. |image2| image:: ../_static/re_devops_flags0001.png
+.. |image3| image:: ../_static/re_devops_encode001.png
+.. |image4| image:: ../_static/re_devops_decode0001.png

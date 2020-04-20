@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9.2. 安装zabbix &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="10. 快速阅读Linux入门-阿铭Linux" href="../10.快速阅读Linux入门-阿铭Linux/index.html" />
+    <link rel="prev" title="9.1. zabbix监控简介" href="01.zabbix监控介绍.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">9. Zabbix3.0入门到精通</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.zabbix监控介绍.html">9.1. zabbix监控简介</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">9.2. 安装zabbix</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">9.2.1. 安装方式选择</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">9. Zabbix3.0入门到精通</a> &raquo;</li>
+        
+      <li>9.2. 安装zabbix</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/09.Zabbix3.0从入门到精通/02.安装zabbix.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#zabbix" id="id6">安装zabbix</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">安装方式选择</a><ul>
+<li><a class="reference internal" href="#id2" id="id8">服务端快速安装脚本</a></li>
+<li><a class="reference internal" href="#id3" id="id9">客户端快速安装脚本</a></li>
+<li><a class="reference internal" href="#id4" id="id10">检测连通性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="zabbix">
+<h1><a class="toc-backref" href="#id6">9.2. 安装zabbix</a><a class="headerlink" href="#zabbix" title="Permalink to this headline">¶</a></h1>
+<p>安装环境</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@iZuf699cacb5huocqld4j2Z home]# cat /etc/redhat-release
+CentOS Linux release 7.6.1810 (Core)
+
+[root@iZuf699cacb5huocqld4j2Z home]# uname -r
+3.10.0-957.5.1.el7.x86_64
+[root@iZuf699cacb5huocqld4j2Z home]# getenforce
+Disabled
+[root@iZuf699cacb5huocqld4j2Z home]#
+[root@iZuf699cacb5huocqld4j2Z home]# systemctl status firewalld.service
+● firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:firewalld(1)
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id7">9.2.1. 安装方式选择</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>编译安装 （服务较多，环境复杂）
+yum安装（干净环境）
+使用yum 需要镜像yum源 http://www.cnblogs.com/clsn/p/7866643.html
+</pre></div>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id8">服务端快速安装脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#clsn</span>
+
+<span class="c1">#设置解析 注意：网络条件较好时，可以不用自建yum源</span>
+<span class="c1"># echo &#39;10.0.0.1 mirrors.aliyuncs.com mirrors.aliyun.com repo.zabbix.com&#39; &gt;&gt; /etc/hosts</span>
+
+<span class="c1">#安装zabbix源、aliyun YUM源</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">ivh</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">zabbix</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">zabbix</span><span class="o">/</span><span class="mf">3.0</span><span class="o">/</span><span class="n">rhel</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">zabbix</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="mf">3.0</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+
+<span class="c1">#安装zabbix</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mysql</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">web</span><span class="o">-</span><span class="n">mysql</span>
+
+<span class="c1">#安装启动 mariadb数据库</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span>  <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">service</span>
+
+<span class="c1">#创建数据库</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;create database zabbix character set utf8 collate utf8_bin;&#39;</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;grant all privileges on zabbix.* to zabbix@localhost identified by &quot;zabbix&quot;;&#39;</span>
+
+<span class="c1">#导入数据</span>
+<span class="n">zcat</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">zabbix</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">mysql</span><span class="o">-</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">13</span><span class="o">/</span><span class="n">create</span><span class="o">.</span><span class="n">sql</span><span class="o">.</span><span class="n">gz</span><span class="o">|</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uzabbix</span> <span class="o">-</span><span class="n">pzabbix</span> <span class="n">zabbix</span>
+
+<span class="c1">#配置zabbixserver连接mysql</span>
+<span class="n">sed</span> <span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">ori</span> <span class="s1">&#39;115a DBPassword=zabbix&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">zabbix</span><span class="o">/</span><span class="n">zabbix_server</span><span class="o">.</span><span class="n">conf</span>
+
+<span class="c1">#添加时区</span>
+<span class="n">sed</span> <span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">ori</span> <span class="s1">&#39;18a php_value date.timezone  Asia/Shanghai&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">zabbix</span><span class="o">.</span><span class="n">conf</span>
+
+<span class="c1">#解决中文乱码</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">wqy</span><span class="o">-</span><span class="n">microhei</span><span class="o">-</span><span class="n">fonts</span>
+\<span class="n">cp</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">fonts</span><span class="o">/</span><span class="n">wqy</span><span class="o">-</span><span class="n">microhei</span><span class="o">/</span><span class="n">wqy</span><span class="o">-</span><span class="n">microhei</span><span class="o">.</span><span class="n">ttc</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">fonts</span><span class="o">/</span><span class="n">dejavu</span><span class="o">/</span><span class="n">DejaVuSans</span><span class="o">.</span><span class="n">ttf</span>
+
+<span class="c1">#启动服务</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">server</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span>
+
+<span class="c1">#写入开机自启动</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">local</span>
+<span class="n">cat</span> <span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">local</span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">server</span>
+<span class="n">EOF</span>
+
+<span class="c1">#输出信息</span>
+<span class="n">echo</span> <span class="s2">&quot;浏览器访问 http://`hostname -I|awk &#39;{print $1}&#39;`/zabbix&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id9">客户端快速安装脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#clsn</span>
+
+<span class="c1">#设置解析</span>
+<span class="n">echo</span> <span class="s1">&#39;10.0.0.1 mirrors.aliyuncs.com mirrors.aliyun.com repo.zabbix.com&#39;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span>
+
+<span class="c1">#安装zabbix源、aliyu nYUM源</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">ivh</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">repo</span><span class="o">.</span><span class="n">zabbix</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">zabbix</span><span class="o">/</span><span class="mf">3.0</span><span class="o">/</span><span class="n">rhel</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">zabbix</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="mf">3.0</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
+
+<span class="c1">#安装zabbix客户端</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">agent</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">sed</span> <span class="o">-</span><span class="n">i</span><span class="o">.</span><span class="n">ori</span> <span class="s1">&#39;s#Server=127.0.0.1#Server=172.16.1.61#&#39;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">zabbix</span><span class="o">/</span><span class="n">zabbix_agentd</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">systemctl</span> <span class="n">start</span>  <span class="n">zabbix</span><span class="o">-</span><span class="n">agent</span><span class="o">.</span><span class="n">service</span>
+
+<span class="c1">#写入开机自启动</span>
+<span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">local</span>
+<span class="n">cat</span> <span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">local</span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">systemctl</span> <span class="n">start</span>  <span class="n">zabbix</span><span class="o">-</span><span class="n">agent</span><span class="o">.</span><span class="n">service</span>
+<span class="n">EOF</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id10">检测连通性</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="zabbix-get">
+<h4>服务端安装zabbix-get检测工具<a class="headerlink" href="#zabbix-get" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">zabbix</span><span class="o">-</span><span class="n">get</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>在服务端进行测试<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span>注意：只能在服务端进行测试
+
+zabbix_get -s 172.16.1.61 -p 10050 -k &quot;system.cpu.load[all,avg1]&quot;
+zabbix_get -s 172.16.1.21 -p 10050 -k &quot;system.cpu.load[all,avg1]&quot;
+</pre></div>
+</div>
+<p>测试结果</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@m01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># zabbix_get -s 172.16.1.61 -p 10050 -k &quot;system.cpu.load[all,avg1]&quot;</span>
+<span class="mf">0.000000</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@m01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># zabbix_get -s 172.16.1.21 -p 10050 -k &quot;system.cpu.load[all,avg1]&quot;</span>
+<span class="mf">0.000000</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../10.快速阅读Linux入门-阿铭Linux/index.html" class="btn btn-neutral float-right" title="10. 快速阅读Linux入门-阿铭Linux" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01.zabbix监控介绍.html" class="btn btn-neutral float-left" title="9.1. zabbix监控简介" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

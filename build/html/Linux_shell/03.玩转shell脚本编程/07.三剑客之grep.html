@@ -1,0 +1,524 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.7. 七、三剑客之grep &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.8. 八、三剑客之sed" href="08.三剑客之sed.html" />
+    <link rel="prev" title="3.6. 六、正则表达式" href="06.正则表达式.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.基础知识.html">3.1. 一、基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 二、字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.7. 七、三剑客之grep</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.7.1. 概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.7.2. 语法格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.7.3. 使用举例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.7. 七、三剑客之grep</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/07.三剑客之grep.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#grep" id="id6">七、三剑客之grep</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">概念</a></li>
+<li><a class="reference internal" href="#id2" id="id8">语法格式</a><ul>
+<li><a class="reference internal" href="#id3" id="id9">选项</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id10">使用举例</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="grep">
+<h1><a class="toc-backref" href="#id6">3.7. 七、三剑客之grep</a><a class="headerlink" href="#grep" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id7">3.7.1. 概念</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>grep (global search regular expression(RE) and print out the
+line,全面搜索正则表达式并把行打印出来)是一种强大的文本搜索工具，它能使用正则表达式搜索文本，并把匹配的行打印出来。egrep是grep的扩展，支持更多的re元字符，
+fgrep就是fixed grep或fast
+grep，它们把所有的字母都看作单词，也就是说，正则表达式中的元字符表示回其自身的字面意义，不再特殊。linux使用GNU版本的grep。它功能更强，可以通过-G、-E、-F命令行选项来使用egrep和fgrep的功能。</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id8">3.7.2. 语法格式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>grep [OPTION]… PATTERN [FILE]</p>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id9">选项</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>grep --help
+
+[options]主要参数：
+-c：只输出匹配行的计数。
+-i：不区分大小写。
+-h：查询多文件时不显示文件名。
+-l：查询多文件时只输出包含匹配字符的文件名。
+-n：显示匹配行及 行号。
+-s：不显示不存在或无匹配文本的错误信息。
+-v：显示不包含匹配文本的所有行。
+--color=auto ：可以将找到的关键词部分加上颜色的显示。
+</pre></div>
+</div>
+<div class="section" id="id4">
+<h4>模式<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>基本正则表达式元字符：</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">.</span> <span class="p">:</span><span class="n">匹配任意单个字符</span>
+<span class="p">[]</span> <span class="p">:</span><span class="n">匹配指定范围内的字符</span>
+<span class="p">[</span><span class="o">^</span><span class="p">]:</span><span class="n">匹配指定范围外的任意字符</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>次数匹配（贪婪模式）</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>*：匹配其前的字符0，1或者多次
+？：匹配其前的字符0或1次
+\{m,n\}:
+    \(m,\):至少m次
+    \{0,n\}:至多n次
+    \{m\}:m次
+</pre></div>
+</div>
+<ul class="simple">
+<li>锚定符：</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>r..t  ：root  chroot
+* 单词锚定：
+\&lt;:锚定词首：\&lt;r..t,    \b
+\&gt;:锚定词尾：root\&gt;
+* 行首行末锚定：
+^: ^root,  行首
+$:    root$ 行尾
+.*:  任意长度的任意字符
+</pre></div>
+</div>
+<ul class="simple">
+<li>分组： () (abc)</li>
+<li>引用：</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span>\1 :后向引用，引用前面的第一个左括号与与之对应的右括号中的模式所匹配到的内容
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id10">3.7.3. 使用举例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>dmesg |grep -n eth0
+grep -E &#39;/.{2,3}&#39; /etc/passwd
+
+$ grep ‘test’ d*
+显示所有以d开头的文件中包含 test的行。
+
+$ grep ‘test’ aa bb cc
+显示在aa，bb，cc文件中匹配test的行。
+
+$ grep ‘[a-z]\{5\}’ aa
+显示所有包含每个字符串至少有5个连续小写字符的字符串的行。
+
+$ grep ‘w\(es\)t.*\1′ aa
+如果west被匹配，则es就被存储到内存中，并标记为1，然后搜索任意个字符(.*)，
+这些字符后面紧跟着 另外一个es(\1)，找到就显示该行。
+如果用egrep或grep -E，就不用”\”号进行转义，直接写成’w(es)t.*\1′就可以了。
+
+
+grep -i pattern files ：不区分大小写地搜索。默认情况区分大小写，
+grep -l pattern files ：只列出匹配的文件名，
+grep -L pattern files ：列出不匹配的文件名，
+grep -w pattern files ：只匹配整个单词，而不是字符串的一部分(如匹配’magic’，而不是’magical’)，
+grep -C number pattern files ：匹配的上下文分别显示[number]行，
+grep pattern1 | pattern2 files ：显示匹配 pattern1 或 pattern2 的行，
+例如：grep &quot;abc\|xyz&quot; testfile    表示过滤包含abc或xyz的行
+grep pattern1 files | grep pattern2 ：显示既匹配 pattern1 又匹配 pattern2 的行。
+
+grep -n pattern files  即可显示行号信息
+
+grep -c pattern files  即可查找总行数
+
+
+显示/proc/meminfo文件中以大小写s开头的行；
+# grep &quot;^[sS]&quot; /proc/meminfo
+# grep -i &quot;^s&quot; /proc/meminfo
+
+
+取出默认shell为非bash的用户；
+# grep -v &quot;bash$&quot; /etc/passwd | cut -d: -f1
+</pre></div>
+</div>
+<p>取掉空行</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="o">-</span><span class="n">E</span> <span class="o">-</span><span class="n">v</span> <span class="s2">&quot;^$|^#&quot;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+<p>查看mysql中的库</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$(mysql -uroot -p&#39;passwd&#39; -e &quot;show databases;&quot;|egrep -v &#39;Database|^test|mysql|performance_schema|information_schema&#39;)
+</pre></div>
+</div>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span># grep
+
+## 匹配到1的行
+[root@localhost ~]# grep &quot;1&quot; awk.txt
+hujianli.wang        male    30   021-1111111
+jianli.hu            Female  25   021-222222
+jack.chen            Male    35   021-333333
+lily.gong           Female   20   021-4444444  shanghai
+
+## -i 不区分大小写的匹配
+[root@localhost ~]# grep -i &quot;f&quot; awk.txt
+jianli.hu            Female  25   021-222222
+lily.gong           Female   20   021-4444444  shanghai
+
+## 匹配以hu开头的行
+[root@localhost ~]# grep &quot;^hu&quot; awk.txt
+hujianli.wang        male    30   021-1111111
+
+
+#搜索以Good 结尾的行
+grep &#39;Good$&#39; RegExp.txt
+
+#排除空行
+[root@localhost ~]# grep -v &quot;^$&quot; sed.txt
+this is line 1,this is First line
+this is line 2,the Second line,Empty line followed
+this is line 4 ,this is Third line
+this is line 5 this is fifth line
+
+#匹配空行的数量
+[root@localhost ~]# grep -c &quot;^$&quot; sed.txt
+1
+
+## 搜索字符..匹配
+[root@localhost ~]# grep &#39;g..d&#39; test_grep.txt
+good morning teacher
+gold sunshine looks beautiful
+golden time flies you fell
+glad wrong word
+gl0d wrong word
+gl2d wrong word gl3d
+
+## ^取反匹配
+[root@localhost ~]# grep &#39;[^Gg]ood&#39; test_grep.txt
+what a delicious food
+ wrong word gooood
+
+ [root@localhost ~]# grep &#39;[Gg]..d&#39; test_grep.txt
+good morning teacher
+gold sunshine looks beautiful
+golden time flies you fell
+glad wrong word
+gl0d wrong word
+gl2d wrong word gl3d
+
+
+[root@localhost ~]# grep &#39;[Gg][lo].d&#39; test_grep.txt
+good morning teacher
+gold sunshine looks beautiful
+golden time flies you fell
+glad wrong word
+gl0d wrong word
+gl2d wrong word gl3d
+
+
+## *来匹配
+[root@localhost ~]# grep go*d test_grep.txt
+good morning teacher
+ wrong word gooood
+
+ ## -
+ [root@localhost ~]# grep &#39;gl[0-9]d&#39; test_grep.txt
+gl0d wrong word
+gl2d wrong word gl3d
+
+
+## 可以使用egrep, egrep支持正则匹配
+{
+[:alnum:]      文字数字字符
+[:alpha:]      文字字符
+[:digit:]      数字字符
+[:graph:]      非空字符( 非空格、控制字符)
+[:lower:]      小写字符
+[:cntrl:]      控制字符
+[:print:]      非空字符( 包括空格)
+[:punct:]      标点符号
+[:space:]      所有空白字符( 新行，空格，制表符)
+[:upper:]      大写字符
+[:xdigit:]     十六进制数字(0-9 ，a-f ，A-F)
+ 搜索以大写字母开头的行
+}
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="08.三剑客之sed.html" class="btn btn-neutral float-right" title="3.8. 八、三剑客之sed" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="06.正则表达式.html" class="btn btn-neutral float-left" title="3.6. 六、正则表达式" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

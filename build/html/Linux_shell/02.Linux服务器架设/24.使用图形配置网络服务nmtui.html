@@ -1,0 +1,370 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.22. nmtui图形配置网络服务 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.23. centos7.2 离线升级openssh7.9" href="25.Centos7中openssh升级到7.9p1.html" />
+    <link rel="prev" title="2.21. 用 Python 快速实现 HTTP 和 FTP 服务器" href="23.用Python快速实现HTTP和FTP服务器.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.22. nmtui图形配置网络服务</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.22.1. 双网卡绑定</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Linux服务器架设</a> &raquo;</li>
+        
+      <li>2.22. nmtui图形配置网络服务</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/24.使用图形配置网络服务nmtui.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#nmtui" id="id2">nmtui图形配置网络服务</a><ul>
+<li><a class="reference internal" href="#id1" id="id3">双网卡绑定</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="nmtui">
+<h1><a class="toc-backref" href="#id2">2.22. nmtui图形配置网络服务</a><a class="headerlink" href="#nmtui" title="Permalink to this headline">¶</a></h1>
+<p>##使用nmtui命令来配置网络 <img alt="image0" src="../../_images/nmtui.PNG" /></p>
+<p>把网络IPv4的配置方式改成Manual（手动） <img alt="image1" src="../../_images/nmtui2.PNG" /></p>
+<p>使用Vim编辑器将网卡配置文件中的ONBOOT参数修改成yes</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
+<span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
+<span class="n">DEFROUTE</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPV4_FAILURE_FATAL</span><span class="o">=</span><span class="n">no</span>
+<span class="n">IPV6INIT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPV6_AUTOCONF</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPV6_DEFROUTE</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPV6_FAILURE_FATAL</span><span class="o">=</span><span class="n">no</span>
+<span class="n">NAME</span><span class="o">=</span><span class="n">eno16777736</span>
+<span class="n">UUID</span><span class="o">=</span><span class="n">ec77579b</span><span class="o">-</span><span class="mi">2</span><span class="n">ced</span><span class="o">-</span><span class="mi">481</span><span class="n">f</span><span class="o">-</span><span class="mi">9</span><span class="n">c09</span><span class="o">-</span><span class="n">f562b321e268</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPADDR0</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.10</span>
+<span class="n">HWADDR</span><span class="o">=</span><span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">C</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="n">C4</span><span class="p">:</span><span class="n">A4</span><span class="p">:</span><span class="mi">09</span>
+<span class="n">PREFIX0</span><span class="o">=</span><span class="mi">24</span>
+<span class="n">IPV6_PEERDNS</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">IPV6_PEERROUTES</span><span class="o">=</span><span class="n">yes</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id3">2.22.1. 双网卡绑定</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>网卡1配置</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
+<span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">USERCTL</span><span class="o">=</span><span class="n">no</span>
+<span class="n">DEVICE</span><span class="o">=</span><span class="n">eno16777736</span>
+<span class="n">MASTER</span><span class="o">=</span><span class="n">bond0</span>
+<span class="n">SLAVE</span><span class="o">=</span><span class="n">yes</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>网卡2配置</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno33554968</span>
+<span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">USERCTL</span><span class="o">=</span><span class="n">no</span>
+<span class="n">DEVICE</span><span class="o">=</span><span class="n">eno33554968</span>
+<span class="n">MASTER</span><span class="o">=</span><span class="n">bond0</span>
+<span class="n">SLAVE</span><span class="o">=</span><span class="n">yes</span>
+</pre></div>
+</div>
+<p>还需要将绑定后的设备命名为bond0并把IP地址等信息填写进去，
+这样当用户访问相应服务的时候，实际上就是由这两块网卡设备在共同提供服务。
+<code class="docutils literal"><span class="pre">[root&#64;linuxprobe</span> <span class="pre">~]#</span> <span class="pre">vim</span> <span class="pre">/etc/sysconfig/network-scripts/ifcfg-bond0</span>&#160;&#160; <span class="pre">TYPE=Ethernet</span>&#160;&#160; <span class="pre">BOOTPROTO=none</span>&#160;&#160; <span class="pre">ONBOOT=yes</span>&#160;&#160; <span class="pre">USERCTL=no</span>&#160;&#160; <span class="pre">DEVICE=bond0</span>&#160;&#160; <span class="pre">IPADDR=192.168.10.10</span>&#160;&#160; <span class="pre">PREFIX=24</span>&#160;&#160; <span class="pre">DNS=192.168.10.1</span>&#160;&#160; <span class="pre">NM_CONTROLLED=no</span></code>
+让Linux内核支持网卡绑定驱动。
+常见的网卡绑定驱动有三种模式——mode0、mode1和mode6。下面以绑定两块网卡为例，讲解使用的情景</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mode0（平衡负载模式）：平时两块网卡均工作，且自动备援，但需要在与服务器本地网卡相连的交换机设备上进行端口聚合来支持绑定技术。
+mode1（自动备援模式）：平时只有一块网卡工作，在它故障后自动替换为另外的网卡。
+mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，无须交换机设备提供辅助支持。
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
+但是访问该服务器的用户数量特别多，那么它的访问压力一定很大。
+在生产环境中，网络的可靠性是极为重要的，而且网络的传输速度也必须得以保证。
+针对这样的情况，比较好的选择就是mode6网卡绑定驱动模式了。
+因为mode6能够让两块网卡同时一起工作，当其中一块网卡出现故障后能自动备援，
+且无需交换机设备支援，从而提供了可靠的网络传输保障。
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
+但是访问该服务器的用户数量特别多，那么它的访问压力一定很大。
+在生产环境中，网络的可靠性是极为重要的，而且网络的传输速度也必须得以保证。
+针对这样的情况，比较好的选择就是mode6网卡绑定驱动模式了。
+因为mode6能够让两块网卡同时一起工作，当其中一块网卡出现故障后能自动备援，且无需交换机设备支援，
+从而提供了可靠的网络传输保障。
+</pre></div>
+</div>
+<p>出现故障时自动切换的时间为100毫秒</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/modprobe.d/bond.conf</span>
+<span class="n">alias</span> <span class="n">bond0</span> <span class="n">bonding</span>
+<span class="n">options</span> <span class="n">bond0</span> <span class="n">miimon</span><span class="o">=</span><span class="mi">100</span> <span class="n">mode</span><span class="o">=</span><span class="mi">6</span>
+</pre></div>
+</div>
+<p>重启网络服务后网卡绑定操作即可成功。</p>
+<p>正常情况下只有bond0网卡设备才会有IP地址等信息</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">network</span>
+</pre></div>
+</div>
+<p>长ping服务器，进行网卡shutdown操作，查看网卡连通性是否正常。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="25.Centos7中openssh升级到7.9p1.html" class="btn btn-neutral float-right" title="2.23. centos7.2 离线升级openssh7.9" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="23.用Python快速实现HTTP和FTP服务器.html" class="btn btn-neutral float-left" title="2.21. 用 Python 快速实现 HTTP 和 FTP 服务器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

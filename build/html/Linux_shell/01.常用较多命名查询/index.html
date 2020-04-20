@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 常用较多命名查询 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="1.1. find查找" href="01.find.html" />
+    <link rel="prev" title="Linux_shell" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 常用较多命名查询</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.正则表达式.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget和curl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.运算符.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc命令.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su命令与sudo服务.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.34. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+      <li>1. 常用较多命名查询</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>1. 常用较多命名查询<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.find.html">1.1. find查找</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.find.html#id1">1.1.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.find.html#id2">1.1.2. 格式：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.find.html#id3">1.1.3. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.find.html#id4">1.1.4. 示例：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.find.html#id5">1.1.5. 常用示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.正则表达式.html">1.2. 正则表达式</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03.lsof.html">1.3. lsof</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.lsof.html#id1">1.3.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.lsof.html#id2">1.3.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.lsof.html#id3">1.3.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.xargs.html">1.4. xargs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.xargs.html#id1">1.4.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.xargs.html#id2">1.4.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.xargs.html#id3">1.4.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.scp.html">1.5. scp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.scp.html#id1">1.5.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.scp.html#id2">1.5.2. 常用选项：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.wget和curl.html">1.6. wget</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.wget和curl.html#id1">1.6.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.wget和curl.html#id2">1.6.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.wget和curl.html#id3">1.6.3. 示例：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.wget和curl.html#curl">1.6.4. curl</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.wget和curl.html#shell">1.6.5. shell爬取网站图片的用例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.curl.html">1.7. curl</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.curl.html#id1">1.7.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.curl.html#id2">1.7.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.curl.html#id3">1.7.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.cut.html">1.8. cut</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.cut.html#id1">1.8.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.cut.html#id2">1.8.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.cut.html#id3">1.8.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09.ss.html">1.10. ss</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.ss.html#id1">1.10.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.ss.html#id2">1.10.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.ss.html#id3">1.10.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.date.html">1.11. date</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10.date.html#id1">1.11.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.date.html#id2">1.11.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.date.html#id3">1.11.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="11.nestat.html">1.12. netstat</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="11.nestat.html#id1">1.12.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.nestat.html#id2">1.12.2. 常用选项:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.nestat.html#id3">1.12.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12.eval.html">1.13. eval</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="12.eval.html#id1">1.13.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.eval.html#id2">1.13.2. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="13.ssh.html">1.14. ssh</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="13.ssh.html#id1">1.14.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13.ssh.html#id2">1.14.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13.ssh.html#id3">1.14.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="14.nohup.html">1.15. nohup</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="14.nohup.html#id1">1.15.1. 功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="14.nohup.html#id2">1.15.2. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="15.grep.html">1.16. grep</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="15.grep.html#id1">1.16.1. 参数说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="15.grep.html#grepif">1.16.2. grep用于if判断</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="16.route.html#id1">1.17.1. 添加网关</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.route.html#id2">1.17.2. 删除</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.route.html#id3">1.17.3. 查看当前路由表</a></li>
+<li class="toctree-l2"><a class="reference internal" href="16.route.html#id4">1.17.4. 示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="17.exec.html">1.18. exec</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="17.exec.html#exec-find">1.18.1. exec+find联合使用示例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="18.运算符.html">1.19. let运算符</a></li>
+<li class="toctree-l1"><a class="reference internal" href="19.read.html">1.20. read</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="19.read.html#readn">1.20.1. 过read从键盘输入中读取到变量N的值</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="20.wc命令.html">1.21. wc命令</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="21.printf.html#echo">1.22.1. echo</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="22.dd.html">1.23. dd命令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="22.dd.html#iso">1.23.1. 1.能够起到闪存或者硬盘的混合型ISO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="22.dd.html#id1">1.23.2. 2. 用命令行刻录ISO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="22.dd.html#cd-rom">1.23.3. 3. 玩转CD-ROM托盘</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="23.tar.html">1.24. tar命令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="23.tar.html#id1">1.24.1. 打包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="23.tar.html#id2">1.24.2. 解包</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="24.su命令与sudo服务.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html">1.26. Centos7忘记root密码、修改网卡名称</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html#id1">1.26.1. Centos7忘记root密码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html#centos7">1.26.2. Centos7修改网卡名称</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l1"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="28.一些有用的shell脚本.html#id1">1.29.1. 删除重复的文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="28.一些有用的shell脚本.html#id2">1.29.2. 生成文件统计信息的脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="30.tcpdump跟踪分组.html#tcpdum">1.31.1. 安装tcpdum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html#http">1. 只显示HTTP分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html#id1">2.只显示本机生成的HTTP分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html#payload">3.查看分组载荷（payload）以及头部</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="31.screen集中管理多个终端.html#id1">1.32.1. 安装screen工具</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="32.echo输出颜色.html#id1">1.33.1. echo 中颜色表示</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.34. Linux初始化系统安全设置</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#ping">1.34.1. 1.禁止系统响应任何从外部/内部来的ping请求</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#shell">1.34.2. 2.限制Shell记录的历史命令条数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#id1">1.34.3. 3.删除系统默认的不必要用户和组</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#selinux">1.34.4. 4.关闭SELinux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#tcp-wrappers">1.34.5. 5.设定tcp_wrappers防火墙</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#id2">1.34.6. 6.运行级别设置为文本模式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#id3">1.34.7. 7. 精简开机启动服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#id4">1.34.8. 8.优化Linux文件打开最大数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="40.Linux初始化系统安全设置.html#id5">1.34.9. 9.Linux内核参数优化</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#centos7yum">1.36.1. Centos7使用互联网yum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#id1">1.36.2. Yum的特点与基本用法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#isoyum">1.36.3. 基于ISO镜像构建本地Yum软件仓库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html#id2">配置本地yum步骤</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#centos7httpyum">1.36.4. Centos7基于HTTP构建局域网yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#id3">1.36.5. YUM源软件包扩展</a></li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#id4">1.36.6. 同步外网yum源</a></li>
+<li class="toctree-l2"><a class="reference internal" href="42.配置Yum软件仓库.html#id5">1.36.7. 几个不错的yum源</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
+<li class="toctree-l1"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.find.html" class="btn btn-neutral float-right" title="1.1. find查找" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Linux_shell" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

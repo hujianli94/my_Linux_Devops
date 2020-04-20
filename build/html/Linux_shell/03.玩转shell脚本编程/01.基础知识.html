@@ -1,0 +1,665 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.1. 一、基础知识 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.2. 二、字符串与数组" href="02.字符串与数组.html" />
+    <link rel="prev" title="3. 玩转shell脚本编程" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.1. 一、基础知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shell">3.1.1. 一、Shell简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.1.2. 二、Shell分类</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.1.3. 三、第一个Shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.1.4. 四、执行Shell的三种方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.1.5. 五、Shell变量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.1.6. 六、引号</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">3.1.7. 七、注释</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.1.8. 八、参考手册</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 二、字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 三、运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 四、流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 五、函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 六、正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 七、三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.三剑客之sed.html">3.8. 八、三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 九、三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. 十、shell杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
+        
+      <li>3.1. 一、基础知识</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/01.基础知识.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id15">一、基础知识</a><ul>
+<li><a class="reference internal" href="#shell" id="id16">一、Shell简介</a></li>
+<li><a class="reference internal" href="#id2" id="id17">二、Shell分类</a><ul>
+<li><a class="reference internal" href="#shell-gui-shell" id="id18">2.1 图形界面 Shell（GUI Shell）</a></li>
+<li><a class="reference internal" href="#shell-cli-shell" id="id19">2.2 命令行界面 Shell（CLI Shell）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id3" id="id20">三、第一个Shell</a></li>
+<li><a class="reference internal" href="#id4" id="id21">四、执行Shell的三种方法</a><ul>
+<li><a class="reference internal" href="#bash" id="id22">4.1 直接bash执行</a></li>
+<li><a class="reference internal" href="#id5" id="id23">4.2 ./执行</a></li>
+<li><a class="reference internal" href="#source" id="id24">4.3 source执行</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6" id="id25">五、Shell变量</a><ul>
+<li><a class="reference internal" href="#id7" id="id26">5.1 变量命名规则：</a></li>
+<li><a class="reference internal" href="#id8" id="id27">5.2 系统内置变量</a></li>
+<li><a class="reference internal" href="#id9" id="id28">设置环境变量永久生效的常用设置文件</a></li>
+<li><a class="reference internal" href="#id10" id="id29">5.3 用户自定义变量</a></li>
+<li><a class="reference internal" href="#id11" id="id30">5.4 变量引用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id12" id="id31">六、引号</a></li>
+<li><a class="reference internal" href="#id13" id="id32">七、注释</a></li>
+<li><a class="reference internal" href="#id14" id="id33">八、参考手册</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id15">3.1. 一、基础知识</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="shell">
+<h2><a class="toc-backref" href="#id16">3.1.1. 一、Shell简介</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<p>Shell 是一个 C 语言编写的脚本语言，它是用户与 Linux
+的桥梁，用户输入命令交给 Shell 处理， Shell
+将相应的操作传递给内核（Kernel），内核把处理的结果输出给用户。</p>
+<p>程序=指令+数据</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id17">3.1.2. 二、Shell分类</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="shell-gui-shell">
+<h3><a class="toc-backref" href="#id18">2.1 图形界面 Shell（GUI Shell）</a><a class="headerlink" href="#shell-gui-shell" title="Permalink to this headline">¶</a></h3>
+<p>GUI 为 Unix 或者类 Unix
+操作系统构造一个功能完善、操作简单以及界面友好的桌面环境。主流桌面环境有
+KDE，Gnome 等。</p>
+</div>
+<div class="section" id="shell-cli-shell">
+<h3><a class="toc-backref" href="#id19">2.2 命令行界面 Shell（CLI Shell）</a><a class="headerlink" href="#shell-cli-shell" title="Permalink to this headline">¶</a></h3>
+<p>CLI
+是在用户提示符下键入可执行指令的界面，用户通过键盘输入指令，完成一系列操作。
+在 Linux 系统上主流的 CLI 实现是 Bash，是许多 Linux 发行版默认的
+Shell。还有许多 Unix 上Shell。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@10</span><span class="o">-</span><span class="mi">234</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">128</span> <span class="n">pyworkspace</span><span class="p">]</span><span class="c1"># cat /etc/shells</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span>
+</pre></div>
+</div>
+<p><strong>Shell的分类:</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>* Bourne Shell（/usr/bin/sh或/bin/sh）
+* Bourne Again Shell（/bin/bash）
+* C Shell（/usr/bin/csh）
+* K Shell（/usr/bin/ksh）
+* Shell for Root（/sbin/sh）
+</pre></div>
+</div>
+<p><strong>脚本命名:</strong></p>
+<p>注意：见名知意，后缀规范为<code class="docutils literal"><span class="pre">.sh</span></code></p>
+</div>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id20">3.1.3. 三、第一个Shell</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="n">echo</span> <span class="s2">&quot;this is my first shell script&quot;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">#!</span></code> 告诉系统其后路径所指定的程序即是解释此脚本文件的 Shell 程序
+<code class="docutils literal"><span class="pre">/bin/bash</span></code> 指定使用的是那种shell <code class="docutils literal"><span class="pre">echo</span></code>在终端打印出内容</p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id21">3.1.4. 四、执行Shell的三种方法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bash">
+<h3><a class="toc-backref" href="#id22">4.1 直接bash执行</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># ll</span>
+<span class="n">total</span> <span class="mi">4</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">44</span> <span class="n">Sep</span>  <span class="mi">3</span> <span class="mi">14</span><span class="p">:</span><span class="mi">16</span> <span class="mi">01</span><span class="o">-</span><span class="n">scripts</span><span class="o">.</span><span class="n">sh</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># cat 01-scripts.sh</span>
+<span class="c1">#!/bin/bash</span>
+
+<span class="n">echo</span> <span class="s2">&quot;this is my first script&quot;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># bash 01-scripts.sh</span>
+<span class="n">this</span> <span class="ow">is</span> <span class="n">my</span> <span class="n">first</span> <span class="n">script</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id23">4.2 ./执行</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># ./01-scripts.sh</span>
+<span class="o">-</span><span class="n">bash</span><span class="p">:</span> <span class="o">./</span><span class="mi">01</span><span class="o">-</span><span class="n">scripts</span><span class="o">.</span><span class="n">sh</span><span class="p">:</span> <span class="n">Permission</span> <span class="n">denied</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># chmod +x 01-scripts.sh</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># ll</span>
+<span class="n">total</span> <span class="mi">4</span>
+<span class="o">-</span><span class="n">rwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">44</span> <span class="n">Sep</span>  <span class="mi">3</span> <span class="mi">14</span><span class="p">:</span><span class="mi">16</span> <span class="mi">01</span><span class="o">-</span><span class="n">scripts</span><span class="o">.</span><span class="n">sh</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># ./01-scripts.sh</span>
+<span class="n">this</span> <span class="ow">is</span> <span class="n">my</span> <span class="n">first</span> <span class="n">script</span>
+</pre></div>
+</div>
+<p>这种方式默认根据脚本第一行指定的解释器处理，如果没写以当前默认 Shell
+解释器执行。</p>
+</div>
+<div class="section" id="source">
+<h3><a class="toc-backref" href="#id24">4.3 source执行</a><a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># source 01-scripts.sh</span>
+<span class="n">this</span> <span class="ow">is</span> <span class="n">my</span> <span class="n">first</span> <span class="n">script</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id25">3.1.5. 五、Shell变量</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>变量名+内存空间</p>
+<p>变量赋值：<code class="docutils literal"><span class="pre">name=value</span></code></p>
+<p>弱类型变量，所有变量类型视为字符串类型，对于数值相加自动转换为数组类型，无需实现声明</p>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id26">5.1 变量命名规则：</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>命名只能使用英文字母，数字和下划线，首个字符不能以数字开头。</li>
+<li>中间不能有空格，可以使用下划线（_）。</li>
+<li>不能使用标点符号。</li>
+<li>不能使用bash里的关键字（可用help命令查看保留关键字）</li>
+<li>做到见名知意</li>
+</ul>
+<p>环境变量作用范围：当前shell进程及其子进程</p>
+<p>本地变量作用范围：当前shell</p>
+<p>局部变量作用范围：代码片段</p>
+<p>利用export将本地变量导入到环境，扩大作用范围</p>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id27">5.2 系统内置变量</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>在命令行提示符直接执行<code class="docutils literal"><span class="pre">env、set</span></code>查看系统或环境变量。<code class="docutils literal"><span class="pre">env</span></code>
+显示用户环境变量，<code class="docutils literal"><span class="pre">set</span></code> 显示 Shell
+预先定义好的变量以及用户变量。可以通过 <code class="docutils literal"><span class="pre">export</span></code> 导出成用户变量。</p>
+<p>还可通过<code class="docutils literal"><span class="pre">printevn/declare</span> <span class="pre">-x</span></code></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$SHELL      默认 Shell
+
+$HOME       当前用户家目录
+
+$IFS        内部字段分隔符
+
+$LANG       默认语言
+
+$PATH       默认可执行程序路径
+
+$PWD        当前目录
+
+$UID        当前用户 ID
+
+$USER       当前用户
+
+$HISTSIZE   历史命令大小，可通过 HISTTIMEFORMAT 变量设置命令执行时间
+
+$RANDOM     随机生成一个 0 至 32767 的整数
+
+$HOSTNAME   主机名
+</pre></div>
+</div>
+<p><strong>特殊变量</strong></p>
+<p>系统变量
+系统变量,Shell常用的系统变量并不多，但却十分有用，特别是在做一些参数检测的时候。下面是Shell常用的系统变量</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">表示方法</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$n</td>
+<td>$1 表示第一个参数，$2 表示第二个参数 …</td>
+</tr>
+<tr class="row-odd"><td>$#</td>
+<td>命令行参数的个数</td>
+</tr>
+<tr class="row-even"><td>$0</td>
+<td>当前程序的名称</td>
+</tr>
+<tr class="row-odd"><td>$?</td>
+<td>前一个命令或函数的返回码</td>
+</tr>
+<tr class="row-even"><td>$*</td>
+<td>以“参数1 参数2 …” 形式保存所有参数</td>
+</tr>
+<tr class="row-odd"><td>$&#64;</td>
+<td>以“参数1” “参数2” … 形式保存所有参数</td>
+</tr>
+<tr class="row-even"><td>$$</td>
+<td>本程序的(进程ID号)PID</td>
+</tr>
+<tr class="row-odd"><td>$!</td>
+<td>上一个命令的PID</td>
+</tr>
+</tbody>
+</table>
+<ul class="simple">
+<li><span class="math">\(*和\)</span>&#64;的区别：</li>
+</ul>
+<p><strong>相同点</strong>：都是引用所有参数。</p>
+<p><strong>不同点</strong>：只有在双引号中体现出来。假设在脚本运行时写了三个参数
+1、2、3，，则 &#8221; * &#8221; 等价于 “1 2 3”（传递了一个参数），而 “&#64;” 等价于 “1”
+“2” “3”（传递了三个参数）。</p>
+<p>profile 类型：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">定义全局变量</span>
+<span class="o">*</span> <span class="n">运行命令或脚本</span>
+</pre></div>
+</div>
+<p>bashrc 类型：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">定义本地变量</span>
+<span class="o">*</span> <span class="n">定义命令别名</span>
+</pre></div>
+</div>
+<p>交互式登录shell：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>加载顺序：/etc/profile -&gt; /etc/profile.d/* -&gt; ~/.bash_profile -&gt; ~/.bashrc -&gt; /etc/bashrc
+</pre></div>
+</div>
+<p>非交互式登录shell：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>加载顺序：~/.bashrc -&gt; /etc/bashrc -&gt; /etc/profile.d/*
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id28">设置环境变量永久生效的常用设置文件</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="n">用户环境变量配置</span>
+<span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">bashrc</span>
+<span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">bash_profile</span>
+
+
+
+<span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="n">全局环境变量的配置</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">bashrc</span>                         <span class="c1"># &lt;=== 推荐在此文件中优先设置</span>
+<span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span><span class="o">.</span><span class="n">d</span><span class="o">/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id29">5.3 用户自定义变量</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>普通变量</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># var=normal</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">workspace</span><span class="p">]</span><span class="c1"># echo $var</span>
+<span class="n">normal</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>临时环境变量</li>
+</ul>
+<p>在当前shell下定义的变量，只对当前shell有效，
+新的bash已经其子bash无法使用当前定义的shell，
+如果在本shell存在的情况下，使用<code class="docutils literal"><span class="pre">export</span></code>来导入到系统变量中，
+如果当前shell终端终端，那么导入的变量将全部失效，永久生效需要写入linux配置文件中。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># export NAME1=hujianli1</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># declare -x NAME2=hujianli2</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># NAME3=hujianli3;export NAME3</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># env|grep NAME*</span>
+<span class="n">HOSTNAME</span><span class="o">=</span><span class="n">k8s</span><span class="o">-</span><span class="n">master</span>
+<span class="n">NAME</span><span class="o">=</span><span class="n">hujianli2</span>
+<span class="n">NAME3</span><span class="o">=</span><span class="n">hujianli3</span>
+<span class="n">NAME2</span><span class="o">=</span><span class="n">hujianli2</span>
+<span class="n">NAME1</span><span class="o">=</span><span class="n">hujianli1</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>只读变量</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&#39;test&#39;</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo $var</span>
+<span class="n">test</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># readonly var</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&#39;bbb&#39;</span>
+<span class="o">-</span><span class="n">bash</span><span class="p">:</span> <span class="n">var</span><span class="p">:</span> <span class="n">readonly</span> <span class="n">variable</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>删除变量</li>
+</ul>
+<p><code class="docutils literal"><span class="pre">unset</span> <span class="pre">variable_name</span></code></p>
+<p>变量被删除后不能再次使用。unset 命令不能删除只读变量。</p>
+</div>
+<div class="section" id="id11">
+<h3><a class="toc-backref" href="#id30">5.4 变量引用</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>= 变量赋值</li>
+<li>+= 变量相加</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">data</span><span class="p">]</span><span class="c1"># var=123</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">data</span><span class="p">]</span><span class="c1"># var+=234</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@shell</span> <span class="n">data</span><span class="p">]</span><span class="c1"># echo $var</span>
+<span class="mi">123234</span>
+</pre></div>
+</div>
+<p>为避免特殊字符及变量与字符连接使用，建议引用变量添加大括号</p>
+</div>
+</div>
+<div class="section" id="id12">
+<h2><a class="toc-backref" href="#id31">3.1.6. 六、引号</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>单引号是告诉 Shell
+忽略特殊字符，而双引号则解释特殊符号原有的意义，比如$、！。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@xuel-tmp-shell www]# var1=&quot;aaa&quot;
+[root@xuel-tmp-shell www]# echo &#39;$var1&#39;
+$var1
+[root@xuel-tmp-shell www]# echo &quot;$var1&quot;
+aaa
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@xuel-tmp-shell www]# var2=&quot;aa&quot;
+[root@xuel-tmp-shell www]# var3=&#39;bb $var2&#39;
+[root@xuel-tmp-shell www]# echo $var3
+bb $var2
+[root@xuel-tmp-shell www]# var4=&quot;bb $var2&quot;
+[root@xuel-tmp-shell www]# echo $var4
+bb aa
+</pre></div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><a class="toc-backref" href="#id32">3.1.7. 七、注释</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>单行注释使用<code class="docutils literal"><span class="pre">#</span></code></li>
+<li>多行注释固定函数格式</li>
+</ul>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#方式一</span>
+<span class="p">:</span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">内容</span><span class="o">...</span>
+<span class="n">内容</span><span class="o">...</span>
+<span class="n">EOF</span>
+
+<span class="c1">#方式二</span>
+<span class="c1">#用:(冒号), 做一个假命令来从一个here document中接收输出 用于区块注释</span>
+<span class="n">cat</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">xxxxx</span>
+<span class="n">yyyyy</span>
+<span class="n">xyxyxyx</span>
+<span class="n">EOF</span>
+
+<span class="c1">#方式三</span>
+<span class="p">[</span> <span class="mi">0</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">1</span> <span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="p">{</span>
+<span class="n">echo</span> <span class="s2">&quot;这是注释1！&quot;</span>
+<span class="n">echo</span> <span class="s2">&quot;这是注释2！&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h2><a class="toc-backref" href="#id33">3.1.8. 八、参考手册</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://bash.cyberciti.biz/guide/Main_Page">https://bash.cyberciti.biz/guide/Main_Page</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02.字符串与数组.html" class="btn btn-neutral float-right" title="3.2. 二、字符串与数组" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="3. 玩转shell脚本编程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

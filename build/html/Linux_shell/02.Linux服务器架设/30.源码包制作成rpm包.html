@@ -1,0 +1,618 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.28. 源码包制作成rpm包 &mdash; 系统化的学习Linux、Shell、Devops运维开发</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.29. Yum自动下载RPM包及其所有依赖的包" href="31.Yum自动下载RPM包及其所有依赖的包.html" />
+    <link rel="prev" title="2.27. 目前流行的开源监控框架" href="29.目前流行的开源监控框架.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.28. 源码包制作成rpm包</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#rpmbuildrpm-mariadb">2.28.1. rpmbuild打包成rpm包(mariadb示例)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rpmbuild-spec">2.28.2. 示例：rpmbuild.spec</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rpmbuildrpm-mysql">2.28.3. rpmbuild打包成rpm包(mysql示例)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mariadbrpm">2.28.4. mariadb定制rpm包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linuxrpmapache">2.28.5. 烂泥：Linux源码包制作RPM包之Apache</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#centos7rpmbuildrpm">2.28.6. centos7使用rpmbuild制作rpm包</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Linux服务器架设</a> &raquo;</li>
+        
+      <li>2.28. 源码包制作成rpm包</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#rpm" id="id1">源码包制作成rpm包</a><ul>
+<li><a class="reference internal" href="#rpmbuildrpm-mariadb" id="id2">rpmbuild打包成rpm包(mariadb示例)</a></li>
+<li><a class="reference internal" href="#rpmbuild-spec" id="id3">示例：rpmbuild.spec</a></li>
+<li><a class="reference internal" href="#rpmbuildrpm-mysql" id="id4">rpmbuild打包成rpm包(mysql示例)</a></li>
+<li><a class="reference internal" href="#mariadbrpm" id="id5">mariadb定制rpm包</a></li>
+<li><a class="reference internal" href="#linuxrpmapache" id="id6">烂泥：Linux源码包制作RPM包之Apache</a></li>
+<li><a class="reference internal" href="#centos7rpmbuildrpm" id="id7">centos7使用rpmbuild制作rpm包</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="rpm">
+<h1><a class="toc-backref" href="#id1">2.28. 源码包制作成rpm包</a><a class="headerlink" href="#rpm" title="Permalink to this headline">¶</a></h1>
+<p>RPM的全称是Red Hat Package Manager(Red
+Hat包管理器)。几乎所有的Linux发行版本都使用这种形式的软件包管理软件，如安装、更新和卸载软件。</p>
+<p>其实制作RPM软件包并不是一项复杂的工作，其中的关键在于编写SPEC软件包描述文件，要想制作一个RPM软件包，就必须编写一个软件包描述文件（SPEC）。
+这个文件中包含了软件包的诸多信息，如软件包的名称、版本、类别、说明摘要、创建时要执行什么指令、安装时要执行什么操作，以及软件包所要包含的文件列表等。</p>
+<p>描述文件的说明具体如下：</p>
+<p>一般的spec文件头包含以下几个域：</p>
+<p>(1)文件头</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>· Summary:  用一句话尽可能多地概括该软件包的信息。
+· Name： 软件包的名称，最终RPM软件包将使用该名称与版本号、释出号及体系号来命名软件包。
+· Version：软件版本号，仅当软件包相较以前有较大改变时才增加版本号。
+· Release：软件包释出号，一般在对该软件包加了一些小补丁的时候就应该把释出号加1。
+· Vendor：软件开发者的名字。
+· Copyright: 软件包所采用的版权规则，具体包括GPL(自由软件)、BSD、MIT、
+Public Domain(公共域)、Distributable(贡献)、Commercial(商业)、Share(共享)等，一般的开发都写GPL。
+· Group：软件包所属类别，具体类别包括文档、娱乐游戏、数据库、编辑器、工程等。
+· Source：源程序软件包的名字，如stardict-2.0.tar.gz。
+· %description： 软件包的详细说明，可写在多个行上。
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li>%prep段</li>
+</ol>
+<div class="highlight-default"><div class="highlight"><pre><span></span>%prep段是预处理段，通常用来执行一些解开源程序包的命令，为下一步编译做准备。
+%prep段和下面的%build、%install段一样，除了可以执行RPM所定义的宏命令（以%开头）以外，还可以执行SHELL命令，命令可有很多行，
+如我们常写的tar解包命令。
+</pre></div>
+</div>
+<p>(3)%build段</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>%build段是建立段，所要执行的命令为生成软件包的服务，如make命令。
+</pre></div>
+</div>
+<p>(4)%install段</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>%install段是安装段，其中的命令是在安装软件包时将执行，如make install命令
+</pre></div>
+</div>
+<p>(5)%files段</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>%files段是文件段，用于定义软件包所包含的文件，分为三类：说明文档(doc)、配置文件(config)及执行程序，
+该段还可以定义文件存储权限、拥有者及组别。
+</pre></div>
+</div>
+<p>(6)%changelog段</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>本段是修改日志段。你可以将软件的每次修改记录到这里，保存到发布的软件包中，以便查询之用。
+每一个修改日志都有这样一种格式：
+    第一行是：* 星期 月 日 年 修改人 电子信箱。其中：星期、月份均用英文形式的前3个字母，用中文会报错。
+    接下来的行写的是修改了什么地方，可写多行。一般以减号开始，便于后续的查阅。
+</pre></div>
+</div>
+<p>参考：</p>
+<p><a class="reference external" href="https://blog.csdn.net/diaoqu4574/article/details/102222811">https://blog.csdn.net/diaoqu4574/article/details/102222811</a></p>
+<div class="section" id="rpmbuildrpm-mariadb">
+<h2><a class="toc-backref" href="#id2">2.28.1. rpmbuild打包成rpm包(mariadb示例)</a><a class="headerlink" href="#rpmbuildrpm-mariadb" title="Permalink to this headline">¶</a></h2>
+<p>编译和二进制安装mysql的时间有点长，所以考虑了一下， 还是利用rpm
+build打包成rpm包更快的安装，还可以自己定义配置文件和脚本等，
+打包一个属于自己的rpm包。</p>
+<p>这里使用的源码包是：</p>
+<p><code class="docutils literal"><span class="pre">mariadb-10.4.11.tar.gz</span></code></p>
+<p>因为这个包自带boost库，就不需要自己另外下载了</p>
+<p>1、开始安装：</p>
+<p>安装rpmbuild工具包：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">rpmbuild</span> <span class="n">rpmdevtools</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>2、初始化一个工作目录：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpmdev</span><span class="o">-</span><span class="n">setuptree</span> <span class="n">rpmbuild2</span>
+</pre></div>
+</div>
+<p>3、查看目录结构：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@master ~]# tree -L 3
+└── rpmbuild
+    ├── BUILD --源码包解压后的目录
+    ├── RPMS --生成rpm包的目录
+    ├── SOURCES --源码包放在这里
+    ├── SPECS --最重要的目录，使用这个目录下的.spec文件生成rpm包
+    └── SRPMS  --存放生成的源码包
+</pre></div>
+</div>
+<p>4、将mariadb-10.4.11.tar.gz上传至SOURCES目录下，
+在该目录下创建my.cnf文件和mysqld.service文件。在SPECS目录下创建mariadb.spec文件。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@172-16-72-20 rpmbuild]# tree -L 3
+.
+├── BUILD
+├── BUILDROOT
+├── RPMS
+│   └── x86_64
+├── SOURCES
+│   ├── mariadb-10.4.11.tar.gz
+│   ├── mariadb.cnf
+│   ├── my.cnf
+│   ├── mysqld
+│   └── mysqld.server
+├── SPECS
+│   └── mariadb.spec
+└── SRPMS
+</pre></div>
+</div>
+<p>5、配置mariadb.spec文件，内容如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[root@172-16-72-20 SPECS]# cat mariadb.spec
+Name:       mariadb
+Version:    10.3.10
+Release:    1%{?dist}
+Summary:    maraidb
+
+License:    GPL
+Source0:    %{name}-%{version}.tar.gz
+Source1:    mariadb.cnf
+Source2:    mysqld.server
+BuildRequires:  cmake /sbin/useradd /sbin/groupadd /bin/bash /bin/sh /bin/chown
+Requires:   Judy-devel bison bison-devel boost-devel cmake gcc-c++ krb5-devel libaio-devel libarchive-devel libedit-devel lz4-devel multilib-rpm-config ncurses-devel openssl openssl-devel pam-devel perl(Data::Dumper) perl(Env) perl(Exporter) perl(Fcntl) perl(File::Temp) perl(Getopt::Long) perl(IPC::Open3) perl(Memoize) perl(Socket) perl(Symbol) perl(Sys::Hostname) perl(Test::More) perl(Time::HiRes) procps python rpmlib(CompressedFileNames) &lt;= 3.0.4-1 rpmlib(FileDigests) &lt;= 4.6.0-1 selinux-policy-devel systemd systemd-devel systemtap-sdt-devel time zlib-devel
+BuildRoot:  %{_topdir}/BUILDROOT
+%define     _prefix     /etc/mysql
+%define     _datadir    /data/mysql/data
+%define     MYSQL_USER  mysql
+%define     MYSQL_GROUP     mysql
+%define     mysql_conf  /etc/mysql/my.cnf
+%define     mysql_server    /usr/lib/systemd/system/mysqld.service
+%define     mysqld      /etc/init.d/mysqld
+%description
+The MySQL(TM) software delivers a very fast, multi-threaded, multi-user,
+and robust SQL (Structured Query Language) database server. MySQL Server
+is intended for mission-critical, heavy-load production systems as well
+as for embedding into mass-deployed software.
+
+%prep
+rm -rf $RPM_BUILD_ROOT/%{name}-%{version}
+%setup -q -n %{name}-%{version}
+id $user &gt;&amp; /dev/null
+if [ $? -ne 0 ];then
+  groupadd %{MYSQL_GROUP}
+  useradd -g %{MYSQL_GROUP} %{MYSQL_USER} -s /bin/nologin &gt;/dev/null 2&gt;&amp;1
+fi
+%build
+cmake . -DCMAKE_INSTALL_PREFIX=%{_prefix} \
+-DMYSQL_DATADIR=%{_datadir} -DSYSCONFDIR=/etc/mysql \
+-DMYSQL_UNIX_ADDR=/var/run/mysqld/mysql.sock \
+-DMYSQL_TCP_PORT=3306 \
+-DWITH_INNOBASE_STORAGE_ENGINE=1 \
+-DWITH_PARTITION_STORAGE_ENGINE=1 \
+-DWITH_BLACKHOLE_STORAGE_ENGINE=1 \
+-DWITH_MYISAM_STORAGE_ENGINE=1 \
+-DWITH_READLINE=1 \
+-DENABLED_LOCAL_INFILE=1 \
+-DDEFAULT_CHARSET=utf8 \
+-DDEFAULT_COLLATION=utf8_general_ci \
+-DWITH_EXTRA_CHARSETS=all
+
+
+make -j `cat /proc/cpuinfo | grep processor| wc -l`
+%install
+rm -rf %{buildroot}
+make DESTDIR=%{buildroot} install
+%{__install} -p -D -m 0644 %{SOURCE1} %{buildroot}/etc/mysql/my.cnf
+%{__install} -p -D -m 0755 %{SOURCE2} %{buildroot}/usr/lib/systemd/system/mysqld.service
+%{__install} -p -D -m 0755 %{buildroot}%{_prefix}/support-files/mysql.server %{buildroot}/etc/init.d/mysqld
+
+%pre
+useradd -s /bin/nologin -M mysql &gt;/dev/null 2&gt;&amp;1
+
+%post
+chkconfig mysqld on
+%{_prefix}/bin/mysqld --initialize-insecure --basedir=%{_prefix} --datadir=%{_datadir} --user=mysql
+%{_prefix}/bin/mysql_ssl_rsa_setup --uid=%{MYSQL_USER}
+chown -R mysql:mysql %{_prefix}
+systemctl start mysqld
+
+%preun
+systemctl stop mysqld
+chkconfig --del mysqld
+
+%postun
+rm -rf /etc/mysql &gt;/dev/null 2&gt;&amp;1
+rm -rf /etc/mysql/data &gt;/dev/null 2&gt;&amp;1
+rm -rf /etc/init.d/mysql &gt;/dev/null 2&gt;&amp;1
+rm -rf /etc/mysql/my.cnf &gt;/dev/null 2&gt;&amp;1
+rm -rf /etc/mysql/my.cnf.d &gt;/dev/null 2&gt;&amp;1
+rm -rf /etc/mysql/mysql &gt;/dev/null 2&gt;&amp;1
+rm -rf /var/run/mysqld.pid &gt;/dev/null 2&gt;&amp;1
+userdel -r mysql &gt;/dev/null 2&gt;&amp;1
+
+%files
+%defattr(-,mysql,mysql)
+%doc
+%{_prefix}
+%{mysql_conf}
+%{mysqld}
+%{mysql_server}
+
+%changelog
+</pre></div>
+</div>
+<p>6、开始打包，执行：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpmbuild</span> <span class="o">-</span><span class="n">bb</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">spec</span>
+</pre></div>
+</div>
+<p>7、等待打包完成，完成之后会在RPMS目录下生成两个rpm包：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@172</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="mi">72</span><span class="o">-</span><span class="mi">20</span> <span class="n">x86_64</span><span class="p">]</span><span class="c1"># ll -lih</span>
+<span class="n">total</span> <span class="mi">204</span><span class="n">M</span>
+<span class="mi">80161320</span> <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">67</span><span class="n">M</span> <span class="n">Jan</span>  <span class="mi">3</span> <span class="mi">06</span><span class="p">:</span><span class="mi">08</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.3</span><span class="o">.</span><span class="mi">10</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+<span class="mi">80161321</span> <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">138</span><span class="n">M</span> <span class="n">Jan</span>  <span class="mi">3</span> <span class="mi">06</span><span class="p">:</span><span class="mi">10</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">debuginfo</span><span class="o">-</span><span class="mf">10.3</span><span class="o">.</span><span class="mi">10</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+<p>8、安装打包好的rpm包：</p>
+</div>
+<div class="section" id="rpmbuild-spec">
+<h2><a class="toc-backref" href="#id3">2.28.2. 示例：rpmbuild.spec</a><a class="headerlink" href="#rpmbuild-spec" title="Permalink to this headline">¶</a></h2>
+<p>制作一个<code class="docutils literal"><span class="pre">cluster-management</span></code>的rpm包</p>
+<p>cluster-management.spec</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Name:      cluster-management-system
+Version:    v0.1
+Release:    1%{?dist}
+Summary:    louie@futongcloud.com.cn
+License:    GPL
+Group:  Applications/System
+#Requires:  /usr/bin/pip
+Source0:   %{name}-%{version}.tar
+
+%description
+This is cluster management system v0.1.
+
+%prep
+
+%build
+
+%install
+mkdir -p $RPM_BUILD_ROOT/tmp/whl
+mkdir -p $RPM_BUILD_ROOT/usr/bin/
+mkdir -p $RPM_BUILD_ROOT/usr/lib/systemd/system/
+cp  %{_builddir}/download/* $RPM_BUILD_ROOT/tmp/whl
+cp  %{_builddir}/bin/* $RPM_BUILD_ROOT/usr/bin
+cp  %{_builddir}/systemd/* $RPM_BUILD_ROOT/usr/lib/systemd/system
+
+%post
+if [ ! -f &quot;/usr/bin/pip&quot; ]; then
+ curl &#39;https://bootstrap.pypa.io/get-pip.py&#39; -o /tmp/get-pip.py &amp;&amp; python /tmp/get-pip.py &amp;&amp; rm -fr /tmp/get-pip.py
+fi
+
+if [ ! -f &quot;/usr/bin/pip&quot; ]; then
+ yum install -y epel-release python-pip
+fi
+
+pip install /tmp/whl/*
+pip install /tmp/whl/tornado-5.1.1.tar.gz
+
+#rm -rf /tmp/whl
+
+function open_ports(){
+for i in $tcp_ports;
+do
+ echo &quot;Set tcp port $i&quot;
+ firewall-cmd --zone=public --add-port=$i/tcp --permanent
+done
+
+for i in $udp_ports;
+do
+ echo &quot;Set upd port $i&quot;
+ firewall-cmd --zone=public --add-port=$i/udp --permanent
+done
+firewall-cmd --reload
+}
+
+tcp_ports=&quot;3306 4396 5010 5016 5671 5672 6010 15671 15672 25672 6379 8300-8302 8400 8500 8080 8686 8070 17082 17086 16006 27016 27017 27018 27019 18080 11000 13001 18000 2377 7946&quot;
+udp_ports=&quot;8301 8302 53 11111 4789 7946&quot;
+
+open_ports
+
+systemctl enable consul
+systemctl enable ftnode
+systemctl enable ft-mongo
+systemctl enable ft-mysql
+systemctl enable ft-rabbitmq
+systemctl enable ft-redis
+systemctl start consul
+systemctl start ftnode
+systemctl start ft-mongo
+systemctl start ft-mysql
+systemctl start ft-rabbitmq
+systemctl start ft-redis
+
+%preun
+systemctl disable consul
+systemctl disable ftnode
+systemctl disable ft-mongo
+systemctl disable ft-mysql
+systemctl disable ft-rabbitmq
+systemctl disable ft-redis
+systemctl stop consul
+systemctl stop ftnode
+systemctl stop ft-mongo
+systemctl stop ft-mysql
+systemctl stop ft-rabbitmq
+systemctl stop ft-redis
+
+
+%files
+%defattr (-,root,root)
+/usr/bin/*
+/usr/lib/systemd/system/*
+/tmp/whl/*
+
+%changelog
+
+%clean
+rm -rf %{buildroot}
+</pre></div>
+</div>
+</div>
+<div class="section" id="rpmbuildrpm-mysql">
+<h2><a class="toc-backref" href="#id4">2.28.3. rpmbuild打包成rpm包(mysql示例)</a><a class="headerlink" href="#rpmbuildrpm-mysql" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.58jb.com/html/149.html">https://www.58jb.com/html/149.html</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/baijiu1/article/details/97017411">https://blog.csdn.net/baijiu1/article/details/97017411</a></p>
+</div>
+<div class="section" id="mariadbrpm">
+<h2><a class="toc-backref" href="#id5">2.28.4. mariadb定制rpm包</a><a class="headerlink" href="#mariadbrpm" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://www.suoniao.com/article/4320">http://www.suoniao.com/article/4320</a></p>
+</div>
+<div class="section" id="linuxrpmapache">
+<h2><a class="toc-backref" href="#id6">2.28.5. 烂泥：Linux源码包制作RPM包之Apache</a><a class="headerlink" href="#linuxrpmapache" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/ilanni/p/4312581.html">https://www.cnblogs.com/ilanni/p/4312581.html</a></p>
+</div>
+<div class="section" id="centos7rpmbuildrpm">
+<h2><a class="toc-backref" href="#id7">2.28.6. centos7使用rpmbuild制作rpm包</a><a class="headerlink" href="#centos7rpmbuildrpm" title="Permalink to this headline">¶</a></h2>
+<p>参考文献</p>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_44208042/article/details/89216844">https://blog.csdn.net/weixin_44208042/article/details/89216844</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/u010384744/article/details/80929319">https://blog.csdn.net/u010384744/article/details/80929319</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/u012373815/article/details/73257754">https://blog.csdn.net/u012373815/article/details/73257754</a></p>
+<p>参考文献</p>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_33827590/article/details/89859618">https://blog.csdn.net/weixin_33827590/article/details/89859618</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="31.Yum自动下载RPM包及其所有依赖的包.html" class="btn btn-neutral float-right" title="2.29. Yum自动下载RPM包及其所有依赖的包" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="29.目前流行的开源监控框架.html" class="btn btn-neutral float-left" title="2.27. 目前流行的开源监控框架" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
