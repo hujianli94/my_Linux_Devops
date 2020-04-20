@@ -86,7 +86,7 @@ exclude_patterns = []
 from recommonmark.transform import AutoStructify
 
 github_doc_root = 'https://github.com/rtfd/recommonmark/tree/master/docs/'
-html_title = u'系统化的学习Linux、Shell、Devops运维开发'
+html_title = u'运维开发修炼之路'
 
 # 注：在生成html的时候这句话要注释
 # latex_engine = 'xelatex'
