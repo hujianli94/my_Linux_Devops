@@ -13,4 +13,7 @@ DevOps与自动化运维
     04.生产环境下的Shell脚本
     05.工作中的Python脚本分享
     06.利用Docker搭建Jenkines-Master-Slave分布式环境
-
+    07.GitLab在DevOps工作中的实际应用
+    08.用Gunicorn部署高性能Python-WSGI服务器
+    09.Supervisor在DevOps中的应用
+    10.分布式队列管理Cerely

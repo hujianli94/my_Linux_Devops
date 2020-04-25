@@ -36,7 +36,7 @@
     26.vmware克隆后操作
     27.xshell登录-采用密钥登录
     28.一些有用的shell脚本
-    29.使用SSH实现端口转发
+    29.使用OpenSSH远程管理Linux服务器
     30.tcpdump跟踪分组
     31.screen集中管理多个终端
     32.echo输出颜色
@@ -44,4 +44,4 @@
     41.使用tar命令进行本地备份scripts
     42.配置Yum软件仓库
     43.Vim编辑器学习
-    44.Linux服务器故障排查顺序
+    44.Linux下软件的安装与管理

@@ -17,6 +17,7 @@
     08.虚拟化与集群应用篇
     09.Keepalived实现基于HTTPD的高可用系统
     10.搭建HAProxy+Keepalived高可用负载均衡系统
+    11.Keepalived实现基于LVS高可用性集群系统
 
 
 

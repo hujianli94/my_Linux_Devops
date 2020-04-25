@@ -101,10 +101,31 @@
 <li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html">2. 02.Shell脚本在Devops下的应用</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4. 04.生产环境下的Shell脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#id1">4.1. 1.生产环境下的备份类脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">4.2. 2.生产环境下的统计类脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">4.3. 3.生产环境下的监控类脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">4.4. 4. 生产环境下运维开发类脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.1. 1.生产环境下的备份类脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#svn">4.1.1. <strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysqls3">4.1.2. <strong>1.2 Mysql数据库备份至S3文件系统</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.2. 2.生产环境下的统计类脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.2.1. <strong>2.1 统计设备资产明细脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.2.2. <strong>2.2 统计重要业务程序是否正常运行</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ip">4.2.3. <strong>2.3 统计机器的IP连接数</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4.3. 3.生产环境下的监控类脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nginxnginx">4.3.1. <strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">4.3.2. <strong>3.2 系统文件数打开监控脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpu">4.3.3. <strong>3.3 监控机器CPU利用率脚本</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">4.4. 4. 生产环境下运维开发类脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">4.4.1. <strong>4.1 系统初始化脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">4.4.2. <strong>4.2 控制shell多进程数量的脚本</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ansible">4.4.3. <strong>4.3 调用Ansible来分发多条线路的配置</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raid">4.4.4. <strong>4.4 手动建立软Raid级别需求</strong></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">4.4.5. <strong>4.5 重载或更新机器路由配置</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a></li>
@@ -184,20 +205,43 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#shell" id="id5">04.生产环境下的Shell脚本</a><ul>
-<li><a class="reference internal" href="#id1" id="id6">1.生产环境下的备份类脚本</a></li>
-<li><a class="reference internal" href="#id2" id="id7">2.生产环境下的统计类脚本</a></li>
-<li><a class="reference internal" href="#id3" id="id8">3.生产环境下的监控类脚本</a></li>
-<li><a class="reference internal" href="#id4" id="id9">4. 生产环境下运维开发类脚本</a></li>
+<li><a class="reference internal" href="#shell" id="id11">04.生产环境下的Shell脚本</a><ul>
+<li><a class="reference internal" href="#id1" id="id12">1.生产环境下的备份类脚本</a><ul>
+<li><a class="reference internal" href="#svn" id="id13"><strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></a></li>
+<li><a class="reference internal" href="#mysqls3" id="id14"><strong>1.2 Mysql数据库备份至S3文件系统</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2" id="id15">2.生产环境下的统计类脚本</a><ul>
+<li><a class="reference internal" href="#id3" id="id16"><strong>2.1 统计设备资产明细脚本</strong></a></li>
+<li><a class="reference internal" href="#id4" id="id17"><strong>2.2 统计重要业务程序是否正常运行</strong></a></li>
+<li><a class="reference internal" href="#ip" id="id18"><strong>2.3 统计机器的IP连接数</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id19">3.生产环境下的监控类脚本</a><ul>
+<li><a class="reference internal" href="#nginxnginx" id="id20"><strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></a></li>
+<li><a class="reference internal" href="#id6" id="id21"><strong>3.2 系统文件数打开监控脚本</strong></a></li>
+<li><a class="reference internal" href="#cpu" id="id22"><strong>3.3 监控机器CPU利用率脚本</strong></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id23">4. 生产环境下运维开发类脚本</a><ul>
+<li><a class="reference internal" href="#id8" id="id24"><strong>4.1 系统初始化脚本</strong></a></li>
+<li><a class="reference internal" href="#id9" id="id25"><strong>4.2 控制shell多进程数量的脚本</strong></a></li>
+<li><a class="reference internal" href="#ansible" id="id26"><strong>4.3 调用Ansible来分发多条线路的配置</strong></a></li>
+<li><a class="reference internal" href="#raid" id="id27"><strong>4.4 手动建立软Raid级别需求</strong></a></li>
+<li><a class="reference internal" href="#id10" id="id28"><strong>4.5 重载或更新机器路由配置</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="shell">
-<h1><a class="toc-backref" href="#id5">4. 04.生产环境下的Shell脚本</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id11">4. 04.生产环境下的Shell脚本</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<p>[TOC]</p>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id6">4.1. 1.生产环境下的备份类脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p><strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></p>
+<h2><a class="toc-backref" href="#id12">4.1. 1.生产环境下的备份类脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="svn">
+<h3><a class="toc-backref" href="#id13">4.1.1. <strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></a><a class="headerlink" href="#svn" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
 SVNDIR=/data/svn
 SVNADMIN=/usr/bin/svnadmin
@@ -242,7 +286,9 @@ bye
 !
 </pre></div>
 </div>
-<p><strong>1.2 Mysql数据库备份至S3文件系统</strong></p>
+</div>
+<div class="section" id="mysqls3">
+<h3><a class="toc-backref" href="#id14">4.1.2. <strong>1.2 Mysql数据库备份至S3文件系统</strong></a><a class="headerlink" href="#mysqls3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 #
 # Filename:
@@ -272,9 +318,11 @@ aws s3 cp ${BACKDIR}/${DATE}/* s3://example-share/cms/databackup/
 </pre></div>
 </div>
 </div>
+</div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id7">4.2. 2.生产环境下的统计类脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p><strong>2.1 统计设备资产明细脚本</strong></p>
+<h2><a class="toc-backref" href="#id15">4.2. 2.生产环境下的统计类脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id16">4.2.1. <strong>2.1 统计设备资产明细脚本</strong></a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 
 #####get cpu info#####
@@ -338,7 +386,9 @@ echo -n &quot;网卡数量(千兆,万兆): $qian_num $wan_num &quot;
 echo &quot;SSD数量: ${ssd_num} SSD容量: ${ssd_sum}GB SATA数量: ${sata_num} SATA容量 ${sata_sum}GB &quot;
 </pre></div>
 </div>
-<p><strong>2.2 统计重要业务程序是否正常运行</strong></p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id17">4.2.2. <strong>2.2 统计重要业务程序是否正常运行</strong></a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 sync_redis_status=`ps aux | grep sync_redis.py | grep -v grep | wc -l `
 if [ ${sync_redis_status} != 1 ]; then
@@ -350,7 +400,9 @@ else
 fi
 </pre></div>
 </div>
-<p><strong>2.3 统计机器的IP连接数</strong></p>
+</div>
+<div class="section" id="ip">
+<h3><a class="toc-backref" href="#id18">4.2.3. <strong>2.3 统计机器的IP连接数</strong></a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 #脚本的$1和$2报警阀值可以根据业务的实际情况调整。
 #$1 = 15000，$2 = 20000
@@ -375,9 +427,11 @@ fi
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id8">4.3. 3.生产环境下的监控类脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p><strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id19">4.3. 3.生产环境下的监控类脚本</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nginxnginx">
+<h3><a class="toc-backref" href="#id20">4.3.1. <strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></a><a class="headerlink" href="#nginxnginx" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 while :
 do
@@ -394,7 +448,9 @@ do
 done
 </pre></div>
 </div>
-<p><strong>3.2 系统文件数打开监控脚本</strong></p>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id21">4.3.2. <strong>3.2 系统文件数打开监控脚本</strong></a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 for pid in `ps aux |grep nginx |grep -v grep|awk &#39;{print $2}&#39;`
 do
@@ -402,7 +458,9 @@ cat /proc/${pid}/limits | grep &#39;Max open files&#39;
 done
 </pre></div>
 </div>
-<p><strong>3.3 监控机器CPU利用率脚本</strong></p>
+</div>
+<div class="section" id="cpu">
+<h3><a class="toc-backref" href="#id22">4.3.3. <strong>3.3 监控机器CPU利用率脚本</strong></a><a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 # CPU Utilization Statistics plugin for Nagios
 #
@@ -567,9 +625,11 @@ fi
 </pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id9">4.4. 4. 生产环境下运维开发类脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<p><strong>4.1 系统初始化脚本</strong></p>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id23">4.4. 4. 生产环境下运维开发类脚本</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id24">4.4.1. <strong>4.1 系统初始化脚本</strong></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>初始化脚本用于新安装的Linux的相关配置工作，（此脚本再Centos6.8
 x86_64上测试通过）</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
@@ -639,7 +699,9 @@ for CURSRV  in crond rsyslog sshd network;do chkconfig --level 3 $CURSRV on;done
 reboot
 </pre></div>
 </div>
-<p><strong>4.2 控制shell多进程数量的脚本</strong></p>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id25">4.4.2. <strong>4.2 控制shell多进程数量的脚本</strong></a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -661,7 +723,9 @@ while [ $count -lt $MAX_SPIDER_COUNT -a $try_time -lt $MAX_SPIDER_COUNT ]; do
 done
 </pre></div>
 </div>
-<p><strong>4.3 调用Ansible来分发多条线路的配置</strong></p>
+</div>
+<div class="section" id="ansible">
+<h3><a class="toc-backref" href="#id26">4.4.3. <strong>4.3 调用Ansible来分发多条线路的配置</strong></a><a class="headerlink" href="#ansible" title="Permalink to this headline">¶</a></h3>
 <p>Ansible的<code class="docutils literal"><span class="pre">hosts</span></code>文件内容如下,举例IP，真实IP已被隐藏</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">yd</span><span class="p">]</span>
 <span class="mf">1.1</span><span class="o">.</span><span class="mf">1.1</span>
@@ -722,7 +786,9 @@ rm -rf $hosts
 trap &quot;rm -rf $hosts&quot; exit
 </pre></div>
 </div>
-<p><strong>4.4 手动建立软Raid级别需求</strong></p>
+</div>
+<div class="section" id="raid">
+<h3><a class="toc-backref" href="#id27">4.4.4. <strong>4.4 手动建立软Raid级别需求</strong></a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 function rg_mkfs_interac(){
     read -p &quot;请输入您要做的RAID级别，可选择项为0|1|5|10:&quot; raid
@@ -774,7 +840,10 @@ function rg_mkfs_interac(){
 }
 </pre></div>
 </div>
-<p><strong>4.5 重载或更新机器路由配置</strong> 参考了Git的思想，配置文件分成3种：</p>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id28">4.4.5. <strong>4.5 重载或更新机器路由配置</strong></a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>参考了Git的思想，配置文件分成3种：</p>
 <p>分别对应Git的工作区、Git本地版本库和Git远程版本库。对应的动作和思路很明确：</p>
 <p>reload和updata动作都会进行差异对比，然后根据需求获取真正有用的rules配置文件。</p>
 <p>这里只列举了<code class="docutils literal"><span class="pre">updata_rules()</span></code>函数,<code class="docutils literal"><span class="pre">reload_rules()</span></code>函数的设计思路与此类似。
@@ -807,6 +876,7 @@ if [ $? -eq 0 ]; then
 fi
 }
 </pre></div>
+</div>
 </div>
 </div>
 </div>

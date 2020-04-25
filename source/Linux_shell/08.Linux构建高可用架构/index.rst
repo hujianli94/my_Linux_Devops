@@ -21,5 +21,6 @@
     12.MySQL主从复制、读写分离
     13.双机热备开源软件Pacemaker
     14.使用Haproxy+keepalived搭建Web群集
+    15.Redis主从+KeepAlived实现高可用
 
 

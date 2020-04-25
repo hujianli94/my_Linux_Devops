@@ -102,10 +102,11 @@
 <li class="toctree-l3"><a class="reference internal" href="#shell">2.1. 2.1 Shell脚本的基本元素</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id1">2.2. 2.2 Shell基础正则表达式</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">2.3. 2.3 Shell特殊字符</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">2.4. 2.4 运行、调试Shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#test">2.5. 2.5 test语句</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id4">2.6. 2.6 Shell应用于Devops开发中音掌握的系统知识点</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id5">2.7. 2.7 理解并行和并发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2.4. 2.4 变量和运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2.5. 2.5 运行、调试Shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test">2.6. 2.6 test语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">2.7. 2.7 Shell应用于Devops开发中音掌握的系统知识点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">2.8. 2.8 理解并行和并发</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a></li>
@@ -187,42 +188,139 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#shelldevops" id="id6">02.Shell脚本在Devops下的应用</a><ul>
-<li><a class="reference internal" href="#shell" id="id7">2.1 Shell脚本的基本元素</a></li>
-<li><a class="reference internal" href="#id1" id="id8">2.2 Shell基础正则表达式</a></li>
-<li><a class="reference internal" href="#id2" id="id9">2.3 Shell特殊字符</a></li>
-<li><a class="reference internal" href="#id3" id="id10">2.4 运行、调试Shell脚本</a></li>
-<li><a class="reference internal" href="#test" id="id11">2.5 test语句</a></li>
-<li><a class="reference internal" href="#id4" id="id12">2.6 Shell应用于Devops开发中音掌握的系统知识点</a></li>
-<li><a class="reference internal" href="#id5" id="id13">2.7 理解并行和并发</a></li>
+<li><a class="reference internal" href="#shelldevops" id="id7">02.Shell脚本在Devops下的应用</a><ul>
+<li><a class="reference internal" href="#shell" id="id8">2.1 Shell脚本的基本元素</a></li>
+<li><a class="reference internal" href="#id1" id="id9">2.2 Shell基础正则表达式</a></li>
+<li><a class="reference internal" href="#id2" id="id10">2.3 Shell特殊字符</a></li>
+<li><a class="reference internal" href="#id3" id="id11">2.4 变量和运算符</a></li>
+<li><a class="reference internal" href="#id4" id="id12">2.5 运行、调试Shell脚本</a></li>
+<li><a class="reference internal" href="#test" id="id13">2.6 test语句</a></li>
+<li><a class="reference internal" href="#id5" id="id14">2.7 Shell应用于Devops开发中音掌握的系统知识点</a></li>
+<li><a class="reference internal" href="#id6" id="id15">2.8 理解并行和并发</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="shelldevops">
-<h1><a class="toc-backref" href="#id6">2. 02.Shell脚本在Devops下的应用</a><a class="headerlink" href="#shelldevops" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id7">2. 02.Shell脚本在Devops下的应用</a><a class="headerlink" href="#shelldevops" title="Permalink to this headline">¶</a></h1>
+<p>[TOC]</p>
 <div class="section" id="shell">
-<h2><a class="toc-backref" href="#id7">2.1. 2.1 Shell脚本的基本元素</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">2.1. 2.1 Shell脚本的基本元素</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
 <p>单行注释</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash     //第一行</span>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash     //第一行</span>
 <span class="c1">#               // 表示单行注释</span>
 </pre></div>
 </div>
 <p>多行注释</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">&lt;&lt;</span><span class="n">BLOCK</span>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="p">:</span><span class="o">&lt;&lt;</span><span class="n">BLOCK</span>
 <span class="n">中间部分为要省略的内容</span>
 <span class="n">BLOCK</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id8">2.2. 2.2 Shell基础正则表达式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>参考玩转shell脚本编程的 <code class="docutils literal"><span class="pre">正则表达式章节</span></code></p>
+<h2><a class="toc-backref" href="#id9">2.2. 2.2 Shell基础正则表达式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>参考玩转shell脚本编程的 `正则表达式章节</p>
+<p><a class="reference external" href="https://www.jb51.net/tools/shell_regex.html">Shell中的正则表达式</a></p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id9">2.3. 2.3 Shell特殊字符</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">2.3. 2.3 Shell特殊字符</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><img alt="image0" src="../_images/shell-teshustr.PNG" /></p>
-<p>关于位置参数shift的常见用法，例如，脚本publis-hconf依次对后面的IP进行操作，代码如下：</p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id11">2.4. 2.4 变量和运算符</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>变量名=“变量”
+readonly 变量名=“变量”       #设置只读变量
+echo $变量名
+set         #显示本地所有的变量
+unset       #变量名清除变量
+readonly    #显示当前Shell下有哪些只读变量
+</pre></div>
+</div>
+<p>设置环境变量，环境变量可以用于所有的子shell中，其包括编辑器、脚本和应用。</p>
+<p>环境变量的主目标如下：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$HOME/.bash_profile(/etc/profile)
+</pre></div>
+</div>
+<p>设置环境变量，例句如下：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">test</span><span class="o">=</span><span class="s2">&quot;123&quot;</span>
+</pre></div>
+</div>
+<p>查看环境变量，命令如下：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">env</span>
+</pre></div>
+</div>
+<p>或者使用</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">export</span>
+</pre></div>
+</div>
+<p>变量清除命令：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">unset</span> <span class="n">变量名</span>
+</pre></div>
+</div>
+<p><strong>位置变量的用法</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+echo &quot;第1个参数为：&quot; $0
+echo &quot;第2个参数为：&quot; $1
+echo &quot;第3个参数为：&quot; $2
+echo &quot;第4个参数为：&quot; $3
+echo &quot;第5个参数为：&quot; $4
+</pre></div>
+</div>
+<p>执行结果如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ ./aaa.sh 1 2 3 4 5
+第1个参数为： ./aaa.sh
+第2个参数为： 1
+第3个参数为： 2
+第4个参数为： 3
+第5个参数为： 4
+</pre></div>
+</div>
+<p>从第10个参数开始就要使用花括号将编号括起来，如“${10}”。</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="80%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">表示方法</th>
+<th class="head">描述</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$n</td>
+<td>$1 表示第一个参数，$2 表示第二个参数 …</td>
+</tr>
+<tr class="row-odd"><td>$#</td>
+<td>命令行参数的个数</td>
+</tr>
+<tr class="row-even"><td>$0</td>
+<td>当前程序的名称</td>
+</tr>
+<tr class="row-odd"><td>$?</td>
+<td>前一个命令或函数的返回码</td>
+</tr>
+<tr class="row-even"><td>$*</td>
+<td>以“参数1 参数2 …” 形式保存所有参数</td>
+</tr>
+<tr class="row-odd"><td>$&#64;</td>
+<td>以“参数1” “参数2” … 形式保存所有参数</td>
+</tr>
+<tr class="row-even"><td>$$</td>
+<td>本程序的(进程ID号)PID</td>
+</tr>
+<tr class="row-odd"><td>$!</td>
+<td>上一个命令的PID</td>
+</tr>
+</tbody>
+</table>
+<p><code class="docutils literal"><span class="pre">$*</span></code>和<code class="docutils literal"><span class="pre">$&#64;</span></code>的区别：</p>
+<p><strong>相同点</strong>：都是引用所有参数。
+<strong>不同点</strong>：只有在双引号中体现出来。假设在脚本运行时写了三个参数
+1、2、3，，<code class="docutils literal"><span class="pre">则</span> <span class="pre">”</span> <span class="pre">*</span> <span class="pre">”</span> <span class="pre">等价于</span> <span class="pre">“1</span> <span class="pre">2</span> <span class="pre">3”（传递了一个参数），</span></code>
+<code class="docutils literal"><span class="pre">而</span> <span class="pre">“&#64;”</span> <span class="pre">等价于</span> <span class="pre">“1”</span> <span class="pre">“2”</span> <span class="pre">“3”（传递了三个参数）。</span></code></p>
+<p><strong>关于位置参数shift的常见用法</strong></p>
+<p>例如，脚本publis-hconf依次对后面的IP进行操作，代码如下：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -239,8 +337,8 @@ fi
 </pre></div>
 </div>
 </div>
-<div class="section" id="id3">
-<h2><a class="toc-backref" href="#id10">2.4. 2.4 运行、调试Shell脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id12">2.5. 2.5 运行、调试Shell脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>调试Shell脚本</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>· -n: 不会执行该脚本，仅查询脚本语法是否有问题，并给出错误提示。
 · -v：在执行脚本时，先将脚本的内容输出到屏幕上，然后执行脚本。如果有错误，也会给出错误提示。
@@ -255,12 +353,17 @@ set -x
 set +x
 </pre></div>
 </div>
-<p>set命令最大的优点是，与“bash -x”相比，“set
--x”可以缩小调试的作用域，这个功能在工作中是非常有用的功能，可以帮助我们调试变量，
-找出Bug的位置并打印。</p>
+<p>set命令最大的优点是：</p>
+<p>与“bash -x”相比，“set
+-x”可以缩小调试的作用域，这个功能在工作中是非常有用的功能，可以帮助我们调试变量，找出Bug的位置并打印。</p>
+<p><strong>退出或出口状态</strong></p>
+<p>在Shell脚本中，可以利用<code class="docutils literal"><span class="pre">&quot;exit[n]&quot;</span></code>
+n在0~255范围之内。向脚本的父进程返回一个数值为n的shell脚本出口状态。</p>
+<p>如果Shell脚本是以不带参数的exit语句结束的，则Shell脚本的出口状态就是脚本最后一条命令的出口状态。</p>
+<p>在Unix中，为了测试一个命令或Shell脚本的执行结果，<code class="docutils literal"><span class="pre">&quot;$?&quot;</span></code>内部变量将返回执行执行的最后一条命令的出口状态。其中0位正确值，其他非零为错误值。</p>
 </div>
 <div class="section" id="test">
-<h2><a class="toc-backref" href="#id11">2.5. 2.5 test语句</a><a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">2.6. 2.6 test语句</a><a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h2>
 <p>文件测试运算符常见代码举例如下：</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>BACKDIR=/data/backup
 
@@ -270,8 +373,8 @@ set +x
 </pre></div>
 </div>
 </div>
-<div class="section" id="id4">
-<h2><a class="toc-backref" href="#id12">2.6. 2.6 Shell应用于Devops开发中音掌握的系统知识点</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id14">2.7. 2.7 Shell应用于Devops开发中音掌握的系统知识点</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>默认情况下，Shell脚本中的命令是串行执行的，必须等到前一条命令执行完毕之后才执行接下来的命令，
 但是如果有一大批的命令需要执行，而且相互之间没有影响的情况下，此时就要使用命令的并发执行了。</p>
 <p>正常的程序<code class="docutils literal"><span class="pre">echo_hello.sh</span></code>代码如下所示：</p>
@@ -341,8 +444,8 @@ sys     0m0.244s
 如果检测到这个文件存在，就认为操作同样数据的进程在工作。这样做有个问题，当进程不小心意外死亡了，没有清理掉那个文件，
 只能由用户手工的去清理了。</p>
 </div>
-<div class="section" id="id5">
-<h2><a class="toc-backref" href="#id13">2.7. 2.7 理解并行和并发</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id15">2.8. 2.8 理解并行和并发</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>目前大部分语言都能瞒住并发执行，当多核CPU出现后，多CPU的场景下开始产生并行的概念。</p>
 <p>（1）总体概念</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>在单CPU系统中，系统调度在某一时刻只能让一个线程运行，虽然这种调试机制具有多种形式（大多数是以时间片轮询为主），

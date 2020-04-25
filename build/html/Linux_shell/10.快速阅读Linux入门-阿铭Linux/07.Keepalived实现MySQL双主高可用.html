@@ -113,17 +113,22 @@
 <li class="toctree-l3"><a class="reference internal" href="02.sed练习题测试.html">10.2. sed练习题测试</a></li>
 <li class="toctree-l3"><a class="reference internal" href="03.xargs与exec.html">10.3. xargs与exec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.Nginx系列.html">10.4. Nginx系列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">10.7. Keepalived实现MySQL双主高可用</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#mysql">10.7.1. MySQL主主互备模式配置环境</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#db1">10.7.2. DB1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#db2">10.7.3. DB2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">10.7.2. MySQL主主互备模式配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db1db2keepalived">10.7.3. DB1和DB2上安装Keepalived</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db1">10.7.4. DB1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db2">10.7.5. DB2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">10.7.6. 测试MySQL主从同步功能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">10.7.7. 相关参考文献：</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Keepalived实现基于HTTPD的高可用系统.html">10.9. Keepalived实现基于HTTPD的高可用系统</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html">10.10. 搭建HAProxy+Keepalived高可用负载均衡系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </li>
 </ul>
@@ -201,19 +206,34 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#keepalivedmysql" id="id1">Keepalived实现MySQL双主高可用</a><ul>
-<li><a class="reference internal" href="#mysql" id="id2">MySQL主主互备模式配置环境</a></li>
-<li><a class="reference internal" href="#db1" id="id3">DB1</a></li>
-<li><a class="reference internal" href="#db2" id="id4">DB2</a></li>
+<li><a class="reference internal" href="#keepalivedmysql" id="id8">Keepalived实现MySQL双主高可用</a><ul>
+<li><a class="reference internal" href="#mysql" id="id9">MySQL主主互备模式配置环境</a></li>
+<li><a class="reference internal" href="#id1" id="id10">MySQL主主互备模式配置</a><ul>
+<li><a class="reference internal" href="#id2" id="id11">1.修改MySQL配置文件</a></li>
+<li><a class="reference internal" href="#id3" id="id12">2.手动同步数据库</a></li>
+<li><a class="reference internal" href="#id4" id="id13">3.创建复制用户并授权，并查看二进制文件</a></li>
+<li><a class="reference internal" href="#position" id="id14">4. 通过关联用户 关联两端position号 与 二进制文件 实现主主复制</a></li>
+<li><a class="reference internal" href="#id5" id="id15">5.两端开启复制功能</a></li>
+<li><a class="reference internal" href="#yes" id="id16">6.查看主主复制状态，双yes 为成功！！！</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#db1db2keepalived" id="id17">DB1和DB2上安装Keepalived</a></li>
+<li><a class="reference internal" href="#db1" id="id18">DB1</a></li>
+<li><a class="reference internal" href="#db2" id="id19">DB2</a></li>
+<li><a class="reference internal" href="#id6" id="id20">测试MySQL主从同步功能</a></li>
+<li><a class="reference internal" href="#id7" id="id21">相关参考文献：</a><ul>
+<li><a class="reference internal" href="#mysql-keepalived" id="id22">MySQL + Keepalived 双主热备高可用操作记录</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="keepalivedmysql">
-<h1><a class="toc-backref" href="#id1">10.7. Keepalived实现MySQL双主高可用</a><a class="headerlink" href="#keepalivedmysql" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id8">10.7. Keepalived实现MySQL双主高可用</a><a class="headerlink" href="#keepalivedmysql" title="Permalink to this headline">¶</a></h1>
 <p>架构图： <img alt="image0" src="../../_images/keepalived_db1_db201.png" /></p>
 <div class="section" id="mysql">
-<h2><a class="toc-backref" href="#id2">10.7.1. MySQL主主互备模式配置环境</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">10.7.1. MySQL主主互备模式配置环境</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
 <col width="14%" />
@@ -245,10 +265,177 @@
 </tr>
 </tbody>
 </table>
-<p>DB1和DB2数据库同步的方式省略</p>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id10">10.7.2. MySQL主主互备模式配置</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id11">1.修改MySQL配置文件</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p><strong>DB1 主机的配置文件</strong></p>
+<p>在/etc/my.cnf文件中的“[mysqld]”段添加如下内容。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 添加 主1 = 1  主2 = 2</span>
+<span class="n">server</span><span class="o">-</span><span class="nb">id</span>  <span class="o">=</span>  <span class="mi">1</span>
+<span class="c1"># 添加 开启二进制文件</span>
+<span class="n">log</span><span class="o">-</span><span class="nb">bin</span><span class="o">=</span><span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span>
+<span class="n">relay</span><span class="o">-</span><span class="n">log</span>  <span class="o">=</span>  <span class="n">mysql</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span>
+
+<span class="c1"># 添加 避免主键冲突</span>
+<span class="n">auto</span><span class="o">-</span><span class="n">increment</span><span class="o">-</span><span class="n">offset</span><span class="o">=</span> <span class="mi">1</span>
+<span class="n">auto</span><span class="o">-</span><span class="n">increment</span><span class="o">-</span><span class="n">increment</span><span class="o">=</span> <span class="mi">2</span>
+<span class="c1">##过滤掉不需要复制的数据库或表</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">mysql</span><span class="o">.%</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">test</span><span class="o">.%</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">information_schema</span><span class="o">.%</span>
+</pre></div>
+</div>
+<p><strong>DB2主机的配置文件</strong></p>
+<p>在/etc/my.cnf文件中的“[mysqld]”段添加如下内容。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 添加 主1 = 1  主2 = 2</span>
+<span class="n">server</span><span class="o">-</span><span class="nb">id</span>  <span class="o">=</span>  <span class="mi">2</span>
+<span class="c1"># 添加 开启二进制文件</span>
+<span class="n">log</span><span class="o">-</span><span class="nb">bin</span><span class="o">=</span><span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span>
+<span class="n">relay</span><span class="o">-</span><span class="n">log</span>  <span class="o">=</span>  <span class="n">mysql</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span>
+
+<span class="c1"># 添加 避免主键冲突</span>
+<span class="n">auto</span><span class="o">-</span><span class="n">increment</span><span class="o">-</span><span class="n">offset</span><span class="o">=</span> <span class="mi">1</span>
+<span class="n">auto</span><span class="o">-</span><span class="n">increment</span><span class="o">-</span><span class="n">increment</span><span class="o">=</span> <span class="mi">2</span>
+<span class="c1">##过滤掉不需要复制的数据库或表</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">mysql</span><span class="o">.%</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">test</span><span class="o">.%</span>
+<span class="n">replicate</span><span class="o">-</span><span class="n">wild</span><span class="o">-</span><span class="n">ignore</span><span class="o">-</span><span class="n">table</span><span class="o">=</span><span class="n">information_schema</span><span class="o">.%</span>
+</pre></div>
+</div>
+<p><strong>replicate-wild-ignore-table
+是个复制过滤选项，可以过滤掉不需要复制的数据库或表。</strong></p>
+<p>例如“mysql.%”表示不复制MySQL库下的所有对象，其他依次类推。</p>
+<p><strong>与此对应的是replicate_wild_do_table选项，用来指定需要复制的数据库或表。</strong></p>
+<p>这里需要注意的是，不要在主库上使用binlog-do-db或binlog-ignore-db选项，也不要在从库上使用replicate-do-db或replicate-ignore-db选项，因为这样可能产生跨库更新失败的问题。推荐在从库上使用replicate_wild_do_table和replicate-wild-ignore-table两个选项来解决复制过滤问题。</p>
+</div>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id12">2.手动同步数据库</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>mysql&gt;FLUSH  TABLES  WITH  READ  LOCK;
+Query  OK,  0  rows  affected  (0.00  sec)
+不要退出这个终端，否则这个锁就失效了。在不退出终端的情况下，再开启一个终端直接打包压缩数据文件或使用mysqldump工具来导出数据。这里通过打包mysql文件来完成数据的备份，操作过程如下：
+
+[root@DB1 ～]# cd /var/lib/
+[root@DB1  lib]# tar zcvf mysql.tar.gz  mysql
+[root@DB1 lib]# scp mysql.tar.gz  DB2:/var/lib/
+</pre></div>
+</div>
+<p>将数据传输到DB2后，依次重启DB1和DB2上面的mysql。</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id13">3.创建复制用户并授权，并查看二进制文件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>首先在DB1的mysql库中创建复制用户，</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">创建用户</span>
+<span class="c1"># 1.创建用户名可被任意主机连接</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;grant all on *.* to &quot;</span><span class="n">root</span><span class="s2">&quot;@&quot;</span><span class="o">%</span><span class="s2">&quot; identified by &quot;</span><span class="mi">123456</span><span class="s2">&quot;;&quot;</span>
+
+<span class="c1"># 2.添加复制连接用户</span>
+<span class="n">GRANT</span> <span class="n">REPLICATION</span> <span class="n">SLAVE</span> <span class="n">ON</span> <span class="o">*.*</span> <span class="n">TO</span> <span class="s1">&#39;RepUser&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;beijing&#39;</span><span class="p">;</span>
+
+<span class="c1"># 3.刷新</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>查看二进制文件</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 进入主1数据库</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span> <span class="o">|</span>      <span class="mi">245</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+
+<span class="c1"># 进入主2数据库</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p123456</span>
+
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span> <span class="o">|</span>      <span class="mi">335</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">+------------------+----------+--------------+------------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="position">
+<h3><a class="toc-backref" href="#id14">4. 通过关联用户 关联两端position号 与 二进制文件 实现主主复制</a><a class="headerlink" href="#position" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 主1</span>
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">CHANGE</span> <span class="n">MASTER</span> <span class="n">TO</span> <span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;RepUser&#39;</span><span class="p">,</span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;192.168.1.109&#39;</span><span class="p">,</span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;beijing&#39;</span><span class="p">,</span><span class="n">MASTER_PORT</span><span class="o">=</span><span class="mi">3307</span><span class="p">,</span><span class="n">MASTER_LOG_FILE</span><span class="o">=</span><span class="s1">&#39;mysql-bin.000005&#39;</span><span class="p">,</span><span class="n">MASTER_LOG_POS</span><span class="o">=</span><span class="mi">335</span><span class="p">;</span>
+
+<span class="c1"># 主2</span>
+<span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">CHANGE</span> <span class="n">MASTER</span> <span class="n">TO</span> <span class="n">MASTER_USER</span><span class="o">=</span><span class="s1">&#39;RepUser&#39;</span><span class="p">,</span><span class="n">MASTER_HOST</span><span class="o">=</span><span class="s1">&#39;192.168.1.108&#39;</span><span class="p">,</span><span class="n">MASTER_PASSWORD</span><span class="o">=</span><span class="s1">&#39;beijing&#39;</span><span class="p">,</span><span class="n">MASTER_PORT</span><span class="o">=</span><span class="mi">3307</span><span class="p">,</span><span class="n">MASTER_LOG_FILE</span><span class="o">=</span><span class="s1">&#39;mysql-bin.000004&#39;</span><span class="p">,</span><span class="n">MASTER_LOG_POS</span><span class="o">=</span><span class="mi">245</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id15">5.两端开启复制功能</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">start</span> <span class="n">slave</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="yes">
+<h3><a class="toc-backref" href="#id16">6.查看主主复制状态，双yes 为成功！！！</a><a class="headerlink" href="#yes" title="Permalink to this headline">¶</a></h3>
+<p><strong>主1</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span>
+<span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
+               <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
+                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.109</span>
+                  <span class="n">Master_User</span><span class="p">:</span> <span class="n">RepUser</span>
+                  <span class="n">Master_Port</span><span class="p">:</span> <span class="mi">3307</span>
+                <span class="n">Connect_Retry</span><span class="p">:</span> <span class="mi">60</span>
+              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span>
+          <span class="n">Read_Master_Log_Pos</span><span class="p">:</span> <span class="mi">335</span>
+               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000015</span>
+                <span class="n">Relay_Log_Pos</span><span class="p">:</span> <span class="mi">619</span>
+        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span>
+             <span class="n">Slave_IO_Running</span><span class="p">:</span> <span class="n">Yes</span>
+            <span class="n">Slave_SQL_Running</span><span class="p">:</span> <span class="n">Yes</span>
+</pre></div>
+</div>
+<p><strong>主2</strong></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span>  <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span>
+<span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
+               <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
+                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.108</span>
+                  <span class="n">Master_User</span><span class="p">:</span> <span class="n">RepUser</span>
+                  <span class="n">Master_Port</span><span class="p">:</span> <span class="mi">3307</span>
+                <span class="n">Connect_Retry</span><span class="p">:</span> <span class="mi">60</span>
+              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span>
+          <span class="n">Read_Master_Log_Pos</span><span class="p">:</span> <span class="mi">245</span>
+               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000015</span>
+                <span class="n">Relay_Log_Pos</span><span class="p">:</span> <span class="mi">529</span>
+        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span>
+             <span class="n">Slave_IO_Running</span><span class="p">:</span> <span class="n">Yes</span>
+            <span class="n">Slave_SQL_Running</span><span class="p">:</span> <span class="n">Yes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="db1db2keepalived">
+<h2><a class="toc-backref" href="#id17">10.7.3. DB1和DB2上安装Keepalived</a><a class="headerlink" href="#db1db2keepalived" title="Permalink to this headline">¶</a></h2>
+<p>安装和配置，安装过程如下:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#tar zxvf keepalived-1.2.12.tar.gz</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#cd  keepalived-1.2.12</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#./configure   --sysconf=/etc \</span>
+<span class="o">&gt;</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="nb">dir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">32</span><span class="o">-</span><span class="mf">431.5</span><span class="o">.</span><span class="mf">1.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#make</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#make  install</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#ln -s /usr/local/sbin/keepalived /sbin/</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#chkconfig   --add  keepalived</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#chkconfig   --level  35  keepalived  on</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="db1">
-<h2><a class="toc-backref" href="#id3">10.7.2. DB1</a><a class="headerlink" href="#db1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">10.7.4. DB1</a><a class="headerlink" href="#db1" title="Permalink to this headline">¶</a></h2>
 <p>DB1服务器上<code class="docutils literal"><span class="pre">/etc/keepalived/keepalived.conf</span></code></p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">global_defs</span> <span class="p">{</span>
      <span class="n">notification_email</span> <span class="p">{</span>
@@ -330,10 +517,22 @@ exit  0;
 <p>这是个用Perl写的检测mysql复制状态的脚本。ixdba是本例中的一个数据库名。读者只需修改文件中数据库名、数据库的端口、用户名和密码即可直接使用，但在使用前要保证对于此脚本有可执行权限</p>
 </div>
 <div class="section" id="db2">
-<h2><a class="toc-backref" href="#id4">10.7.3. DB2</a><a class="headerlink" href="#db2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">10.7.5. DB2</a><a class="headerlink" href="#db2" title="Permalink to this headline">¶</a></h2>
 <p>接着将keepalived.conf文件和check_slave.pl文件复制到DB2服务器上对应的位置，
 然后将DB2上keepalived.conf文件中<code class="docutils literal"><span class="pre">priority值修改为90</span></code>，同时去掉<code class="docutils literal"><span class="pre">nopreempt</span></code>选项。</p>
 <p>在完成所有配置后，分别在DB1和DB2上启动Keepalived服务，在正常情况下VIP地址应该运行在DB1服务器上。</p>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id20">10.7.6. 测试MySQL主从同步功能</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p><strong>1.在远程客户端通过VIP登录测试</strong></p>
+<p><strong>2.数据复制功能测试</strong></p>
+<p>着上面的SQL操作过程，通过远程的mysql客户端连接VIP，进行读、写操作测试，登录DB2主机的mysql命令行，查询过程,看数据是否能够迅速同步了DB1的mysql写的数据。</p>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id21">10.7.7. 相关参考文献：</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="mysql-keepalived">
+<h3><a class="reference external" href="https://www.cnblogs.com/kevingrace/p/6710136.html">MySQL + Keepalived 双主热备高可用操作记录</a><a class="headerlink" href="#mysql-keepalived" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 

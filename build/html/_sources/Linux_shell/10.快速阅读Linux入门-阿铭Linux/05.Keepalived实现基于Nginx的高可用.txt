@@ -2,13 +2,13 @@
    :depth: 3
 ..
 
-Keepalived实现基于Nginx的高可用.md
-==================================
+Keepalived实现基于Nginx的高可用
+===============================
 
-master主机
-----------
+Nginx的master主机
+-----------------
 
-master_keepalived.conf
+``master_keepalived.conf``
 
 ::
 
@@ -47,7 +47,7 @@ master_keepalived.conf
 
    }
 
-master上
+master上检测脚本
 
 ``check_ng.sh``
 
@@ -69,10 +69,10 @@ master上
            fi
    fi
 
-backup备机
-----------
+Nginx的backup备机
+-----------------
 
-backup_keepalived.conf
+``backup_keepalived.conf``
 
 ::
 
@@ -111,7 +111,7 @@ backup_keepalived.conf
 
    }
 
-backup上
+backup上的检测脚本
 
 ``check_ng.sh``
 

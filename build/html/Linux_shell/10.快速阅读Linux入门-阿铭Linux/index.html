@@ -113,12 +113,13 @@
 <li class="toctree-l3"><a class="reference internal" href="02.sed练习题测试.html">10.2. sed练习题测试</a></li>
 <li class="toctree-l3"><a class="reference internal" href="03.xargs与exec.html">10.3. xargs与exec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.Nginx系列.html">10.4. Nginx系列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html">10.7. Keepalived实现MySQL双主高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Keepalived实现基于HTTPD的高可用系统.html">10.9. Keepalived实现基于HTTPD的高可用系统</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html">10.10. 搭建HAProxy+Keepalived高可用负载均衡系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </li>
 </ul>
@@ -218,16 +219,31 @@
 <li class="toctree-l2"><a class="reference internal" href="04.Nginx系列.html#nginx-ssl">10.4.13. Nginx 配置ssl</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html#master">10.5.1. master主机</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html#backup">10.5.2. backup备机</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html#nginxmaster">10.5.1. Nginx的master主机</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html#nginxbackup">10.5.2. Nginx的backup备机</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
 <li class="toctree-l1"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html">10.7. Keepalived实现MySQL双主高可用</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#mysql">10.7.1. MySQL主主互备模式配置环境</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#db1">10.7.2. DB1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#db2">10.7.3. DB2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id1">10.7.2. MySQL主主互备模式配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id2">1.修改MySQL配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id3">2.手动同步数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id4">3.创建复制用户并授权，并查看二进制文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#position">4. 通过关联用户 关联两端position号 与 二进制文件 实现主主复制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id5">5.两端开启复制功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#yes">6.查看主主复制状态，双yes 为成功！！！</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#db1db2keepalived">10.7.3. DB1和DB2上安装Keepalived</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#db1">10.7.4. DB1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#db2">10.7.5. DB2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id6">10.7.6. 测试MySQL主从同步功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#id7">10.7.7. 相关参考文献：</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html#mysql-keepalived">MySQL + Keepalived 双主热备高可用操作记录</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
@@ -256,6 +272,7 @@
 <li class="toctree-l2"><a class="reference internal" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html#id1">10.10.3. 3. 验证</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </div>
 </div>

@@ -103,6 +103,10 @@
 <li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html">7. GitLab在DevOps工作中的实际应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.用Gunicorn部署高性能Python-WSGI服务器.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.分布式队列管理Cerely.html">10. 分布式队列管理Cerely</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
@@ -178,19 +182,19 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="01.Devops与自动化运维的意义.html">1. 01.Devops与自动化运维的意义</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id1">1.1. 为什么企业需要自动化运维</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id2">1.2. 为什么要前后端分离</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#restful">1.3. 什么是RESTful</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#web">1.4. Web编程相关体系知识点</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id1">1.1. 1.1 为什么企业需要自动化运维</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id2">1.2. 1.2 为什么要前后端分离</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#restful">1.3. 1.3 什么是RESTful</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#web">1.4. 1.4 Web编程相关体系知识点</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id3">1.4.1. 同步和异步、阻塞与非阻塞的区别</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id4">1.5. 从事Devops应该掌握的语言</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id5">1.6. 从事DevOps工作应该掌握的工具</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id6">1.7. 了解网站系统架构设计和高并发场景</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id8">1.8. 了解数据库集群主从复制的基本原理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id4">1.5. 1.5 从事Devops应该掌握的语言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id5">1.6. 1.6 从事DevOps工作应该掌握的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id6">1.7. 1.7 了解网站系统架构设计和高并发场景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops与自动化运维的意义.html#id8">1.8. 1.8 了解数据库集群主从复制的基本原理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="01.Devops与自动化运维的意义.html#redis">1.8.1. redis主从复制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Devops与自动化运维的意义.html#mysqlreplication">1.8.2. MySQL数据库注册Replication同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops与自动化运维的意义.html#mysqlreplication">1.8.2. MySQL数据库主从Replication同步</a></li>
 </ul>
 </li>
 </ul>
@@ -199,26 +203,49 @@
 <li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#shell">2.1. 2.1 Shell脚本的基本元素</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id1">2.2. 2.2 Shell基础正则表达式</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id2">2.3. 2.3 Shell特殊字符</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id3">2.4. 2.4 运行、调试Shell脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#test">2.5. 2.5 test语句</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id4">2.6. 2.6 Shell应用于Devops开发中音掌握的系统知识点</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id5">2.7. 2.7 理解并行和并发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id3">2.4. 2.4 变量和运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id4">2.5. 2.5 运行、调试Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#test">2.6. 2.6 test语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id5">2.7. 2.7 Shell应用于Devops开发中音掌握的系统知识点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell脚本在Devops下的应用.html#id6">2.8. 2.8 理解并行和并发</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#python">3.1. Python基础知识进阶</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#id1">3.1.1. 1.正则表达式应用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#pythonjson">3.1.2. 2.使用Python解析JSON</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#id2">3.1.3. 3.Python多进程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#python">3.1. 3.1 Python基础知识进阶</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#id1">3.1.1. 3.1.1 正则表达式应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#pythonjson">3.1.2. 3.1.2 使用Python解析JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#id2">3.1.3. 3.1.3 Python多进程</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python在Devops与自动化运维中的应用.html#id3">3.2. 3.2 Python常用的三方库</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id1">4.1. 1.生产环境下的备份类脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id2">4.2. 2.生产环境下的统计类脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id3">4.3. 3.生产环境下的监控类脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id4">4.4. 4. 生产环境下运维开发类脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id1">4.1. 1.生产环境下的备份类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#svn">4.1.1. <strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#mysqls3">4.1.2. <strong>1.2 Mysql数据库备份至S3文件系统</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id2">4.2. 2.生产环境下的统计类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id3">4.2.1. <strong>2.1 统计设备资产明细脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id4">4.2.2. <strong>2.2 统计重要业务程序是否正常运行</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#ip">4.2.3. <strong>2.3 统计机器的IP连接数</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id5">4.3. 3.生产环境下的监控类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#nginxnginx">4.3.1. <strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id6">4.3.2. <strong>3.2 系统文件数打开监控脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#cpu">4.3.3. <strong>3.3 监控机器CPU利用率脚本</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id7">4.4. 4. 生产环境下运维开发类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id8">4.4.1. <strong>4.1 系统初始化脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id9">4.4.2. <strong>4.2 控制shell多进程数量的脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#ansible">4.4.3. <strong>4.3 调用Ansible来分发多条线路的配置</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#raid">4.4.4. <strong>4.4 手动建立软Raid级别需求</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.生产环境下的Shell脚本.html#id10">4.4.5. <strong>4.5 重载或更新机器路由配置</strong></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="05.工作中的Python脚本分享.html">5. 05.工作中的Python脚本分享</a><ul>
@@ -233,6 +260,42 @@
 <li class="toctree-l1"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html">6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html#dockerfi">6.1. Dockerfi文件</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.利用Docker搭建Jenkines-Master-Slave分布式环境.html#docker-compose">6.2. 利用docker-compose编排多容器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html">7. GitLab在DevOps工作中的实际应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#gitlab">7.1. GitLab的优势所在</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#gitsvn">7.1.1. Git与SVN的区别如下：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#gitlabgithub">7.1.2. GitLab与Github的区别如下：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#id1">7.2. GitLab的工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#id2">7.2.1. 离线场景下，如图：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#gitlab-repository">7.2.2. 在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#gitlub">7.3. GitLub部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab在DevOps工作中的实际应用.html#id3">7.4. GitLub的操作流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.用Gunicorn部署高性能Python-WSGI服务器.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.用Gunicorn部署高性能Python-WSGI服务器.html#nginx-gunicorn-flask-supervisor-python">8.1. Nginx+Gunicorn+Flask+Supervisor 部署 Python 服务的详细教程！</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html">9. Supervisor在DevOps中的应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html#supervisor">9.1. Supervisor的作用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html#id1">9.2. Supervisor安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html#id2">9.3. Supervisor的配置文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html#id3">9.4. Supervisor的启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor在DevOps中的应用.html#supervisor4redis">9.5. Supervisor管理4个redis实例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.分布式队列管理Cerely.html">10. 分布式队列管理Cerely</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10.分布式队列管理Cerely.html#celery">10.1. Celery有以下优点：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.分布式队列管理Cerely.html#demo">10.2. Demo演示</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.分布式队列管理Cerely.html#id1">10.2.1. 简单使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.分布式队列管理Cerely.html#id2">10.3. Cerely进阶参考文献</a></li>
 </ul>
 </li>
 </ul>
