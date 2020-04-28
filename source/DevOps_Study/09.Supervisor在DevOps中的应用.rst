@@ -134,3 +134,9 @@ Supervisor管理4个redis实例
    priority=999
    autostart=true
    autorestart=true
+
+使用Supervisord软件管理go服务进程
+---------------------------------
+
+参考文献如下：
+`使用Supervisord软件管理go服务进程 <https://www.cnblogs.com/nulige/p/11075596.html>`__
