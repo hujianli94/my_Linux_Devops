@@ -43,7 +43,7 @@
   
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="next" title="Mysql王者之路" href="../../Mysql/index.html" />
+    <link rel="next" title="10.11. Keepalived实现基于LVS高可用性集群系统" href="11.Keepalived实现基于LVS高可用性集群系统.html" />
     <link rel="prev" title="10.9. Keepalived实现基于HTTPD的高可用系统" href="09.Keepalived实现基于HTTPD的高可用系统.html" /> 
 </head>
 
@@ -113,7 +113,7 @@
 <li class="toctree-l3"><a class="reference internal" href="02.sed练习题测试.html">10.2. sed练习题测试</a></li>
 <li class="toctree-l3"><a class="reference internal" href="03.xargs与exec.html">10.3. xargs与exec</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.Nginx系列.html">10.4. Nginx系列</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html">10.7. Keepalived实现MySQL双主高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
@@ -124,6 +124,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">10.10.3. 3. 验证</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </li>
 </ul>
@@ -214,43 +215,50 @@
 <p>Haproxy+Keepalived地址规划表</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="25%" />
-<col width="23%" />
-<col width="29%" />
-<col width="23%" />
+<col width="24%" />
+<col width="22%" />
+<col width="28%" />
+<col width="22%" />
+<col width="3%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">主机名</th>
 <th class="head">主机IP地址</th>
 <th class="head">集群角色</th>
 <th class="head">虚拟 VIP</th>
+<th class="head">&nbsp;</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>haproxy-server</td>
+<tr class="row-even"><td>master-haproxy</td>
 <td>192.168.0.128</td>
 <td>主HAProxy服务</td>
 <td>192.168.0.130</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td>backup-haproxy</td>
 <td>192.168.0.129</td>
 <td>备用HAProxy服务器</td>
 <td>192.168.0.130</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-even"><td>webapp1</td>
 <td>192.168.0.20</td>
 <td>后端服务器1</td>
 <td>无</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-odd"><td>webapp2</td>
 <td>192.168.0.21</td>
 <td>后端服务器2</td>
 <td>无</td>
+<td>&nbsp;</td>
 </tr>
 <tr class="row-even"><td>webapp3</td>
 <td>192.168.0.22</td>
 <td>后端服务器3</td>
 <td>无</td>
+<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -492,7 +500,7 @@ vrrp_instance HAProxy_HA {
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../../Mysql/index.html" class="btn btn-neutral float-right" title="Mysql王者之路" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="11.Keepalived实现基于LVS高可用性集群系统.html" class="btn btn-neutral float-right" title="10.11. Keepalived实现基于LVS高可用性集群系统" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="09.Keepalived实现基于HTTPD的高可用系统.html" class="btn btn-neutral float-left" title="10.9. Keepalived实现基于HTTPD的高可用系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

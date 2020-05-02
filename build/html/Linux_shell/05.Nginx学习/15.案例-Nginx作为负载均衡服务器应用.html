@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5.15. 案例-Nginx作为负载均衡服务器应用 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" />
+    <link rel="prev" title="5.14. 案例-Nginx作为Web缓存服务器应用" href="14.案例-Nginx作为Web缓存服务器应用.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Nginx学习</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.nginx入门简介.html">5.1. nginx入门简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.nginx常用命令管理.html">5.2. nginx常用命令管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.nginx版本升级.html">5.3. nginx版本升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.nginx配置文件优化一.html">5.4. nginx配置文件优化一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.nginx配置文件优化二.html">5.5. nginx配置文件优化二</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.nginx多站点配置.html">5.6. nginx多站点配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.nginx负载均衡配置+健康检查.html">5.7. nginx负载均衡配置+健康检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.nginx反向代理做下载文件.html">5.8. nginx反向代理做下载文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.Nginx-location深入解析.html">5.9. Nginx location 深入解析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.Nginx实战-动静分离配置.html">5.10. Nginx实战-动静分离配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.15. 案例-Nginx作为负载均衡服务器应用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">5.15.1. 1　Nginx的负载均衡算法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">5.15.2. 2　Nginx的负载均衡配置实例</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">5. Nginx学习</a> &raquo;</li>
+        
+      <li>5.15. 案例-Nginx作为负载均衡服务器应用</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/05.Nginx学习/15.案例-Nginx作为负载均衡服务器应用.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#nginx" id="id3">案例-Nginx作为负载均衡服务器应用</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">1　Nginx的负载均衡算法</a></li>
+<li><a class="reference internal" href="#id2" id="id5">2　Nginx的负载均衡配置实例</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="nginx">
+<h1><a class="toc-backref" href="#id3">5.15. 案例-Nginx作为负载均衡服务器应用</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<p>Nginx的负载均衡功能是通过upstream命令实现的，因此它的负载均衡机制实现比较简单，是一个基于内容和应用的7层交换负载均衡的实现。Nginx负载均衡默认对后端服务器有健康检测能力，但是检测能力较弱，仅限于端口检测，在后端服务器比较少的情况下（10台以下）负载均衡能力表现突出。而对于有大量后端节点的负载应用，由于所有访问请求都从一台服务器进出，容易发生请求堵塞进而引发连接失败，因此无法充分发挥后端服务器的性能。</p>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">5.15.1. 1　Nginx的负载均衡算法</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Nginx的负载均衡模块目前支持4种调度算法，下面分别进行介绍，其中后两种属于第三方调度方法。</p>
+<p>·轮询（默认），每个请求按时间顺序逐一分配到不同的后端服务器，如果后端某台服务器死机，自动剔除故障系统，使用户访问不受影响。</p>
+<p>·weight，指定轮询权值，weight值越大，分配到的访问概率越高，主要用于后端每台服务器性能不均衡的情况下。</p>
+<p>·ip_hash，每个请求按访问IP的哈希结果分配，这样来自同一个IP的访客固定访问一台后端服务器，有效解决动态网页存在的session共享问题。</p>
+<p>·fair，它是比上面两种更加智能的负载均衡算法。此种算法可以依据页面大小和加载时间长短智能地进行负载均衡，也就是根据后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx本身是不支持fair的，如果需要使用这种调度算法，必须下载Nginx的upstream_fair模块。</p>
+<p>·url_hash，按访问URL的哈希结果来分配请求，使每个URL定向到同一台后端服务器，可以进一步提高后端缓存服务器的效率。Nginx本身是不支持url_hash的，如果需要使用这种调度算法，必须安装Nginx的hash软件包。</p>
+<p>在HTTP
+Upstream模块中，可以通过server命令指定后端服务器的IP地址和端口，同时还可以设定每台后端服务器在负载均衡调度中的状态。常用的状态有：</p>
+<p>·down，表示当前的server暂时不参与负载均衡。</p>
+<p>·backup，预留的备份机器。当其他所有的非backup机器出现故障或者忙的时候，才会请求backup机器，因此这台机器的访问压力最轻。</p>
+<p>·max_fails，允许请求失败的次数，默认为1。当超过最大次数时，返回proxy_next_upstream模块定义的错误。</p>
+<p>·fail_timeout，在经历了max_fails次失败后，暂停服务的时间。max_fails可以和fail_timeout一起使用。</p>
+<p><code class="docutils literal"><span class="pre">注意</span> <span class="pre">当负载调度算法为ip_hash时，后端服务器在负载均衡调度中的状态不能是weight和backup。</span></code></p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">5.15.2. 2　Nginx的负载均衡配置实例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>下面是一个Nginx的负载均衡配置实例，为了重点说明负载均衡的配置，这里仅列出了Nginx配置文件中的http配置段，而省略了其他部分的配置，特此说明。关于负载均衡的配置参数如下：</p>
+<hr class="docutils" />
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span>
+<span class="p">{</span>
+  <span class="n">upstream</span>  <span class="n">myserver</span> <span class="p">{</span>
+    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.181</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">3</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.182</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.183</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">4</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">server</span>
+  <span class="p">{</span>
+    <span class="n">listen</span>       <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span>  <span class="n">www</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.189</span><span class="p">;</span>
+    <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">htm</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span>
+    <span class="n">root</span>  <span class="o">/</span><span class="n">ixdba</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">wwwroot</span><span class="p">;</span>
+<span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+   <span class="n">proxy_pass</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">myserver</span><span class="p">;</span>
+   <span class="n">proxy_next_upstream</span> <span class="n">http_500</span> <span class="n">http_502</span> <span class="n">http_503</span> <span class="n">error</span> <span class="n">timeout</span> <span class="n">invalid_header</span><span class="p">;</span>
+   <span class="n">include</span>    <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">proxy</span><span class="o">.</span><span class="n">conf</span><span class="p">;</span>
+   <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>在此段配置中，upstream关键字标识负载均衡配置开始，upstream是Nginx的HTTP
+Upstream模块，这个模块通过一个简单的调度算法来实现客户端IP到后端服务器的负载均衡。在上面的配置段中，通过upstream命令指定了一个负载均衡器的名称为myserver。这个名称可以任意指定，在后面需要的地方直接调用即可。</p>
+<p>另外，proxy_next_upstream参数用来定义故障转移策略，当后端服务节点返回500、502、503、504和执行超时等错误时，自动将请求转发到upstream负载均衡组中的另一台服务器，实现故障转移。</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" class="btn btn-neutral float-right" title="5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="14.案例-Nginx作为Web缓存服务器应用.html" class="btn btn-neutral float-left" title="5.14. 案例-Nginx作为Web缓存服务器应用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
