@@ -2,8 +2,8 @@
    :depth: 3
 ..
 
-十、shell杂项
-=============
+shell 技巧与杂项
+================
 
 cron计划任务
 ------------
@@ -89,7 +89,9 @@ crontab -l
    $ command > /dev/null
    /dev/null 是一个特殊的文件，写入到它的内容都会被丢弃；如果尝试从该文件读取内容，那么什么也读不到。但是 /dev/null 文件非常有用，将命令的输出重定向到它，会起到"禁止输出"的效果。
 
-   如果希望屏蔽 stdout 和 stderr，可以这样写：
+如果希望屏蔽 stdout 和 stderr，可以这样写：
+
+::
 
    command &> /dev/null
    command >& /dev/null 
@@ -113,9 +115,7 @@ crontab -l
    $ tty
    /dev/pty0
 
-
    $ echo "aaa" > /dev/tty0
-
    $ echo "aaa" > /dev/pty0
    aaa
 
@@ -150,7 +150,26 @@ crontab -l
        echo "Passwd is Successful setup!"
    fi
 
--  exec 3文件输出例子
+使用exec命令分配文件描述符
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+用户在命令后面使用重定向操作符的时候，重定向只对当前的命令有效。用户可以使用exec命令创建新的文件描述符，并且将文件描述符绑定到文件或者另外一个文件描述符或者文件
+
+常用的重定向操作
+
+::
+
+
+   重定向                 说　明
+   exec 2> file        将所有命令的标准错误重定向到文件file
+   exec n< file        只读的方式打开名称为file的文件，并且使用文件描述符n，n是大于3的整数
+   exec n> file        以写入的方式打开名称为file的文件，并且使用文件描述符n，n是大于3的整数
+   exec n<> file       以读写方式打开文件file，并且使用文件描述符n，n是大于3的整数
+   exec n>&-           关闭文件描述符n
+   exec n>&m           使得文件描述符n成为文件描述符m的副本，即将文件描述符m复制到n
+   exec n>&-           关闭文件描述符n
+
+exec 3文件输出例子
 
 ::
 
@@ -337,6 +356,7 @@ eg
    标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。
    默认情况下，command > file 将 stdout 重定向到 file，command < file 将stdin 重定向到 file。
 
+
    cmd > file             把标准输出重定向到新文件中
    cmd >> file            追加
    cmd > file 2>&1        标准出错也重定向到1所指向的file里
@@ -348,28 +368,26 @@ eg
 
 
    如果希望 stderr 重定向到 file，可以这样写：
-
    $ command 2 > file
-   如果希望 stderr 追加到 file 文件末尾，可以这样写：
 
+
+   如果希望 stderr 追加到 file 文件末尾，可以这样写：
    $ command 2 >> file
-   2 表示标准错误文件(stderr)。
+   #2 表示标准错误文件(stderr)。
+
 
    如果希望将 stdout 和 stderr 合并后重定向到 file，可以这样写：
-
    $ command &>file
    或者
-
    # 将错误输出转为标准输出，然后一同定向到一个文件
    $ command > file 2>&1
-
    或者
-
-   $ command >> file 2>&1
    如果希望对 stdin 和 stdout 都重定向，可以这样写：
+   $ command >> file 2>&1
 
-   $ command < file1 >file2
+
    command 命令将 stdin 重定向到 file1，将 stdout 重定向到 file2。
+   $ command < file1 >file2
 
 eg: - 从文件输入
 
@@ -803,18 +821,23 @@ tac:倒序打印文件
 rev反向打印每一行
 ~~~~~~~~~~~~~~~~~
 
-cut
-~~~
+cut 选取文本列
+~~~~~~~~~~~~~~
 
 ::
 
-   This is a test line.
-   -d字符：指定分隔符
-   -f#: 指定要显示字段
-       单个数字：一个字段
-       逗号分隔的多个数字：指定多个离散字段
-       -：连续字段，
-       
+   cut命令的基本语法如下：
+
+   cut option... [file]...
+   在上面的语法中，option表示选项，cut命令常用的选项如下所列。
+
+   -b：只选择指定的字节。
+   -c：只选择指定的字符。
+   -d：自定义列分隔符，默认值为制表符。
+   -f：只选择列表中指定的文本列，文本列用列号表示，多个列之间用逗号隔开。
+   -n：取消分隔多字节字符。
+   -s：不输出不包含列分隔符的行。
+   file参数表示要处理的文件列表，多个文件名之间用空格分隔。
 
 tr:替换或删除字符
 ~~~~~~~~~~~~~~~~~
@@ -825,6 +848,20 @@ tr:替换或删除字符
        tr '集合1' '集合2'
        tr -d '字符集合'
        
+   # 压缩重复字符
+   result='tr -s "[a-z]" < demo9.txt'
+
+   # 删除空白行
+   result='cat demo10.txt | tr -s ["\n"]'
+
+   # 将当前目录在的所有文件的文件名转为大写
+   for file in 'ls';do
+      echo "$file" | tr 'a-z' 'A-Z'
+   done
+
+   # 删除数字和冒号
+   result='tr -d "[0-9][:]" < demo11.txt'
+
    $ tr 'a-z' 'A-Z' <a.txt >a1.txt  # 将文本内容转换为大写
    $ tr '{}' '()' <test.txt >newfile.txt   # 将文本的大括号转为小括号
    $ tr '{}' '\[]' <test.txt >newfile.txt  # 将文本的大括号转为中括号
@@ -841,7 +878,6 @@ wc
        -l: 统计行数
        -c: 统计字节数
        -w；统计单词数
-       
 
 sort
 ~~~~
@@ -855,7 +891,6 @@ sort
        -t: 指定分隔符
        -k: 指定分隔后进行比较字段
        -u: 重复的行，只显示一次；
-       
 
 uniq
 ~~~~
@@ -939,8 +974,213 @@ screen
 
 ``set -eu`` ``set -euo pipefail``
 
-Shell脚本的调试方法
+Shell脚本的调试技术
 -------------------
+
+使用echo命令调试脚本
+~~~~~~~~~~~~~~~~~~~~
+
+echo命令是Shell编程中最简单的调试技术。当用户需要验证程序中某个变量的值时，就可以直接使用echo命令将该变量的值输出到屏幕。
+
+.. code:: shell
+
+   #! /bin/bash
+   # 定义变量 a
+   a=1
+   # 当 a 的值等于 1 时
+   if [ "$a" -eq 1 ]
+   then
+      b=2
+   else
+      b=1
+   fi
+   c=3
+
+   echo "a=$a"
+   echo "b=$b"
+   echo "c=$c"
+
+使用trap命令调试Shell脚本
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+trap命令可以捕获指定的信号，并且执行预定的命令，其基本语法如下：
+
+::
+
+   trap 'command' signal
+
+其中，参数command表示捕获指定的信号后要执行的命令，而参数signal表示指定的信号。
+
+``在Shell脚本执行的时候，会产生3个所谓的伪信号，分别为EXIT、ERR以及DEBUG。``\ 其中，EXIT信号在退出某个函数或者某个脚本执行完成时触发，ERR信号在某条命令返回非0状态时触发，DEBUG信号在脚本的每一条命令执行之前触发。
+
+演示使用trap命令输出发生错误的行号以及退出状态码，代码如下：
+
+::
+
+   #! /bin/bash
+   # 定义信号处理函数
+   ERRTRAP()
+   {
+      echo "[LINE:$1] Error:Command or function exited with status code $?"
+   }
+   # 定义函数
+   func()
+   {
+      # 返回值为 1
+      return 1
+   }
+
+   # 使用 trap 命令捕获 ERR 信号
+   trap 'ERRTRAP $LINENO' ERR
+   # 调用错误的命令
+   abc
+   # 调用函数
+   func
+
+--------------
+
+::
+
+   [root@192 chapter5]# sh sample01.sh 
+   sample01.sh:行17: abc: 未找到命令
+   [LINE:17] Error:Command or function exited with status code 127
+   [LINE:11] Error:Command or function exited with status code 1
+
+演示通过捕获DEBUG信号来进行程序调试的方法，代码如下：
+
+.. code:: shell
+
+   #! /bin/bash
+   # 捕获 DEBUG 信号
+   trap 'echo "before execute line:$LINENO,a=$a,b=$b,c=$c"' DEBUG
+
+   # 定义变量 a
+   a=1
+   # 根据变量 a 的值初始化变量 b
+   if [ "$a" -eq 1 ]
+   then
+      b=2
+   else
+      b=1
+   fi
+   # 定义变量 c
+   c=3
+
+   echo "end"
+
+--------------
+
+.. code:: shell
+
+   [root@192 chapter5]# sh sample02.sh 
+   before execute line:6,a=,b=,c=
+   before execute line:8,a=1,b=,c=
+   before execute line:10,a=1,b=,c=
+   before execute line:15,a=1,b=2,c=
+   before execute line:17,a=1,b=2,c=3
+   end
+
+使用tee命令调试shell脚本
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+在普通的语句中，用户使用echo和trap命令就可以非常轻松地完成调试，但是对于管道或者重定向来说，使用上面两种方法就显得心有余而力不足，因为在管道的作用下，一些命令的输出结果将会直接成为下一个命令的输入，中间结果并不会显示在屏幕上，因此给程序调试带来了困难。
+
+由于在实际开发过程中，管道和重定向在Shell脚本中使用得非常多。所以必须找到能够输出中间结果的方法。在这种情况下，tee命令就可以轻松地完成任务。tee命令会从标准输入读取数据，将其内容输出到标准输出设备，同时又可将内容保存成文件。
+
+.. code:: shell
+
+   #! /bin/bash
+   # 将文件名转换为大写
+   list='ls -l | tee list.txt | awk '{print toupper($7)}'''
+   echo "$list"
+
+使用钩子函数，调试shell脚本
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+在许多程序设计语言中，用户在调试程序的时候都可以设定一个开关变量，当该变量的值为真时，才输出调试信息；否则，不输出调试信息。例如用户可以设计以下代码：
+
+::
+
+   if [ "$DEBUG" = "true" ]; then
+       输出调试信息
+   fi
+
+只有当变量DEBUG的值为true时，才输出调试信息。这样的代码块称为调试钩子。在调试钩子中，用户可以输出任何调试信息。使用调试钩子，用户可以通过开关变量控制是否输出调试信息。这样的话，在开发过程中，可以将开关变量的值设置为真，便于程序的调试。当调试完成，需要发布脚本的时候，将开关变量的值设置为flase即可，无需再一条条地删除程序中的调试代码。
+
+演示使用调试钩子调试程序的方法，代码如下：
+
+::
+
+   #! /bin/bash
+
+   # 定义调试开关
+   export DEBUG=true
+
+   # 调试函数
+   DEBUG()
+   {
+      if [ "$DEBUG" == "true" ];then
+         $@
+      fi
+   }
+
+   a=1
+   # 调用调试函数
+   DEBUG echo "a=$a"
+
+   if [ "$a" -eq 1 ]
+   then
+        b=2
+   else
+        b=1
+   fi
+   # 调用调试函数
+   DEBUG echo "b=$b"
+   c=3
+   # 调用调试函数
+   DEBUG echo "c=$c"
+
+--------------
+
+.. code:: shell
+
+   [root@192 chapter5]# sh sample03.sh 
+   a=1
+   b=2
+   c=3
+
+从上面的执行结果可以得知，因为开关变量DEBUG的值为true，所以输出了相应的调试信息。如果将DEBUG变量的值设置为false，则上面的程序没有任何输出，用户可以自行验证。
+
+.. code:: shell
+
+   [root@k8s-node1 centos]# _DEBUG=on ./gouzi.sh 
+   I is 1
+   I is 2
+   I is 3
+   I is 4
+   I is 5
+   I is 6
+   I is 7
+   I is 8
+   I is 9
+   I is 10
+   [root@k8s-node1 centos]# ./gouzi.sh 
+
+
+   [root@k8s-node1 centos]# cat gouzi.sh 
+   #!/bin/bash
+   DEBUG() {
+   [ "$_DEBUG" == "on" ] && $@ || :
+
+   }
+   for i in {1..10};do
+       #set -x
+       DEBUG echo -e "I is $i"
+      #set +x
+   done
+
+shell自带的调试选项
+~~~~~~~~~~~~~~~~~~~
 
 Shell提供了一些用于调试脚本的选项，如下所示：
 
@@ -981,38 +1221,122 @@ Shell提供了一些用于调试脚本的选项，如下所示：
 set -x和set +x分别表示启用和禁用-x参数，
 这样可以只对脚本中的某一段进行跟踪调试。
 
-调试中使用钩子函数，定义环境变量来启用或禁止某些显示
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+`Linux常用命令工具箱 <https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/index.html>`__
+
+子shell
+-------
+
+在子shell中执行命令
+~~~~~~~~~~~~~~~~~~~
+
+1．圆括号结构
+^^^^^^^^^^^^^
+
+当一组命令放在圆括号中时，该组命令会在一个子Shell环境中执行，其语法如下：
 
 ::
 
-   [root@k8s-node1 centos]# _DEBUG=on ./gouzi.sh 
-   I is 1
-   I is 2
-   I is 3
-   I is 4
-   I is 5
-   I is 6
-   I is 7
-   I is 8
-   I is 9
-   I is 10
-   [root@k8s-node1 centos]# ./gouzi.sh 
+   (command1;command2;command3;...)
 
+在上面的语法中，command1、command2，以及command3等都是Shell命令，这些命令写在一行中，它们之间用分号隔开。
 
-   [root@k8s-node1 centos]# cat gouzi.sh 
+如果每一行只有一条命令，则可以省略分号，变成以下语法形式：
+
+::
+
+   (
+      command1
+      command2
+      command3
+      ...
+   )
+
+演示子shell的使用
+
+.. code:: shell
+
    #!/bin/bash
-   DEBUG() {
-   [ "$_DEBUG" == "on" ] && $@ || :
+   echo
+   # 输出子 Shell 的层次
+   echo "Subshell level OUTSIDE subshell = $BASH_SUBSHELL"
+   echo
+   # 定义子 Shell 外面的变量
+   outer_variable=Outer
+   # 圆括号开始
+   (
+      # 输出子 Shell 的层次
+      echo "Subshell level INSIDE subshell = $BASH_SUBSHELL"
+      # 定义子 Shell 内的变量
+      inner_variable=Inner
+      # 在子 Shell 内输出圆括号里面定义的变量
+      echo "From subshell, \"inner_variable\" = $inner_variable"
+      # 在子 Shell 内输出圆括号外面定义的变量
+      echo "From subshell, \"outer\" = $outer_variable"
+   )
 
-   }
-   for i in {1..10};do
-       #set -x
-       DEBUG echo -e "I is $i"
-      #set +x
-   done
+   echo
+   # 输出子 Shell 级别
+   echo "Subshell level OUTSIDE subshell = $BASH_SUBSHELL"
+   echo
+   # 判断 inner_variable 变量是否已经定义
+   if [ -z "$inner_variable" ]
+   then
+     echo "inner_variable undefined in main body of shell"
+   else
+     echo "inner_variable defined in main body of shell"
+   fi
+   # 输出圆括号内定义的变量
+   echo "From main body of shell, \"inner_variable\" = $inner_variable"
 
-`Linux常用命令工具箱 <https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/index.html>`__
+演示将脚本中的部分代码放在后台执行的方法
+
+.. code:: shell
+
+   #!/bin/bash
+   # 输出开始提示信息
+   echo "Before starting subshell"
+   # 圆括号结构开始
+   (
+      count=1
+      while [ $count -le 10 ]
+      do
+          echo "$count"
+          sleep 1
+          # 在 Shell 中修改循环变量的值
+          (( count++ ))
+      done
+   ) &
+   echo "Finished"
+
+2．后台执行或异步执行
+^^^^^^^^^^^^^^^^^^^^^
+
+在某些情况下，Shell命令需要较长的时间来执行，尤其是在处理大量的数据的时候。在这种情况下，用户可以将命令置于后台执行，而不必等待命令执行结束。
+
+将命令置于后台执行的语法如下：
+
+::
+
+   command&
+
+其中，command表示要执行的命令，&操作符表示将前面的命令置于后台执行。在命令末尾追加&操作符之后，当前命令会由一个子Shell在后台执行。当前的Shell会立即获得控制权并且返回到命令行提示符。后台命令和当前的Shell是并行的，相互之间没有依赖及等待关系。这意味着，后台命令和当前Shell是异步的并行。
+
+3．命令替换
+^^^^^^^^^^^
+
+命令替换的语法如下：
+
+::
+
+   'command'
+
+或者
+
+::
+
+   $(command)
+
+其中，command表示要执行的命令。command会在一个子Shell中执行，不会影响当前的Shell环境。
 
 自动化
 ------
@@ -1039,14 +1363,415 @@ set -x和set +x分别表示启用和禁用-x参数，
        $ cd /etc/init.d
        $ sudo update-rc.d test defaults 95
 
-实战
-----
+Shell脚本实战
+-------------
 
 更多示例可参考：\ `shell
 脚本示例 <https://github.com/redhatxl/scripts>`__
 
-3.1 文件扫描校验
-~~~~~~~~~~~~~~~~
+系统启动过程
+~~~~~~~~~~~~
+
+从大的方面来讲，Linux系统的启动过程如图。当一个Linux系统启动的时候，首先是用户按下电源，接着电脑加电，然后执行BIOS中的固件程序，完成系统硬件的自检。当硬件自检没有发现问题之后，便调用内核装载器来载入系统内核。内核装载器又称为内核装载程序，目前比较流行的是GNU
+GRUB。GRUB是GRand Unified
+Bootloader的缩写，它是一个多重操作系统启动管理器，可以用来引导不同系统，例如Windows或者Linux等。
+
+Linux启动过程
+
+|image3|
+
+当Linux内核加载完成之后，便执行/sbin/init程序，创建系统中的第一个进程。init进程的进程ID为1，是Linux系统中所有进程的父进程。init进程会读取/etc/inittab、/etc/init/rc.conf以及/etc/init/rcS.conf等文件，执行一系列的初始化操作。然后执行/etc/rc.d目录中相应的子目录中的服务脚本，创建启动或者停止某项服务。
+
+在Linux的启动过程中，有个文件发挥了非常重要的作用，该文件为一个Shell脚本文件，其名称为/etc/rc.d/rc。/etc/rc.d/rc的作用是根据不同的运行级别来启动或者停止服务。无论是对于初学者，还是有一定经验的读者来说，这个文件都是一个极好的范例，有兴趣的读者可以仔细地阅读这个文件的代码。
+
+**运行级别**
+
+所谓运行级别，是指UNIX或者Linux等类UNIX操作系统的不同运行模式。在不同的运行级别下，用户可以执行相应的操作，例如运行级别1表示单用户模式，在这种运行级别下，只允许root用户登录，不启动网络服务。运行级别的概念只用于System
+V流派的UNIX系统以及Linux系统，对于BSD流派的UNIX系统则不使用运行级别的概念。
+
+在通常情况下，运行级别分为7级，分别使用0～6这7个数字来表示。典型的运行级别如下所述。
+
+-  0：停机。
+-  1：单用户模式，不启用网络，不启动各种服务，只允许root用户登录进行维护。
+-  2：多用户模式，不启用网络，不启动各种服务。
+-  3：多用户模式，除图形界面之外，各种网络服务都可以使用。
+-  4：用户自定义。
+-  5：带图形界面的多用户模式。
+-  6：重新启动系统。
+
+在Linux系统中，各个运行级别下面需要启动或者停止的服务的脚本都位于特定的目录中，这些目录都位于/etc目录中，其名称为/etc/rc0.d～/etc/rc6.d，分别对应上面7个运行级别。下面列出的是运行级别3所对应的目录下面的部分脚本文件列表：
+
+::
+
+   [root@linux rc0.d]# ll /etc/rc3.d/
+   total 0
+   lrwxrwxrwx      1   root    root    20 Apr  6 13:48     K01certmonger
+   -> ../init.d/certmonger
+   lrwxrwxrwx      1   root    root    15 Apr  6 13:48     K01numad
+   -> ../init.d/numad
+   lrwxrwxrwx      1   root    root    16 Apr  6 13:59     K01smartd
+   -> ../init.d/smartd
+   …
+   lrwxrwxrwx      1   root    root    17 Mar  9 15:31     S01sysstat
+   -> ../init.d/sysstat
+   lrwxrwxrwx      1   root    root    22 Apr  6 13:48     S02lvm2-monitor
+   -> ../init.d/lvm2-monitor
+   lrwxrwxrwx      1   root    root    18 Apr  6 13:48     S05cgconfig
+   -> ../init.d/cgconfig
+
+从上面的输出可以得知，/etc/rc3.d中的脚本文件实际上是/etc/init.d目录中的相应脚本文件的符号链接。这些符号链接的命名有着特定的规则，如果文件名的首字符为大写字母K，表示将要传递stop参数给脚本，以停止该服务。如果文件名的首字符为S，则表示将要传递start参数给脚本，以启动该服务。首字符后面的数字表示该脚本执行的顺序。例如，在上面的结果中，K01numad表示在运行级别3中，将传递stop参数给/etc/init.d/numad脚本文件，以停止numad服务。S01sysstat表示在运行级别3中，将传递start参数给/etc/init.d/sysstat脚本，以启动sysstat服务。
+
+服务脚本的基本语法
+~~~~~~~~~~~~~~~~~~
+
+在Linux系统中，服务脚本有固定的语法，通常情况下，服务脚本应该包括处理服务启动、服务停止、服务重新启动，以及查看服务状态的函数。另外，服务脚本还可以接受某些特定的参数，例如start、stop，以及restart等，并且根据这些参数调用不同的函数。
+
+下面给出的是某个Linux系统中的Apache
+Web服务器的服务脚本，为了节省篇幅，省略了部分无关紧要的代码。
+
+.. code:: shell
+
+   # 在当前 Shell 中执行定义公共函数的脚本
+   . /etc/rc.d/init.d/functions
+
+   #Apache 各组件的路径
+   apachectl=/usr/sbin/apachectl
+   httpd=${HTTPD-/usr/sbin/httpd}
+   prog=httpd
+   pidfile=${PIDFILE-/var/run/httpd/httpd.pid}
+   lockfile=${LOCKFILE-/var/lock/subsys/httpd}
+
+   # 脚本执行结果
+   RETVAL=0
+   # 停止服务的超时时间
+   STOP_TIMEOUT=${STOP_TIMEOUT-10}
+
+   # 定义启动服务的函数
+   start() {
+           echo -n $"Starting $prog: "
+           LANG=$HTTPD_LANG daemon --pidfile=${pidfile} $httpd $OPTIONS
+           RETVAL=$?
+           echo
+           [ $RETVAL = 0 ] && touch ${lockfile}
+           return $RETVAL
+   }
+
+   # 定义停止服务的函数
+   stop() {
+      echo -n $"Stopping $prog: "
+           killproc -p ${pidfile} -d ${STOP_TIMEOUT} $httpd
+           RETVAL=$?
+           echo
+           [ $RETVAL = 0 ] && rm -f ${lockfile} ${pidfile}
+   }
+   # 定义重新加载配置文件的函数
+   reload() {
+       echo -n $"Reloading $prog: "
+       if ! LANG=$HTTPD_LANG $httpd $OPTIONS -t >&/dev/null; then
+           RETVAL=6
+           echo $"not reloading due to configuration syntax error"
+           failure $"not reloading $httpd due to configuration syntax error"
+       else
+           # Force LSB behaviour from killproc
+           LSB=1 killproc -p ${pidfile} $httpd -HUP
+           RETVAL=$?
+           if [ $RETVAL -eq 7 ]; then
+               failure $"httpd shutdown"
+           fi
+       fi
+       echo
+   }
+
+   # 根据用户传递的参数执行不同的操作
+   case "$1" in
+         # 启动服务
+         start)
+              start
+              ;;
+         # 停止服务
+         stop)
+              stop
+              ;;
+         # 查看服务状态
+         status)
+              status -p ${pidfile} $httpd
+              RETVAL=$?
+              ;;
+         # 重新启动服务
+         restart)
+              stop
+              start
+              ;;
+         # 强制重新启动
+         force-reload|reload)
+              reload
+              ;;
+         # 处理其他情况
+         *)
+              echo $"Usage: $prog {start|stop|restart|condrestart|try-restart|force-reload|reload|status|fullstatus|graceful|help|configtest}"
+             RETVAL=2
+     esac
+
+     exit $RETVAL
+
+编写MySQL服务脚本
+
+.. code:: shell
+
+   #!/bin/sh
+   #
+   # MySQL 服务脚本
+   #  指定运行级别以及优先级
+   # chkconfig: - 64 36
+   # description:  MySQL database server.
+
+   #MySQL 服务主程序的路径
+   mysql="/usr/bin/mysqld_safe"
+
+   #MySQL 管理工具路径
+   mysqladmin="/usr/bin/mysqladmin"
+
+   # 定义获取 MySQL 选项的函数
+   get_mysql_option()
+   {
+      # 使用 my_print_defaults 命令输出各个选项
+      result='/usr/bin/my_print_defaults "$1" | sed -n "s/^--$2=//p" |tail -n 1'
+      # 如果文件不存在，则使用默认值
+      if [ -z "$result" ]; then
+         result="$3"
+      fi
+   }
+   # 数据库文件路径
+   get_mysql_option mysqld datadir "/var/lib/mysql"
+
+   datadir="$result"
+
+   #Socket 文件路径
+   get_mysql_option mysqld socket "$datadir/mysql.sock"
+   socketfile="$result"
+
+   # 日志文件路径
+   get_mysql_option mysqld_safe log-error "/var/log/mysqld.log"
+   errlogfile="$result"
+
+   # 进程 ID 文件路径
+   get_mysql_option mysqld_safe pid-file "/var/run/mysqld/mysqld.pid"
+   mypidfile="$result"
+
+   # 服务启动函数
+   start(){
+      # 如果程序不可执行，则直接退出
+      [ -x $mysql ] || exit 5
+      #  判断服务进程是否存在
+      /usr/bin/mysqladmin --socket="$socketfile" --user=mysql ping 2>&1
+      if [ $? = 0 ]; then
+         echo "mysql has been already running."
+         ret=0
+      else
+         if [ ! -d "$datadir/mysql" ] ; then
+            echo "mysql database does not exists."
+            exit 1
+         fi
+
+         $mysql --datadir="$datadir" --socket="$socketfile" --pid-file="$mypidfile" --basedir=/usr --user=mysql >/dev/null 2>&1 &
+
+         ret=$?
+
+         if [ $ret -eq 0 ]; then
+            touch $lockfile
+         else
+            echo "starting mysql failed."
+         fi
+      fi
+      return $ret
+   }
+
+   stop(){
+      # 如果进程文件不存在，则直接退出
+      if [ ! -f "$mypidfile" ]; then
+         echo "mysql is not running."
+         return 0
+      fi
+      # 从进程文件中获取进程 ID
+      mysqlpid='cat "$mypidfile"'
+      # 如果进程 ID 为整数，则调用 mysqladmin 停止 mysql 服务
+      if [ -n "$mysqlpid" ]; then
+         $mysqladmin --socket="$socketfile" --user=root shutdown
+
+         ret=$?
+         # 如果停止成功，则删除锁定文件和 Socket 文件
+         if [ $ret -eq 0 ]; then
+            rm -f $lockfile
+            rm -f "$socketfile"
+            echo "mysql stopped."
+            ret=0
+         else
+            echo "stopping mysql failed."
+            ret=1
+         fi
+
+         return $ret
+   }
+
+   restart(){
+       stop
+       start
+   }
+
+   # 根据参数值执行相应的操作
+   case "$1" in
+      # 启动服务
+      start)
+         start
+         ;;
+      # 停止服务
+      stop)
+         stop
+       ;;
+      # 查看状态
+      status)
+         if [ -n pidof "$procname" ]; then
+            echo "mysql is running."
+         fi
+         ;;
+      # 重新启动
+      restart)
+         restart
+         ;;
+      *)
+         echo $"Usage: $0 {start|stop|status|restart}"
+         exit 2
+   esac
+
+   exit $?
+
+在上面的代码中，第6行需要特别说明一下。该行的作用是告诉chkconfig命令，当前的服务脚本可以在哪些运行级别下面执行。其中连字符-表示当前脚本适用于所有的运行级别。如果只想在某些运行级别下面执行，则可以直接用数字指定，例如：
+
+::
+
+   # chkconfig: 345 64 36
+
+表示当前脚本可以在3、4和5这3个运行级别下面运行。后面的2个数字分别表示当前脚本在启动和停止时的优先级。数值越小，优先级越高；反之，优先级越低。
+
+当整个mysql脚本都编写完成之后，将其复制到/etc/init.d目录中，并且赋予可执行权限，命令如下：
+
+::
+
+   [root@linux chapter15]# cp mysql /etc/init.d/
+   [root@linux chapter15]# chmod +x /etc/init.d/mysqld
+
+接下来使用chkconfig命令更新系统服务，如下所示：
+
+::
+
+   [root@linux chapter15]# chkconfig mysql on
+
+最后，用户就可以使用service命令来启动、停止或者查看运行状态了，代码如下：
+
+::
+
+   [root@linux chapter15]# service mysql start
+   [root@linux chapter15]# service mysql status
+
+1. Apache服务器日志管理
+~~~~~~~~~~~~~~~~~~~~~~~
+
+.. code:: shell
+
+   #! /bin/bash
+
+   # 归档文件名生成函数
+   function filename()
+   {
+      timestamp=$(date +%Y%m%d%H%M%S)
+      echo "$1".$timestamp."tar"
+   }
+
+
+   # 过期日志归档函数
+   function archivelog()
+   {
+      archivefile='filename httpd_log'
+
+      archivedest=$1
+
+      if [ ! -d archivedest ];then
+         mkdir -p $archivedest
+      fi
+
+      cd /var/log/httpd
+
+      find . -mtime +1 -exec tar -rf $archivedest$archivefile {} \;
+
+      zip $archivedest$archivefile".zip" $archivedest$archivefile
+
+      if [ "$?" -eq 0 ]
+      then
+         rm -f $archivedest$archivefile
+      fi
+
+      return $?
+   }
+
+
+   # 已归档日志删除函数
+   function removearchivedlog()
+   {
+      cd /var/log/httpd
+
+      find . -mtime +1 -exec rm -f $archivedest$archivefile {} \;
+   }
+
+   # 将过期日志归档
+   archivelog "/root/chapter15/"
+
+
+   # 删除已归档日志
+   if [ "$?" -eq 0 ]
+   then
+      removearchivedlog
+   fi
+
+   exit 0
+
+定时运行日志归档脚本
+
+通常情况下，用户可以使用两种方法来实现脚本的定时运行。一种方法是使用sleep命令，另外一种方法是使用cron工具。
+
+::
+
+   # 无限循环
+   while true
+   do
+      # 归档过期日志
+      archivelog "/root/chapter15/"
+
+      if [ "$?" -eq 0 ]
+      then
+         # 删除过期日志
+         removearchivedlog
+      fi
+      # 休眠 1 天
+      sleep 86400
+   done
+
+为了使得归档操作能够不断地重复执行，将archivelog()和removearchivedlog()这两个函数的调用都放在了一个无限循环结构中。第13行使用sleep命令使进程每天执行一次，其中sleep命令以秒为单位。
+
+修改完成之后，用户可以使用以下命令执行归档脚本：
+
+::
+
+   [root@linux chapter15]# ./archivelog.sh &
+
+Cron计划任务的方式
+
+.. code:: shell
+
+   [root@linux log]# crontab -l
+   0 * * * * /root/chapter15/archivelog.sh
+
+2 文件扫描校验
+~~~~~~~~~~~~~~
 
 ::
 
@@ -1089,8 +1814,8 @@ set -x和set +x分别表示启用和禁用-x参数，
 
    main
 
-3.2 自定义垃圾回收
-~~~~~~~~~~~~~~~~~~
+3 自定义垃圾回收
+~~~~~~~~~~~~~~~~
 
 ::
 
@@ -1122,8 +1847,8 @@ set -x和set +x分别表示启用和禁用-x参数，
    echo "删除脚本:$CMD_SCRIPTS"
    echo "请执行:source $BASHRC 来加载文件或退出当前shell重新登录"
 
-3.3 Linux系统检测
-~~~~~~~~~~~~~~~~~
+4 Linux系统检测
+~~~~~~~~~~~~~~~
 
 ::
 
@@ -1354,8 +2079,8 @@ set -x和set +x分别表示启用和禁用-x参数，
 
    sys_check > ${sys_check_file}
 
-自动化安装lnmp，安装提示菜单
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+5 自动化安装lnmp，安装提示菜单
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -1400,8 +2125,8 @@ set -x和set +x分别表示启用和禁用-x参数，
 
    fi
 
-选择菜单 2
-~~~~~~~~~~
+6 选择菜单 2
+~~~~~~~~~~~~
 
 ::
 
@@ -1452,8 +2177,8 @@ set -x和set +x分别表示启用和禁用-x参数，
            ;;
    esac
 
-启动脚本示例
-~~~~~~~~~~~~
+4 启动脚本示例
+~~~~~~~~~~~~~~
 
 ::
 
@@ -1519,8 +2244,8 @@ set -x和set +x分别表示启用和禁用-x参数，
    #退出脚本的运行，退出状态码为变量RETVAL的值
    exit $RETVAL
 
-备份24小时被修改的文件
-~~~~~~~~~~~~~~~~~~~~~~
+8 备份24小时被修改的文件
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -1538,8 +2263,8 @@ set -x和set +x分别表示启用和禁用-x参数，
    find . -mtime -1 -type f -print0 | xargs -0 tar rvf "$archive.tar"
    find . -mitime -1 -type f -exec tar rvf "$archive.tar" '{}' \ ;
 
-卸载相关的rpm包、检查rpm包的方法
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+9 卸载相关的rpm包、检查rpm包的方法
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -1562,10 +2287,10 @@ set -x和set +x分别表示启用和禁用-x参数，
        echo "sysstat is not  install"
    fi
 
-检查软件状态
-~~~~~~~~~~~~
+10 检查软件状态
+~~~~~~~~~~~~~~~
 
-::
+.. code:: shell
 
    #!/usr/bin/env bash
    PORT_C=$(ss -anu| grep -c 123)
@@ -1575,8 +2300,8 @@ set -x和set +x分别表示启用和禁用-x参数，
        :
    fi
 
-color_print输出
-~~~~~~~~~~~~~~~
+11 color_print输出
+~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -1606,8 +2331,8 @@ color_print输出
 
    }
 
-/init/function函数
-~~~~~~~~~~~~~~~~~~
+12 /init/function函数
+~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -2325,3 +3050,4 @@ color_print输出
 .. |image0| image:: ../../_static/crontab.PNG
 .. |image1| image:: ../../_static/shell+date-args001.png
 .. |image2| image:: ../../_static/shell+date-args002.png
+.. |image3| image:: ../../_static\linux-init0.PNG
