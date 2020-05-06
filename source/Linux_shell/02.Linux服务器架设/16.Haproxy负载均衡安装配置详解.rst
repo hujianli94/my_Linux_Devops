@@ -23,6 +23,30 @@ Haproxy负载均衡安装配置详解
 安装
 ----
 
+快速安装HAProxy集群软件
+
+可以在HAProxy的官网http://haproxy.1wt.eu/下载HAProxy的源码包，这里以操作系统CentOS
+6.3版本为例，下载的HAProxy是当前的稳定版本haproxy-1.4.24.tar.gz，安装过程如下：
+
+::
+
+   [root@haproxy-server app]# tar zcvf haproxy-1.4.24.tar.gz
+   [root@haproxy-server app]#cd haproxy-1.4.24
+   [root@haproxy-server haproxy-1.4.24]#make TARGET=linux26 PREFIX=/usr/local/haproxy
+   # 将HAProxy安装到/usr/local/haproxy下
+   [root@haproxy-server haproxy-1.4.24]#make install PREFIX=/usr/local/haproxy    
+
+   # HAProxy默认不创建配置文件目录，这里是创建HAProxy配置文件目录
+   [root@haproxy-server haproxy-1.4.24]#mkdir /usr/local/haproxy/conf     
+
+
+   # HAProxy安装完成后，默认安装目录中没有配置文件，这里是将源码包里面的示例配置文件复制到配置文件目录
+   [root@haproxy-server haproxy-1.4.24]# cp examples/haproxy.cfg  /usr/local/haproxy/conf
+
+这样，HAProxy就安装完成了。
+
+安装示例2
+
 ::
 
    #下载

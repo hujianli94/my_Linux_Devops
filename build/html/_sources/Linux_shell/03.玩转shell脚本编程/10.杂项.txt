@@ -93,6 +93,15 @@ crontab -l
 
 ::
 
+   同时重定向命令的标准输出和标准错误的信息到/dev/null的语法如下所示：
+   $ command &> /dev/null
+   或
+   $ command >& /dev/null
+   或
+   $ command > /dev/null 2>&1
+
+::
+
    command &> /dev/null
    command >& /dev/null 
    command > /dev/null 2>&1 
@@ -747,6 +756,24 @@ Here Document
    EOF
    sudo systemctl daemon-reload
    sudo systemctl restart docker
+
+一个Here Document的示例
+
+::
+
+   usage() {
+
+   cat <<-EOF
+
+     usage: command [-x] [-v] [-z] [file ...]
+
+     A short explanation of the operation goes here.
+
+     It might be a few lines long, but shouldn't be excessive.
+
+   EOF
+
+   }
 
 常见小技巧
 ----------

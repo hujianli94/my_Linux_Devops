@@ -11,7 +11,7 @@
 1.1 获取字符串长度
 ~~~~~~~~~~~~~~~~~~
 
-利用\ ``${#var}``\ 来获取字符串长度
+方式1 利用\ ``${#var}``\ 来获取字符串长度
 
 ::
 
@@ -19,12 +19,23 @@
    [root@xuel-tmp-shell ~]# echo ${#var}
    9
 
+方式2
+
+::
+
+   # $string上的双引号必不可少
+   expr length "$string"
+
 1.2 字符串切片
 ~~~~~~~~~~~~~~
 
 格式：
 
-${parameter:offset} ${parameter:offset:length}
+::
+
+   ·${parameter:offset}
+
+   ·${parameter:offset:length}
 
 截取从 offset 个字符开始，向后 length 个字符。
 
