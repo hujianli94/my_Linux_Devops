@@ -122,6 +122,7 @@
 <li class="toctree-l3"><a class="reference internal" href="13.双机热备开源软件Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.使用Haproxy+keepalived搭建Web群集.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
 <li class="toctree-l3"><a class="reference internal" href="15.Redis主从+KeepAlived实现高可用.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html">8.16. keepalived高可用集群</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
@@ -316,6 +317,49 @@
 <li class="toctree-l1"><a class="reference internal" href="13.双机热备开源软件Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="14.使用Haproxy+keepalived搭建Web群集.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
 <li class="toctree-l1"><a class="reference internal" href="15.Redis主从+KeepAlived实现高可用.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l1"><a class="reference internal" href="16.keepalived高可用集群.html">8.16. keepalived高可用集群</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="16.keepalived高可用集群.html#id1">8.16.1. 1.1. 高可用集群简介</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id2">什么是高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id3">高可用集群的衡量标准</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#failover">自动切换/故障转移（FailOver）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id4">自动侦测</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="16.keepalived高可用集群.html#id13">8.16.2. 1.2. keepalived</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id14">keepalived是什么</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id15">keepalived工作原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id16">组播</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#vrrp">VRRP协议</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id17">keepalived主要有三个模块</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="16.keepalived高可用集群.html#id18">8.16.3. 实战案例1</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id19">环境:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id20">原理示例图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#server1">server1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#server2">server2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#client">client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id21">编辑监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id24">启动监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#nginx">nginx状态测试</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="16.keepalived高可用集群.html#id25">8.16.4. 实战案例2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id26">环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id28">拓扑</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#master">master</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#backup">backup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#masterbackup">master和backup上启动服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#web">web服务器配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id29">配置虚拟地址</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id30">配置路由</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#arp">配置ARP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id31">测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html#id33">思考题</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
