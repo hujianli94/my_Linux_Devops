@@ -1,0 +1,526 @@
+.. contents::
+   :depth: 3
+..
+
+华为防火墙玩转
+==============
+
+USG防火墙学习
+-------------
+
+::
+
+   #关闭80端口，管理员使用Web浏览器访问80端口时，FW会自动将管理员的访问重定向到8443端口
+   undo web-manager enable
+
+
+   #创建一个安全区域
+   firewall zone name userzone
+
+   #设置优先级
+   set priority 60
+
+   #给安全区域添加接口
+   add interface GigabitEthernet 0/0/1
+
+   #查看防火墙安全区域配置
+   display zone username
+
+
+   #安全区域配置---2
+
+   #在域间下发ACL
+   system-view
+   policy interzone trust untrust outbound
+   policy 1
+   action permit
+
+
+
+   #查看所有策略
+   display policy all
+
+
+
+   配置安全策略，允许域间互访。
+   [USG6600] security-policy
+   [USG6600-policy-security] rule name policy1
+   [USG6600-policy-security-rule-policy1] source-zone trust
+   [USG6600-policy-security-rule-policy1] destination-zone untrust
+   [USG6600-policy-security-rule-policy1] source-address 192.168.0.0 mask 255.255.0.0
+   [USG6600-policy-security-rule-policy1] action permit
+   [USG6600-policy-security-rule-policy1] quit
+   [USG6600-policy-security] quit
+
+
+
+   #允许trust访问untrust区域， 信任区域--->不信任区域
+   firewall packet-filter default permit interzone trust untrust direction outbound
+
+   #允许trust访问dmz区域     信任区--->dmz区域
+   firewall packet-filter default permit interzone trust dmz direction outbound
+
+   #允许dmz访问untrust区域    dmz区域 ---> 不信任区域
+   firewall packet-filter default permit interzone dmz untrust direction outbound
+
+
+
+   #允许 untrust ----> dmz区域的web主机,只放行http服务
+   policy interzone dmz untrust inbound        #定义 untrust ---> dmz 的 inbound方向
+   policy 1    #策略名称，优先执行策略数值小的
+   policy service service-set http
+   action permit
+   display this
+
+防火墙的工作模式
+----------------
+
+-  1.路由模式
+   #先建的模式都是路由模式，防火墙已经替代了路由器，路由器的功能防火墙都支持
+-  2.透明模式
+-  3.混合模式
+
+透明模式 用于路由器与核心之间
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   #会话
+
+   #查看防火墙的Session详细的信息
+   display firewall session table verbose
+
+
+   #重置防火墙的session
+   reset firewall session table
+
+
+   #查看防火墙默认的Session aging-time
+   display firewall session aging-time
+
+
+   #修改icmp的会话老化时间
+   firewall session aging-time icmp 15
+
+防火墙关键技术
+~~~~~~~~~~~~~~
+
+1.ASPF #对特点应用报文进行过滤
+USG相当于一个六元祖（支持VPN情况下，有VPN-ID）的NAT设备
+防火墙上每个会话的监控都需要六元祖： 源IP地址 源端口 目的IP地址 目的端口
+协议号 VPN-ID 只有这些元素都具备了会话才能建立完成，报文才能通过，
+一些实时通讯工具，如QQ、MSN，需要按三元祖处理： 1.源IP地址 2.源端口
+3.协议号 USG为了适配QQ、MSN等通讯机制，支持三元组处理方式。
+
+#ASPF配置 firewall interzone trust untrust
+
+#打开ASPF功能 detect protocal detect {xxxx|xxxx}
+
+WEB配置和管理
+~~~~~~~~~~~~~
+
+::
+
+    USG9500提供基于Web GUI（Graphic User Interface）的管理界面，为用户提供友好的配置和管理界面。
+    在图形化界面中，可以配置安全区域、ACL、NAT、ASPF、攻击防范、黑名单、IPS等功能特性并查看各种统计参数。
+
+   Web浏览器和USG9500之间通过HTTPS（Hypertext Transfer Protocol Secure）安全协议进行交互。
+   HTTPS采用SSL安全加密机制，通过在客户和服务器之间建立一条加密通道，确保数据不被非法窃取。加密功能保证了用户信息的安全。
+
+缺省配置
+~~~~~~~~
+
+::
+
+   GE0/0/0  IP:192.168.0.1
+   管理员账号/密码：   web/Console  admin/Admin@123
+   管理PC上打开Web浏览器并访问https://192.168.0.1:8443            #在登录界面输入用户名：admin，密码：Admin@123
+
+防火墙的基本功能
+----------------
+
+黑名单
+~~~~~~
+
+静态黑名单配置
+^^^^^^^^^^^^^^
+
+::
+
+   firewall blacklist item 202.169.168.2 timeout 100
+   firewall blacklist enable
+
+动态黑名单配置
+^^^^^^^^^^^^^^
+
+::
+
+   firewall defend ip-sweep enable
+   firewall defend ip-sweep max-rate 1000          #ip在1s速度超过1000次，会自动加入到黑名单
+   firewall defend ip-sweep blacklist-timeout 20
+   firewall blacklist enable
+
+
+   display firewall blacklist item             #查看防火墙的黑名单
+
+MAC地址绑定
+~~~~~~~~~~~
+
+::
+
+   firewall mac-binding enable
+   mac-binding 10.3.3.12 0000-0000-0012
+
+端口映射
+~~~~~~~~
+
+::
+
+   display port-mapping                #查看端口映射信息
+   acl number 2010
+   rule permit source 129.38.1.1 0.0.0.0
+   port-mapping ftp port 80 acl 2010
+   firewall interzone dmz untrust
+   detect ftp
+
+   acl number 2020
+   rule permit source 129.38.1.0 0.0.0.255
+   port-mapping ftp port 8080 acl 2020
+   firewall interzone dmz untrust
+   detect http
+
+与IDS联动配置
+~~~~~~~~~~~~~
+
+::
+
+   firewall ids server 192.168.10.10
+   firewall ids port 3000
+   firewall ids authentication type md5 key huawei123
+   firewall ids enable
+
+   #ids配置验证
+   display firewall ids        #查看ids的配置是否成功
+
+   #日志输出配置
+   info-center enable
+   info-center loghost 192.168.10.2 language english
+
+   firewall session log-type binary host 192.168.10.2 9002
+
+
+   #查看日志信息
+   display info-center
+
+负载均衡
+--------
+
+负载均衡配置
+~~~~~~~~~~~~
+
+::
+
+   slb enable
+   slb
+   rserver 1 rip 10.1.1.3
+   rserver 2 rip 10.1.1.4
+   rserver 2 rip 10.1.1.5
+   firewall packet-filter default permit interzone local dmz direction outbound
+
+   group group1
+   metric roundrobin
+   addrserver 1
+   addrserver 2
+   addrserver 3
+   vserver huawei vip 202.2.2.2 group group1
+
+虚拟防火墙
+----------
+
+-  虚拟防火墙
+
+   在USG上创建逻辑上的虚拟防火墙(Vfw),能够提供防火墙的出租业务，实现子网隔离
+   和解决地址重叠的问题，每个虚拟防火墙都是VPN实例，安全实例和配置实例的综合体，
+   能够为虚拟防火墙用户提供使用的路由转发平面、安全服务和配置管理平面
+
+USG防火墙NAT业务
+----------------
+
+NAT技术的原理
+~~~~~~~~~~~~~
+
+::
+
+   静态NAT ：一对一发布服务端口
+   动态NAT：一对多，创建地址pool，轮训访问地址pool中的地址
+   策略NAT：控制指定内网机器可以访问外网
+   PAT：所有内网地址都在在出口的端口启动一个端口对应一个内部地址
+
+描述USG防火墙的各种NAT特性
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   #NAT
+   #定义地址池
+   nat address-group 1 202.38.160.1 202.38.160.4
+   nat-policy interzone untrust trust outbound
+   policy 1
+   action source-nat
+   address-group 1 no-pat
+
+常用的NAT地址转换方式
+~~~~~~~~~~~~~~~~~~~~~
+
+PAT
+^^^
+
+::
+
+   nat-policy interzone untrust trust outbound
+   policy 1
+   action source-nat
+   address-group 1
+
+配置策略NAT
+^^^^^^^^^^^
+
+::
+
+   nat address-group 1 202.38.160.1 202.38.160.4
+   nat-policy interzone untrust trust outbound
+   policy source 10.1.10
+   action source-nat
+   address-group 1
+
+描述USG防火墙各NAT特性的基本组网与配置
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+双向NAT
+^^^^^^^
+
+::
+
+   #配置NAT SERVER服务器
+   nat server global 192.168.1.20 inside 202.1.1.10
+   nat server global 202.1.1.20 inside 192.168.1.10
+
+域内NAT
+^^^^^^^
+
+::
+
+   #很常用
+   nat address-group 1 202.1.1.11 202.1.1.11
+   nat-policy zone trust
+   policy 0
+   policy source 192.168.1.0 0.0.0.255
+   action source-nat
+   address-group 1
+
+实验
+----
+
+::
+
+   #允许信任区访问不信任区域，在outbond口
+   firewall packet-filter default permit interzone trust untrust direction outbound
+
+
+   #允许不信任区域去访问dmz的web服务，方向是inbound,不信任区
+   policy interface dmz untrust inbound
+   policy 1
+   policy server service-set http
+   action permit                   #执行动作允许
+
+
+
+   #设置2个地址池,用于策略NAT转换
+   pool1:172.16.1.100~109
+   pool2:172.16.1.110~119
+
+   #定义地址池
+   nat address-group 1 172.16.1.100 172.16.1.109
+   nat address-group 2 172.16.1.110 172.16.1.119
+
+   #显示地址池信息
+   display nat address-group
+
+开通内网访问外网的NAT
+~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   #开始做策略一
+   nat-policy interzone trust untrust outbound
+   policy 1
+   policy source 10.3.3.3 0        #只有这个源地址才能使用pool1
+   action source-nat
+   address-group 1
+
+   display this                #source 10.3.3.3 0  ---- >  使用地址池pool1
+
+
+
+   #开始做策略二
+   nat-policy interzone trust untrust outbound
+   action source-nat
+   policy server service-set ip
+   policy source any
+   address-group 2
+
+
+   #查看地址转换详细
+   display firewall session table
+
+开通DMZ区域发放服务到外网
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   #将内部本地转换为内部全局
+   nat server protocal tcp global 172.16.1.10 inside 10.2.2.10
+   display nat-server          #查看内部本地和内部全局之间的映射
+
+USG防火墙学习
+
+部署场景
+--------
+
+场景A：三层路由网关
+~~~~~~~~~~~~~~~~~~~
+
+当设备作为三层路由网关部署在内外网之间时，通常还需要负责内网的私网地址与外网的公网地址之间的转换
+
+因此这种部署方式又常被称为“NAT模式”。因为FW实现了切换业务接口的工作层次，所以无需通过整机切换工作模式来实现传统意义上的“路由模式/NAT模式”或者“透明模式”。
+在FW中，只要接口工作在三层，就可以实现三层路由网关的功能；
+
+场景B：二层透明桥接
+~~~~~~~~~~~~~~~~~~~
+
+设备的业务接口工作在二层（数据链路层），负责二层报文的转发。
+此时设备可以作为一台交换机一样部署在网络中，透明接入到原有的网关设备之后，
+在不改变原有网络结构和配置的前提下对流量进行安全防护，因此这种部署方式常被称为“透明模式”。
+在FW中可以使用部分三层接口来进行三层路由网关的部署，再使用二层接口来进行二层透明桥接的部署。两者可以共存。
+二层透明网桥部署的最大优势在于：透明植入原有网络，不改变网络拓扑和周边设备的配置，可以基于MAC地址对同一网段内的流量进行更深入的控制。
+但是，如果设备的所有接口都工作在二层，那么设备也将无法进行特征库升级等需要设备本身与外部网络通信的操作
+
+场景C：双机热备
+~~~~~~~~~~~~~~~
+
+两台设备组成双机热备组网，目的是为了提高网络可靠性。当设备作为网关时，如果设备出现故障导致不能做正常转发流量，会影响到网络业务的运行。
+所以通过将两台设备进行双机热备，可以在一台设备发生问题时，另外一台设备自动接替故障设备的位置继续进行流量转发，以保证业务不受影响。
+
+防火墙：
+~~~~~~~~
+
+::
+
+   g0/0/0默认属于trust  用户名默认admin 密码默认Admin@123
+   [FW1]firewall zone name 名字      //创建一个安全区域
+   [FW1-zone-a1]set priority 60        //设置优先级
+   [FW1-zone-a1]add interface g0/0/1   //添加接口
+   display zone 名字         //查看安全区域配置
+   [FW1]display firewall packet-filter default all     //查看策略
+   [FW1]firewall packet-filter default permit interzone trust dmz direction outbound               //放行trust到dmz的流量
+   [FW1]display firewall session table //查看会话表项 为什么出去的能回来
+
+远程管理防火墙：
+~~~~~~~~~~~~~~~~
+
+::
+
+   [FW1]user-interface vty 0 4
+   [FW1-ui-vty0-4]authentication-mode aaa
+   [FW1-ui-vty0-4]aaa
+   [FW1-aaa]local-user lewis password cipher 123       //创建用户名密码
+   权限提升：
+   1.针对具体账号提升权限
+   [FW1-aaa]local-user lewis level 3
+   2.针对局部用户提升权限
+   [FW1]super password level 3 cipher Admin@123        //设置超级密码
+   <FW1>super          //登陆后输入super 输入超级密码提升权限
+   3.针对大面积提升权限
+   [FW1]user-interface vty 0 4
+   [FW1-ui-vty0-4]user privilege level 3
+
+流量过滤：
+~~~~~~~~~~
+
+::
+
+   1.域内流量过滤
+   [FW1]policy zone trust
+   [FW1-policy-zone-trust]policy 10
+   [FW1-policy-zone-trust-10]policy source 192.168.1.0 0.0.0.255
+   [FW1-policy-zone-trust-10]policy destination 192.168.2.0 0.0.0.255
+   [FW1-policy-zone-trust-10]action deny       //拒绝访问
+
+   2.域间流量过滤
+   [FW1]ip service-set setl type object
+   [FW1-object-service-set-setl]service 0 protocol icmp
+   [FW1-object-service-set-setl]service 1 protocol tcp destination-port 80
+   [FW1-object-service-set-setl]service 2 protocol tcp destination-port 21
+   [FW1]policy interzone untrust dmz inbound   //untrust到dmz的流量
+   [FW1-policy-interzone-dmz-untrust-inbound]policy 10
+   [FW1-policy-interzone-dmz-untrust-inbound-10]action deny
+   [FW1-policy-interzone-dmz-untrust-inbound-10]policy source 202.1.10.0 0.0.0.255
+   [FW1-policy-interzone-dmz-untrust-inbound-10]policy service service-set setl
+   [FW1-policy-interzone-dmz-untrust-inbound-10]action permit
+   [FW1]firewall interzone untrust dmz
+   [FW1-interzone-dmz-untrust]detect ftp       //开启ftp
+
+   [FW1]policy interzone untrust dmz inbound
+   [FW1-policy-interzone-dmz-untrust-inbound]policy 9  //拦截icmp报文
+   [FW1-policy-interzone-dmz-untrust-inbound-9]policy source 202.1.10.0 0.0.0.255
+   [FW1-policy-interzone-dmz-untrust-inbound-9]policy service service-set icmp
+   [FW1-policy-interzone-dmz-untrust-inbound-9]action deny
+   //拒绝untrust202.1.10.0网段发往dmz的icmp
+   [FW1-policy-interzone-dmz-untrust-inbound]policy move 9 before 10 //把策略九移到十的上边
+
+NAT：
+~~~~~
+
+::
+
+   静态NAT： 一对一
+   [FW1]nat address-group 1 202.1.1.3 202.1.1.3    //设置地址池
+   [FW1]nat-policy interzone trust untrust outbound
+   [FW1-nat-policy-interzone-trust-untrust-outbound]policy 10
+   [FW1-nat-policy-interzone-trust-untrust-outbound-10]action source-nat
+   [FW1-nat-policy-interzone-trust-untrust-outbound-10]policy source 192.168.1.0 0.0.0.255     192.168.1.0网段做nat
+   [FW1-nat-policy-interzone-trust-untrust-outbound-10]address-group 1
+   //绑定地址池1
+
+   NAPT：一对多
+   [FW1]nat-policy interzone trust untrust outbound
+   [FW1-nat-policy-interzone-trust-untrust-outbound]policy 11
+   [FW1-nat-policy-interzone-trust-untrust-outbound-11]action source-nat
+   [FW1-nat-policy-interzone-trust-untrust-outbound-11]policy source 192.168.2.0 0.0.0.255
+   [FW1-nat-policy-interzone-trust-untrust-outbound-11]easy-ip g0/0/3
+   //以该端口ip地址做nat
+   [FW1]dis firewell session table nat         //查看nat地址转换表
+
+
+
+
+   #PAT策略,实现私网指定网段访问公网时自动进行源地址转换。
+
+
+   # 配置PAT地址池，开启允许端口地址转换。
+   [USG6600] nat address-group addressgroup1
+   [USG6600-address-group-addressgroup1] mode pat
+   [USG6600-address-group-addressgroup1] route enable
+   [USG6600-address-group-addressgroup1] section 0 200.0.0.2 200.0.0.2    //转换的公网IP地址
+   [USG6600-address-group-addressgroup1] quit
+
+
+   [USG6600] nat-policy
+   [USG6600-policy-nat] rule name policy_nat1
+   [USG6600-policy-nat-rule-policy_nat1] source-zone trust
+   [USG6600-policy-nat-rule-policy_nat1] destination-zone untrust
+   [USG6600-policy-nat-rule-policy_nat1] source-address 192.168.0.0 mask 255.255.0.0   #允许进行PAT转换的源IP地址
+   [USG6600-policy-nat-rule-policy_nat1] action nat address-group addressgroup1
+   [USG6600-policy-nat-rule-policy_nat1] quit
+   [USG6600-policy-nat] quit
+   [USG6600] quit

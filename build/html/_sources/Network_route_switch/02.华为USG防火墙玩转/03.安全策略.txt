@@ -1,0 +1,70 @@
+.. contents::
+   :depth: 3
+..
+
+安全策略
+========
+
+安全策略的阶段
+
+``第一阶段：基于ACL的包过滤``
+
+|image0|
+
+在trust安全域到Untrust安全域的方向上，拒绝源地址是192.168.0.100的报文通过，允许源地址是192.168.0.0/24网段，
+目的地址是172.16.0.0/24网段的报文通过。
+
+配置如下。
+
+::
+
+   acl 3000
+   rule deny ip source 192.168.0.100 0
+   rule permit ip source 192.168.0.0 0.0.0.255 destination 172.16.0.0 0.0.0.255
+   quit
+   firewall interzone trust untrust
+   packet-filter 3000 outbound
+
+``第二阶段：融合UTM的安全策略`` |image1|
+
+::
+
+   policy interzone trust untrust outbound
+   poilcy 1
+   policy source 192.168.100.0
+   action deny
+   quit
+
+
+   poilcy 2
+   policy source 192.168.0.0 0.0.0.255
+   policy destination 172.16.0.0 0.0.0.255
+   action permit
+
+``第三阶段：一体化安全策略``
+
+|image2|
+
+|image3|
+
+::
+
+   security-policy
+   rule name policy1
+   source-zone trust
+   destination-zone untrust
+   source-address 192.168.0.100 32
+   action deny
+   quit
+
+   rule name policy2
+   source-zone trust
+   destination-zone untrust
+   source-address 192.168.0.0 24
+   destination-address 172.16.0.0 24
+   action permit
+
+.. |image0| image:: ../../_static/huawei-firewall-acl0001.png
+.. |image1| image:: ../../_static/huawei-firewall-utm0001.png
+.. |image2| image:: ../../_static/huawei-firawell000003.png
+.. |image3| image:: ../../_static/huawei-firewall-ythua0001.png

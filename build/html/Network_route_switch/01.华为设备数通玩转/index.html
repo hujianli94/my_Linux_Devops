@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 华为设备数通玩转 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="1.1. HCNA基础知识" href="01.HCNA基础知识.html" />
+    <link rel="prev" title="Network_route_switch" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 华为设备数通玩转</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html">1.1. HCNA基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html">1.2. HCNA实验</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.华为路由器、交换机常用命令.html">1.3. 华为设备常用命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.小型园区组网场景.html">1.4. 小型园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.中小园区组网场景.html">1.5. 中小园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.综合配置案例.html">1.6. 综合配置案例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.华为USG防火墙玩转/index.html">2. 华为USG防火墙玩转</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.思科设备数通复习/index.html">3. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C数通玩转/index.html">4. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+        
+      <li>1. 华为设备数通玩转</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="id1">
+<h1>1. 华为设备数通玩转<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.HCNA基础知识.html">1.1. HCNA基础知识</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#console">1.1.1. Console口登录密码丢失后如何恢复</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id1">方式1</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01.HCNA基础知识.html#huawei-123">以登录用户界面的认证方式为密码认证，密码为Huawei&#64;123为例，配置如下</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id2">方式2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="01.HCNA基础知识.html#bootrom-bootloadconsole">通过BootROM/BootLoad清除Console口登录密码</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#bootrom">1.1.2. BootROM密码丢失后如何恢复</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id3">说明：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id4">1.1.3. 清空配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id5">1.1.4. 通过Console口首次登录设备</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#telnet">1.1.5. Telnet登录密码丢失后如何恢复</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id6">说明：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id8">通过Console口登录设备。</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id9">1.1.6. 配置Telnet类型的本地用户</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id10">1.1.7. 备份配置文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id11">1.1.8. 恢复配置文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#stelnet-ssh">1.1.9. 配置通过STelnet登录设备(ssh连接交换机)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#acl">1.1.10. 使用基本ACL规则限制用户登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#vrp">1.1.11. VRP（通用路由平台）操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#ip">1.1.12. 熟悉常用的IP相关命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id12">1.1.13. 交换机基础配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#mac">1.1.14. 常见的MAC地址操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id13">1.1.15. 接口配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id14">1.1.16. 一键清除接口下的配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id15">1.1.17. 链路聚合操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#vlan">1.1.18. vlan学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#dhcp">1.1.19. 常见的DHCP操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id16">1.1.20. 利用三层交换机实现vlan间路由</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#stp">1.1.21. STP生成树学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#eth-trunk">1.1.22. Eth-trunk 链路聚合</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#id17">手工聚合</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA基础知识.html#lacp">配置静态LACP模式</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.HCNA基础知识.html#id18">1.1.23. 静态路由</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.HCNA实验举例.html">1.2. HCNA实验</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.HCNA实验举例.html#id1">1.2.1. 1.1 以太网接口和配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id2">拓扑图：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id3">1.配置手工模式的链路聚合（关闭自协商、接口速率为100,，全双工）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#lacp">配置静态LACP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.HCNA实验举例.html#vlan">1.2.2. 1.2 VLAN配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id4">拓扑图如下：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id5">配置文件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.HCNA实验举例.html#gvrp">1.2.3. 1.3 GVRP配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id6">拓扑图</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id8">配置如下</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02.HCNA实验举例.html#id9">修改交换机接口的注册模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.HCNA实验举例.html#id10">1.2.4. 1.4 VLAN间路由</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#id11">掌握知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="02.HCNA实验举例.html#id12">单臂路由</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02.HCNA实验举例.html#id13">网络拓扑图如下：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02.HCNA实验举例.html#id14">配置三层交换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="02.HCNA实验举例.html#id15">网络拓扑图如下：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.HCNA实验举例.html#ip-acl">1.2.5. 1.5 IP安全配置(ACL)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA实验举例.html#acl">配置ACL过滤企业数据</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.华为路由器、交换机常用命令.html">1.3. 华为设备常用命令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id2">1.3.1. 华为路由器交换机配置命令：路由器命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id3">1.3.2. 华为路由器交换机配置命令：静态路由：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id4">1.3.3. 华为路由器交换机配置命令：动态路由：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id5">1.3.4. 华为路由器交换机配置命令：标准访问列表命令格式如下：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id6">1.3.5. 华为路由器交换机配置命令：扩展访问控制列表配置命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id7">1.3.6. 华为路由器交换机配置命令：扩展访问控制列表操作符的含义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id8">1.3.7. 华为路由器交换机配置命令：扩展访问控制列表举例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.华为路由器、交换机常用命令.html#id9">1.3.8. 查看交换机日志</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.小型园区组网场景.html">1.4. 小型园区组网场景</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.小型园区组网场景.html#id2">1.4.1. 拓扑图</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.中小园区组网场景.html">1.5. 中小园区组网场景</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.中小园区组网场景.html#core1">1.5.1. Core1 配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.中小园区组网场景.html#core2">1.5.2. Core2配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.中小园区组网场景.html#r1">1.5.3. R1配置</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.综合配置案例.html">1.6. 综合配置案例</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.综合配置案例.html#id2">1.6.1. 交换机与防火墙对接上网示例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.综合配置案例.html#id3">二层交换机与防火墙对接上网</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.综合配置案例.html#id4">三层交换机与防火墙对接上网</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.HCNA基础知识.html" class="btn btn-neutral float-right" title="1.1. HCNA基础知识" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral float-left" title="Network_route_switch" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

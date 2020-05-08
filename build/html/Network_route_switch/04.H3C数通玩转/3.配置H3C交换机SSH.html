@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>3.3. 配置H3C交换机 ssh &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="3.4. 配置eth-trunk" href="4.配置eth-trunk.html" />
+    <link rel="prev" title="3.2. 交换机配置堆叠" href="2.交换机配置堆叠.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.华为设备数通玩转/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.思科设备数通复习/index.html">2. 思科设备数通复习</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. H3C设备数通</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.H3C设备升级版本补丁.html">3.1. H3C设备升级版本补丁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.交换机配置堆叠.html">3.2. 交换机配置堆叠</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.3. 配置H3C交换机 ssh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.3.1. 脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="4.配置eth-trunk.html">3.4. 配置eth-trunk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.H3C40G1分410G接口.html">3.5. 40G一分4接口的合并和拆分</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+        
+          <li><a href="index.html">3. H3C设备数通</a> &raquo;</li>
+        
+      <li>3.3. 配置H3C交换机 ssh</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Network_route_switch/04.H3C数通玩转/3.配置H3C交换机SSH.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#h3c-ssh" id="id4">配置H3C交换机 ssh</a><ul>
+<li><a class="reference internal" href="#id1" id="id5">脚本</a><ul>
+<li><a class="reference internal" href="#ssh-ssh" id="id6">使用SSH+密码认证(基本SSH配置方法)</a></li>
+<li><a class="reference internal" href="#id2" id="id7">使用SSH+密钥、密码认证（高级SSH配置方法）</a></li>
+<li><a class="reference internal" href="#sshssh-1" id="id8">使用SSH+密码认证(基本SSH配置方法)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="h3c-ssh">
+<h1><a class="toc-backref" href="#id4">3.3. 配置H3C交换机 ssh</a><a class="headerlink" href="#h3c-ssh" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#1生成RSA和DSA密钥对
+[H3C]public-key local create rsa
+[H3C]public-key local create dsa
+
+#2、设置用户接口上的认证模式为AAA，并让用户接口支持SSH协议
+[H3C]user-interface vty 0 4
+[H3C-ui-vty0-4]authentication-mode scheme
+
+#如果在该用户界面上配置支持的协议是SSH，为确保登录成功，请务必配置登录用户界面的认证方式为authentication-mode scheme（采用AAA认证）。
+[H3C-ui-vty0-4]protocol inbound ssh
+
+#3、创建用户
+系统配置模式下：
+[H3C]local-user zsh_admin
+
+#4、创建密码
+[H3C-luser-cdc_admin]password cipher 密码
+
+#5、定义登录协议
+[H3C-luser-cdc_admin]service-type ssh
+
+authorization-attribute user-role level-15
+
+#6、创建用户级别
+[H3C-luser-cdc_admin]authorization-attribute level 3
+
+#7、配置SSH用户client001的服务类型为Stelnet，认证方式为password认证。（此步骤可以不配置）--不用配置
+[H3C]ssh user zsh_admin service-type stelnet authentication-type password
+
+#8、备份配置信息
+备份配置信息防止重启后丢失
+&lt;H3C&gt;save
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id5">3.3.1. 脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="n">server</span> <span class="n">enable</span>
+<span class="n">public</span><span class="o">-</span><span class="n">key</span> <span class="n">local</span> <span class="n">create</span> <span class="n">rsa</span>
+<span class="n">public</span><span class="o">-</span><span class="n">key</span> <span class="n">local</span> <span class="n">create</span> <span class="n">dsa</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">vty</span> <span class="mi">0</span> <span class="mi">4</span>
+<span class="n">authentication</span><span class="o">-</span><span class="n">mode</span> <span class="n">scheme</span>
+<span class="n">protocol</span> <span class="n">inbound</span> <span class="n">ssh</span>
+<span class="n">quit</span>
+
+<span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">zsh_admin</span>
+<span class="c1">#password hash zsh_admin12#$</span>
+<span class="n">password</span> <span class="n">simple</span> <span class="n">zsh_admin12</span><span class="c1">#$</span>
+<span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">ssh</span>
+<span class="n">authorization</span><span class="o">-</span><span class="n">attribute</span> <span class="n">user</span><span class="o">-</span><span class="n">role</span> <span class="n">level</span><span class="o">-</span><span class="mi">15</span>
+<span class="n">quit</span>
+<span class="n">ssh</span> <span class="n">user</span> <span class="n">zsh_admin</span> <span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">stelnet</span> <span class="n">authentication</span><span class="o">-</span><span class="nb">type</span> <span class="n">password</span>
+
+<span class="n">quit</span>
+<span class="n">save</span>
+</pre></div>
+</div>
+<div class="section" id="ssh-ssh">
+<h3><a class="toc-backref" href="#id6">使用SSH+密码认证(基本SSH配置方法)</a><a class="headerlink" href="#ssh-ssh" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>注：在用户使用SSH登录交换机时，交换机对所要登录的用户使用密码对其进行身份验证
+生成RSA和DSA密钥对
+[H3C]public-key local create rsa
+[H3C]public-key local create dsa
+设置用户接口上的认证模式为AAA，并让用户接口支持SSH协议
+[H3C]user-interface vty 0 4
+[H3C-ui-vty0-4]authentication-mode scheme
+[H3C-ui-vty0-4]protocol inbound ssh
+创建用户luwenju-juzi，设置认证密码为luwenju-!@# 登录协议为SSH，能访问的命令级别为3
+[H3C]local-user luwenju-juzi
+[H3C-luser-luwenju-juzi]password cipher luwenju-!@#
+[H3C-luser-luwenju-juzi]service-type ssh level 3
+指定用户luwenju-juzi的认证方式为password
+[H3C]ssh user luwenju-juzi authentication-type password
+一个基本的SSH配置就结束了，配置完成后即可使用SSH登录工具进行连接交换机
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id7">使用SSH+密钥、密码认证（高级SSH配置方法）</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>注：客户端在使用SSH工具登录交换机时，交换机同时使用密钥和密码对所要登录的用户实行身份验证
+生成RSA和DSA密钥对
+[H3C]public-key local create rsa
+[H3C]public-key local create dsa
+设置用户接口上的认证模式为AAA认证，并在接口上开启SSH协议，并设置用户能访问的命令级别为3
+[H3C]user-interface vty 0 4
+[H3C-ui-vty0-4]authentication-mode scheme
+[H3C-ui-vty0-4]protocol inbound ssh
+[H3C-ui-vty0-4]user privilege level 3
+创建用户，并指定认证方式为公钥认证，用户名为luwenju-juzi，密码为luwenju-!@#
+[H3C]local-user luwenju-juzi
+[H3C-luser-luwenju-juzi]password cipher luwenju-!@#
+[H3C-luser-luwenju-juzi]service-type ssh level 3
+[H3C]ssh user luwenju-juzi authentication-type password-publickey
+客户端生成公钥和私钥
+用puttygen.exe生成公私钥对，然后放到某个文件夹下，在此，我们生成的公钥叫luwenjukey私钥为luwenju.ppk,然后我们把公钥文件luwenjukey上传到FTP服务器,然后登录交换机，将luwenjukey下载到交换机
+&lt;H3C&gt;ftp 202.106.0.20
+[ftp]get luwenjukey
+为用户生成公钥，在交换机上把文件luwenjukey中导入客户端的公钥，公钥名为luwenju-juzikey   注：luwenju-juzikey是为用户生成的公钥
+[H3C]public-key peer luwenju-juzikey import sshkey luwenjukey
+为用户luwenju-juzi指定公钥luwenju-juzikey
+[H3C]ssh user luwenju-juzi assign publickey luwenju-juzikey
+然后打开SSH登录工具，导入私钥luwenju.ppk，然后输入交换机的IP地址登录即可
+</pre></div>
+</div>
+</div>
+<div class="section" id="sshssh-1">
+<span id="id3"></span><h3><a class="toc-backref" href="#id8">使用SSH+密码认证(基本SSH配置方法)</a><a class="headerlink" href="#sshssh-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>注：在用户使用SSH登录交换机时，交换机对所要登录的用户使用密码对其进行身份验证
+生成RSA和DSA密钥对
+[H3C]public-key local create rsa
+[H3C]public-key local create dsa
+设置用户接口上的认证模式为AAA，并让用户接口支持SSH协议
+[H3C]user-interface vty 0 4
+[H3C-ui-vty0-4]authentication-mode scheme
+[H3C-ui-vty0-4]protocol inbound ssh
+创建用户luwenju-juzi，设置认证密码为luwenju-!@# 登录协议为SSH，能访问的命令级别为3
+[H3C]local-user luwenju-juzi
+[H3C-luser-luwenju-juzi]password cipher luwenju-!@#
+[H3C-luser-luwenju-juzi]service-type ssh level 3
+指定用户luwenju-juzi的认证方式为password
+[H3C]ssh user luwenju-juzi authentication-type password
+一个基本的SSH配置就结束了，配置完成后即可使用SSH登录工具进行连接交换机
+使用SSH+密钥、密码认证（高级SSH配置方法）
+注：客户端在使用SSH工具登录交换机时，交换机同时使用密钥和密码对所要登录的用户实行身份验证
+生成RSA和DSA密钥对
+[H3C]public-key local create rsa
+[H3C]public-key local create dsa
+设置用户接口上的认证模式为AAA认证，并在接口上开启SSH协议，并设置用户能访问的命令级别为3
+[H3C]user-interface vty 0 4
+[H3C-ui-vty0-4]authentication-mode scheme
+[H3C-ui-vty0-4]protocol inbound ssh
+[H3C-ui-vty0-4]user privilege level 3
+创建用户，并指定认证方式为公钥认证，用户名为luwenju-juzi，密码为luwenju-!@#
+[H3C]local-user luwenju-juzi
+[H3C-luser-luwenju-juzi]password cipher luwenju-!@#
+[H3C-luser-luwenju-juzi]service-type ssh level 3
+[H3C]ssh user luwenju-juzi authentication-type password-publickey
+客户端生成公钥和私钥
+用puttygen.exe生成公私钥对，然后放到某个文件夹下，在此，我们生成的公钥叫luwenjukey私钥为luwenju.ppk,然后我们把公钥文件luwenjukey上传到FTP服务器,然后登录交换机，将luwenjukey下载到交换机
+&lt;H3C&gt;ftp 202.106.0.20
+[ftp]get luwenjukey
+为用户生成公钥，在交换机上把文件luwenjukey中导入客户端的公钥，公钥名为luwenju-juzikey   注：luwenju-juzikey是为用户生成的公钥
+[H3C]public-key peer luwenju-juzikey import sshkey luwenjukey
+为用户luwenju-juzi指定公钥luwenju-juzikey
+[H3C]ssh user luwenju-juzi assign publickey luwenju-juzikey
+然后打开SSH登录工具，导入私钥luwenju.ppk，然后输入交换机的IP地址登录即可
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="4.配置eth-trunk.html" class="btn btn-neutral float-right" title="3.4. 配置eth-trunk" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="2.交换机配置堆叠.html" class="btn btn-neutral float-left" title="3.2. 交换机配置堆叠" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

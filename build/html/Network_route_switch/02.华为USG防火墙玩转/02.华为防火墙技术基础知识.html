@@ -1,0 +1,401 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.2. 华为防火墙技术基础知识 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.3. 安全策略" href="03.安全策略.html" />
+    <link rel="prev" title="2.1. 华为防火墙玩转" href="01.华为防火墙玩转.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.华为设备数通玩转/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 华为USG防火墙玩转</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html">2.1. 华为防火墙玩转</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. 华为防火墙技术基础知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2.1. 基础知识</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.安全策略.html">2.3. 安全策略</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.思科设备数通复习/index.html">3. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C数通玩转/index.html">4. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+        
+          <li><a href="index.html">2. 华为USG防火墙玩转</a> &raquo;</li>
+        
+      <li>2.2. 华为防火墙技术基础知识</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Network_route_switch/02.华为USG防火墙玩转/02.华为防火墙技术基础知识.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id7">华为防火墙技术基础知识</a><ul>
+<li><a class="reference internal" href="#id2" id="id8">基础知识</a><ul>
+<li><a class="reference internal" href="#id3" id="id9">安全区域</a></li>
+<li><a class="reference internal" href="#id4" id="id10">报文在安全区域之间的流动方向</a></li>
+<li><a class="reference internal" href="#id5" id="id11">安全区域的配置</a></li>
+<li><a class="reference internal" href="#id6" id="id12">状态检测</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id7">2.2. 华为防火墙技术基础知识</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id8">2.2.1. 基础知识</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id9">安全区域</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>通过把接口划分到不同的安全区域中，就可以在防火墙上划分出不通的网络。
+
+例如：我们把接口1和接口2划分到安全区域A中。
+把接口3划分到安全域B中
+把接口4划分到安全区域C中，
+这样防火墙就存在三个安全区域，对应三个网络。
+</pre></div>
+</div>
+<p><img alt="image0" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-zone0001.png" /></p>
+<p>华为防火墙上已经默认为大家提供了三个安全域。分别是 Trust、DMZ和Untrust。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>① Trust 区域： 该区域内网络的受限任程度高，通常用来定义内部用户所在的网络。
+② DMZ 区域：该区域内网络的受信任程度中等，通常用来定义内部服务器所在的网络。
+③ Untrust 区域：该区域代表的是不受信任的网络，通常用来定义Internet等不安全的网络。
+</pre></div>
+</div>
+<p>如果接口1和接口2连接的是内部用户，我们就把这两个接口划分到Trust区域中；</p>
+<p>接口3连接的是内部服务器，我们就把这个接口划分到DMZ区域中，</p>
+<p>接口4连接的是Internet，将它划分到Untrust区域。 <img alt="image1" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-dmz-internet-zone001.png" /></p>
+<p>例如：</p>
+<p>· 当内部网络用户访问Internet的时候，走的线路是 Trust 区域 —&gt; Untrust
+区域</p>
+<p>· 当Internet上的用户访问内部服务器时，报文在防火墙的线路是 Untrust 区域
+—&gt; Trust 区域</p>
+<p>防火墙提供Local区域，代表防火墙本身。凡是由防火墙主动发出的报文均可认为是从Local区域中发出。
+凡是需要防火墙响应并处理（而不是转发）的报文可认为是由Local区域接口。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Local区域中不能添加任何接口，防火墙上所有接口本身都隐含于Local区域，报文通过接口去往某个网络时，目地安全区是接口所在的安全区域。
+报文通过接口到达防火墙本身时，目地安全区域是Local区域。这样既可以使每个接口连接的其他设备能够访问防火墙自身，也能明确Local区域和各个安全区域的域间关系，一举两得。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id10">报文在安全区域之间的流动方向</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>对于默认的安全区域，它们的安全级别是固定的：
+Local区域的安全级别是100，
+Trust区域的安全级别是85，
+DMZ区域的安全级别是50，
+Untrust区域的安全级别是5.
+
+
+报文从低级别的安全区域向高级版的安全区域流动时为入方向（Inbound）
+
+报文从高级别的安全区域向低级版的安全区域流动时为入方向（Outbound）
+</pre></div>
+</div>
+<p><img alt="image2" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-firewall-zone0001.png" /></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>确定目的安全区域时分两种情况，
+
+三层模式下：防火墙查路由表确定报文从哪个接口发出，该接口所属的安全域就是报文的目的安全区域。
+二层模式下：防火墙通过查MAC地址转发表确定报文将要从哪个接口发出，该接口所属的安全区域就是报文的目的安全区域。
+
+源安全区域和目的安全区域确定后，就可以指定报文是在哪两个安全区域之间流动了。
+
+VPN场景中放好收到的是封装的报文，将报文解封装后得到原始报文，然后查找路由表来确定目的安全区域，报文将要从哪个接口发出，
+该接口所属的安全区域就是报文的目的安全区域。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id11">安全区域的配置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="n">zone</span> <span class="n">name</span> <span class="n">test</span>                 <span class="o">//</span><span class="n">创建安全区域test</span>
+<span class="nb">set</span> <span class="n">priority</span> <span class="mi">10</span>                         <span class="o">//</span> <span class="n">将安全级别设置为10</span>
+<span class="n">add</span> <span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>      <span class="o">//</span> <span class="n">将接口GE</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="n">加入安全区域</span>
+</pre></div>
+</div>
+<div class="section" id="pc1pc2zone">
+<h4>通过子接口将PC1和PC2放入两个不同的zone<a class="headerlink" href="#pc1pc2zone" title="Permalink to this headline">¶</a></h4>
+<p><img alt="image3" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-firewall-zijiekou001.png" /></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>interface GigabitEthernet 0/0/1.10
+vlan-type dotlq 10
+ip address 192.168.10.1 24
+quit
+
+interface GigabitEthernet 0/0/1.20
+vlan-type dotlq 20
+ip address 192.168.20.1 24
+quit
+
+zone name trustl
+set priority 10
+add interface GigabitEthernet 0/0/1.10
+quit
+
+zone name trust2
+set priority 120
+add interface GigabitEthernet 0/0/1.20
+quit
+
+完成上述配置后
+PC1被划分到trustl安全区域，
+PC2被划分到trust2安全区域，此时就可以对PC1和PC2的报文进行控制
+</pre></div>
+</div>
+</div>
+<div class="section" id="vlanifpc1pc2zone">
+<h4>通过Vlanif的方式对PC1和PC2进行zone的划分<a class="headerlink" href="#vlanifpc1pc2zone" title="Permalink to this headline">¶</a></h4>
+<p><img alt="image4" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-firewall-vlanif001.png" /></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vlan</span> <span class="mi">10</span>
+<span class="n">quit</span>
+<span class="n">interface</span> <span class="n">V1anif</span> <span class="mi">10</span>
+<span class="n">quit</span>
+
+<span class="n">vlan</span> <span class="mi">20</span>
+<span class="n">quit</span>
+<span class="n">interface</span> <span class="n">VIanif</span> <span class="mi">20</span>
+<span class="n">quit</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">portswitch</span>
+<span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>
+<span class="n">port</span> <span class="n">trunk</span> <span class="n">permit</span> <span class="n">vlan</span> <span class="mi">10</span> <span class="mi">20</span>
+<span class="n">quit</span>
+
+<span class="n">firewall</span> <span class="n">zone</span> <span class="n">name</span> <span class="n">trust1</span>
+<span class="nb">set</span> <span class="n">priority</span> <span class="mi">10</span>
+<span class="n">add</span> <span class="n">interface</span> <span class="n">V1anif</span> <span class="mi">10</span>
+<span class="n">quit</span>
+
+
+<span class="n">firewall</span> <span class="n">zone</span> <span class="n">name</span> <span class="n">trust2</span>
+<span class="nb">set</span> <span class="n">priority</span> <span class="mi">20</span>
+<span class="n">add</span> <span class="n">interface</span> <span class="n">V1anif</span> <span class="mi">20</span>
+<span class="n">quit</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id12">状态检测</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p><img alt="image5" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/huawei-zhuangtaichek0001.png" /></p>
+<p><img alt="image6" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/zhuangtaijiance0001.png" /></p>
+<p><img alt="image7" src="Network_route_switch\02.华为USG防火墙玩转\../../_static/zhuangtaijiance0002.png" /></p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">table</span> <span class="n">verbose</span>      <span class="o">//</span><span class="n">防火墙上查看状态检测会话</span>
+
+<span class="n">undo</span> <span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">link</span><span class="o">-</span><span class="n">state</span> <span class="n">check</span>  <span class="o">//</span><span class="n">关闭状态检测功能</span>
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">display</span> <span class="n">zone</span>        <span class="o">//</span><span class="n">查看防火墙上安全区域的配置情况</span>
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">statistic</span> <span class="n">system</span> <span class="n">discard</span>       <span class="o">//</span><span class="n">查看防火墙的丢包统计信息</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="03.安全策略.html" class="btn btn-neutral float-right" title="2.3. 安全策略" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01.华为防火墙玩转.html" class="btn btn-neutral float-left" title="2.1. 华为防火墙玩转" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,788 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.1. 华为防火墙玩转 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.2. 华为防火墙技术基础知识" href="02.华为防火墙技术基础知识.html" />
+    <link rel="prev" title="2. 华为USG防火墙玩转" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.华为设备数通玩转/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 华为USG防火墙玩转</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. 华为防火墙玩转</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#usg">2.1.1. USG防火墙学习</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.1.2. 防火墙的工作模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.1.3. 防火墙的基本功能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">2.1.4. 负载均衡</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">2.1.5. 虚拟防火墙</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usgnat">2.1.6. USG防火墙NAT业务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">2.1.7. 实验</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">2.1.8. 部署场景</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html">2.2. 华为防火墙技术基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.安全策略.html">2.3. 安全策略</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.思科设备数通复习/index.html">3. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C数通玩转/index.html">4. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+        
+          <li><a href="index.html">2. 华为USG防火墙玩转</a> &raquo;</li>
+        
+      <li>2.1. 华为防火墙玩转</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Network_route_switch/02.华为USG防火墙玩转/01.华为防火墙玩转.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id27">华为防火墙玩转</a><ul>
+<li><a class="reference internal" href="#usg" id="id28">USG防火墙学习</a></li>
+<li><a class="reference internal" href="#id2" id="id29">防火墙的工作模式</a><ul>
+<li><a class="reference internal" href="#id3" id="id30">透明模式 用于路由器与核心之间</a></li>
+<li><a class="reference internal" href="#id4" id="id31">防火墙关键技术</a></li>
+<li><a class="reference internal" href="#web" id="id32">WEB配置和管理</a></li>
+<li><a class="reference internal" href="#id5" id="id33">缺省配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id6" id="id34">防火墙的基本功能</a><ul>
+<li><a class="reference internal" href="#id7" id="id35">黑名单</a></li>
+<li><a class="reference internal" href="#mac" id="id36">MAC地址绑定</a></li>
+<li><a class="reference internal" href="#id10" id="id37">端口映射</a></li>
+<li><a class="reference internal" href="#ids" id="id38">与IDS联动配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id11" id="id39">负载均衡</a><ul>
+<li><a class="reference internal" href="#id12" id="id40">负载均衡配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id13" id="id41">虚拟防火墙</a></li>
+<li><a class="reference internal" href="#usgnat" id="id42">USG防火墙NAT业务</a><ul>
+<li><a class="reference internal" href="#nat" id="id43">NAT技术的原理</a></li>
+<li><a class="reference internal" href="#id14" id="id44">描述USG防火墙的各种NAT特性</a></li>
+<li><a class="reference internal" href="#id15" id="id45">常用的NAT地址转换方式</a></li>
+<li><a class="reference internal" href="#id17" id="id46">描述USG防火墙各NAT特性的基本组网与配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id20" id="id47">实验</a><ul>
+<li><a class="reference internal" href="#id21" id="id48">开通内网访问外网的NAT</a></li>
+<li><a class="reference internal" href="#dmz" id="id49">开通DMZ区域发放服务到外网</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22" id="id50">部署场景</a><ul>
+<li><a class="reference internal" href="#a" id="id51">场景A：三层路由网关</a></li>
+<li><a class="reference internal" href="#b" id="id52">场景B：二层透明桥接</a></li>
+<li><a class="reference internal" href="#c" id="id53">场景C：双机热备</a></li>
+<li><a class="reference internal" href="#id23" id="id54">防火墙：</a></li>
+<li><a class="reference internal" href="#id24" id="id55">远程管理防火墙：</a></li>
+<li><a class="reference internal" href="#id25" id="id56">流量过滤：</a></li>
+<li><a class="reference internal" href="#id26" id="id57">NAT：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id27">2.1. 华为防火墙玩转</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="usg">
+<h2><a class="toc-backref" href="#id28">2.1.1. USG防火墙学习</a><a class="headerlink" href="#usg" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#关闭80端口，管理员使用Web浏览器访问80端口时，FW会自动将管理员的访问重定向到8443端口
+undo web-manager enable
+
+
+#创建一个安全区域
+firewall zone name userzone
+
+#设置优先级
+set priority 60
+
+#给安全区域添加接口
+add interface GigabitEthernet 0/0/1
+
+#查看防火墙安全区域配置
+display zone username
+
+
+#安全区域配置---2
+
+#在域间下发ACL
+system-view
+policy interzone trust untrust outbound
+policy 1
+action permit
+
+
+
+#查看所有策略
+display policy all
+
+
+
+配置安全策略，允许域间互访。
+[USG6600] security-policy
+[USG6600-policy-security] rule name policy1
+[USG6600-policy-security-rule-policy1] source-zone trust
+[USG6600-policy-security-rule-policy1] destination-zone untrust
+[USG6600-policy-security-rule-policy1] source-address 192.168.0.0 mask 255.255.0.0
+[USG6600-policy-security-rule-policy1] action permit
+[USG6600-policy-security-rule-policy1] quit
+[USG6600-policy-security] quit
+
+
+
+#允许trust访问untrust区域， 信任区域---&gt;不信任区域
+firewall packet-filter default permit interzone trust untrust direction outbound
+
+#允许trust访问dmz区域     信任区---&gt;dmz区域
+firewall packet-filter default permit interzone trust dmz direction outbound
+
+#允许dmz访问untrust区域    dmz区域 ---&gt; 不信任区域
+firewall packet-filter default permit interzone dmz untrust direction outbound
+
+
+
+#允许 untrust ----&gt; dmz区域的web主机,只放行http服务
+policy interzone dmz untrust inbound        #定义 untrust ---&gt; dmz 的 inbound方向
+policy 1    #策略名称，优先执行策略数值小的
+policy service service-set http
+action permit
+display this
+</pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id29">2.1.2. 防火墙的工作模式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>1.路由模式
+#先建的模式都是路由模式，防火墙已经替代了路由器，路由器的功能防火墙都支持</li>
+<li>2.透明模式</li>
+<li>3.混合模式</li>
+</ul>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id30">透明模式 用于路由器与核心之间</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#会话</span>
+
+<span class="c1">#查看防火墙的Session详细的信息</span>
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">table</span> <span class="n">verbose</span>
+
+
+<span class="c1">#重置防火墙的session</span>
+<span class="n">reset</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">table</span>
+
+
+<span class="c1">#查看防火墙默认的Session aging-time</span>
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">aging</span><span class="o">-</span><span class="n">time</span>
+
+
+<span class="c1">#修改icmp的会话老化时间</span>
+<span class="n">firewall</span> <span class="n">session</span> <span class="n">aging</span><span class="o">-</span><span class="n">time</span> <span class="n">icmp</span> <span class="mi">15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id31">防火墙关键技术</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>1.ASPF #对特点应用报文进行过滤
+USG相当于一个六元祖（支持VPN情况下，有VPN-ID）的NAT设备
+防火墙上每个会话的监控都需要六元祖： 源IP地址 源端口 目的IP地址 目的端口
+协议号 VPN-ID 只有这些元素都具备了会话才能建立完成，报文才能通过，
+一些实时通讯工具，如QQ、MSN，需要按三元祖处理： 1.源IP地址 2.源端口
+3.协议号 USG为了适配QQ、MSN等通讯机制，支持三元组处理方式。</p>
+<p>#ASPF配置 firewall interzone trust untrust</p>
+<p>#打开ASPF功能 detect protocal detect {xxxx|xxxx}</p>
+</div>
+<div class="section" id="web">
+<h3><a class="toc-backref" href="#id32">WEB配置和管理</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span> USG9500提供基于Web GUI（Graphic User Interface）的管理界面，为用户提供友好的配置和管理界面。
+ 在图形化界面中，可以配置安全区域、ACL、NAT、ASPF、攻击防范、黑名单、IPS等功能特性并查看各种统计参数。
+
+Web浏览器和USG9500之间通过HTTPS（Hypertext Transfer Protocol Secure）安全协议进行交互。
+HTTPS采用SSL安全加密机制，通过在客户和服务器之间建立一条加密通道，确保数据不被非法窃取。加密功能保证了用户信息的安全。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id33">缺省配置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>GE0/0/0  IP:192.168.0.1
+管理员账号/密码：   web/Console  admin/Admin@123
+管理PC上打开Web浏览器并访问https://192.168.0.1:8443            #在登录界面输入用户名：admin，密码：Admin@123
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id34">2.1.3. 防火墙的基本功能</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id35">黑名单</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h4>静态黑名单配置<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="n">blacklist</span> <span class="n">item</span> <span class="mf">202.169</span><span class="o">.</span><span class="mf">168.2</span> <span class="n">timeout</span> <span class="mi">100</span>
+<span class="n">firewall</span> <span class="n">blacklist</span> <span class="n">enable</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h4>动态黑名单配置<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="n">defend</span> <span class="n">ip</span><span class="o">-</span><span class="n">sweep</span> <span class="n">enable</span>
+<span class="n">firewall</span> <span class="n">defend</span> <span class="n">ip</span><span class="o">-</span><span class="n">sweep</span> <span class="nb">max</span><span class="o">-</span><span class="n">rate</span> <span class="mi">1000</span>          <span class="c1">#ip在1s速度超过1000次，会自动加入到黑名单</span>
+<span class="n">firewall</span> <span class="n">defend</span> <span class="n">ip</span><span class="o">-</span><span class="n">sweep</span> <span class="n">blacklist</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">20</span>
+<span class="n">firewall</span> <span class="n">blacklist</span> <span class="n">enable</span>
+
+
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">blacklist</span> <span class="n">item</span>             <span class="c1">#查看防火墙的黑名单</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="mac">
+<h3><a class="toc-backref" href="#id36">MAC地址绑定</a><a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="n">mac</span><span class="o">-</span><span class="n">binding</span> <span class="n">enable</span>
+<span class="n">mac</span><span class="o">-</span><span class="n">binding</span> <span class="mf">10.3</span><span class="o">.</span><span class="mf">3.12</span> <span class="mi">0000</span><span class="o">-</span><span class="mi">0000</span><span class="o">-</span><span class="mi">0012</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id37">端口映射</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">display</span> <span class="n">port</span><span class="o">-</span><span class="n">mapping</span>                <span class="c1">#查看端口映射信息</span>
+<span class="n">acl</span> <span class="n">number</span> <span class="mi">2010</span>
+<span class="n">rule</span> <span class="n">permit</span> <span class="n">source</span> <span class="mf">129.38</span><span class="o">.</span><span class="mf">1.1</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span class="n">port</span><span class="o">-</span><span class="n">mapping</span> <span class="n">ftp</span> <span class="n">port</span> <span class="mi">80</span> <span class="n">acl</span> <span class="mi">2010</span>
+<span class="n">firewall</span> <span class="n">interzone</span> <span class="n">dmz</span> <span class="n">untrust</span>
+<span class="n">detect</span> <span class="n">ftp</span>
+
+<span class="n">acl</span> <span class="n">number</span> <span class="mi">2020</span>
+<span class="n">rule</span> <span class="n">permit</span> <span class="n">source</span> <span class="mf">129.38</span><span class="o">.</span><span class="mf">1.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="n">port</span><span class="o">-</span><span class="n">mapping</span> <span class="n">ftp</span> <span class="n">port</span> <span class="mi">8080</span> <span class="n">acl</span> <span class="mi">2020</span>
+<span class="n">firewall</span> <span class="n">interzone</span> <span class="n">dmz</span> <span class="n">untrust</span>
+<span class="n">detect</span> <span class="n">http</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="ids">
+<h3><a class="toc-backref" href="#id38">与IDS联动配置</a><a class="headerlink" href="#ids" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">firewall</span> <span class="n">ids</span> <span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.10</span>
+<span class="n">firewall</span> <span class="n">ids</span> <span class="n">port</span> <span class="mi">3000</span>
+<span class="n">firewall</span> <span class="n">ids</span> <span class="n">authentication</span> <span class="nb">type</span> <span class="n">md5</span> <span class="n">key</span> <span class="n">huawei123</span>
+<span class="n">firewall</span> <span class="n">ids</span> <span class="n">enable</span>
+
+<span class="c1">#ids配置验证</span>
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">ids</span>        <span class="c1">#查看ids的配置是否成功</span>
+
+<span class="c1">#日志输出配置</span>
+<span class="n">info</span><span class="o">-</span><span class="n">center</span> <span class="n">enable</span>
+<span class="n">info</span><span class="o">-</span><span class="n">center</span> <span class="n">loghost</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.2</span> <span class="n">language</span> <span class="n">english</span>
+
+<span class="n">firewall</span> <span class="n">session</span> <span class="n">log</span><span class="o">-</span><span class="nb">type</span> <span class="n">binary</span> <span class="n">host</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.2</span> <span class="mi">9002</span>
+
+
+<span class="c1">#查看日志信息</span>
+<span class="n">display</span> <span class="n">info</span><span class="o">-</span><span class="n">center</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id39">2.1.4. 负载均衡</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id40">负载均衡配置</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">slb</span> <span class="n">enable</span>
+<span class="n">slb</span>
+<span class="n">rserver</span> <span class="mi">1</span> <span class="n">rip</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.3</span>
+<span class="n">rserver</span> <span class="mi">2</span> <span class="n">rip</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.4</span>
+<span class="n">rserver</span> <span class="mi">2</span> <span class="n">rip</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.5</span>
+<span class="n">firewall</span> <span class="n">packet</span><span class="o">-</span><span class="nb">filter</span> <span class="n">default</span> <span class="n">permit</span> <span class="n">interzone</span> <span class="n">local</span> <span class="n">dmz</span> <span class="n">direction</span> <span class="n">outbound</span>
+
+<span class="n">group</span> <span class="n">group1</span>
+<span class="n">metric</span> <span class="n">roundrobin</span>
+<span class="n">addrserver</span> <span class="mi">1</span>
+<span class="n">addrserver</span> <span class="mi">2</span>
+<span class="n">addrserver</span> <span class="mi">3</span>
+<span class="n">vserver</span> <span class="n">huawei</span> <span class="n">vip</span> <span class="mf">202.2</span><span class="o">.</span><span class="mf">2.2</span> <span class="n">group</span> <span class="n">group1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id13">
+<h2><a class="toc-backref" href="#id41">2.1.5. 虚拟防火墙</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">虚拟防火墙</p>
+<p>在USG上创建逻辑上的虚拟防火墙(Vfw),能够提供防火墙的出租业务，实现子网隔离
+和解决地址重叠的问题，每个虚拟防火墙都是VPN实例，安全实例和配置实例的综合体，
+能够为虚拟防火墙用户提供使用的路由转发平面、安全服务和配置管理平面</p>
+</li>
+</ul>
+</div>
+<div class="section" id="usgnat">
+<h2><a class="toc-backref" href="#id42">2.1.6. USG防火墙NAT业务</a><a class="headerlink" href="#usgnat" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nat">
+<h3><a class="toc-backref" href="#id43">NAT技术的原理</a><a class="headerlink" href="#nat" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>静态NAT ：一对一发布服务端口
+动态NAT：一对多，创建地址pool，轮训访问地址pool中的地址
+策略NAT：控制指定内网机器可以访问外网
+PAT：所有内网地址都在在出口的端口启动一个端口对应一个内部地址
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h3><a class="toc-backref" href="#id44">描述USG防火墙的各种NAT特性</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#NAT</span>
+<span class="c1">#定义地址池</span>
+<span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span> <span class="mf">202.38</span><span class="o">.</span><span class="mf">160.1</span> <span class="mf">202.38</span><span class="o">.</span><span class="mf">160.4</span>
+<span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">trust</span> <span class="n">outbound</span>
+<span class="n">policy</span> <span class="mi">1</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span> <span class="n">no</span><span class="o">-</span><span class="n">pat</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id15">
+<h3><a class="toc-backref" href="#id45">常用的NAT地址转换方式</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="pat">
+<h4>PAT<a class="headerlink" href="#pat" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">trust</span> <span class="n">outbound</span>
+<span class="n">policy</span> <span class="mi">1</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id16">
+<h4>配置策略NAT<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span> <span class="mf">202.38</span><span class="o">.</span><span class="mf">160.1</span> <span class="mf">202.38</span><span class="o">.</span><span class="mf">160.4</span>
+<span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">trust</span> <span class="n">outbound</span>
+<span class="n">policy</span> <span class="n">source</span> <span class="mf">10.1</span><span class="o">.</span><span class="mi">10</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3><a class="toc-backref" href="#id46">描述USG防火墙各NAT特性的基本组网与配置</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h4>双向NAT<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#配置NAT SERVER服务器</span>
+<span class="n">nat</span> <span class="n">server</span> <span class="k">global</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.20</span> <span class="n">inside</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">1.10</span>
+<span class="n">nat</span> <span class="n">server</span> <span class="k">global</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">1.20</span> <span class="n">inside</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id19">
+<h4>域内NAT<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#很常用</span>
+<span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">1.11</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">1.11</span>
+<span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">zone</span> <span class="n">trust</span>
+<span class="n">policy</span> <span class="mi">0</span>
+<span class="n">policy</span> <span class="n">source</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id20">
+<h2><a class="toc-backref" href="#id47">2.1.7. 实验</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#允许信任区访问不信任区域，在outbond口</span>
+<span class="n">firewall</span> <span class="n">packet</span><span class="o">-</span><span class="nb">filter</span> <span class="n">default</span> <span class="n">permit</span> <span class="n">interzone</span> <span class="n">trust</span> <span class="n">untrust</span> <span class="n">direction</span> <span class="n">outbound</span>
+
+
+<span class="c1">#允许不信任区域去访问dmz的web服务，方向是inbound,不信任区</span>
+<span class="n">policy</span> <span class="n">interface</span> <span class="n">dmz</span> <span class="n">untrust</span> <span class="n">inbound</span>
+<span class="n">policy</span> <span class="mi">1</span>
+<span class="n">policy</span> <span class="n">server</span> <span class="n">service</span><span class="o">-</span><span class="nb">set</span> <span class="n">http</span>
+<span class="n">action</span> <span class="n">permit</span>                   <span class="c1">#执行动作允许</span>
+
+
+
+<span class="c1">#设置2个地址池,用于策略NAT转换</span>
+<span class="n">pool1</span><span class="p">:</span><span class="mf">172.16</span><span class="o">.</span><span class="mf">1.100</span><span class="o">~</span><span class="mi">109</span>
+<span class="n">pool2</span><span class="p">:</span><span class="mf">172.16</span><span class="o">.</span><span class="mf">1.110</span><span class="o">~</span><span class="mi">119</span>
+
+<span class="c1">#定义地址池</span>
+<span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.100</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.109</span>
+<span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">2</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.110</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.119</span>
+
+<span class="c1">#显示地址池信息</span>
+<span class="n">display</span> <span class="n">nat</span> <span class="n">address</span><span class="o">-</span><span class="n">group</span>
+</pre></div>
+</div>
+<div class="section" id="id21">
+<h3><a class="toc-backref" href="#id48">开通内网访问外网的NAT</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#开始做策略一</span>
+<span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">trust</span> <span class="n">untrust</span> <span class="n">outbound</span>
+<span class="n">policy</span> <span class="mi">1</span>
+<span class="n">policy</span> <span class="n">source</span> <span class="mf">10.3</span><span class="o">.</span><span class="mf">3.3</span> <span class="mi">0</span>        <span class="c1">#只有这个源地址才能使用pool1</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">1</span>
+
+<span class="n">display</span> <span class="n">this</span>                <span class="c1">#source 10.3.3.3 0  ---- &gt;  使用地址池pool1</span>
+
+
+
+<span class="c1">#开始做策略二</span>
+<span class="n">nat</span><span class="o">-</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">trust</span> <span class="n">untrust</span> <span class="n">outbound</span>
+<span class="n">action</span> <span class="n">source</span><span class="o">-</span><span class="n">nat</span>
+<span class="n">policy</span> <span class="n">server</span> <span class="n">service</span><span class="o">-</span><span class="nb">set</span> <span class="n">ip</span>
+<span class="n">policy</span> <span class="n">source</span> <span class="nb">any</span>
+<span class="n">address</span><span class="o">-</span><span class="n">group</span> <span class="mi">2</span>
+
+
+<span class="c1">#查看地址转换详细</span>
+<span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">table</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dmz">
+<h3><a class="toc-backref" href="#id49">开通DMZ区域发放服务到外网</a><a class="headerlink" href="#dmz" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#将内部本地转换为内部全局</span>
+<span class="n">nat</span> <span class="n">server</span> <span class="n">protocal</span> <span class="n">tcp</span> <span class="k">global</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.10</span> <span class="n">inside</span> <span class="mf">10.2</span><span class="o">.</span><span class="mf">2.10</span>
+<span class="n">display</span> <span class="n">nat</span><span class="o">-</span><span class="n">server</span>          <span class="c1">#查看内部本地和内部全局之间的映射</span>
+</pre></div>
+</div>
+<p>USG防火墙学习</p>
+</div>
+</div>
+<div class="section" id="id22">
+<h2><a class="toc-backref" href="#id50">2.1.8. 部署场景</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="a">
+<h3><a class="toc-backref" href="#id51">场景A：三层路由网关</a><a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h3>
+<p>当设备作为三层路由网关部署在内外网之间时，通常还需要负责内网的私网地址与外网的公网地址之间的转换</p>
+<p>因此这种部署方式又常被称为“NAT模式”。因为FW实现了切换业务接口的工作层次，所以无需通过整机切换工作模式来实现传统意义上的“路由模式/NAT模式”或者“透明模式”。
+在FW中，只要接口工作在三层，就可以实现三层路由网关的功能；</p>
+</div>
+<div class="section" id="b">
+<h3><a class="toc-backref" href="#id52">场景B：二层透明桥接</a><a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h3>
+<p>设备的业务接口工作在二层（数据链路层），负责二层报文的转发。
+此时设备可以作为一台交换机一样部署在网络中，透明接入到原有的网关设备之后，
+在不改变原有网络结构和配置的前提下对流量进行安全防护，因此这种部署方式常被称为“透明模式”。
+在FW中可以使用部分三层接口来进行三层路由网关的部署，再使用二层接口来进行二层透明桥接的部署。两者可以共存。
+二层透明网桥部署的最大优势在于：透明植入原有网络，不改变网络拓扑和周边设备的配置，可以基于MAC地址对同一网段内的流量进行更深入的控制。
+但是，如果设备的所有接口都工作在二层，那么设备也将无法进行特征库升级等需要设备本身与外部网络通信的操作</p>
+</div>
+<div class="section" id="c">
+<h3><a class="toc-backref" href="#id53">场景C：双机热备</a><a class="headerlink" href="#c" title="Permalink to this headline">¶</a></h3>
+<p>两台设备组成双机热备组网，目的是为了提高网络可靠性。当设备作为网关时，如果设备出现故障导致不能做正常转发流量，会影响到网络业务的运行。
+所以通过将两台设备进行双机热备，可以在一台设备发生问题时，另外一台设备自动接替故障设备的位置继续进行流量转发，以保证业务不受影响。</p>
+</div>
+<div class="section" id="id23">
+<h3><a class="toc-backref" href="#id54">防火墙：</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">g0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="n">默认属于trust</span>  <span class="n">用户名默认admin</span> <span class="n">密码默认Admin</span><span class="nd">@123</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">firewall</span> <span class="n">zone</span> <span class="n">name</span> <span class="n">名字</span>      <span class="o">//</span><span class="n">创建一个安全区域</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">a1</span><span class="p">]</span><span class="nb">set</span> <span class="n">priority</span> <span class="mi">60</span>        <span class="o">//</span><span class="n">设置优先级</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">a1</span><span class="p">]</span><span class="n">add</span> <span class="n">interface</span> <span class="n">g0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>   <span class="o">//</span><span class="n">添加接口</span>
+<span class="n">display</span> <span class="n">zone</span> <span class="n">名字</span>         <span class="o">//</span><span class="n">查看安全区域配置</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">display</span> <span class="n">firewall</span> <span class="n">packet</span><span class="o">-</span><span class="nb">filter</span> <span class="n">default</span> <span class="nb">all</span>     <span class="o">//</span><span class="n">查看策略</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">firewall</span> <span class="n">packet</span><span class="o">-</span><span class="nb">filter</span> <span class="n">default</span> <span class="n">permit</span> <span class="n">interzone</span> <span class="n">trust</span> <span class="n">dmz</span> <span class="n">direction</span> <span class="n">outbound</span>               <span class="o">//</span><span class="n">放行trust到dmz的流量</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">display</span> <span class="n">firewall</span> <span class="n">session</span> <span class="n">table</span> <span class="o">//</span><span class="n">查看会话表项</span> <span class="n">为什么出去的能回来</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id24">
+<h3><a class="toc-backref" href="#id55">远程管理防火墙：</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>[FW1]user-interface vty 0 4
+[FW1-ui-vty0-4]authentication-mode aaa
+[FW1-ui-vty0-4]aaa
+[FW1-aaa]local-user lewis password cipher 123       //创建用户名密码
+权限提升：
+1.针对具体账号提升权限
+[FW1-aaa]local-user lewis level 3
+2.针对局部用户提升权限
+[FW1]super password level 3 cipher Admin@123        //设置超级密码
+&lt;FW1&gt;super          //登陆后输入super 输入超级密码提升权限
+3.针对大面积提升权限
+[FW1]user-interface vty 0 4
+[FW1-ui-vty0-4]user privilege level 3
+</pre></div>
+</div>
+</div>
+<div class="section" id="id25">
+<h3><a class="toc-backref" href="#id56">流量过滤：</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">域内流量过滤</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">policy</span> <span class="n">zone</span> <span class="n">trust</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">trust</span><span class="p">]</span><span class="n">policy</span> <span class="mi">10</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">trust</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">policy</span> <span class="n">source</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">trust</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">policy</span> <span class="n">destination</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">2.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">zone</span><span class="o">-</span><span class="n">trust</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">action</span> <span class="n">deny</span>       <span class="o">//</span><span class="n">拒绝访问</span>
+
+<span class="mf">2.</span><span class="n">域间流量过滤</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">ip</span> <span class="n">service</span><span class="o">-</span><span class="nb">set</span> <span class="n">setl</span> <span class="nb">type</span> <span class="nb">object</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="nb">object</span><span class="o">-</span><span class="n">service</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">setl</span><span class="p">]</span><span class="n">service</span> <span class="mi">0</span> <span class="n">protocol</span> <span class="n">icmp</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="nb">object</span><span class="o">-</span><span class="n">service</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">setl</span><span class="p">]</span><span class="n">service</span> <span class="mi">1</span> <span class="n">protocol</span> <span class="n">tcp</span> <span class="n">destination</span><span class="o">-</span><span class="n">port</span> <span class="mi">80</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="nb">object</span><span class="o">-</span><span class="n">service</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">setl</span><span class="p">]</span><span class="n">service</span> <span class="mi">2</span> <span class="n">protocol</span> <span class="n">tcp</span> <span class="n">destination</span><span class="o">-</span><span class="n">port</span> <span class="mi">21</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">dmz</span> <span class="n">inbound</span>   <span class="o">//</span><span class="n">untrust到dmz的流量</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="p">]</span><span class="n">policy</span> <span class="mi">10</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">action</span> <span class="n">deny</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">policy</span> <span class="n">source</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">10.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">policy</span> <span class="n">service</span> <span class="n">service</span><span class="o">-</span><span class="nb">set</span> <span class="n">setl</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">10</span><span class="p">]</span><span class="n">action</span> <span class="n">permit</span>
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">firewall</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">dmz</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="p">]</span><span class="n">detect</span> <span class="n">ftp</span>       <span class="o">//</span><span class="n">开启ftp</span>
+
+<span class="p">[</span><span class="n">FW1</span><span class="p">]</span><span class="n">policy</span> <span class="n">interzone</span> <span class="n">untrust</span> <span class="n">dmz</span> <span class="n">inbound</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="p">]</span><span class="n">policy</span> <span class="mi">9</span>  <span class="o">//</span><span class="n">拦截icmp报文</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="n">policy</span> <span class="n">source</span> <span class="mf">202.1</span><span class="o">.</span><span class="mf">10.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.255</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="n">policy</span> <span class="n">service</span> <span class="n">service</span><span class="o">-</span><span class="nb">set</span> <span class="n">icmp</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="o">-</span><span class="mi">9</span><span class="p">]</span><span class="n">action</span> <span class="n">deny</span>
+<span class="o">//</span><span class="n">拒绝untrust202</span><span class="o">.</span><span class="mf">1.10</span><span class="o">.</span><span class="mi">0</span><span class="n">网段发往dmz的icmp</span>
+<span class="p">[</span><span class="n">FW1</span><span class="o">-</span><span class="n">policy</span><span class="o">-</span><span class="n">interzone</span><span class="o">-</span><span class="n">dmz</span><span class="o">-</span><span class="n">untrust</span><span class="o">-</span><span class="n">inbound</span><span class="p">]</span><span class="n">policy</span> <span class="n">move</span> <span class="mi">9</span> <span class="n">before</span> <span class="mi">10</span> <span class="o">//</span><span class="n">把策略九移到十的上边</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id26">
+<h3><a class="toc-backref" href="#id57">NAT：</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default"><div class="highlight"><pre><span></span>静态NAT： 一对一
+[FW1]nat address-group 1 202.1.1.3 202.1.1.3    //设置地址池
+[FW1]nat-policy interzone trust untrust outbound
+[FW1-nat-policy-interzone-trust-untrust-outbound]policy 10
+[FW1-nat-policy-interzone-trust-untrust-outbound-10]action source-nat
+[FW1-nat-policy-interzone-trust-untrust-outbound-10]policy source 192.168.1.0 0.0.0.255     192.168.1.0网段做nat
+[FW1-nat-policy-interzone-trust-untrust-outbound-10]address-group 1
+//绑定地址池1
+
+NAPT：一对多
+[FW1]nat-policy interzone trust untrust outbound
+[FW1-nat-policy-interzone-trust-untrust-outbound]policy 11
+[FW1-nat-policy-interzone-trust-untrust-outbound-11]action source-nat
+[FW1-nat-policy-interzone-trust-untrust-outbound-11]policy source 192.168.2.0 0.0.0.255
+[FW1-nat-policy-interzone-trust-untrust-outbound-11]easy-ip g0/0/3
+//以该端口ip地址做nat
+[FW1]dis firewell session table nat         //查看nat地址转换表
+
+
+
+
+#PAT策略,实现私网指定网段访问公网时自动进行源地址转换。
+
+
+# 配置PAT地址池，开启允许端口地址转换。
+[USG6600] nat address-group addressgroup1
+[USG6600-address-group-addressgroup1] mode pat
+[USG6600-address-group-addressgroup1] route enable
+[USG6600-address-group-addressgroup1] section 0 200.0.0.2 200.0.0.2    //转换的公网IP地址
+[USG6600-address-group-addressgroup1] quit
+
+
+[USG6600] nat-policy
+[USG6600-policy-nat] rule name policy_nat1
+[USG6600-policy-nat-rule-policy_nat1] source-zone trust
+[USG6600-policy-nat-rule-policy_nat1] destination-zone untrust
+[USG6600-policy-nat-rule-policy_nat1] source-address 192.168.0.0 mask 255.255.0.0   #允许进行PAT转换的源IP地址
+[USG6600-policy-nat-rule-policy_nat1] action nat address-group addressgroup1
+[USG6600-policy-nat-rule-policy_nat1] quit
+[USG6600-policy-nat] quit
+[USG6600] quit
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02.华为防火墙技术基础知识.html" class="btn btn-neutral float-right" title="2.2. 华为防火墙技术基础知识" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="2. 华为USG防火墙玩转" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

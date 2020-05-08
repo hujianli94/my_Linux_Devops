@@ -1,0 +1,295 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. 华为USG防火墙玩转 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2.1. 华为防火墙玩转" href="01.华为防火墙玩转.html" />
+    <link rel="prev" title="1.6. 综合配置案例" href="../01.华为设备数通玩转/06.综合配置案例.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.华为设备数通玩转/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. 华为USG防火墙玩转</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html">2.1. 华为防火墙玩转</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html">2.2. 华为防火墙技术基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.安全策略.html">2.3. 安全策略</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.思科设备数通复习/index.html">3. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C数通玩转/index.html">4. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+        
+      <li>2. 华为USG防火墙玩转</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Network_route_switch/02.华为USG防火墙玩转/index.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="usg">
+<h1>2. 华为USG防火墙玩转<a class="headerlink" href="#usg" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.华为防火墙玩转.html">2.1. 华为防火墙玩转</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#usg">2.1.1. USG防火墙学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id2">2.1.2. 防火墙的工作模式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id3">透明模式 用于路由器与核心之间</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id4">防火墙关键技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#web">WEB配置和管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id5">缺省配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id6">2.1.3. 防火墙的基本功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id7">黑名单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#mac">MAC地址绑定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id10">端口映射</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#ids">与IDS联动配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id11">2.1.4. 负载均衡</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id12">负载均衡配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id13">2.1.5. 虚拟防火墙</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#usgnat">2.1.6. USG防火墙NAT业务</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#nat">NAT技术的原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id14">描述USG防火墙的各种NAT特性</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id15">常用的NAT地址转换方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id17">描述USG防火墙各NAT特性的基本组网与配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id20">2.1.7. 实验</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id21">开通内网访问外网的NAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#dmz">开通DMZ区域发放服务到外网</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.华为防火墙玩转.html#id22">2.1.8. 部署场景</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#a">场景A：三层路由网关</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#b">场景B：二层透明桥接</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#c">场景C：双机热备</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id23">防火墙：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id24">远程管理防火墙：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id25">流量过滤：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.华为防火墙玩转.html#id26">NAT：</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.华为防火墙技术基础知识.html">2.2. 华为防火墙技术基础知识</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.华为防火墙技术基础知识.html#id2">2.2.1. 基础知识</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html#id3">安全区域</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html#id4">报文在安全区域之间的流动方向</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html#id5">安全区域的配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.华为防火墙技术基础知识.html#id6">状态检测</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.安全策略.html">2.3. 安全策略</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.华为防火墙玩转.html" class="btn btn-neutral float-right" title="2.1. 华为防火墙玩转" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../01.华为设备数通玩转/06.综合配置案例.html" class="btn btn-neutral float-left" title="1.6. 综合配置案例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
