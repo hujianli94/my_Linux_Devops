@@ -23,5 +23,6 @@
     14.使用Haproxy+keepalived搭建Web群集
     15.Redis主从+KeepAlived实现高可用
     16.keepalived高可用集群
+    17.Pacemaker实现双机热备
 
 
