@@ -118,9 +118,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#id2">3.10.4. 常见小技巧</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id4">3.10.5. 常用命令使用方法</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id9">3.10.6. Shell脚本的调试技术</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id12">3.10.7. 子shell</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">3.10.8. 自动化</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id19">3.10.9. Shell脚本实战</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#getopts">3.10.7. 使用getopts处理多命令行选项</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">3.10.8. 子shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">3.10.9. 自动化</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">3.10.10. Shell脚本实战</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
@@ -178,6 +179,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
@@ -287,29 +289,30 @@
 <li><a class="reference internal" href="#id11" id="id57">shell自带的调试选项</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id12" id="id58">子shell</a><ul>
-<li><a class="reference internal" href="#id13" id="id59">在子shell中执行命令</a></li>
+<li><a class="reference internal" href="#getopts" id="id58">使用getopts处理多命令行选项</a></li>
+<li><a class="reference internal" href="#id12" id="id59">子shell</a><ul>
+<li><a class="reference internal" href="#id13" id="id60">在子shell中执行命令</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id17" id="id60">自动化</a><ul>
-<li><a class="reference internal" href="#id18" id="id61">开机自启动脚本</a></li>
+<li><a class="reference internal" href="#id17" id="id61">自动化</a><ul>
+<li><a class="reference internal" href="#id18" id="id62">开机自启动脚本</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id19" id="id62">Shell脚本实战</a><ul>
-<li><a class="reference internal" href="#id20" id="id63">系统启动过程</a></li>
-<li><a class="reference internal" href="#id21" id="id64">服务脚本的基本语法</a></li>
-<li><a class="reference internal" href="#apache" id="id65">1. Apache服务器日志管理</a></li>
-<li><a class="reference internal" href="#id22" id="id66">2 文件扫描校验</a></li>
-<li><a class="reference internal" href="#id23" id="id67">3 自定义垃圾回收</a></li>
-<li><a class="reference internal" href="#linux" id="id68">4 Linux系统检测</a></li>
-<li><a class="reference internal" href="#lnmp" id="id69">5 自动化安装lnmp，安装提示菜单</a></li>
-<li><a class="reference internal" href="#id24" id="id70">6 选择菜单 2</a></li>
-<li><a class="reference internal" href="#id25" id="id71">4 启动脚本示例</a></li>
-<li><a class="reference internal" href="#id26" id="id72">8 备份24小时被修改的文件</a></li>
-<li><a class="reference internal" href="#rpmrpm" id="id73">9 卸载相关的rpm包、检查rpm包的方法</a></li>
-<li><a class="reference internal" href="#id27" id="id74">10 检查软件状态</a></li>
-<li><a class="reference internal" href="#color-print" id="id75">11 color_print输出</a></li>
-<li><a class="reference internal" href="#init-function" id="id76">12 /init/function函数</a></li>
+<li><a class="reference internal" href="#id19" id="id63">Shell脚本实战</a><ul>
+<li><a class="reference internal" href="#id20" id="id64">系统启动过程</a></li>
+<li><a class="reference internal" href="#id21" id="id65">服务脚本的基本语法</a></li>
+<li><a class="reference internal" href="#apache" id="id66">1. Apache服务器日志管理</a></li>
+<li><a class="reference internal" href="#id22" id="id67">2 文件扫描校验</a></li>
+<li><a class="reference internal" href="#id23" id="id68">3 自定义垃圾回收</a></li>
+<li><a class="reference internal" href="#linux" id="id69">4 Linux系统检测</a></li>
+<li><a class="reference internal" href="#lnmp" id="id70">5 自动化安装lnmp，安装提示菜单</a></li>
+<li><a class="reference internal" href="#id24" id="id71">6 选择菜单 2</a></li>
+<li><a class="reference internal" href="#id25" id="id72">4 启动脚本示例</a></li>
+<li><a class="reference internal" href="#id26" id="id73">8 备份24小时被修改的文件</a></li>
+<li><a class="reference internal" href="#rpmrpm" id="id74">9 卸载相关的rpm包、检查rpm包的方法</a></li>
+<li><a class="reference internal" href="#id27" id="id75">10 检查软件状态</a></li>
+<li><a class="reference internal" href="#color-print" id="id76">11 color_print输出</a></li>
+<li><a class="reference internal" href="#init-function" id="id77">12 /init/function函数</a></li>
 </ul>
 </li>
 </ul>
@@ -1506,15 +1509,169 @@ done
 <span class="n">fi</span>
 </pre></div>
 </div>
-<p>set -x和set +x分别表示启用和禁用-x参数，
-这样可以只对脚本中的某一段进行跟踪调试。</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="nb">set</span> <span class="o">-</span><span class="n">e</span>    <span class="c1">#若指令传回值不等于0，则立即退出shell。</span>
+<span class="nb">set</span> <span class="o">-</span><span class="n">n</span>    <span class="c1">#只读取指令，而不实际执行。</span>
+
+<span class="nb">set</span> <span class="o">-</span><span class="n">u</span> 　     <span class="c1">#当执行时使用到未定义过的变量，则显示错误信息。</span>
+<span class="nb">set</span> <span class="o">-</span><span class="n">v</span> 　     <span class="c1">#显示shell所读取的输入值。</span>
+
+<span class="nb">set</span> <span class="o">-</span><span class="n">x</span>
+<span class="o">......</span>
+<span class="nb">set</span> <span class="o">+</span><span class="n">x</span>
+<span class="c1">#分别表示启用和禁用-x参数，这样可以只对脚本中的某一段进行跟踪调试。</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="getopts">
+<h2><a class="toc-backref" href="#id58">3.10.7. 使用getopts处理多命令行选项</a><a class="headerlink" href="#getopts" title="Permalink to this headline">¶</a></h2>
+<p>当你希望以专业的方式解析命令行选项和参数时，getopts将是一个很好的工具。它是Bash的内部命令。它的优势在于：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>* 你不需要通过一个外部程序来处理位置参数。
+* getopts可以很容易地设置你可以用来解析的Shell变量（对于一个外部进程是不可能的）。
+* getopts定义在POSIX中。
+</pre></div>
+</div>
+<p>因为当没有内容可解析时，getopts会设置一个退出状态FALSE，所以它很容易在while循环中使用：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>while getopts …; do
+  …
+done
+</pre></div>
+</div>
+<p>getopts会使用到以下3个变量。</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>OPTIND：存放下一个要处理的参数的索引。这是getopts在调用过程中记住自己状态的方式。同样可以用于移位使用getopts处理后的位置参数。OPTIND初始被设为1，并且如果你想再次使用getopts解析任何内容，需要将其重置为1。
+OPTARG：这个变量被设置为由getopts找到的选项所对应的参数。
+OPTERR：它的值为0或1。指示Bash是否应该显示由getopts产生的错误信息。在每个Shell启动时，它的值被初始化为1。如果你不想看烦人的信息，请确保将它设置为0。
+</pre></div>
+</div>
+<p><strong>代码示例</strong></p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span># 使用getopts解析命令行选项，这里仅解析-a选项，选项字符串中的第一个字符为冒号(:)，表示抑制错误报告
+while getopts &quot;:a&quot; opt
+do
+  case $opt in
+                # 匹配-a选项
+        a)
+                  echo &quot;The option -a was triggered!&quot;
+                  ;;
+                # 匹配其他选项
+        \?)
+                  echo &quot;Invalid option: -${OPTARG}&quot;
+                  ;;
+          esac
+done
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sh test_getopts_1.sh
+
+$ sh test_getopts_1.sh -a
+The option -a was triggered!
+
+$ sh test_getopts_1.sh -b
+Invalid option: -b
+</pre></div>
+</div>
+<p><strong>代码示例2</strong> 这个脚本稍微复杂一些，它可以接收多个命令行选项和参数</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+
+# 定义变量vflag
+vflag=off
+
+# 定义变量filename
+filename=&quot;&quot;
+
+# 定义变量output
+output=&quot;&quot;
+
+
+
+# 定义函数usage
+function usage() {
+  echo &quot;USAGE:&quot;
+  echo &quot;    myscript [-h] [-v] [-f &lt;filename&gt;] [-o &lt;filename&gt;]&quot;
+  exit -1
+}
+
+
+
+# 在while循环中使用getopts解析命令行选项
+# 要解析的选项有-h、-v、-f和-o，其中-f和-o选项带有参数
+# 字符串选项中第一个冒号表示getopts使用抑制错误报告模式
+while getopts :hvf:o: opt
+do
+  case &quot;$opt&quot; in
+
+    v)
+
+        vflag=on
+
+    ;;
+    f)
+      # 将-f选项的参数赋值给变量filename
+          filename=$OPTARG
+
+          # 如果文件不存在，则显示提示信息，并退出脚本的执行
+          if [ ! -f $filename ]
+          then
+            echo &quot;The source file $filename doesn&#39;t exist!&quot;
+            exit
+          fi
+          ;;
+
+    o)
+        # 将-o选项的参数赋值给变量output
+        output=$OPTARG
+        # 如果指定的输出文件的目录不存在，则显示提示信息，并退出脚本的执行
+        if [ ! -d `dirname $output` ]
+            then
+            echo &quot;The output path `dirname $output` doesn&#39;t exist!&quot;
+            exit
+        fi
+
+        ;;
+
+    h)
+      # 显示脚本的使用信息
+          usage
+          exit
+          ;;
+    :)
+
+         # 如果没有为需要参数的选项指定参数，则显示提示信息，并退出脚本的运行
+          echo &quot;The option -$OPTARG requires an argument.&quot;
+          exit 1
+          ;;
+
+    ?)
+        # 若指定的选项为无效选项，则显示提示信息，及脚本的使用方法信息，并退出脚本的运行
+          echo &quot;Invalid option: -$OPTARG&quot;
+          usage
+          exit 2
+          ;;
+      esac
+done
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>$ sh test_getopts_2.sh -h
+USAGE:
+    myscript [-h] [-v] [-f &lt;filename&gt;] [-o &lt;filename&gt;]
+
+$ sh test_getopts_2.sh -vf
+The option -f requires an argument.
+
+$ sh test_getopts_2.sh -q
+Invalid option: -q
+USAGE:
+    myscript [-h] [-v] [-f &lt;filename&gt;] [-o &lt;filename&gt;]
+
+$ sh test_getopts_2.sh -vf /etc/networks -o /tmp/out.log/aaa
+The output path /tmp/out.log doesn&#39;t exist!
+</pre></div>
+</div>
 <p><a class="reference external" href="https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/index.html">Linux常用命令工具箱</a></p>
 </div>
-</div>
 <div class="section" id="id12">
-<h2><a class="toc-backref" href="#id58">3.10.7. 子shell</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id59">3.10.8. 子shell</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id13">
-<h3><a class="toc-backref" href="#id59">在子shell中执行命令</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id60">在子shell中执行命令</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id14">
 <h4>1．圆括号结构<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
 <p>当一组命令放在圆括号中时，该组命令会在一个子Shell环境中执行，其语法如下：</p>
@@ -1609,9 +1766,9 @@ echo &quot;Finished&quot;
 </div>
 </div>
 <div class="section" id="id17">
-<h2><a class="toc-backref" href="#id60">3.10.8. 自动化</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id61">3.10.9. 自动化</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id18">
-<h3><a class="toc-backref" href="#id61">开机自启动脚本</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id62">开机自启动脚本</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>如果要添加为开机启动执行的脚本文件，可先将脚本复制或者软连接到/etc/init.d/目录下，然后用：
 
     update-rc.d xxx defaults NN命令(NN为启动顺序)，
@@ -1633,11 +1790,11 @@ echo &quot;Finished&quot;
 </div>
 </div>
 <div class="section" id="id19">
-<h2><a class="toc-backref" href="#id62">3.10.9. Shell脚本实战</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id63">3.10.10. Shell脚本实战</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
 <p>更多示例可参考：<a class="reference external" href="https://github.com/redhatxl/scripts">shell
 脚本示例</a></p>
 <div class="section" id="id20">
-<h3><a class="toc-backref" href="#id63">系统启动过程</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id64">系统启动过程</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>从大的方面来讲，Linux系统的启动过程如图。当一个Linux系统启动的时候，首先是用户按下电源，接着电脑加电，然后执行BIOS中的固件程序，完成系统硬件的自检。当硬件自检没有发现问题之后，便调用内核装载器来载入系统内核。内核装载器又称为内核装载程序，目前比较流行的是GNU
 GRUB。GRUB是GRand Unified
 Bootloader的缩写，它是一个多重操作系统启动管理器，可以用来引导不同系统，例如Windows或者Linux等。</p>
@@ -1679,7 +1836,7 @@ lrwxrwxrwx      1   root    root    18 Apr  6 13:48     S05cgconfig
 <p>从上面的输出可以得知，/etc/rc3.d中的脚本文件实际上是/etc/init.d目录中的相应脚本文件的符号链接。这些符号链接的命名有着特定的规则，如果文件名的首字符为大写字母K，表示将要传递stop参数给脚本，以停止该服务。如果文件名的首字符为S，则表示将要传递start参数给脚本，以启动该服务。首字符后面的数字表示该脚本执行的顺序。例如，在上面的结果中，K01numad表示在运行级别3中，将传递stop参数给/etc/init.d/numad脚本文件，以停止numad服务。S01sysstat表示在运行级别3中，将传递start参数给/etc/init.d/sysstat脚本，以启动sysstat服务。</p>
 </div>
 <div class="section" id="id21">
-<h3><a class="toc-backref" href="#id64">服务脚本的基本语法</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id65">服务脚本的基本语法</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>在Linux系统中，服务脚本有固定的语法，通常情况下，服务脚本应该包括处理服务启动、服务停止、服务重新启动，以及查看服务状态的函数。另外，服务脚本还可以接受某些特定的参数，例如start、stop，以及restart等，并且根据这些参数调用不同的函数。</p>
 <p>下面给出的是某个Linux系统中的Apache
 Web服务器的服务脚本，为了节省篇幅，省略了部分无关紧要的代码。</p>
@@ -1917,7 +2074,7 @@ exit $?
 </div>
 </div>
 <div class="section" id="apache">
-<h3><a class="toc-backref" href="#id65">1. Apache服务器日志管理</a><a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id66">1. Apache服务器日志管理</a><a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
 
 # 归档文件名生成函数
@@ -2005,7 +2162,7 @@ exit 0
 </div>
 </div>
 <div class="section" id="id22">
-<h3><a class="toc-backref" href="#id66">2 文件扫描校验</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id67">2 文件扫描校验</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 #func:scan file
 #md5sum -c $SCAN_FILE
@@ -2048,7 +2205,7 @@ main
 </div>
 </div>
 <div class="section" id="id23">
-<h3><a class="toc-backref" href="#id67">3 自定义垃圾回收</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id68">3 自定义垃圾回收</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 # function:自定义rm命令，每天晚上定时清理
 
@@ -2080,7 +2237,7 @@ echo &quot;请执行:source $BASHRC 来加载文件或退出当前shell重新登
 </div>
 </div>
 <div class="section" id="linux">
-<h3><a class="toc-backref" href="#id68">4 Linux系统检测</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id69">4 Linux系统检测</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 # auth:kaliarch
 # func:sys info check
@@ -2311,7 +2468,7 @@ sys_check &gt; ${sys_check_file}
 </div>
 </div>
 <div class="section" id="lnmp">
-<h3><a class="toc-backref" href="#id69">5 自动化安装lnmp，安装提示菜单</a><a class="headerlink" href="#lnmp" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id70">5 自动化安装lnmp，安装提示菜单</a><a class="headerlink" href="#lnmp" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
 # @Author: hujianli
 # @Date:   2018-11-15 16:39:51
@@ -2356,7 +2513,7 @@ fi
 </div>
 </div>
 <div class="section" id="id24">
-<h3><a class="toc-backref" href="#id70">6 选择菜单 2</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id71">6 选择菜单 2</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
 # @Author: hujianli
 # @Date:   2018-11-15 15:49:22
@@ -2407,7 +2564,7 @@ esac
 </div>
 </div>
 <div class="section" id="id25">
-<h3><a class="toc-backref" href="#id71">4 启动脚本示例</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id72">4 启动脚本示例</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #?$Id:?gmond.init?180?2003-03-07?20:38:36Z?sacerdoti $
 # chkconfig:?2345?70?40
@@ -2473,7 +2630,7 @@ exit $RETVAL
 </div>
 </div>
 <div class="section" id="id26">
-<h3><a class="toc-backref" href="#id72">8 备份24小时被修改的文件</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id73">8 备份24小时被修改的文件</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 
 #备份当前目录下所有前24小时被修改的文件为一个归档压缩包
@@ -2491,7 +2648,7 @@ find . -mitime -1 -type f -exec tar rvf &quot;$archive.tar&quot; &#39;{}&#39; \ 
 </div>
 </div>
 <div class="section" id="rpmrpm">
-<h3><a class="toc-backref" href="#id73">9 卸载相关的rpm包、检查rpm包的方法</a><a class="headerlink" href="#rpmrpm" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id74">9 卸载相关的rpm包、检查rpm包的方法</a><a class="headerlink" href="#rpmrpm" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 File_1=unstall.txt
 rpm -qa | grep ssh &gt; $File_1
@@ -2513,7 +2670,7 @@ done &lt; $File_1
 </div>
 </div>
 <div class="section" id="id27">
-<h3><a class="toc-backref" href="#id74">10 检查软件状态</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id75">10 检查软件状态</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 PORT_C=$(ss -anu| grep -c 123)
 PS_C=$(ps -aux| grep ntp| grep -vc grep)
@@ -2525,7 +2682,7 @@ fi
 </div>
 </div>
 <div class="section" id="color-print">
-<h3><a class="toc-backref" href="#id75">11 color_print输出</a><a class="headerlink" href="#color-print" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id76">11 color_print输出</a><a class="headerlink" href="#color-print" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #方法1
 color_printf1(){
@@ -2555,7 +2712,7 @@ color_printf2(){
 </div>
 </div>
 <div class="section" id="init-function">
-<h3><a class="toc-backref" href="#id76">12 /init/function函数</a><a class="headerlink" href="#init-function" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id77">12 /init/function函数</a><a class="headerlink" href="#init-function" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 # -*-Shell-script-*-
 #

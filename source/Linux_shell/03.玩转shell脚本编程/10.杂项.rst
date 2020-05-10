@@ -1245,8 +1245,174 @@ Shell提供了一些用于调试脚本的选项，如下所示：
      set +x
    fi
 
-set -x和set +x分别表示启用和禁用-x参数，
-这样可以只对脚本中的某一段进行跟踪调试。
+::
+
+   set -e    #若指令传回值不等于0，则立即退出shell。
+   set -n    #只读取指令，而不实际执行。  
+
+   set -u 　     #当执行时使用到未定义过的变量，则显示错误信息。
+   set -v 　     #显示shell所读取的输入值。
+
+   set -x
+   ......
+   set +x
+   #分别表示启用和禁用-x参数，这样可以只对脚本中的某一段进行跟踪调试。
+
+使用getopts处理多命令行选项
+---------------------------
+
+当你希望以专业的方式解析命令行选项和参数时，getopts将是一个很好的工具。它是Bash的内部命令。它的优势在于：
+
+::
+
+   * 你不需要通过一个外部程序来处理位置参数。
+   * getopts可以很容易地设置你可以用来解析的Shell变量（对于一个外部进程是不可能的）。
+   * getopts定义在POSIX中。
+
+因为当没有内容可解析时，getopts会设置一个退出状态FALSE，所以它很容易在while循环中使用：
+
+.. code:: bash
+
+   while getopts …; do
+     …
+   done
+
+getopts会使用到以下3个变量。
+
+.. code:: bash
+
+   OPTIND：存放下一个要处理的参数的索引。这是getopts在调用过程中记住自己状态的方式。同样可以用于移位使用getopts处理后的位置参数。OPTIND初始被设为1，并且如果你想再次使用getopts解析任何内容，需要将其重置为1。
+   OPTARG：这个变量被设置为由getopts找到的选项所对应的参数。
+   OPTERR：它的值为0或1。指示Bash是否应该显示由getopts产生的错误信息。在每个Shell启动时，它的值被初始化为1。如果你不想看烦人的信息，请确保将它设置为0。
+
+**代码示例**
+
+.. code:: bash
+
+   # 使用getopts解析命令行选项，这里仅解析-a选项，选项字符串中的第一个字符为冒号(:)，表示抑制错误报告
+   while getopts ":a" opt
+   do
+     case $opt in
+                   # 匹配-a选项
+           a)
+                     echo "The option -a was triggered!"
+                     ;;
+                   # 匹配其他选项
+           \?)
+                     echo "Invalid option: -${OPTARG}"
+                     ;;
+             esac
+   done
+
+::
+
+   $ sh test_getopts_1.sh
+
+   $ sh test_getopts_1.sh -a
+   The option -a was triggered!
+
+   $ sh test_getopts_1.sh -b
+   Invalid option: -b
+
+**代码示例2** 这个脚本稍微复杂一些，它可以接收多个命令行选项和参数
+
+::
+
+   #!/bin/bash 
+
+   # 定义变量vflag
+   vflag=off
+
+   # 定义变量filename
+   filename=""
+
+   # 定义变量output
+   output=""
+
+
+
+   # 定义函数usage
+   function usage() {
+     echo "USAGE:"
+     echo "    myscript [-h] [-v] [-f <filename>] [-o <filename>]"
+     exit -1
+   }
+
+
+
+   # 在while循环中使用getopts解析命令行选项
+   # 要解析的选项有-h、-v、-f和-o，其中-f和-o选项带有参数
+   # 字符串选项中第一个冒号表示getopts使用抑制错误报告模式
+   while getopts :hvf:o: opt
+   do
+     case "$opt" in
+
+       v)
+
+           vflag=on
+
+       ;;
+       f)
+         # 将-f选项的参数赋值给变量filename
+             filename=$OPTARG
+
+             # 如果文件不存在，则显示提示信息，并退出脚本的执行
+             if [ ! -f $filename ]
+             then
+               echo "The source file $filename doesn't exist!"
+               exit
+             fi
+             ;;
+
+       o)
+           # 将-o选项的参数赋值给变量output
+           output=$OPTARG
+           # 如果指定的输出文件的目录不存在，则显示提示信息，并退出脚本的执行
+           if [ ! -d `dirname $output` ]
+               then
+               echo "The output path `dirname $output` doesn't exist!"
+               exit
+           fi
+       
+           ;;
+
+       h)
+         # 显示脚本的使用信息
+             usage
+             exit
+             ;;
+       :)
+
+            # 如果没有为需要参数的选项指定参数，则显示提示信息，并退出脚本的运行
+             echo "The option -$OPTARG requires an argument."
+             exit 1
+             ;;
+
+       ?)
+           # 若指定的选项为无效选项，则显示提示信息，及脚本的使用方法信息，并退出脚本的运行
+             echo "Invalid option: -$OPTARG"
+             usage
+             exit 2
+             ;;
+         esac
+   done
+
+::
+
+   $ sh test_getopts_2.sh -h
+   USAGE:
+       myscript [-h] [-v] [-f <filename>] [-o <filename>]
+
+   $ sh test_getopts_2.sh -vf
+   The option -f requires an argument.
+
+   $ sh test_getopts_2.sh -q
+   Invalid option: -q
+   USAGE:
+       myscript [-h] [-v] [-f <filename>] [-o <filename>]
+
+   $ sh test_getopts_2.sh -vf /etc/networks -o /tmp/out.log/aaa
+   The output path /tmp/out.log doesn't exist!
 
 `Linux常用命令工具箱 <https://linuxtools-rst.readthedocs.io/zh_CN/latest/tool/index.html>`__
 
