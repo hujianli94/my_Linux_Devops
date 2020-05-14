@@ -2,22 +2,210 @@
    :depth: 3
 ..
 
-HCNA实验
-========
+HCNA网络技术实验指南
+====================
 
-**以太网与VLAN**
+熟悉VRP基本操作
+---------------
 
-1.1 以太网接口和配置
---------------------
+1．命令视图切换
+~~~~~~~~~~~~~~~
 
-1.掌握接口速率和双工模式的配置方法
+使用display version 命令显示系统软件版本及硬件等信息。
 
-2.掌握实验手段模式配置链路聚合的方法
+::
 
-3.掌握实验静态LACP模式配置链路聚合的方法
+   <Huawei>display version
 
-拓扑图：
-~~~~~~~~
+用户视图下使用 system-view 命令可以切换到系统视图
+
+::
+
+   <Huawei>system-view 
+   Enter system view, return user view with Ctrl+Z
+   [Huawei]quit
+   <Huawei>
+
+进入接口视图
+
+::
+
+   [Huawei]interface GigabitEthernet 0/0/0
+   [Huawei-GigabitEthernet0/0/0]
+   [Huawei-GigabitEthernet0/0/0]ip address 10.1.1.1 24
+
+return命令可以使用户从任意非用户视图退回到用户视图，也可以用组合快捷键<Ctrl+Z>完成
+
+2．命令行帮助
+~~~~~~~~~~~~~
+
+（1）完全帮助：在任意命令视图下，输入“？”获取该命令视图下所有的命令及其简单描述。
+
+（2）部分帮助：输入一字符串，其后紧接“？”，列出以该字符串开头的所有关键字。
+
+3．快捷键使用
+~~~~~~~~~~~~~
+
+::
+
+   ■退格键<BackSpace>表示删除光标位置的前一个字符；
+
+   ■左光标键<←>或<Ctrl+B>表示光标向左移动一个字符位置；
+
+   ■右光标键<→>或<Ctrl+F>表示光标向右移动一个字符位置；
+
+   ■删除键<Delete>表示删除光标位置字符；
+
+   ■上下光标键<↑>、<↓>表示显示历史命令；
+
+   ■当用户输入不完整的关键字后按下<Tab>键，系统自动执行部分帮助，将命令补全。比如输入“dis”后，按<Tab>键可以将命令补全为“display”。
+
+4．修改路由器名称
+~~~~~~~~~~~~~~~~~
+
+::
+
+   [Huawei]sysname R1
+   [R1]
+
+5．设置路由器时钟
+~~~~~~~~~~~~~~~~~
+
+::
+
+   例如：在用户视图下，使用clock datetime 命令修改系统日期和时间为2011 年9 月15日12时。
+
+   <R1>clock datetime 12:00:00 2011-09-15
+
+   例如：在用户视图下，使用clock timezone 命令，设置所在的时区为北京。
+
+   <R1>clock timezone BJ add 08:00:00
+
+6．设置标题信息
+~~~~~~~~~~~~~~~
+
+::
+
+   [R1]header login information "hello"
+   [R1]header shell information "Welcome to Huawei certification lab"
+   [R1]quit
+   <R1>quit
+
+     Configuration console exit, please press any key to log on
+
+   Welcome to Huawei certification lab
+   <R1>
+
+7．查看路由器基本信息
+~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   <R1>display version
+
+   #使用display current-configuration命令查看路由器当前配置。
+   <R1>display current-configuration
+
+   #使用display interface GigabitEthernet 0/0/0命令查看路由器GE 0/0/0接口的状态信息。
+   [R1]display interface GigabitEthernet 0/0/0
+
+   #查看IPv4路由表的信息。
+   <R1>display ip routing-table
+
+熟悉常用的IP 相关命令
+---------------------
+
+实验拓扑
+
+常用的IP相关命令的拓扑如图
+
+|image0|
+
+::
+
+   [R1]display ip interface brief 
+   *down: administratively down
+   ^down: standby
+   (l): loopback
+   (s): spoofing
+   The number of interface that is UP in Physical is 3
+   The number of interface that is DOWN in Physical is 1
+   The number of interface that is UP in Protocol is 3
+   The number of interface that is DOWN in Protocol is 1
+
+   Interface                         IP Address/Mask      Physical   Protocol  
+   GigabitEthernet0/0/0              10.0.1.254/24        up         up        
+   GigabitEthernet0/0/1              10.0.2.254/24        up         up        
+   GigabitEthernet0/0/2              unassigned           down       down      
+   NULL0                             unassigned           up         up(s)  
+
+::
+
+   [R1]display ip routing-table
+   Route Flags: R - relay, D - download to fib
+   ------------------------------------------------------------------------------
+   Routing Tables: Public
+            Destinations : 10       Routes : 10       
+
+   Destination/Mask    Proto   Pre  Cost      Flags NextHop         Interface
+
+          10.0.1.0/24  Direct  0    0           D   10.0.1.254      GigabitEthernet
+   0/0/0
+        10.0.1.254/32  Direct  0    0           D   127.0.0.1       GigabitEthernet
+   0/0/0
+        10.0.1.255/32  Direct  0    0           D   127.0.0.1       GigabitEthernet
+   0/0/0
+          10.0.2.0/24  Direct  0    0           D   10.0.2.254      GigabitEthernet
+   0/0/1
+        10.0.2.254/32  Direct  0    0           D   127.0.0.1       GigabitEthernet
+   0/0/1
+        10.0.2.255/32  Direct  0    0           D   127.0.0.1       GigabitEthernet
+   0/0/1
+         127.0.0.0/8   Direct  0    0           D   127.0.0.1       InLoopBack0
+         127.0.0.1/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+   127.255.255.255/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+   255.255.255.255/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+
+::
+
+   [R1]ping 10.0.1.1
+     PING 10.0.1.1: 56  data bytes, press CTRL_C to break
+       Reply from 10.0.1.1: bytes=56 Sequence=1 ttl=128 time=120 ms
+       Reply from 10.0.1.1: bytes=56 Sequence=2 ttl=128 time=50 
+
+
+   [R1]ping 10.0.2.1
+     PING 10.0.2.1: 56  data bytes, press CTRL_C to break
+       Reply from 10.0.2.1: bytes=56 Sequence=1 ttl=128 time=90 ms
+
+在PC1上ping PC2，开始抓包查看数据包信息
+
+::
+
+   PC>ping 10.0.2.1
+
+   Ping 10.0.2.1: 32 data bytes, Press Ctrl_C to break
+   From 10.0.2.1: bytes=32 seq=1 ttl=127 time=63 ms
+
+|image1|
+
+交换机基础配置
+--------------
+
+以太网接口和配置
+~~~~~~~~~~~~~~~~
+
+::
+
+   1.掌握接口速率和双工模式的配置方法
+
+   2.掌握实验手段模式配置链路聚合的方法
+
+   3.掌握实验静态LACP模式配置链路聚合的方法
+
+拓扑图
+
+|image2|
 
 1.配置手工模式的链路聚合（关闭自协商、接口速率为100,，全双工）
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -73,8 +261,8 @@ HCNA实验
    GigabitEthernet0/0/9          Up          1
    GigabitEthernet0/0/10         Up          1
 
-配置静态LACP
-~~~~~~~~~~~~
+2.配置静态LACP
+~~~~~~~~~~~~~~
 
 -  配置文件如下：
 
@@ -104,9 +292,6 @@ HCNA实验
     speed 100
     eth-trunk 1
     lacp priority 100   #配置接口优先级确定活动链路
-
-::
-
    [SW2]display current-configuration
    #
    sysname SW2
@@ -143,9 +328,6 @@ HCNA实验
    ActorPortName          SysPri   SystemID        PortPri PortNo PortKey PortState
    GigabitEthernet0/0/9   32768    4c1f-ccaa-681d  32768   10     305     10111100
    GigabitEthernet0/0/10  32768    4c1f-ccaa-681d  32768   11     305     10111100
-
-::
-
    [SW2]display eth-trunk 1
    Eth-Trunk1's state information is:
    Local:
@@ -165,125 +347,132 @@ HCNA实验
    GigabitEthernet0/0/9   100      4c1f-ccf3-0486  100     10     305     10111100
    GigabitEthernet0/0/10  100      4c1f-ccf3-0486  100     11     305     10111100
 
-1.2 VLAN配置
-------------
+VLAN配置
+--------
 
-1.掌握vlan的创建方法 2.掌握Access和Trunk类型接口的配置方法
-3.掌握Hybird接口的配置 4.掌握将接口与VLAN关联的配置方法
+学习目的
 
-拓扑图如下：
-~~~~~~~~~~~~
+::
+
+   1.掌握vlan的创建方法 
+   2.掌握Access和Trunk类型接口的配置方法 
+   3.掌握Hybird接口的配置 
+   4.掌握将接口与VLAN关联的配置方法
+
+拓扑图
+
+|image3|
 
 配置文件
 ~~~~~~~~
 
 -  SW1
 
-::
+   ::
 
-   [SW1]display current-configuration
-   #
-   sysname SW1
-   #
-   vlan batch 3 to 4
-   #
-   lacp priority 100
+      [SW1]display current-configuration
+      #
+      sysname SW1
+      #
+      vlan batch 3 to 4
+      #
+      lacp priority 100
 
-   interface Eth-Trunk1
-    port link-type trunk
-    port trunk allow-pass vlan 2 to 4094
-    mode lacp-static
-   #
-   interface GigabitEthernet0/0/1
-    port link-type access
-    port default vlan 4
+      interface Eth-Trunk1
+       port link-type trunk
+       port trunk allow-pass vlan 2 to 4094
+       mode lacp-static
+      #
+      interface GigabitEthernet0/0/1
+       port link-type access
+       port default vlan 4
 
-   interface GigabitEthernet0/0/9
-    undo negotiation auto
-    speed 100
-    eth-trunk 1
-    lacp priority 100
-   #
-   interface GigabitEthernet0/0/10
-    undo negotiation auto
-    speed 100
-    eth-trunk 1
-    lacp priority 100
+      interface GigabitEthernet0/0/9
+       undo negotiation auto
+       speed 100
+       eth-trunk 1
+       lacp priority 100
+      #
+      interface GigabitEthernet0/0/10
+       undo negotiation auto
+       speed 100
+       eth-trunk 1
+       lacp priority 100
 
-   interface GigabitEthernet0/0/13
-    port link-type access
-    port default vlan 3
+      interface GigabitEthernet0/0/13
+       port link-type access
+       port default vlan 3
 
 -  SW2
 
-::
+   ::
 
-   [SW2]display current-configuration
-   #
-   sysname SW2
-   #
-   vlan batch 2 4
+      [SW2]display current-configuration
+      #
+      sysname SW2
+      #
+      vlan batch 2 4
 
-   interface Eth-Trunk1
-    port link-type trunk
-    port trunk allow-pass vlan 2 to 4094
-    mode lacp-static
-   #
-   interface GigabitEthernet0/0/1
-    port link-type access
-    port default vlan 4
+      interface Eth-Trunk1
+       port link-type trunk
+       port trunk allow-pass vlan 2 to 4094
+       mode lacp-static
+      #
+      interface GigabitEthernet0/0/1
+       port link-type access
+       port default vlan 4
 
-   interface GigabitEthernet0/0/9
-    undo negotiation auto
-    speed 100
-    eth-trunk 1
-   #
-   interface GigabitEthernet0/0/10
-    undo negotiation auto
-    speed 100
-    eth-trunk 1
+      interface GigabitEthernet0/0/9
+       undo negotiation auto
+       speed 100
+       eth-trunk 1
+      #
+      interface GigabitEthernet0/0/10
+       undo negotiation auto
+       speed 100
+       eth-trunk 1
 
-   interface GigabitEthernet0/0/13
-    port link-type access
-    port default vlan 2
+      interface GigabitEthernet0/0/13
+       port link-type access
+       port default vlan 2
 
 -  SW3
 
-::
+   ::
 
-   [sw3]dis current-configuration
-   #
-   sysname sw3
+      [sw3]dis current-configuration
+      #
+      sysname sw3
 
-   interface Vlanif1
-    ip address 10.0.4.2 255.255.255.0
+      interface Vlanif1
+       ip address 10.0.4.2 255.255.255.0
 
 -  SW4
 
-::
+   ::
 
-   [Huawei]display current-configuration
-   #
-   sysname Huawei
+      [Huawei]display current-configuration
+      #
+      sysname Huawei
 
-   interface Vlanif1
-    ip address 10.0.4.4 255.255.255.0
+      interface Vlanif1
+       ip address 10.0.4.4 255.255.255.0
+
+-  R1
+
+   ::
+
+      interface GigabitEthernet0/0/1
+       ip address 10.0.4.1 255.255.255.0
 
 -  R3
 
-::
+   ::
 
-   interface GigabitEthernet0/0/1
-    ip address 10.0.4.1 255.255.255.0
+      interface GigabitEthernet0/0/1
+       ip address 10.0.4.3 255.255.255.0
 
--  R4
-
-::
-
-   interface GigabitEthernet0/0/1
-    ip address 10.0.4.3 255.255.255.0
-
-R3和R4在同一vlan，可以互通，如下：
+   R1和R3在同一vlan，可以互通，如下：
 
 ::
 
@@ -297,7 +486,9 @@ R3和R4在同一vlan，可以互通，如下：
        Reply from 10.0.4.3: bytes=56 Sequence=1 ttl=255 time=80 ms
        Reply from 10.0.4.3: bytes=56 Sequence=2 ttl=255 time=70 ms
 
--  SW1
+实现效果; R3、R4、SW4之间互通，Vlan2和Vlan4打通通信
+
+​ SW1
 
 ::
 
@@ -332,7 +523,7 @@ R3和R4在同一vlan，可以互通，如下：
     port link-type access
     port default vlan 3
 
--  SW2
+SW2
 
 ::
 
@@ -366,23 +557,30 @@ R3和R4在同一vlan，可以互通，如下：
                         port hybrid pvid vlan 2
                         port hybrid untagged vlan 2 4
 
--  实现效果; R3、R4、SW4之间互通，Vlan2和Vlan4打通通信
+GVRP配置
+--------
 
-1.3 GVRP配置
-------------
+::
 
--  掌握GVRP的配置方法
--  掌握GVRP不同注册模式的配置方法
-
-.. _拓扑图-1:
+   1.掌握GVRP的配置方法
+   2.掌握GVRP不同注册模式的配置方法
 
 拓扑图
-~~~~~~
 
-配置如下
+|image4|
+
+**场景**
+
+企业网绍中往会使用大量的交换机目需要在网络中划分不同的VLAN ， 若
+网络管理员采用手工配置VLAN 的创建和删除，工作量极大而目容易出错。这种
+情况下迎可以通过GVRP 的VLAN 动态注册功能来自动完成VLAN 的配置。
+
+.. _配置文件-1:
+
+配置文件
 ~~~~~~~~
 
--  sw1
+sw1
 
 ::
 
@@ -405,7 +603,7 @@ R3和R4在同一vlan，可以互通，如下：
     port trunk allow-pass vlan 2 to 4094
     gvrp
 
--  sw1查看学习到的vlan
+sw1查看学习到的vlan
 
 ::
 
@@ -445,7 +643,7 @@ R3和R4在同一vlan，可以互通，如下：
    100  enable  default       enable  disable    VLAN 0100
    200  enable  default       enable  disable    VLAN 0200
 
--  sw 2 配置
+sw2
 
 ::
 
@@ -467,7 +665,7 @@ R3和R4在同一vlan，可以互通，如下：
     port trunk allow-pass vlan 2 to 4094
     gvrp
 
--  查看sw2 学习到的vlan
+查看sw2 学习到的vlan
 
 ::
 
@@ -503,7 +701,7 @@ R3和R4在同一vlan，可以互通，如下：
    100  enable  default       enable  disable    VLAN 0100
    200  enable  default       enable  disable    VLAN 0200
 
--  sw3配置
+sw3
 
 ::
 
@@ -520,7 +718,7 @@ R3和R4在同一vlan，可以互通，如下：
     port trunk allow-pass vlan 2 to 4094
     gvrp
 
--  sw4配置
+sw4
 
 ::
 
@@ -538,11 +736,10 @@ R3和R4在同一vlan，可以互通，如下：
     gvrp
 
 需要手动的设置vlan SW3：vlan 100 SW4：vlan 200
-
 使得sw1和sw2交换机两端都能动态的学习到vlan信息，这样报文就能够双向通信
 
 修改交换机接口的注册模式
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 -  sw1
 
@@ -592,7 +789,6 @@ R3和R4在同一vlan，可以互通，如下：
    100  dynamic TG:Eth0/0/13(U)
    200  dynamic TG:Eth0/0/13(U)
 
-
 -  sw2
 
 ::
@@ -639,10 +835,9 @@ R3和R4在同一vlan，可以互通，如下：
    100  dynamic TG:Eth0/0/22(U)
    200  dynamic TG:Eth0/0/22(U)
 
-**回显信息中灰色阴影标注的部分表明端口E0/0/1无法注册动态VLAN100和200**
+回显信息中灰色阴影标注的部分表明端口E0/0/1无法注册动态VLAN100和200
 
 配置S1、S2 E0/0/1接口的注册模式为Forbidden
-''''''''''''''''''''''''''''''''''''''''''
 
 -  sw1
 
@@ -732,21 +927,21 @@ R3和R4在同一vlan，可以互通，如下：
 -  在
    Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他VLAN的报文通过
 
-1.4 VLAN间路由
---------------
+VLAN间路由
+----------
 
 掌握知识
 ~~~~~~~~
 
--  1 掌握用于VLAN间路由的Trunk接口的配置方法
--  2 掌握单个物理接口上配置多个子接口的方法
--  3 掌握VLAN间实现ARP通信的配置方法
+::
+
+   1 掌握用于VLAN间路由的Trunk接口的配置方法
+   2 掌握单个物理接口上配置多个子接口的方法
+   3 掌握VLAN间实现ARP通信的配置方法
 
 单臂路由
-^^^^^^^^
 
-网络拓扑图如下：
-^^^^^^^^^^^^^^^^
+|image5|
 
 -  R1配置
 
@@ -842,14 +1037,17 @@ R3和R4在同一vlan，可以互通，如下：
 配置三层交换
 ^^^^^^^^^^^^
 
--  掌握三层交换机实现VLAN通信的方法
--  通过Trunk链路实现VLAN间通信的配置方法
--  配置不同VLAN间动态路由协议OSPF的方法
+::
 
-.. _网络拓扑图如下-1:
+   - 掌握三层交换机实现VLAN通信的方法
+   - 通过Trunk链路实现VLAN间通信的配置方法
+   - 配置不同VLAN间动态路由协议OSPF的方法
 
-网络拓扑图如下：
-^^^^^^^^^^^^^^^^
+拓扑图
+
+三层交换实验拓扑
+
+|image6|
 
 -  SW1
 
@@ -1026,14 +1224,19 @@ R3和R4在同一vlan，可以互通，如下：
 
    ip route-static 0.0.0.0 0.0.0.0 10.0.7.254
 
-1.5 IP安全配置(ACL)
--------------------
+IP安全配置(ACL)
+---------------
 
-配置ACL过滤企业数据
-~~~~~~~~~~~~~~~~~~~
+::
 
--  掌握高级ACL的配置方法
--  掌握ACL在接口下的应用方法
+   - 掌握高级ACL的配置方法
+   - 掌握ACL在接口下的应用方法
+
+拓扑图
+
+配置ACL过滤企业数据实验拓扑图
+
+|image7|
 
 -  R1
 
@@ -1208,3 +1411,12 @@ R3和R4在同一vlan，可以互通，如下：
    user-interface vty 0 4
 
 **R1可以访问S1的telnet服务器** **R2可以访问S2的ftp服务器**
+
+.. |image0| image:: ../../_static\hcna-IP0001.png
+.. |image1| image:: ../../_static\networ-ip0002.png
+.. |image2| image:: ../../_static\network-sw0001.png
+.. |image3| image:: ../../_static\netwrok-vlan001.png
+.. |image4| image:: ../../_static\network-GVRP01.png
+.. |image5| image:: ../../_static\network-danbiroute01.png
+.. |image6| image:: ../../_static\network-vlanif01.png
+.. |image7| image:: ../../_static\network_ACL01.png
