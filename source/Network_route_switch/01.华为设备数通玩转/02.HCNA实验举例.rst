@@ -361,6 +361,8 @@ VLAN配置
 
 拓扑图
 
+VLAN配置实验拓扑图
+
 |image3|
 
 配置文件
@@ -1412,10 +1414,20 @@ IP安全配置(ACL)
 
 **R1可以访问S1的telnet服务器** **R2可以访问S2的ftp服务器**
 
-.. |image0| image:: ../../_static\hcna-IP0001.png
-.. |image1| image:: ../../_static\networ-ip0002.png
-.. |image2| image:: ../../_static\network-sw0001.png
-.. |image3| image:: ../../_static\netwrok-vlan001.png
+NAT的配置
+---------
+
+学习目标
+
+::
+
+   * 掌握动态NAT的配置方法
+   * 掌握Easy IP的配置方法
+
+.. |image0| image:: ../../_static/hcna-IP0001.png
+.. |image1| image:: ../../_static/networ-ip0002.png
+.. |image2| image:: ../../_static/network-sw0001.png
+.. |image3| image:: ../../_static/network-vlan0001.png
 .. |image4| image:: ../../_static\network-GVRP01.png
 .. |image5| image:: ../../_static\network-danbiroute01.png
 .. |image6| image:: ../../_static\network-vlanif01.png

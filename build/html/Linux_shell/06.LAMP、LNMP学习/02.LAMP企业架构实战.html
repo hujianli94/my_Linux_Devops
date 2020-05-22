@@ -126,6 +126,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
@@ -226,17 +227,18 @@ httpd：2.4.6
 mariadb-server：5.5.56
 php-mysql（PHP连接MySQL时需要用到的驱动）：5.4.16
 php：5.4.16
-
-
-CentOS 7.4已经不再提供mysql-server的程序包
-httpd配置文件：
-1、主配置文件：/etc/httpd/conf/httpd.conf
-2、辅助配置文件：/etc/httpd/conf.d/*.conf
-3、模块配置文件：/etc/httpd/conf.modules.d/*.conf
-mariadb配置文件：/etc/my.cnf
-php配置文件：/etc/php.ini
-
-httpd与php组合时需要用到的配置文件：/etc/httpd/conf.d/php.conf
+</pre></div>
+</div>
+<p>​ CentOS 7.4已经不再提供mysql-server的程序包</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>httpd配置文件：
+   1、主配置文件：/etc/httpd/conf/httpd.conf
+   2、辅助配置文件：/etc/httpd/conf.d/*.conf
+   3、模块配置文件：/etc/httpd/conf.modules.d/*.conf
+   mariadb配置文件：/etc/my.cnf
+   php配置文件：/etc/php.ini
+</pre></div>
+</div>
+<div class="highlight-default"><div class="highlight"><pre><span></span>httpd与php组合时需要用到的配置文件：/etc/httpd/conf.d/php.conf
 httpd与php组合时需要用到的模块文件：/usr/lib64/httpd/modules/libphp5.so
 
 [root@iZ2zeanknh4l64n4rnlnr6Z html]# httpd -M | grep mpm
@@ -248,7 +250,7 @@ s message php5_module (shared)
 </pre></div>
 </div>
 <p>二、测试LAMP环境：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span># systemctl start httpd.service
+<div class="highlight-default"><div class="highlight"><pre><span></span>#systemctl start httpd.service
 
 systemctl restart httpd.service
 
@@ -257,7 +259,6 @@ systemctl restart httpd.service
 # mysql_secure_installation     #设置mariadb的密码
 
 # mysql -uroot -p
-
 create database discuz charset=utf8;        #创建discuz数据库
 grant all on discuz.* to discuz@&#39;localhost&#39; identified by &quot;123456&quot;;     #授权discuz用户访问数据库
 
@@ -273,13 +274,17 @@ EOF
 
 安装Discuz论坛
 
- wget http://download.comsenz.com/DiscuzX/3.1/Discuz_X3.1_SC_UTF8.zip
- unzip Discuz_X3.1_SC_UTF8.zip
- mv * /var/www/html/;cd /var/www/html/data/
- chmod 757 -R data/ uc_server/ uc_client/ config/
- systemctl restart httpd.service
+wget http://download.comsenz.com/DiscuzX/3.1/Discuz_X3.1_SC_UTF8.zip
+unzip Discuz_X3.1_SC_UTF8.zip
+cd Discuz_X3.1_SC_UTF8/
+mv upload/* /var/www/html/
+cd /var/www/html/
+chmod 757 -R data/ uc_server/ uc_client/ config/
+systemctl restart httpd.service
 </pre></div>
 </div>
+<p>访问<code class="docutils literal"><span class="pre">http://192.168.6.13/install/</span></code></p>
+<p><img alt="image0" src="../../_images/Discuz001.png" /></p>
 </div>
 </div>
 </div>
@@ -355,9 +360,12 @@ Query OK, 0 rows affected, 1 warning (0.00 sec)
 </pre></div>
 </div>
 <p>默认配置文件路径：</p>
-<p>配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log
+<div class="highlight-default"><div class="highlight"><pre><span></span>配置文件：/etc/my.cnf
+日志文件：/var/log//var/log/mysqld.log
 服务启动脚本：/usr/lib/systemd/system/mysqld.service
-socket文件：/var/run/mysqld/mysqld.pid</p>
+socket文件：/var/run/mysqld/mysqld.pid
+</pre></div>
+</div>
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id10">6.2.4. 忘记密码</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>

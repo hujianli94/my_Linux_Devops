@@ -28,14 +28,18 @@ YUM现在安装方法如下：
    php-mysql（PHP连接MySQL时需要用到的驱动）：5.4.16
    php：5.4.16
 
+​ CentOS 7.4已经不再提供mysql-server的程序包
 
-   CentOS 7.4已经不再提供mysql-server的程序包
-   httpd配置文件：
-   1、主配置文件：/etc/httpd/conf/httpd.conf
-   2、辅助配置文件：/etc/httpd/conf.d/*.conf
-   3、模块配置文件：/etc/httpd/conf.modules.d/*.conf
-   mariadb配置文件：/etc/my.cnf
-   php配置文件：/etc/php.ini
+::
+
+    httpd配置文件：
+       1、主配置文件：/etc/httpd/conf/httpd.conf
+       2、辅助配置文件：/etc/httpd/conf.d/*.conf
+       3、模块配置文件：/etc/httpd/conf.modules.d/*.conf
+       mariadb配置文件：/etc/my.cnf
+       php配置文件：/etc/php.ini
+
+::
 
    httpd与php组合时需要用到的配置文件：/etc/httpd/conf.d/php.conf
    httpd与php组合时需要用到的模块文件：/usr/lib64/httpd/modules/libphp5.so
@@ -51,7 +55,7 @@ YUM现在安装方法如下：
 
 ::
 
-   # systemctl start httpd.service
+   #systemctl start httpd.service
 
    systemctl restart httpd.service
 
@@ -60,10 +64,9 @@ YUM现在安装方法如下：
    # mysql_secure_installation     #设置mariadb的密码
 
    # mysql -uroot -p
-
    create database discuz charset=utf8;        #创建discuz数据库
    grant all on discuz.* to discuz@'localhost' identified by "123456";     #授权discuz用户访问数据库
-    
+
 
 
 
@@ -76,11 +79,17 @@ YUM现在安装方法如下：
 
    安装Discuz论坛
 
-    wget http://download.comsenz.com/DiscuzX/3.1/Discuz_X3.1_SC_UTF8.zip
-    unzip Discuz_X3.1_SC_UTF8.zip
-    mv * /var/www/html/;cd /var/www/html/data/
-    chmod 757 -R data/ uc_server/ uc_client/ config/
-    systemctl restart httpd.service
+   wget http://download.comsenz.com/DiscuzX/3.1/Discuz_X3.1_SC_UTF8.zip
+   unzip Discuz_X3.1_SC_UTF8.zip
+   cd Discuz_X3.1_SC_UTF8/
+   mv upload/* /var/www/html/
+   cd /var/www/html/
+   chmod 757 -R data/ uc_server/ uc_client/ config/
+   systemctl restart httpd.service
+
+访问\ ``http://192.168.6.13/install/``
+
+|image0|
 
 LAMP企业架构拓展实战
 --------------------
@@ -166,9 +175,12 @@ Centos7使用yum源安装mysql5.7.22
 
 默认配置文件路径：
 
-配置文件：/etc/my.cnf 日志文件：/var/log//var/log/mysqld.log
-服务启动脚本：/usr/lib/systemd/system/mysqld.service
-socket文件：/var/run/mysqld/mysqld.pid
+::
+
+   配置文件：/etc/my.cnf 
+   日志文件：/var/log//var/log/mysqld.log 
+   服务启动脚本：/usr/lib/systemd/system/mysqld.service 
+   socket文件：/var/run/mysqld/mysqld.pid
 
 忘记密码
 --------
@@ -203,3 +215,5 @@ socket文件：/var/run/mysqld/mysqld.pid
 参考文献
 
 https://www.cnblogs.com/ianduin/p/7679239.html
+
+.. |image0| image:: ../../_static\Discuz001.png
