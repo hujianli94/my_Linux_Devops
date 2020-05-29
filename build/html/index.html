@@ -416,6 +416,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/04.xargs.html#id1">1.4.1. 功能</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/04.xargs.html#id2">1.4.2. 常用选项：</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/04.xargs.html#id3">1.4.3. 示例：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/04.xargs.html#id4">1.4.4. xargs用法</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/05.scp.html">1.5. scp</a><ul>
@@ -703,11 +704,9 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/24.使用图形配置网络服务nmtui.html#id1">2.22.1. 双网卡绑定</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Centos7中openssh升级到7.9p1.html#id1">2.23.1. 环境介绍</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Centos7中openssh升级到7.9p1.html#id2">2.23.2. 准备工作，安装基础包</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Centos7中openssh升级到7.9p1.html#openssl">2.23.3. 升级openssl</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Centos7中openssh升级到7.9p1.html#openssh">2.23.4. 升级openssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Openssh更新升级.html">2.23. Openssh更新升级</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Openssh更新升级.html#centos7-2-openssh7-9">2.23.1. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/25.Openssh更新升级.html#ssh8-2p1">2.23.2. SSH升级版本–8.2p1</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
@@ -723,6 +722,7 @@
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.html#specrpm">2.28.1. 使用spec文件构建RPM包</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.html#fpm">2.28.2. 命令行打包工具FPM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.html#id1">2.28.3. 参考一个很好的文章</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a><ul>
@@ -1693,9 +1693,11 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/07.一些常用的工具/index.html">7. 一些常用的工具</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html">7.1. 常用工具合集</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 网站运维</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id11">7.1.2. 开发工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id16">7.1.3. 文档处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.2. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id3">7.1.3. 网站运维</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id12">7.1.4. 开发工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id17">7.1.5. 文档处理</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html">7.2. 日常工具</a><ul>

@@ -148,6 +148,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
@@ -219,10 +220,11 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#yumrpm" id="id2">Yum自动下载RPM包及其所有依赖的包</a><ul>
-<li><a class="reference internal" href="#id1" id="id3">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
-<li><a class="reference internal" href="#downloadonly-rpm" id="id4">工具1 方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</a></li>
-<li><a class="reference internal" href="#yumdownloader-rpm" id="id5">工具2 使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</a></li>
+<li><a class="reference internal" href="#yumrpm" id="id5">Yum自动下载RPM包及其所有依赖的包</a><ul>
+<li><a class="reference internal" href="#id1" id="id6">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
+<li><a class="reference internal" href="#id2" id="id7">工具1</a></li>
+<li><a class="reference internal" href="#id3" id="id8">工具2</a></li>
+<li><a class="reference internal" href="#id4" id="id9">其他</a></li>
 </ul>
 </li>
 </ul>
@@ -230,11 +232,12 @@
 </ul>
 </div>
 <div class="section" id="yumrpm">
-<h1><a class="toc-backref" href="#id2">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id5">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id3">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="downloadonly-rpm">
-<h3><a class="toc-backref" href="#id4">工具1 方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</a><a class="headerlink" href="#downloadonly-rpm" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id6">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id7">工具1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span>yum install yum-plugin-downloadonly
 yum install --downloadonly --downloaddir=&lt;directory&gt; &lt;package-name&gt;
 例子：
@@ -245,13 +248,31 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 </pre></div>
 </div>
 </div>
-<div class="section" id="yumdownloader-rpm">
-<h3><a class="toc-backref" href="#id5">工具2 使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</a><a class="headerlink" href="#yumdownloader-rpm" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id8">工具2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span>
-<span class="n">yumdownloader</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">--</span><span class="n">destdir</span><span class="o">=/</span><span class="n">root</span><span class="o">/</span><span class="n">mypackages</span><span class="o">/</span> <span class="n">httpd</span>
+
+<span class="n">yumdownloader</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">--</span><span class="n">destdir</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">yums</span><span class="o">/</span> <span class="n">nginx</span>
+<span class="c1"># OR</span>
+<span class="n">yumdownloader</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">--</span><span class="n">destdir</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">yums</span><span class="o">/</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id9">其他</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="n">repoquery</span> <span class="o">--</span><span class="n">requires</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
+<span class="c1"># rpmrepater會向用戶顯示已安裝包的列表，你可以使用上/下箭頭來滾動屏幕</span>
+<span class="c1"># 可以在指定包上使用&quot;r&quot;鍵來顯示其依賴關係，循環在指定包上按下&quot;r&quot;鍵可以展示出餘下的信息。</span>
+<span class="c1"># &quot;L&quot;標誌的意思是說這個包是一片“孤葉”，意思說說沒有任何包依賴它。</span>
+<span class="c1"># &quot;o&quot;標誌是說這個包是整個依賴鏈的中間部分。</span>
+<span class="c1"># 按下&quot;b&quot;鍵會顯示其他依賴於該包的其他包。</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">rpmreaper</span>
+<span class="n">rpmreaper</span>
 </pre></div>
 </div>
 <p>参考文献 <a class="reference external" href="https://www.cnblogs.com/guigujun/p/7868748.html">https://www.cnblogs.com/guigujun/p/7868748.html</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/michael-xiang/p/10474319.html">https://www.cnblogs.com/michael-xiang/p/10474319.html</a></p>
 </div>
 </div>
 </div>

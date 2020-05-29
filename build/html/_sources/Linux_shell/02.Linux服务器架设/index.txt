@@ -29,7 +29,7 @@ Linux服务器架设
     22.windows上搭建yum源站点
     23.用Python快速实现HTTP和FTP服务器
     24.使用图形配置网络服务nmtui
-    25.Centos7中openssh升级到7.9p1
+    25.Openssh更新升级
     26.rabbitmq服务部署
     27.Cobbler无人值守安装
     28.Linux运维工具Supervisor(进程管理工具)
