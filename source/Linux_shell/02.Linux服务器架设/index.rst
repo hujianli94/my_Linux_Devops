@@ -37,3 +37,4 @@ Linux服务器架设
     30.源码包制作成rpm包
     31.Yum自动下载RPM包及其所有依赖的包
     32.基于Galera_Cluster多主结构的Mysql高可用集群
+    33.Gitlab安装

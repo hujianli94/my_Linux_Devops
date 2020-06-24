@@ -128,7 +128,7 @@
 <li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
 <li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh更新升级.html">2.23. Openssh更新升级</a></li>
 <li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
@@ -136,6 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -146,10 +147,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
@@ -224,7 +227,10 @@
 <li><a class="reference internal" href="#iscsi" id="id1">使用iSCSI服务部署网络存储</a><ul>
 <li><a class="reference internal" href="#raid" id="id2">创建RAID磁盘阵列</a></li>
 <li><a class="reference internal" href="#iscsi-target-initiator" id="id3">iSCSI技术在工作形式上分为服务端（target）与客户端（initiator）。</a></li>
-<li><a class="reference internal" href="#windows" id="id4">　配置Windows客户端</a></li>
+<li><a class="reference internal" href="#windows" id="id4">　配置Windows客户端</a><ul>
+<li><a class="reference internal" href="#linux" id="id5">配置Linux客户端</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -311,7 +317,10 @@ Consistency Policy : resync
 [root@localhost ~]# systemctl enable targetd
 </pre></div>
 </div>
-<p>第2步：配置iSCSI服务端共享资源。</p>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">第2步：配置iSCSI服务端共享资源。</div>
+</div>
 <p>targetcli是用于管理iSCSI服务端存储资源的专用配置命令，
 它能够提供类似于fdisk命令的交互式配置功能，将iSCSI共享资源的配置内容抽象成“目录”的形式，
 我们只需将各类配置信息填入到相应的“目录”中即可。这里的难点主要在于认识每个“参数目录”的作用。
@@ -361,7 +370,10 @@ Consistency Policy : resync
 <span class="o">/&gt;</span>
 </pre></div>
 </div>
-<p>第3步：创建iSCSI target名称及配置共享资源。</p>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">第3步：创建iSCSI target名称及配置共享资源。</div>
+</div>
 <p>iSCSI
 target名称是由系统自动生成的，这是一串用于描述共享资源的唯一字符串。
 稍后用户在扫描iSCSI服务端时即可看到这个字符串，因此我们不需要记住它。
@@ -474,6 +486,85 @@ C组合键结束进程， 这样不会保存配置文件，我们的工作也就
 </div>
 <p><img alt="image2" src="../../_images/iSCSI3.PNG" /></p>
 <p><img alt="image3" src="../../_images/iSCSI5.PNG" /></p>
+<div class="section" id="linux">
+<h3><a class="toc-backref" href="#id5">配置Linux客户端</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span>$ iscsiadm -m discovery -t st -p 192.168.5.174
+192.168.5.174:3260,1 iqn.2020-06.supool.com:lun02
+192.168.5.173:3260,1 iqn.2020-06.supool.com:lun02
+192.168.5.175:3260,1 iqn.2020-06.supool.com:lun02
+
+
+$ iscsiadm -m node -T iqn.2020-06.supool.com:lun02 -p 192.168.5.173:3260,1 --login
+
+Logging in to [iface: default, target: iqn.2020-06.supool.com:lun02, portal: 192.168.5.173,3260] (multiple)
+Login to [iface: default, target: iqn.2020-06.supool.com:lun02, portal: 192.168.5.173,3260] successful.
+
+$ lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda      8:0    0   80G  0 disk
+├─sda1   8:1    0    2G  0 part /boot
+├─sda2   8:2    0    8G  0 part [SWAP]
+└─sda3   8:3    0   70G  0 part /
+sdb      8:16   0    1T  0 disk
+sr0     11:0    1 1024M  0 rom
+
+
+$ file /dev/sdb
+/dev/sdb: block special
+
+# 查看到1TB数据我们不再进行分区，而是直接格式化并挂载使用。
+# 格式化
+[root@supool-10 vdbench_test]# mkfs.xfs /dev/sdb
+meta-data=/dev/sdb               isize=512    agcount=4, agsize=67108864 blks
+         =                       sectsz=4096  attr=2, projid32bit=1
+         =                       crc=1        finobt=0, sparse=0
+data     =                       bsize=4096   blocks=268435456, imaxpct=5
+         =                       sunit=0      swidth=0 blks
+naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+log      =internal log           bsize=4096   blocks=131072, version=2
+         =                       sectsz=4096  sunit=1 blks, lazy-count=1
+realtime =none                   extsz=4096   blocks=0, rtextents=0
+[root@supool-10 vdbench_test]# mkdir /iscsi
+[root@supool-10 vdbench_test]# mount /dev/sdb /iscsi
+[root@supool-10 vdbench_test]# df -h
+Filesystem                   Size  Used Avail Use% Mounted on
+devtmpfs                     2.0G     0  2.0G   0% /dev
+tmpfs                        2.0G     0  2.0G   0% /dev/shm
+tmpfs                        2.0G  9.8M  2.0G   1% /run
+tmpfs                        2.0G     0  2.0G   0% /sys/fs/cgroup
+/dev/sda3                     70G   29G   42G  42% /
+/dev/sda1                    2.0G  168M  1.9G   9% /boot
+tmpfs                        396M   12K  396M   1% /run/user/42
+tmpfs                        396M     0  396M   0% /run/user/0
+192.168.5.173:/vol/supool_d   33T  148M   33T   1% /mnt/nfs
+/dev/sdb                     1.0T   33M  1.0T   1% /iscsi
+
+# blkid 命令用于查看设备的名称、文件系统及 UUID
+$ blkid | grep /dev/sdb
+/dev/sdb: UUID=&quot;670faf91-f594-4655-91cf-c9dcea95b4d8&quot; TYPE=&quot;xfs&quot;
+
+# 设置开机自动挂载
+vim /etc/fstab
+#
+# /etc/fstab
+# Created by anaconda on Wed May 4 19:26:23 2017
+#
+# Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/rhel-root / xfs defaults 1 1
+UUID=812b1f7c-8b5b-43da-8c06-b9999e0fe48b /boot xfs defaults 1 2
+/dev/mapper /rhel-swap swap swap defaults 0 0
+/dev/cdrom /media/cdrom iso9660 defaults 0 0
+UUID=670faf91-f594-4655-91cf-c9dcea95b4d8 /iscsi xfs defaults,_ _netdev 0 0
+</pre></div>
+</div>
+<p>如果我们不再需要使用 iSCSI 共享设备资源了，可以用 iscsiadm 命令的-u
+参数将其设备卸载：</p>
+<div class="code shell highlight-default"><div class="highlight"><pre><span></span>$ iscsiadm -m node -T iqn.2003-01.org.linux-iscsi.linuxprobe.x8664:sn.d497c356ad80 -u
+</pre></div>
+</div>
+</div>
 </div>
 </div>
 

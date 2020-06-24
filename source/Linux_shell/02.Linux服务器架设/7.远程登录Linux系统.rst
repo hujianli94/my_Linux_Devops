@@ -76,15 +76,29 @@ Linux主机A
    |+E  .            |
    +----[SHA256]-----+
 
+​
+
 ::
 
-   ssh-keygen 程序会生成两个文件：~/.ssh/id_rsa.pub和~/.ssh/id_rsa。其中前者是公钥，后者是
+   ssh-keygen 程序会生成两个文件：
+
+   ~/.ssh/id_rsa.pub和~/.ssh/id_rsa。其中前者是公钥，后者是
    私钥。公钥必须添加到想要自动登入的远程服务器的~/.ssh/authorized_keys文件中
 
-   可以使用下列命令添加密钥文件：
-   $ ssh USER@REMOTE_HOST \
-   "cat >> ~/.ssh/authorized_keys" < ~/.ssh/id_rsa.pub
+分发公钥到远程主机上
 
+.. code:: shell
+
+   可以使用下列命令添加密钥文件：
+   $ ssh root@192.168.1.80 'mkdir -p .ssh && cat >>.ssh/authorized_keys' <~/.ssh/id_rsa.pub
+
+   上面的命令是使用Shell脚本的方式将公钥保存到远程服务器，除此之外，OpenSSH专门提供了一个名为ssh-copy-id的工具。我们可以使用该工具将公钥保存到远程服务器中，这种方式比前面Shell脚本的方式更加方便。如下所示:
+
+    $ ssh-copy-id -i ~/.ssh/id_rsa.pub root@192.168.1.80
+
+或者手动的进行粘贴
+
+::
 
    #将此公钥的内容复制粘贴到Linux主机B的/root/.ssh/authorized_keys文件中。
    [root@localhost ~]# cat /root/.ssh/id_rsa.pub 
@@ -148,16 +162,16 @@ Linux主机B
    [root@localhost ~]# who am i
    root     pts/1        2019-02-22 19:24 (192.168.1.106)
 
-scp远程传输命令
-~~~~~~~~~~~~~~~
-
--  1.将本地文件上传到远程服务器
+| ​
+| ### scp远程传输命令 \* 1.将本地文件上传到远程服务器
 
 ::
 
    scp /root/readme.txt 192.168.10.20:/home
 
--  2.把远程主机的文件下载到本地
+| ​
+| ​
+| \* 2.把远程主机的文件下载到本地
 
 ::
 

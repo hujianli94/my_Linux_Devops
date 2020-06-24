@@ -844,6 +844,11 @@ Nginx对日志进行处理的脚本
 
    00 00 * * * /bin/bash /usr/local/webserver/nginx/sbin/cut_nginx_log.sh
 
+8.Nginx实现数据库端口转发
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+https://www.cnblogs.com/kazihuo/p/10755972.html
+
 Nginx性能优化技巧
 -----------------
 

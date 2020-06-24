@@ -79,7 +79,6 @@ iSCSI技术在工作形式上分为服务端（target）与客户端（initiator
           4       8       48        2      active sync   /dev/sdd
 
           3       8       64        -      spare   /dev/sde
-          
 
 第1步：配置好Yum软件仓库后安装iSCSI服务端程序以及配置命令工具
 
@@ -90,10 +89,9 @@ iSCSI技术在工作形式上分为服务端（target）与客户端（initiator
        安装完成后启动iSCSI的服务端程序targetd，然后把这个服务程序加入到开机启动项中，以便下次在服务器重启后依然能够为用户提供iSCSI共享存储资源服务：
        [root@localhost ~]# systemctl start targetd
        [root@localhost ~]# systemctl enable targetd
-       
-       
 
-第2步：配置iSCSI服务端共享资源。
+| ​
+| 第2步：配置iSCSI服务端共享资源。
 
 targetcli是用于管理iSCSI服务端存储资源的专用配置命令，
 它能够提供类似于fdisk命令的交互式配置功能，将iSCSI共享资源的配置内容抽象成“目录”的形式，
@@ -147,7 +145,8 @@ targetcli是用于管理iSCSI服务端存储资源的专用配置命令，
      o- loopback ......................................................................................................... [Targets: 0]
    /> 
 
-第3步：创建iSCSI target名称及配置共享资源。
+| ​
+| 第3步：创建iSCSI target名称及配置共享资源。
 
 iSCSI
 target名称是由系统自动生成的，这是一串用于描述共享资源的唯一字符串。
@@ -278,6 +277,88 @@ iSCSI服务端的配置至此全部完成。
 |image2|
 
 |image3|
+
+配置Linux客户端
+~~~~~~~~~~~~~~~
+
+.. code:: shell
+
+   $ iscsiadm -m discovery -t st -p 192.168.5.174
+   192.168.5.174:3260,1 iqn.2020-06.supool.com:lun02
+   192.168.5.173:3260,1 iqn.2020-06.supool.com:lun02
+   192.168.5.175:3260,1 iqn.2020-06.supool.com:lun02
+
+
+   $ iscsiadm -m node -T iqn.2020-06.supool.com:lun02 -p 192.168.5.173:3260,1 --login
+
+   Logging in to [iface: default, target: iqn.2020-06.supool.com:lun02, portal: 192.168.5.173,3260] (multiple)
+   Login to [iface: default, target: iqn.2020-06.supool.com:lun02, portal: 192.168.5.173,3260] successful.
+
+   $ lsblk
+   NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+   sda      8:0    0   80G  0 disk
+   ├─sda1   8:1    0    2G  0 part /boot
+   ├─sda2   8:2    0    8G  0 part [SWAP]
+   └─sda3   8:3    0   70G  0 part /
+   sdb      8:16   0    1T  0 disk
+   sr0     11:0    1 1024M  0 rom
+
+
+   $ file /dev/sdb
+   /dev/sdb: block special
+
+   # 查看到1TB数据我们不再进行分区，而是直接格式化并挂载使用。
+   # 格式化
+   [root@supool-10 vdbench_test]# mkfs.xfs /dev/sdb
+   meta-data=/dev/sdb               isize=512    agcount=4, agsize=67108864 blks
+            =                       sectsz=4096  attr=2, projid32bit=1
+            =                       crc=1        finobt=0, sparse=0
+   data     =                       bsize=4096   blocks=268435456, imaxpct=5
+            =                       sunit=0      swidth=0 blks
+   naming   =version 2              bsize=4096   ascii-ci=0 ftype=1
+   log      =internal log           bsize=4096   blocks=131072, version=2
+            =                       sectsz=4096  sunit=1 blks, lazy-count=1
+   realtime =none                   extsz=4096   blocks=0, rtextents=0
+   [root@supool-10 vdbench_test]# mkdir /iscsi
+   [root@supool-10 vdbench_test]# mount /dev/sdb /iscsi
+   [root@supool-10 vdbench_test]# df -h
+   Filesystem                   Size  Used Avail Use% Mounted on
+   devtmpfs                     2.0G     0  2.0G   0% /dev
+   tmpfs                        2.0G     0  2.0G   0% /dev/shm
+   tmpfs                        2.0G  9.8M  2.0G   1% /run
+   tmpfs                        2.0G     0  2.0G   0% /sys/fs/cgroup
+   /dev/sda3                     70G   29G   42G  42% /
+   /dev/sda1                    2.0G  168M  1.9G   9% /boot
+   tmpfs                        396M   12K  396M   1% /run/user/42
+   tmpfs                        396M     0  396M   0% /run/user/0
+   192.168.5.173:/vol/supool_d   33T  148M   33T   1% /mnt/nfs
+   /dev/sdb                     1.0T   33M  1.0T   1% /iscsi
+
+   # blkid 命令用于查看设备的名称、文件系统及 UUID
+   $ blkid | grep /dev/sdb
+   /dev/sdb: UUID="670faf91-f594-4655-91cf-c9dcea95b4d8" TYPE="xfs"
+
+   # 设置开机自动挂载
+   vim /etc/fstab
+   #
+   # /etc/fstab
+   # Created by anaconda on Wed May 4 19:26:23 2017
+   #
+   # Accessible filesystems, by reference, are maintained under '/dev/disk'
+   # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+   #
+   /dev/mapper/rhel-root / xfs defaults 1 1
+   UUID=812b1f7c-8b5b-43da-8c06-b9999e0fe48b /boot xfs defaults 1 2
+   /dev/mapper /rhel-swap swap swap defaults 0 0
+   /dev/cdrom /media/cdrom iso9660 defaults 0 0
+   UUID=670faf91-f594-4655-91cf-c9dcea95b4d8 /iscsi xfs defaults,_ _netdev 0 0
+
+如果我们不再需要使用 iSCSI 共享设备资源了，可以用 iscsiadm 命令的-u
+参数将其设备卸载：
+
+.. code:: shell
+
+   $ iscsiadm -m node -T iqn.2003-01.org.linux-iscsi.linuxprobe.x8664:sn.d497c356ad80 -u
 
 .. |image0| image:: ../../_static/iSCSI.PNG
 .. |image1| image:: ../../_static/iSCSI2.PNG
