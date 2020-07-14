@@ -128,6 +128,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auto-config-vsftpd-sh">3.23.4. auto_config_vsftpd.sh</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
@@ -168,10 +169,12 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
@@ -247,6 +250,7 @@
 <li><a class="reference internal" href="#install-vsftpd-sh" id="id2">install_vsftpd.sh</a></li>
 <li><a class="reference internal" href="#install-nsf-sh" id="id3">install_nsf.sh</a></li>
 <li><a class="reference internal" href="#vsftp" id="id4">vsftp主动和被动模式脚本</a></li>
+<li><a class="reference internal" href="#auto-config-vsftpd-sh" id="id5">auto_config_vsftpd.sh</a></li>
 </ul>
 </li>
 </ul>
@@ -906,6 +910,179 @@ Usage_choice() {
 
 check_Root
 Usage_choice $1
+</pre></div>
+</div>
+</div>
+<div class="section" id="auto-config-vsftpd-sh">
+<h2><a class="toc-backref" href="#id5">3.23.4. auto_config_vsftpd.sh</a><a class="headerlink" href="#auto-config-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+SUCCESS=&quot;echo -en \\033[1;32m&quot;  #green
+FAILURE=&quot;echo -en \\033[1;31m&quot;  #红色
+WARNING=&quot;echo -en \\033[1;33m&quot;  #黄色
+NORMAL=&quot;echo -en \\033[1;39m&quot;  #黑色
+config_file=/etc/vsftpd/vsftpd.conf
+
+#function
+
+function menu() {
+    clear
+    echo &quot;------------------------------------------&quot;
+    echo &quot;#         菜单              #&quot;
+    echo &quot;------------------------------------------&quot;
+    echo &quot;# 1.安装配置vsftpd.&quot;
+    echo &quot;# 2.创建FTP账户.&quot;
+    echo &quot;# 3.删除FTP账户.&quot;
+    echo &quot;# 4.配置匿名账户.&quot;
+    echo &quot;# 5.启动关闭vsftpd.&quot;
+    echo &quot;# 6.退出脚本.&quot;
+    echo &quot;-------------------------------------------&quot;
+    echo
+}
+
+
+# 定义配置匿名账户的子菜单
+function anon_sub_menu() {
+    clear
+    echo &quot;----------------------------------------------&quot;
+    echo &quot;# 服务管理子菜单(Menu)&quot;
+    echo &quot;----------------------------------------------&quot;
+    echo &quot;# 1.启动vsftpd.&quot;
+    echo &quot;# 2.关闭vsftpd.&quot;
+    echo &quot;# 3.重启vsftpd.&quot;
+    echo &quot;----------------------------------------------&quot;
+    echo
+}
+
+function test_yum() {
+    num=$(yum repolist|tail -1|sed &#39;s/.*: *//;s/,//&#39;)
+    if [ ${num} -le 0 ]; then
+        $FAILURE
+        echo &quot;没有可用的Yum源.&quot;
+        $NORMAL
+        exit
+    else
+        if ! yum list vsftpd &amp;&gt;/dev/null;then
+            $FAILURE
+            echo &quot;Yum源中没有vsftpd软件包.&quot;
+            $NORMAL
+            exit
+        fi
+    fi
+
+}
+
+function install_vsftpd() {
+    if test rpm -q vsftpd &amp;&gt; /dev/null; then
+        $WARNING
+        echo &quot;vsftpd已安装.&quot;
+        $NORMAL
+        exit
+    else
+        yum -y install vsftpd
+    fi
+}
+
+function init_config() {
+    [ ! -e $config_file ] &amp;&amp; cp $config_file $config_file{,.bak}
+    [ ! -d /common/pub ] &amp;&amp; mkdir -p /common/pub
+    chmod a+w /common/pub
+    grep -q local_root $config_file|| sed -i &#39;$a local_root=/common&#39; $config_file
+    sed -i &#39;s/^#chroot_local_user=YES/chroot_local_user=YES/&#39; $config_file
+}
+
+function create_ftpuser() {
+    local $1
+    local $2
+    if id $1 &amp;&gt; /dev/null; then
+        $FAILURE
+        echo &quot;${1}账户已存在&quot;
+        $NORMAL
+        exit
+    else
+        useradd $1
+        echo &quot;$2&quot;|passwd --stdin $1 &amp;&gt;/dev/null
+    fi
+}
+
+function delete_user() {
+    local $1
+    if id $1 &amp;&gt; /dev/null; then
+        $FAILURE
+        echo &quot;${1}账户不存在&quot;
+        $NORMAL
+        exit
+    else
+        userdel $1
+    fi
+}
+
+#第一个参数1，匿名账户禁用
+#第一个参数2，开启匿名账户登录功能
+#第一个参数3，允许匿名账户上传文件
+function anon_config() {
+   case $1 in
+   1)
+      :
+      # 待实现
+      ;;
+   2)
+      :
+      # 待实现
+      :
+      ;;
+   3)
+      :
+      # 待实现
+      ;;
+   esac
+}
+
+# 服务管理
+#第一个参数start，启动vsftpd
+#第一个参数restart，重启vsftpd
+#第一个参数stop，关闭vsftpd
+function proc_manager() {
+case $1 in
+    start)
+        :
+       ;;
+    restart)
+        :
+       ;;
+    stop)
+        :
+       ;;
+esac
+
+}
+
+menu
+
+read -p &quot;please choice 【1-6】: &quot; input
+
+case $input in
+1)
+   test_yum
+   ;;
+2)
+   :
+   ;;
+3)
+   :
+   ;;
+4)
+   :
+   ;;
+6)
+   :
+   ;;
+*)
+   :
+   ;;
+esac
 </pre></div>
 </div>
 </div>

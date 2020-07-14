@@ -177,6 +177,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -1646,8 +1647,16 @@ done
 </div>
 <div class="section" id="getopts">
 <h2><a class="toc-backref" href="#id62">3.10.9. 使用getopts处理多命令行选项</a><a class="headerlink" href="#getopts" title="Permalink to this headline">¶</a></h2>
+<p>例如，下面的命令告诉getopts查找-f、-A和-x选项：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ getopts fAx VARNAME
+</pre></div>
+</div>
+<p>下面的命令表示告诉getopts命令，-A选项后面会有一个参数：</p>
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ getopts fA:x VARNAME
+</pre></div>
+</div>
 <p>当你希望以专业的方式解析命令行选项和参数时，getopts将是一个很好的工具。它是Bash的内部命令。它的优势在于：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>* 你不需要通过一个外部程序来处理位置参数。
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>* 你不需要通过一个外部程序来处理位置参数。
 * getopts可以很容易地设置你可以用来解析的Shell变量（对于一个外部进程是不可能的）。
 * getopts定义在POSIX中。
 </pre></div>
@@ -1691,7 +1700,7 @@ Invalid option: -b
 </pre></div>
 </div>
 <p><strong>代码示例2</strong> 这个脚本稍微复杂一些，它可以接收多个命令行选项和参数</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
 
 # 定义变量vflag
 vflag=off
@@ -1771,7 +1780,7 @@ do
 done
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ sh test_getopts_2.sh -h
+<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ sh test_getopts_2.sh -h
 USAGE:
     myscript [-h] [-v] [-f &lt;filename&gt;] [-o &lt;filename&gt;]
 

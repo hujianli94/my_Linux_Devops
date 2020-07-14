@@ -8,7 +8,7 @@
 初始化操作系统脚本
 ------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -178,7 +178,7 @@
 开发检测脚本
 ------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -244,7 +244,7 @@
 利用Shell函数开发rsync服务启动脚本
 ----------------------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -320,7 +320,7 @@
 一个颜色打印示例脚本
 --------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -373,7 +373,7 @@
 结合case给输出的语句加颜色
 --------------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -417,7 +417,7 @@
 while循环
 ---------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -438,7 +438,7 @@ while循环
 数组用法
 --------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -497,7 +497,7 @@ while循环按行读文件的方式总结
 
 方式1：采用exec读取文件，然后进入while循环处理。
 
-::
+.. code:: bash
 
    exec <FILE 
    sum=0 
@@ -507,7 +507,7 @@ while循环按行读文件的方式总结
 
 方式2：使用cat读取文件内容，然后通过管道进入while循环处理。
 
-::
+.. code:: bash
 
    cat FILE_PATH|while read line 
    do     
@@ -516,7 +516,7 @@ while循环按行读文件的方式总结
 
 方式3：在while循环结尾done处通过输入重定向指定读取的文件。
 
-::
+.. code:: bash
 
    while read line 
    do     
@@ -526,7 +526,7 @@ while循环按行读文件的方式总结
 批量检查多个网站地址是否正常。
 ------------------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -578,7 +578,7 @@ while循环按行读文件的方式总结
 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常
 ---------------------------------------------------------
 
-::
+.. code:: bash
 
    #!/usr/bin/env bash
    #usage:xxx
@@ -645,7 +645,7 @@ Shell脚本调试技巧
 使用set命令调试部分脚本内容
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-::
+.. code:: bash
 
    set命令也可以用于辅助脚本调试。
 
@@ -904,3 +904,183 @@ Shell脚本调试技巧
 ::
 
    ansible oldboy -m command -a "uptime"
+
+使用exec调用其他外部命令或脚本
+------------------------------
+
+exec调用后会自动退出
+
+.. code:: bash
+
+
+   #!/bin/bash
+   #功能描述(Description):使用exec调用其他外部命令或脚本示例.
+   ls
+   echo
+   echo "----------------------"
+   exec ls
+
+
+   echo "te
+
+fork子进程的示例.
+-----------------
+
+.. code:: bash
+
+   #!/bin/bash
+   #功能描述(Description):fork子进程的示例.
+
+   #调用外部命令时会导致fork子进程.
+   sleep 5
+
+   #绝对路径或相对路径调用外部脚本时会导致fork子进程.
+   /root/tmp.sh
+   cd /root; ./tmp.sh
+
+使用函数与&后台进程实现多进程ping测试1.
+---------------------------------------
+
+.. code:: bash
+
+   #!/bin/bash
+   #Version:1.0
+   #功能描述(Description):使用函数与&后台进程实现多进程ping测试.
+
+   net="192.168.4"
+
+   multi_ping() {
+       ping -c2 -i0.2 -W1 $1 &>/dev/null
+       if [ $? -eq 0 ];then
+           echo "$1 is up."
+       else
+           echo "$1 is down."
+       fi
+   }
+
+   #通过循环反复调用函数并将其放入后台并行执行.
+   for i in {1..254}
+   do
+       multi_ping $net.$i &
+   done
+
+使用函数与&后台进程实现多进程ping测试2.
+---------------------------------------
+
+.. code:: bash
+
+   #!/bin/bash
+   #Version:2.0
+   #功能描述(Description):使用函数与&后台进程实现多进程ping测试.
+   #使用wait命令等待所有子进程结束后再退出脚本.
+
+   net="192.168.4"
+
+   multi_ping() {
+       ping -c2 -i0.2 -W1 $1 &>/dev/null
+       if [ $? -eq 0 ];then
+           echo "$1 is up."
+       else
+           echo "$1 is down."
+       fi
+   }
+
+   #通过循环反复调用函数并将其放入后台并行执行.
+   for i in {1..254}
+   do
+       multi_ping $net.$i &
+   done
+   wait
+
+控制进程数量的ping测试脚本
+--------------------------
+
+.. code:: bash
+
+
+   #!/bin/bash
+   #Version:3.0
+   #功能描述(Description):控制进程数量的ping测试脚本.
+   #使用wait命令等待所有子进程结束后再退出脚本.
+
+   num=10             #控制进程数量.
+   net="192.168.4"
+   pipefile="/tmp/multiping_$$.tmp"
+
+   multi_ping() {
+       ping -c2 -i0.2 -W1 $1 &>/dev/null
+       if [ $? -eq 0 ];then
+           echo "$1 is up."
+       else
+           echo "$1 is down."
+       fi
+   }
+
+   #创建命名管道文件,创建其文件描述符,通过重定向导入数据到管道文件中.
+   mkfifo $pipefile
+   exec 12<>$pipefile
+   for i in `seq $num`
+   do
+       echo "" >&12 &
+   done
+
+   #通过循环反复调用函数并将其放入后台并行执行.
+   #成功读取命名管道中的数据后开启新的进程.
+   #所有内容读取完后read被阻塞,无法再启动新进程.
+   #等待前面启动的进程结束后,继续往管道文件中写入数据,释放阻塞,再次开启新的进程.
+   for j in {1..254}
+   do
+       read -u12
+       {
+           multi_ping $net.$j
+           echo "" >&12
+       } &
+   done
+   wait
+   rm -rf $pipfile
+
+修改SSHD配置文件,提升SSH安全性
+------------------------------
+
+.. code:: bash
+
+   #!/bin/bash
+   #功能描述(Description):修改SSHD配置文件,提升SSH安全性.
+
+   config_file="/etc/ssh/sshd_config"
+   PORT=12345
+
+   #将默认端口号修改为自定义端口号.
+   if grep -q "^Port" $config_file;then
+       sed -i "/^Port/c Port $PORT" $config_file
+   else
+       echo "Port $PORT" >> $config_file
+   fi
+
+   #禁止root远程登陆SSH服务器.
+   if grep -q "^PermitRootLogin" $config_file;then
+       sed -i '/^PermitRootLogin/s/yes/no/' $config_file
+   else
+       sed -i '$a PermitRootLogin no' $config_file
+   fi
+
+   #禁止使用密码远程登陆SSH服务器.
+   if grep -q "^PasswordAuthentication" $config_file;then
+       sed -i '/^PasswordAuthentication/s/yes/no/' $config_file
+   else
+       sed -i '$a PasswordAuthentication no' $config_file
+   fi
+
+   #禁止X11图形转发功能.
+   if grep -q "^X11Forwarding" $config_file;then
+       sed -i '/^X11Forwarding/s/yes/no/' $config_file
+   else
+       sed -i '$a X11Forwarding no' $config_file
+   fi
+
+   #禁止DNS查询.
+   if grep -q "^UseDNS" $config_file;then
+       sed -i '/^UseDNS/s/yes/no/' $config_file
+   else
+       sed -i '$a UseDNS no' $config_file
+   fi

@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="next" title="3.1. 1 基础知识" href="01.基础知识.html" />
-    <link rel="prev" title="2.30. 基于Galera多主结构的Mysql高可用集群" href="../02.Linux服务器架设/32.基于Galera_Cluster多主结构的Mysql高可用集群.html" /> 
+    <link rel="prev" title="2.31. Gitlab安装" href="../02.Linux服务器架设/33.Gitlab安装.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -163,6 +163,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -291,14 +292,14 @@
 <li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id15">3.4 数组元素读取</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id16">3.5 以切片方式获取部分数组元素</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#declare">3.6 通过declare语句定义关联数组</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id17">3.7 在数组末尾追加新元素</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id18">3.8 通过循环为数组赋值</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id19">3.9 数组元素的替换</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id20">3.10 删除数组</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id21">3.11 数组的其它操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id18">3.7 在数组末尾追加新元素</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id19">3.8 通过循环为数组赋值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id20">3.9 数组元素的替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id21">3.10 删除数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html#id22">3.11 数组的其它操作</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.字符串与数组.html#id22">3.2.4. 4 字符显示颜色</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.字符串与数组.html#id23">3.2.4. 4 字符显示颜色</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03.运算符.html">3.3. 3 运算符</a><ul>
@@ -597,6 +598,7 @@
 <li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd脚本.html#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd脚本.html#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
 <li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd脚本.html#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd脚本.html#auto-config-vsftpd-sh">3.23.4. auto_config_vsftpd.sh</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
@@ -707,6 +709,12 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#ssh-ansible">3.52.13. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#exec">3.52.14. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#fork">3.52.15. fork子进程的示例.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#ping1">3.52.16. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#ping2">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#ping">3.52.18. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html#sshd-ssh">3.52.19. 修改SSHD配置文件,提升SSH安全性</a></li>
 </ul>
 </li>
 </ul>
@@ -724,7 +732,7 @@
         <a href="01.基础知识.html" class="btn btn-neutral float-right" title="3.1. 1 基础知识" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../02.Linux服务器架设/32.基于Galera_Cluster多主结构的Mysql高可用集群.html" class="btn btn-neutral float-left" title="2.30. 基于Galera多主结构的Mysql高可用集群" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../02.Linux服务器架设/33.Gitlab安装.html" class="btn btn-neutral float-left" title="2.31. Gitlab安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

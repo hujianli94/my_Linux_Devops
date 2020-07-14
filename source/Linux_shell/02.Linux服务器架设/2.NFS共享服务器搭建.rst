@@ -41,7 +41,11 @@ NFS共享服务器搭建
    no_root_squash root 用户具有根目录的完全管理访问权限
 
    Linux 客户端，如何想使用这个 NFS 文件系统，需要在客户端挂载，挂载命令为：
-   mount –t nfs 192.168.1.103:/data/ /mnt 即可。
+   # 挂载前需要安装
+   yum install nfs-utils
+   mount -t nfs 192.168.1.103:/data/ /mnt 
+
+   即可。
 
 
    如果有报错根据错误信息排查。常见问题有 rpc 服务没有启动、防火墙没关闭、selinux
