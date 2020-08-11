@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5.11. Nginx日志分析与切割" href="11.Nginx日志分析与切割.html" />
     <link rel="prev" title="5.9. Nginx location 深入解析" href="09.Nginx-location深入解析.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -121,7 +126,9 @@
 <li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.14. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -129,15 +136,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -176,7 +186,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -188,7 +198,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/05.Nginx学习/10.Nginx实战-动静分离配置.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/05.Nginx学习/10.Nginx实战-动静分离配置.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -215,7 +225,7 @@
 <h1><a class="toc-backref" href="#id3">5.10. Nginx实战-动静分离配置</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id4">5.10.1. 一、为什么要做动静分离</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>对于一些应用来说（比如网站），图片，css文件，js文件等静态资源不需要动态语言的支持，可以直接返回给客户端使用，如果这些静态资源跟着动态资源一样的流程，那就太浪费服务器资源了。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>对于一些应用来说（比如网站），图片，css文件，js文件等静态资源不需要动态语言的支持，可以直接返回给客户端使用，如果这些静态资源跟着动态资源一样的流程，那就太浪费服务器资源了。
 所以，最好的办法是让他们分家，静态资源直接从nginx服务器返回，动态资源经过nginx转发给相应的服务执行后再返回客户端。
 
 动静分离的好处是可以为用户提供更好的使用体验，而不是一直等着服务器一次性将资源返回。
@@ -225,7 +235,7 @@
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id5">5.10.2. 二、Nginx实现动静分离</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>nginx 配置</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>    server {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    server {
     listen       8827;
     server_name  localhost;
     root         /opt/app/php72;
@@ -247,21 +257,21 @@
 </pre></div>
 </div>
 <p>2、PHP文件 地址： /opt/app/php72/index.php</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;?php
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?php
    date_default_timezone_set(&quot;Asia/Shanghai&quot;);
    #显示时间
    echo date(&quot;Y-m-d H:i:s&quot;,time());
 </pre></div>
 </div>
 <p>3、静态文件</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">文件名</span>                   <span class="n">地址</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">文件名</span>                   <span class="n">地址</span>
 <span class="n">index</span><span class="o">.</span><span class="n">html</span>        <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
 <span class="n">app</span><span class="o">.</span><span class="n">css</span>           <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">css</span><span class="o">/</span><span class="n">app</span><span class="o">.</span><span class="n">css</span>
 <span class="n">default</span><span class="o">.</span><span class="n">png</span>       <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">app</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">png</span>
 </pre></div>
 </div>
 <p>这里列出index.html的代码，其他图片和css可随便准备</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
 &lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot;&gt;
 &lt;head&gt;
     &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html;charset=UTF-8&quot;&gt;
@@ -315,11 +325,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -330,7 +348,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

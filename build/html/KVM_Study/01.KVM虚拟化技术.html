@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 虚拟化技术 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: ''
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="next" title="2. KVM虚拟化应用案例" href="02.KVM虚拟化应用案例.html" />
+    <link rel="prev" title="KVM_Study" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM_Study</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 虚拟化技术</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id2">1.1. 虚拟化产品对比</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vmware">1.2. VMware 虚拟化技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hyper-v">1.3. Hyper V</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xen">1.4. Xen虚拟化技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kvm">1.5. KVM虚拟化技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#type1type2">1.6. Type1和Type2虚拟化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.KVM虚拟化应用案例.html">2. KVM虚拟化应用案例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Kvm虚拟机console登录.html">3. Kvm虚拟机console登录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM虚拟机磁盘、快照与克隆.html">4. KVM虚拟机磁盘、快照与克隆</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.KVM虚拟机网络管理.html">5. KVM虚拟机网络管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM虚拟机冷-热迁移.html">6. KVM虚拟机冷-热迁移</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.KVM链接克隆.html">7. KVM链接克隆</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM系列文章参考.html">8. KVM系列文章参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.最新版P2V教程及最新客户端整理.html">9. 最新版P2V教程及最新客户端整理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">KVM_Study</a> &raquo;</li>
+        
+      <li>1. 虚拟化技术</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/KVM_Study/01.KVM虚拟化技术.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id3">虚拟化技术</a><ul>
+<li><a class="reference internal" href="#id2" id="id4">虚拟化产品对比</a></li>
+<li><a class="reference internal" href="#vmware" id="id5">VMware 虚拟化技术</a></li>
+<li><a class="reference internal" href="#hyper-v" id="id6">Hyper V</a></li>
+<li><a class="reference internal" href="#xen" id="id7">Xen虚拟化技术</a></li>
+<li><a class="reference internal" href="#kvm" id="id8">KVM虚拟化技术</a></li>
+<li><a class="reference internal" href="#type1type2" id="id9">Type1和Type2虚拟化</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id3">1. 虚拟化技术</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id4">1.1. 虚拟化产品对比</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>计算机虚拟化技术是多种技术的综合实现，包括硬件平台、操作系统、存储、以及网络等
+简单的说：
+    虚拟化技术就是在单台主机上可以虚拟多个虚拟主机，并可以在这些虚拟主机上运行不通的操作系统平台。
+
+目前比较成熟的虚拟化解决方案主要有：
+    VMWare、Xen、KVM以及Hyper-V。
+
+虚拟化技术通过Hypervisor动态模拟与分配计算机硬件资源给虚拟机操作系统（Guest OS），
+由于Hypervisor可以模拟多个硬件资源给多个Guest OS,因而对Guest OS 而言，就像运行在独立、真实的硬件资源上一样。
+</pre></div>
+</div>
+<p><img alt="image0" src="KVM_Study\../_static/kvm_study001.png" /></p>
+</div>
+<div class="section" id="vmware">
+<h2><a class="toc-backref" href="#id5">1.2. VMware 虚拟化技术</a><a class="headerlink" href="#vmware" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>VMware 是全球数据中心解决方案的领导品牌， 它为我们提供了高性能、高可用、管理方
+便的虚拟机管理程序， 是目前大多数企业虚拟化环境部署的首选方案。VMware 虚拟化的工作
+原理是， 直接在计算机硬件或主机操作系统上插入一个精简的软件层。该软件层包含一个以动
+态和透明方式分配硬件资源的虚拟化管理程序。多个操作系统可以同时运行在单台物理机上，
+彼此之间共享硬件资源。由于是将整台计算机（ 包括CPU 、内存、操作系统和网络设备） 封装
+起来， 因此， 虚拟机可与所有标准的x86 操作系统、应用程序和设备驱动程序完全兼容。可以
+同时在单台计算机上安全运行多个操作系统和应用程序， 每个操作系统和应用程序都可以在需
+要时访问其所需的资源。
+
+VMware 虚拟化产品最大的优势在于其完善的虚拟化管理平台以及可靠的基础架构， 为企
+业计算环境提供完善、稳定、可靠的虚拟技术。到目前为止， VMware 依然是虚拟化技术行业
+的领头羊。VMware 虚拟化产品的不足主要包括： 首先， VMware 虚拟化技术主要针对的是X86
+架构， 对于复杂的企业运算环境， VMware 无法满足所有计算机主机的需要。其次， VMware
+在云计算方面的发展略显迟缓， 在性能与容灾方面表现不足。最后， VMware 是商业产品， 用
+户需要为此支付大量的许可费用。
+
+代表产品：
+1.VMware Workstation：桌面级虚拟化产品，运行在Windows、Linux和Mac操作系统上，是Type 2 Hypervisor
+2.VMware ESXi：是服务器级的虚拟化软件。与Workstation不同，它直接运行在硬件平台上，是Type1 Hypervisor。
+</pre></div>
+</div>
+</div>
+<div class="section" id="hyper-v">
+<h2><a class="toc-backref" href="#id6">1.3. Hyper V</a><a class="headerlink" href="#hyper-v" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>与VMware一样，HyperV也是闭源（Close Source，与Opensource相对）的商业软件。
+微软从Windows 8/Windows Server 2008开始，用它取代原来的Virtual PC，成为Server OS
+版本自带的平台虚拟化软件
+HyperV在架构上与Xen类似，也是Type 1 Hypervisor。微软的产品，收费
+</pre></div>
+</div>
+</div>
+<div class="section" id="xen">
+<h2><a class="toc-backref" href="#id7">1.4. Xen虚拟化技术</a><a class="headerlink" href="#xen" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Xen在架构上是一个典型的Type 1 Hypervisor
+Xen 是由剑桥大学开发的开源虚拟机监控器，Xen的目标是在单台主机上运行上百台全功能的虚拟机，
+Xen 支持半虚拟化与全虚拟化技术，半虚拟化的性能要比全虚拟化技术高很多，全虚拟化技术是通过中间层软件模拟
+真实的硬件设备，最终虚拟机使用模拟设备时就需要中间层软件将相应的之路转换为物理硬件指令进行操作，
+也就是说虚拟机无法直接发送操作指令给物理硬件，必须经过模拟软件转换代码后才可以发送给物理硬件执行具体操作。
+半虚拟化技术则可以实现部分虚拟机与部分硬件直接通信，虚拟机可以直接发送操作指令给部分硬件设备，
+这样虚拟机的效率就可以提升很多倍，Xen的优势在于开源且技术非常成熟，但随着RedHat以及Ubantu目前已经将系统默认的虚拟组件更新为KVM，所以Xen的市场已经开始受到影响。
+</pre></div>
+</div>
+</div>
+<div class="section" id="kvm">
+<h2><a class="toc-backref" href="#id8">1.5. KVM虚拟化技术</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h2>
+<p>KVM （ Kernel-based VirtuaI Machine ） 是基于x86 架构上Linux
+操作系统的全虚拟化解决方 案。在CentOS 7 系统中，KVM己经被集成到内核中，
+相当于使用内核来做虚拟机管理程序。 由于KVM 本身就工作于内核环境中，
+所以执行效率要比传统意义上的虚拟化技术高很多。</p>
+<p>虚拟机上开启支持虚拟化功能</p>
+<p><img alt="image1" src="KVM_Study\../_static/kvm0003.png" /> KVM虚拟化需要lntel VT或AMD-V技术的支持，
+可以使用下面的命令确定本机CPU 是否支持以上 两种虚拟化技术：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># egrep &#39;(vmx|svm)&#39; /proc/cpuinfo</span>
+<span class="n">flags</span>       <span class="p">:</span> <span class="n">fpu</span> <span class="n">vme</span> <span class="n">de</span> <span class="n">pse</span> <span class="n">tsc</span> <span class="n">msr</span> <span class="n">pae</span> <span class="n">mce</span> <span class="n">cx8</span> <span class="n">apic</span> <span class="n">sep</span> <span class="n">mtrr</span> <span class="n">pge</span> <span class="n">mca</span> <span class="n">cmov</span> <span class="n">pat</span> <span class="n">pse36</span> <span class="n">clflush</span> <span class="n">dts</span> <span class="n">mmx</span> <span class="n">fxsr</span> <span class="n">sse</span> <span class="n">sse2</span> <span class="n">ss</span> <span class="n">ht</span> <span class="n">syscall</span> <span class="n">nx</span> <span class="n">pd</span>
+<span class="n">pe1gb</span> <span class="n">rdtscp</span> <span class="n">lm</span> <span class="n">constant_tsc</span> <span class="n">arch_perfmon</span> <span class="n">pebs</span> <span class="n">bts</span> <span class="n">nopl</span> <span class="n">xtopology</span> <span class="n">tsc_reliable</span> <span class="n">nonstop_tsc</span> <span class="n">aperfmperf</span> <span class="n">eagerfpu</span> <span class="n">pni</span> <span class="n">pclmulqdq</span> <span class="n">vmx</span> <span class="n">ssse3</span> <span class="n">fma</span> <span class="n">cx16</span> <span class="n">pcid</span> <span class="n">sse4_1</span> <span class="n">sse4_2</span> <span class="n">x2apic</span> <span class="n">movbe</span> <span class="n">popcnt</span> <span class="n">tsc_deadline_timer</span> <span class="n">aes</span> <span class="n">xsave</span> <span class="n">avx</span> <span class="n">f16c</span> <span class="n">rdrand</span> <span class="n">hypervisor</span> <span class="n">lahf_lm</span> <span class="n">abm</span> <span class="mi">3</span><span class="n">dnowprefetch</span> <span class="n">epb</span> <span class="n">tpr_shadow</span> <span class="n">vnmi</span> <span class="n">ept</span> <span class="n">vpid</span> <span class="n">fsgsbase</span> <span class="n">tsc_adjust</span> <span class="n">bmi1</span> <span class="n">avx2</span> <span class="n">smep</span> <span class="n">bmi2</span> <span class="n">invpcid</span> <span class="n">rdseed</span> <span class="n">adx</span> <span class="n">smap</span> <span class="n">xsaveopt</span> <span class="n">dtherm</span> <span class="n">ida</span> <span class="n">arat</span> <span class="n">pln</span> <span class="n">pts</span> <span class="n">hwp</span> <span class="n">hwp_notify</span> <span class="n">hwp_act_window</span> <span class="n">hwp_eppflags</span>       <span class="p">:</span> <span class="n">fpu</span> <span class="n">vme</span> <span class="n">de</span> <span class="n">pse</span> <span class="n">tsc</span> <span class="n">msr</span> <span class="n">pae</span> <span class="n">mce</span> <span class="n">cx8</span> <span class="n">apic</span> <span class="n">sep</span> <span class="n">mtrr</span> <span class="n">pge</span> <span class="n">mca</span> <span class="n">cmov</span> <span class="n">pat</span> <span class="n">pse36</span> <span class="n">clflush</span> <span class="n">dts</span> <span class="n">mmx</span> <span class="n">fxsr</span> <span class="n">sse</span> <span class="n">sse2</span> <span class="n">ss</span> <span class="n">ht</span> <span class="n">syscall</span> <span class="n">nx</span> <span class="n">pd</span>
+<span class="n">pe1gb</span> <span class="n">rdtscp</span> <span class="n">lm</span> <span class="n">constant_tsc</span> <span class="n">arch_perfmon</span> <span class="n">pebs</span> <span class="n">bts</span> <span class="n">nopl</span> <span class="n">xtopology</span> <span class="n">tsc_reliable</span> <span class="n">nonstop_tsc</span> <span class="n">aperfmperf</span> <span class="n">eagerfpu</span> <span class="n">pni</span> <span class="n">pclmulqdq</span> <span class="n">vmx</span> <span class="n">ssse3</span> <span class="n">fma</span> <span class="n">cx16</span> <span class="n">pcid</span> <span class="n">sse4_1</span> <span class="n">sse4_2</span> <span class="n">x2apic</span> <span class="n">movbe</span> <span class="n">popcnt</span> <span class="n">tsc_deadline_timer</span> <span class="n">aes</span> <span class="n">xsave</span> <span class="n">avx</span> <span class="n">f16c</span> <span class="n">rdrand</span> <span class="n">hypervisor</span> <span class="n">lahf_lm</span> <span class="n">abm</span> <span class="mi">3</span><span class="n">dnowprefetch</span> <span class="n">epb</span> <span class="n">tpr_shadow</span> <span class="n">vnmi</span> <span class="n">ept</span> <span class="n">vpid</span> <span class="n">fsgsbase</span> <span class="n">tsc_adjust</span> <span class="n">bmi1</span> <span class="n">avx2</span> <span class="n">smep</span> <span class="n">bmi2</span> <span class="n">invpcid</span> <span class="n">rdseed</span> <span class="n">adx</span> <span class="n">smap</span> <span class="n">xsaveopt</span> <span class="n">dtherm</span> <span class="n">ida</span> <span class="n">arat</span> <span class="n">pln</span> <span class="n">pts</span> <span class="n">hwp</span> <span class="n">hwp_notify</span> <span class="n">hwp_act_window</span> <span class="n">hwp_epp</span>
+</pre></div>
+</div>
+<p>相对于xen 而占,KVM 从Linux 2.6.20 后己经集成到内核模块中,使用Linux
+内核作为虚 拟调度器管理虚拟机,更直接的硬件调度代表更高的效率， KVM
+核心代码也非常短小精湛,未 来KVM 将逐渐成为主流虚拟化技术。</p>
+</div>
+<div class="section" id="type1type2">
+<h2><a class="toc-backref" href="#id9">1.6. Type1和Type2虚拟化</a><a class="headerlink" href="#type1type2" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image2" src="KVM_Study\../_static/type1-and-type2.png" /></p>
+<p>Type1（类型1）</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Type1（类型1）Hypervisor也叫native或bare-metal Hypervisor。这类虚拟化层直接运
+行在硬件之上，没有所谓的宿主机操作系统。它们直接控制硬件资源以及客户机。
+典型地如Xen和VMware ESX。
+</pre></div>
+</div>
+<p>Type2（类型2）</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>Type2（类型2）Hypervisor运行在一个宿主机操作系统之上，如VMware
+Workstation；或系统里，如KVM。这类Hypervisor通常就是宿主机操作系统的一个应用程
+序，像其他应用程序一样受宿主机操作系统的管理。比如VMware Workstation就是运行在
+Windows或者Linux操作系统上的一个程序而已 [1] 。客户机是在宿主机操作系统上的一个
+抽象，通常抽象为进程。
+</pre></div>
+</div>
+<p>几个知识点需要记住：</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>KVM模块的源代码被正式纳入Linux kernel，成为内核源代码的一部分。
+KVM已经成为Openstack用户选择的最主流的Hypervisor（因为KVM是Openstack的默认Hypervisor）
+KVM已经主宰了公有云部署的Hypervisor市场；而在私有云部署方面，尤其大公司内部私有云部署，还是VMware的地
+盘，目前受到HyperV的竞争。
+</pre></div>
+</div>
+<p>【参考文献 】 <a class="reference external" href="https://www.cnblogs.com/clsn/p/10175960.html">https://www.cnblogs.com/clsn/p/10175960.html</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/clsn/p/8366251.html#auto_id_22">https://www.cnblogs.com/clsn/p/8366251.html#auto_id_22</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02.KVM虚拟化应用案例.html" class="btn btn-neutral float-right" title="2. KVM虚拟化应用案例" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="KVM_Study" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

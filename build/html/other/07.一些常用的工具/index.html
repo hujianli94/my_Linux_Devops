@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="7.1. 常用工具合集" href="01.常用工具合集.html" />
     <link rel="prev" title="6.9. 架构选型的要点" href="../06.APP后台开发运维_读书笔记/09.架构选型的要点.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -111,8 +116,10 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html">7.1. 常用工具合集</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.日常工具.html">7.2. 日常工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="03.博客写书软件.html">7.3. 博客写书软件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.程序员必备的网站推荐.html">7.4. 程序员必备的网站推荐</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows系统相关/index.html">8. Windows系统相关</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
@@ -121,6 +128,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -159,7 +167,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Other</a> &raquo;</li>
         
@@ -169,7 +177,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/other/07.一些常用的工具/index.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/other/07.一些常用的工具/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -187,51 +195,54 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="01.常用工具合集.html">7.1. 常用工具合集</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id2">7.1.1. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#nextcloud">7.1.2. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id3">7.1.3. 网站运维</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id4">网速测试工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id2">7.1.1. 常用的开源镜像站（不定期更新）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id3">7.1.2. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#nextcloud">7.1.3. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id4">7.1.4. 网站运维</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id5">网速测试工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#nginx">Nginx配置生成器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id5">备案查询</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id6">仿站工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id6">备案查询</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id7">仿站工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#wordpress-by-mengkun">Wordpress 主题嗅探 by mengkun</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id7">网络拓扑图制作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id8">网络拓扑图制作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#logo">LOGO在线制作</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id8">端口检测</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id9">状态码日志分析</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id10">网站日志分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id9">端口检测</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id10">状态码日志分析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id11">网站日志分析</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#by-jsdifflib">文本差异比较 by jsdifflib</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id11">在线并发测试工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id12">在线并发测试工具</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id12">7.1.4. 开发工具</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id13">数据库结构设计</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id13">7.1.5. 开发工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id14">数据库结构设计</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#mysql">MySQL可视化工具大全</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id14">在线正则测试和生成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id15">在线正则测试和生成</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#xpath">Xpath在线测试工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#json">JSON格式化</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#xmljson">XML和JSON互转</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#jsonpostman">JSON互转postman参数</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#markdown-by-editor-md">MarkDown 编辑器 by editor.md</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#github">Github 文件夹下载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id15">图标制作工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id16">推荐工具：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id16">图标制作工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id17">推荐工具：</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id17">7.1.5. 文档处理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id18">7.1.6. 文档处理</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#pdfword">PDF转WORD</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#pdf">PDF添加水印工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id18">PDF设置密码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#id19">PDF设置密码</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#ppt">PPT密码设置工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用工具合集.html#excelpdf">Excel转PDF</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id19">7.1.6. 5款优秀的开源克隆软件</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#linux">7.1.7. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#id20">7.1.7. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用工具合集.html#linux">7.1.8. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02.日常工具.html">7.2. 日常工具</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="02.日常工具.html#id2">7.2.1. 免费无线投屏神器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.日常工具.html#web">7.2.1. web服务压力测试工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.日常工具.html#github">7.2.2. Github代码搜索技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.日常工具.html#id2">7.2.3. 免费无线投屏神器</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="02.日常工具.html#id3">免费脑图流程图大全</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.日常工具.html#id4">在线视频剪辑</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.日常工具.html#id5">免费在线抠图换背景</a></li>
@@ -251,6 +262,7 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03.博客写书软件.html">7.3. 博客写书软件</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04.程序员必备的网站推荐.html">7.4. 程序员必备的网站推荐</a></li>
 </ul>
 </div>
 </div>
@@ -275,11 +287,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -290,7 +310,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

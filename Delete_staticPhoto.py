@@ -21,6 +21,7 @@ CurrentDirectory = os.path.normpath(os.path.abspath(os.path.dirname(__file__)))
 # 生成一个使用了图片链接的列表
 list_photo = []
 Static_Path = CurrentDirectory + "/" + "source/_static"
+new_CurrentD = CurrentDirectory + "/source/KVM_Study/"
 
 
 def trav_walk(pathname):
@@ -33,17 +34,15 @@ def trav_walk(pathname):
         for file in files:
             if file.endswith(".png") or file.endswith(".PNG") or file.endswith(".jpg"):
                 continue
-
             fname = os.path.abspath(os.path.join(root, file))
             fname = fname.split("\\")
-            if fname[2] == ".git" or fname[2] == ".idea" or fname[2] == "build" or fname[2] == "exts" or fname[
-                2] != "source":
+            if fname[2] == ".git" or fname[2] == ".idea" or fname[2] == "build" or fname[2] == "exts" or fname[2] != "source":
                 continue
             fname_file = "\\".join(fname)
             if fname_file.endswith(".md"):
                 # print(fname_file)
                 Read_file(fname_file)
-
+    print(list_photo)
 
 def Read_file(file):
     """ 读文件将使用了图片链接的信息加入到列表中 """
@@ -65,11 +64,12 @@ def Delete_picturelink(pathname):
             if file not in list_photo:
                 Deltet_fileName = os.path.join(root, file)
                 print("delete file : 【{}】".format(Deltet_fileName))
-                os.unlink(Deltet_fileName)
+                # os.unlink(Deltet_fileName)
 
 
 if __name__ == '__main__':
     # 遍历文件找到标记信息加入列表
-    trav_walk(CurrentDirectory)
+    # print(new_CurrentD)
+    trav_walk(new_CurrentD)
     # 比对列表进行删除操作
     # Delete_picturelink(Static_Path)

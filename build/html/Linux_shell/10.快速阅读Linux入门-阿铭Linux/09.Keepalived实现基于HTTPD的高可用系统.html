@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="10.10. 搭建HAProxy+Keepalived高可用负载均衡系统" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html" />
     <link rel="prev" title="10.8. 虚拟化与集群应用篇" href="08.虚拟化与集群应用篇.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -130,15 +135,18 @@
 <li class="toctree-l3"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -177,7 +185,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -189,7 +197,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/10.快速阅读Linux入门-阿铭Linux/09.Keepalived实现基于HTTPD的高可用系统.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/10.快速阅读Linux入门-阿铭Linux/09.Keepalived实现基于HTTPD的高可用系统.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -264,8 +272,8 @@
 </div>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id7">10.9.2. 环境准备</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">keepalived-master</span></code>和<code class="docutils literal"><span class="pre">keepalived-backup</span></code>上安装httpd服务。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">httpd</span>
+<p><code class="docutils literal notranslate"><span class="pre">keepalived-master</span></code>和<code class="docutils literal notranslate"><span class="pre">keepalived-backup</span></code>上安装httpd服务。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">httpd</span>
 <span class="n">echo</span> <span class="s2">&quot;&lt;h1&gt; hello hujianli web1&lt;h1&gt;&quot;</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span>
 
@@ -274,19 +282,19 @@
 </pre></div>
 </div>
 <p>检查http安装后的状态。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
 <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span> <span class="n">hello</span> <span class="n">hujianli</span> <span class="n">web1</span><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 127.0.0.1</span>
 <span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span> <span class="n">hello</span> <span class="n">hujianli</span> <span class="n">web1</span><span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="keepalived-master">
 <h2><a class="toc-backref" href="#id8">10.9.3. keepalived_master</a><a class="headerlink" href="#keepalived-master" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">/etc/keepalived/keepalived.conf</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>! Configuration File for keepalived
+<p><code class="docutils literal notranslate"><span class="pre">/etc/keepalived/keepalived.conf</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! Configuration File for keepalived
 
 global_defs {
     notification_email {
@@ -329,22 +337,22 @@ vrrp_instance VI_1 {
 }
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">/etc/keepalived/master.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<p><code class="docutils literal notranslate"><span class="pre">/etc/keepalived/master.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 LOGFILE=/var/log/keepalived-mysql-state.log
 echo  &quot;[Master]&quot;  &gt;&gt;  $LOGFILE
 date  &gt;&gt;  $LOGFILE
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">/etc/keepalived/backup.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<p><code class="docutils literal notranslate"><span class="pre">/etc/keepalived/backup.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 LOGFILE=/var/log/keepalived-mysql-state.log
 echo  &quot;[Backup]&quot;  &gt;&gt;  $LOGFILE
 date  &gt;&gt;  $LOGFILE
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">/etc/keepalived/fault.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<p><code class="docutils literal notranslate"><span class="pre">/etc/keepalived/fault.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 LOGFILE=/var/log/keepalived-mysql-state.log
 echo  &quot;[FAULT]&quot;  &gt;&gt;  $LOGFILE
 date  &gt;&gt;  $LOGFILE
@@ -355,16 +363,16 @@ date  &gt;&gt;  $LOGFILE
 <h2><a class="toc-backref" href="#id9">10.9.4. keepalived_backup</a><a class="headerlink" href="#keepalived-backup" title="Permalink to this headline">¶</a></h2>
 <p>keepalived-backup节点上的keepalived.conf配置文件内容与keepalived-master节点上的基本相同，
 需要修改的地方有两个。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>将“state MASTER”更改为“state BACKUP”。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>将“state MASTER”更改为“state BACKUP”。
 将priority 100更改为一个较小的值，这里改为“priority 80”。
 </pre></div>
 </div>
 <p>将配置好的
-<code class="docutils literal"><span class="pre">keepalived.conf</span></code>文件及<code class="docutils literal"><span class="pre">master.sh</span></code>、<code class="docutils literal"><span class="pre">backup.sh</span></code>、<code class="docutils literal"><span class="pre">fault.sh</span></code>三个文件一起复制到keepalived-backup
+<code class="docutils literal notranslate"><span class="pre">keepalived.conf</span></code>文件及<code class="docutils literal notranslate"><span class="pre">master.sh</span></code>、<code class="docutils literal notranslate"><span class="pre">backup.sh</span></code>、<code class="docutils literal notranslate"><span class="pre">fault.sh</span></code>三个文件一起复制到keepalived-backup
 备用节点对应的路径下，</p>
 <p>Keepalived启动过程分析</p>
 <p>主机</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">ens32</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">c</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="mi">6</span><span class="n">e</span><span class="p">:</span><span class="mi">3</span><span class="n">d</span><span class="p">:</span><span class="n">f6</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
     <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.128</span><span class="o">/</span><span class="mi">24</span> <span class="n">brd</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">noprefixroute</span> <span class="n">dynamic</span> <span class="n">ens32</span>
@@ -382,14 +390,14 @@ date  &gt;&gt;  $LOGFILE
 </pre></div>
 </div>
 <p>备机</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
 <span class="p">[</span><span class="n">Backup</span><span class="p">]</span>
 <span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">13</span><span class="p">:</span><span class="mi">42</span><span class="p">:</span><span class="mi">11</span> <span class="n">CST</span>
 </pre></div>
 </div>
 <div class="section" id="httpd">
 <h3><a class="toc-backref" href="#id10">在主机上停止httpd</a><a class="headerlink" href="#httpd" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># cat /var/log/keepalived-mysql-state.log</span>
 <span class="p">[</span><span class="n">Master</span><span class="p">]</span>
 <span class="mi">2020</span><span class="n">年</span> <span class="mi">03</span><span class="n">月</span> <span class="mi">28</span><span class="n">日</span> <span class="n">星期六</span> <span class="mi">14</span><span class="p">:</span><span class="mi">36</span><span class="p">:</span><span class="mi">03</span> <span class="n">CST</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># systemctl stop httpd</span>
@@ -406,7 +414,7 @@ date  &gt;&gt;  $LOGFILE
 </div>
 <div class="section" id="id2">
 <h3><a class="toc-backref" href="#id11">备机切换成主机</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">backup</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># ip a</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">ens32</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">pfifo_fast</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">c</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="n">f6</span><span class="p">:</span><span class="mi">8</span><span class="n">a</span><span class="p">:</span><span class="mi">13</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
     <span class="n">inet</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.129</span><span class="o">/</span><span class="mi">24</span> <span class="n">brd</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">noprefixroute</span> <span class="n">dynamic</span> <span class="n">ens32</span>
@@ -424,11 +432,11 @@ date  &gt;&gt;  $LOGFILE
 </pre></div>
 </div>
 <p>主机上启动httpd服务后，状态立马变成backup状态</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># systemctl start httpd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># systemctl start httpd</span>
 </pre></div>
 </div>
 <p>日志信息</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">54</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Starting</span> <span class="n">The</span> <span class="n">Apache</span> <span class="n">HTTP</span> <span class="n">Server</span><span class="o">...</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">54</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Starting</span> <span class="n">The</span> <span class="n">Apache</span> <span class="n">HTTP</span> <span class="n">Server</span><span class="o">...</span>
 <span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">58</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">11022</span><span class="p">]:</span> <span class="n">VRRP_Script</span><span class="p">(</span><span class="n">chk_httpd</span><span class="p">)</span> <span class="n">succeeded</span>
 <span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">38</span><span class="p">:</span><span class="mi">59</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">11022</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">BACKUP</span> <span class="n">STATE</span>
 <span class="n">Mar</span> <span class="mi">28</span> <span class="mi">14</span><span class="p">:</span><span class="mi">39</span><span class="p">:</span><span class="mi">01</span> <span class="n">keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">httpd</span><span class="p">:</span> <span class="n">AH00558</span><span class="p">:</span> <span class="n">httpd</span><span class="p">:</span> <span class="n">Could</span> <span class="ow">not</span> <span class="n">reliably</span> <span class="n">determine</span> <span class="n">the</span> <span class="n">server</span><span class="s1">&#39;s fully qualified domain name, using fe80::44c2:32ba:d50e:44c3.</span>
@@ -437,7 +445,7 @@ date  &gt;&gt;  $LOGFILE
 </pre></div>
 </div>
 <p>Keepalived配置中的一个通知机制，也是Keepalived包含的4种状态。下面介绍每个选项的含义。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>notify_master：指定当Keepalived进入Master状态时要执行的脚本，这个脚本可以是一个状态报警脚本，也可以是一个服务管理脚本。Keepalived允许脚本传入参数，因此灵活性很强。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>notify_master：指定当Keepalived进入Master状态时要执行的脚本，这个脚本可以是一个状态报警脚本，也可以是一个服务管理脚本。Keepalived允许脚本传入参数，因此灵活性很强。
 
 notify_backup：指定当Keepalived进入Backup状态时要执行的脚本，同理，这个脚本可以是一个状态报警脚本，也可以是一个服务管理脚本。
 
@@ -454,7 +462,7 @@ notify_stop：指定当Keepalived程序终止时需要执行的脚本。
 <h3><a class="toc-backref" href="#id13">1.通过killall命令监控服务运行状态</a><a class="headerlink" href="#killall" title="Permalink to this headline">¶</a></h3>
 <p>这里要用到的信号为0，代号为0的信号并不表示要关闭某个程序，而表示对程序（进程）的运行状态进行监控，
 如果发现进程关闭或其他异常，将返回状态码1，反之，如果发现进程运行正常，将返回状态码0。vrrp_script模块正是利用了killall命令的这个特性，变相地实现了对服务运行状态的监控。下面看一个实例。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">check_mysqld</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">check_mysqld</span> <span class="p">{</span>
       <span class="n">script</span>  <span class="s2">&quot;killall  -0  mysqld&quot;</span>
       <span class="n">interval</span>  <span class="mi">2</span>
       <span class="p">}</span>
@@ -469,7 +477,7 @@ notify_stop：指定当Keepalived程序终止时需要执行的脚本。
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id14">2.检测端口运行状态</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>检测端口的运行状态，也是最常见的服务监控方式。在Keepalived的vrrp_script模块中可以通过如下方式对本机的端口进行检测。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>    vrrp_script check_httpd {
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    vrrp_script check_httpd {
         script &quot;&lt;/dev/tcp/127.0.0.1/80&quot;
         interval  2
 
@@ -520,7 +528,7 @@ notify_stop：指定当Keepalived程序终止时需要执行的脚本。
 <div class="section" id="shell">
 <h3><a class="toc-backref" href="#id15">3.通过shell语句进行状态监控</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
 <p>在Keepalived的vrrp_script模块中甚至可以直接引用shell语句进行状态监控。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_httpd</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_httpd</span> <span class="p">{</span>
     <span class="n">script</span> <span class="s2">&quot;if [ -f /var/run/httpd/httpd.pid ]; then exit 0; else exit 1; fi&quot;</span>
     <span class="n">interval</span>  <span class="mi">2</span>
     <span class="n">fall</span>    <span class="mi">1</span>
@@ -535,7 +543,7 @@ notify_stop：指定当Keepalived程序终止时需要执行的脚本。
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id16">4.通过脚本进行服务状态监控</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>这是最常见的监控方式，其监控过程类似于Nagios的执行方式。不同的是，这里只有0、1两种返回状态。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_mysqld</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vrrp_script</span> <span class="n">chk_mysqld</span> <span class="p">{</span>
     <span class="n">script</span> <span class="s2">&quot;/etc/keepalived/check_mysqld.sh&quot;</span>
     <span class="n">interval</span>  <span class="mi">2</span>
     <span class="p">}</span>
@@ -545,7 +553,7 @@ notify_stop：指定当Keepalived程序终止时需要执行的脚本。
 </pre></div>
 </div>
 <p>check_mysqld.sh的内容如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 MYSQL=/usr/bin/mysql
 MYSQL_HOST=localhost
 MYSQL_USER=root
@@ -602,11 +610,19 @@ fi
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -617,7 +633,6 @@ fi
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,0 +1,83 @@
+.. contents::
+   :depth: 3
+..
+
+KVM链接克隆
+===========
+
+链接克隆脚本
+
+.. code:: bash
+
+   #!/bin/bash
+   # kvm link clone scripts  
+   # 2018-02-06
+   ###
+
+   # init
+   if [ $# -ne 2 ]
+     then 
+       echo "Usage: $0 OLD_VMNAME NEW_VMNAME"
+       exit 2
+   fi
+   LOG=/var/log/messages
+   old_vm=$1
+   new_vm=$2
+   new_xml="/tmp/${new_vm}.xml"
+   . /etc/init.d/functions
+
+   # dump old xmlfile 
+   virsh dumpxml $old_vm >$new_xml
+   old_disk=`awk -F "'" '/source file/{print $2}'  $new_xml`
+   tmp_dir=`dirname $old_disk`
+   new_disk=${tmp_dir}/${new_vm}.qcow2
+
+   # make link disk 
+   qemu-img create -f qcow2 -b $old_disk $new_disk &>> $LOG
+
+   # make over xml info 
+   sed -i '/uuid/d' $new_xml
+   sed -i '/mac address/d' $new_xml
+   sed -i '2s#'$old_vm'#'$new_vm'#' $new_xml
+   sed -i "s#$old_disk#$new_disk#g" $new_xml
+   sed -i '/source mode/d' $new_xml
+
+   # import new xml file
+   virsh define $new_xml &>> $LOG
+
+   # start new vm 
+   virsh start $new_vm &>> $LOG
+   if [ $? -eq 0 ]
+     then 
+      action "vmhost $new_vm start"  /bin/true 
+   else 
+      action "vmhost $new_vm start"  /bin/false
+      echo "log info : $LOG"
+   fi
+
+   # END
+   \rm $new_xml
+
+手动克隆说明:
+-------------
+
+::
+
+   第一步：复制虚拟磁盘文件
+   第二步：修改xml配置文件
+   　　1）name
+   　　2）uuid
+   　　3）虚拟磁盘存储路径
+   　　4）mac地址
+
+脚本克隆说明：
+--------------
+
+::
+
+   1) 备份old_vm的配置文件，并重定向生成一个新的虚拟机配置文件
+   2）取出old_vm的磁盘路径
+   3）创建新的链接磁盘文件
+   4) 修改xml配置文件
+   5) 导入新虚拟机
+   6）启动测试

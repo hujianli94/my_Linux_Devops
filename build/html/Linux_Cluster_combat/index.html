@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,23 +33,21 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Web应用篇" href="01.Web应用篇/index.html" />
-    <link rel="prev" title="6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境" href="../DevOps_Study/06.利用Docker搭建Jenkines-Master-Slave分布式环境.html" /> 
+    <link rel="prev" title="1. 参考文献" href="../KVM_Study/01.参考文献.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">高性能Linux服务构建实战</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01.Web应用篇/index.html">Web应用篇</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.数据备份恢复篇/index.html">数据备份恢复篇</a></li>
@@ -108,11 +113,13 @@
 <li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -151,7 +158,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>高性能Linux服务构建实战</li>
     
@@ -159,7 +166,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/Linux_Cluster_combat/index.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/Linux_Cluster_combat/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -182,24 +189,25 @@
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginx">Nginx的优势所在</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id1">Nginx的模块与工作原理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id2">Nginx的安装与配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id3">Nginx配置文件的结构</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id4">配置与调试Nginx</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id5">Nginx的启动、关闭和平滑重启</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id6">Nginx常用配置实例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id9">3.防盗链配置实例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id10">4.日志分割配置实例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id11">Nginx性能优化技巧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id4">Nginx配置文件的结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id5">配置与调试Nginx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id8">Nginx的启动、关闭和平滑重启</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id9">Nginx常用配置实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id18">Nginx性能优化技巧</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginxphp-fastcgi">实战Nginx与PHP（FastCGI）的安装、配置与优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginx-fastcgi">Nginx+FastCGI运行原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginxperljava">实战Nginx与Perl、Java的安装与配置</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html">02.高性能HTTP加速器Varnish</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#varnish">初识Varnish</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#varnishsquid">Varnish与Squid的对比</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id1">开始安装Varnish</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id2">配置一个简单的Varnish实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id1">使用Varnish代替Squid做网站缓存加速器的详细解决方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id2">开始安装Varnish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id3">配置一个简单的Varnish实例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#varnishweb">Varnish对应多台Web服务器的配置实例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id3">运行Varnish</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id4">其他功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id4">运行Varnish</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Web应用篇/02.高性能HTTP加速器Varnish.html#id5">其他功能</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.Web应用篇/03.Memcached应用实战.html">03.Memcached应用实战</a><ul>
@@ -283,7 +291,7 @@
         <a href="01.Web应用篇/index.html" class="btn btn-neutral float-right" title="Web应用篇" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../DevOps_Study/06.利用Docker搭建Jenkines-Master-Slave分布式环境.html" class="btn btn-neutral float-left" title="6. 06.利用Docker搭建Jenkines-Master-Slave分布式环境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../KVM_Study/01.参考文献.html" class="btn btn-neutral float-left" title="1. 参考文献" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -292,11 +300,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -307,7 +323,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

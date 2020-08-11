@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.7. 使用iSCSI服务部署网络存储" href="6.使用iSCSI服务部署网络存储.html" />
     <link rel="prev" title="2.5. 挂载硬盘和分区" href="4.挂载硬盘mount命令.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -131,7 +136,7 @@
 <li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
 <li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
-<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh更新升级.html">2.23. Openssh更新升级</a></li>
 <li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
@@ -139,6 +144,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -149,15 +155,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -196,7 +205,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -208,7 +217,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/5.Apache服务搭建.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/5.Apache服务搭建.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -246,7 +255,7 @@
 <div class="section" id="apache">
 <h1><a class="toc-backref" href="#id8">2.6. Apache服务源码搭建</a><a class="headerlink" href="#apache" title="Permalink to this headline">¶</a></h1>
 <p>Apache 是世界使用排名第一的 Web 服务器软件。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的 Web 服务器端软件之一。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>它可以运行在几乎所有广泛使用的计算机平台上，由于其跨平台和安全性被广泛使用，是最流行的 Web 服务器端软件之一。
 Apache HTTP Server（简称 Apache）是 Apache 软件基金会的一个开放源码的网页
 服务器，可以在大多数计算机操作系统中运行，由于其多平台和安全性被广泛使用，是最流
 行的 Web 服务器端软件之一。它快速、可靠并且可通过简单的 API 扩展，将 Perl/Python
@@ -264,11 +273,11 @@ Apache 源于 NCSAhttpd 服务器，经过多次修改，成为世界上最流�
 </div>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id9">2.6.1. Apache 的特点</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>简单、速度快、性能稳定，并可做代理服务器来使用。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>简单、速度快、性能稳定，并可做代理服务器来使用。
 </pre></div>
 </div>
 <p>prefork 的工作原理</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>如果不用“——with-mpm”显式指定某种 MPM,prefork 就是 Unix 平台上缺省的
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>如果不用“——with-mpm”显式指定某种 MPM,prefork 就是 Unix 平台上缺省的
 MPM.它所采用的预派生子进程方式也是 Apache1.3 中采用的模式.prefork 本身并没有使
 用到线程,2.0版使用它是为了与1.3版保持兼容性;另一方面,prefork用单独的子进程来处理
 不同的请求,进程之间是彼此独立的,这也使其成为最稳定的 MPM 之一.
@@ -280,7 +289,7 @@ MinSpareServers 设置的值为止.这就是预派生（prefork）的由来.这�
 </pre></div>
 </div>
 <p>worker 的工作原理</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>相对于 prefork,worker 是 2.0 版中全新的支持多线程和多进程混合模型的 MPM.由于
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>相对于 prefork,worker 是 2.0 版中全新的支持多线程和多进程混合模型的 MPM.由于
 使用线程来处理,所以可以处理相对海量的请求,而系统资源的开销要小于基于进程的服务器.
 但是,worker 也使用了多进程,每个进程又生成多个线程,以获得基于进程服务器的稳定性.这
 种 MPM 的工作方式将是 Apache2.0 的发展趋势.
@@ -299,7 +308,7 @@ MaxClients 设置了所有子进程中的线程总数.如果现有子进程中�
 需要注意的是,如果显式声明了 ServerLimit,那么它乘以 ThreadsPerChild
 的值必须大于等 于 MaxClients,而且 MaxClients 必须是 ThreadsPerChild
 的整数倍,否则 Apache 将会自 动调节到一个相应值（可能是个非期望值）.</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>在大多数平台上，Prefork MPM 在效率上要比 Worker MPM 要高，但是内存使用大
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在大多数平台上，Prefork MPM 在效率上要比 Worker MPM 要高，但是内存使用大
 得多。
 
 prefork 的无线程设计在某些情况下将比 worker 更有优势：它可以使用那些没有处
@@ -318,7 +327,7 @@ Worker MPM 也由不完善的地方，如果一个线程崩溃，整个进程就
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id10">2.6.2. Apache 源码安装编译配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>wget http://mirrors.hust.edu.cn/apache/httpd/httpd-2.4.38.tar.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget http://mirrors.hust.edu.cn/apache/httpd/httpd-2.4.38.tar.gz
 tar xf httpd-2.4.38.tar.gz
 yum -y install apr apr-util apr-devel apr-util-devel pcre*
 cd httpd-2.4.38
@@ -360,7 +369,7 @@ httpd     22507 daemon    3u  IPv4 130564      0t0  TCP *:http (LISTEN)
 </div>
 <div class="section" id="yumapache">
 <h2><a class="toc-backref" href="#id11">2.6.3. yum安装apache</a><a class="headerlink" href="#yumapache" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">httpd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">httpd</span>
 
 <span class="c1">#启用httpd服务程序并将其加入到开机启动项中，使其能够随系统开机而运行，从而持续为用户提供Web服务：</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span>
@@ -371,7 +380,7 @@ httpd     22507 daemon    3u  IPv4 130564      0t0  TCP *:http (LISTEN)
 <ul class="simple">
 <li>配置文件目录</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># rpm -qc httpd</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># rpm -qc httpd</span>
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">autoindex</span><span class="o">.</span><span class="n">conf</span>
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">userdir</span><span class="o">.</span><span class="n">conf</span>
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">welcome</span><span class="o">.</span><span class="n">conf</span>
@@ -389,7 +398,7 @@ httpd     22507 daemon    3u  IPv4 130564      0t0  TCP *:http (LISTEN)
 <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">httpd</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">配置文件的名称</span>                 <span class="n">存放位置</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">配置文件的名称</span>                 <span class="n">存放位置</span>
 <span class="n">服务目录</span>                      <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span>
 <span class="n">主配置文件</span>                    <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">网站数据目录</span>                  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">html</span>
@@ -398,20 +407,20 @@ httpd     22507 daemon    3u  IPv4 130564      0t0  TCP *:http (LISTEN)
 </pre></div>
 </div>
 <p><img alt="image1" src="../../_images/apache2.PNG" /> <img alt="image2" src="../../_images/apache4.PNG" /></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>DocumentRoot参数用于定义网站数据的保存路径，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>DocumentRoot参数用于定义网站数据的保存路径，
 其参数的默认值是把网站数据存放到/var/www/html目录中；
 而当前网站普遍的首页面名称是index.html，因此可以向/var/www/html目录中写入一个文件，
 替换掉httpd服务程序的默认首页面，该操作会立即生效。
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># echo &quot;wellcome to linuxProbe.Com&quot; &gt; /var/www/html/index.html^C</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># echo &quot;wellcome to linuxProbe.Com&quot; &gt; /var/www/html/index.html^C</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># chmod 755 /var/www/html/index.html</span>
 </pre></div>
 </div>
 <p><img alt="image3" src="../../_images/apache5.PNG" /></p>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id12">建立网站目录，保存首页</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># mkdir /home/wwwroot</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># mkdir /home/wwwroot</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">html</span><span class="p">]</span><span class="c1"># echo &quot;The New Web Directory&quot; &gt; /home/wwwroot/index.html</span>
 
 
@@ -438,7 +447,7 @@ httpd     22507 daemon    3u  IPv4 130564      0t0  TCP *:http (LISTEN)
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id13">2.6.4. 基于端口号访问虚拟主机网站</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@host-10-144-114-67 admin]# vim /etc/httpd/conf/httpd.conf
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@host-10-144-114-67 admin]# vim /etc/httpd/conf/httpd.conf
  41 #Listen 12.34.56.78:80
  42 Listen 80
  43 Listen 6111
@@ -484,7 +493,7 @@ tcp6       0      0 :::6222                 :::*                    LISTEN      
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id14">2.6.5. Apache的访问控制</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Apache可以基于源主机名、源IP地址或源主机上的浏览器特征等信息对网站上的资源进行访问控制。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Apache可以基于源主机名、源IP地址或源主机上的浏览器特征等信息对网站上的资源进行访问控制。
 它通过Allow指令允许某个主机访问服务器上的网站资源，通过Deny指令实现禁止访问。
 在允许或禁止访问网站资源时，还会用到Order指令，这个指令用来定义Allow或Deny指令起作用的顺序，
 其匹配原则是按照顺序进行匹配，若匹配成功则执行后面的默认指令。
@@ -493,7 +502,7 @@ tcp6       0      0 :::6222                 :::*                    LISTEN      
 </div>
 <ul>
 <li><p class="first">这段规则的含义是允许使用Firefox浏览器的主机访问服务器上的首页文件，除此之外的所有请求都将被拒绝。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">httpd</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">httpd</span><span class="o">.</span><span class="n">conf</span>
 <span class="mi">141</span> <span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/html/server&quot;</span><span class="o">&gt;</span>
 <span class="mi">142</span>     <span class="c1">#AllowOverride None</span>
 <span class="mi">143</span>     <span class="n">SetEnvIf</span> <span class="n">User</span><span class="o">-</span><span class="n">Agent</span> <span class="s2">&quot;Firefox&quot;</span> <span class="n">ff</span><span class="o">=</span><span class="mi">1</span>
@@ -510,7 +519,7 @@ httpd</p>
 <li><p class="first">只允许10.144.65.102这台机器单独访问</p>
 </li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># vim /etc/httpd/conf/httpd.conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">67</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># vim /etc/httpd/conf/httpd.conf</span>
 <span class="mi">141</span> <span class="o">&lt;</span><span class="n">Directory</span> <span class="s2">&quot;/var/www/html/server&quot;</span><span class="o">&gt;</span>
 <span class="mi">142</span>     <span class="c1">#AllowOverride None</span>
 <span class="mi">143</span>     <span class="c1">#SetEnvIf User-Agent &quot;Firefox&quot; ff=1</span>
@@ -533,7 +542,7 @@ httpd</p>
 <div class="section" id="apachetomcat">
 <h3><a class="toc-backref" href="#id16">Apache与Tomcat整合的必要性</a><a class="headerlink" href="#apachetomcat" title="Permalink to this headline">¶</a></h3>
 <p>通过整合可以实现以下几个功能。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>客户端请求静态页面时，由Apache服务器响应请求。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>客户端请求静态页面时，由Apache服务器响应请求。
 客户端请求动态页面时，则由Tomcat服务器响应请求。
 通过Apache信息过滤，实现网站动、静页面分离，保证了应用的可扩展性和安全性。
 </pre></div>
@@ -547,7 +556,7 @@ httpd</p>
 1.3.x以前的版本中通常取名以Apache开头，2.x以后版本则用httpd开头来命名。</p>
 <p>Apache的官方地址为http://httpd.apache.org/，这里以源码的方式进行安装，我们下载的版本是httpd-2.2.29，下载后的压缩包文件为httpd-2.2.29.tar.gz。</p>
 <p>下面是具体的编译、安装过程。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@webserver ～]# yum install zlib zlib-devel
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@webserver ～]# yum install zlib zlib-devel
 [root@webserver ～]#tar -zxvf  httpd-2.2.29.tar.gz
 [root@webserver ～]#cd httpd-2.2.29
 [root@webserver ～]#./configure --prefix=/usr/local/apache2 \ --enable-modules=most  \
@@ -565,7 +574,7 @@ httpd</p>
 Tomcat
 7.0.62。下载后的压缩包文件为apache-tomcat-7.0.62.tar.gz，把此安装包放到/usr/local目录下，通过解压即可完成Tomcat的安装。</p>
 <p>基本步骤如下。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@webserver</span>  <span class="n">local</span><span class="p">]</span><span class="c1">#tar -zxvf apache-tomcat-7.0.62.tar.gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@webserver</span>  <span class="n">local</span><span class="p">]</span><span class="c1">#tar -zxvf apache-tomcat-7.0.62.tar.gz</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@webserver</span>  <span class="n">local</span><span class="p">]</span><span class="c1">#mv apache-tomcat-7.0.62  tomcat7.0.62</span>
 </pre></div>
 </div>
@@ -578,12 +587,12 @@ tomcat7.0.62，软件名称加上软件版本的格式便于记忆。</p>
 <p>在Tomcat运行环境下，JDK是必不可少的软件，因为Tomcat只是一个Servlet/JSP容器，底层的操作都需要JDK来完成。</p>
 <p>JDK的安装也非常简单，只需到http://www.oracle.com/technetwork/java/index.html下载对应的JDK即可。这里下载的版本是JDK
 1.7，对应的文件为jdk-7u80-linux-x64.tar.gz。下载时将所需软件包文件保存在/usr/local目录下，安装步骤如下。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@webserver ～]#cd /usr/local
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@webserver ～]#cd /usr/local
 [root@webserver  local]#tar zxvf jdk-7u80-linux-x64.tar.gz
 </pre></div>
 </div>
 <p>解压完成后，会在/usr/local/下产生一个jdk1.7.0_80目录，这个就是JDK的程序目录了。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">local</span><span class="p">]</span><span class="c1"># /usr/local/jdk1.7.0_80/bin/java -version</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">local</span><span class="p">]</span><span class="c1"># /usr/local/jdk1.7.0_80/bin/java -version</span>
 <span class="n">java</span> <span class="n">version</span> <span class="s2">&quot;1.7.0_80&quot;</span>
 <span class="n">Java</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span> <span class="n">SE</span> <span class="n">Runtime</span> <span class="n">Environment</span> <span class="p">(</span><span class="n">build</span> <span class="mf">1.7</span><span class="o">.</span><span class="mi">0</span><span class="n">_80</span><span class="o">-</span><span class="n">b15</span><span class="p">)</span>
 <span class="n">Java</span>  <span class="n">HotSpot</span><span class="p">(</span><span class="n">TM</span><span class="p">)</span>  <span class="mi">64</span><span class="o">-</span><span class="n">Bit</span>  <span class="n">Server</span>  <span class="n">VM</span>  <span class="p">(</span><span class="n">build</span>  <span class="mf">24.80</span><span class="o">-</span><span class="n">b11</span><span class="p">,</span>  <span class="n">mixed</span>  <span class="n">mode</span><span class="p">)</span>
@@ -596,7 +605,7 @@ tomcat7.0.62，软件名称加上软件版本的格式便于记忆。</p>
 <p>为了更灵活地使用mod_jk连接器，这里采用源码方式编译出所需要的JK模块，JK的源码可以从这个地址下载，<a class="reference external" href="http://tomcat.apache.org/download-connectors.cgi">http://tomcat.apache.org/download-connectors.cgi</a>，但是不保证此连接永久有效，这里采用的JK版本为JK
 1.2.40。</p>
 <p>下载后的JK源码压缩包文件为tomcat-connectors-1.2.40-src.tar.gz，这里也将此压缩包放到/usr/local下，具体安装步骤如下。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@webserver ～]# yum install libtool autoconf
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@webserver ～]# yum install libtool autoconf
 [root@webserver ～]# cd /usr/local/
 [root@webserver  local]#  tar  xzvf  tomcat-connectors-1.2.40-src.tar.gz
 [root@webserver local]# cd tomcat-connectors-1.2.40-src/native
@@ -640,11 +649,19 @@ tomcat7.0.62，软件名称加上软件版本的格式便于记忆。</p>
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -655,7 +672,6 @@ tomcat7.0.62，软件名称加上软件版本的格式便于记忆。</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

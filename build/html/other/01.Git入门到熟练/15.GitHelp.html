@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2. 构建写书博客" href="../02.构建自己的写书博客/index.html" />
     <link rel="prev" title="1.3. Github高级搜索方式" href="3.Github高级搜索方式.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -119,11 +124,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -162,7 +169,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Other</a> &raquo;</li>
         
@@ -174,7 +181,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/other/01.Git入门到熟练/15.GitHelp.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/other/01.Git入门到熟练/15.GitHelp.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -213,7 +220,7 @@
 <h2><a class="toc-backref" href="#id11">1.4.1. Git 常用命令</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3><a class="toc-backref" href="#id12">仓库</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 在当前目录新建一个Git代码库
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 在当前目录新建一个Git代码库
 $ git init
 
 # 新建一个目录，将其初始化为Git代码库
@@ -226,7 +233,7 @@ $ git clone [url]
 </div>
 <div class="section" id="id2">
 <h3><a class="toc-backref" href="#id13">配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 显示当前的Git配置
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 显示当前的Git配置
 $ git config --list
 
 # 编辑Git配置文件
@@ -240,7 +247,7 @@ $ git config [--global] user.email &quot;[email address]&quot;
 </div>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id14">增加/删除文件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 添加指定文件到暂存区
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 添加指定文件到暂存区
 $ git add [file1] [file2] ...
 
 # 添加指定目录到暂存区，包括子目录
@@ -266,7 +273,7 @@ $ git mv [file-original] [file-renamed]
 </div>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id15">代码提交</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 提交暂存区到仓库区
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 提交暂存区到仓库区
 $ git commit -m [message]
 
 # 提交暂存区的指定文件到仓库区
@@ -289,7 +296,7 @@ $ git commit --amend [file1] [file2] ...
 </div>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id16">分支</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 列出所有本地分支
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 列出所有本地分支
 $ git branch
 
 # 列出所有远程分支
@@ -336,7 +343,7 @@ $ git branch -dr [remote/branch]
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id17">标签</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 列出所有tag
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 列出所有tag
 $ git tag
 
 # 新建一个tag在当前commit
@@ -367,7 +374,7 @@ $ git checkout -b [branch] [tag]
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id18">查看信息</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 显示有变更的文件
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 显示有变更的文件
 $ git status
 
 # 显示当前分支的版本历史
@@ -432,7 +439,7 @@ $ git reflog
 </div>
 <div class="section" id="id8">
 <h3><a class="toc-backref" href="#id19">远程同步</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 下载远程仓库的所有变动
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 下载远程仓库的所有变动
 $ git fetch [remote]
 
 # 显示所有远程仓库
@@ -460,7 +467,7 @@ $ git push [remote] --all
 </div>
 <div class="section" id="id9">
 <h3><a class="toc-backref" href="#id20">撤销</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span># 恢复暂存区的指定文件到工作区
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 恢复暂存区的指定文件到工作区
 $ git checkout [file]
 
 # 恢复某个commit的指定文件到暂存区和工作区
@@ -517,11 +524,19 @@ $ git stash pop
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -532,7 +547,6 @@ $ git stash pop
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

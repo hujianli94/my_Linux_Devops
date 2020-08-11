@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.24. rabbitmq服务部署" href="26.rabbitmq服务部署.html" />
     <link rel="prev" title="2.22. nmtui图形配置网络服务" href="24.使用图形配置网络服务nmtui.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -135,6 +140,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -145,6 +151,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -155,6 +162,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -193,7 +201,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -205,7 +213,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/25.Openssh更新升级.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/25.Openssh更新升级.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -241,13 +249,13 @@
 <h2><a class="toc-backref" href="#id6">2.23.1. centos7.2 离线升级openssh7.9</a><a class="headerlink" href="#centos7-2-openssh7-9" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3><a class="toc-backref" href="#id7">环境介绍</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">centos7</span><span class="o">.</span><span class="mi">2</span> <span class="mi">64</span><span class="n">位</span> <span class="p">,</span> <span class="n">OpenSSH_6</span><span class="o">.</span><span class="mf">6.1</span><span class="n">p1</span><span class="p">,</span> <span class="n">OpenSSL</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="n">fips</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">centos7</span><span class="o">.</span><span class="mi">2</span> <span class="mi">64</span><span class="n">位</span> <span class="p">,</span> <span class="n">OpenSSH_6</span><span class="o">.</span><span class="mf">6.1</span><span class="n">p1</span><span class="p">,</span> <span class="n">OpenSSL</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">1</span><span class="n">e</span><span class="o">-</span><span class="n">fips</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h3><a class="toc-backref" href="#id8">准备工作，安装基础包</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">75</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># yum -y install lrzsz glibc-devel gcc gcc-c++ zlib-devel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">75</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># yum -y install lrzsz glibc-devel gcc gcc-c++ zlib-devel</span>
 <span class="n">Loaded</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">fastestmirror</span>
 <span class="n">Loading</span> <span class="n">mirror</span> <span class="n">speeds</span> <span class="kn">from</span> <span class="nn">cached</span> <span class="n">hostfile</span>
 <span class="n">Package</span> <span class="n">lrzsz</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mi">20</span><span class="o">-</span><span class="mf">36.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span> <span class="n">already</span> <span class="n">installed</span> <span class="ow">and</span> <span class="n">latest</span> <span class="n">version</span>
@@ -259,7 +267,7 @@
 </pre></div>
 </div>
 <p>FQ：安装gcc-c++报错</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">75</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># yum -y install gcc-c++</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">75</span> <span class="n">admin</span><span class="p">]</span><span class="c1"># yum -y install gcc-c++</span>
 <span class="n">Loaded</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">fastestmirror</span>
 <span class="n">Loading</span> <span class="n">mirror</span> <span class="n">speeds</span> <span class="kn">from</span> <span class="nn">cached</span> <span class="n">hostfile</span>
 <span class="n">Resolving</span> <span class="n">Dependencies</span>
@@ -303,7 +311,7 @@
 <div class="section" id="openssl">
 <h3><a class="toc-backref" href="#id9">升级openssl</a><a class="headerlink" href="#openssl" title="Permalink to this headline">¶</a></h3>
 <p>下载安装包：openssh-7.9p1.tar.gz、openssl-1.0.2h.tar.gz、zlib-1.2.11.tar.xz</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>rpm -e --nodeps `rpm -qa|grep openss`
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rpm -e --nodeps `rpm -qa|grep openss`
 
 解压缩openssl软件包：
 tar -zxvf openssl-1.0.2h.tar.gz
@@ -322,7 +330,7 @@ openssl version -a
 </div>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id10">升级openssh</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>备份旧ssh配置文件 /etc/ssh ：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>备份旧ssh配置文件 /etc/ssh ：
      cp -rf /etc/ssh/ /home/ssh-bak
      解压：
      tar -zxvf openssh-7.9p1.tar.gz
@@ -374,7 +382,7 @@ Subsystem       sftp    /usr/libexec/sftp-server
 </div>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id11">验证版本信息：</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">83</span> <span class="n">ssh</span><span class="p">]</span><span class="c1"># ssh -V</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@host</span><span class="o">-</span><span class="mi">10</span><span class="o">-</span><span class="mi">144</span><span class="o">-</span><span class="mi">114</span><span class="o">-</span><span class="mi">83</span> <span class="n">ssh</span><span class="p">]</span><span class="c1"># ssh -V</span>
 <span class="n">OpenSSH_7</span><span class="o">.</span><span class="mi">9</span><span class="n">p1</span><span class="p">,</span> <span class="n">OpenSSL</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">2</span><span class="n">h</span>  <span class="mi">3</span> <span class="n">May</span> <span class="mi">2016</span>
 </pre></div>
 </div>
@@ -406,11 +414,19 @@ Subsystem       sftp    /usr/libexec/sftp-server
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -421,7 +437,6 @@ Subsystem       sftp    /usr/libexec/sftp-server
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

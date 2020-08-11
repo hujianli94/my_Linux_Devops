@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="8.8. Mysql双主+keepalived集群架构" href="08.MySQL双主+keepalived高可用集群.html" />
     <link rel="prev" title="8.6. MySQL 主从高可用架构" href="06.MySQL主从高可用架构.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -124,23 +129,29 @@
 <li class="toctree-l3"><a class="reference internal" href="08.MySQL双主+keepalived高可用集群.html">8.8. Mysql双主+keepalived集群架构</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Haproxy+keepalived主从-主主高可用架构.html">8.9. Haproxy+keepalived主从-主主高可用架构</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.LVS+Keepalived高可用集群.html">8.10. LVS+keeplaived高可用集群</a></li>
-<li class="toctree-l3"><a class="reference internal" href="11.Redis实战篇之搭建集群.html">8.11. Redis 实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis实战篇之搭建集群.html">8.11. Redis实战篇之搭建集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.MySQL主从复制、读写分离.html">8.12. MySQL主从复制、读写分离</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.双机热备开源软件Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.使用Haproxy+keepalived搭建Web群集.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis主从+KeepAlived实现高可用.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html">8.16. keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker实现双机热备.html">8.17. Pacemaker实现双机热备</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -179,7 +190,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -191,7 +202,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/08.Linux构建高可用架构/07.MySQL主主同步高可用架构.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/08.Linux构建高可用架构/07.MySQL主主同步高可用架构.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -225,7 +236,7 @@
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id6">8.7.2. MySQL 数据库主主配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>环境：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>环境：
 1.两个数据库版本最好一致
 2.两个数据库内数据保持一致，若不一致，可手动调整，比如A比B多一个库，那将这个库导入到B库，达到一致。
     mysql主机：192.168.1.111  CentOS Linux release 7.5
@@ -235,7 +246,7 @@
 </div>
 <div class="section" id="a">
 <h2><a class="toc-backref" href="#id7">8.7.3. 主A数据库</a><a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.开启binlog
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.开启binlog
 
 vim /etc/my.cnf
 [root@nginx_keepalived_master ~]# cat /etc/my.cnf
@@ -294,7 +305,7 @@ show master status;
 </div>
 <div class="section" id="b">
 <h2><a class="toc-backref" href="#id8">8.7.4. 主B数据库</a><a class="headerlink" href="#b" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.导入数据库
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.导入数据库
 mysql -uroot -padmin#123!  &lt; /root/alldb.sql
 
 2.修改配置文件
@@ -341,7 +352,7 @@ mysql&gt; show master status;
 </pre></div>
 </div>
 <p>#主A上数据库授权bin-log日志</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
 <span class="o">+------------------+----------+--------------+------------------+-------------------+</span>
 <span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span> <span class="n">Executed_Gtid_Set</span> <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+-------------------+</span>
@@ -401,7 +412,7 @@ mysql&gt; show master status;
                <span class="n">Last_SQL_Error</span><span class="p">:</span>
   <span class="n">Replicate_Ignore_Server_Ids</span><span class="p">:</span>
              <span class="n">Master_Server_Id</span><span class="p">:</span> <span class="mi">2</span>
-                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="n">b25eabdb</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mi">11</span><span class="n">e9</span><span class="o">-</span><span class="mi">81</span><span class="n">d5</span><span class="o">-</span><span class="mi">000</span><span class="n">c29f23347</span>
+                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="n">b25eabdb</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="mi">81</span><span class="n">d5</span><span class="o">-</span><span class="mi">000</span><span class="n">c29f23347</span>
              <span class="n">Master_Info_File</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">info</span>
                     <span class="n">SQL_Delay</span><span class="p">:</span> <span class="mi">0</span>
           <span class="n">SQL_Remaining_Delay</span><span class="p">:</span> <span class="n">NULL</span>
@@ -425,7 +436,7 @@ mysql&gt; show master status;
 </pre></div>
 </div>
 <p>#主B上数据库授权bin-log日志</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span> <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span><span class="p">;</span>
 <span class="o">+------------------+----------+--------------+------------------+-------------------+</span>
 <span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span> <span class="n">Executed_Gtid_Set</span> <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+-------------------+</span>
@@ -489,7 +500,7 @@ mysql&gt; show master status;
                <span class="n">Last_SQL_Error</span><span class="p">:</span>
   <span class="n">Replicate_Ignore_Server_Ids</span><span class="p">:</span>
              <span class="n">Master_Server_Id</span><span class="p">:</span> <span class="mi">1</span>
-                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="mi">750</span><span class="n">a3dc6</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mi">11</span><span class="n">e9</span><span class="o">-</span><span class="mi">8</span><span class="n">c2e</span><span class="o">-</span><span class="mi">000</span><span class="n">c29449e0f</span>
+                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="mi">750</span><span class="n">a3dc6</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="mi">8</span><span class="n">c2e</span><span class="o">-</span><span class="mi">000</span><span class="n">c29449e0f</span>
              <span class="n">Master_Info_File</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">info</span>
                     <span class="n">SQL_Delay</span><span class="p">:</span> <span class="mi">0</span>
           <span class="n">SQL_Remaining_Delay</span><span class="p">:</span> <span class="n">NULL</span>
@@ -515,7 +526,7 @@ mysql&gt; show master status;
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id9">8.7.5. Mysql同步引入话题</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>附加配置
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>附加配置
 不同步哪些数据库
 binlog-ignore-db = mysql
 binlog-ignore-db = test
@@ -563,11 +574,19 @@ start slave;
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -578,7 +597,6 @@ start slave;
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

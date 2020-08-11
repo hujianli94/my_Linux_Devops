@@ -1,0 +1,801 @@
+.. contents::
+   :depth: 3
+..
+
+KVM虚拟化应用案例
+=================
+
+KVM虚拟化的核心主要由以下两个模块组成：
+
+::
+
+   1）KVM内核模块，它属于标准Linux内核的一部分，是一个专门提供虚拟化功能的
+   模块，主要负责CPU和内存的虚拟化，包括：客户机的创建、虚拟内存的分配、CPU执行
+   模式的切换、vCPU寄存器的访问、vCPU的执行。
+
+
+   2）QEMU用户态工具，它是一个普通的Linux进程，为客户机提供设备模拟的功能，
+   包括模拟BIOS、PCI/PCIE总线、磁盘、网卡、显卡、声卡、键盘、鼠标等。同时它通过
+   ioctl系统调用与内核态的KVM模块进行交互。
+
+在KVM虚拟化架构下，每个客户机就是一个QEMU进程，在一个宿主机上
+有多少个虚拟机就会有多少个QEMU进程；客户机中的每一个虚拟CPU对应QEMU进程中的一个执行线程；一个宿主机中只有一个KVM内核模块，所有客户机都与这个内核模块
+进行交互。
+
+|image0|
+
+KVM上层管理工具
+---------------
+
+1.libvirt
+
+::
+
+   libvirt是使用最广泛的对KVM虚拟化进行管理的工具和应用程序接口，已经是事实上
+   的虚拟化接口标准.
+
+2.virsh
+
+::
+
+   virsh是一个常用的管理KVM虚拟化的命令行工具，对于系统管理员在单个宿主机上
+   进行运维操作，virsh命令行可能是最佳选择。
+
+3.virt-manager
+
+::
+
+   的。virt-manager除了提供虚拟机生命周期（包括：创建、启动、停止、打快照、动态迁移等）管理的基本功能，还提供性能和资源使用率的监控，同时内置
+   了VNC和SPICE客户端，方便图形化连接到虚拟客户机中。
+
+4.Openstack
+
+::
+
+   OpenStack仍然使用libvirt API来完成对底层虚拟化的管理
+
+安装KVM组件前提
+---------------
+
+::
+
+   安装KVM 组件需要先确保系统己经满足了最低安装要求,部署KVM 虚拟化需要通过BIOS
+   开启CPU 的虚拟化功能,确保至少6GB 的磁盘剩余空间以及2GB 内存空间。
+   KVM 虚拟机支持的存储方式有:本地磁盘文件、物理磁盘分区、LVM 分区、iSCS1 磁盘、GFS2 文件系统、光
+   纤LUNs 设备等。
+
+在部署操作系统时安装KVM组件
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+::
+
+   KVM 虚拟化组件可以在安装操作系统的过程中选择《带GUI 的服务器》， 然后点选如下这
+   些软件组包Virtualization CIient 、Virtualization Hypervisor 和VirtuaIization Tool来部署虚拟化软件环境。
+
+通过Kickstart方式安装系统时需要在Kickstart配置文件中加入如下内容：
+
+::
+
+       @virtualization—hypervisor
+       @virtualization—client
+       @virtualization—platform
+       @virtualization—tools
+
+在现有的操作系统平台上安装虚拟化组件
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+对于已经安装好的操作系统来说，配置YUM源后，可以通过Centos官方的源中找到虚拟化组件，可以直接通过组包来安装虚拟化组件。组件如下：
+|image1|
+
+::
+
+   使用命令“yum groupinstall "组包名称"”安装这些组包即可，例如：需要安装VIrtualization Tool组包，
+   运行 yum groupinstall "VIrtualization Tool"即可。
+
+安装KVM虚拟化软件
+-----------------
+
+`KVM虚拟机在Ubuntu16.04下的环境搭建 <https://www.cnblogs.com/luohongyi/p/6744611.html>`__
+
+安装依赖包(可以使用本地 yum 源)
+
+::
+
+   # centos7安装GUI图形界面、安装Gnome包。
+   yum groupinstall "GNOME Desktop" "Graphical Administration Tools"
+   yum install libvirt* virt-* qemu-kvm* -y
+
+若出现报错：
+
+::
+
+   [root@pxe-server ~]# virt-manager 
+   Traceback (most recent call last):
+     File "/usr/share/virt-manager/virt-manager", line 35, in <module>
+       from virtinst import util as util
+     File "/usr/share/virt-manager/virtinst/__init__.py", line 90, in <module>
+       from virtinst.distroinstaller import DistroInstaller
+     File "/usr/share/virt-manager/virtinst/distroinstaller.py", line 23, in <module>
+       from . import urlfetcher
+     File "/usr/share/virt-manager/virtinst/urlfetcher.py", line 33, in <module>
+       import requests
+     File "/usr/lib/python2.7/site-packages/requests/__init__.py", line 58, in <module>
+       from . import utils
+     File "/usr/lib/python2.7/site-packages/requests/utils.py", line 32, in <module>
+       from .exceptions import InvalidURL
+     File "/usr/lib/python2.7/site-packages/requests/exceptions.py", line 10, in <module>
+       from .packages.urllib3.exceptions import HTTPError as BaseHTTPError
+     File "/usr/lib/python2.7/site-packages/requests/packages/__init__.py", line 95, in load_module
+       raise ImportError("No module named '%s'" % (name,))
+   ImportError: No module named 'requests.packages.urllib3'
+
+原因：requests库版本问题
+
+解决方法：　　
+
+::
+
+   pip install requests urllib3 pyOpenSSL --force --upgrade
+   pip install --upgrade --force-reinstall 'requests==2.6.0'
+
+安装软件说明内容：
+
+::
+
+   libvirt    # 虚拟机管理
+   virt       # 虚拟机安装克隆
+   qemu-kvm   # 管理虚拟机磁盘
+
+启动服务
+
+::
+
+   [root@kvm ~]# systemctl start libvirtd.service
+   [root@kvm ~]# systemctl status libvirtd.servic
+
+virt-manager命令开启KVM虚拟系统管理器，点击’New’按钮创建虚拟主机，也可以通过命令行工具virt-install命令直接安装部署虚拟主机。
+
+::
+
+   [root@bogon ~]# virt-manager 
+
+|image2|
+
+virsh命令帮助
+-------------
+
+::
+
+   [root@bogon data]# virsh --help
+
+   virsh [options]... [<command_string>]
+   virsh [options]... <command> [args...]
+
+     options:
+       -c | --connect=URI      hypervisor connection URI
+       -d | --debug=NUM        debug level [0-4]
+       -e | --escape <char>    set escape sequence for console
+       -h | --help             this help
+       -k | --keepalive-interval=NUM
+                               keepalive interval in seconds, 0 for disable
+       -K | --keepalive-count=NUM
+                               number of possible missed keepalive messages
+       -l | --log=FILE         output logging to file
+       -q | --quiet            quiet mode
+       -r | --readonly         connect readonly
+       -t | --timing           print timing information
+       -v                      short version
+       -V                      long version
+            --version[=TYPE]   version, TYPE is short or long (default short)
+     commands (non interactive mode):
+
+    Domain Management (help keyword 'domain')
+       attach-device                  从一个XML文件附加装置
+       attach-disk                    附加磁盘设备
+       attach-interface               获得网络界面
+       autostart                      自动开始一个域
+       blkdeviotune                   设定或者查询块设备 I/O 调节参数。
+       blkiotune                      获取或者数值 blkio 参数
+       blockcommit                    启动块提交操作。
+       blockcopy                      启动块复制操作。
+       blockjob                       管理活跃块操作
+       blockpull                      使用其后端映像填充磁盘。
+       blockresize                    创新定义域块设备大小
+       change-media                   更改 CD 介质或者软盘驱动器
+       console                        连接到客户会话
+       cpu-stats                      显示域 cpu 统计数据
+       create                         从一个 XML 文件创建一个域
+       define                         从一个 XML 文件定义（但不开始）一个域
+       desc                           显示或者设定域描述或者标题
+       destroy                        销毁（停止）域
+       detach-device                  从一个 XML 文件分离设备
+       detach-device-alias            detach device from an alias
+       detach-disk                    分离磁盘设备
+       detach-interface               分离网络界面
+       domdisplay                     域显示连接 URI
+       domfsfreeze                    Freeze domain's mounted filesystems.
+       domfsthaw                      Thaw domain's mounted filesystems.
+       domfsinfo                      Get information of domain's mounted filesystems.
+       domfstrim                      在域挂载的文件系统中调用 fstrim。
+       domhostname                    输出域主机名
+       domid                          把一个域名或 UUID 转换为域 id
+       domif-setlink                  设定虚拟接口的链接状态
+       domiftune                      获取/设定虚拟接口参数
+       domjobabort                    忽略活跃域任务
+       domjobinfo                     域任务信息
+       domname                        将域 id 或 UUID 转换为域名
+       domrename                      rename a domain
+       dompmsuspend                   使用电源管理功能挂起域
+       dompmwakeup                    从 pmsuspended 状态唤醒域
+       domuuid                        把一个域名或 id 转换为域 UUID
+       domxml-from-native             将原始配置转换为域 XML
+       domxml-to-native               将域 XML 转换为原始配置
+       dump                           把一个域的内核 dump 到一个文件中以方便分析
+       dumpxml                        XML 中的域信息
+       edit                           编辑某个域的 XML 配置
+       event                          Domain Events
+       inject-nmi                     在虚拟机中输入 NMI
+       iothreadinfo                   view domain IOThreads
+       iothreadpin                    control domain IOThread affinity
+       iothreadadd                    add an IOThread to the guest domain
+       iothreaddel                    delete an IOThread from the guest domain
+       send-key                       向虚拟机发送序列号
+       send-process-signal            向进程发送信号
+       lxc-enter-namespace            LXC 虚拟机进入名称空间
+       managedsave                    管理域状态的保存
+       managedsave-remove             删除域的管理保存
+       managedsave-edit               edit XML for a domain's managed save state file
+       managedsave-dumpxml            Domain information of managed save state file in XML
+       managedsave-define             redefine the XML for a domain's managed save state file
+       memtune                        获取或者数值内存参数
+       perf                           Get or set perf event
+       metadata                       show or set domain's custom XML metadata
+       migrate                        将域迁移到另一个主机中
+       migrate-setmaxdowntime         设定最大可耐受故障时间
+       migrate-getmaxdowntime         get maximum tolerable downtime
+       migrate-compcache              获取/设定压缩缓存大小
+       migrate-setspeed               设定迁移带宽的最大值
+       migrate-getspeed               获取最长迁移带宽
+       migrate-postcopy               Switch running migration from pre-copy to post-copy
+       numatune                       获取或者数值 numa 参数
+       qemu-attach                    QEMU 附加
+       qemu-monitor-command           QEMU 监控程序命令
+       qemu-monitor-event             QEMU Monitor Events
+       qemu-agent-command             QEMU 虚拟机代理命令
+       reboot                         重新启动一个域
+       reset                          重新设定域
+       restore                        从一个存在一个文件中的状态恢复一个域
+       resume                         重新恢复一个域
+       save                           把一个域的状态保存到一个文件
+       save-image-define              为域的保存状态文件重新定义 XML
+       save-image-dumpxml             在 XML 中保存状态域信息
+       save-image-edit                为域保存状态文件编辑 XML
+       schedinfo                      显示/设置日程安排变量
+       screenshot                     提取当前域控制台快照并保存到文件中
+       set-lifecycle-action           change lifecycle actions
+       set-user-password              set the user password inside the domain
+       setmaxmem                      改变最大内存限制值
+       setmem                         改变内存的分配
+       setvcpus                       改变虚拟 CPU 的号
+       shutdown                       关闭一个域
+       start                          开始一个（以前定义的）非活跃的域
+       suspend                        挂起一个域
+       ttyconsole                     tty 控制台
+       undefine                       取消定义一个域
+       update-device                  从 XML 文件中关系设备
+       vcpucount                      域 vcpu 计数
+       vcpuinfo                       详细的域 vcpu 信息
+       vcpupin                        控制或者查询域 vcpu 亲和性
+       emulatorpin                    控制火车查询域模拟器亲和性
+       vncdisplay                     vnc 显示
+       guestvcpus                     query or modify state of vcpu in the guest (via agent)
+       setvcpu                        attach/detach vcpu or groups of threads
+       domblkthreshold                set the threshold for block-threshold event for a given block device or it's backing chain element
+
+    Domain Monitoring (help keyword 'monitor')
+       domblkerror                    在块设备中显示错误
+       domblkinfo                     域块设备大小信息
+       domblklist                     列出所有域块
+       domblkstat                     获得域设备块状态
+       domcontrol                     域控制接口状态
+       domif-getlink                  获取虚拟接口链接状态
+       domifaddr                      Get network interfaces' addresses for a running domain
+       domiflist                      列出所有域虚拟接口
+       domifstat                      获得域网络接口状态
+       dominfo                        域信息
+       dommemstat                     获取域的内存统计
+       domstate                       域状态
+       domstats                       get statistics about one or multiple domains
+       domtime                        domain time
+       list                           列出域
+
+    Host and Hypervisor (help keyword 'host')
+       allocpages                     Manipulate pages pool size
+       capabilities                   性能
+       cpu-baseline                   计算基线 CPU
+       cpu-compare                    使用 XML 文件中描述的 CPU 与主机 CPU 进行对比
+       cpu-models                     CPU models
+       domcapabilities                domain capabilities
+       freecell                       NUMA可用内存
+       freepages                      NUMA free pages
+       hostname                       打印管理程序主机名
+       hypervisor-cpu-baseline        compute baseline CPU usable by a specific hypervisor
+       hypervisor-cpu-compare         compare a CPU with the CPU created by a hypervisor on the host
+       maxvcpus                       连接 vcpu 最大值
+       node-memory-tune               获取或者设定节点内存参数
+       nodecpumap                     节点 cpu 映射
+       nodecpustats                   输出节点的 cpu 状统计数据。
+       nodeinfo                       节点信息
+       nodememstats                   输出节点的内存状统计数据。
+       nodesuspend                    在给定时间段挂起主机节点
+       sysinfo                        输出 hypervisor sysinfo
+       uri                            打印管理程序典型的URI
+       version                        显示版本
+
+    Interface (help keyword 'interface')
+       iface-begin                    生成当前接口设置快照，可在今后用于提交 (iface-commit) 或者恢复 (iface-rollback)
+       iface-bridge                   生成桥接设备并为其附加一个现有网络设备
+       iface-commit                   提交 iface-begin 后的更改并释放恢复点
+       iface-define                   define an inactive persistent physical host interface or modify an existing persistent one from an XML f
+   ile    iface-destroy                  删除物理主机接口（启用它请执行 "if-down"）
+       iface-dumpxml                  XML 中的接口信息
+       iface-edit                     为物理主机界面编辑 XML 配置
+       iface-list                     物理主机接口列表
+       iface-mac                      将接口名称转换为接口 MAC 地址
+       iface-name                     将接口 MAC 地址转换为接口名称
+       iface-rollback                 恢复到之前保存的使用 iface-begin 生成的更改
+       iface-start                    启动物理主机接口（启用它请执行 "if-up"）
+       iface-unbridge                 分离其辅助设备后取消定义桥接设备
+       iface-undefine                 取消定义物理主机接口（从配置中删除）
+
+    Network Filter (help keyword 'filter')
+       nwfilter-define                使用 XML 文件定义或者更新网络过滤器
+       nwfilter-dumpxml               XML 中的网络过滤器信息
+       nwfilter-edit                  为网络过滤器编辑 XML 配置
+       nwfilter-list                  列出网络过滤器
+       nwfilter-undefine              取消定义网络过滤器
+       nwfilter-binding-create        create a network filter binding from an XML file
+       nwfilter-binding-delete        delete a network filter binding
+       nwfilter-binding-dumpxml       XML 中的网络过滤器信息
+       nwfilter-binding-list          list network filter bindings
+
+    Networking (help keyword 'network')
+       net-autostart                  自动开始网络
+       net-create                     从一个 XML 文件创建一个网络
+       net-define                     define an inactive persistent virtual network or modify an existing persistent one from an XML file
+       net-destroy                    销毁（停止）网络
+       net-dhcp-leases                print lease info for a given network
+       net-dumpxml                    XML 中的网络信息
+       net-edit                       为网络编辑 XML 配置
+       net-event                      Network Events
+       net-info                       网络信息
+       net-list                       列出网络
+       net-name                       把一个网络UUID 转换为网络名
+       net-start                      开始一个(以前定义的)不活跃的网络
+       net-undefine                   undefine a persistent network
+       net-update                     更新现有网络配置的部分
+       net-uuid                       把一个网络名转换为网络UUID
+
+    Node Device (help keyword 'nodedev')
+       nodedev-create                 根据节点中的 XML 文件定义生成设备
+       nodedev-destroy                销毁（停止）节点中的设备
+       nodedev-detach                 将节点设备与其设备驱动程序分离
+       nodedev-dumpxml                XML 中的节点设备详情
+       nodedev-list                   这台主机中中的枚举设备
+       nodedev-reattach               重新将节点设备附加到他的设备驱动程序中
+       nodedev-reset                  重置节点设备
+       nodedev-event                  Node Device Events
+
+    Secret (help keyword 'secret')
+       secret-define                  定义或者修改 XML 中的 secret
+       secret-dumpxml                 XML 中的 secret 属性
+       secret-event                   Secret Events
+       secret-get-value               secret 值输出
+       secret-list                    列出 secret
+       secret-set-value               设定 secret 值
+       secret-undefine                取消定义 secret
+
+    Snapshot (help keyword 'snapshot')
+       snapshot-create                使用 XML 生成快照
+       snapshot-create-as             使用一组参数生成快照
+       snapshot-current               获取或者设定当前快照
+       snapshot-delete                删除域快照
+       snapshot-dumpxml               为域快照转储 XML
+       snapshot-edit                  编辑快照 XML
+       snapshot-info                  快照信息
+       snapshot-list                  为域列出快照
+       snapshot-parent                获取快照的上级快照名称
+       snapshot-revert                将域转换为快照
+
+    Storage Pool (help keyword 'pool')
+       find-storage-pool-sources-as   找到潜在存储池源
+       find-storage-pool-sources      发现潜在存储池源
+       pool-autostart                 自动启动某个池
+       pool-build                     建立池
+       pool-create-as                 从一组变量中创建一个池
+       pool-create                    从一个 XML 文件中创建一个池
+       pool-define-as                 在一组变量中定义池
+       pool-define                    define an inactive persistent storage pool or modify an existing persistent one from an XML file
+       pool-delete                    删除池
+       pool-destroy                   销毁（删除）池
+       pool-dumpxml                   XML 中的池信息
+       pool-edit                      为存储池编辑 XML 配置
+       pool-info                      存储池信息
+       pool-list                      列出池
+       pool-name                      将池 UUID 转换为池名称
+       pool-refresh                   刷新池
+       pool-start                     启动一个（以前定义的）非活跃的池
+       pool-undefine                  取消定义一个不活跃的池
+       pool-uuid                      把一个池名称转换为池 UUID
+       pool-event                     Storage Pool Events
+
+    Storage Volume (help keyword 'volume')
+       vol-clone                      克隆卷。
+       vol-create-as                  从一组变量中创建卷
+       vol-create                     从一个 XML 文件创建一个卷
+       vol-create-from                生成卷，使用另一个卷作为输入。
+       vol-delete                     删除卷
+       vol-download                   将卷内容下载到文件中
+       vol-dumpxml                    XML 中的卷信息
+       vol-info                       存储卷信息
+       vol-key                        为给定密钥或者路径返回卷密钥
+       vol-list                       列出卷
+       vol-name                       为给定密钥或者路径返回卷名
+       vol-path                       为给定密钥或者路径返回卷路径
+       vol-pool                       为给定密钥或者路径返回存储池
+       vol-resize                     创新定义卷大小
+       vol-upload                     将文件内容上传到卷中
+       vol-wipe                       擦除卷
+
+    Virsh itself (help keyword 'virsh')
+       cd                             更改当前目录
+       echo                           echo 参数
+       exit                           退出这个非交互式终端
+       help                           打印帮助
+       pwd                            输出当前目录
+       quit                           退出这个非交互式终端
+       connect                        连接（重新连接）到 hypervisor
+
+使用virt-install命令创建虚拟机
+------------------------------
+
+::
+
+   [root@bogon data]# virt-install --virt-type kvm --os-type=linux --os-variant rhel7 --name centos7 --memory 1024 --vcpus 1 --disk /data/centos7.raw,format=raw,size=10 --cdrom /da
+   ta/CentOS-7-x86_64-Minimal-1810.iso --network network=default --graphics vnc,listen=0.0.0.0,port=5900 --noautoconsole
+   开始安装......
+
+   正在分配 'centos7.raw'                                                                                                                                |  10 GB  00:00:00     
+   域安装仍在进行。您可以重新连接
+   到控制台以便完成安装进程。
+
+-  注意：需要先将镜像文件拷贝到 /data/CentOS-7-x86_64-DVD-1511.iso 。
+   使用参数说明： |image3|
+
+|image4|
+
+使用vnc客户端连接，如下图： |image5|
+
+操作过程
+--------
+
+KVM虚拟机配置文件位置
+
+::
+
+   [root@bogon ~]# ll /etc/libvirt/qemu/centos7.xml 
+   -rw------- 1 root root 4076 5月  22 18:11 /etc/libvirt/qemu/centos7.xml
+
+修改KVM虚拟机配置的方法
+
+::
+
+   [root@bogon ~]# virsh edit centos7
+   使用该命令修改可以对文件进行语法校验。
+
+备份与恢复
+~~~~~~~~~~
+
+备份虚拟机配置(关机时备份):
+
+::
+
+   [root@bogon ~]# virsh dumpxml centos7 > centos7.xml
+
+删除虚拟机配置
+
+查看
+
+::
+
+    [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    -     centos7                        关闭
+
+关闭
+
+::
+
+   [root@bogon data]# virsh list
+    Id    名称                         状态
+   ----------------------------------------------------
+    5     Centos7                        running
+
+   [root@bogon data]# virsh shutdown Centos7
+   域 Centos7 被关闭
+
+
+   [root@bogon data]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    -     Centos7                        关闭
+
+删除
+
+::
+
+   [root@bogon ~]# virsh undefine centos7 
+   域 centos7 已经被取消定义
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+
+导入虚拟机
+~~~~~~~~~~
+
+导入
+
+::
+
+   [root@bogon ~]# virsh define centos7.xml 
+   定义域 centos7（从 centos7.xml）
+
+查看
+
+::
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    -     centos7                        关闭
+    
+
+修改虚拟机名称
+~~~~~~~~~~~~~~
+
+::
+
+   [root@bogon ~]# virsh domrename centos7 centos7_hu
+   Domain successfully renamed
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    -     centos7_hu                     关闭
+
+虚拟机挂起与恢复
+~~~~~~~~~~~~~~~~
+
+开启虚拟机
+
+::
+
+   [root@bogon ~]# virsh start centos7_hu
+   域 centos7_hu 已开始
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+
+虚拟机设置为开机自启动
+
+::
+
+   [root@bogon ~]# virsh autostart centos7_hu
+   域 centos7_hu标记为自动开始
+
+   # 实质为创建软连接
+   [root@bogon ~]# ll /etc/libvirt/qemu/autostart/centos7_hu.xml 
+   lrwxrwxrwx 1 root root 32 5月  23 10:09 /etc/libvirt/qemu/autostart/centos7_hu.xml -> /etc/libvirt/qemu/centos7_hu.xml
+
+挂起虚拟机
+
+::
+
+   [root@bogon ~]# virsh suspend centos7_hu
+   域 centos7_hu 被挂起
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     暂停
+
+恢复虚拟机
+
+::
+
+   [root@bogon ~]# virsh resume centos7_hu
+   域 centos7_hu 被重新恢复
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+
+查询虚拟机VNC端口
+~~~~~~~~~~~~~~~~~
+
+::
+
+   [root@bogon ~]# virsh vncdisplay centos7_hu
+   :0
+   # :0 即 为 5900 端口，以此类推 :1为5901 。
+
+开机自启动设置
+~~~~~~~~~~~~~~
+
+::
+
+   # 设置 libvirtd 服务开机自启动。
+   [root@bogon ~]# systemctl is-enabled libvirtd.service 
+   enabled
+
+案例
+~~~~
+
+①查看当前正在运行的虚拟机列表和所有虚拟机列表
+
+::
+
+   [root@bogon ~]# virsh list
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+
+② 设置虚拟机centos7_hu设置为开机自启动
+
+::
+
+   [root@bogon ~]# virsh autostart centos7_hu
+   域 centos7_hu标记为自动开始
+
+③ 备份centos7_hu虚拟主机的配置文件，将配置文件保存为centos7_clone.xml
+
+::
+
+   [root@bogon ~]# virsh dumpxml centos7_hu > centos7_clone.xml
+   [root@bogon ~]# ll
+   总用量 56
+   -rw-------. 1 root root  1863 2月  13 21:54 anaconda-ks.cfg
+   -rw-r--r--  1 root root  5151 5月  23 10:19 centos7_clone.xml
+
+④
+使用centos7_clone.xml配置文件生成新的虚拟主机，修改uuid、虚拟主机名称、MAC地址等必须修改的内容
+
+::
+
+   #随机生成UUID
+   [root@bogon ~]# uuidgen
+   4a7d0ddf-0211-4c69-8fc7-b6a03ed4c697
+
+   < name > < / name > 定义的是虚拟主机名称， < uuid > < / uuid > 定义的是虚拟主机唯一的序列编号，
+   <mac address ／ > 定义的是虚拟主机的MAC 地址。以上这些信息都是必须要修改的内容
+
+|image6|
+
+::
+
+   <interface type='network'>
+     <mac address='52:56:00:3e:29:57'/>
+     <source network='default' bridge='virbr0'/>
+     
+   <graphics type='vnc' port='5901' autoport='no' listen='0.0.0.0'>
+       <listen type='address' address='0.0.0.0'/>
+       
+       
+       修改xml配置文件
+   　　1）name
+   　　2）uuid
+   　　3）虚拟磁盘存储路径
+   　　4）mac地址
+       
+   [root@bogon ~]# virsh create centos7_hu3_clone.xml 
+   域 centos7_hu3 被创建（从 centos7_hu3_clone.xml）
+
+⑤ 查看虚拟机centos7_hu3的基本信息
+
+::
+
+   #查看虚拟机的基本信息
+
+   [root@bogon ~]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+    4     centos7_hu3                    running
+
+   [root@bogon ~]# virsh dominfo 4
+   Id:             4
+   名称：       centos7_hu3
+   UUID:           4a7d0ddf-0211-4c69-8fc7-b6a03ed4c697
+   OS 类型：    hvm
+   状态：       running
+   CPU：          1
+   CPU 时间：   2.4s
+   最大内存： 1048576 KiB
+   使用的内存： 1048576 KiB
+   持久：       否
+   自动启动： 禁用
+   管理的保存： 否
+   安全性模式： none
+   安全性 DOI： 0
+
+⑥ 开启centos7_hu3这台虚拟主机
+
+::
+
+   [root@bogon ~]# virsh start centos7_hu3
+   错误：域已经活跃
+
+   [root@bogon ~]# virsh list
+    Id    名称                         状态
+   ----------------------------------------------------
+    1     centos7_hu                     running
+    4     centos7_hu3                    running
+
+⑦ 设置指定虚拟机内存大小值、最大内存值、CPU个数，使虚拟机下次重启后生效
+
+::
+
+   [root@bogon ~]# virsh dominfo 1
+   Id:             1
+   名称：       centos7_hu
+   UUID:           30c7f379-636e-4911-b478-721bc7f51d5e
+   OS 类型：    hvm
+   状态：       running
+   CPU：          1
+   CPU 时间：   32.8s
+   最大内存： 1048576 KiB
+   使用的内存： 1048576 KiB
+   持久：       是
+   自动启动： 启用
+   管理的保存： 否
+   安全性模式： none
+   安全性 DOI： 0
+
+   # 调整最大内存
+   [root@bogon ~]#  virsh setmaxmem centos7_hu 1048574 --config  
+
+   #从1颗cpu增至2颗
+   [root@bogon ~]# virsh setvcpus centos7_hu --maximum 2 --config
+
+   #设置指定虚拟机内存大小值
+   [root@bogon ~]# virsh setmem centos7_hu 1048572 --config
+
+⑧ 查看并备份default网络配置文件，将配置文件保存为default_net.xml
+
+::
+
+   [root@bogon ~]# virsh net-dumpxml default > default_net.xml
+   [root@bogon ~]# ll
+   总用量 68
+   -rw-------. 1 root root  1863 2月  13 21:54 anaconda-ks.cfg
+   -rw-r--r--  1 root root  5151 5月  23 10:19 centos7_clone.xml
+   -rw-r--r--  1 root root  5152 5月  23 10:31 centos7_hu3_clone.xml
+   -rw-r--r--  1 root root   436 5月  23 10:47 default_net.xml
+
+.. |image0| image:: ../_static/kvm-QEMU.png
+.. |image1| image:: ../_static/kvm0004.png
+.. |image2| image:: ../_static/kvm0005.png
+.. |image3| image:: ../_static/kvm00008.png
+.. |image4| image:: ../_static/kvm0009.png
+.. |image5| image:: ../_static/kvm_vnc.png
+.. |image6| image:: ../_static/kvm00009.png

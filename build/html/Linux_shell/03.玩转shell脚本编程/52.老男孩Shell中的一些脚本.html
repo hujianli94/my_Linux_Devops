@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4. 玩转数据库(mysql、Redis)" href="../04.玩转数据库（mysql、Redis）/index.html" />
     <link rel="prev" title="3.51. 检测函数执行是否超时" href="51.检测函数执行是否超时.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -195,6 +200,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -233,7 +239,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -245,7 +251,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -299,7 +305,7 @@
 <h1><a class="toc-backref" href="#id11">3.52. 老男孩Shell中的一些脚本</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id12">3.52.1. 初始化操作系统脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -468,7 +474,7 @@ main
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id13">3.52.2. 开发检测脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -533,7 +539,7 @@ main
 </div>
 <div class="section" id="shellrsync">
 <h2><a class="toc-backref" href="#id14">3.52.3. 利用Shell函数开发rsync服务启动脚本</a><a class="headerlink" href="#shellrsync" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -608,7 +614,7 @@ main $*
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id15">3.52.4. 一个颜色打印示例脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1">#usage:xxx</span>
 <span class="c1">#scripts_name:${NAME}.sh</span>
 <span class="c1"># author：xiaojian</span>
@@ -660,7 +666,7 @@ main $*
 </div>
 <div class="section" id="case">
 <h2><a class="toc-backref" href="#id16">3.52.5. 结合case给输出的语句加颜色</a><a class="headerlink" href="#case" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -703,7 +709,7 @@ plus_color &quot;hujianli&quot; blue
 </div>
 <div class="section" id="while">
 <h2><a class="toc-backref" href="#id17">3.52.6. while循环</a><a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1">#usage:xxx</span>
 <span class="c1">#scripts_name:${NAME}.sh</span>
 <span class="c1"># author：xiaojian</span>
@@ -723,7 +729,7 @@ plus_color &quot;hujianli&quot; blue
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id18">3.52.7. 数组用法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -780,7 +786,7 @@ done
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id19">3.52.8. while循环按行读文件的方式总结</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>方式1：采用exec读取文件，然后进入while循环处理。</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="o">&lt;</span><span class="n">FILE</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="o">&lt;</span><span class="n">FILE</span>
 <span class="nb">sum</span><span class="o">=</span><span class="mi">0</span>
 <span class="k">while</span> <span class="n">read</span> <span class="n">line</span> <span class="n">do</span>
     <span class="n">cmd</span>
@@ -788,14 +794,14 @@ done
 </pre></div>
 </div>
 <p>方式2：使用cat读取文件内容，然后通过管道进入while循环处理。</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">FILE_PATH</span><span class="o">|</span><span class="k">while</span> <span class="n">read</span> <span class="n">line</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">FILE_PATH</span><span class="o">|</span><span class="k">while</span> <span class="n">read</span> <span class="n">line</span>
 <span class="n">do</span>
     <span class="n">cmd</span>
 <span class="n">done</span>
 </pre></div>
 </div>
 <p>方式3：在while循环结尾done处通过输入重定向指定读取的文件。</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">read</span> <span class="n">line</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="n">read</span> <span class="n">line</span>
 <span class="n">do</span>
     <span class="n">cmd</span>
 <span class="n">done</span><span class="o">&lt;</span><span class="n">FILE</span>
@@ -804,7 +810,7 @@ done
 </div>
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id20">3.52.9. 批量检查多个网站地址是否正常。</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -855,7 +861,7 @@ main
 </div>
 <div class="section" id="mysql">
 <h2><a class="toc-backref" href="#id21">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -895,7 +901,7 @@ main
 <h2><a class="toc-backref" href="#id22">3.52.11. Shell脚本调试技巧</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="echo">
 <h3><a class="toc-backref" href="#id23">使用echo命令调试</a><a class="headerlink" href="#echo" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>echo命令是最有用的调试脚本的工具之一。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>echo命令是最有用的调试脚本的工具之一。
 一般应在可能出现问题的脚本的重要部分加入echo命令，
 例如在变量读取或修改操作的前后加入echo命令，并紧挨着退出命令exit。
 </pre></div>
@@ -903,7 +909,7 @@ main
 </div>
 <div class="section" id="bash">
 <h3><a class="toc-backref" href="#id24">使用bash命令参数调试</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>sh [-nvx] scripts.sh
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sh [-nvx] scripts.sh
 
 参数说明如下。
 
@@ -918,7 +924,7 @@ main
 </div>
 <div class="section" id="set">
 <h3><a class="toc-backref" href="#id25">使用set命令调试部分脚本内容</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>set命令也可以用于辅助脚本调试。
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>set命令也可以用于辅助脚本调试。
 
 以下是set命令常用的调试选项。
 ·set-n：读命令但并不执行。
@@ -930,11 +936,11 @@ main
 <div class="section" id="id8">
 <h3><a class="toc-backref" href="#id26">其他调试Shell脚本的工具</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>（1）Shell调试工具：bashdb</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Shell调试器bashdb是一个类似于GDB的调试工具，可以完成对Shell脚本的断点设置、单步执行、变量观察等许多功能，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Shell调试器bashdb是一个类似于GDB的调试工具，可以完成对Shell脚本的断点设置、单步执行、变量观察等许多功能，
 </pre></div>
 </div>
 <p>（2）Shell调试工具：shellcheck</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">shellcheck是一个可检查sh</span><span class="o">/</span><span class="n">bash脚本和命令语法的小工具</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shellcheck是一个可检查sh</span><span class="o">/</span><span class="n">bash脚本和命令语法的小工具</span>
 </pre></div>
 </div>
 </div>
@@ -970,8 +976,8 @@ main
 </table>
 <div class="section" id="id9">
 <h3><a class="toc-backref" href="#id28">批量执行命令</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>1）实现Expect自动交互的脚本： <code class="docutils literal"><span class="pre">sample1.exp</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+<p>1）实现Expect自动交互的脚本： <code class="docutils literal notranslate"><span class="pre">sample1.exp</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
 
 if { $argc != 2 } {
     puts &quot;usage: expect $argv0 ip command&quot;
@@ -991,11 +997,11 @@ expect eof
 </pre></div>
 </div>
 <p>执行命令如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample1</span><span class="o">.</span><span class="n">exp</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample1</span><span class="o">.</span><span class="n">exp</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
 </pre></div>
 </div>
-<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal"><span class="pre">sample2.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal notranslate"><span class="pre">sample2.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
 if [ $# -ne 1 ]
 then
     echo $&quot;USAGE:$0 cmd&quot;
@@ -1009,13 +1015,13 @@ do
 done
 </pre></div>
 </div>
-<p>使用命令如下： <code class="docutils literal"><span class="pre">sh</span> <span class="pre">sample2.sh</span> <span class="pre">uptime</span></code></p>
+<p>使用命令如下： <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">sample2.sh</span> <span class="pre">uptime</span></code></p>
 <p>如果遇到连接SSH反应慢的问题，请在所有被管理的机器上提前执行如下命令：
-<code class="docutils literal"><span class="pre">sed</span> <span class="pre">-ir</span> <span class="pre">'13iUseDNS</span> <span class="pre">no\nGSSAPIAuthentication</span> <span class="pre">no\n'</span> <span class="pre">/etc/ssh/sshd_config</span>&#160; <span class="pre">/etc/init.d/sshd</span> <span class="pre">restart</span></code></p>
+<code class="docutils literal notranslate"><span class="pre">sed</span> <span class="pre">-ir</span> <span class="pre">'13iUseDNS</span> <span class="pre">no\nGSSAPIAuthentication</span> <span class="pre">no\n'</span> <span class="pre">/etc/ssh/sshd_config</span>&#160; <span class="pre">/etc/init.d/sshd</span> <span class="pre">restart</span></code></p>
 <p>### 批量发送文件</p>
 <p>1）实现Expect自动交互的脚本：</p>
-<p><code class="docutils literal"><span class="pre">sample001.exp</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+<p><code class="docutils literal notranslate"><span class="pre">sample001.exp</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
 if { $argc != 3 } {
    puts &quot;usage: expect $argv0 file host dir&quot;
    exit
@@ -1036,11 +1042,11 @@ expect eof
 </pre></div>
 </div>
 <p>使用方法</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample001</span><span class="o">.</span><span class="n">exp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">oldboy</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample001</span><span class="o">.</span><span class="n">exp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">oldboy</span>
 </pre></div>
 </div>
-<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal"><span class="pre">sample002.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal notranslate"><span class="pre">sample002.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -1060,23 +1066,23 @@ done
 </pre></div>
 </div>
 <p>将/server/scripts目录批量发送到所有服务器指定的/tmp目录：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id10">
 <h3><a class="toc-backref" href="#id29">批量执行Shell脚本</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p>1）准备脚本文件：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
-<p>2）使用范例<code class="docutils literal"><span class="pre">sample002.sh</span></code>的脚本发送要执行的脚本文件到所有机器：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
+<p>2）使用范例<code class="docutils literal notranslate"><span class="pre">sample002.sh</span></code>的脚本发送要执行的脚本文件到所有机器：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
 </pre></div>
 </div>
-<p>3）使用范例<code class="docutils literal"><span class="pre">sample2.sh</span></code>的脚本远程连接所有服务器并远程执行脚本：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample2</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;source /tmp/yum.sh&quot;</span>
+<p>3）使用范例<code class="docutils literal notranslate"><span class="pre">sample2.sh</span></code>的脚本远程连接所有服务器并远程执行脚本：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample2</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;source /tmp/yum.sh&quot;</span>
 </pre></div>
 </div>
 </div>
@@ -1084,12 +1090,12 @@ done
 <div class="section" id="ssh-ansible">
 <h2><a class="toc-backref" href="#id30">3.52.13. 自动化部署SSH密钥认证+ansible的项目实战</a><a class="headerlink" href="#ssh-ansible" title="Permalink to this headline">¶</a></h2>
 <p>1）本地生成密钥对，代码如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
 </pre></div>
 </div>
 <p>2）开发Expect脚本自动化交互分发公钥到所有的服务器：</p>
-<p><code class="docutils literal"><span class="pre">ansible.exp</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+<p><code class="docutils literal notranslate"><span class="pre">ansible.exp</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
 if { $argc != 2 } {     send_user &quot;usage: expect expect.exp file host\n&quot;
                            exit }
 #define var
@@ -1107,8 +1113,8 @@ expect eof
 </pre></div>
 </div>
 <p>3）开发Shell脚本循环执行Expect脚本：</p>
-<p><code class="docutils literal"><span class="pre">sample003.sh</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<p><code class="docutils literal notranslate"><span class="pre">sample003.sh</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -1120,25 +1126,25 @@ done
 </pre></div>
 </div>
 <p>操作过程如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">fr</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">fr</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span>
 <span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
 <span class="n">sh</span> <span class="n">sample003</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>4）实现无密码且不需要Expect就可以批量管理： cat exec.sh</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
 <span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.129</span> <span class="n">uptime</span>
 <span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span> <span class="n">uptime</span>
 </pre></div>
 </div>
 <p>5）配合ansible（Python开发的基于SSH的批量管理工具）实现自动化运维管理。
 首先安装ansible，命令如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span> <span class="o">-</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">ansible</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
 <p>然后编辑ansible的主机配置文件hosts，添加主机组oldboy：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@oldboy</span> <span class="o">~</span><span class="p">]</span><span class="c1"># tail -4 /etc/ansible/hosts</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@oldboy</span> <span class="o">~</span><span class="p">]</span><span class="c1"># tail -4 /etc/ansible/hosts</span>
 <span class="p">[</span><span class="n">oldboy</span><span class="p">]</span>
 <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span>
 <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.129</span>
@@ -1146,14 +1152,14 @@ done
 </pre></div>
 </div>
 <p>接着使用ansible并借助Expect建立好的SSH密钥认证执行命令</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">ansible</span> <span class="n">oldboy</span> <span class="o">-</span><span class="n">m</span> <span class="n">command</span> <span class="o">-</span><span class="n">a</span> <span class="s2">&quot;uptime&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ansible</span> <span class="n">oldboy</span> <span class="o">-</span><span class="n">m</span> <span class="n">command</span> <span class="o">-</span><span class="n">a</span> <span class="s2">&quot;uptime&quot;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="exec">
 <h2><a class="toc-backref" href="#id31">3.52.14. 使用exec调用其他外部命令或脚本</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h2>
 <p>exec调用后会自动退出</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#功能描述(Description):使用exec调用其他外部命令或脚本示例.</span>
 <span class="n">ls</span>
 <span class="n">echo</span>
@@ -1167,7 +1173,7 @@ done
 </div>
 <div class="section" id="fork">
 <h2><a class="toc-backref" href="#id32">3.52.15. fork子进程的示例.</a><a class="headerlink" href="#fork" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#功能描述(Description):fork子进程的示例.</span>
 
 <span class="c1">#调用外部命令时会导致fork子进程.</span>
@@ -1181,7 +1187,7 @@ done
 </div>
 <div class="section" id="ping1">
 <h2><a class="toc-backref" href="#id33">3.52.16. 使用函数与&amp;后台进程实现多进程ping测试1.</a><a class="headerlink" href="#ping1" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:1.0
 #功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.
 
@@ -1206,7 +1212,7 @@ done
 </div>
 <div class="section" id="ping2">
 <h2><a class="toc-backref" href="#id34">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试2.</a><a class="headerlink" href="#ping2" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:2.0
 #功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.
 #使用wait命令等待所有子进程结束后再退出脚本.
@@ -1233,7 +1239,7 @@ wait
 </div>
 <div class="section" id="ping">
 <h2><a class="toc-backref" href="#id35">3.52.18. 控制进程数量的ping测试脚本</a><a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:3.0
 #功能描述(Description):控制进程数量的ping测试脚本.
 #使用wait命令等待所有子进程结束后再退出脚本.
@@ -1278,7 +1284,7 @@ rm -rf $pipfile
 </div>
 <div class="section" id="sshd-ssh">
 <h2><a class="toc-backref" href="#id36">3.52.19. 修改SSHD配置文件,提升SSH安全性</a><a class="headerlink" href="#sshd-ssh" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #功能描述(Description):修改SSHD配置文件,提升SSH安全性.
 
 config_file=&quot;/etc/ssh/sshd_config&quot;
@@ -1343,11 +1349,19 @@ fi
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1358,7 +1372,6 @@ fi
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

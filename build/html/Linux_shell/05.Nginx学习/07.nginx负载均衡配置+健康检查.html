@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5.8. nginx反向代理做下载文件" href="08.nginx反向代理做下载文件.html" />
     <link rel="prev" title="5.6. nginx多站点配置" href="06.nginx多站点配置.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -125,7 +130,9 @@
 <li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.14. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -133,15 +140,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -180,7 +190,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -192,7 +202,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/05.Nginx学习/07.nginx负载均衡配置+健康检查.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/05.Nginx学习/07.nginx负载均衡配置+健康检查.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -235,7 +245,7 @@
 <p>均衡负载能够平均分配客户请求到服务器列阵，籍此提供快速获取重要数据，解决大量并发访问服务问题。</p>
 <ol class="arabic">
 <li><p class="first">upstream块</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">name</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">name</span> <span class="p">{</span><span class="o">...</span><span class="p">}</span>
 <span class="n">配置块</span> <span class="n">http</span>
 <span class="n">upstream块定义一个上游服务器的集群</span><span class="p">,</span><span class="n">便于反向代理中的proxy_pass使用</span>
 
@@ -254,7 +264,7 @@
 </li>
 </ol>
 <p>2.server</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="n">name</span> <span class="p">[</span><span class="n">paramenters</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="n">name</span> <span class="p">[</span><span class="n">paramenters</span><span class="p">]</span>
 <span class="n">配置块upstream</span>
 <span class="n">server配置项指定了一台上游服务器的名字</span><span class="p">,</span><span class="n">可以是域名</span> <span class="n">IP地址端口</span> <span class="n">UNIX句柄</span>
 <span class="n">weight</span><span class="o">=</span> <span class="n">number</span><span class="p">;</span><span class="n">设置向这台服务器转发的权重</span><span class="p">,</span><span class="n">默认为1</span>
@@ -272,7 +282,7 @@
 </pre></div>
 </div>
 <p>3.ip_hash</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">配置块</span> <span class="n">upstream</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">配置块</span> <span class="n">upstream</span>
 <span class="n">希望来自某一个用户的请求始终落在固定的一台服务器上进行处理</span><span class="o">.</span>
 <span class="n">根据客户端的IP散列计算出一个key</span><span class="p">,</span><span class="n">将key按照upstream集群中的上游服务器进行取模</span><span class="p">,</span><span class="n">求得的值对应的主机接收转发请求</span><span class="o">.</span>
 <span class="n">ip_hash不可以与weight同时使用</span>
@@ -287,7 +297,7 @@
 </pre></div>
 </div>
 <p>例子,服务器负载均衡基本配置,nginx中可以进行负载均衡的相关设置:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">my</span><span class="o">.</span><span class="n">net</span><span class="p">{</span>    <span class="c1">#my.net是自定义的命名 在server结构中引用即可</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">my</span><span class="o">.</span><span class="n">net</span><span class="p">{</span>    <span class="c1">#my.net是自定义的命名 在server结构中引用即可</span>
 
 <span class="c1">#代理服务器为 两台机器192.168.22.136 192.168.22.147做负载均衡操作</span>
 <span class="c1">#两台机器上 可以跑apache负载功能更为强大的网页相关任务</span>
@@ -315,7 +325,7 @@
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id12">5.7.3. 实践负载均衡+健康检查的方法</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>直接vim /usr/local/nginx/conf/nginx.conf 修改upstream 段配置文件：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">http</span> <span class="p">{</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span> <span class="p">{</span>
     <span class="n">include</span>       <span class="n">mime</span><span class="o">.</span><span class="n">types</span><span class="p">;</span>
     <span class="n">default_type</span>  <span class="n">application</span><span class="o">/</span><span class="n">octet</span><span class="o">-</span><span class="n">stream</span><span class="p">;</span>
 
@@ -337,7 +347,7 @@
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id13">5.7.4. 实践示例，仅供参考：</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>worker_processes  1;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>worker_processes  1;
 
 events {
     worker_connections  1024;
@@ -404,7 +414,7 @@ location / {
 <p>介绍两种健康检查的方式</p>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id15">方法一：</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>添加upstream的时候，直接ip+port后接weight=1 max_fails=2 fail_timeout=30s;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>添加upstream的时候，直接ip+port后接weight=1 max_fails=2 fail_timeout=30s;
 ###如以下代码
 upstream fastdfs_tracker {
     server 192.168.1.1:8080 weight=1 max_fails=2 fail_timeout=30s;
@@ -416,7 +426,7 @@ upstream fastdfs_tracker {
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id16">方法二：</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>添加upstream的时候，在最后一行添加
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>添加upstream的时候，在最后一行添加
 
 ###如以下代码：
 
@@ -442,7 +452,7 @@ interval=3000：间隔3秒检查一次，rise=2：检查2次ok后端节点up，f
 <div class="section" id="id8">
 <h2><a class="toc-backref" href="#id17">5.7.6. nginx负载均衡的配置文件</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>cat conf/nginx.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">worker_processes</span> <span class="mi">1</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">worker_processes</span> <span class="mi">1</span><span class="p">;</span>
     <span class="n">events</span> <span class="p">{</span>
         <span class="n">worker_connections</span> <span class="mi">1024</span><span class="p">;</span>
     <span class="p">}</span>
@@ -498,11 +508,19 @@ interval=3000：间隔3秒检查一次，rise=2：检查2次ok后端节点up，f
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -513,7 +531,6 @@ interval=3000：间隔3秒检查一次，rise=2：检查2次ok后端节点up，f
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

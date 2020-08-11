@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="9.2. 安装zabbix" href="02.安装zabbix.html" />
     <link rel="prev" title="9. Zabbix3.0入门到精通" href="index.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -114,18 +119,22 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="02.安装zabbix.html">9.2. 安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Zabbix入门到精通(zabbix使用详解).html">9.3. Zabbix入门到精通(zabbix使用详解)</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -164,7 +173,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -176,7 +185,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/09.Zabbix3.0从入门到精通/01.zabbix监控介绍.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/09.Zabbix3.0从入门到精通/01.zabbix监控介绍.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -204,7 +213,7 @@
 <div class="section" id="linux">
 <h2><a class="toc-backref" href="#id3">9.1.1. 常见的Linux监控命令</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <p>查看cpu相关</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZuf699cacb5huocqld4j2Z</span> <span class="n">home</span><span class="p">]</span><span class="c1"># lscpu</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZuf699cacb5huocqld4j2Z</span> <span class="n">home</span><span class="p">]</span><span class="c1"># lscpu</span>
 <span class="n">Architecture</span><span class="p">:</span>          <span class="n">x86_64</span>
 <span class="n">CPU</span> <span class="n">op</span><span class="o">-</span><span class="n">mode</span><span class="p">(</span><span class="n">s</span><span class="p">):</span>        <span class="mi">32</span><span class="o">-</span><span class="n">bit</span><span class="p">,</span> <span class="mi">64</span><span class="o">-</span><span class="n">bit</span>
 <span class="n">Byte</span> <span class="n">Order</span><span class="p">:</span>            <span class="n">Little</span> <span class="n">Endian</span>
@@ -232,19 +241,19 @@
 </pre></div>
 </div>
 <p>查看内存使用</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZuf699cacb5huocqld4j2Z</span> <span class="n">home</span><span class="p">]</span><span class="c1"># free -h</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZuf699cacb5huocqld4j2Z</span> <span class="n">home</span><span class="p">]</span><span class="c1"># free -h</span>
               <span class="n">total</span>        <span class="n">used</span>        <span class="n">free</span>      <span class="n">shared</span>  <span class="n">buff</span><span class="o">/</span><span class="n">cache</span>   <span class="n">available</span>
 <span class="n">Mem</span><span class="p">:</span>           <span class="mf">7.6</span><span class="n">G</span>        <span class="mi">216</span><span class="n">M</span>        <span class="mf">7.2</span><span class="n">G</span>        <span class="mi">468</span><span class="n">K</span>        <span class="mi">224</span><span class="n">M</span>        <span class="mf">7.2</span><span class="n">G</span>
 <span class="n">Swap</span><span class="p">:</span>            <span class="mi">0</span><span class="n">B</span>          <span class="mi">0</span><span class="n">B</span>          <span class="mi">0</span><span class="n">B</span>
 </pre></div>
 </div>
 <p>监控网络 　　iftop nethogs</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">iftop</span>   <span class="n">监控主机间流量</span>  <span class="o">-</span><span class="n">i</span> <span class="n">指定监控网卡</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">iftop</span>   <span class="n">监控主机间流量</span>  <span class="o">-</span><span class="n">i</span> <span class="n">指定监控网卡</span>
 <span class="n">nethogs</span> <span class="n">监控进程流量</span>
 </pre></div>
 </div>
 <p>磁盘剩多少写的快不快可以用 　　df、dd、iotop</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[znix@clsn ~]$df -h
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[znix@clsn ~]$df -h
 Filesystem      Size  Used Avail Use% Mounted on
 /dev/vda1        40G   24G   15G  62% /
 tmpfs           499M   20K  499M   1% /dev/shm
@@ -254,20 +263,24 @@ tmpfs           499M   20K  499M   1% /dev/shm
 </div>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id4">9.1.2. 监控工具总览</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mrtg</span> <span class="n">流量监控出图</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mrtg</span> <span class="n">流量监控出图</span>
 <span class="n">nagios</span> <span class="n">监控</span>
 <span class="n">cacti</span>  <span class="n">流量监控出图</span>
 <span class="n">zabbix</span> <span class="n">监控</span><span class="o">+</span><span class="n">出图</span>
 </pre></div>
 </div>
-<p>zabbix官网: <a class="reference external" href="https://www.zabbix.com">https://www.zabbix.com</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>zabbix 主要由2部分构成 zabbix server和 zabbix agent
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">zabbix官网: <a class="reference external" href="https://www.zabbix.com">https://www.zabbix.com</a></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>zabbix 主要由2部分构成 zabbix server和 zabbix agent
 
 zabbix proxy是用来管理其他的agent，作为代理
 </pre></div>
 </div>
 <p>1.5.2 zabbix监控范畴</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>²  硬件监控 ：Zabbix IPMI Interface
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>²  硬件监控 ：Zabbix IPMI Interface
+
 ²  系统监控 ：Zabbix Agent Interface
 
 ²  Java 监控：ZabbixJMX Interface
@@ -281,6 +294,7 @@ zabbix proxy是用来管理其他的agent，作为代理
 ²  URL监控：Zabbix Web监控
 </pre></div>
 </div>
+<p>​</p>
 </div>
 </div>
 
@@ -304,11 +318,19 @@ zabbix proxy是用来管理其他的agent，作为代理
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -319,7 +341,6 @@ zabbix proxy是用来管理其他的agent，作为代理
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

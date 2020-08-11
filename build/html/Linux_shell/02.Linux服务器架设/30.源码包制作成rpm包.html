@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.29. Yum自动下载RPM包及其所有依赖的包" href="31.Yum自动下载RPM包及其所有依赖的包.html" />
     <link rel="prev" title="2.27. 目前流行的开源监控框架" href="29.目前流行的开源监控框架.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -136,6 +141,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -146,6 +152,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -156,6 +163,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -194,7 +202,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -206,7 +214,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/30.源码包制作成rpm包.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -250,7 +258,7 @@ Hat包管理器)。几乎所有的Linux发行版本都使用这种形式的软�
 <p>描述文件的说明具体如下：</p>
 <p>一般的spec文件头包含以下几个域：</p>
 <p>(1)文件头</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>· Summary:  用一句话尽可能多地概括该软件包的信息。软件包的内容概要，在yum/zipper install的时候会提示使用者软件包的用途。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· Summary:  用一句话尽可能多地概括该软件包的信息。软件包的内容概要，在yum/zipper install的时候会提示使用者软件包的用途。
 
 · Name： 软件包的名称，最终RPM软件包将使用该名称与版本号、释出号及体系号来命名软件包，之后可以使用%{name}的方式引用。
 
@@ -277,24 +285,24 @@ Hat包管理器)。几乎所有的Linux发行版本都使用这种形式的软�
 <ol class="arabic simple" start="2">
 <li>%prep段</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span>%prep段是预处理段，通常用来执行一些解开源程序包的命令，为下一步编译做准备。%prep段和下面的%build、%install段一样，除了可以执行RPM所定义的宏命令（以%开头）以外，还可以执行SHELL命令，命令可有很多行，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%prep段是预处理段，通常用来执行一些解开源程序包的命令，为下一步编译做准备。%prep段和下面的%build、%install段一样，除了可以执行RPM所定义的宏命令（以%开头）以外，还可以执行SHELL命令，命令可有很多行，
 如我们常写的tar解包命令。
 </pre></div>
 </div>
 <p>(3)%build段</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>%build段是建立段，所要执行的命令为生成软件包的服务，如make命令。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%build段是建立段，所要执行的命令为生成软件包的服务，如make命令。
 </pre></div>
 </div>
 <p>(4)%install段</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>%install段是安装段，其中的命令是在安装软件包时将执行，如make install命令
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%install段是安装段，其中的命令是在安装软件包时将执行，如make install命令
 </pre></div>
 </div>
 <p>(5)%clean段</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">清理临时文件</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">清理临时文件</span>
 </pre></div>
 </div>
 <p>（6）附加动作脚本 附加动作包括以下几种：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pre</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">pre</span>
 <span class="c1"># 安装后执行的脚本</span>
 <span class="o">%</span><span class="n">post</span>
 <span class="c1"># 卸载前执行的脚本</span>
@@ -304,14 +312,14 @@ Hat包管理器)。几乎所有的Linux发行版本都使用这种形式的软�
 <span class="c1"># 清理阶段，在制作完成后删除安装的内容</span>
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">注意：%preun在升级的时候会执行，</span> <span class="pre">%postun在升级RPM包的时候则不会执行。</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">注意：%preun在升级的时候会执行，</span> <span class="pre">%postun在升级RPM包的时候则不会执行。</span></code></p>
 <p>(7)%files段</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>%files段是文件段，用于定义软件包所包含的文件，分为三类：说明文档(doc)、配置文件(config)及执行程序，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%files段是文件段，用于定义软件包所包含的文件，分为三类：说明文档(doc)、配置文件(config)及执行程序，
 该段还可以定义文件存储权限、拥有者及组别。
 </pre></div>
 </div>
 <p>(8)%changelog段</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>本段是修改日志段。你可以将软件的每次修改记录到这里，保存到发布的软件包中，以便查询之用。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>本段是修改日志段。你可以将软件的每次修改记录到这里，保存到发布的软件包中，以便查询之用。
 每一个修改日志都有这样一种格式：
     第一行是：* 星期 月 日 年 修改人 电子信箱。其中：星期、月份均用英文形式的前3个字母，用中文会报错。
     接下来的行写的是修改了什么地方，可写多行。一般以减号开始，便于后续的查阅。
@@ -325,19 +333,19 @@ Hat包管理器)。几乎所有的Linux发行版本都使用这种形式的软�
 build打包成rpm包更快的安装，还可以自己定义配置文件和脚本等，
 打包一个属于自己的rpm包。</p>
 <p>这里使用的源码包是：</p>
-<p><code class="docutils literal"><span class="pre">mariadb-10.4.11.tar.gz</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">mariadb-10.4.11.tar.gz</span></code></p>
 <p>因为这个包自带boost库，就不需要自己另外下载了</p>
 <p>1、开始安装：</p>
 <p>安装rpmbuild工具包：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">rpmbuild</span> <span class="n">rpmdevtools</span> <span class="o">-</span><span class="n">y</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">rpmbuild</span> <span class="n">rpmdevtools</span> <span class="o">-</span><span class="n">y</span>
 </pre></div>
 </div>
 <p>2、初始化一个工作目录：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpmdev</span><span class="o">-</span><span class="n">setuptree</span> <span class="n">rpmbuild2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpmdev</span><span class="o">-</span><span class="n">setuptree</span> <span class="n">rpmbuild2</span>
 </pre></div>
 </div>
 <p>3、查看目录结构：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@master ~]# tree -L 3
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@master ~]# tree -L 3
 └── rpmbuild
     ├── BUILD --源码包解压后的目录
     ├── RPMS --生成rpm包的目录
@@ -348,7 +356,7 @@ build打包成rpm包更快的安装，还可以自己定义配置文件和脚本
 </div>
 <p>4、将mariadb-10.4.11.tar.gz上传至SOURCES目录下，
 在该目录下创建my.cnf文件和mysqld.service文件。在SPECS目录下创建mariadb.spec文件。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@172-16-72-20 rpmbuild]# tree -L 3
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@172-16-72-20 rpmbuild]# tree -L 3
 .
 ├── BUILD
 ├── BUILDROOT
@@ -366,13 +374,13 @@ build打包成rpm包更快的安装，还可以自己定义配置文件和脚本
 </pre></div>
 </div>
 <p>5、配置mariadb.spec文件，内容如下：</p>
-<p>如果系统有 <code class="docutils literal"><span class="pre">rpmdevtools</span></code> 工具，可以用 <code class="docutils literal"><span class="pre">rpmdev-newspec</span> <span class="pre">-o</span> <span class="pre">name.spec</span></code>
-命令来生成 <code class="docutils literal"><span class="pre">SPEC</span></code> 文件的模板，然后进行修改：</p>
+<p>如果系统有 <code class="docutils literal notranslate"><span class="pre">rpmdevtools</span></code> 工具，可以用 <code class="docutils literal notranslate"><span class="pre">rpmdev-newspec</span> <span class="pre">-o</span> <span class="pre">name.spec</span></code>
+命令来生成 <code class="docutils literal notranslate"><span class="pre">SPEC</span></code> 文件的模板，然后进行修改：</p>
 <p>生成文件模板</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpmdev</span><span class="o">-</span><span class="n">newspec</span> <span class="o">-</span><span class="n">o</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">spec</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpmdev</span><span class="o">-</span><span class="n">newspec</span> <span class="o">-</span><span class="n">o</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">spec</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@172-16-72-20 SPECS]# cat mariadb.spec
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@172-16-72-20 SPECS]# cat mariadb.spec
 Name:       mariadb
 Version:    10.3.10
 Release:    1%{?dist}
@@ -467,11 +475,11 @@ userdel -r mysql &gt;/dev/null 2&gt;&amp;1
 </pre></div>
 </div>
 <p>6、开始打包，执行：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rpmbuild</span> <span class="o">-</span><span class="n">bb</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">spec</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpmbuild</span> <span class="o">-</span><span class="n">bb</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">spec</span>
 </pre></div>
 </div>
 <p>7、等待打包完成，完成之后会在RPMS目录下生成两个rpm包：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@172</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="mi">72</span><span class="o">-</span><span class="mi">20</span> <span class="n">x86_64</span><span class="p">]</span><span class="c1"># ll -lih</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@172</span><span class="o">-</span><span class="mi">16</span><span class="o">-</span><span class="mi">72</span><span class="o">-</span><span class="mi">20</span> <span class="n">x86_64</span><span class="p">]</span><span class="c1"># ll -lih</span>
 <span class="n">total</span> <span class="mi">204</span><span class="n">M</span>
 <span class="mi">80161320</span> <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">67</span><span class="n">M</span> <span class="n">Jan</span>  <span class="mi">3</span> <span class="mi">06</span><span class="p">:</span><span class="mi">08</span> <span class="n">mariadb</span><span class="o">-</span><span class="mf">10.3</span><span class="o">.</span><span class="mi">10</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
 <span class="mi">80161321</span> <span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--.</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">138</span><span class="n">M</span> <span class="n">Jan</span>  <span class="mi">3</span> <span class="mi">06</span><span class="p">:</span><span class="mi">10</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">debuginfo</span><span class="o">-</span><span class="mf">10.3</span><span class="o">.</span><span class="mi">10</span><span class="o">-</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
@@ -481,9 +489,9 @@ userdel -r mysql &gt;/dev/null 2&gt;&amp;1
 </div>
 <div class="section" id="rpmbuild-spec">
 <h3><a class="toc-backref" href="#id5">示例：rpmbuild.spec</a><a class="headerlink" href="#rpmbuild-spec" title="Permalink to this headline">¶</a></h3>
-<p>制作一个<code class="docutils literal"><span class="pre">cluster-management</span></code>的rpm包</p>
+<p>制作一个<code class="docutils literal notranslate"><span class="pre">cluster-management</span></code>的rpm包</p>
 <p>cluster-management.spec</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Name:      cluster-management-system
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Name:      cluster-management-system
 Version:    v0.1
 Release:    1%{?dist}
 Summary:    louie@futongcloud.com.cn
@@ -635,11 +643,19 @@ rm -rf %{buildroot}
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -650,7 +666,6 @@ rm -rf %{buildroot}
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

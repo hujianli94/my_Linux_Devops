@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.3. Github高级搜索方式" href="3.Github高级搜索方式.html" />
     <link rel="prev" title="1.1. Git基础操作" href="1.Git基础操作.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -124,11 +129,13 @@
 <li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -167,7 +174,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Other</a> &raquo;</li>
         
@@ -179,7 +186,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/other/01.Git入门到熟练/2.Git仓库的使用.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/other/01.Git入门到熟练/2.Git仓库的使用.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -210,14 +217,14 @@
 <h1><a class="toc-backref" href="#id7">1.2. Git仓库的使用</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id8">1.2.1. 安装git</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ sudo yum install git-all          #Centos7
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum install git-all          #Centos7
 $ sudo apt-get install git-all      #Ubuntu
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id9">1.2.2. 创建新的 git 仓库</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ mkdirMyProject
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdirMyProject
 $ cdMyProject
 $ git init
 
@@ -231,7 +238,7 @@ $ git update-server-info
 <h2><a class="toc-backref" href="#id10">1.2.3. 克隆远程 git 仓库</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>git clone
 命令可以将文件从远程站点复制到本地系统中。远程站点可以是匿名仓库（如GitHub），也可以是需要用户名和密码登录的系统。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>从已知的远程站点（如GitHub）克隆：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>从已知的远程站点（如GitHub）克隆：
 $ git clone http://github.com/ProjectName
 
 
@@ -242,7 +249,7 @@ $ git clone clif@172.16.183.130:gitTest
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id11">1.2.4. 使用 git 添加与提交变更</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>git add 命令可以将工作代码（working code）中的变更添加到暂存区。该命令并不会改变仓库内容，它只是标记出此次变更，将其加入下一次提交中：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>git add 命令可以将工作代码（working code）中的变更添加到暂存区。该命令并不会改变仓库内容，它只是标记出此次变更，将其加入下一次提交中：
 
 $ vim SomeFile.sh
 $ git add SomeFile.sh
@@ -269,7 +276,7 @@ git commit -am &quot;Add and Commit all modified files.&quot;
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id12">1.2.5. 使用 git 创建与合并分支</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>切换到之前创建的分支：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>切换到之前创建的分支：
 $ git checkout OldBranchName
 
 可以使用 checkout 的选项 -b 来创建新的分支：
@@ -291,7 +298,7 @@ master
 </div>
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id13">1.2.6. 实战演练</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>创建了新分支，添加并提交过变更之后，切换回起始分支，然后使用 git merge 命令将变更合并入新分支：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>创建了新分支，添加并提交过变更之后，切换回起始分支，然后使用 git merge 命令将变更合并入新分支：
 
 $ git checkout originalBranch
 $ git checkout -b modsToOriginalBranch
@@ -337,11 +344,19 @@ $ git branch -d MyBranchName
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -352,7 +367,6 @@ $ git branch -d MyBranchName
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

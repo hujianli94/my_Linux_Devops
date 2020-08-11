@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,22 +33,20 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="next" title="10.5. Keepalived实现基于Nginx的高可用.md" href="05.Keepalived实现基于Nginx的高可用.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="10.5. Keepalived实现基于Nginx的高可用" href="05.Keepalived实现基于Nginx的高可用.html" />
     <link rel="prev" title="10.3. xargs与exec" href="03.xargs与exec.html" /> 
 </head>
 
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -128,23 +133,27 @@
 <li class="toctree-l4"><a class="reference internal" href="#nginx-ssl">10.4.13. Nginx 配置ssl</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Keepalived实现基于Nginx的高可用.html">10.5. Keepalived实现基于Nginx的高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.一个邮件报警的小脚本.html">10.6. 一个邮件报警的小脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="07.Keepalived实现MySQL双主高可用.html">10.7. Keepalived实现MySQL双主高可用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="08.虚拟化与集群应用篇.html">10.8. 虚拟化与集群应用篇</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Keepalived实现基于HTTPD的高可用系统.html">10.9. Keepalived实现基于HTTPD的高可用系统</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.搭建HAProxy+Keepalived高可用负载均衡系统.html">10.10. 搭建HAProxy+Keepalived高可用负载均衡系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Keepalived实现基于LVS高可用性集群系统.html">10.11. Keepalived实现基于LVS高可用性集群系统</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -183,7 +192,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -195,7 +204,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/10.快速阅读Linux入门-阿铭Linux/04.Nginx系列.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/10.快速阅读Linux入门-阿铭Linux/04.Nginx系列.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -234,7 +243,7 @@
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id12">10.4.1. Nginx启动脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>etc_init.d_nginx</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 # chkconfig: - 30 21
 # description: http service.
 # Source Function Library
@@ -316,7 +325,7 @@ exit $RETVAL
 <div class="section" id="nginx-conf">
 <h2><a class="toc-backref" href="#id13">10.4.2. Nginx.conf配置</a><a class="headerlink" href="#nginx-conf" title="Permalink to this headline">¶</a></h2>
 <p>nginx.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>user nobody nobody;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user nobody nobody;
 worker_processes 2;
 error_log /usr/local/nginx/logs/nginx_error.log crit;
 pid /usr/local/nginx/logs/nginx.pid;
@@ -385,7 +394,7 @@ http
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id14">10.4.3. 默认虚拟主机</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">server</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span>
 <span class="p">{</span>
     <span class="n">listen</span> <span class="mi">80</span> <span class="n">default_server</span><span class="p">;</span>  <span class="o">//</span><span class="n">有这个标记的就是默认虚拟主机</span>
     <span class="n">server_name</span> <span class="n">aaa</span><span class="o">.</span><span class="n">com</span><span class="p">;</span>
@@ -398,7 +407,7 @@ http
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id15">10.4.4. 用户认证</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>nginx_user_auth.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">server</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span>
 <span class="p">{</span>
     <span class="n">listen</span> <span class="mi">80</span><span class="p">;</span>
     <span class="n">server_name</span> <span class="n">test</span><span class="o">.</span><span class="n">com</span><span class="p">;</span>
@@ -413,7 +422,7 @@ http
 <span class="p">}</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>yum install -y htttpd       //安装httpd
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum install -y htttpd       //安装httpd
 htpasswd -c /usr/local/nginx/conf/htpasswd hujianli     //创建hujianli用户
 /usr/local/nginx/sbin/nginx -t
 /usr/local/nginx/sbin/nginx -s reload
@@ -428,7 +437,7 @@ curl -I -x 127.0.0.0.1:80 test.com
 </div>
 <p>如果针对某个目录做用户密码认证，配置如下:</p>
 <p>nginx_user_auth_admin.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">location</span>  <span class="o">/</span><span class="n">admin</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">location</span>  <span class="o">/</span><span class="n">admin</span><span class="o">/</span>
     <span class="p">{</span>
         <span class="n">auth_basic</span>              <span class="s2">&quot;Auth&quot;</span><span class="p">;</span>
         <span class="n">auth_basic_user_file</span>   <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">htpasswd</span><span class="p">;</span>
@@ -439,7 +448,7 @@ curl -I -x 127.0.0.0.1:80 test.com
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id16">10.4.5. 域名重定向</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <p>nginx_rewrite.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 80;
     server_name test.com test1.com test2.com;
@@ -457,7 +466,7 @@ curl -I -x 127.0.0.0.1:80 test.com
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id17">10.4.6. Nginx 的访问日志</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>使用access_log来指定日志的存储路径，最后面指定日志的格式名字。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 80;
     server_name test.com test1.com test2.com;
@@ -475,7 +484,7 @@ curl -I -x 127.0.0.0.1:80 test.com
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id18">10.4.7. Nginx日志切割脚本</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>nginx_log_rotate.sh</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 ## 假设nginx的日志存放路径为/data/logs/
 d=`date -d &quot;-1 day&quot; +%Y%m%d`
 logdir=&quot;/data/logs&quot;
@@ -495,7 +504,7 @@ done
 </div>
 <div class="section" id="id7">
 <h2><a class="toc-backref" href="#id19">10.4.8. 配置静态文件不吉利日志并添加过期时间</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 80;
     server_name test.com test1.com test2.com;
@@ -522,7 +531,7 @@ location ~ .*\.(js|css)$
 </div>
 <div class="section" id="id8">
 <h2><a class="toc-backref" href="#id20">10.4.9. Nginx防盗链</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>location ~* ^.+\.(gif|jpg|png|swf|flv|rar|zip|doc|pdf|gz|bz2|jpeg|bmp|xls)$
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>location ~* ^.+\.(gif|jpg|png|swf|flv|rar|zip|doc|pdf|gz|bz2|jpeg|bmp|xls)$
 {
     expires 7d;
     valid_referers none blocked server_names  *.test.com ;
@@ -536,7 +545,7 @@ location ~ .*\.(js|css)$
 </div>
 <div class="section" id="id9">
 <h2><a class="toc-backref" href="#id21">10.4.10. Nginx访问控制</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>location /admin/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>location /admin/
 {
     allow 192.168.188.1;
     allow 127.0.0.1;
@@ -567,7 +576,7 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
 </div>
 <div class="section" id="id10">
 <h2><a class="toc-backref" href="#id23">10.4.12. Nginx 代理</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 80;
     server_name ask.apelearn.com;
@@ -584,7 +593,7 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
 </div>
 <p>Nginx反向代理Zabbix服务器</p>
 <p>nginx_zabbix.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 80;
     server_name 192.168.188.128;
@@ -602,7 +611,7 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
 </div>
 <div class="section" id="nginx-ssl">
 <h2><a class="toc-backref" href="#id24">10.4.13. Nginx 配置ssl</a><a class="headerlink" href="#nginx-ssl" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>server
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>server
 {
     listen 443;
     server_name aming.com;
@@ -636,7 +645,7 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="05.Keepalived实现基于Nginx的高可用.html" class="btn btn-neutral float-right" title="10.5. Keepalived实现基于Nginx的高可用.md" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="05.Keepalived实现基于Nginx的高可用.html" class="btn btn-neutral float-right" title="10.5. Keepalived实现基于Nginx的高可用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="03.xargs与exec.html" class="btn btn-neutral float-left" title="10.3. xargs与exec" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -648,11 +657,19 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -663,7 +680,6 @@ if ($http_user_agent ~ &#39;Spider/3.0|YoudaoBot|Tomato&#39;)
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

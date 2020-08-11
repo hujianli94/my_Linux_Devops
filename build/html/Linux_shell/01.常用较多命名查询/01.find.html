@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.2. 正则表达式" href="02.正则表达式.html" />
     <link rel="prev" title="1. 常用较多命名查询" href="index.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
@@ -136,7 +141,7 @@
 <li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用OpenSSH远程管理Linux服务器.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
@@ -144,7 +149,7 @@
 <li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
 <li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
-<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.38. Linux下软件的安装与管理</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -156,15 +161,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -203,7 +211,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -215,7 +223,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/01.常用较多命名查询/01.find.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/01.find.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -245,19 +253,19 @@
 <h1><a class="toc-backref" href="#id6">1.1. find查找</a><a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id7">1.1.1. 功能</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">搜索文件目录层次结构</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">搜索文件目录层次结构</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id8">1.1.2. 格式：</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="n">path</span> <span class="o">-</span><span class="n">option</span> <span class="n">actions</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">find</span> <span class="n">path</span> <span class="o">-</span><span class="n">option</span> <span class="n">actions</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id9">1.1.3. 常用选项：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>-name 文件名，支持(‘*’, ‘?’)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-name 文件名，支持(‘*’, ‘?’)
 -type 文件类型，d 目录，f 常规文件等
 -perm 符合权限的文件，比如 755
 -atime -/+n 在 n 天以内/过去 n 天被访问过
@@ -284,7 +292,7 @@
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id10">1.1.4. 示例：</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>查找文件名：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查找文件名：
 # find / -name &quot;*http*&quot;
 查找文件名并且文件类型：
 # find /tmp -name core -type f -print
@@ -324,7 +332,7 @@ find 命令的 -delete 选项可以删除所匹配到的文件。下面的命令
 $ find . -type f -name &quot;*.swp&quot; -delete
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span># linux文件无创建时间
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># linux文件无创建时间
 # Access 使用时间
 # Modify 内容修改时间
 # Change 状态改变时间(权限、属主)
@@ -361,47 +369,47 @@ find /etc -type l -print                                #查找/etc下所有的�
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id11">1.1.5. 常用示例</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>1）在系统根目录下，查找文件类型为普通文件，属于ixdba用户，两天以前，并且查找时不包含/usr/bin目录的文件名为main.c的文件，并将结果输出到屏幕。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -path &quot;/usr/bin&quot; -prune -o -name &quot;main.c&quot;  -user ixdba -type f -mtime  +2  -print
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -path &quot;/usr/bin&quot; -prune -o -name &quot;main.c&quot;  -user ixdba -type f -mtime  +2  -print
 </pre></div>
 </div>
 <p>2）对上例中搜索的结果进行删除操作。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -path &quot;/usr/bin&quot; -prune -o -name &quot;main.c&quot;  -user ixdba -type f
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -path &quot;/usr/bin&quot; -prune -o -name &quot;main.c&quot;  -user ixdba -type f
     -mtime  +2  –print -exec  rm  {}  \;
 </pre></div>
 </div>
 <p>3）在系统根目录下查找不在/var/log和/usr/bin目录下的所有普通文件。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find /  \( -path /var/log –o –path /usr/bin \) –prune –o –name
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find /  \( -path /var/log –o –path /usr/bin \) –prune –o –name
    &quot;main.c&quot;–print
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">\</span> <span class="pre">表示引用，告诉shell不对后面的字符做特殊解释，而留给find命令去解释其意义。</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">\</span> <span class="pre">表示引用，告诉shell不对后面的字符做特殊解释，而留给find命令去解释其意义。</span></code></p>
 <p><strong>注意</strong></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>“\(-path”中，在“(”和“-path”之间是有空格的，同时“/usr/bin\)”在“bin”和“\”之间也是有空格的。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>“\(-path”中，在“(”和“-path”之间是有空格的，同时“/usr/bin\)”在“bin”和“\”之间也是有空格的。
 </pre></div>
 </div>
 <p>4）查找系统中所有大小为0的普通文件，并列出它们的完整路径。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -type f –size 0 –exec ls –al {} \;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find / -type f –size 0 –exec ls –al {} \;
 </pre></div>
 </div>
 <p>5）查找系统/var/logs目录中修改时间在7天以前的普通文件，然后以交互方式删除。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find /var/log –type f –mtime +7 –ok rm {} \;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find /var/log –type f –mtime +7 –ok rm {} \;
 &lt;rm ... /var/log/spooler.1 &gt; ? y
 &lt;rm ... /var/log/spooler.3 &gt; ? y
 &lt;rm ... /var/log/boot.log.2 &gt; ? y
 &lt;rm ... /var/log/spooler.4 &gt; ? y
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>在当前目录及子目录下查找所有“*.txt”文件。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在当前目录及子目录下查找所有“*.txt”文件。
 
 [root@mylinux～]#find .–name &quot;*.txt&quot;–print
 </pre></div>
 </div>
 <p>6）在用户自己的根目录下查找文件名以一个大写字母开头，紧接着是一个小写字母和两个数字，最后以“.txt”结尾的文件。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]$ find ～  -name “[A-Z][a-z][0--9][0--9]*.txt” -print
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]$ find ～  -name “[A-Z][a-z][0--9][0--9]*.txt” -print
 </pre></div>
 </div>
 <p>7）在/etc目录下查找文件属主为ixdba用户的文件。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mylinux～]#find /etc –user ixdba -print
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mylinux～]#find /etc –user ixdba -print
 </pre></div>
 </div>
 </div>
@@ -427,11 +435,19 @@ find /etc -type l -print                                #查找/etc下所有的�
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -442,7 +458,6 @@ find /etc -type l -print                                #查找/etc下所有的�
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

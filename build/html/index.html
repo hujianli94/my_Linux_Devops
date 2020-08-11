@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="_static/jquery.js"></script>
         <script type="text/javascript" src="_static/underscore.js"></script>
         <script type="text/javascript" src="_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="DevOps与自动化运维" href="DevOps_Study/index.html" /> 
 </head>
 
@@ -57,7 +60,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="#" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -87,6 +90,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -96,6 +100,7 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mysql/index.html">Mysql王者之路</a></li>
@@ -106,6 +111,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -144,7 +150,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
       <li>Devops学院【Linux架构|shell】专栏二</li>
     
@@ -152,7 +158,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -178,17 +184,25 @@
 <li class="toctree-l2"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html">1. 01.Devops与自动化运维的意义</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id1">1.1. 1.1 为什么企业需要自动化运维</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id2">1.2. 1.2 为什么要前后端分离</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#restful">1.3. 1.3 什么是RESTful</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#web">1.4. 1.4 Web编程相关体系知识点</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id3">1.4.1. 同步和异步、阻塞与非阻塞的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#web">1.3. 1.3 Web编程相关体系知识点</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id3">1.3.1. 1.3.1 为什么要前后端分离</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#restful">1.3.2. 1.3.2 什么是RESTful</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id5">1.3.3. 1.3.3 同步和异步、阻塞与非阻塞的区别</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id4">1.5. 1.5 从事Devops应该掌握的语言</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id5">1.6. 1.6 从事DevOps工作应该掌握的工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id6">1.7. 1.7 了解网站系统架构设计和高并发场景</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id8">1.8. 1.8 了解数据库集群主从复制的基本原理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#redis">1.8.1. redis主从复制</a></li>
-<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#mysqlreplication">1.8.2. MySQL数据库主从Replication同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id6">1.4. 1.4 从事Devops应该掌握的语言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id7">1.5. 1.5 从事DevOps工作应该掌握的工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id8">1.6. 1.6 了解网站系统架构设计和高并发场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id10">1.7. 1.7 了解数据库集群主从复制的基本原理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#redis">1.7.1. redis主从复制的原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#mysqlreplication">1.7.2. MySQL数据库主从Replication同步</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#linux">1.8. 1.8 Linux服务器的安全防护</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#ddos">1.8.1. 1.8.1 DDoS攻击和运营商劫持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id11">1.8.2. 1.8.2 运营商劫持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id12">1.8.3. 1.8.3 Linux服务器基础防护篇</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id13">1.8.4. 1.8.4 Linux服务器高级防护篇</a></li>
 </ul>
 </li>
 </ul>
@@ -199,9 +213,22 @@
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id2">2.3. 2.3 Shell特殊字符</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id3">2.4. 2.4 变量和运算符</a></li>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id4">2.5. 2.5 运行、调试Shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#test">2.6. 2.6 test语句</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id5">2.7. 2.7 Shell应用于Devops开发中音掌握的系统知识点</a></li>
-<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id6">2.8. 2.8 理解并行和并发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#test">2.6. 2.6 test语句</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id5">2.6.1. 2.6.1 文件测试运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id6">2.6.2. 2.6.2 字符串测试运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id7">2.6.3. 2.6.3 整数值测试运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id8">2.6.4. 2.6.4 逻辑运算符</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id9">2.7. 2.7 Shell中的自定义函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id10">2.8. 2.8 Shell应用于Devops开发中音掌握的系统知识点</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id11">2.8.1. 2.8.1 Shell多进程并发</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#shellshell">2.8.2. 2.8.2 Shell脚本中执行另一个Shell脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#flock">2.8.3. 2.8.3 flock文件锁</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#parallellism">2.9. 2.9 什么是并行（parallellism）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/02.Shell脚本在Devops下的应用.html#id12">2.10. 2.10 什么是管道</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="DevOps_Study/03.Python在Devops与自动化运维中的应用.html">3. 03.Python在Devops与自动化运维中的应用</a><ul>
@@ -212,6 +239,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/03.Python在Devops与自动化运维中的应用.html#id3">3.2. 3.2 Python常用的三方库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="DevOps_Study/03.Python在Devops与自动化运维中的应用.html#flaskrestful-api">3.3. 3.3 利用Flask设计后端Restful API</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="DevOps_Study/04.生产环境下的Shell脚本.html">4. 04.生产环境下的Shell脚本</a><ul>
@@ -295,6 +323,29 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/10.分布式队列管理Cerely.html#id2">10.3. Cerely进阶参考文献</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="KVM_Study/index.html">KVM_Study</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/01.参考文献.html">1. 参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html">2. 镜像转换V2V</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#vmwarekvm">2.1. VMware产品转KVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#vmdk-qcow2">2.2. VMDK–&gt;qcow2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#qcow2raw">2.3. qcow2转raw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#rawqcow2">2.4. raw转qcow2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#ovaovf">2.5. ova转ovf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#virtualboxkvm">2.6. VirtualBox迁移到KVM</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/03.KVM带web管理界面.html">3. KVM带web管理界面</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/03.KVM带web管理界面.html#kvmlinuxkvmweb">3.1. 搭建KVM环境——Linux上安装KVM带web管理界面</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/03.KVM带web管理界面.html#centos7-2-kvmwebvirtmgr">3.2. centos7.2 kvm虚拟化管理平台WebVirtMgr部署</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/04.Proxmox_VE.html">4. Proxmox VE</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/04.Proxmox_VE.html#id1">4.1. 安装后相关补丁脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/04.Proxmox_VE.html#id2">4.2. 推荐说明</a></li>
 </ul>
 </li>
 </ul>
@@ -580,6 +631,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/44.Linux下软件的安装与管理.html#id15">1.38.4. 二进制软件安装方式</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/45.Linux下绑定网卡的操作记录.html">1.39. Linux下绑定网卡的操作记录</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/index.html">2. Linux服务器架设</a><ul>
@@ -1172,10 +1224,11 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html">6.5. 一键快速lnmp</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#oneinstack">6.5.1. oneinstack快速部署</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id1">6.5.2. 宝塔面板</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id2">6.5.3. 运维自动化脚本网站</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id3">6.5.4. LNMP一键安装包</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#ezhttp">6.5.5. ezhttp一键安装包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id1">6.5.2. 服务软件各类套件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id2">6.5.3. 宝塔面板</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id3">6.5.4. 运维自动化脚本网站</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#id4">6.5.5. LNMP一键安装包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/05.一键快速lnmp.html#ezhttp">6.5.6. ezhttp一键安装包</a></li>
 </ul>
 </li>
 </ul>
@@ -1297,6 +1350,12 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html">9.3. Zabbix入门到精通(zabbix使用详解)</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabbix-3-0-zabbix">9.3.1. Zabbix 3.0 从入门到精通(zabbix使用详解)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabbix">9.3.2. 1. Zabbix 安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabiix">9.3.3. 2. Zabiix 监控图形乱码问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabbix-linux-agent">9.3.4. 3. Zabbix linux agent 安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabbix-windos-agent">9.3.5. 4. Zabbix Windos agent 安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#id1">9.3.6. 5. Zabbix 邮件告警配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/09.Zabbix3.0从入门到精通/03.Zabbix入门到精通(zabbix使用详解).html#zabbixmysql">9.3.7. Zabbix监控MySQL主从状态</a></li>
 </ul>
 </li>
 </ul>
@@ -1603,6 +1662,7 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/04.SQL-Server学习/02.利用HAProxy代理SQL-Server的AlwaysOn辅助副本.html">4.2. 利用HAProxy代理SQL-Server的AlwaysOn辅助副本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/04.SQL-Server学习/03.SQL-Server-2014数据库集群搭建与配置指南.html">4.3. SQL Server 2014数据库集群搭建与配置指南</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a><ul>
@@ -1625,6 +1685,7 @@
 <li class="toctree-l4"><a class="reference internal" href="other/05.程序员实用工具网站/01.实用工具网站1.html#id26">5.1.16. 临时云盘——快捷方便的文件传输</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="other/05.程序员实用工具网站/02.程序员必备的网站推荐.html">5.2. 程序员必备的网站推荐</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a><ul>
@@ -1713,20 +1774,31 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/07.一些常用的工具/index.html">7. 一些常用的工具</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html">7.1. 常用工具合集</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.2. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id3">7.1.3. 网站运维</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id12">7.1.4. 开发工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id17">7.1.5. 文档处理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id19">7.1.6. 5款优秀的开源克隆软件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#linux">7.1.7. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 常用的开源镜像站（不定期更新）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id3">7.1.2. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.3. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id4">7.1.4. 网站运维</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id13">7.1.5. 开发工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id18">7.1.6. 文档处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id20">7.1.7. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#linux">7.1.8. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html">7.2. 日常工具</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#id2">7.2.1. 免费无线投屏神器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#web">7.2.1. web服务压力测试工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#github">7.2.2. Github代码搜索技巧</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#id2">7.2.3. 免费无线投屏神器</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/03.博客写书软件.html">7.3. 博客写书软件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/04.程序员必备的网站推荐.html">7.4. 程序员必备的网站推荐</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="other/08.Windows系统相关/index.html">8. Windows系统相关</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="other/08.Windows系统相关/01.windows-server-2008-R2-Enterprise-系统安全配置.html">8.1. windows-server-2008-R2-Enterprise-系统安全配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/08.Windows系统相关/02.windows-server-几大实时同步软件比较.html">8.2. windows-server-几大实时同步软件比较</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/08.Windows系统相关/03.windows-server-2008-R2间实时同步之FreeFileSync.html">8.3. windows-server-2008-R2间实时同步之FreeFileSync</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/08.Windows系统相关/04.Windows-Server-2008-R2-部署nginx、tomcat、mysql.html">8.4. Windows-Server-2008-R2-部署nginx、tomcat、mysql</a></li>
 </ul>
 </li>
 </ul>
@@ -1835,14 +1907,8 @@
 </div>
 <div class="section" id="id2">
 <h2>温馨提示：认真的学习，思考、系统的整理碎片化的知识<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>orem ipsum <a class="footnote-reference" href="#f1" id="id3">[1]</a> dolor sit amet ... <a class="footnote-reference" href="#f2" id="id4">[2]</a></p>
+<p>orem ipsum <a class="footnote-reference" href="#f1" id="id3">[1]</a> dolor sit amet … <a class="footnote-reference" href="#f2" id="id4">[2]</a></p>
 <p>Footnotes</p>
-<table class="docutils citation" frame="void" id="ref" rules="none">
-<colgroup><col class="label" /><col /></colgroup>
-<tbody valign="top">
-<tr><td class="label">[Ref]</td><td>参考文献《DevOps与自动化运维》、《高性能Linux服务构建实战》、《Mysql王者之路》等.</td></tr>
-</tbody>
-</table>
 <p class="rubric">Footnotes</p>
 <table class="docutils footnote" frame="void" id="f1" rules="none">
 <colgroup><col class="label" /><col /></colgroup>
@@ -1877,11 +1943,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1892,7 +1966,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

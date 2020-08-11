@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.3. 华为设备常用命令" href="03.华为路由器、交换机常用命令.html" />
     <link rel="prev" title="1.1. HCNA基础知识" href="01.HCNA基础知识.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
@@ -130,6 +135,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -168,7 +174,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
         
@@ -180,7 +186,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/02.HCNA实验举例.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/02.HCNA实验举例.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -240,18 +246,18 @@
 <div class="section" id="id1">
 <h3><a class="toc-backref" href="#id20">1．命令视图切换</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p>使用display version 命令显示系统软件版本及硬件等信息。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">display</span> <span class="n">version</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">display</span> <span class="n">version</span>
 </pre></div>
 </div>
 <p>用户视图下使用 system-view 命令可以切换到系统视图</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">system</span><span class="o">-</span><span class="n">view</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">system</span><span class="o">-</span><span class="n">view</span>
 <span class="n">Enter</span> <span class="n">system</span> <span class="n">view</span><span class="p">,</span> <span class="k">return</span> <span class="n">user</span> <span class="n">view</span> <span class="k">with</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Z</span>
 <span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">quit</span>
 <span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 <p>进入接口视图</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
 <span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">]</span>
 <span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="p">]</span><span class="n">ip</span> <span class="n">address</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.1</span> <span class="mi">24</span>
 </pre></div>
@@ -265,7 +271,7 @@
 </div>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id22">3．快捷键使用</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>■退格键&lt;BackSpace&gt;表示删除光标位置的前一个字符；
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>■退格键&lt;BackSpace&gt;表示删除光标位置的前一个字符；
 
 ■左光标键&lt;←&gt;或&lt;Ctrl+B&gt;表示光标向左移动一个字符位置；
 
@@ -281,14 +287,14 @@
 </div>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id23">4．修改路由器名称</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">sysname</span> <span class="n">R1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">sysname</span> <span class="n">R1</span>
 <span class="p">[</span><span class="n">R1</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id24">5．设置路由器时钟</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>例如：在用户视图下，使用clock datetime 命令修改系统日期和时间为2011 年9 月15日12时。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>例如：在用户视图下，使用clock datetime 命令修改系统日期和时间为2011 年9 月15日12时。
 
 &lt;R1&gt;clock datetime 12:00:00 2011-09-15
 
@@ -300,7 +306,7 @@
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id25">6．设置标题信息</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">header</span> <span class="n">login</span> <span class="n">information</span> <span class="s2">&quot;hello&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">header</span> <span class="n">login</span> <span class="n">information</span> <span class="s2">&quot;hello&quot;</span>
 <span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">header</span> <span class="n">shell</span> <span class="n">information</span> <span class="s2">&quot;Welcome to Huawei certification lab&quot;</span>
 <span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">quit</span>
 <span class="o">&lt;</span><span class="n">R1</span><span class="o">&gt;</span><span class="n">quit</span>
@@ -314,7 +320,7 @@
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id26">7．查看路由器基本信息</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">R1</span><span class="o">&gt;</span><span class="n">display</span> <span class="n">version</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">R1</span><span class="o">&gt;</span><span class="n">display</span> <span class="n">version</span>
 
 <span class="c1">#使用display current-configuration命令查看路由器当前配置。</span>
 <span class="o">&lt;</span><span class="n">R1</span><span class="o">&gt;</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
@@ -333,7 +339,7 @@
 <p>实验拓扑</p>
 <p>常用的IP相关命令的拓扑如图</p>
 <p><img alt="image0" src="../../_images/hcna-IP0001.png" /></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
 <span class="o">*</span><span class="n">down</span><span class="p">:</span> <span class="n">administratively</span> <span class="n">down</span>
 <span class="o">^</span><span class="n">down</span><span class="p">:</span> <span class="n">standby</span>
 <span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="n">loopback</span>
@@ -350,7 +356,7 @@
 <span class="n">NULL0</span>                             <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span>
 <span class="n">Route</span> <span class="n">Flags</span><span class="p">:</span> <span class="n">R</span> <span class="o">-</span> <span class="n">relay</span><span class="p">,</span> <span class="n">D</span> <span class="o">-</span> <span class="n">download</span> <span class="n">to</span> <span class="n">fib</span>
 <span class="o">------------------------------------------------------------------------------</span>
 <span class="n">Routing</span> <span class="n">Tables</span><span class="p">:</span> <span class="n">Public</span>
@@ -376,7 +382,7 @@
 <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.255</span><span class="o">/</span><span class="mi">32</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">InLoopBack0</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.1</span>
   <span class="n">PING</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.1</span><span class="p">:</span> <span class="mi">56</span>  <span class="n">data</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">press</span> <span class="n">CTRL_C</span> <span class="n">to</span> <span class="k">break</span>
     <span class="n">Reply</span> <span class="kn">from</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">56</span> <span class="n">Sequence</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">128</span> <span class="n">time</span><span class="o">=</span><span class="mi">120</span> <span class="n">ms</span>
     <span class="n">Reply</span> <span class="kn">from</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">56</span> <span class="n">Sequence</span><span class="o">=</span><span class="mi">2</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">128</span> <span class="n">time</span><span class="o">=</span><span class="mi">50</span>
@@ -388,7 +394,7 @@
 </pre></div>
 </div>
 <p>在PC1上ping PC2，开始抓包查看数据包信息</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">PC</span><span class="o">&gt;</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">2.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PC</span><span class="o">&gt;</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">2.1</span>
 
 <span class="n">Ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">2.1</span><span class="p">:</span> <span class="mi">32</span> <span class="n">data</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">Press</span> <span class="n">Ctrl_C</span> <span class="n">to</span> <span class="k">break</span>
 <span class="n">From</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">2.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">32</span> <span class="n">seq</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">127</span> <span class="n">time</span><span class="o">=</span><span class="mi">63</span> <span class="n">ms</span>
@@ -400,7 +406,7 @@
 <h2><a class="toc-backref" href="#id28">1.2.3. 交换机基础配置</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id9">
 <h3><a class="toc-backref" href="#id29">以太网接口和配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握接口速率和双工模式的配置方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握接口速率和双工模式的配置方法</span>
 
 <span class="mf">2.</span><span class="n">掌握实验手段模式配置链路聚合的方法</span>
 
@@ -415,7 +421,7 @@
 <ul class="simple">
 <li>方式一</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
 <span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">9</span>
 <span class="p">[</span><span class="n">sw1</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">9</span><span class="p">]</span><span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
 </pre></div>
@@ -423,7 +429,7 @@
 <ul class="simple">
 <li>方式二</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#创建Eth-Trunk 1，将接口0/0/9 - 0/0/10一次加入Eth-Trunk 1中</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#创建Eth-Trunk 1，将接口0/0/9 - 0/0/10一次加入Eth-Trunk 1中</span>
 <span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
 <span class="p">[</span><span class="n">sw1</span><span class="o">-</span><span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="p">]</span><span class="n">trunkport</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">9</span> <span class="n">to</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">10</span>
 
@@ -441,7 +447,7 @@
 <ul class="simple">
 <li>查看Eth-trunk的配置结果</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
 <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="s1">&#39;s state information is:</span>
 <span class="n">WorkingMode</span><span class="p">:</span> <span class="n">NORMAL</span>         <span class="n">Hash</span> <span class="n">arithmetic</span><span class="p">:</span> <span class="n">According</span> <span class="n">to</span> <span class="n">SIP</span><span class="o">-</span><span class="n">XOR</span><span class="o">-</span><span class="n">DIP</span>
 <span class="n">Least</span> <span class="n">Active</span><span class="o">-</span><span class="n">linknumber</span><span class="p">:</span> <span class="mi">1</span>  <span class="n">Max</span> <span class="n">Bandwidth</span><span class="o">-</span><span class="n">affected</span><span class="o">-</span><span class="n">linknumber</span><span class="p">:</span> <span class="mi">8</span>
@@ -469,7 +475,7 @@
 <ul class="simple">
 <li>配置文件如下：</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW1</span>
 <span class="c1">#</span>
@@ -511,7 +517,7 @@
 <ul class="simple">
 <li>查看Eth-trunk的配置结果</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
 <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="s1">&#39;s state information is:</span>
 <span class="n">Local</span><span class="p">:</span>
 <span class="n">LAG</span> <span class="n">ID</span><span class="p">:</span> <span class="mi">1</span>                   <span class="n">WorkingMode</span><span class="p">:</span> <span class="n">STATIC</span>
@@ -554,7 +560,7 @@
 <div class="section" id="vlan">
 <h2><a class="toc-backref" href="#id32">1.2.4. VLAN配置</a><a class="headerlink" href="#vlan" title="Permalink to this headline">¶</a></h2>
 <p>学习目的</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握vlan的创建方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握vlan的创建方法</span>
 <span class="mf">2.</span><span class="n">掌握Access和Trunk类型接口的配置方法</span>
 <span class="mf">3.</span><span class="n">掌握Hybird接口的配置</span>
 <span class="mf">4.</span><span class="n">掌握将接口与VLAN关联的配置方法</span>
@@ -567,7 +573,7 @@
 <h3><a class="toc-backref" href="#id33">配置文件</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <ul>
 <li><p class="first">SW1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW1</span>
 <span class="c1">#</span>
@@ -603,7 +609,7 @@
 </div>
 </li>
 <li><p class="first">SW2</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW2</span>
 <span class="c1">#</span>
@@ -635,7 +641,7 @@
 </div>
 </li>
 <li><p class="first">SW3</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw3</span><span class="p">]</span><span class="n">dis</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw3</span><span class="p">]</span><span class="n">dis</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">sw3</span>
 
@@ -645,7 +651,7 @@
 </div>
 </li>
 <li><p class="first">SW4</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">Huawei</span>
 
@@ -655,20 +661,20 @@
 </div>
 </li>
 <li><p class="first">R1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
  <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
 </pre></div>
 </div>
 </li>
 <li><p class="first">R3</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
  <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.3</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
 </pre></div>
 </div>
 <p>R1和R3在同一vlan，可以互通，如下：</p>
 </li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R4</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R4</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">ping</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span>
   <span class="n">PING</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span><span class="p">:</span> <span class="mi">56</span>  <span class="n">data</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">press</span> <span class="n">CTRL_C</span> <span class="n">to</span> <span class="k">break</span>
     <span class="n">Reply</span> <span class="kn">from</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">56</span> <span class="n">Sequence</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">255</span> <span class="n">time</span><span class="o">=</span><span class="mi">110</span> <span class="n">ms</span>
     <span class="n">Reply</span> <span class="kn">from</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">4.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">56</span> <span class="n">Sequence</span><span class="o">=</span><span class="mi">2</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">255</span> <span class="n">time</span><span class="o">=</span><span class="mi">70</span> <span class="n">ms</span>
@@ -681,7 +687,7 @@
 </div>
 <p>实现效果; R3、R4、SW4之间互通，Vlan2和Vlan4打通通信</p>
 <p>​ SW1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW1</span>
 <span class="c1">#</span>
@@ -714,7 +720,7 @@
 </pre></div>
 </div>
 <p>SW2</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW2</span>
 <span class="c1">#</span>
@@ -749,7 +755,7 @@
 </div>
 <div class="section" id="gvrp">
 <h2><a class="toc-backref" href="#id34">1.2.5. GVRP配置</a><a class="headerlink" href="#gvrp" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握GVRP的配置方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">掌握GVRP的配置方法</span>
 <span class="mf">2.</span><span class="n">掌握GVRP不同注册模式的配置方法</span>
 </pre></div>
 </div>
@@ -762,7 +768,7 @@
 <div class="section" id="id12">
 <span id="id13"></span><h3><a class="toc-backref" href="#id35">配置文件</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>sw1</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">Sw1</span>
 <span class="c1">#</span>
@@ -783,7 +789,7 @@
 </pre></div>
 </div>
 <p>sw1查看学习到的vlan</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span>  <span class="n">vlan</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span>  <span class="n">vlan</span>
 <span class="n">Dec</span> <span class="mi">21</span> <span class="mi">2018</span> <span class="mi">15</span><span class="p">:</span><span class="mi">24</span><span class="p">:</span><span class="mi">05</span><span class="o">-</span><span class="mi">08</span><span class="p">:</span><span class="mi">00</span> <span class="n">Sw1</span> <span class="n">DS</span><span class="o">/</span><span class="mi">4</span><span class="o">/</span><span class="n">DATASYNC_CFGCHANGE</span><span class="p">:</span><span class="n">OID</span> <span class="mf">1.3</span><span class="o">.</span><span class="mf">6.1</span><span class="o">.</span><span class="mf">4.1</span><span class="o">.</span><span class="mf">2011.5</span><span class="o">.</span><span class="mi">25</span>
 <span class="o">.</span><span class="mf">191.3</span><span class="o">.</span><span class="mi">1</span> <span class="n">configurations</span> <span class="n">have</span> <span class="n">been</span> <span class="n">changed</span><span class="o">.</span> <span class="n">The</span> <span class="n">current</span> <span class="n">change</span> <span class="n">number</span> <span class="ow">is</span> <span class="mi">20</span><span class="p">,</span> <span class="n">the</span>
 <span class="n">change</span> <span class="n">loop</span> <span class="n">count</span> <span class="ow">is</span> <span class="mi">0</span><span class="p">,</span> <span class="ow">and</span> <span class="n">the</span> <span class="n">maximum</span> <span class="n">number</span> <span class="n">of</span> <span class="n">records</span> <span class="ow">is</span> <span class="mf">4095.</span> <span class="n">vlan</span>
@@ -821,7 +827,7 @@
 </pre></div>
 </div>
 <p>sw2</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW2</span>
 <span class="c1">#</span>
@@ -841,7 +847,7 @@
 </pre></div>
 </div>
 <p>查看sw2 学习到的vlan</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">vlan</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">vlan</span>
 <span class="n">The</span> <span class="n">total</span> <span class="n">number</span> <span class="n">of</span> <span class="n">vlans</span> <span class="ow">is</span> <span class="p">:</span> <span class="mi">4</span>
 <span class="o">--------------------------------------------------------------------------------</span>
 <span class="n">U</span><span class="p">:</span> <span class="n">Up</span><span class="p">;</span>         <span class="n">D</span><span class="p">:</span> <span class="n">Down</span><span class="p">;</span>         <span class="n">TG</span><span class="p">:</span> <span class="n">Tagged</span><span class="p">;</span>         <span class="n">UT</span><span class="p">:</span> <span class="n">Untagged</span><span class="p">;</span>
@@ -875,7 +881,7 @@
 </pre></div>
 </div>
 <p>sw3</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW3</span>
 <span class="c1">#</span>
@@ -890,7 +896,7 @@
 </pre></div>
 </div>
 <p>sw4</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW4</span><span class="p">]</span><span class="n">displa</span> <span class="n">cu</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW4</span><span class="p">]</span><span class="n">displa</span> <span class="n">cu</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW4</span>
 <span class="c1">#</span>
@@ -912,7 +918,7 @@
 <ul class="simple">
 <li>sw1</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">fixed</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">fixed</span>
 
 
 <span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">gvrp</span> <span class="n">statistics</span>
@@ -960,7 +966,7 @@
 <ul class="simple">
 <li>sw2</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">fixed</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">fixed</span>
 
 
 <span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">gvrp</span> <span class="n">statistics</span>
@@ -1008,7 +1014,7 @@
 <ul class="simple">
 <li>sw1</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">forbidden</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Sw1</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">forbidden</span>
 <span class="n">Info</span><span class="p">:</span> <span class="n">This</span> <span class="n">operation</span> <span class="n">may</span> <span class="n">take</span> <span class="n">a</span> <span class="n">few</span> <span class="n">seconds</span><span class="o">.</span> <span class="n">Please</span> <span class="n">wait</span> <span class="k">for</span> <span class="n">a</span> <span class="n">moment</span><span class="o">...</span><span class="n">done</span><span class="o">.</span>
 
 <span class="p">[</span><span class="n">Sw1</span><span class="p">]</span><span class="n">display</span> <span class="n">gvrp</span> <span class="n">statistics</span>
@@ -1051,7 +1057,7 @@
 <ul class="simple">
 <li>sw2</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">forbidden</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">gvrp</span> <span class="n">registration</span> <span class="n">forbidden</span>
 
 <span class="p">[</span><span class="n">SW2</span><span class="p">]</span><span class="n">display</span> <span class="n">gvrp</span> <span class="n">statistics</span>
 
@@ -1100,7 +1106,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <h2><a class="toc-backref" href="#id37">1.2.6. VLAN间路由</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id16">
 <h3><a class="toc-backref" href="#id38">掌握知识</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="n">掌握用于VLAN间路由的Trunk接口的配置方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span> <span class="n">掌握用于VLAN间路由的Trunk接口的配置方法</span>
 <span class="mi">2</span> <span class="n">掌握单个物理接口上配置多个子接口的方法</span>
 <span class="mi">3</span> <span class="n">掌握VLAN间实现ARP通信的配置方法</span>
 </pre></div>
@@ -1110,7 +1116,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R1配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R1</span>
@@ -1124,7 +1130,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R2配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R2</span>
@@ -1139,7 +1145,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R3配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R3</span>
@@ -1177,7 +1183,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>SW配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW1</span>
 <span class="c1">#</span>
@@ -1201,7 +1207,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 </ul>
 <div class="section" id="id17">
 <h4>配置三层交换<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">掌握三层交换机实现VLAN通信的方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">掌握三层交换机实现VLAN通信的方法</span>
 <span class="o">-</span> <span class="n">通过Trunk链路实现VLAN间通信的配置方法</span>
 <span class="o">-</span> <span class="n">配置不同VLAN间动态路由协议OSPF的方法</span>
 </pre></div>
@@ -1212,7 +1218,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>SW1</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="o">-</span><span class="n">ospf</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">sw1</span><span class="o">-</span><span class="n">ospf</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">sw1</span>
 <span class="c1">#</span>
@@ -1275,7 +1281,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>SW2</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">ospf</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">area</span><span class="o">-</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW2</span><span class="o">-</span><span class="n">ospf</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">area</span><span class="o">-</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW2</span>
 <span class="c1">#</span>
@@ -1333,7 +1339,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R1</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R1</span>
@@ -1349,7 +1355,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R2</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R2</span>
@@ -1363,7 +1369,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>SW3</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW3</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW3</span>
 <span class="n">interface</span> <span class="n">Vlanif1</span>
@@ -1375,7 +1381,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>SW4</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW4</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW4</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="c1">#</span>
 <span class="n">sysname</span> <span class="n">SW4</span>
 <span class="n">interface</span> <span class="n">Vlanif1</span>
@@ -1389,7 +1395,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 </div>
 <div class="section" id="ip-acl">
 <h2><a class="toc-backref" href="#id39">1.2.7. IP安全配置(ACL)</a><a class="headerlink" href="#ip-acl" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">掌握高级ACL的配置方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="n">掌握高级ACL的配置方法</span>
 <span class="o">-</span> <span class="n">掌握ACL在接口下的应用方法</span>
 </pre></div>
 </div>
@@ -1399,7 +1405,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R1</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">R1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
 <span class="p">[</span><span class="n">V200R003C00</span><span class="p">]</span>
 <span class="c1">#</span>
  <span class="n">sysname</span> <span class="n">R1</span>
@@ -1417,7 +1423,7 @@ Forbidden模式下E0/0/1接口只允许VLAN1的报文通过，禁止任何其他
 <ul class="simple">
 <li>R2</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[R2]display current-configuration
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[R2]display current-configuration
 [V200R003C00]
 #
  sysname R2
@@ -1479,7 +1485,7 @@ user-interface vty 16 20
 <ul class="simple">
 <li>R3</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[R3]display current-configuration
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[R3]display current-configuration
 [V200R003C00]
 #
  sysname R3
@@ -1508,7 +1514,7 @@ ospf 1
 <ul class="simple">
 <li>SW1 telnet服务器</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;SW1&gt;display current-configuration
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;SW1&gt;display current-configuration
 #
 sysname SW1
 #
@@ -1534,7 +1540,7 @@ user-interface vty 0 4
 <ul class="simple">
 <li>SW2 ftp服务器</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[SW2]display current-configuration
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[SW2]display current-configuration
 #
 sysname SW2
 #
@@ -1573,7 +1579,7 @@ user-interface vty 0 4
 <div class="section" id="nat">
 <h2><a class="toc-backref" href="#id40">1.2.8. NAT的配置</a><a class="headerlink" href="#nat" title="Permalink to this headline">¶</a></h2>
 <p>学习目标</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">掌握动态NAT的配置方法</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">掌握动态NAT的配置方法</span>
 <span class="o">*</span> <span class="n">掌握Easy</span> <span class="n">IP的配置方法</span>
 </pre></div>
 </div>
@@ -1600,11 +1606,19 @@ user-interface vty 0 4
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1615,7 +1629,6 @@ user-interface vty 0 4
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

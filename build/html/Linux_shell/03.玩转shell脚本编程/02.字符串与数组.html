@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.3. 3 运算符" href="03.运算符.html" />
     <link rel="prev" title="3.1. 1 基础知识" href="01.基础知识.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -180,6 +185,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -218,7 +224,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -230,7 +236,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/02.字符串与数组.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/02.字符串与数组.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -286,14 +292,14 @@
 <h2><a class="toc-backref" href="#id25">3.2.1. 1 字符串常用操作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id26">1.1 获取字符串长度</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p>方式1 利用<code class="docutils literal"><span class="pre">${#var}</span></code>来获取字符串长度</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&#39;abcstring&#39;</span>
+<p>方式1 利用<code class="docutils literal notranslate"><span class="pre">${#var}</span></code>来获取字符串长度</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&#39;abcstring&#39;</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${#var}</span>
 <span class="mi">9</span>
 </pre></div>
 </div>
 <p>方式2</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># $string上的双引号必不可少</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># $string上的双引号必不可少</span>
 <span class="n">expr</span> <span class="n">length</span> <span class="s2">&quot;$string&quot;</span>
 </pre></div>
 </div>
@@ -301,13 +307,13 @@
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id27">1.2 字符串切片</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>格式：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>·${parameter:offset}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·${parameter:offset}
 
 ·${parameter:offset:length}
 </pre></div>
 </div>
 <p>截取从 offset 个字符开始，向后 length 个字符。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:0}</span>
 <span class="n">hello</span> <span class="n">shell</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var:0:5}</span>
@@ -326,17 +332,17 @@
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id28">1.3 字符串替换</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>格式：${parameter/pattern/string}</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>${PARAMETER/PATTERN/STRING}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${PARAMETER/PATTERN/STRING}
 ${PARAMETER//PATTERN/STRING}
 ${PARAMETER/PATTERN}
 ${PARAMETER//PATTERN}
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>操作符“/”表示只替换一个匹配的字符串，而操作符“//”表示替换所有匹配的字符串。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>操作符“/”表示只替换一个匹配的字符串，而操作符“//”表示替换所有匹配的字符串。
 如果没有指定替换字符串STRING，那么匹配的内容将被替换为空字符串，即被删除。
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># var=&quot;hello shell&quot;</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${var/shell/world}</span>
 <span class="n">hello</span> <span class="n">world</span>
 
@@ -361,7 +367,7 @@ ${PARAMETER//PATTERN}
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id29">1.4 字符串删除</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ hujianli=&quot;hello fred，/home/fred, this is test var fred&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ hujianli=&quot;hello fred，/home/fred, this is test var fred&quot;
 
 # 删除变量中匹配到1次的元素     /元素
 $ echo ${hujianli/fred}
@@ -382,7 +388,7 @@ hello ，/home/, this is test var
 </pre></div>
 </div>
 <p>字符串变量大小写转换</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ echo ${hujianli^^}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo ${hujianli^^}
 HELLO FRED，/HOME/FRED, THIS IS TEST VAR FRED
 
 $ echo ${hujianli,,}
@@ -399,7 +405,7 @@ hello fred，/home/fred, this is test var fred
 <p>${parameter%%word}</p>
 <p># 去掉左边，最短匹配模式，##最长匹配模式。</p>
 <p>% 去掉右边，最短匹配模式，%%最长匹配模式。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># url=&quot;https://www.baidu.com/index.html&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># url=&quot;https://www.baidu.com/index.html&quot;</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url#*/}</span>
 <span class="o">/</span><span class="n">www</span><span class="o">.</span><span class="n">baidu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${url##*/}</span>
@@ -418,7 +424,7 @@ hello fred，/home/fred, this is test var fred
 <p>${VAR:+string} 如果 VAR 变量不为空则返回 string</p>
 <p>${VAR:=string} 如果 VAR 变量为空则重新赋值 VAR 变量值为 string</p>
 <p>${VAR:?string} 如果 VAR 变量为空则将 string 输出到 stderr</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@xuel-tmp-shell ~]# url=&quot;https://www.baidu.com/index.html&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@xuel-tmp-shell ~]# url=&quot;https://www.baidu.com/index.html&quot;
 [root@xuel-tmp-shell ~]# echo ${url:-&quot;string&quot;}
 https://www.baidu.com/index.html
 [root@xuel-tmp-shell ~]# echo ${url:+&quot;string&quot;}
@@ -460,7 +466,7 @@ for i in `cat /etc/group`;do echo ${i%%:*};done
 </div>
 <div class="section" id="id13">
 <h3><a class="toc-backref" href="#id37">3.2 通过元素值集合来创建数组变量</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="c1"># 定义数组</span>
 <span class="n">array</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span> <span class="mi">6</span> <span class="mi">7</span> <span class="mi">8</span><span class="p">)</span>
@@ -473,7 +479,7 @@ for i in `cat /etc/group`;do echo ${i%%:*};done
 </pre></div>
 </div>
 <p>计算数组的长度</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>${#array[@]}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${#array[@]}
 或者
 ${#array[*]}
 
@@ -483,7 +489,7 @@ ${#array[*]}
 </div>
 <div class="section" id="id14">
 <h3><a class="toc-backref" href="#id38">3.3 通过键值对定义数组</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="c1"># 定义数组</span>
 <span class="n">array</span><span class="o">=</span><span class="p">([</span><span class="mi">1</span><span class="p">]</span><span class="o">=</span><span class="n">one</span> <span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="o">=</span><span class="n">four</span><span class="p">)</span>
@@ -496,7 +502,7 @@ ${#array[*]}
 </div>
 <div class="section" id="id15">
 <h3><a class="toc-backref" href="#id39">3.4 数组元素读取</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># args1=(aa bb cc 1123)</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># args1=(aa bb cc 1123)</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${#args1[@]}     #获取数组元素个数</span>
 <span class="mi">4</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@xuel</span><span class="o">-</span><span class="n">tmp</span><span class="o">-</span><span class="n">shell</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo ${args1[0]}</span>
@@ -515,7 +521,7 @@ ${#array[*]}
 </div>
 <p>遍历数组</p>
 <p>方式1</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="c1"># 定义数组</span>
 <span class="n">array</span><span class="o">=</span><span class="p">(</span><span class="n">Mon</span> <span class="n">Tue</span> <span class="n">Wed</span> <span class="n">Thu</span> <span class="n">Fri</span> <span class="n">Sat</span> <span class="n">Sun</span><span class="p">)</span>
@@ -527,7 +533,7 @@ ${#array[*]}
 </div>
 <hr class="docutils" />
 <p>方式2</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 
 array=(Mon Tue Wed Thu Fri Sat Sun)
 # 获取数组长度
@@ -540,13 +546,13 @@ done
 </pre></div>
 </div>
 <p>遍历文件</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>filelist=($(ls));for i in ${!filelist[@]};do echo ${filelist[$i]};done
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>filelist=($(ls));for i in ${!filelist[@]};do echo ${filelist[$i]};done
 </pre></div>
 </div>
 </div>
 <div class="section" id="id16">
 <h3><a class="toc-backref" href="#id40">3.5 以切片方式获取部分数组元素</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 #在上面的代码中，第4行定义了一个含有7个元素的数组。第6行从下标为2的数组元素开始，截取其中的4个元素。
 linux=(&quot;Debian&quot; &quot;RedHat&quot; &quot;Ubuntu&quot; &quot;Suse&quot; &quot;Fedora&quot; &quot;UTS&quot; &quot;CentOS&quot;)
 # 数组切片
@@ -555,12 +561,12 @@ echo &quot;$var&quot;
 </pre></div>
 </div>
 <hr class="docutils" />
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linux</span> <span class="n">chapter7</span><span class="p">]</span><span class="c1"># ./ex7-19.sh</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linux</span> <span class="n">chapter7</span><span class="p">]</span><span class="c1"># ./ex7-19.sh</span>
 <span class="n">Ubuntu</span> <span class="n">Suse</span> <span class="n">Fedora</span> <span class="n">UTS</span>
 </pre></div>
 </div>
 <p>演示将切片结果以数组形式保存的方法。本例将切片的结果赋给了一个新的数组变量，然后输出新的数组的长度，最后通过循环输出所有的数组元素</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 
 # 定义数组
 linux=(&quot;Debian&quot; &quot;RedHat&quot; &quot;Ubuntu&quot; &quot;Suse&quot; &quot;Fedora&quot; &quot;UTS&quot; &quot;CentOS&quot;)
@@ -582,14 +588,14 @@ done
 <div class="section" id="declare">
 <h3><a class="toc-backref" href="#id41">3.6 通过declare语句定义关联数组</a><a class="headerlink" href="#declare" title="Permalink to this headline">¶</a></h3>
 <p>其基本语法如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">declare</span> <span class="o">-</span><span class="n">a</span> <span class="n">array</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">declare</span> <span class="o">-</span><span class="n">a</span> <span class="n">array</span>
 <span class="n">declare</span> <span class="o">-</span><span class="n">A</span> <span class="n">dic</span>
 </pre></div>
 </div>
 <p>在上面的语法中，-a选项表示后面定义的是一个数组，其名称为array。</p>
 <div class="section" id="id17">
 <h4>关联数组 —&gt; shell中的字典<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span># -A 举例，字典类型的关联数组
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># -A 举例，字典类型的关联数组
 declare -A dic
 dic=([no1]=&quot;hujianli1&quot; [no2]=&quot;hujianli2&quot; [no3]=&quot;hujianli3&quot;)
 
@@ -608,7 +614,7 @@ no1:hujianli1
 </pre></div>
 </div>
 <p>关联数组必须以大写的declare -A命令来进行声明</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>$ declare -A array_example
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>$ declare -A array_example
 $ array_example=([0]=centos7
                  [1]=centos6
                  [2]=ubuntu
@@ -634,7 +640,7 @@ $ echo ${!array_example[*]}
 </pre></div>
 </div>
 <p>举例说明</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>declare -A projects=(
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>declare -A projects=(
     [test_chatsrv-frontend]=&quot;172.20.20.3&quot;
     [test_chatsrv-core]=&quot;172.20.20.5&quot;
     [test_chatsrv-storage]=&quot;172.20.20.5&quot;
@@ -649,7 +655,7 @@ for project in ${!projects[@]}; do
 done
 </pre></div>
 </div>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
 # @Author: hujianli
 # @Date:   2018-11-18 15:03:18
 # @Last Modified by:   hujianli
@@ -685,7 +691,7 @@ echo ${student[@]}
 echo ${student[*]}
 </pre></div>
 </div>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#!/bin/sh
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
 # @Author: hujianli
 # @Date:   2018-11-18 13:59:12
 # @Last Modified by:   hujianli
@@ -708,7 +714,7 @@ done
 <h3><a class="toc-backref" href="#id42">3.7 在数组末尾追加新元素</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <p>在Shell中，向已有的数组末尾追加新的元素非常方便。在通过索引为数组元素赋值时，如果指定的索引不存在，则Shell会自动添加一个新的元素，并且将指定的值赋给该元素。</p>
 <p>演示如何在数组末尾追加新的数组元素</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 <span class="c1"># 定义数组</span>
 <span class="n">array</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span> <span class="mi">2</span><span class="p">)</span>
 <span class="c1"># 输出数组</span>
@@ -720,7 +726,7 @@ done
 </pre></div>
 </div>
 <p>演示向关联数组追加新元素的方法</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 <span class="c1"># 定义数组</span>
 <span class="n">declare</span> <span class="o">-</span><span class="n">A</span> <span class="n">array</span>
 <span class="c1"># 初始化数组</span>
@@ -735,7 +741,7 @@ done
 </div>
 <div class="section" id="id19">
 <h3><a class="toc-backref" href="#id43">3.8 通过循环为数组赋值</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 # 通过循环为数组赋值
 for i in {1..10}
 do
@@ -749,11 +755,11 @@ echo &quot;${array[@]}&quot;
 <div class="section" id="id20">
 <h3><a class="toc-backref" href="#id44">3.9 数组元素的替换</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>数组元素替换的基本语法如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>${array[@|*]/pattern/replacement}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>${array[@|*]/pattern/replacement}
 </pre></div>
 </div>
 <p>演示如何对数组进行替换，以及如何将替换的结果赋给一个新的数组变量。</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 # 定义数组
 a=(1 2 3 4 5)
 # 输出替换结果
@@ -767,7 +773,7 @@ echo &quot;the new array is ${a[@]}&quot;
 </pre></div>
 </div>
 <p>该程序的执行结果如下：</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linux</span> <span class="n">chapter7</span><span class="p">]</span><span class="c1"># ./ex7-23.sh</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linux</span> <span class="n">chapter7</span><span class="p">]</span><span class="c1"># ./ex7-23.sh</span>
 <span class="n">the</span> <span class="n">result</span> <span class="ow">is</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">100</span> <span class="mi">4</span> <span class="mi">5</span>
 <span class="n">the</span> <span class="n">old</span> <span class="n">array</span> <span class="ow">is</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span>
 <span class="n">the</span> <span class="n">new</span> <span class="n">array</span> <span class="ow">is</span> <span class="mi">1</span> <span class="mi">2</span> <span class="mi">100</span> <span class="mi">4</span> <span class="mi">5</span>
@@ -777,11 +783,11 @@ echo &quot;the new array is ${a[@]}&quot;
 <div class="section" id="id21">
 <h3><a class="toc-backref" href="#id45">3.10 删除数组</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <p>与删除其他的Shell变量一样，用户可以使用unset命令来删除某个数组元素，其基本语法如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">unset</span> <span class="n">array</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">unset</span> <span class="n">array</span><span class="p">[</span><span class="n">n</span><span class="p">]</span>
 </pre></div>
 </div>
 <p><strong>删除数组中的元素</strong></p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="n">linux</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Debian&quot;</span> <span class="s2">&quot;RedHat&quot;</span> <span class="s2">&quot;Ubuntu&quot;</span> <span class="s2">&quot;Suse&quot;</span> <span class="s2">&quot;Fedora&quot;</span> <span class="s2">&quot;UTS&quot;</span> <span class="s2">&quot;CentOS&quot;</span><span class="p">)</span>
 <span class="c1"># 输出原始数组长度</span>
@@ -797,7 +803,7 @@ echo &quot;the new array is ${a[@]}&quot;
 </pre></div>
 </div>
 <p><strong>删除整个数组</strong></p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="n">linux</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Debian&quot;</span> <span class="s2">&quot;RedHat&quot;</span> <span class="s2">&quot;Ubuntu&quot;</span> <span class="s2">&quot;Suse&quot;</span> <span class="s2">&quot;Fedora&quot;</span> <span class="s2">&quot;UTS&quot;</span> <span class="s2">&quot;CentOS&quot;</span><span class="p">)</span>
 <span class="c1"># 删除整个数组</span>
@@ -810,17 +816,17 @@ echo &quot;the new array is ${a[@]}&quot;
 <h3><a class="toc-backref" href="#id46">3.11 数组的其它操作</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <p><strong>复制数组</strong></p>
 <p>所谓复制数组，是指创建一个已经存在的数组的副本。也就是将一个数组的内容全部存储到另外一个新的数组中。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>在Shell中，用户可以通过以下语法来实现数组的复制：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在Shell中，用户可以通过以下语法来实现数组的复制：
 newarray=(&quot;${array[@]}&quot;)
 </pre></div>
 </div>
 <p><strong>连接数组</strong></p>
 <p>连接数组是指将2个数组的数组元素连接在一起，变成一个大的数组。新的数组依次包含2个数组的所有的元素。数组连接的语法如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;$array1[@]}&quot;</span> <span class="s2">&quot;$</span><span class="si">{array2[@]}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;$array1[@]}&quot;</span> <span class="s2">&quot;$</span><span class="si">{array2[@]}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>示例</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#! /bin/bash</span>
 
 <span class="c1"># 定义 2 个数组</span>
 <span class="n">linux</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;Debian&quot;</span> <span class="s2">&quot;RedHat&quot;</span> <span class="s2">&quot;Ubuntu&quot;</span> <span class="s2">&quot;Suse&quot;</span> <span class="s2">&quot;Fedora&quot;</span> <span class="s2">&quot;UTS&quot;</span> <span class="s2">&quot;CentOS&quot;</span><span class="p">)</span>
@@ -836,7 +842,7 @@ newarray=(&quot;${array[@]}&quot;)
 </pre></div>
 </div>
 <p><strong>加载文件内容到数组</strong></p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>#! /bin/bash
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#! /bin/bash
 # 加载文件内容
 content=(`cat &quot;demo.txt&quot;`)
 # 通过循环输出数组内容
@@ -850,7 +856,7 @@ done
 </div>
 <div class="section" id="id23">
 <h2><a class="toc-backref" href="#id47">3.2.4. 4 字符显示颜色</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>字体颜色           字体背景颜色            显示方式
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>字体颜色           字体背景颜色            显示方式
 30：黑                40：黑
 31：红                41：深红              0：终端默认设置
 32：绿                42：绿                   1：高亮显示
@@ -867,22 +873,22 @@ done
 <ul class="simple">
 <li>显示方式</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="mi">8</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;31;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">1.</span><span class="o">.</span><span class="mi">8</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;31;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>字体颜色</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">30.</span><span class="o">.</span><span class="mi">37</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">30.</span><span class="o">.</span><span class="mi">37</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[$i;40m hello world </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
 </pre></div>
 </div>
 <ul class="simple">
 <li>背景颜色</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">40.</span><span class="o">.</span><span class="mi">47</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[47;$</span><span class="si">{i}</span><span class="s2">m hello world! </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="p">{</span><span class="mf">40.</span><span class="o">.</span><span class="mi">47</span><span class="p">};</span><span class="n">do</span> <span class="n">echo</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;</span><span class="se">\033</span><span class="s2">[47;$</span><span class="si">{i}</span><span class="s2">m hello world! </span><span class="se">\033</span><span class="s2">[0m&quot;</span><span class="p">;</span><span class="n">done</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:xxx.sh
 # 文本颜色是由对应的色彩码来描述的。其中包括：重置=0，黑色=30，红色=31，绿色=32，
@@ -967,11 +973,19 @@ echo_color Magenta &quot;哈哈哈哈哈哈&quot;
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -982,7 +996,6 @@ echo_color Magenta &quot;哈哈哈哈哈哈&quot;
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.2. 02.Mysql数据库的安装启动和关闭" href="02.Mysql数据库的安装启动和关闭.html" />
     <link rel="prev" title="1. 01.倔强的青铜篇" href="index.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
@@ -124,11 +129,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -167,7 +174,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
         
@@ -179,7 +186,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Mysql/01.倔强的青铜篇/01.Mysql简介与主流分支版本.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/01.Mysql简介与主流分支版本.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -223,7 +230,7 @@ MySQL公布了自己的源代码。</p>
 <h2><a class="toc-backref" href="#id6">1.1.2. Mysql主流的分支版本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id3">
 <h3><a class="toc-backref" href="#id7">官方版本的MySQL</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL 5.5 5.6 5.7 8.0
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 5.5 5.6 5.7 8.0
 
 MySQL 8.0对源代码进行了重构，对MySQL Optimizer优化器进行了改进，支持隐藏索引
 </pre></div>
@@ -232,7 +239,7 @@ MySQL 8.0对源代码进行了重构，对MySQL Optimizer优化器进行了改�
 </div>
 <div class="section" id="percona-server">
 <h3><a class="toc-backref" href="#id8">Percona Server</a><a class="headerlink" href="#percona-server" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>在InnoDB存储引擎的基础上，提升性能和易管理性，最后形成增强版的XtraDB引擎，可以更好地发挥硬件性能。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在InnoDB存储引擎的基础上，提升性能和易管理性，最后形成增强版的XtraDB引擎，可以更好地发挥硬件性能。
 
 XtraDB-Cluster支持多点写入强同步高可用集群，实现实时同步，解决MySQL主从复制延迟问题
 
@@ -242,7 +249,7 @@ TokuDB存储引擎，支持数据压缩、高扩展性和优秀的查询插入�
 </div>
 <div class="section" id="mariadb">
 <h3><a class="toc-backref" href="#id9">MariaDB</a><a class="headerlink" href="#mariadb" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>由开源社区维护，高度兼容
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>由开源社区维护，高度兼容
 
 包含XtraDB存储引擎、TokuDB存储引擎、Spider水平分片存储引擎，支持基于表的并行复制、多源复制、Galera Cluster集群
 </pre></div>
@@ -271,11 +278,19 @@ TokuDB存储引擎，支持数据压缩、高扩展性和优秀的查询插入�
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -286,7 +301,6 @@ TokuDB存储引擎，支持数据压缩、高扩展性和优秀的查询插入�
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

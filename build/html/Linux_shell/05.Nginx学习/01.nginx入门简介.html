@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5.2. nginx常用命令管理" href="02.nginx常用命令管理.html" />
     <link rel="prev" title="5. Nginx学习" href="index.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -123,7 +128,9 @@
 <li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.14. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -131,15 +138,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -178,7 +188,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -190,7 +200,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/05.Nginx学习/01.nginx入门简介.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/05.Nginx学习/01.nginx入门简介.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -220,12 +230,12 @@
 <p>Nginx (“engine x”) 是一个高性能的 HTTP 和 反向代理 服务器，也是一个
 IMAP/POP3/SMTP
 代理服务器，目前中国互联网企业70%以上公司都在使用nginx作为自己的web服务器。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Nginx特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Nginx特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。
 </pre></div>
 </div>
 <div class="section" id="nginxapache">
 <h2><a class="toc-backref" href="#id4">5.1.1. 一：Nginx相对于Apache优点：</a><a class="headerlink" href="#nginxapache" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1)     高并发响应性能非常好，官方Nginx处理静态文件并发5w/s
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1)     高并发响应性能非常好，官方Nginx处理静态文件并发5w/s
 
 2)     反向代理性能非常强。（可用于负载均衡）
 
@@ -241,7 +251,7 @@ IMAP/POP3/SMTP
 </div>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id5">5.1.2. 二：nginx的模块</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>① 核心模块：HTTP模块、EVENT模块和MAIL模块
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>① 核心模块：HTTP模块、EVENT模块和MAIL模块
 
 ② 基础模块：HTTP Access模块、HTTP FastCGI模块、HTTP Proxy模块和HTTP Rewrite模块，
 
@@ -252,29 +262,29 @@ IMAP/POP3/SMTP
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id6">5.1.3. 三：nginx的安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>注意：首先需要安装pcre库，安装pcre支持rewrite库,也可以安装源码，注*安装源码时，指定pcre路径为解压源码的路径，而不是编译后的路径，否则会报错。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">vim</span> <span class="n">gcc</span> <span class="n">telnet</span> <span class="n">lrzsz</span> <span class="n">openssl</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">pcre</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">vim</span> <span class="n">gcc</span> <span class="n">telnet</span> <span class="n">lrzsz</span> <span class="n">openssl</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">pcre</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span>
 </pre></div>
 </div>
 <p>下载Nginx源码包</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
 <p>创建nginx用户，并且设置为不能登录</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">nginx</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">nginx</span>
 </pre></div>
 </div>
 <p>解压，进入解压目录，然后sed修改Nginx版本信息为JSW</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 <span class="n">cd</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mi">0</span><span class="p">;</span><span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/1.12.0//g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/nginx\//JWS/g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/&quot;NGINX&quot;/&quot;JWS&quot;/g&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">h</span>
 </pre></div>
 </div>
 <p>编译，预编译nginx</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">www</span><span class="p">;</span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">www</span><span class="p">;</span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
 <p>至此nginx web服务安装完毕</p>
 <p>检查nginx配置文件是否正确，返回OK即正确。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx -t
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx -t
 nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
 nginx: configuration file /usr/local/nginx//conf/nginx.conf test is successful
 
@@ -283,7 +293,7 @@ echo &quot;export PATH=$PATH:/usr/local/nginx/sbin/&quot; &gt;&gt; /etc/profile
 </pre></div>
 </div>
 <p>启动nginx</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx
 [root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# ps aux | grep nginx
 root     10952  0.0  0.0  45932  1120 ?        Ss   23:28   0:00 nginx: master process /usr/local/nginx/sbin/nginx
 www      10953  0.0  0.0  46380  1896 ?        S    23:28   0:00 nginx: worker process
@@ -296,7 +306,7 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 <h2><a class="toc-backref" href="#id7">5.1.4. 四：yum安装nginx</a><a class="headerlink" href="#yumnginx" title="Permalink to this headline">¶</a></h2>
 <p>环境 Centos 7</p>
 <p>安装步骤</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">添加Nginx到YUM源</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">添加Nginx到YUM源</span>
 <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">noarch</span><span class="o">/</span><span class="n">RPMS</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="mf">0.</span><span class="n">el7</span><span class="o">.</span><span class="n">ngx</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">或者</span>
 <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
@@ -344,11 +354,19 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -359,7 +377,6 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

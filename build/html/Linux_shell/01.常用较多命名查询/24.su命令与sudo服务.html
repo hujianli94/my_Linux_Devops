@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.26. Centos7忘记root密码、修改网卡名称" href="25.Centos7忘记root密码、修改网卡名称.html" />
     <link rel="prev" title="1.24. tar命令" href="23.tar.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
@@ -129,7 +134,7 @@
 <li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用OpenSSH远程管理Linux服务器.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
@@ -137,7 +142,7 @@
 <li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
 <li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
-<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.38. Linux下软件的安装与管理</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -149,15 +154,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -196,7 +204,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -208,7 +216,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/01.常用较多命名查询/24.su命令与sudo服务.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/24.su命令与sudo服务.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -229,7 +237,7 @@
 </div>
 <div class="section" id="susudo">
 <h1><a class="toc-backref" href="#id1">1.25. su命令与sudo服务</a><a class="headerlink" href="#susudo" title="Permalink to this headline">¶</a></h1>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>su命令可以解决切换用户身份的需求，使得当前用户在不退出登录的情况下，顺畅地切换到其他用户
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>su命令可以解决切换用户身份的需求，使得当前用户在不退出登录的情况下，顺畅地切换到其他用户
 
 su命令与用户名之间有一个减号（-），这意味着完全切换到新的用户，
 即把环境变量信息也变更为新用户的相应信息，而不是保留原始的信息。
@@ -237,7 +245,7 @@ su命令与用户名之间有一个减号（-），这意味着完全切换到�
 </pre></div>
 </div>
 <p>谁可以使用　允许使用的主机=（以谁的身份）　可执行命令的列表</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># visudo</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># visudo</span>
 <span class="mi">96</span> <span class="c1">##</span>
 <span class="mi">97</span> <span class="c1">## Allow root to run any commands anywhere</span>
 <span class="mi">98</span> <span class="n">root</span> <span class="n">ALL</span><span class="o">=</span><span class="p">(</span><span class="n">ALL</span><span class="p">)</span> <span class="n">ALL</span>
@@ -247,7 +255,7 @@ su命令与用户名之间有一个减号（-），这意味着完全切换到�
 <ul class="simple">
 <li>sudo 命令时候免密码,使得用户执行sudo命令时不再需要密码验证：</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@linuxprobe ~]# whereis poweroff
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@linuxprobe ~]# whereis poweroff
 poweroff: /usr/sbin/poweroff /usr/share/man/man8/poweroff.8.gz
 [root@linuxprobe ~]# visudo
 ………………省略部分文件内容………………
@@ -279,11 +287,19 @@ poweroff: /usr/sbin/poweroff /usr/share/man/man8/poweroff.8.gz
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -294,7 +310,6 @@ poweroff: /usr/sbin/poweroff /usr/share/man/man8/poweroff.8.gz
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="8.7. MySQL主主同步高可用架构" href="07.MySQL主主同步高可用架构.html" />
     <link rel="prev" title="8.5. nfs+ keepalived高可用集群" href="05.NFS+keepalived实现高可用共享.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -125,23 +130,29 @@
 <li class="toctree-l3"><a class="reference internal" href="08.MySQL双主+keepalived高可用集群.html">8.8. Mysql双主+keepalived集群架构</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Haproxy+keepalived主从-主主高可用架构.html">8.9. Haproxy+keepalived主从-主主高可用架构</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.LVS+Keepalived高可用集群.html">8.10. LVS+keeplaived高可用集群</a></li>
-<li class="toctree-l3"><a class="reference internal" href="11.Redis实战篇之搭建集群.html">8.11. Redis 实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis实战篇之搭建集群.html">8.11. Redis实战篇之搭建集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.MySQL主从复制、读写分离.html">8.12. MySQL主从复制、读写分离</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.双机热备开源软件Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.使用Haproxy+keepalived搭建Web群集.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis主从+KeepAlived实现高可用.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived高可用集群.html">8.16. keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker实现双机热备.html">8.17. Pacemaker实现双机热备</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -180,7 +191,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -192,7 +203,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/08.Linux构建高可用架构/06.MySQL主从高可用架构.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/08.Linux构建高可用架构/06.MySQL主从高可用架构.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -226,7 +237,7 @@
 <h1><a class="toc-backref" href="#id8">8.6. MySQL 主从高可用架构</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id9">8.6.1. MySQL 数据库主从复制原理</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>Mysql 主从同步其实是一个异步复制的过程，要实现复制首先需要在 master 上开启
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Mysql 主从同步其实是一个异步复制的过程，要实现复制首先需要在 master 上开启
 bin-log 日志功能，
 整个过程需要开启 3 个线程，
 
@@ -236,7 +247,7 @@ slave开启 IO 线程和 SQL 线程。
 </div>
 <p><img alt="image0" src="../../_images/sql_rsyn.png" /></p>
 <p><img alt="image1" src="../../_images/mysql_master_slave01.png" /></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL 复制是从主服务器复制到一个或多个从服务器的异步过程，在主服务器与从服务器之间实现整个复制过程主要由三个线程来完成，其中一个I/O线程在主服务器端，另两个线程（SQL线程和IO线程）在从服务器端。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 复制是从主服务器复制到一个或多个从服务器的异步过程，在主服务器与从服务器之间实现整个复制过程主要由三个线程来完成，其中一个I/O线程在主服务器端，另两个线程（SQL线程和IO线程）在从服务器端。
 要实现Mysql复制，首先要在主服务器上打开MySQL的Binary Log（产生二进制日志文件）功能，因为整个复制过程实际上就是从服务器从主服务器端获取该日志，然后在自身上将二进制文件解析为SQL语句并完全顺序地执行SQL语句所记录的各种操作。更详细的过程如下。
 
 1）首先从服务器上的I/O线程连接上主服务器，然后请求从指定日志文件的指定位置或者从最开始的日志位置之后的日志内容。
@@ -249,7 +260,7 @@ slave开启 IO 线程和 SQL 线程。
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id10">8.6.2. MySQL复制的常用架构</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>MySQL复制技术在实际应用中有多种实现架构，常见的有以下几种。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>一主一从，即一个主服务器和一个从服务器。这是最常见的架构。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一主一从，即一个主服务器和一个从服务器。这是最常见的架构。
 一主多从，即一个主服务器和两个或两个以上从服务器。经常用在写操作不频繁、查询量比较大的业务环境中。
 主主互备，又称双主互备，即两个MySQL服务器互相将对方作为自己的主服务器，自己又同时作为对方的从服务器来进行复制。主要用于对 MySQL写操作要求比较高的环境中，避免了MySQL单点故障。
 双主多从，其实就是双主互备，然后再加上多个从服务器。主要用于对 MySQL写操作要求比较高，同时查询量比较大的环境中。这种构架在8.3节会详细介绍。
@@ -264,7 +275,7 @@ slave开启 IO 线程和 SQL 线程。
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id11">8.6.3. MySQL 数据库主从配置</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>环境：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>环境：
     mysql主机：192.168.1.111  CentOS Linux release 7.5
     mysql备机：192.168.1.112  CentOS Linux release 7.5
 </pre></div>
@@ -272,7 +283,7 @@ slave开启 IO 线程和 SQL 线程。
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id12">8.6.4. 主和从服务器都安装 mysql 相关软件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.安装依赖
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.安装依赖
 yum -y install autoconf libaio bison ncurses-devel
 
 2.创建用户
@@ -297,21 +308,21 @@ chown -R mysql:mysql /usr/local/mysql
 </pre></div>
 </div>
 <p>3.初始化</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>cd /usr/local/mysql/bin
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cd /usr/local/mysql/bin
 初始化数据库，没有反应则正确
 /usr/local/mysql/bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data
 </pre></div>
 </div>
 <p>初始化时注意最后一行输出root的临时密码</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2019</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T21</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mf">33.170400</span><span class="n">Z</span> <span class="mi">1</span> <span class="p">[</span><span class="n">Note</span><span class="p">]</span> <span class="n">A</span> <span class="n">temporary</span> <span class="n">password</span> <span class="ow">is</span> <span class="n">generated</span> <span class="k">for</span> <span class="n">root</span><span class="nd">@localhost</span><span class="p">:</span> <span class="n">Mjfth</span><span class="o">+</span><span class="p">)</span><span class="n">A2ok6</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2019</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">28</span><span class="n">T21</span><span class="p">:</span><span class="mi">22</span><span class="p">:</span><span class="mf">33.170400</span><span class="n">Z</span> <span class="mi">1</span> <span class="p">[</span><span class="n">Note</span><span class="p">]</span> <span class="n">A</span> <span class="n">temporary</span> <span class="n">password</span> <span class="ow">is</span> <span class="n">generated</span> <span class="k">for</span> <span class="n">root</span><span class="nd">@localhost</span><span class="p">:</span> <span class="n">Mjfth</span><span class="o">+</span><span class="p">)</span><span class="n">A2ok6</span>
 </pre></div>
 </div>
 <p><img alt="image2" src="../../_images/mysql5.7.png" /></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@mysql02</span> <span class="n">data</span><span class="p">]</span><span class="c1"># cp -rf /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@mysql02</span> <span class="n">data</span><span class="p">]</span><span class="c1"># cp -rf /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld</span>
 </pre></div>
 </div>
 <p>添加新的my.cnf文件 vim /etc/my.cnf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">client</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">client</span><span class="p">]</span>
 <span class="n">port</span>    <span class="o">=</span> <span class="mi">3306</span>
 <span class="n">socket</span>  <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
 
@@ -387,7 +398,7 @@ chown -R mysql:mysql /usr/local/mysql
 <span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@mysql02 data]# chmod 755 /etc/init.d/mysqld
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@mysql02 data]# chmod 755 /etc/init.d/mysqld
 
 #启动mysql
 [root@mysql02 data]# /etc/init.d/mysqld start
@@ -438,7 +449,7 @@ Warning: Since password will be sent to server in plain text, use ssl connection
 <p>至此mysql就安装完成了。</p>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id13">忘记密码，解决办法</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>########## 忘记Mysql密码后的办法，修改mysql的登录密码 ##########
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>########## 忘记Mysql密码后的办法，修改mysql的登录密码 ##########
 service mysqld stop
 
 #使用 mysqld_safe 来启动mysql服务
@@ -465,7 +476,7 @@ ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
 <div class="section" id="id6">
 <h2><a class="toc-backref" href="#id14">8.6.5. 配置主从</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>主数据库操作</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.开启binlog
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.开启binlog
 
 [mysqld]
 log-bin=mysql-bin #开启二进制日志
@@ -508,7 +519,7 @@ scp alldb.sql root@192.168.1.112:/root/
 </pre></div>
 </div>
 <p>从数据库操作</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.导入数据
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.导入数据
 mysql -uroot -padmin#123! &lt; /root/alldb.sql
 
 2.修改配置文件
@@ -527,7 +538,7 @@ start slave;
 </pre></div>
 </div>
 <p>查看slave状态：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
@@ -570,7 +581,7 @@ start slave;
                <span class="n">Last_SQL_Error</span><span class="p">:</span>
   <span class="n">Replicate_Ignore_Server_Ids</span><span class="p">:</span>
              <span class="n">Master_Server_Id</span><span class="p">:</span> <span class="mi">1</span>
-                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="mi">750</span><span class="n">a3dc6</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mi">11</span><span class="n">e9</span><span class="o">-</span><span class="mi">8</span><span class="n">c2e</span><span class="o">-</span><span class="mi">000</span><span class="n">c29449e0f</span>
+                  <span class="n">Master_UUID</span><span class="p">:</span> <span class="mi">750</span><span class="n">a3dc6</span><span class="o">-</span><span class="mi">32</span><span class="n">a6</span><span class="o">-</span><span class="mf">11e9</span><span class="o">-</span><span class="mi">8</span><span class="n">c2e</span><span class="o">-</span><span class="mi">000</span><span class="n">c29449e0f</span>
              <span class="n">Master_Info_File</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">master</span><span class="o">.</span><span class="n">info</span>
                     <span class="n">SQL_Delay</span><span class="p">:</span> <span class="mi">0</span>
           <span class="n">SQL_Remaining_Delay</span><span class="p">:</span> <span class="n">NULL</span>
@@ -596,7 +607,7 @@ start slave;
 </div>
 <div class="section" id="id7">
 <h2><a class="toc-backref" href="#id15">8.6.6. 测试主从同步</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>在主库上创建2个数据库
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在主库上创建2个数据库
 create database bolg default character set utf8;
 create database bolg2 default character set utf8;
 
@@ -627,11 +638,19 @@ create database bolg2 default character set utf8;
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -642,7 +661,6 @@ create database bolg2 default character set utf8;
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

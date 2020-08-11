@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.4. vsftpd服务安装配置" href="3.Vsftpd服务器搭建.html" />
     <link rel="prev" title="2.2. RAID与LVM磁盘阵列" href="1.RAID与LVM磁盘阵列技术.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -157,6 +162,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -195,7 +201,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -207,7 +213,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/2.NFS共享服务器搭建.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/2.NFS共享服务器搭建.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -235,7 +241,7 @@
 <p><a class="reference external" href="https://www.cnblogs.com/zhangxinqi/articles/6662953.html">NFS参考文献</a></p>
 <div class="section" id="nfs-centos7-6">
 <h2><a class="toc-backref" href="#id3">2.3.1. 安装NFS服务（Centos7.6）</a><a class="headerlink" href="#nfs-centos7-6" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>cp -rf /etc/yum.repos.d/CentOS-Base.repo{,.bak}
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cp -rf /etc/yum.repos.d/CentOS-Base.repo{,.bak}
 wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo   #更换阿里源国内源
 wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo           #改为aliyun的epel源,先备份epel本身的源
 yum clean all
@@ -301,7 +307,7 @@ t@bogon yum.repos.d]# systemctl stop firewalld.service
 </div>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id4">2.3.2. nfs搭建 方式二</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>NFS：Network File System
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>NFS：Network File System
 
 功能也就是能把远程网络的文件挂载到NFS Server上，在Server上看来，客户端的挂载的目录就像自己的子目录一样，可以对它操作。所以，对于嵌入式系统的调试是很方便的。
 
@@ -383,18 +389,18 @@ umount -f /data/img/             # 强制卸载挂载目录  如还不可以  um
 </pre></div>
 </div>
 <p>NFS客户端的设定</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nfs</span><span class="o">-</span><span class="n">utils</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nfs</span><span class="o">-</span><span class="n">utils</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">rpcbind</span>
 <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">rpcbind</span>
 </pre></div>
 </div>
 <p>为保证客户端能正常连接，如果NFS服务器上开启了防火墙，最好关闭防火墙服务。执行如下操作，关闭防火墙。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">firewalld</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">firewalld</span>
 <span class="n">systemctl</span> <span class="n">disable</span> <span class="n">firewalld</span>
 </pre></div>
 </div>
 <p>（1）查看NFS 服务器端提供的服务</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>要查看NFS服务器提供了哪些NFS服务，可以使用showmount命令，使用方法如下。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>要查看NFS服务器提供了哪些NFS服务，可以使用showmount命令，使用方法如下。
 showmount  [-ea]
 
 各个选项含义如下。
@@ -405,7 +411,7 @@ showmount  [-ea]
 <p>（2）挂载共享资源
 客户端要使用NFS服务器提供的共享资源，使用mount命令挂载就可以了。</p>
 <p>挂载格式如下。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mount -t nfs Hostname(orIP):/directory  /mountpoint
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mount -t nfs Hostname(orIP):/directory  /mountpoint
 其中，各个选项的含义如下。
 
 
@@ -437,11 +443,19 @@ Hostname：用来指定NFS服务器的地址，可以是IP地址或主机名。
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -452,7 +466,6 @@ Hostname：用来指定NFS服务器的地址，可以是IP地址或主机名。
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,0 +1,235 @@
+.. contents::
+   :depth: 3
+..
+
+KVM虚拟机冷-热迁移
+==================
+
+在进行迁移之前需要准备一台与KVM配置相同的机器（KVM02）,部署好kvm环境。
+## 虚拟机冷迁移 在kvm02中安装kvm组件
+
+::
+
+   [root@kvm02 ~]# yum install libvirt* virt-* qemu-kvm* -y
+
+配置桥接网络
+
+::
+
+   [root@kvm02 ~]# virsh iface-bridge eth0 br0
+   [root@kvm02 ~]# mkdir -p /data
+
+将虚拟机关机，导出配置文件
+
+::
+
+   [root@KVM001 data]# virsh dumpxml centos7 > centos7.xml
+
+将虚拟机文件传输到kvm02上
+
+::
+
+   [root@KVM001 data]# scp centos7.xml centos7.qcow2 root@192.168.20.74:/data/
+
+导入配置文件
+
+::
+
+   [root@KVM0002 data]# virsh define centos7.xml 
+   定义域 centos7（从 centos7.xml）
+
+   [root@KVM0002 data]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    -     centos7                        关闭
+
+启动虚拟机
+
+::
+
+   [root@KVM0002 data]# ll
+   总用量 1408900
+   -rw-r--r-- 1 root root 1442709504 5月  24 13:39 centos7.qcow2
+   -rw-r--r-- 1 root root       3865 5月  24 13:38 centos7.xml
+   [root@KVM0002 data]# virsh start centos7 
+   域 centos7 已开始
+
+   [root@KVM0002 data]# 
+
+查看虚拟机状态
+
+::
+
+   [root@KVM0002 data]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    2     centos7                        running
+
+KVM的冷迁移就完成了！
+
+virt-manager和kvm虚拟机热迁移（准备)
+------------------------------------
+
+实现kvm虚拟机热迁移核心：共享存储。在这里使用的时NFS共享存储。
+
+::
+
+   关于nfs的详情参考：http://www.cnblogs.com/clsn/p/7694456.html
+
+1、安装virt-manager所需桌面及vnc-server
+
+::
+
+   yum groupinstall "GNOME Desktop" -y
+   # vnc-server端
+   yum install tigervnc-server -y
+   # virt-manager需要软件
+   yum install openssh-askpass -y
+
+2、配置vnc服务 复制vnc配置文件
+
+::
+
+       [root@KVM001 data]# vim /usr/lib/systemd/system/vncserver@.service 
+       [root@KVM001 data]# cp /usr/lib/systemd/system/vncserver@.service  /usr/lib/systemd/system/vncserver@\:1.service
+
+修改配置文件，主要修改参数。
+
+::
+
+   [root@KVM001 data]# egrep -v "^#|^$" /usr/lib/systemd/system/vncserver@\:1.service
+   [Unit]
+   Description=Remote desktop service (VNC)
+   After=syslog.target network.target
+   [Service]
+   Type=forking
+   User=root
+   ExecStartPre=-/usr/bin/vncserver -kill %i
+   ExecStart=/sbin/runuser -l root -c "/usr/bin/vncserver %i" 
+   PIDFile=/root/.vnc/%H%i.pid
+   ExecStop=-/usr/bin/vncserver -kill %i
+   [Install]
+   WantedBy=multi-user.target
+   # 用户为root，家目录为root
+
+官方提供修改方法
+
+::
+
+   # Quick HowTo:
+   # 1. Copy this file to /etc/systemd/system/vncserver@.service
+   # 2. Replace <USER> with the actual user name and edit vncserver
+   #    parameters appropriately
+   #   ("User=<USER>" and "/home/<USER>/.vnc/%H%i.pid")
+   # 3. Run `systemctl daemon-reload`
+   # 4. Run `systemctl enable vncserver@:<display>.service`
+
+设置vnc连接时的密码，
+
+::
+
+   [root@KVM001 ~]# vncpasswd 
+   Password:
+   Verify:
+   Would you like to enter a view-only password (y/n)? n  
+   # y为创建只读用户，n为非只读用户。  
+
+   #修改文件使配置生效：
+   systemctl daemon-reload
+
+   systemctl enable vncserver@:1.service #设置开机启动
+   systemctl start vncserver@:1.service #启动vnc会话服务
+   systemctl status vncserver@:1.service #查看nvc会话服务状态
+
+   [root@KVM001 system]# netstat -lnt | grep 590*
+   tcp        0      0 0.0.0.0:5901            0.0.0.0:*               LISTEN     
+   tcp6       0      0 :::5901                 :::*                    LISTEN  
+
+3、配置NFS存储 安装软件
+
+::
+
+   [root@KVM001 ~]# yum install nfs-utils rpcbind -y
+
+修改配置文件
+
+::
+
+   [root@KVM001 system]# cat /etc/exports
+   /data   192.168.20.0/24(rw,sync,all_squash,anonuid=0,anongid=0)
+
+启动nfs程序
+
+::
+
+   [root@KVM001 system]# systemctl restart rpcbind 
+   [root@KVM001 system]#  systemctl restart nfs
+
+   # 设置开机自启动
+   [root@KVM001 system]# systemctl enable rpcbind 
+   [root@KVM001 system]# systemctl enable nfs
+
+在kvm02上安装nfs
+
+::
+
+   [root@KVM0002 data]# yum install nfs-utils rpcbind -y
+
+查看共享信息
+
+::
+
+   [root@KVM0002 data]# showmount -e 192.168.20.182
+   Export list for 192.168.20.182:
+   /data 192.168.20.0/24
+
+挂载目录
+
+::
+
+   [root@KVM0002 data]# mount.nfs 192.168.20.182:/data/ /data/
+   #加入开机自启动
+   [root@KVM0002 data]# echo "mount.nfs 192.168.20.182:/data/ /data/" >> /etc/rc.local 
+   [root@KVM0002 data]# chmod +x /etc/rc.d/rc.local 
+
+KVM虚拟机热迁移（实现）
+-----------------------
+
+| vnc连接KVM宿主机： |image0|
+| |image1|
+
+添加KVM02宿主机 |image2|
+
+如下图所示，主机添加完成 |image3|
+
+主机热迁移
+
+虚拟机处于running状态 |image4|
+
+选择要迁移到目的的主机 |image5|
+
+|image6|
+
+在KVM002上查看虚拟机状态
+
+::
+
+   [root@KVM0002 data]# virsh list --all
+    Id    名称                         状态
+   ----------------------------------------------------
+    5     Centos7                        running
+
+   [root@KVM0002 data]# 
+
+虚拟机配置查看方法： |image7|
+
+说明：在热迁移的过程中可能会参数丢包的情况，一般不会超过1个包。
+
+.. |image0| image:: ../_static/kvm_hot_comvm.png
+.. |image1| image:: ../_static/kvm_comm.png
+.. |image2| image:: ../_static/kvm_comm0002.png
+.. |image3| image:: ../_static/kvm_comm0003.png
+.. |image4| image:: ../_static/kvm_status_run.png
+.. |image5| image:: ../_static/kvm2kvm2.png
+.. |image6| image:: ../_static/kvm2kvm3.png
+.. |image7| image:: ../_static/kvm2kvm4.png

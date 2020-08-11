@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4.3. 03.PXC" href="03.PXC.html" />
     <link rel="prev" title="4.1. 01.高可用集群之MHA" href="01.高可用集群之MHA.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
@@ -121,11 +126,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -164,7 +171,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
         
@@ -176,7 +183,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Mysql/04.尊贵的铂金篇/02.Keepalived加双主架构.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Mysql/04.尊贵的铂金篇/02.Keepalived加双主架构.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -217,21 +224,21 @@
 <p>keepalived是基于vrrp协议的，虚拟冗余路由协议。master会向backup节点发送广播信号，当backup节点接收不到master发送的vrrp包时，会认为master宕机，这时会根据vrrp的优先级选举一个backup充当master，该master会持有vip，而vip是对处应用连接的ip，从而保证业务的正常运行</p>
 <p>优先级，用1&lt;254表示，数字越小优先级超低。当值为0时，表示放弃持有vip，值为255时，当前master优先级最高并持有vip</p>
 <p>vrid，虚拟路由标识，同组机器内vrid必须一致，通常用0~255标识</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>官网：http://www.keepalived.org/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>官网：http://www.keepalived.org/
 当前最新版本：http://www.keepalived.org/software/keepalived-2.0.5.tar.gz
 </pre></div>
 </div>
 <p>keepalived启动后，会有watch dog、vrrp、health-check三个进程，watch
 dog负责监控vrrp和health-check进程，vrrp负责当master不可用时通过vrrp切换到backup服务器，health-check检测服务器健康状态
 <img alt="image0" src="../../_images/keepalived0001.png" /></p>
-<p>keepalived启动后，会有<code class="docutils literal"><span class="pre">watch</span> <span class="pre">dog</span></code>、<code class="docutils literal"><span class="pre">vrrp</span></code>、<code class="docutils literal"><span class="pre">health-check</span></code>三个进程，
+<p>keepalived启动后，会有<code class="docutils literal notranslate"><span class="pre">watch</span> <span class="pre">dog</span></code>、<code class="docutils literal notranslate"><span class="pre">vrrp</span></code>、<code class="docutils literal notranslate"><span class="pre">health-check</span></code>三个进程，
 watch dog负责监控vrrp和health-check进程，
 vrrp负责当master不可用时通过vrrp切换到backup服务器，
 health-check检测服务器健康状态。</p>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id11">4.2.2. 集群搭建思路</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>搭建思路：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>搭建思路：
 1）需要两台MySQL服务器，互为主从，都可读写。一台负责写入，一台充当备用
 2）安装Keepalived软件，yum的就可以
 3）整理好Keepalivd配置文件，理清Keepalived三种状态；准备监控MySQL的脚本，便于检测到宕机，从而进行切换
@@ -252,7 +259,7 @@ health-check检测服务器健康状态。</p>
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id12">4.2.3. 集群部署</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>结构：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>结构：
 192.168.0.128 主masterA
 192.168.0.129 备masterB
 192.168.0.130/24 VIP
@@ -262,7 +269,7 @@ gtid+row模式
 <p>部署过程：</p>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id13">第一步，分别在主备上创建同步复制帐号</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">grant</span> <span class="n">replication</span> <span class="n">slave</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="s1">&#39;repl&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.0.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;123456&#39;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grant</span> <span class="n">replication</span> <span class="n">slave</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="s1">&#39;repl&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.0.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;123456&#39;</span><span class="p">;</span>
 <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
 </pre></div>
 </div>
@@ -270,7 +277,7 @@ gtid+row模式
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id14">第二步，搭建双主</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>192.168.0.128上执行</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">change</span> <span class="n">master</span> <span class="n">to</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">change</span> <span class="n">master</span> <span class="n">to</span>
 <span class="n">master_host</span><span class="o">=</span><span class="s1">&#39;192.168.0.129&#39;</span><span class="p">,</span>
 <span class="n">master_user</span><span class="o">=</span><span class="s1">&#39;repl&#39;</span><span class="p">,</span>
 <span class="n">master_password</span><span class="o">=</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span>
@@ -278,7 +285,7 @@ gtid+row模式
 </pre></div>
 </div>
 <p>192.168.0.129上执行</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">change</span> <span class="n">master</span> <span class="n">to</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">change</span> <span class="n">master</span> <span class="n">to</span>
 <span class="n">master_host</span><span class="o">=</span><span class="s1">&#39;192.168.0.128&#39;</span><span class="p">,</span>
 <span class="n">master_user</span><span class="o">=</span><span class="s1">&#39;repl&#39;</span><span class="p">,</span>
 <span class="n">master_password</span><span class="o">=</span><span class="s1">&#39;123456&#39;</span><span class="p">,</span>
@@ -286,13 +293,13 @@ gtid+row模式
 </pre></div>
 </div>
 <p>在主备上执行</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="n">slave</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">start</span> <span class="n">slave</span><span class="p">;</span>
 <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>查看主从同步状态 GTID+row模式</p>
 <p>主机上</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
                   <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.129</span>
@@ -309,7 +316,7 @@ gtid+row模式
 </pre></div>
 </div>
 <p>备机上</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
                   <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.128</span>
@@ -330,7 +337,7 @@ gtid+row模式
 <h3><a class="toc-backref" href="#id15">第三步，在两台机器上安装keepalived软件</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>相关参考：<a class="reference external" href="http://pdf.us/2018/06/12/1311.html">http://pdf.us/2018/06/12/1311.html</a></p>
 <p>主备机操作如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">keepalived</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">keepalived</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="n">mysql</span><span class="p">]</span><span class="c1"># rpm -qa|grep keepalived</span>
 <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.3</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="mf">16.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
@@ -344,7 +351,7 @@ gtid+row模式
 <h3><a class="toc-backref" href="#id16">第四步，配置检测MySQL的脚本</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
 <p>通过判断MySQL服务是否宕机，确定停止Keepalived服务进行切换操作 cat
 /etc/keepalived/checkmysql.sh</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 mysqlstr=/usr/local/mysql/bin/mysql
 # 注意主备检查脚本中ip不能相同 主为VIP 备为自已的ip
 host=192.168.0.130
@@ -365,7 +372,7 @@ else
 fi
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#不需要授任何权限，仅需执行show status命令</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#不需要授任何权限，仅需执行show status命令</span>
 <span class="n">create</span> <span class="n">user</span> <span class="s1">&#39;healthcheck&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.0.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;check123&#39;</span><span class="p">;</span>
 <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
 <span class="n">chmod</span> <span class="o">+</span><span class="n">x</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">checkmysql</span><span class="o">.</span><span class="n">sh</span>
@@ -375,7 +382,7 @@ fi
 <div class="section" id="keepalive">
 <h3><a class="toc-backref" href="#id17">第五步，修改Keepalive配置文件</a><a class="headerlink" href="#keepalive" title="Permalink to this headline">¶</a></h3>
 <p>主机 cat /etc/keepalived/keepalived.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>! Configuration File for keepalived
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! Configuration File for keepalived
 
 global_defs {
     notification_email {
@@ -418,7 +425,7 @@ vrrp_instance VI_1 {
 </pre></div>
 </div>
 <p>备机 cat /etc/keepalived/keepalived.conf</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>! Configuration File for keepalived
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! Configuration File for keepalived
 
 global_defs {
     notification_email {
@@ -464,7 +471,7 @@ vrrp_instance VI_1 {
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id18">第六步，启动和测试</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">启动两台机器的keepalived进程</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">启动两台机器的keepalived进程</span>
 <span class="c1">#/etc/init.d/keepalived start</span>
 
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">keepalived</span>
@@ -476,7 +483,7 @@ vrrp_instance VI_1 {
 </div>
 <p><img alt="image1" src="../../_images/keepalive_vvrp001.png" /></p>
 <p>查看启动日志的输出结果： 主机上：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="mi">192</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">24009</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Changing</span> <span class="n">effective</span> <span class="n">priority</span> <span class="kn">from</span> <span class="mi">100</span> <span class="n">to</span> <span class="mi">102</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="mi">192</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">24009</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Changing</span> <span class="n">effective</span> <span class="n">priority</span> <span class="kn">from</span> <span class="mi">100</span> <span class="n">to</span> <span class="mi">102</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">42</span> <span class="mi">192</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">24009</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Transition</span> <span class="n">to</span> <span class="n">MASTER</span> <span class="n">STATE</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">43</span> <span class="mi">192</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">24009</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">Entering</span> <span class="n">MASTER</span> <span class="n">STATE</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">43</span> <span class="mi">192</span> <span class="n">Keepalived_vrrp</span><span class="p">[</span><span class="mi">24009</span><span class="p">]:</span> <span class="n">VRRP_Instance</span><span class="p">(</span><span class="n">VI_1</span><span class="p">)</span> <span class="n">setting</span> <span class="n">protocol</span> <span class="n">VIPs</span><span class="o">.</span>
@@ -489,7 +496,7 @@ vrrp_instance VI_1 {
 </pre></div>
 </div>
 <p>备机上：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">49</span> <span class="n">pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">Keepalived</span><span class="p">[</span><span class="mi">19584</span><span class="p">]:</span> <span class="n">Starting</span> <span class="n">VRRP</span> <span class="n">child</span> <span class="n">process</span><span class="p">,</span> <span class="n">pid</span><span class="o">=</span><span class="mi">19586</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">49</span> <span class="n">pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">Keepalived</span><span class="p">[</span><span class="mi">19584</span><span class="p">]:</span> <span class="n">Starting</span> <span class="n">VRRP</span> <span class="n">child</span> <span class="n">process</span><span class="p">,</span> <span class="n">pid</span><span class="o">=</span><span class="mi">19586</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">49</span> <span class="n">pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">systemd</span><span class="p">:</span> <span class="n">Started</span> <span class="n">LVS</span> <span class="ow">and</span> <span class="n">VRRP</span> <span class="n">High</span> <span class="n">Availability</span> <span class="n">Monitor</span><span class="o">.</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">49</span> <span class="n">pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">Keepalived_healthcheckers</span><span class="p">[</span><span class="mi">19585</span><span class="p">]:</span> <span class="n">Opening</span> <span class="n">file</span> <span class="s1">&#39;/etc/keepalived/keepalived.conf&#39;</span><span class="o">.</span>
 <span class="n">Mar</span>  <span class="mi">7</span> <span class="mi">17</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">49</span> <span class="n">pxe</span><span class="o">-</span><span class="n">server</span> <span class="n">Keepalived_healthcheckers</span><span class="p">[</span><span class="mi">19585</span><span class="p">]:</span> <span class="n">Unknown</span> <span class="n">keyword</span> <span class="s1">&#39;route_id&#39;</span>
@@ -506,14 +513,14 @@ vrrp_instance VI_1 {
 </pre></div>
 </div>
 <p>利用VIP连接MySQL服务器成功。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># mysql -urepl -p123456 -h192.168.0.130</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@master</span> <span class="n">keepalived</span><span class="p">]</span><span class="c1"># mysql -urepl -p123456 -h192.168.0.130</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id8">
 <h3><a class="toc-backref" href="#id19">模拟主库宕机故障</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>主机模拟故障</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@master keepalived]# /etc/init.d/mysql stop
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@master keepalived]# /etc/init.d/mysql stop
 Shutting down MySQL.... SUCCESS!
 
 [root@master keepalived]# ip a
@@ -559,11 +566,19 @@ Shutting down MySQL.... SUCCESS!
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -574,7 +589,6 @@ Shutting down MySQL.... SUCCESS!
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

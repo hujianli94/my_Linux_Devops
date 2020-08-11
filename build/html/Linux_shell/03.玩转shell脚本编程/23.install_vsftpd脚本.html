@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.24. install_mysql5.7" href="24.install_mysql5.7.html" />
     <link rel="prev" title="3.22. 自动Autoinstall_ELK_V1.3脚本" href="22.自动Autoinstall_ELK_V1.3.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -180,6 +185,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -218,7 +224,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -230,7 +236,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/23.install_vsftpd脚本.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/23.install_vsftpd脚本.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -259,7 +265,7 @@
 <h1><a class="toc-backref" href="#id1">3.23. install_vsftpd_or_nfs脚本</a><a class="headerlink" href="#install-vsftpd-or-nfs" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="install-vsftpd-sh">
 <h2><a class="toc-backref" href="#id2">3.23.1. install_vsftpd.sh</a><a class="headerlink" href="#install-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:xxx.sh
 
@@ -647,7 +653,7 @@ main
 </div>
 <div class="section" id="install-nsf-sh">
 <h2><a class="toc-backref" href="#id3">3.23.2. install_nsf.sh</a><a class="headerlink" href="#install-nsf-sh" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 # auto_install_nfs_server
 # author:hujl
 
@@ -726,7 +732,7 @@ echo -e &quot;Usage method 【 mount -t nfs ${IP_INFO}:${Share_DIR} /mount 】&q
 </div>
 <div class="section" id="vsftp">
 <h2><a class="toc-backref" href="#id4">3.23.3. vsftp主动和被动模式脚本</a><a class="headerlink" href="#vsftp" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 # author：hujianli
 # by:2019-10-06
 # use : minni install vsftpd
@@ -915,7 +921,7 @@ Usage_choice $1
 </div>
 <div class="section" id="auto-config-vsftpd-sh">
 <h2><a class="toc-backref" href="#id5">3.23.4. auto_config_vsftpd.sh</a><a class="headerlink" href="#auto-config-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
 # author：xiaojian
@@ -1108,11 +1114,19 @@ esac
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1123,7 +1137,6 @@ esac
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

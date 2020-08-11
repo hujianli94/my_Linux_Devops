@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="1. Git入门到熟练" href="01.Git入门到熟练/index.html" />
     <link rel="prev" title="7.1. 01.MySQL面试宝典" href="../Mysql/07.最强的王者篇/01.MySQL面试宝典.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
@@ -108,6 +113,7 @@
 <li class="toctree-l2"><a class="reference internal" href="05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a></li>
 <li class="toctree-l2"><a class="reference internal" href="06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a></li>
 <li class="toctree-l2"><a class="reference internal" href="07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.Windows系统相关/index.html">8. Windows系统相关</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
@@ -116,6 +122,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -154,7 +161,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
       <li>Other</li>
     
@@ -162,7 +169,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/other/index.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/other/index.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -177,8 +184,8 @@
             
   <div class="section" id="other">
 <h1>Other<a class="headerlink" href="#other" title="Permalink to this headline">¶</a></h1>
-<div class="toctree-wrapper compound" id="other-study">
-<p class="caption"><span class="caption-text">Other study</span><a class="headerlink" href="#other-study" title="Permalink to this toctree">¶</a></p>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Other study</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="01.Git入门到熟练/index.html">1. Git入门到熟练</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01.Git入门到熟练/1.Git基础操作.html">1.1. Git基础操作</a><ul>
@@ -230,6 +237,7 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="04.SQL-Server学习/02.利用HAProxy代理SQL-Server的AlwaysOn辅助副本.html">4.2. 利用HAProxy代理SQL-Server的AlwaysOn辅助副本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.SQL-Server学习/03.SQL-Server-2014数据库集群搭建与配置指南.html">4.3. SQL Server 2014数据库集群搭建与配置指南</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a><ul>
@@ -252,6 +260,7 @@
 <li class="toctree-l3"><a class="reference internal" href="05.程序员实用工具网站/01.实用工具网站1.html#id26">5.1.16. 临时云盘——快捷方便的文件传输</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="05.程序员实用工具网站/02.程序员必备的网站推荐.html">5.2. 程序员必备的网站推荐</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a><ul>
@@ -345,13 +354,24 @@
 <li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/01.常用工具合集.html#id3">7.1.3. 网站运维</a></li>
 <li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/01.常用工具合集.html#id12">7.1.4. 开发工具</a></li>
 <li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/01.常用工具合集.html#id17">7.1.5. 文档处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/01.常用工具合集.html#id19">7.1.6. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/01.常用工具合集.html#linux">7.1.7. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="07.一些常用的工具/02.日常工具.html">7.2. 日常工具</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/02.日常工具.html#id2">7.2.1. 免费无线投屏神器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/02.日常工具.html#github">7.2.1. Github代码搜索技巧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.一些常用的工具/02.日常工具.html#id2">7.2.2. 免费无线投屏神器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="07.一些常用的工具/03.博客写书软件.html">7.3. 博客写书软件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.一些常用的工具/04.程序员必备的网站推荐.html">7.4. 程序员必备的网站推荐</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.Windows系统相关/index.html">8. Windows系统相关</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.Windows系统相关/01.windows-server-2008-R2-Enterprise-系统安全配置.html">8.1. windows-server-2008-R2-Enterprise-系统安全配置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.Windows系统相关/02.windows-server-几大实时同步软件比较.html">8.2. windows-server-几大实时同步软件比较</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.Windows系统相关/03.windows-server-2008-R2间实时同步之FreeFileSync.html">8.3. windows-server-2008-R2间实时同步之FreeFileSync</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.Windows系统相关/04.Windows-Server-2008-R2-部署nginx、tomcat、mysql.html">8.4. Windows-Server-2008-R2-部署nginx、tomcat、mysql</a></li>
 </ul>
 </li>
 </ul>
@@ -378,11 +398,19 @@
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -393,7 +421,6 @@
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

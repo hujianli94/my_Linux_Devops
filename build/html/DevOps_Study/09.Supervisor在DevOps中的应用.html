@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../_static/jquery.js"></script>
         <script type="text/javascript" src="../_static/underscore.js"></script>
         <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="10. 分布式队列管理Cerely" href="10.分布式队列管理Cerely.html" />
     <link rel="prev" title="8. 用Gunicorn部署高性能Python-WSGI服务器" href="08.用Gunicorn部署高性能Python-WSGI服务器.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -121,15 +125,18 @@
 <li class="toctree-l2"><a class="reference internal" href="10.分布式队列管理Cerely.html">10. 分布式队列管理Cerely</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -168,7 +175,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../index.html">Docs</a> &raquo;</li>
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="index.html">DevOps与自动化运维</a> &raquo;</li>
         
@@ -178,7 +185,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../_sources/DevOps_Study/09.Supervisor在DevOps中的应用.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/DevOps_Study/09.Supervisor在DevOps中的应用.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -220,22 +227,22 @@
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id6">9.2. Supervisor安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>命令如下:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">supervisor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">supervisor</span>
 </pre></div>
 </div>
 <p>或者</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">supervisor</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">supervisor</span>
 </pre></div>
 </div>
 <p>初始化配置文件：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo_supervisord_conf</span> <span class="o">&gt;</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo_supervisord_conf</span> <span class="o">&gt;</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">conf</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id7">9.3. Supervisor的配置文件说明</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>修改配置文件，在配置文件最底部添加相应配置，gunicorn程序启动的示例：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[include] 自己的项目配置
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[include] 自己的项目配置
 [program:project]
 directory = /home/jerry/Code/project       ; 程序的启动目录
 command = /home/jerry/.virtualenvs/parsing/bin/gunicorn -w 4 -worker-class gevent -bind 0.0.0.0:9600 app:app  ; 启动命令
@@ -258,7 +265,7 @@ stderr_logfile=/home/jerry/Code/project/log/gunicorn.error     ; 错误日志
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id8">9.4. Supervisor的启动</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">.</span><span class="n">conf</span>
 
 <span class="c1">#查看 supervisor 的状态</span>
 <span class="n">supervisorctl</span> <span class="o">-</span><span class="n">c</span> <span class="n">supervisor</span><span class="o">.</span><span class="n">conf</span> <span class="n">status</span>
@@ -276,7 +283,7 @@ stderr_logfile=/home/jerry/Code/project/log/gunicorn.error     ; 错误日志
 </div>
 <div class="section" id="supervisor4redis">
 <h2><a class="toc-backref" href="#id9">9.5. Supervisor管理4个redis实例</a><a class="headerlink" href="#supervisor4redis" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">program</span><span class="p">:</span><span class="n">redis_6376</span><span class="p">]</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">program</span><span class="p">:</span><span class="n">redis_6376</span><span class="p">]</span>
 <span class="n">command</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">redis</span><span class="o">-</span><span class="n">server</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redis_6376</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">stdout_logfile</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/%</span><span class="p">(</span><span class="n">program_name</span><span class="p">)</span><span class="n">s</span><span class="o">.</span><span class="n">log</span>
 <span class="n">stderr_logfile</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/%</span><span class="p">(</span><span class="n">program_name</span><span class="p">)</span><span class="n">s</span><span class="o">.</span><span class="n">log</span>
@@ -337,10 +344,10 @@ stderr_logfile=/home/jerry/Code/project/log/gunicorn.error     ; 错误日志
 <div class="section" id="dockersupervisorlamp">
 <h3><a class="toc-backref" href="#id12">9.7.1. 在Docker中使用Supervisor监控lamp进程。</a><a class="headerlink" href="#dockersupervisorlamp" title="Permalink to this headline">¶</a></h3>
 <p>·监控 apache2和mysql</p>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span>$ cat /etc/supervisor/supervisord.conf
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat /etc/supervisor/supervisord.conf
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>; supervisor config file
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>; supervisor config file
 
 [unix_http_server]
 file=/var/run/supervisor.sock   ; (the path to the socket file)
@@ -370,11 +377,11 @@ serverurl=unix:///var/run/supervisor.sock ; use a unix:// URL  for a unix socket
 files = /etc/supervisor/conf.d/*.conf
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$ ls /etc/supervisor/conf.d/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls /etc/supervisor/conf.d/
 supervisord-apache2.conf  supervisord-mysqld.conf
 </pre></div>
 </div>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@98643c960e69</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="c1"># cat supervisord-apache2.conf</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@98643c960e69</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="c1"># cat supervisord-apache2.conf</span>
 <span class="p">[</span><span class="n">program</span><span class="p">:</span><span class="n">apache2</span><span class="p">]</span>
 <span class="n">command</span><span class="o">=/</span><span class="n">start</span><span class="o">-</span><span class="n">apache2</span><span class="o">.</span><span class="n">sh</span>
 <span class="n">numprocs</span><span class="o">=</span><span class="mi">1</span>
@@ -388,7 +395,7 @@ supervisord-apache2.conf  supervisord-mysqld.conf
 <span class="n">autostart</span><span class="o">=</span><span class="n">true</span>
 </pre></div>
 </div>
-<div class="code bash highlight-default"><div class="highlight"><pre><span></span><span class="n">autorestart</span><span class="o">=</span><span class="n">trueroot</span><span class="nd">@98643c960e69</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="c1"># cat /start-apache2.sh</span>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autorestart</span><span class="o">=</span><span class="n">trueroot</span><span class="nd">@98643c960e69</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisor</span><span class="o">/</span><span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="c1"># cat /start-apache2.sh</span>
 <span class="c1">#!/bin/bash</span>
 <span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">apache2</span><span class="o">/</span><span class="n">envvars</span>
 <span class="n">exec</span> <span class="n">apache2</span> <span class="o">-</span><span class="n">D</span> <span class="n">FOREGROUND</span>
@@ -423,11 +430,19 @@ supervisord-apache2.conf  supervisord-mysqld.conf
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -438,7 +453,6 @@ supervisord-apache2.conf  supervisord-mysqld.conf
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

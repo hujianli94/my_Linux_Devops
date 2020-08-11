@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5.12. Nginx访问控制" href="12.Nginx访问控制.html" />
     <link rel="prev" title="5.10. Nginx实战-动静分离配置" href="10.Nginx实战-动静分离配置.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -121,7 +126,9 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.14. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -129,15 +136,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -176,7 +186,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -188,7 +198,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/05.Nginx学习/11.Nginx日志分析与切割.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/05.Nginx学习/11.Nginx日志分析与切割.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -216,18 +226,18 @@
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id4">5.11.1. 一：nginx日志分析</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>其实在我们日常的运维工作中，只要有线上使用过Nginx服务器的人都知道，nginx正常运行后，我们都会经常密切关注Nginx访问日志的相关情况，发现有异常的日志信息需要进行及时处理。</p>
-<p>那么我将跟大家一起来研究和分析Nginx日志，nginx一般默认日志路径为：<code class="docutils literal"><span class="pre">/usr/local/nginx/logs/access.log</span></code>
-和<code class="docutils literal"><span class="pre">error.log</span></code>文件。如下图：</p>
+<p>那么我将跟大家一起来研究和分析Nginx日志，nginx一般默认日志路径为：<code class="docutils literal notranslate"><span class="pre">/usr/local/nginx/logs/access.log</span></code>
+和<code class="docutils literal notranslate"><span class="pre">error.log</span></code>文件。如下图：</p>
 <p><img alt="image0" src="../../_images/cut_nginx_grep_info.png" /></p>
 <p>Nginx日志的格式一般在nginx.conf里面配置，常见的格式配置如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">log_format</span>  <span class="n">main</span>  <span class="s1">&#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">log_format</span>  <span class="n">main</span>  <span class="s1">&#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span>
                       <span class="s1">&#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span>
                       <span class="s1">&#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;</span><span class="p">;</span>
 <span class="n">access_log</span>  <span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span>  <span class="n">main</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>格式解释：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>$remote_addr, $http_x_forwarded_for 记录客户端IP地址
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$remote_addr, $http_x_forwarded_for 记录客户端IP地址
 $remote_user 记录客户端用户名称
 $request 记录请求的URL和HTTP协议
 $status 记录请求状态
@@ -244,11 +254,11 @@ $request_time 请求处理时间，单位为秒，精度毫秒； 从读入客�
 <ol class="arabic simple">
 <li>分析截止目前为止访问量最高的IP排行。</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span>awk &#39;{print $1}&#39; /usr/local/nginx/logs/access.log|sort |uniq -c |sort -nr |head -20就可以了。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>awk &#39;{print $1}&#39; /usr/local/nginx/logs/access.log|sort |uniq -c |sort -nr |head -20就可以了。
 </pre></div>
 </div>
 <p>2)找到当前日志中502或者404错误的页面并统计。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">awk</span> <span class="s1">&#39;{print $0}&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="o">|</span><span class="n">egrep</span> <span class="s2">&quot;404|502&quot;</span><span class="o">|</span><span class="n">awk</span> <span class="s1">&#39;{print 1,7,$9}&#39;</span><span class="o">|</span><span class="n">more</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">awk</span> <span class="s1">&#39;{print $0}&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">access</span><span class="o">.</span><span class="n">log</span><span class="o">|</span><span class="n">egrep</span> <span class="s2">&quot;404|502&quot;</span><span class="o">|</span><span class="n">awk</span> <span class="s1">&#39;{print 1,7,$9}&#39;</span><span class="o">|</span><span class="n">more</span>
 </pre></div>
 </div>
 <p>当然还有很多需求，只要你搞清楚了日志的格式与由来，并且有shell或者python基础的话，相信都不是问题的。</p>
@@ -259,9 +269,9 @@ $request_time 请求处理时间，单位为秒，精度毫秒； 从读入客�
 服务器，体积小、性能高、速度快等诸多优点。但不足的是也存在缺点，比如在产生的访问日志文件一直就是一个，不会自动地进行切割，如果访问量很大的话，将会导致日志文件容量非常大，不便于管理。当然了，我们也不希望看到这么庞大的一个访问日志文件，那需要手动对这个文件进行切割。那么这里就自然而然用到了shell+crontab
 命令了。（当然是用python也是可以的）</p>
 <p>脚本的功能，就是定时切割日志，这里切割的方法我们直接使用mv即可。</p>
-<p><code class="docutils literal"><span class="pre">nginx日志切割脚本</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">nginx日志切割脚本</span></code></p>
 <p>如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #auto mv nginx log shell
 #by author wugk
 S_LOG=/usr/local/nginx/logs/access.log
@@ -283,7 +293,7 @@ echo &quot;You can access backup nginx log $D_LOG/access.log files.&quot;
 </pre></div>
 </div>
 <p>最后在crontab中添加如下代码即可，每天晚上自动去切割日志：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mi">0</span>  <span class="o">*</span> <span class="o">*</span> <span class="o">*</span>  <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">sh</span><span class="o">/</span><span class="n">auto_nginx_log</span><span class="o">.</span><span class="n">sh</span>  <span class="o">&gt;&gt;/</span><span class="n">tmp</span><span class="o">/</span><span class="n">nginx_cut</span><span class="o">.</span><span class="n">log</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span>    <span class="mi">0</span>  <span class="o">*</span> <span class="o">*</span> <span class="o">*</span>  <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">sh</span><span class="o">/</span><span class="n">auto_nginx_log</span><span class="o">.</span><span class="n">sh</span>  <span class="o">&gt;&gt;/</span><span class="n">tmp</span><span class="o">/</span><span class="n">nginx_cut</span><span class="o">.</span><span class="n">log</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
 </pre></div>
 </div>
 </div>
@@ -309,11 +319,19 @@ echo &quot;You can access backup nginx log $D_LOG/access.log files.&quot;
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -324,7 +342,6 @@ echo &quot;You can access backup nginx log $D_LOG/access.log files.&quot;
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

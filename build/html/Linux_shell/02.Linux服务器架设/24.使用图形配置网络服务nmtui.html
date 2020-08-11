@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,22 +33,20 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="next" title="2.23. centos7.2 离线升级openssh7.9" href="25.Centos7中openssh升级到7.9p1.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.23. Openssh更新升级" href="25.Openssh更新升级.html" />
     <link rel="prev" title="2.21. 用 Python 快速实现 HTTP 和 FTP 服务器" href="23.用Python快速实现HTTP和FTP服务器.html" /> 
 </head>
 
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -126,7 +131,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id1">2.22.1. 双网卡绑定</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="25.Centos7中openssh升级到7.9p1.html">2.23. centos7.2 离线升级openssh7.9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh更新升级.html">2.23. Openssh更新升级</a></li>
 <li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
@@ -134,6 +139,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -144,15 +150,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -191,7 +200,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -203,7 +212,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/24.使用图形配置网络服务nmtui.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/24.使用图形配置网络服务nmtui.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -230,7 +239,7 @@
 <p>##使用nmtui命令来配置网络 <img alt="image0" src="../../_images/nmtui.PNG" /></p>
 <p>把网络IPv4的配置方式改成Manual（手动） <img alt="image1" src="../../_images/nmtui2.PNG" /></p>
 <p>使用Vim编辑器将网卡配置文件中的ONBOOT参数修改成yes</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
 <span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
 <span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
 <span class="n">DEFROUTE</span><span class="o">=</span><span class="n">yes</span>
@@ -254,7 +263,7 @@
 <ul class="simple">
 <li>网卡1配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno16777736</span>
 <span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
 <span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
 <span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
@@ -267,7 +276,7 @@
 <ul class="simple">
 <li>网卡2配置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno33554968</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-eno33554968</span>
 <span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
 <span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
 <span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
@@ -279,15 +288,15 @@
 </div>
 <p>还需要将绑定后的设备命名为bond0并把IP地址等信息填写进去，
 这样当用户访问相应服务的时候，实际上就是由这两块网卡设备在共同提供服务。
-<code class="docutils literal"><span class="pre">[root&#64;linuxprobe</span> <span class="pre">~]#</span> <span class="pre">vim</span> <span class="pre">/etc/sysconfig/network-scripts/ifcfg-bond0</span>&#160;&#160; <span class="pre">TYPE=Ethernet</span>&#160;&#160; <span class="pre">BOOTPROTO=none</span>&#160;&#160; <span class="pre">ONBOOT=yes</span>&#160;&#160; <span class="pre">USERCTL=no</span>&#160;&#160; <span class="pre">DEVICE=bond0</span>&#160;&#160; <span class="pre">IPADDR=192.168.10.10</span>&#160;&#160; <span class="pre">PREFIX=24</span>&#160;&#160; <span class="pre">DNS=192.168.10.1</span>&#160;&#160; <span class="pre">NM_CONTROLLED=no</span></code>
+<code class="docutils literal notranslate"><span class="pre">[root&#64;linuxprobe</span> <span class="pre">~]#</span> <span class="pre">vim</span> <span class="pre">/etc/sysconfig/network-scripts/ifcfg-bond0</span>&#160;&#160; <span class="pre">TYPE=Ethernet</span>&#160;&#160; <span class="pre">BOOTPROTO=none</span>&#160;&#160; <span class="pre">ONBOOT=yes</span>&#160;&#160; <span class="pre">USERCTL=no</span>&#160;&#160; <span class="pre">DEVICE=bond0</span>&#160;&#160; <span class="pre">IPADDR=192.168.10.10</span>&#160;&#160; <span class="pre">PREFIX=24</span>&#160;&#160; <span class="pre">DNS=192.168.10.1</span>&#160;&#160; <span class="pre">NM_CONTROLLED=no</span></code>
 让Linux内核支持网卡绑定驱动。
 常见的网卡绑定驱动有三种模式——mode0、mode1和mode6。下面以绑定两块网卡为例，讲解使用的情景</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mode0（平衡负载模式）：平时两块网卡均工作，且自动备援，但需要在与服务器本地网卡相连的交换机设备上进行端口聚合来支持绑定技术。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mode0（平衡负载模式）：平时两块网卡均工作，且自动备援，但需要在与服务器本地网卡相连的交换机设备上进行端口聚合来支持绑定技术。
 mode1（自动备援模式）：平时只有一块网卡工作，在它故障后自动替换为另外的网卡。
 mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，无须交换机设备提供辅助支持。
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
 但是访问该服务器的用户数量特别多，那么它的访问压力一定很大。
 在生产环境中，网络的可靠性是极为重要的，而且网络的传输速度也必须得以保证。
 针对这样的情况，比较好的选择就是mode6网卡绑定驱动模式了。
@@ -295,7 +304,7 @@ mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，
 且无需交换机设备支援，从而提供了可靠的网络传输保障。
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>比如有一台用于提供NFS或者samba服务的文件服务器，它所能提供的最大网络传输速度为100Mbit/s，
 但是访问该服务器的用户数量特别多，那么它的访问压力一定很大。
 在生产环境中，网络的可靠性是极为重要的，而且网络的传输速度也必须得以保证。
 针对这样的情况，比较好的选择就是mode6网卡绑定驱动模式了。
@@ -304,14 +313,14 @@ mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，
 </pre></div>
 </div>
 <p>出现故障时自动切换的时间为100毫秒</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/modprobe.d/bond.conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/modprobe.d/bond.conf</span>
 <span class="n">alias</span> <span class="n">bond0</span> <span class="n">bonding</span>
 <span class="n">options</span> <span class="n">bond0</span> <span class="n">miimon</span><span class="o">=</span><span class="mi">100</span> <span class="n">mode</span><span class="o">=</span><span class="mi">6</span>
 </pre></div>
 </div>
 <p>重启网络服务后网卡绑定操作即可成功。</p>
 <p>正常情况下只有bond0网卡设备才会有IP地址等信息</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">network</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">restart</span> <span class="n">network</span>
 </pre></div>
 </div>
 <p>长ping服务器，进行网卡shutdown操作，查看网卡连通性是否正常。</p>
@@ -326,7 +335,7 @@ mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="25.Centos7中openssh升级到7.9p1.html" class="btn btn-neutral float-right" title="2.23. centos7.2 离线升级openssh7.9" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="25.Openssh更新升级.html" class="btn btn-neutral float-right" title="2.23. Openssh更新升级" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="23.用Python快速实现HTTP和FTP服务器.html" class="btn btn-neutral float-left" title="2.21. 用 Python 快速实现 HTTP 和 FTP 服务器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -338,11 +347,19 @@ mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -353,7 +370,6 @@ mode6（平衡负载模式）：平时两块网卡均工作，且自动备援，
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

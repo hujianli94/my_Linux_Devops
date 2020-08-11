@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.9. Samba服务器搭建" href="8.Samba服务器的搭建.html" />
     <link rel="prev" title="2.7. 使用iSCSI服务部署网络存储" href="6.使用iSCSI服务部署网络存储.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -135,6 +140,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -156,6 +162,7 @@
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -194,7 +201,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -206,7 +213,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/02.Linux服务器架设/7.远程登录Linux系统.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/7.远程登录Linux系统.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -245,7 +252,7 @@
 <div class="section" id="windowslinux">
 <h3><a class="toc-backref" href="#id8">windows上使用密钥登录Linux系统</a><a class="headerlink" href="#windowslinux" title="Permalink to this headline">¶</a></h3>
 <p>下载安装puttygen或者其他ssh客户端软件</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>点击生成，在指点区域晃动鼠标，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>点击生成，在指点区域晃动鼠标，
 会自动生成公钥----点击保存私钥，
 可以重命名，后缀为ppk文件
 
@@ -259,7 +266,7 @@ vim /root/.ssh/authorized_keys
 </div>
 <div class="section" id="id2">
 <h4>例如：<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /root/.ssh/authorized_keys</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /root/.ssh/authorized_keys</span>
 <span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="n">AAAAB3NzaC1yc2EAAAABJQAAAQEA5Sd4R39caEI7qEHLogTfc1HiytTV2qWYRvWxmYn</span><span class="o">/</span><span class="n">lD</span><span class="o">/</span><span class="n">oKX</span><span class="o">+</span><span class="n">o8Cr</span><span class="o">/</span><span class="n">JPl8aWhghNuIISYzVme6s</span><span class="o">+</span><span class="n">zVPLFVARIc7pOlvYXYNZ9yCPUbb5Q94JYngjoBFhNsf</span>
 <span class="n">mBCf0m6qitR0TsPsMRDYrlOmTwzo1bvd2O1Vrp0FtJuBJp6tXN7knpGVFqfaOTdbzgg2POWNc4gQpvUI4PhOmMzFnDN5DK</span><span class="o">+</span><span class="n">Vz4gSBNKocdl1M7ysQJ559xy</span><span class="o">/</span><span class="mi">7</span><span class="n">x7DCRj3gh8s00EqiNzSsduIKRJcqEpvFHg0MgSG5qsYMk5uxwrhTDIBKpuybmAMZ</span><span class="o">+</span><span class="n">IV5s9ri7cR207Mwthdb3v3xGrQP9</span><span class="o">+</span><span class="n">kDIAF7dhBw</span><span class="o">==</span> <span class="n">rsa</span><span class="o">-</span><span class="n">key</span><span class="o">-</span><span class="mi">20190221</span>
 </pre></div>
@@ -272,7 +279,7 @@ vim /root/.ssh/authorized_keys
 <h2><a class="toc-backref" href="#id9">2.8.2. 2.两台Linux之间互访</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="linuxa">
 <h3><a class="toc-backref" href="#id10">Linux主机A</a><a class="headerlink" href="#linuxa" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ssh -V</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ssh -V</span>
 <span class="n">OpenSSH_7</span><span class="o">.</span><span class="mi">4</span><span class="n">p1</span><span class="p">,</span> <span class="n">OpenSSL</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">2</span><span class="n">k</span><span class="o">-</span><span class="n">fips</span>  <span class="mi">26</span> <span class="n">Jan</span> <span class="mi">2017</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># whoami</span>
@@ -305,14 +312,14 @@ vim /root/.ssh/authorized_keys
 </pre></div>
 </div>
 <p>​</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>ssh-keygen 程序会生成两个文件：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ssh-keygen 程序会生成两个文件：
 
 ~/.ssh/id_rsa.pub和~/.ssh/id_rsa。其中前者是公钥，后者是
 私钥。公钥必须添加到想要自动登入的远程服务器的~/.ssh/authorized_keys文件中
 </pre></div>
 </div>
 <p>分发公钥到远程主机上</p>
-<div class="code shell highlight-default"><div class="highlight"><pre><span></span>可以使用下列命令添加密钥文件：
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>可以使用下列命令添加密钥文件：
 $ ssh root@192.168.1.80 &#39;mkdir -p .ssh &amp;&amp; cat &gt;&gt;.ssh/authorized_keys&#39; &lt;~/.ssh/id_rsa.pub
 
 上面的命令是使用Shell脚本的方式将公钥保存到远程服务器，除此之外，OpenSSH专门提供了一个名为ssh-copy-id的工具。我们可以使用该工具将公钥保存到远程服务器中，这种方式比前面Shell脚本的方式更加方便。如下所示:
@@ -321,7 +328,7 @@ $ ssh root@192.168.1.80 &#39;mkdir -p .ssh &amp;&amp; cat &gt;&gt;.ssh/authorize
 </pre></div>
 </div>
 <p>或者手动的进行粘贴</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#将此公钥的内容复制粘贴到Linux主机B的/root/.ssh/authorized_keys文件中。</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#将此公钥的内容复制粘贴到Linux主机B的/root/.ssh/authorized_keys文件中。</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /root/.ssh/id_rsa.pub</span>
 <span class="n">ssh</span><span class="o">-</span><span class="n">rsa</span> <span class="n">AAAAB3NzaC1yc2EAAAADAQABAAABAQD2siSU9RiPxoNja2rQ4KDVMacMgjrVMmnM4umCI5Hqvxv</span><span class="o">/</span><span class="n">CH737XfCaUQIDdLRFMp3Q</span>
 <span class="o">/</span><span class="n">Hc4K6nERXlrxW</span><span class="o">/</span><span class="n">lLN8E8hUkzcmk4L1LmO4H</span><span class="o">+</span><span class="n">hljCyGWSUcBfemRyj7ACV8jls0AqftiVIgG</span><span class="o">+</span><span class="mi">8</span><span class="n">eCZaLcrEmF6bLUs1Cs2n2</span><span class="o">/</span><span class="n">uIbY8karfH</span>
@@ -332,7 +339,7 @@ $ ssh root@192.168.1.80 &#39;mkdir -p .ssh &amp;&amp; cat &gt;&gt;.ssh/authorize
 </div>
 <div class="section" id="linuxb">
 <h3><a class="toc-backref" href="#id11">Linux主机B</a><a class="headerlink" href="#linuxb" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mkdir -p /root/.ssh/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mkdir -p /root/.ssh/
 [root@localhost ~]# cat /root/.ssh/authorized_keys
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD2siSU9RiPxoNja2
 rQ4KDVMacMgjrVMmnM4umCI5Hqvxv/CH737XfCaUQIDdLRFMp3Q/Hc4K6nERXlrxW/
@@ -358,7 +365,7 @@ sshd服务启动完毕，就可以利用SecureCRT通过PublicKey认证远程登�
 </div>
 <div class="section" id="id4">
 <h3><a class="toc-backref" href="#id12">实现免密码登录</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>把之前生成的后缀名为 pub 的密钥文件传到 Linux 服务器上，如果已经在用 Securecrt连接Linux系统，可以直接使用rz命令将密钥文件传到服务器上。然后开始导入pub文件。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>把之前生成的后缀名为 pub 的密钥文件传到 Linux 服务器上，如果已经在用 Securecrt连接Linux系统，可以直接使用rz命令将密钥文件传到服务器上。然后开始导入pub文件。
 ssh-keygen -i -f Identity.pub &gt;&gt; /root/.ssh/authorized_keys
 
 完成后，在 /root/.ssh/ 下面就会多出一个 authorized_keys 文件。
@@ -386,7 +393,7 @@ root     pts/1        2019-02-22 19:24 (192.168.1.106)
 <div class="line">​</div>
 <div class="line">### scp远程传输命令 * 1.将本地文件上传到远程服务器</div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">readme</span><span class="o">.</span><span class="n">txt</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.20</span><span class="p">:</span><span class="o">/</span><span class="n">home</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">readme</span><span class="o">.</span><span class="n">txt</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.20</span><span class="p">:</span><span class="o">/</span><span class="n">home</span>
 </pre></div>
 </div>
 <div class="line-block">
@@ -394,13 +401,13 @@ root     pts/1        2019-02-22 19:24 (192.168.1.106)
 <div class="line">​</div>
 <div class="line">* 2.把远程主机的文件下载到本地</div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.20</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redhat</span><span class="o">-</span><span class="n">release</span> <span class="o">/</span><span class="n">root</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scp</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">10.20</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">redhat</span><span class="o">-</span><span class="n">release</span> <span class="o">/</span><span class="n">root</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id13">免密登录转为密码登录</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>PermitRootLogin这行改为 PermitRootLogin yes
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PermitRootLogin这行改为 PermitRootLogin yes
 PasswordAuthentication no改为 PasswordAuthentication  yes
 UsePAM yes改为UsePAM  no  （Redhat系统保持默认yes）
 </pre></div>
@@ -431,11 +438,19 @@ UsePAM yes改为UsePAM  no  （Redhat系统保持默认yes）
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -446,7 +461,6 @@ UsePAM yes改为UsePAM  no  （Redhat系统保持默认yes）
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4.4. Navicat把csv数据导入mysql操作方法" href="04.Navicat把csv数据导入mysql操作方法.html" />
     <link rel="prev" title="4.2. mysql入门到精通" href="02.Mysql入门到精通.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -138,15 +143,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -185,7 +193,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -197,7 +205,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/04.玩转数据库（mysql、Redis）/03.Linux运维之Mysql必会知识.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/04.玩转数据库（mysql、Redis）/03.Linux运维之Mysql必会知识.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -278,14 +286,14 @@
 <h2><a class="toc-backref" href="#id53">4.3.1. MySQL概述</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id1">
 <h3><a class="toc-backref" href="#id54">MySQL 简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL 是最流行的开放源码 SQL 数据库管理系统，它是由 MySQLAB 公司开发、发布并支持
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 是最流行的开放源码 SQL 数据库管理系统，它是由 MySQLAB 公司开发、发布并支持
 的。它的插入式存储引擎可以让使用者根据实际应用使用不同的存储。
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h3><a class="toc-backref" href="#id55">MySQL 相关链接</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL 官方网站：http://www.mysql.com/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 官方网站：http://www.mysql.com/
 MySQL 社区版本下载地址：http://www.mysql.com/downloads/mysql/
 MySQL 中文文档：http://dev.mysql.com/doc/refman/5.1/zh/index.html
 MySQL 实用文档：http://www.unixhot.com/pdf/mysql.pdf
@@ -295,35 +303,35 @@ MySQL 实用文档：http://www.unixhot.com/pdf/mysql.pdf
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id56">4.3.2. Mysql数据库安装</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">(1)</span> <span class="pre">YUM方式按MySQL的方法，执行命令详解如下：</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>①yum install mysql-server mysql-devel mysql-libs -y        #Centos6.X YUM安装。
+<p><code class="docutils literal notranslate"><span class="pre">(1)</span> <span class="pre">YUM方式按MySQL的方法，执行命令详解如下：</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>①yum install mysql-server mysql-devel mysql-libs -y        #Centos6.X YUM安装。
 
 ②yum install mariadb-server mariadb mariadb-libs -y        #Centos7X YUM安装。
 systemctl start mariadb.service       # 启动mariadb.db数据库
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">(2)</span> <span class="pre">源码安装方法</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>一.环境准备
+<p><code class="docutils literal notranslate"><span class="pre">(2)</span> <span class="pre">源码安装方法</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一.环境准备
 环境：centos-7.3 一台
 软件版本：mysql-5.7.21
 说明：使用二进制包进行初始化操作，并不进行make等编译操作。
 </pre></div>
 </div>
 <p>1.安装依赖</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">autoconf</span> <span class="n">libaio</span> <span class="n">bison</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">autoconf</span> <span class="n">libaio</span> <span class="n">bison</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
 </pre></div>
 </div>
 <p>2.创建用户</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">groupadd</span> <span class="n">mysql</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">groupadd</span> <span class="n">mysql</span>
 <span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">mysql</span>
 </pre></div>
 </div>
 <p>3.清理centos7 默认自带数据库</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">remove</span> <span class="n">mariadb</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">remove</span> <span class="n">mariadb</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
 </pre></div>
 </div>
 <p>二.部署 1.下载包</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz
 
 tar -xf mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz
 
@@ -340,7 +348,7 @@ chown -R mysql:mysql /var/log/mysql
 <p>2.进去删除所有行，添加新的</p>
 <p>可参考</p>
 <p><a class="reference external" href="http://imysql.com/my-cnf-wizard.html">my.cnf生成器</a></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span>
 
 <span class="p">[</span><span class="n">client</span><span class="p">]</span>
 <span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
@@ -357,14 +365,14 @@ chown -R mysql:mysql /var/log/mysql
 </pre></div>
 </div>
 <p>3.初始化</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span>
 
 <span class="c1">#初始化数据库，没有反应则正确</span>
 <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld</span> <span class="o">--</span><span class="n">initialize</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span> <span class="o">--</span><span class="n">datadir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
 </pre></div>
 </div>
 <p>4.加入systemctl</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">service</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">service</span>
 
 <span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
 <span class="n">Description</span><span class="o">=</span><span class="n">mysql</span>
@@ -385,12 +393,12 @@ chown -R mysql:mysql /var/log/mysql
 </pre></div>
 </div>
 <p>6.启动</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mysql</span>
 <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">mysql</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#查看密码
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#查看密码
 cat /var/log/mysql/mysqld.log
 最后一行：root@localhost: 这里就是初始密码
 
@@ -433,7 +441,7 @@ ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id57">4.3.3. 1.基础操作</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#查看当前时间</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看当前时间</span>
 <span class="n">select</span> <span class="n">now</span><span class="p">();</span>
 
 <span class="c1">#查看mysql版本</span>
@@ -473,7 +481,7 @@ ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id58">4.3.4. 2.数据库操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>create database hujianli default charset=utf8;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create database hujianli default charset=utf8;
 
 create database IF NOT EXISTS hujianli2;
 
@@ -523,7 +531,7 @@ delete from test01;
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id59">3.mysql忘记密码后，跳过密码进入数据库</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
 
 <span class="c1">#修改mysql的root密码</span>
     <span class="c1">#第一种方式:</span>
@@ -539,7 +547,7 @@ delete from test01;
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id60">4.mysql的各种权限管理</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>用户权限管理主要有以下作用：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>用户权限管理主要有以下作用：
 1. 可以限制用户访问哪些库、哪些表
 2. 可以限制用户对哪些表执行SELECT、CREATE、DELETE、DELETE、ALTER等操作
 3. 可以限制用户登录的IP或域名
@@ -652,7 +660,7 @@ grant select,insert,update,delete on *.* to test@”%”identified by &#39;12345
 </div>
 <div class="section" id="id8">
 <h3><a class="toc-backref" href="#id61">5.表的操作</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>格式：create table 表名(列及类型)
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：create table 表名(列及类型)
 create table students2(id int auto_increment primary key,name varchar(20) not null,
 age int not null ,gender bit default 1,address varchar(20),isDelete bit default 0);
 
@@ -799,20 +807,20 @@ create table table_name(
 </div>
 <div class="section" id="id9">
 <h4>5.1 查看建表语句<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">create</span> <span class="n">table</span> <span class="n">student2</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">create</span> <span class="n">table</span> <span class="n">student2</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id10">
 <h4>5.2 重名名表名<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">rename</span> <span class="n">table</span> <span class="n">原表名</span> <span class="n">to</span> <span class="n">新表名</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rename</span> <span class="n">table</span> <span class="n">原表名</span> <span class="n">to</span> <span class="n">新表名</span>
 <span class="n">rename</span> <span class="n">table</span> <span class="n">student2</span> <span class="n">to</span> <span class="n">students2</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id11">
 <h4>5.3修改表名<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>alter table 表名 add|change|drop 列名 类型;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>alter table 表名 add|change|drop 列名 类型;
 alter table students2 add isDelete bit default 1;
 
 
@@ -865,8 +873,8 @@ mysql&gt; alter table students change regiiter_date register_date DATE;
 <h2><a class="toc-backref" href="#id62">4.3.5. 数据的操作</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id13">
 <h3><a class="toc-backref" href="#id63">1.增</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
-<p><code class="docutils literal"><span class="pre">语法：</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>`INSERT INTO table_name ( field1, field2,...fieldN )
+<p><code class="docutils literal notranslate"><span class="pre">语法：</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`INSERT INTO table_name ( field1, field2,...fieldN )
                        VALUES
                        ( value1, value2,...valueN );`
 
@@ -900,7 +908,7 @@ SELECT * FROM student;  --&gt;看表里面的内容
 </div>
 <div class="section" id="id14">
 <h3><a class="toc-backref" href="#id64">2.删</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>格式：delete from 表名;    ---删除表全部的内容,危险慎用！
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：delete from 表名;    ---删除表全部的内容,危险慎用！
       delete from 表名 where 条件;
 示例：delete from students2 where id=6;
 
@@ -911,18 +919,18 @@ Truncate tables_name;         # 清空数据库表内容
 </div>
 <div class="section" id="id15">
 <h3><a class="toc-backref" href="#id65">3.改</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>格式：update 表名 set 列1=值1,列2=值2,...... where 条件
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：update 表名 set 列1=值1,列2=值2,...... where 条件
 示例:update student2 set age=16 where id=5；   ---注意没有条件是全列修改，慎用！
 </pre></div>
 </div>
 </div>
 <div class="section" id="id16">
 <h3><a class="toc-backref" href="#id66">4.查</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>格式：select * from students2;    ---查询表中的全部数据
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：select * from students2;    ---查询表中的全部数据
 </pre></div>
 </div>
-<p><code class="docutils literal"><span class="pre">语法：</span>&#160;&#160;&#160;&#160; <span class="pre">SELECT</span> <span class="pre">column_name,column_name</span>&#160;&#160;&#160;&#160; <span class="pre">FROM</span> <span class="pre">table_name</span>&#160;&#160;&#160;&#160; <span class="pre">[WHERE</span> <span class="pre">Clause]</span>&#160;&#160;&#160;&#160; <span class="pre">[OFFSET</span> <span class="pre">M</span> <span class="pre">][LIMIT</span> <span class="pre">N]</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。
+<p><code class="docutils literal notranslate"><span class="pre">语法：</span>&#160;&#160;&#160;&#160; <span class="pre">SELECT</span> <span class="pre">column_name,column_name</span>&#160;&#160;&#160;&#160; <span class="pre">FROM</span> <span class="pre">table_name</span>&#160;&#160;&#160;&#160; <span class="pre">[WHERE</span> <span class="pre">Clause]</span>&#160;&#160;&#160;&#160; <span class="pre">[OFFSET</span> <span class="pre">M</span> <span class="pre">][LIMIT</span> <span class="pre">N]</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。
 SELECT 命令可以读取一条或者多条记录。
 你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据
 你可以使用 WHERE 语句来包含任何条件。
@@ -930,7 +938,7 @@ SELECT 命令可以读取一条或者多条记录。
 你可以使用 LIMIT 属性来设定返回的记录数。
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">2</span> <span class="n">offset</span> <span class="mi">3</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">2</span> <span class="n">offset</span> <span class="mi">3</span><span class="p">;</span>
     <span class="c1">#limit： 查几条数据</span>
     <span class="c1">#offset: 从第几个开始查</span>
 
@@ -946,7 +954,7 @@ SELECT 命令可以读取一条或者多条记录。
 </div>
 <div class="section" id="id17">
 <h4>4,1查操作，使用最多<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.基本语法
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.基本语法
     格式：select * from 表名
         说明：
             a、from关键字后面是表名，表示数据来源于这张表
@@ -1142,11 +1150,11 @@ ALTER TABLE test DROP PRIMARY KEY;  --&gt;删除主键
 </div>
 <div class="section" id="id18">
 <h4>其他操作<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建授权用户</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建授权用户</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">grant</span> <span class="nb">all</span> <span class="n">on</span> <span class="n">test</span><span class="o">.*</span> <span class="n">to</span> <span class="s1">&#39;xsk&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;123456&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>注:
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>注:
 
 GRANT          #命令
 
@@ -1174,7 +1182,7 @@ by             # 后面根密码
 ‘123456’;      # 设置密码
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建无授权用户</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建无授权用户</span>
 <span class="n">mysql</span><span class="o">&gt;</span><span class="n">grant</span> <span class="nb">all</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="n">用户名</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;密码&#39;</span><span class="p">;</span>
 
 <span class="c1"># 更改密码</span>
@@ -1199,19 +1207,19 @@ by             # 后面根密码
 </div>
 <div class="section" id="id19">
 <h4>修改<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">update</span> <span class="n">students</span> <span class="nb">set</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;hu&#39;</span> <span class="n">where</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">update</span> <span class="n">students</span> <span class="nb">set</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;hu&#39;</span> <span class="n">where</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id20">
 <h4>删除<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="nb">id</span> <span class="o">&gt;</span><span class="mi">4</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="nb">id</span> <span class="o">&gt;</span><span class="mi">4</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id21">
 <h4>排序<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>排序
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>排序
     select * from 表 order by 列 asc              - 根据 “列” 从小到大排列
     select * from 表 order by 列 desc             - 根据 “列” 从大到小排列
     select * from 表 order by 列1 desc,列2 asc    - 根据 “列1” 从大到小排列，如果相同则按列2从小到大排
@@ -1222,7 +1230,7 @@ by             # 后面根密码
 </div>
 <div class="section" id="id22">
 <h4>分组<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1.按名字分组后，并且统计名字出现的次数
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.按名字分组后，并且统计名字出现的次数
 select name,count(*) from students group by name;
 
 2.按名字分组后，把年龄加起来
@@ -1235,7 +1243,7 @@ select name,sum(age) as rename_sumage from students group by name;
 </div>
 <div class="section" id="id23">
 <h4>事务<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL 事务主要用于处理操作量大，复杂度高的数据。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 事务主要用于处理操作量大，复杂度高的数据。
 
 特性：
     1、事务的原子性：一组事务，要么成功；要么撤回。
@@ -1256,7 +1264,7 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id24">
 <h4>外键<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">MySQL支持外键的存储引擎只有InnoDB</span> <span class="p">,</span> <span class="n">在创建外键的时候</span> <span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MySQL支持外键的存储引擎只有InnoDB</span> <span class="p">,</span> <span class="n">在创建外键的时候</span> <span class="p">,</span>
 <span class="n">要求父表必须有对应的索引</span> <span class="p">,</span> <span class="n">子表在创建外键的时候也会自动创建对应的索引</span>
 </pre></div>
 </div>
@@ -1266,7 +1274,7 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id25">
 <h2><a class="toc-backref" href="#id67">4.3.6. 1.显示</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mysql&gt; show databases;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql&gt; show databases;
 
 
   默认数据库：
@@ -1279,8 +1287,8 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id26">
 <h2><a class="toc-backref" href="#id68">4.3.7. 2.创建</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
-<p><code class="docutils literal"><span class="pre">create</span> <span class="pre">database</span> <span class="pre">数据库名称</span> <span class="pre">default</span> <span class="pre">charset</span> <span class="pre">utf8</span> <span class="pre">collate</span> <span class="pre">utf8_general_ci;</span></code></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">derek</span> <span class="n">default</span> <span class="n">charset</span> <span class="n">utf8</span> <span class="n">collate</span> <span class="n">utf8_general_ci</span><span class="p">;</span>
+<p><code class="docutils literal notranslate"><span class="pre">create</span> <span class="pre">database</span> <span class="pre">数据库名称</span> <span class="pre">default</span> <span class="pre">charset</span> <span class="pre">utf8</span> <span class="pre">collate</span> <span class="pre">utf8_general_ci;</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">derek</span> <span class="n">default</span> <span class="n">charset</span> <span class="n">utf8</span> <span class="n">collate</span> <span class="n">utf8_general_ci</span><span class="p">;</span>
 <span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span><span class="p">,</span> <span class="mi">2</span> <span class="n">warnings</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
 
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
@@ -1289,7 +1297,7 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id27">
 <span id="id28"></span><h2><a class="toc-backref" href="#id69">4.3.8. 3.删除</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">derek</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">derek</span><span class="p">;</span>
 <span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.07</span> <span class="n">sec</span><span class="p">)</span>
 
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
@@ -1298,7 +1306,7 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id29">
 <h2><a class="toc-backref" href="#id70">4.3.9. 4.使用</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">derek</span><span class="p">;</span>                  <span class="n">进入数据库</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">derek</span><span class="p">;</span>                  <span class="n">进入数据库</span>
 <span class="n">show</span> <span class="n">tables</span><span class="p">;</span>                <span class="n">查看表</span>
 <span class="n">select</span> <span class="n">database</span><span class="p">();</span>          <span class="n">查看当前使用的数据库</span>
 </pre></div>
@@ -1306,7 +1314,7 @@ commit;             --&gt;确认提交
 </div>
 <div class="section" id="id30">
 <h2><a class="toc-backref" href="#id71">4.3.10. 5.用户管理</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mysql&gt; use mysql;       #进入mysql数据库
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql&gt; use mysql;       #进入mysql数据库
 mysql&gt; select host,user from user;      ##查看目前的用户
 +-----------+------------------+
 | host      | user             |
@@ -1334,13 +1342,13 @@ create user &#39;用户名&#39;@&#39;IP地址&#39; identified by &#39;密码&#39
 </div>
 <div class="section" id="id31">
 <h2><a class="toc-backref" href="#id72">4.3.11. 6.用户授权</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>查看权限：   show grants for &#39;用户&#39;@&#39;IP地址&#39;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查看权限：   show grants for &#39;用户&#39;@&#39;IP地址&#39;
 授权：     grant 权限 on 数据库.表 to &#39;用户&#39;@&#39;IP地址&#39;
 取消权限：   revoke 权限 on 数据库.表 from &#39;用户&#39;@&#39;IP地址&#39;
 flush privileges   将数据读取到内存中，从而立即生效
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">grants</span> <span class="k">for</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">grants</span> <span class="k">for</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
 <span class="n">grant</span> <span class="n">select</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 
@@ -1351,7 +1359,7 @@ flush privileges   将数据读取到内存中，从而立即生效
 <span class="n">revoke</span> <span class="nb">all</span> <span class="n">privileges</span> <span class="n">on</span> <span class="o">*.*</span> <span class="kn">from</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">权限说明</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">权限说明</span>
 <span class="nb">all</span> <span class="n">privileges</span>  <span class="n">除grant外的所有权限</span>
 <span class="n">select</span>          <span class="n">仅查权限</span>
 <span class="n">select</span><span class="p">,</span><span class="n">insert</span>   <span class="n">查和插入权限</span>
@@ -1387,7 +1395,7 @@ flush privileges   将数据读取到内存中，从而立即生效
 </div>
 <div class="section" id="id32">
 <h2><a class="toc-backref" href="#id73">4.3.12. 7.忘记密码</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 启动免授权服务端</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 启动免授权服务端</span>
 <span class="n">mysqld</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span>
 <span class="c1"># 客户端</span>
 <span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span>
@@ -1418,7 +1426,7 @@ flush privileges   将数据读取到内存中，从而立即生效
 </div>
 <div class="section" id="id37">
 <h2><a class="toc-backref" href="#id78">4.3.14. 9.mysql存储引擎</a><a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>创建新表时如果不指定存储引擎 , 那么系统就会使用默认存储引擎 , MySQL 5.5 之前的默认存储引擎是MyISAM , 5.5 之后改为了InnoDB
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>创建新表时如果不指定存储引擎 , 那么系统就会使用默认存储引擎 , MySQL 5.5 之前的默认存储引擎是MyISAM , 5.5 之后改为了InnoDB
 
 查看当前数据库支持的存储引擎类型；
 SHOW ENGINES;
@@ -1427,7 +1435,7 @@ SHOW ENGINES;
 <p><img alt="image4" src="../../_images/mysql-yingqing.png" /></p>
 <div class="section" id="myisam-innodb">
 <h3><a class="toc-backref" href="#id79">1.MyISAM 和 InnoDB的适用场景</a><a class="headerlink" href="#myisam-innodb" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MyISAM适合：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MyISAM适合：
 (1)做很多count 的计算；
 (2)插入不频繁，查询非常频繁；
 (3)没有事务。
@@ -1440,7 +1448,7 @@ InnoDB适合：
 </div>
 <div class="section" id="id38">
 <h3><a class="toc-backref" href="#id80">MyISAM 和 InnoDB的区别</a><a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1)MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1)MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持
 2)myisam表不支持外键
 3)在执行数据库写入的操作（insert,update,delete）的时候，myisam表会锁表，而innodb表会锁行
 4)当你的数据库有大量的写入、更新操作而查询比较少或者数据完整性要求比较高的时候就选择innodb表。当你的数据库主要以查询为主，相比较而言更新和写 入比较少，并且业务方面数据完整性要求不那么严格，就选择mysiam表。因为mysiam表的查询操作效率和速度都比innodb要快
@@ -1449,7 +1457,7 @@ InnoDB适合：
 </div>
 <div class="section" id="id39">
 <h3><a class="toc-backref" href="#id81">如何选择存储引擎</a><a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>InnoDB存储引擎：用于事务处理应用程序，具有众多特性
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>InnoDB存储引擎：用于事务处理应用程序，具有众多特性
 
 MyISAM存储引擎：主要用于管理费事务表，它提供高速存储和检索，以及全文搜索能力
 
@@ -1464,7 +1472,7 @@ MEMORY存储引擎：提供“内存中”表，MEMORY存储引擎的所有数�
 <p>　　MySQL 事务主要用于处理操作量大，复杂度高的数据。
 比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，
 这样，这些数据库操作语句就构成一个事务！</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>mysql引擎：MyIsam，Innodb默认启用innodb支持事务。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql引擎：MyIsam，Innodb默认启用innodb支持事务。
 重构日志：数据可如果在处理多条命令时down机，如果命令，没有全不处理完，当数据库启动时会检测事件并通过重构日志重写取消命令。
 在MySQL中只有使用了Innodb数据库引擎的数据库或表才支持事务
 事务处理可以用来维护数据库的完整性，保证成批的SQL语句要么全部执行，要么全部不执行
@@ -1473,7 +1481,7 @@ MEMORY存储引擎：提供“内存中”表，MEMORY存储引擎的所有数�
 </div>
 <p>　　一般来说，事务是必须满足4个条件（ACID）：
 Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）、Durability（可靠性）</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1、事务的原子性：一组事务，要么成功；要么撤回。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、事务的原子性：一组事务，要么成功；要么撤回。
 2、稳定性 ： 有非法数据（外键约束之类），事务撤回。
 3、隔离性：事务独立运行。一个事务处理后的结果，影响了其他事务，那么其他事务会撤回。事务的100%隔离，需要牺牲速度。
 4、可靠性：软、硬件崩溃后，InnoDB数据表驱动会利用日志文件重构修改。可靠性和高速度不可兼得， innodb_flush_log_at_trx_commit选项 决定什么时候吧事务保存到日志里。
@@ -1482,7 +1490,7 @@ Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）
 </div>
 <div class="section" id="id42">
 <h4>事务操作<a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 开启一个事务</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 开启一个事务</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">begin</span><span class="p">;</span>
 <span class="c1"># 回滚事务，取消事务。</span>
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">rollback</span><span class="p">;</span>
@@ -1497,16 +1505,16 @@ Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）
 <h2><a class="toc-backref" href="#id83">4.3.15. Mysql 慢查询日志配置</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h2>
 <p>查询日志</p>
 <p>1、主配置文件下对添加参数、重启生效。</p>
-<p><code class="docutils literal"><span class="pre">vim</span> <span class="pre">/etc/my.cnf</span></code></p>
+<p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">/etc/my.cnf</span></code></p>
 <p><img alt="image5" src="../../_images/mysql_slow001.png" /></p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>注：主要用于查看开发程序执行时间。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>注：主要用于查看开发程序执行时间。
 
 注：log_slow_queries = /tmp/mysql.slow    # 配置慢查询日志路径
 
 注：long_query_time = 1　　　　　　　   # 慢查询日志测试时间
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">查询慢日志开关是否开启</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">查询慢日志开关是否开启</span>
 
 <span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;slow_query_log&#39;</span><span class="p">;</span>
 <span class="n">打开慢查询日志开关</span>
@@ -1520,17 +1528,17 @@ Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）
 <div class="section" id="id45">
 <h3><a class="toc-backref" href="#id85">1.导入外部数据文本</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <p>1)执行外部的SQL脚本</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
 </pre></div>
 </div>
 <p>2)在指定数据库上执行</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="p">[</span><span class="n">表名</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="p">[</span><span class="n">表名</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li>数据传入命令</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">load</span> <span class="n">data</span> <span class="n">local</span> <span class="n">infile</span> <span class="s2">&quot;[文件名]&quot;</span> <span class="n">into</span> <span class="n">table</span> <span class="p">[</span><span class="n">表名</span><span class="p">];</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span> <span class="n">data</span> <span class="n">local</span> <span class="n">infile</span> <span class="s2">&quot;[文件名]&quot;</span> <span class="n">into</span> <span class="n">table</span> <span class="p">[</span><span class="n">表名</span><span class="p">];</span>
 </pre></div>
 </div>
 </div>
@@ -1539,23 +1547,23 @@ Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）
 <ol class="arabic simple">
 <li>备份数据库：</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 将数据库school备份到school.sql文件中。</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将数据库school备份到school.sql文件中。</span>
 <span class="n">mysqldump</span> <span class="o">--</span><span class="n">opt</span> <span class="n">school</span> <span class="o">&gt;</span> <span class="n">school</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="2">
 <li>备份：</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&gt;</span> <span class="n">filename</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&gt;</span> <span class="n">filename</span><span class="p">;</span>
 </pre></div>
 </div>
 <ol class="arabic simple" start="3">
 <li>恢复：</li>
 </ol>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&lt;</span> <span class="n">filename</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&lt;</span> <span class="n">filename</span><span class="p">;</span>
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">备份数据库</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">备份数据库</span>
 <span class="c1"># 还原没有更改字符集会出现乱码需指定字符集--default-character=gbk。</span>
 <span class="n">mysqldump</span> <span class="o">--</span><span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">=</span><span class="n">gbk</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">p密码</span> <span class="n">数据库名</span> <span class="o">&gt;</span> <span class="n">文件名</span><span class="o">.</span><span class="n">sql</span>
 
@@ -1604,14 +1612,14 @@ Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）
 <h3><a class="toc-backref" href="#id91">Mysql数据库的优化</a><a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
 <p>使用tuning-primer.sh脚本来调优mysql数据库</p>
 <p>脚本下载链接：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BMDan</span><span class="o">/</span><span class="n">tuning</span><span class="o">-</span><span class="n">primer</span><span class="o">.</span><span class="n">sh</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BMDan</span><span class="o">/</span><span class="n">tuning</span><span class="o">-</span><span class="n">primer</span><span class="o">.</span><span class="n">sh</span>
 </pre></div>
 </div>
 <p>该脚本从中获取信息，SHOW STATUS LIKE…并SHOW VARIABLES
 LIKE…为调整服务器变量生成合理的建议。 它与MySQL
 3.23和更高版本（包括5.x）的所有版本兼容。</p>
 <p>当前，它处理以下方面的建议：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>慢查询日志
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>慢查询日志
 最大连接数
 工作线程
 密钥缓冲区[仅适用于MyISAM]
@@ -1628,8 +1636,8 @@ InnoDB状态
 </div>
 <div class="section" id="django">
 <h3><a class="toc-backref" href="#id92">Django访问数据库</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h3>
-<p>在Django项目文件夹的目录下找到<code class="docutils literal"><span class="pre">setting.py</span></code>文件并打开，找到DATABASES这一项，更改数据库连接参数，格式如下：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+<p>在Django项目文件夹的目录下找到<code class="docutils literal notranslate"><span class="pre">setting.py</span></code>文件并打开，找到DATABASES这一项，更改数据库连接参数，格式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
         <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;mysite&#39;</span><span class="p">,</span>
@@ -1665,11 +1673,19 @@ InnoDB状态
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -1680,7 +1696,6 @@ InnoDB状态
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

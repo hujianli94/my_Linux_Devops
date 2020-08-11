@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.35. 使用tar命令进行本地备份scripts" href="41.使用tar命令进行本地备份scripts.html" />
     <link rel="prev" title="1.33. echo 输出颜色" href="32.echo输出颜色.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
@@ -129,7 +134,7 @@
 <li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="29.使用SSH实现端口转发.html">1.30. 使用 SSH 实现端口转发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用OpenSSH远程管理Linux服务器.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
@@ -148,7 +153,7 @@
 <li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
 <li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
-<li class="toctree-l3"><a class="reference internal" href="44.Linux服务器故障排查顺序.html">1.38. Linux 服务器故障排查顺序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.38. Linux下软件的安装与管理</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -160,15 +165,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -207,7 +215,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -219,7 +227,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/01.常用较多命名查询/40.Linux初始化系统安全设置.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/40.Linux初始化系统安全设置.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -254,7 +262,7 @@
 <div class="section" id="ping">
 <h2><a class="toc-backref" href="#id7">1.34.1. 1.禁止系统响应任何从外部/内部来的ping请求</a><a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h2>
 <p>攻击者一般首先通过ping命令检测此主机或者IP是否处于活动状态。如果能够ping通某个主机或者IP，那么攻击者就认为此系统处于活动状态，继而进行攻击或破坏。如果没有人能ping通机器并收到响应，那么就可以大大增强服务器的安全性。Linux下可以执行如下设置，禁止ping请求。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ～]#echo &quot;1&quot; &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]#echo &quot;1&quot; &gt; /proc/sys/net/ipv4/icmp_echo_ignore_all
 </pre></div>
 </div>
 <p>默认情况下“icmp_echo_ignore_all”的值为“0”，表示响应ping操作。</p>
@@ -265,7 +273,7 @@
 <p>默认情况下，Bash
 Shell会在文件$HOME/.bash_history中存放多达1000条命令记录（根据系统不同，默认记录条数不同）。系统中每个用户的主目录下都有一个这样的文件。
 存放这么多的历史命令记录，肯定是不安全的，因此必须限制该文件的大小。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>可以编辑/etc/profile文件，修改其中的如下选项。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>可以编辑/etc/profile文件，修改其中的如下选项。
 HISTSIZE=30
 </pre></div>
 </div>
@@ -277,11 +285,11 @@ HISTSIZE=30
 <p>Linux 提供了各种系统账户，在系统安装完毕后，
 如果不需要某些用户或者组，就要立即删除它，因为账户越多，系统就越不安全，越容易受到攻击。
 删除系统不必要的用户用如下命令。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ～]# userdel username
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# userdel username
 </pre></div>
 </div>
 <p>删除系统不必要的组用如下命令。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ～]# groupdel  groupname
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# groupdel  groupname
 
 Linux系统中可以删除的默认用户有：adm、lp、sync、shutdown、halt、news、uucp、operator、games、gopher等，
 可以删除的组有adm、lp、news、uucp、games、dip、pppusers、popusers、slipusers等。
@@ -296,7 +304,7 @@ Linux的简称，是一种内核强制访问控制（MAC）安全系统，目前
 Linux
 内核模块兼容性还存在一些问题，因此建议初学者先关闭SELinux，等到对Linux有了深入的认识后，再对SELinux深入研究也不迟。
 要查看Linux系统SELinux是否启用，可以使用getenforce命令。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ～]# getenforce
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# getenforce
 Disabled
 
 #临时关闭SELinux
@@ -330,7 +338,7 @@ sed -i &#39;s#SELINUX=enforcing#SELINUX=disabled#g&#39; /etc/selinux/config
 <p>tcp_wrappers是一个用来分析TCP/IP封包的软件，类似的IP封包软件还有iptables，Linux默认都安装了此软件。作为一个安全的系统，Linux本身有两层安全防火墙，通过IP过滤机制的iptables实现第一层防护，iptables防火墙通过直观地监控系统的运行状况，阻挡网络中的一些恶意攻击，保护整个系统正常运行，免遭攻击和破坏。iptables的实现将在下一章详细讲述。如果通过了第一层防护，那么下一层防护就是tcp_wrappers了，通过tcp_wrappers可以实现对系统中提供的某些服务的开放与关闭、允许和禁止，从而更有效地保证系统安全运行。
 tcp_wrappers的使用很简单，仅仅涉及两个配置文件：/etc/hosts.allow和/etc/hosts.deny。</p>
 <p>（1）查看系统是否安装了tcp_wrappers</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>[root@localhost ～]#rpm -q tcp_wrappers 或者
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]#rpm -q tcp_wrappers 或者
 [root@localhost ～]#rpm -qa | grep tcp
 tcp_wrappers-libs-7.6-57.el6.x86_64
 </pre></div>
@@ -342,7 +350,7 @@ tcp_wrappers
 防火墙，取决于该服务是否应用了libwrapped库文件，如果应用了就可以使用tcp_wrappers防火墙，系统中默认的一些服务（如sshd、portmap、sendmail、xinetd、vsftpd、tcpd等）都可以使用tcp_wrappers防火墙。</p>
 <p>（3）tcp_wrappers设定的规则
 tcp_wrappers防火墙的实现是通过/etc/hosts.allow和/etc/hosts.deny两个文件来完成的，首先看一下设定的格式。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>service:host(s)  [:action]
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>service:host(s)  [:action]
 
 service：代表服务名，如sshd、vsftpd、sendmail等。
 host(s)：代表主机名或者IP地址，可以有多个，如192.168.60.0、www.ixdba.net。
@@ -358,7 +366,7 @@ ALL EXCEPT：所有服务或者所有IP（除去指定的）。
 首先设定允许登录的计算机，即配置/etc/hosts.allow
 文件，设置很简单，只要修改/etc/hosts.allow（如果没有此文件，请自行建立）这个文件即可。
 只需要将下面的规则加入/etc/hosts.allow即可。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sshd</span><span class="p">:</span>  <span class="mf">222.90</span><span class="o">.</span><span class="mf">66.4</span>  <span class="mf">61.185</span><span class="o">.</span><span class="mf">224.66</span>  <span class="n">softpark</span><span class="o">.</span><span class="n">com</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sshd</span><span class="p">:</span>  <span class="mf">222.90</span><span class="o">.</span><span class="mf">66.4</span>  <span class="mf">61.185</span><span class="o">.</span><span class="mf">224.66</span>  <span class="n">softpark</span><span class="o">.</span><span class="n">com</span>
 </pre></div>
 </div>
 <p>接着设置不允许登录的机器，也就是配置/etc/hosts.deny文件了。
@@ -370,13 +378,13 @@ ALL EXCEPT：所有服务或者所有IP（除去指定的）。
 <p>因此，当设定好/etc/hosts.allow
 文件的访问规则之后，只须设置/etc/hosts.deny
 为“所有计算机都不能登录的状态”即可。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">sshd</span><span class="p">:</span><span class="n">ALL</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sshd</span><span class="p">:</span><span class="n">ALL</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id12">1.34.6. 6.运行级别设置为文本模式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">inittab</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">inittab</span>
 <span class="nb">id</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="n">initdefault</span><span class="p">:</span>        <span class="n">设置默认运行级别</span>
 <span class="n">runlevel</span>                 <span class="n">查看当前运行级别</span>
 </pre></div>
@@ -384,7 +392,7 @@ ALL EXCEPT：所有服务或者所有IP（除去指定的）。
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id13">1.34.7. 7. 精简开机启动服务</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">只保留五个重要服务</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">只保留五个重要服务</span>
 
 <span class="n">crond</span>
 <span class="n">network</span>
@@ -400,7 +408,7 @@ ALL EXCEPT：所有服务或者所有IP（除去指定的）。
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id14">1.34.8. 8.优化Linux文件打开最大数</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>默认Linux内核对每个用户设置了打开文件最大数为1024，对于高并发网站，是远远不够的，需要将默认值调整到更大，调整方法如下：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>默认Linux内核对每个用户设置了打开文件最大数为1024，对于高并发网站，是远远不够的，需要将默认值调整到更大，调整方法如下：
 ulimit -n 65535
 
 
@@ -412,7 +420,7 @@ ulimit -n 65535
 </pre></div>
 </div>
 <p>可以使用命令修改</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;* soft nofile 65535&#39;</span><span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">limits</span><span class="o">.</span><span class="n">conf</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;* soft nofile 65535&#39;</span><span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">limits</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">echo</span> <span class="s1">&#39;* hard nofile 65535&#39;</span><span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">limits</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">echo</span> <span class="s1">&#39;* soft nproc 65535&#39;</span><span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">limits</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">echo</span> <span class="s1">&#39;* hard nproc 65535&#39;</span><span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">security</span><span class="o">/</span><span class="n">limits</span><span class="o">.</span><span class="n">conf</span>
@@ -421,11 +429,11 @@ ulimit -n 65535
 </div>
 <div class="section" id="id5">
 <h2><a class="toc-backref" href="#id15">1.34.9. 9.Linux内核参数优化</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>实际生产环境服务器内核参数（BAT）：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>实际生产环境服务器内核参数（BAT）：
 </pre></div>
 </div>
 <p>/etc/sysctl.conf文件</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>: &lt;&lt;EOF 其实，很多Linux的默认配置压根不符合我们的生产环境配置所需，有时候我们需要适当的调整一些内核参数，
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>: &lt;&lt;EOF 其实，很多Linux的默认配置压根不符合我们的生产环境配置所需，有时候我们需要适当的调整一些内核参数，
 #有时我们需要开启一些内核功能，有时我们需要关闭内核的某些功能。比如关闭ipv6，开启路由转发功能，关闭虚拟内存使用，
 #套接字缓存大小调整等。我们需要根据自己的生产环境做出适当的分析，将一些默认值我们需要手动去配置一下，
 #具体的参数信息大家可以自行百度，下面是我在生产环境中对某一个集群进行的调优参数配置：
@@ -475,11 +483,19 @@ sysctl -p”
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -490,7 +506,6 @@ sysctl -p”
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

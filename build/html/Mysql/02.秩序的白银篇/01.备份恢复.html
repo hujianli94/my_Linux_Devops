@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3. 03.荣耀的黄金篇" href="../03.荣耀的黄金篇/index.html" />
     <link rel="prev" title="2. 02.秩序的白银篇" href="index.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
@@ -127,11 +132,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -170,7 +177,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
         
@@ -182,7 +189,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Mysql/02.秩序的白银篇/01.备份恢复.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Mysql/02.秩序的白银篇/01.备份恢复.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -238,7 +245,7 @@
 <p>冷备：数据库处于关闭状态下的备份，好处是可以保证数据库的完整性，
 备份过程简单并且恢复速度相对快一些。但是数据的关闭也就意味着会影响现有业务的进行。
 用户不能再访问你的网站。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#先停掉MySQL服务
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#先停掉MySQL服务
 ./mysqladmin -uroot -proot123 shutdown
 #备份整个数据目录到远端或本地磁盘
 scp -r /data/mysql/ root@192.168.1.100:/backup
@@ -254,7 +261,7 @@ copy -r /data/mysql /backup
 <div class="section" id="mysqldump">
 <h3><a class="toc-backref" href="#id13">mysqldump备份与恢复</a><a class="headerlink" href="#mysqldump" title="Permalink to this headline">¶</a></h3>
 <p>先从buffer中找到需要备份的数据进行备份，若buffer中没有，则去磁盘中数据文件中查找并调回到buffer里面再备份，最后形成一个可编辑的备份文件</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>./mysqldump --help 获取帮助
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./mysqldump --help 获取帮助
 重要参数：
 --single-transaction
 用于保证InnoDB备份数据时的一致性，配合RR隔离级别一起使用
@@ -332,7 +339,7 @@ innodb_buffer_pool_dump_pct = 25，innodb buffer pages的比例，默认25%</p>
 <h2><a class="toc-backref" href="#id14">2.1.4. select … into outfile</a><a class="headerlink" href="#select-into-outfile" title="Permalink to this headline">¶</a></h2>
 <p>恢复速度非常快，比insert的插入速度要快很多。只能备份表中的数据，并不能包含表的结构。
 备份出的数据可以通过load data的方式实现还原操作</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>语法：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>语法：
 select col1,col2... from table_name into outfile &#39;/path/to/filename&#39;;
 load data infile &#39;/path/to/filename&#39; into table db.table_name;
 
@@ -351,7 +358,7 @@ load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt; #70W记录12.8
 ##？ load data
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span><span class="p">;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span><span class="p">;</span>
 <span class="o">+----+------+---------+</span>
 <span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">address</span> <span class="o">|</span>
 <span class="o">+----+------+---------+</span>
@@ -385,7 +392,7 @@ load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt; #70W记录12.8
 <div class="section" id="load-datainsert">
 <h2><a class="toc-backref" href="#id15">2.1.5. load data与insert插入速度对比</a><a class="headerlink" href="#load-datainsert" title="Permalink to this headline">¶</a></h2>
 <p>mysql -e 可以调用数据库的命令行命令 load data速度快于insert</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">./</span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="o">--</span><span class="n">single</span><span class="o">-</span><span class="n">transaction</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">gtid</span><span class="o">-</span><span class="n">purged</span><span class="o">=</span><span class="n">OFF</span> <span class="n">test</span> <span class="n">tt</span><span class="o">&gt;</span><span class="n">tt</span><span class="o">.</span><span class="n">sql</span>  <span class="c1">#用时1.828s</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">./</span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="o">--</span><span class="n">single</span><span class="o">-</span><span class="n">transaction</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">gtid</span><span class="o">-</span><span class="n">purged</span><span class="o">=</span><span class="n">OFF</span> <span class="n">test</span> <span class="n">tt</span><span class="o">&gt;</span><span class="n">tt</span><span class="o">.</span><span class="n">sql</span>  <span class="c1">#用时1.828s</span>
 <span class="n">time</span> <span class="o">./</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="n">test</span> <span class="o">&lt;</span> <span class="n">tt</span><span class="o">.</span><span class="n">sql</span> <span class="c1">#用时16.9s</span>
 <span class="n">truncate</span> <span class="n">test</span><span class="o">.</span><span class="n">tt</span><span class="p">;</span>
 <span class="n">time</span> <span class="o">./</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt&quot;</span> <span class="c1">#用时14.1s</span>
@@ -396,7 +403,7 @@ load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt; #70W记录12.8
 <h2><a class="toc-backref" href="#id16">2.1.6. mydumper</a><a class="headerlink" href="#mydumper" title="Permalink to this headline">¶</a></h2>
 <p>mysqldump是单线程的工具，只能逐个导出表
 mydumper是针对MySQL和Drizzle的高性能多线程备份工具，速度远高于mysqldump，逻辑备份，还原使用myloader工具</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>项目地址：https://github.com/maxbube/mydumper/releases
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>项目地址：https://github.com/maxbube/mydumper/releases
 
 编译安装需要的依赖：yum install glib2-devel mysql-devel zlib-devel pcre-devel openssl-devel cmake
 安装：yum install https://github.com/maxbube/mydumper/releases/download/v0.9.5/mydumper-0.9.5-2.el7.x86_64.rpm
@@ -480,11 +487,11 @@ mydumper优点
 </div>
 <p>实际使用效果： 数据表t_schedule大小3千万行，t_schedule.ibd 文件 8.3GB</p>
 <p>备份：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="n">mydumper</span> <span class="o">-</span><span class="n">u</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">p</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">h</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span> <span class="o">-</span><span class="n">P</span> <span class="mi">3306</span> <span class="o">-</span><span class="n">t</span> <span class="mi">2</span> <span class="o">-</span><span class="n">B</span> <span class="n">test</span> <span class="o">-</span><span class="n">T</span> <span class="n">t_schedule</span> <span class="o">-</span><span class="n">o</span> <span class="o">.</span>   <span class="c1"># 用时1m27.633s</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="n">mydumper</span> <span class="o">-</span><span class="n">u</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">p</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">h</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span> <span class="o">-</span><span class="n">P</span> <span class="mi">3306</span> <span class="o">-</span><span class="n">t</span> <span class="mi">2</span> <span class="o">-</span><span class="n">B</span> <span class="n">test</span> <span class="o">-</span><span class="n">T</span> <span class="n">t_schedule</span> <span class="o">-</span><span class="n">o</span> <span class="o">.</span>   <span class="c1"># 用时1m27.633s</span>
 </pre></div>
 </div>
 <p>还原：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>time myloader -u xxx -p xxx -h 192.168.1.10 -P 3306 -q 100 -s test -o -d .                   # 用时33m8.014s
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>time myloader -u xxx -p xxx -h 192.168.1.10 -P 3306 -q 100 -s test -o -d .                   # 用时33m8.014s
 set global max_binlog_cache_size=536870912; 512MB 设置 -q 500 正常
 set global max_binlog_cache_size=134217728; 128MB 设置 -q 100 正常
 -q 设置的值大小对总耗时几乎没有影响
@@ -502,7 +509,7 @@ recovery功能进行备份的。InnoDB内部维护一个redo
 log，即事务日志，它包含InnoDB数据的所有更改信息，InnoDB启动时，会先检查datafile和redo
 log，前滚所有已提交的事务并回滚未提交的事务。XtraBackup备份时不锁表，而是一页页复制InnoDB数据，同时监控redo
 log。</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>下载地址：https://www.percona.com/downloads/XtraBackup/LATEST/
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>下载地址：https://www.percona.com/downloads/XtraBackup/LATEST/
 文件1：https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.12/binary/redhat/7/x86_64/percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm
 文件2：https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.12/binary/tarball/percona-xtrabackup-2.4.12-Linux-x86_64.libgcrypt11.tar.gz
 安装1：yum install percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm 依赖 libev 4.15
@@ -510,7 +517,7 @@ log。</p>
 ./xtrabackup --help 查看帮助
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1、全备过程
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、全备过程
 #创建备份帐号
 create user &#39;zsbak&#39;@&#39;192.168.%&#39; identified by &#39;zsbak&#39;;
 grant reload,lock tables,replication client,process on *.* to &#39;zsbak&#39;@&#39;192.168.%&#39;;
@@ -526,7 +533,7 @@ mkdir -p /data/backup/
 ##xtrabackup_info 记录备份详细信息，如备份命令、开始结束时间、版本等
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>2、全备的恢复
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>2、全备的恢复
 #准备数据，回滚日志
 ./xtrabackup --target-dir=/data/backup/all-20170921bak --prepare
 ##xtrabackup_checkpoints backup_type = full-prepared
@@ -550,7 +557,7 @@ xtrabackup_binlog_pos_innodb是prepare后生成的，position比xtrabackup_binlo
 若是混合引擎，建议(官方)以xtrabackup_binlog_info为准
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>3、XtraBackup增备
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>3、XtraBackup增备
 原理：全备中有xtrabackup_checkpoints文件，记录了完成备份时的检查点lsn，增备时比较表空间中每页的lsn号，进行备份
 第一次的增备基于上一次的全备，之后的增备基于上一次的增备#做一次全备
 ./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --target-dir=/data/backup/20180704 --backup
@@ -561,7 +568,7 @@ xtrabackup_binlog_pos_innodb是prepare后生成的，position比xtrabackup_binlo
 ./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --incremental-basedir=/data/backup/20180705 --target-dir=/data/backup/20180706 --backup
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>4、增备的恢复
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4、增备的恢复
 操作步骤：先进行全备恢复，再进行增备的恢复，除最后一个外，需添加--apply-log-only
 第一步，准备全备
 ./xtrabackup --prepare --apply-log-only --target-dir=/data/backup/20180704
@@ -584,7 +591,7 @@ chown -R mysql:mysql /data/mysql
 XtraBackup工具做在线物理备份，因为MariaDB引入了InnoDB页面压缩和静态数据加密等功能
 Mariabackup工具基于Percona XtraBackup 2.3.8版本改写扩展
 mariabackup工具包含在二进制tar包bin目录下</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1、备份
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、备份
 shell&gt; mariabackup --defaults-file=/etc/my.cnf -S /tmp/mysql3306.sock --backup --target-dir=/data/bak/ --user=root --password=123456
 2、恢复备份期间增量数据 类似innobackupex --apply-log
 shell&gt; mariabackup --prepare --target-dir=/data/bak/
@@ -607,19 +614,19 @@ shell&gt; mariabackup --defaults-file=/etc/my.cnf -S /tmp/mysql3306.sock --backu
 <p>主要是介绍基于tar格式的备份</p>
 <div class="section" id="id5">
 <h3><a class="toc-backref" href="#id20">非压缩模式的备份</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id6">
 <h3><a class="toc-backref" href="#id21">压缩模式的备份</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">|</span><span class="n">gzip</span> <span class="o">-</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">|</span><span class="n">gzip</span> <span class="o">-</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id7">
 <h3><a class="toc-backref" href="#id22">远程备份</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default"><div class="highlight"><pre><span></span>./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --stream=tar --backup |gzip |ssh root@192.168.1.100 &quot;cat - &gt;/data/backup/20180801.tar.gz&quot;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --stream=tar --backup |gzip |ssh root@192.168.1.100 &quot;cat - &gt;/data/backup/20180801.tar.gz&quot;
 192.168.1.100需要能免密登录，且创建好/data/backup目录
 </pre></div>
 </div>
@@ -629,13 +636,13 @@ shell&gt; mariabackup --defaults-file=/etc/my.cnf -S /tmp/mysql3306.sock --backu
 <h2><a class="toc-backref" href="#id23">2.1.10. 表空间传输</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
 <p>5.6版本开始，可以把一张表从一个数据库移到另一个数据库或者另一台机器上。做数据迁移时很方便，相比mysqldump方式，表空间传输要快很多，且更加灵活</p>
 <p>限制条件：</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>1）5.6以上版本
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）5.6以上版本
 2）使用独立表空间方式，开启innodb_file_per_table
 3）源库与目标库page size必须一致
 4）当表做导出操作时，该表只能进行读操作
 </pre></div>
 </div>
-<div class="highlight-default"><div class="highlight"><pre><span></span>目标：将test库下面tt表传输到tzy库下tt表中
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>目标：将test库下面tt表传输到tzy库下tt表中
 #创建tzy库，并创建tt表，表结构与test库tt表一样
 create database tzy;
 #卸载tzy库下tt表的表空间
@@ -660,7 +667,7 @@ alter table tt import tablespace;
 <h2><a class="toc-backref" href="#id24">2.1.11. 利用binlog2sql进行闪回</a><a class="headerlink" href="#binlog2sql" title="Permalink to this headline">¶</a></h2>
 <p>mysqlbinlog可以进行基于位置或者时间点的数据恢复操作</p>
 <p>binlog2sql可以实现数据的快速回滚，从binlog中提取SQL，并生成回滚SQL语句。对于insert会生成delete，对于delete会生成insert，对update会生成相反的update语句，该工具只能使用binlog格式为row</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>项目地址：https://github.com/danfengcao/binlog2sql
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>项目地址：https://github.com/danfengcao/binlog2sql
 安装：
 git clone https://github.com/danfengcao/binlog2sql.git &amp;&amp; cd binlog2sql
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
@@ -722,7 +729,7 @@ python binlog2sql.py -h127.0.0.1 -P3306 -utestuser -ptestpasswd -dtest -ttbl --s
 <div class="section" id="binlog-server">
 <h2><a class="toc-backref" href="#id25">2.1.12. binlog server</a><a class="headerlink" href="#binlog-server" title="Permalink to this headline">¶</a></h2>
 <p>利用mysqlbinlog命令把远程机器binlog备份到本地</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span>重点参数：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>重点参数：
 -R --read-from-remote-server 从远程MySQL服务器上读取binlog
 -raw 以binlog格式存储，方便后期使用
 --stop-never 一直连接，除非远程服务关闭或者被kill
@@ -757,11 +764,19 @@ mkdir -p /data/binbak
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -772,7 +787,6 @@ mkdir -p /data/binbak
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

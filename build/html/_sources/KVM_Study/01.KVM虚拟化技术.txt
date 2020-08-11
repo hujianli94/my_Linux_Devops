@@ -1,0 +1,135 @@
+.. contents::
+   :depth: 3
+..
+
+虚拟化技术
+==========
+
+虚拟化产品对比
+--------------
+
+::
+
+   计算机虚拟化技术是多种技术的综合实现，包括硬件平台、操作系统、存储、以及网络等
+   简单的说：
+       虚拟化技术就是在单台主机上可以虚拟多个虚拟主机，并可以在这些虚拟主机上运行不通的操作系统平台。
+
+   目前比较成熟的虚拟化解决方案主要有：
+       VMWare、Xen、KVM以及Hyper-V。
+
+   虚拟化技术通过Hypervisor动态模拟与分配计算机硬件资源给虚拟机操作系统（Guest OS），
+   由于Hypervisor可以模拟多个硬件资源给多个Guest OS,因而对Guest OS 而言，就像运行在独立、真实的硬件资源上一样。
+
+|image0|
+
+VMware 虚拟化技术
+-----------------
+
+::
+
+   VMware 是全球数据中心解决方案的领导品牌， 它为我们提供了高性能、高可用、管理方
+   便的虚拟机管理程序， 是目前大多数企业虚拟化环境部署的首选方案。VMware 虚拟化的工作
+   原理是， 直接在计算机硬件或主机操作系统上插入一个精简的软件层。该软件层包含一个以动
+   态和透明方式分配硬件资源的虚拟化管理程序。多个操作系统可以同时运行在单台物理机上，
+   彼此之间共享硬件资源。由于是将整台计算机（ 包括CPU 、内存、操作系统和网络设备） 封装
+   起来， 因此， 虚拟机可与所有标准的x86 操作系统、应用程序和设备驱动程序完全兼容。可以
+   同时在单台计算机上安全运行多个操作系统和应用程序， 每个操作系统和应用程序都可以在需
+   要时访问其所需的资源。
+
+   VMware 虚拟化产品最大的优势在于其完善的虚拟化管理平台以及可靠的基础架构， 为企
+   业计算环境提供完善、稳定、可靠的虚拟技术。到目前为止， VMware 依然是虚拟化技术行业
+   的领头羊。VMware 虚拟化产品的不足主要包括： 首先， VMware 虚拟化技术主要针对的是X86
+   架构， 对于复杂的企业运算环境， VMware 无法满足所有计算机主机的需要。其次， VMware
+   在云计算方面的发展略显迟缓， 在性能与容灾方面表现不足。最后， VMware 是商业产品， 用
+   户需要为此支付大量的许可费用。
+
+   代表产品：
+   1.VMware Workstation：桌面级虚拟化产品，运行在Windows、Linux和Mac操作系统上，是Type 2 Hypervisor
+   2.VMware ESXi：是服务器级的虚拟化软件。与Workstation不同，它直接运行在硬件平台上，是Type1 Hypervisor。
+
+Hyper V
+-------
+
+::
+
+   与VMware一样，HyperV也是闭源（Close Source，与Opensource相对）的商业软件。
+   微软从Windows 8/Windows Server 2008开始，用它取代原来的Virtual PC，成为Server OS
+   版本自带的平台虚拟化软件
+   HyperV在架构上与Xen类似，也是Type 1 Hypervisor。微软的产品，收费
+
+Xen虚拟化技术
+-------------
+
+::
+
+   Xen在架构上是一个典型的Type 1 Hypervisor
+   Xen 是由剑桥大学开发的开源虚拟机监控器，Xen的目标是在单台主机上运行上百台全功能的虚拟机，
+   Xen 支持半虚拟化与全虚拟化技术，半虚拟化的性能要比全虚拟化技术高很多，全虚拟化技术是通过中间层软件模拟
+   真实的硬件设备，最终虚拟机使用模拟设备时就需要中间层软件将相应的之路转换为物理硬件指令进行操作，
+   也就是说虚拟机无法直接发送操作指令给物理硬件，必须经过模拟软件转换代码后才可以发送给物理硬件执行具体操作。
+   半虚拟化技术则可以实现部分虚拟机与部分硬件直接通信，虚拟机可以直接发送操作指令给部分硬件设备，
+   这样虚拟机的效率就可以提升很多倍，Xen的优势在于开源且技术非常成熟，但随着RedHat以及Ubantu目前已经将系统默认的虚拟组件更新为KVM，所以Xen的市场已经开始受到影响。
+
+KVM虚拟化技术
+-------------
+
+KVM （ Kernel-based VirtuaI Machine ） 是基于x86 架构上Linux
+操作系统的全虚拟化解决方 案。在CentOS 7 系统中，KVM己经被集成到内核中，
+相当于使用内核来做虚拟机管理程序。 由于KVM 本身就工作于内核环境中，
+所以执行效率要比传统意义上的虚拟化技术高很多。
+
+虚拟机上开启支持虚拟化功能
+
+|image1| KVM虚拟化需要lntel VT或AMD-V技术的支持，
+可以使用下面的命令确定本机CPU 是否支持以上 两种虚拟化技术：
+
+::
+
+   [root@bogon ~]# egrep '(vmx|svm)' /proc/cpuinfo 
+   flags       : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pd
+   pe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch epb tpr_shadow vnmi ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid rdseed adx smap xsaveopt dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_eppflags       : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts mmx fxsr sse sse2 ss ht syscall nx pd
+   pe1gb rdtscp lm constant_tsc arch_perfmon pebs bts nopl xtopology tsc_reliable nonstop_tsc aperfmperf eagerfpu pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch epb tpr_shadow vnmi ept vpid fsgsbase tsc_adjust bmi1 avx2 smep bmi2 invpcid rdseed adx smap xsaveopt dtherm ida arat pln pts hwp hwp_notify hwp_act_window hwp_epp
+
+相对于xen 而占,KVM 从Linux 2.6.20 后己经集成到内核模块中,使用Linux
+内核作为虚 拟调度器管理虚拟机,更直接的硬件调度代表更高的效率， KVM
+核心代码也非常短小精湛,未 来KVM 将逐渐成为主流虚拟化技术。
+
+Type1和Type2虚拟化
+------------------
+
+|image2|
+
+Type1（类型1）
+
+::
+
+   Type1（类型1）Hypervisor也叫native或bare-metal Hypervisor。这类虚拟化层直接运
+   行在硬件之上，没有所谓的宿主机操作系统。它们直接控制硬件资源以及客户机。
+   典型地如Xen和VMware ESX。
+
+Type2（类型2）
+
+::
+
+   Type2（类型2）Hypervisor运行在一个宿主机操作系统之上，如VMware
+   Workstation；或系统里，如KVM。这类Hypervisor通常就是宿主机操作系统的一个应用程
+   序，像其他应用程序一样受宿主机操作系统的管理。比如VMware Workstation就是运行在
+   Windows或者Linux操作系统上的一个程序而已 [1] 。客户机是在宿主机操作系统上的一个
+   抽象，通常抽象为进程。
+
+几个知识点需要记住：
+
+::
+
+   KVM模块的源代码被正式纳入Linux kernel，成为内核源代码的一部分。
+   KVM已经成为Openstack用户选择的最主流的Hypervisor（因为KVM是Openstack的默认Hypervisor）
+   KVM已经主宰了公有云部署的Hypervisor市场；而在私有云部署方面，尤其大公司内部私有云部署，还是VMware的地
+   盘，目前受到HyperV的竞争。
+
+【参考文献 】 https://www.cnblogs.com/clsn/p/10175960.html
+
+https://www.cnblogs.com/clsn/p/8366251.html#auto_id_22
+
+.. |image0| image:: ../_static/kvm_study001.png
+.. |image1| image:: ../_static/kvm0003.png
+.. |image2| image:: ../_static/type1-and-type2.png

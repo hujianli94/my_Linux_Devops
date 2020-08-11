@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="6. 06.至尊的星耀篇" href="../06.至尊的星耀篇/index.html" />
     <link rel="prev" title="5.1. 01.MySQL5.7新特性" href="01.MySQL5.7新特性.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
@@ -120,11 +125,13 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -163,7 +170,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
         
@@ -175,7 +182,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Mysql/05.永恒的钻石篇/02.MySQL全面优化.txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Mysql/05.永恒的钻石篇/02.MySQL全面优化.rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -209,7 +216,7 @@
 <p><img alt="image0" src="../../_images/mysql_youhuaweidu0001.png" /></p>
 <div class="section" id="id1">
 <h2><a class="toc-backref" href="#id6">5.2.1. 硬件优化</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>影响数据库最大的性能问题是磁盘IO，可以使用SSD或PCIE-SSD，可以获得上百倍或上万倍的IOPS性能提升
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>影响数据库最大的性能问题是磁盘IO，可以使用SSD或PCIE-SSD，可以获得上百倍或上万倍的IOPS性能提升
 当数据库TPS过高或者业务量较大时，要配置阵列卡，且要使用cache模块，并要配置BBU模块持续供电，防止出现数据丢失的现象
 选择阵列卡cache策略时，建设设置为Write Back(WB)，千万不要使用Write Through，不经过cache直接写盘
 阵列卡的cache不是太大，建立关闭预读功能，仅使用cache
@@ -223,7 +230,7 @@ BIOS层面，CPU选择performance per watt optimized最大性能模式，关闭C
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id7">5.2.2. 配置参数优化</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>MySQL参数：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL参数：
 innodb_buffer_pool_size，若是单实例且绝大多数是InnoDB引擎表，可设置为物理内存的50%~80%左右
 
 innodb_flush_log_at_trx_commit和sync_binlog，分别是redo log刷新和binlog刷新参数，若要求数据不丢失，可都设置为1(双一概念，可保证主从架构中数据一致性)。若要保证强一致性，主从故障切换中不丢失数据，可使用增强半同步功能
@@ -250,7 +257,7 @@ general log，全量日志，建议关闭，否则该日志文件会越来越大
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id8">5.2.3. 操作系统层面的优化</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>IO调度，建议选择deadline或noop模式，不能使用cfq，会严重影响数据库性能
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>IO调度，建议选择deadline或noop模式，不能使用cfq，会严重影响数据库性能
 #查看当前IO调度方式，中括号中是当前使用方式
 #cat /sys/block/sda/queue/scheduler
 
@@ -272,7 +279,7 @@ vm.dirty_ratio，指定当文件系统缓存脏页达到系统内存比例多少
 </div>
 <div class="section" id="id4">
 <h2><a class="toc-backref" href="#id9">5.2.4. 表设计及其他优化</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>18个建议：
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>18个建议：
 1）创建业务表时，库名、表名、字段名必须使用小写字母，采用_分割
 2）lower_case_table_names参数区分表名大小写，默认0，大小写敏感，若为1，大小写不敏感，以小写存储。为字段选择数据类型时，简单、够用的原则，表中字段和索引数量不宜过多
 3）表存储引擎选择InnoDB
@@ -362,11 +369,19 @@ Sort_scan，通过扫描表完成的排序的数量
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -377,7 +392,6 @@ Sort_scan，通过扫描表完成的排序的数量
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

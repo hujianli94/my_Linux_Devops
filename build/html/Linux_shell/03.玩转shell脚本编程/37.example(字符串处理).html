@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html4" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,12 +11,18 @@
   
 
   
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
   
   
   
 
   
-  <script type="text/javascript" src="../../_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript">
@@ -28,21 +33,19 @@
               COLLAPSE_INDEX:false,
               FILE_SUFFIX:'.html',
               HAS_SOURCE:  true,
-              SOURCELINK_SUFFIX: ''
+              SOURCELINK_SUFFIX: '.txt'
           };
       </script>
         <script type="text/javascript" src="../../_static/jquery.js"></script>
         <script type="text/javascript" src="../../_static/underscore.js"></script>
         <script type="text/javascript" src="../../_static/doctools.js"></script>
-        <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <script type="text/javascript" src="../../_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html" />
     <link rel="prev" title="3.36. k8s_deploy脚本" href="36.k8s_deploy脚本.html" /> 
 </head>
@@ -58,7 +61,7 @@
           
 
           
-            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
           
 
           
@@ -88,6 +91,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -97,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
@@ -169,15 +174,18 @@
 <li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -216,7 +224,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="../../index.html">Docs</a> &raquo;</li>
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="../index.html">Linux_shell</a> &raquo;</li>
         
@@ -228,7 +236,7 @@
       <li class="wy-breadcrumbs-aside">
         
             
-            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/37.example(字符串处理).txt" rel="nofollow"> View page source</a>
+            <a href="../../_sources/Linux_shell/03.玩转shell脚本编程/37.example(字符串处理).rst.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -264,7 +272,7 @@
 <ul class="simple">
 <li>计算字符串长度</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>方法一
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>方法一
 
 ${#string}
 方法二
@@ -277,17 +285,17 @@ expr length &quot;$string&quot;
 <ul class="simple">
 <li>获取子串在字符串中的索引位置</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>expr index $string $substring
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>expr index $string $substring
 </pre></div>
 </div>
 <ul class="simple">
 <li>计算子串长度</li>
 </ul>
-<div class="highlight-default"><div class="highlight"><pre><span></span>expr match $string substr
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>expr match $string substr
 </pre></div>
 </div>
 <p>eg</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@VM_0_9_centos</span> <span class="n">shell_learn</span><span class="p">]</span><span class="c1"># var1=&quot;quickstart is a app&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@VM_0_9_centos</span> <span class="n">shell_learn</span><span class="p">]</span><span class="c1"># var1=&quot;quickstart is a app&quot;</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@VM_0_9_centos</span> <span class="n">shell_learn</span><span class="p">]</span><span class="c1"># len=`expr match &quot;$var1&quot; quic`</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@VM_0_9_centos</span> <span class="n">shell_learn</span><span class="p">]</span><span class="c1"># echo $len</span>
 <span class="mi">4</span>
@@ -307,7 +315,7 @@ expr length &quot;$string&quot;
 </div>
 <div class="section" id="example-sh">
 <h2><a class="toc-backref" href="#id8">3.37.4. 字符串处理完整脚本 example.sh</a><a class="headerlink" href="#example-sh" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default"><div class="highlight"><pre><span></span>#!/bin/bash
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 
 string=&quot;Bigdata process framework is Hadoop,Hadoop is an open source project&quot;
 
@@ -397,11 +405,19 @@ done
 
   <div role="contentinfo">
     <p>
+        
         &copy; Copyright 2019, huxiaojian
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -412,7 +428,6 @@ done
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
