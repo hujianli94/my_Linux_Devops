@@ -123,7 +123,11 @@
 <li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
 <li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.18. 国内常使用的yum源信息</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.18.1. 国内镜像地址</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rpm">2.18.2. RPM包下载地址</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
 <li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
@@ -137,6 +141,12 @@
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id1">2.33. 第1章 rsync 软件介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id22">2.34. 第2章 rsync使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#rsycn-rsyncd-conf">2.35. 第3章 rsycn配置文件详解 rsyncd.conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id50">2.36. 第4章 常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#linuxrsync6">2.37. 在Linux下使用rsync的6个实例</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -225,11 +235,15 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#yum" id="id1">国内常使用的yum源信息</a></li>
+<li><a class="reference internal" href="#yum" id="id2">国内常使用的yum源信息</a><ul>
+<li><a class="reference internal" href="#id1" id="id3">国内镜像地址</a></li>
+<li><a class="reference internal" href="#rpm" id="id4">RPM包下载地址</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="yum">
-<h1><a class="toc-backref" href="#id1">2.18. 国内常使用的yum源信息</a><a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id2">2.18. 国内常使用的yum源信息</a><a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum常用命令
 1.列出所有可更新的软件清单命令：yum check-update
 2.更新所有软件命令：yum update
@@ -377,7 +391,8 @@ Apache：http://www.apache.org/mirrors/#cn
 Cygwin：https://www.cygwin.com/mirrors.html
 </pre></div>
 </div>
-<p>国内镜像地址</p>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id3">2.18.1. 国内镜像地址</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>阿里镜像：https://opsx.alibaba.com/mirror
 googlekubernetes源: https://hub.docker.com/u/mirrorgooglecontainers/
 
@@ -457,6 +472,18 @@ googlekubernetes源: https://hub.docker.com/u/mirrorgooglecontainers/
 
    中国科学技术大学：http://mirrors.ustc.edu.cn/
 </pre></div>
+</div>
+</div>
+<div class="section" id="rpm">
+<h2><a class="toc-backref" href="#id4">2.18.2. RPM包下载地址</a><a class="headerlink" href="#rpm" title="Permalink to this headline">¶</a></h2>
+<p>RedHat可以直接利用CentOS的 RPM包安装，以下是RPM包的下载网址：</p>
+<p>（1）RedHat AS4 &amp; CentOS 4:
+<a class="reference external" href="http://mirrors.163.com/centos/4/os/i386/CentOS/RPMS/">http://mirrors.163.com/centos/4/os/i386/CentOS/RPMS/</a>
+<a class="reference external" href="http://mirrors.163.com/centos/4/os/x86_64/CentOS/RPMS/">http://mirrors.163.com/centos/4/os/x86_64/CentOS/RPMS/</a></p>
+<p>（2）RedHat AS5 &amp; CentOS 5:
+<a class="reference external" href="http://mirrors.163.com/centos/5/os/i386/CentOS/">http://mirrors.163.com/centos/5/os/i386/CentOS/</a>
+<a class="reference external" href="http://mirrors.163.com/centos/5/os/x86_64/CentOS/">http://mirrors.163.com/centos/5/os/x86_64/CentOS/</a></p>
+<p>（3）RPM包搜索网站： <a class="reference external" href="http://rpm.pbone.net/">http://rpm.pbone.net/</a> <a class="reference external" href="http://www.rpmfind.net/">http://www.rpmfind.net/</a></p>
 </div>
 </div>
 

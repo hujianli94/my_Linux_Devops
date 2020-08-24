@@ -21,9 +21,9 @@ MySQL 相关链接
 
 ::
 
-
    MySQL 官方网站：http://www.mysql.com/
    MySQL 社区版本下载地址：http://www.mysql.com/downloads/mysql/
+
    MySQL 中文文档：http://dev.mysql.com/doc/refman/5.1/zh/index.html
    MySQL 实用文档：http://www.unixhot.com/pdf/mysql.pdf
 
@@ -415,6 +415,8 @@ Mysql数据库安装
    --3> 还原登录权限跳过检查配置
        将my.cnf中mysqld节点的skip-grant-tables配置删除，然后重新启动服务即可。
 
+​
+
 5.表的操作
 ~~~~~~~~~~
 
@@ -565,6 +567,8 @@ Mysql数据库安装
    )
        
 
+​
+
 5.1 查看建表语句
 ^^^^^^^^^^^^^^^^
 
@@ -683,13 +687,10 @@ Mysql数据库安装
    Truncate tables_name;         # 清空数据库表内容
    # TRUNCATE TABLE 删除表中的所有行，但表结构及其列、约束、索引等保持不变.
 
-3.改
-~~~~
-
-::
-
-   格式：update 表名 set 列1=值1,列2=值2,...... where 条件
-   示例:update student2 set age=16 where id=5；   ---注意没有条件是全列修改，慎用！
+| ​
+| ### 3.改 格式：update 表名 set 列1=值1,列2=值2,…… where 条件
+  示例:update student2 set age=16 where id=5；
+  —注意没有条件是全列修改，慎用！
 
 4.查
 ~~~~
@@ -750,17 +751,16 @@ Mysql数据库安装
    DROP INDEX index_name ON table；
    ALTER TABLE test DROP PRIMARY KEY;  -->删除主键
 
+| ​
+| ​
+| 2.消除重复行 在select后面列前面使用distinct可以消除重复的行
+  示例：select distinct gender from students2;
 
+| ​
+| 3.条件查询 a、语法 select \* from 表名 where 条件
 
-   2.消除重复行
-       在select后面列前面使用distinct可以消除重复的行
-       示例：select distinct gender from students2;
+::
 
-       
-   3.条件查询
-       a、语法
-           select * from 表名 where 条件 
-       
        b、比较运算符
            等于      =
            大于      >
@@ -770,24 +770,19 @@ Mysql数据库安装
            不等于     !=或<>
            --查询id大于2的所有数据
            select * from students2 where id>2;
-           
-           
-       c、逻辑运算符
-           and         并且
-           or          或者
-           not         非
-           --查询id值大于7的女同学
-           示例：SELECT * FROM students2 WHERE id>3 and gender=0;
-           
-           
-       d、模糊查询
-           INSERT INTO students2 VALUES(0,'习近平',65,1,'北京',0);
-           INSERT INTO students2 VALUES(0,'习大大',66,1,'北京',0);
-           INSERT INTO students2 VALUES(0,'习大',64,1,'北京',0);
-           like 
-           % 表示任意多个任意字符
-           _表示一个任意字符
-           
+
+| ​
+| c、逻辑运算符 and 并且 or 或者 not 非 –查询id值大于7的女同学
+  示例：SELECT \* FROM students2 WHERE id>3 and gender=0;
+
+| ​
+| d、模糊查询 INSERT INTO students2 VALUES(0,‘习近平’,65,1,‘北京’,0);
+  INSERT INTO students2 VALUES(0,‘习大大’,66,1,‘北京’,0); INSERT INTO
+  students2 VALUES(0,‘习大’,64,1,‘北京’,0); like % 表示任意多个任意字符
+  \_表示一个任意字符
+
+::
+
            --需求：查询姓习的同学
            SELECT * FROM students2 WHERE name LIKE '习%';
            SELECT * FROM students2 WHERE name LIKE '习_'; --查询name为习X的同学
@@ -801,13 +796,12 @@ Mysql数据库安装
            
            需求：查询编号为6到8的学生
            示例：select * from students2 where id between 4 and 8;
-           
-           
-       f、空判断
-           注意：null与""是不同
-           判断空：is null
-           判断非空：is not null
-           
+
+| ​
+| f、空判断 注意：null与""是不同 判断空：is null 判断非空：is not null
+
+::
+
            需求：查询没有地址的同学
            示例：select * from students2 where address is null;
            需求：查询有地址的同学
@@ -816,16 +810,15 @@ Mysql数据库安装
        g、优先级
            小括号,not 比较运算符,逻辑运算符
            and比or的优先级高,如果同时出现并希望先选or，需要结合()来使用
-           
 
-   4.聚合
-       为了快速等到统计数据，提供5个聚合函数
-       a、count(*) 表示计算总行数，括号中可以写*和列名
-       b、max(列)  表示求此列的最大值
-       c、min(列)  表示求此列的最小值
-       d、sum(列)    表示求此列的和
-       e、avg(列)    表示求此列的平均值
-       
+| ​
+| 4.聚合 为了快速等到统计数据，提供5个聚合函数 a、count(\ *)
+  表示计算总行数，括号中可以写*\ 和列名 b、max(列) 表示求此列的最大值
+  c、min(列) 表示求此列的最小值 d、sum(列) 表示求此列的和 e、avg(列)
+  表示求此列的平均值
+
+::
+
        需求：查询学生总数
        示例：SELECT COUNT(*) from students2;
        示例：SELECT COUNT(id) from students2;
@@ -841,27 +834,30 @@ Mysql数据库安装
        
        需求：查询所有学生的年龄平均值
        示例：SELECT avg(age) FROM students2;
-       
-       
-   5、分组
-       按照字段分组，表示此字段相同的数据会被放到一个集合中，分组后，只能
-       查询出相同的数据列，对于有差异的数据列，无法显示在结果集中，
-       可以对分组的数据进行统计，做聚合运算
-       
+
+| ​
+| 5、分组
+  按照字段分组，表示此字段相同的数据会被放到一个集合中，分组后，只能
+  查询出相同的数据列，对于有差异的数据列，无法显示在结果集中，
+  可以对分组的数据进行统计，做聚合运算
+
+::
+
        语法：select 列1,列2,聚合...... from 表名 group by 列1,
        列2, 列3,.......
        
        需求：查询男女生统计的总数
        示例：select gender,count(*) from students2 group by gender;
              select name,gender,count(*) from students2 group by gender,age;
-       
-       
-       分组后的数据筛选：
-       select 列1,列2,聚合...... from 表名 group by 列1,
-       列2, 列3,..... having 列1,列2.....,聚合....
-       示例：select gender,count(*) from students2 group by gender having gender;
-             select gender,count(*) from students2 group by gender having gender=0;
-             
+
+| ​
+| 分组后的数据筛选： select 列1,列2,聚合…… from 表名 group by 列1, 列2,
+  列3,….. having 列1,列2…..,聚合…. 示例：select gender,count(\ *) from
+  students2 group by gender having gender; select gender,count(*) from
+  students2 group by gender having gender=0;
+
+::
+
        where 与having的区别
        where是对from后面指定的表进行筛选，属于对原始数据的筛选。
        having是对group by的结果进行筛选
@@ -881,15 +877,16 @@ Mysql数据库安装
        需求：将没有被删除的数据按年龄排序
        示例：SELECT * from students2 WHERE isDelete=0 ORDER BY age asc;  --升序
              SELECT * from students2 WHERE isDelete=0 ORDER BY age DESC; --降序
-       
 
+| ​
+| ​
+| 7.分页 语法：select \* from students2 limit start,count;
+  –start索引从0开始 示例：SELECT \* FROM students2 LIMIT 0,3; SELECT \*
+  FROM students2 LIMIT 3,3; SELECT \* from students2 WHERE gender=1
+  LIMIT 3; –男生前3名
 
-   7.分页
-       语法：select * from students2 limit start,count;  --start索引从0开始
-       示例：SELECT * FROM students2 LIMIT 0,3;
-             SELECT * FROM students2 LIMIT 3,3;
-             SELECT * from students2 WHERE gender=1 LIMIT 3;   --男生前3名
-             
+::
+
    8.关联
        建表语句
                1、 CREATE TABLE `class` (
@@ -897,18 +894,16 @@ Mysql数据库安装
          `name` varchar(20) NOT NULL,
          `stuNum` int(11) NOT NULL,
          PRIMARY KEY (`id`);
-       
-       
-       2、
-            CREATE TABLE `students3` (
-         `id` int(11) NOT NULL AUTO_INCREMENT,
-         `name` varchar(20) NOT NULL,
-         `gender` bit(1) DEFAULT b'1',
-         `classid` int(11) NOT NULL,
-         PRIMARY KEY (`id`),
-         KEY `classid` (`classid`),
-         CONSTRAINT `students3_ibfk_1` FOREIGN KEY (`classid`) REFERENCES `class` (`id`);
-           
+
+| ​
+| 2、 CREATE TABLE ``students3`` ( ``id`` int(11) NOT NULL
+  AUTO_INCREMENT, ``name`` varchar(20) NOT NULL, ``gender`` bit(1)
+  DEFAULT b’1’, ``classid`` int(11) NOT NULL, PRIMARY KEY (``id``), KEY
+  ``classid`` (``classid``), CONSTRAINT ``students3_ibfk_1`` FOREIGN KEY
+  (``classid``) REFERENCES ``class`` (``id``);
+
+::
+
        插入一些数据：
        INSERT INTO class VALUES(0,'pyth8',65),(0,'python9',99),(0,'python12',12);
        INSERT INTO students3 VALUES(0,'HU',1,4);
@@ -920,11 +915,9 @@ Mysql数据库安装
        SELECT students3.`name`,class.`name` FROM class left JOIN students3 on class.id=students3.classid;
        
        SELECT students3.`name`,class.`name` FROM class right JOIN students3 on class.id=students3.classid;
-       
-       
 
-其他操作
-^^^^^^^^
+| ​
+| #### 其他操作
 
 ::
 
@@ -1009,7 +1002,6 @@ Mysql数据库安装
        select * from 表 order by 列1 desc,列2 asc    - 根据 “列1” 从大到小排列，如果相同则按列2从小到大排
        
        select * from students order by id desc;        # 根据id进行倒叙排列
-       
 
 分组
 ^^^^
@@ -1055,7 +1047,8 @@ Mysql数据库安装
    MySQL支持外键的存储引擎只有InnoDB , 在创建外键的时候 ,
    要求父表必须有对应的索引 , 子表在创建外键的时候也会自动创建对应的索引
 
-数据库操作
+| ​
+| 数据库操作
 
 1.显示
 ------
@@ -1389,7 +1382,7 @@ Mysql 慢查询日志配置
 
    mysql -u[user] -p[password] databasename < filename;
 
-::
+.. code:: shell
 
    备份数据库
    # 还原没有更改字符集会出现乱码需指定字符集--default-character=gbk。
@@ -1417,6 +1410,27 @@ Mysql 慢查询日志配置
 
    还原表
    mysql --default-character=gbk -uroot -p密码 数据库名 < 文件名.sql
+
+XtraBackup - MySQL备份工具
+--------------------------
+
+软件简介
+~~~~~~~~
+
+XtraBackup 是一个用来备份 `MySQL <http://www.oschina.net/p/mysql>`__ 的
+`InnoDB <http://www.oschina.net/p/innodb>`__ 数据库的开源工具。
+
+例如执行增量备份的命令是：
+
+.. code:: shell
+
+   # ./xtrabackup --backup --target-dir=/backup/delta --incremental-basedir=/backup/base
+
+参考
+
+::
+
+   http://codingdict.com/os/software/86425
 
 Mysql 整理错误
 --------------

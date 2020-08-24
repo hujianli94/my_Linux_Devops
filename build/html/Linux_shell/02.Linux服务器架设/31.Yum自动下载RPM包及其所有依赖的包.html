@@ -136,10 +136,17 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.29. Yum自动下载RPM包及其所有依赖的包</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id1">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.29.2. yum离线安装rpm包</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id1">2.33. 第1章 rsync 软件介绍</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id22">2.34. 第2章 rsync使用方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#rsycn-rsyncd-conf">2.35. 第3章 rsycn配置文件详解 rsyncd.conf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#id50">2.36. 第4章 常见问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html#linuxrsync6">2.37. 在Linux下使用rsync的6个实例</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -228,23 +235,24 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#yumrpm" id="id5">Yum自动下载RPM包及其所有依赖的包</a><ul>
-<li><a class="reference internal" href="#id1" id="id6">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
-<li><a class="reference internal" href="#id2" id="id7">工具1</a></li>
-<li><a class="reference internal" href="#id3" id="id8">工具2</a></li>
-<li><a class="reference internal" href="#id4" id="id9">其他</a></li>
+<li><a class="reference internal" href="#yumrpm" id="id6">Yum自动下载RPM包及其所有依赖的包</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
+<li><a class="reference internal" href="#id2" id="id8">工具1</a></li>
+<li><a class="reference internal" href="#id3" id="id9">工具2</a></li>
+<li><a class="reference internal" href="#id4" id="id10">其他</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id5" id="id11">yum离线安装rpm包</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="yumrpm">
-<h1><a class="toc-backref" href="#id5">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id6">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id6">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id7">工具1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id8">工具1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum install yum-plugin-downloadonly
 yum install --downloadonly --downloaddir=&lt;directory&gt; &lt;package-name&gt;
@@ -257,7 +265,7 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 </div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id8">工具2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">工具2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span>
 
@@ -268,7 +276,7 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id9">其他</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">其他</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repoquery</span> <span class="o">--</span><span class="n">requires</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
 <span class="c1"># rpmrepater會向用戶顯示已安裝包的列表，你可以使用上/下箭頭來滾動屏幕</span>
 <span class="c1"># 可以在指定包上使用&quot;r&quot;鍵來顯示其依賴關係，循環在指定包上按下&quot;r&quot;鍵可以展示出餘下的信息。</span>
@@ -279,9 +287,13 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 <span class="n">rpmreaper</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id11">2.29.2. yum离线安装rpm包</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/pangguoming/p/9951410.html">https://www.cnblogs.com/pangguoming/p/9951410.html</a></p>
 <p>参考文献 <a class="reference external" href="https://www.cnblogs.com/guigujun/p/7868748.html">https://www.cnblogs.com/guigujun/p/7868748.html</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/michael-xiang/p/10474319.html">https://www.cnblogs.com/michael-xiang/p/10474319.html</a></p>
-</div>
 </div>
 </div>
 

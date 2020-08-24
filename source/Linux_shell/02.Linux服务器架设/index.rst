@@ -38,3 +38,4 @@ Linux服务器架设
     31.Yum自动下载RPM包及其所有依赖的包
     32.基于Galera_Cluster多主结构的Mysql高可用集群
     33.Gitlab安装
+    34.Rsync数据复制软件应用实践

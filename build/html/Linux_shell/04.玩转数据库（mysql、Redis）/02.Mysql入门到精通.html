@@ -208,28 +208,28 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#mysql" id="id25">mysql入门到精通</a><ul>
-<li><a class="reference internal" href="#id1" id="id26">MySQL版本</a></li>
-<li><a class="reference internal" href="#id2" id="id27">Mysql的优势</a></li>
-<li><a class="reference internal" href="#sql4" id="id28">SQL包含以下4个部分</a></li>
-<li><a class="reference internal" href="#mysql-5-6" id="id29">Mysql-5.6二进制部署</a></li>
-<li><a class="reference internal" href="#id3" id="id30">数据库基础操作</a><ul>
-<li><a class="reference internal" href="#windows" id="id31">windows 上启动关闭命令</a></li>
-<li><a class="reference internal" href="#id4" id="id32">mysql常用的图形管理工具</a></li>
-<li><a class="reference internal" href="#id5" id="id33">基础操作</a></li>
-<li><a class="reference internal" href="#linuxmysqlroot" id="id34">Linux下修改mysql的root密码</a></li>
+<li><a class="reference internal" href="#mysql" id="id21">mysql入门到精通</a><ul>
+<li><a class="reference internal" href="#id1" id="id22">MySQL版本</a></li>
+<li><a class="reference internal" href="#id2" id="id23">Mysql的优势</a></li>
+<li><a class="reference internal" href="#sql4" id="id24">SQL包含以下4个部分</a></li>
+<li><a class="reference internal" href="#mysql-5-6" id="id25">Mysql-5.6二进制部署</a></li>
+<li><a class="reference internal" href="#id3" id="id26">数据库基础操作</a><ul>
+<li><a class="reference internal" href="#windows" id="id27">windows 上启动关闭命令</a></li>
+<li><a class="reference internal" href="#id4" id="id28">mysql常用的图形管理工具</a></li>
+<li><a class="reference internal" href="#id5" id="id29">基础操作</a></li>
+<li><a class="reference internal" href="#linuxmysqlroot" id="id30">Linux下修改mysql的root密码</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6" id="id35">数据库操作命令</a><ul>
-<li><a class="reference internal" href="#id7" id="id36">1.创建数据库</a></li>
-<li><a class="reference internal" href="#id8" id="id37">2.删除数据库</a></li>
-<li><a class="reference internal" href="#id9" id="id38">3.mysql忘记密码后，跳过密码进入数据库</a></li>
-<li><a class="reference internal" href="#id12" id="id39">MySQL查看和修改表的存储引擎</a></li>
+<li><a class="reference internal" href="#id6" id="id31">数据库操作命令</a><ul>
+<li><a class="reference internal" href="#id7" id="id32">1.创建数据库</a></li>
+<li><a class="reference internal" href="#id8" id="id33">2.删除数据库</a></li>
+<li><a class="reference internal" href="#id9" id="id34">3.mysql忘记密码后，跳过密码进入数据库</a></li>
+<li><a class="reference internal" href="#id12" id="id35">MySQL查看和修改表的存储引擎</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id13" id="id40">数据库表的基本操作</a><ul>
-<li><a class="reference internal" href="#id14" id="id41">创建数据库表</a></li>
-<li><a class="reference internal" href="#id24" id="id42">查看数据库表结构</a></li>
+<li><a class="reference internal" href="#id13" id="id36">数据库表的基本操作</a><ul>
+<li><a class="reference internal" href="#id14" id="id37">创建数据库表</a></li>
+<li><a class="reference internal" href="#id20" id="id38">查看数据库表结构</a></li>
 </ul>
 </li>
 </ul>
@@ -237,18 +237,17 @@
 </ul>
 </div>
 <div class="section" id="mysql">
-<h1><a class="toc-backref" href="#id25">4.2. mysql入门到精通</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id21">4.2. mysql入门到精通</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id26">4.2.1. MySQL版本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">4.2.1. MySQL版本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>针对不同的用户，MySQL分为两个不同的版本</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. MySQL Community Server(社区版):完全免费，官方不提供技术支持
-2. Mysql Enterprise Server（企业服务器）：能很高性价比为企业提供数据仓库应用，支持ACID事务处理，提供完整
-的提交、回滚、崩溃恢复和行级锁定功能，但是该版本需要付费，官方提供电话技术支持
+2. Mysql Enterprise Server（企业服务器）：能很高性价比为企业提供数据仓库应用，支持ACID事务处理，提供完整的提交、回滚、崩溃恢复和行级锁定功能，但是该版本需要付费，官方提供电话技术支持。
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id27">4.2.2. Mysql的优势</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">4.2.2. Mysql的优势</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL的主要优势如下：
 (1) 速度： 运行速度快。
 (2) 价格： MySQL 对多数个人来说是免费的。
@@ -260,9 +259,10 @@
 并且由于MySQL是网络化的，因此可以在因特网上的任何地方访问，提高书记共享的效率
 </pre></div>
 </div>
+<p>​</p>
 </div>
 <div class="section" id="sql4">
-<h2><a class="toc-backref" href="#id28">4.2.3. SQL包含以下4个部分</a><a class="headerlink" href="#sql4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">4.2.3. SQL包含以下4个部分</a><a class="headerlink" href="#sql4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1)数据定义语言(DDL):DROP、CREATE、ALTER等语句
 (2)数据操作语言(DML):INSERT(插入)、UPDATE(修改)、DELETE(删除)语句
 (3)数据查询语言(DQL):SELECT语句
@@ -271,7 +271,7 @@
 </div>
 </div>
 <div class="section" id="mysql-5-6">
-<h2><a class="toc-backref" href="#id29">4.2.4. Mysql-5.6二进制部署</a><a class="headerlink" href="#mysql-5-6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">4.2.4. Mysql-5.6二进制部署</a><a class="headerlink" href="#mysql-5-6" title="Permalink to this headline">¶</a></h2>
 <p>一.准备环境</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>环境：centos-7.3 一台
 软件版本：mysql-5.6.39
@@ -381,11 +381,13 @@ ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
 systemctl restart mysql
 </pre></div>
 </div>
+<p>相关的参考文档：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/suoning/p/5742885.html">https://www.cnblogs.com/suoning/p/5742885.html</a></p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id30">4.2.5. 数据库基础操作</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id26">4.2.5. 数据库基础操作</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="windows">
-<h3><a class="toc-backref" href="#id31">windows 上启动关闭命令</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">windows 上启动关闭命令</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">启动mysql命令</span>
 <span class="n">net</span> <span class="n">start</span> <span class="n">MYSQL</span>
 
@@ -452,7 +454,7 @@ systemctl restart mysql
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id32">mysql常用的图形管理工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">mysql常用的图形管理工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>----
 1.MYSQL Workbench
 2.phpMyAdmin
@@ -463,7 +465,7 @@ systemctl restart mysql
 </div>
 </div>
 <div class="section" id="id5">
-<h3><a class="toc-backref" href="#id33">基础操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">基础操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看当前时间</span>
 <span class="n">select</span> <span class="n">now</span><span class="p">();</span>
 
@@ -540,16 +542,16 @@ systemctl restart mysql
 </div>
 </div>
 <div class="section" id="linuxmysqlroot">
-<h3><a class="toc-backref" href="#id34">Linux下修改mysql的root密码</a><a class="headerlink" href="#linuxmysqlroot" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id30">Linux下修改mysql的root密码</a><a class="headerlink" href="#linuxmysqlroot" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="s1">&#39;123456&#39;</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id35">4.2.6. 数据库操作命令</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id31">4.2.6. 数据库操作命令</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id7">
-<h3><a class="toc-backref" href="#id36">1.创建数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32">1.创建数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create database hujianli default charset=utf8;
 
 mysql&gt; create database IF NOT EXISTS hujianli2;
@@ -589,7 +591,7 @@ select database(); --查看当前使用的数据库
 </div>
 </div>
 <div class="section" id="id8">
-<h3><a class="toc-backref" href="#id37">2.删除数据库</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id33">2.删除数据库</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drop</span> <span class="n">database</span> <span class="n">hujianli</span><span class="p">;</span>
 <span class="n">drop</span> <span class="n">database</span> <span class="n">IF</span> <span class="n">EXISTS</span> <span class="n">hujianli_db2</span><span class="p">;</span>
 
@@ -600,7 +602,7 @@ select database(); --查看当前使用的数据库
 </div>
 </div>
 <div class="section" id="id9">
-<h3><a class="toc-backref" href="#id38">3.mysql忘记密码后，跳过密码进入数据库</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34">3.mysql忘记密码后，跳过密码进入数据库</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
 
 <span class="c1">#修改mysql的root密码</span>
@@ -649,10 +651,14 @@ mysql&gt; SELECT name FROM students WHERE student_id=123;
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">zoo</span><span class="p">;</span>
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​</div>
+</div>
 </div>
 </div>
 <div class="section" id="id12">
-<h3><a class="toc-backref" href="#id39">MySQL查看和修改表的存储引擎</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id35">MySQL查看和修改表的存储引擎</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>1 查看系统支持的存储引擎</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">ENGINES</span><span class="p">;</span>
 <span class="n">或者</span>
@@ -682,29 +688,26 @@ b、show create table table_name;
 </div>
 </div>
 <div class="section" id="id13">
-<h2><a class="toc-backref" href="#id40">4.2.7. 数据库表的基本操作</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36">4.2.7. 数据库表的基本操作</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id14">
-<h3><a class="toc-backref" href="#id41">创建数据库表</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id37">创建数据库表</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id15">
 <h4>创建表的语法形式：<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    create TABLE &lt;表名&gt;
-    (字段名1，数据类型 [列级别的约束条件] [默认值]
-     字段名2， 数据类型 [列级别的约束条件] [默认值]
-     ......
-     [表级别的约束条件]
-    )
-
-
-创建tb_empl表，SQL语句为：
-CREATE TABLE tb_empl(
-id INT(11),
-name VARCHAR(25),
-deptId INT(11),
-salary FLOAT
-);
-
-#查看表
-mysql&gt; show tables;
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create TABLE &lt;表名&gt;
+(字段名1，数据类型 [列级别的约束条件] [默认值]
+ 字段名2， 数据类型 [列级别的约束条件] [默认值]
+ ......
+ [表级别的约束条件]
+)
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">创建tb_empl表，SQL语句为： CREATE TABLE tb_empl( id INT(11), name
+VARCHAR(25), deptId INT(11), salary FLOAT );</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看表</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">tables</span><span class="p">;</span>
 </pre></div>
 </div>
 </div>
@@ -737,13 +740,12 @@ PRIMARY KEY(id,deptid)
     );
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用外键约束 外键用来在两个表的数据之间建立链接，
+它可以是一列或者多列。一个表可以有一个或多个外键。</div>
 </div>
-</div>
-<div class="section" id="id19">
-<h4>使用外键约束<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>外键用来在两个表的数据之间建立链接， 它可以是一列或者多列。一个表可以有一个或多个外键。
-
-外键对应的是参照完整性， 一个表的外键可以为空值， 若不为空值， 则每一个外键值必须等于另一个表中主键的某个值。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>外键对应的是参照完整性， 一个表的外键可以为空值， 若不为空值， 则每一个外键值必须等于另一个表中主键的某个值。
 
 外键： 首先它是表中的一个字段， 它可以不是本表的主键， 但对应另外一个表的主键。
 外键主要作用是保证数据引用的完整性， 定义外键后， 不允许删除在另一个表中具有关联关系的行。外键的作用是保持数据的一致性、完整性。例如， 部门表tb_dept 的主键是id ， 在员工表tb emp5 中有一个键deptld 与这个id 关联。
@@ -772,10 +774,10 @@ PRIMARY KEY(id,deptid)
 以上语句执行成功之后，在表tb_emp5上添加了名称为fk_emp_dept1的外键约束，外键名称为deptId。其依赖于表tb_dept1的主键id
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用非空约束 非空约束的语法规则如下：</div>
 </div>
-<div class="section" id="id20">
-<h4>使用非空约束<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
-<p>非空约束的语法规则如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">字段名</span> <span class="n">数据类型</span> <span class="ow">not</span> <span class="n">null</span>
 </pre></div>
 </div>
@@ -789,9 +791,10 @@ PRIMARY KEY(id,deptid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用唯一性约束</div>
 </div>
-<div class="section" id="id21">
-<h4>使用唯一性约束<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>唯一性约束要求该列唯一，允许为空，但只能出现一个空值，唯一约束可以确保一列或者几列不出现重复值。
 </pre></div>
 </div>
@@ -800,14 +803,14 @@ PRIMARY KEY(id,deptid)
 <span class="p">[</span><span class="n">CONSTRAINT</span> <span class="o">&lt;</span><span class="n">约束名</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">UNIQUE</span><span class="p">(</span><span class="o">&lt;</span><span class="n">字段名</span><span class="o">&gt;</span><span class="p">)</span>
 </pre></div>
 </div>
-<ul>
-<li><p class="first">UNIQUE和PRIMARY KEY的区别：</p>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">* UNIQUE和PRIMARY KEY的区别：</div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一个表中可以有多个字段声明为UNIQUE ， 但只能有一个PRIMARY KEY 声明；
 声明为PRIMAY KEY的列不允许有空值但是声明为UNIQUE的字段允许空值(NULL)的存在。
 </pre></div>
 </div>
-</li>
-</ul>
 <p>【举例】定义数据库tb_dept3，指定部门的名称唯一，SQL语句如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_dept3` (
   `id` int(11) NOT NULL,
@@ -819,8 +822,9 @@ PRIMARY KEY(id,deptid)
 </pre></div>
 </div>
 </div>
-<div class="section" id="id22">
-<h4>使用默认约束<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+</div>
+<div class="section" id="id19">
+<h4>使用默认约束<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
 <p>默认约束的语法规则如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">字段名</span> <span class="n">数据类型</span> <span class="n">DEFAULT</span> <span class="n">默认值</span>
 </pre></div>
@@ -837,13 +841,12 @@ PRIMARY KEY(id,deptid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 </pre></div>
 </div>
-</div>
-<div class="section" id="id23">
-<h4>设置表的属性值自动增加<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在MYSQL中AUTO_INCREMENT的初始值是1，每新增一条记录，字段值自动加1，
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 设置表的属性值自动增加
+在MYSQL中AUTO_INCREMENT的初始值是1，每新增一条记录，字段值自动加1，
 一个表只能有一个自动使用AUTO_INCREMENT约束，且该字段必须为主键的一部分，AUTO_INCREMENT约束的自动可以是任何整数类型
-（TINYINT、SMALLIN、INT、BIGINT等）
-</pre></div>
+（TINYINT、SMALLIN、INT、BIGINT等）</div>
 </div>
 <p>【举例】定义数据表tb_emp6，指定员工的标号自动递增，SQL语句如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_emp6` (
@@ -860,13 +863,15 @@ INSERT INTO `tb_emp6`(name,salary)VALUES (&quot;hujianli&quot;,100),(&quot;wugua
 <p><img alt="image0" src="../../_images/mysql_auto_diz.png" /></p>
 </div>
 </div>
-<div class="section" id="id24">
-<h3><a class="toc-backref" href="#id42">查看数据库表结构</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id20">
+<h3><a class="toc-backref" href="#id38">查看数据库表结构</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="describe">
 <h4>查看表基本结构语句 DESCRIBE<a class="headerlink" href="#describe" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">desc</span> <span class="n">表名</span><span class="p">;</span>
 </pre></div>
 </div>
+<p>参考文档：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/suoning/p/5769141.html">https://www.cnblogs.com/suoning/p/5769141.html</a></p>
 </div>
 </div>
 </div>

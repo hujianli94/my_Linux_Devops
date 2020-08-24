@@ -1,0 +1,1335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2.32. Rsync数据复制软件应用实践 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. 玩转shell脚本编程" href="../03.玩转shell脚本编程/index.html" />
+    <link rel="prev" title="2.31. Gitlab安装" href="33.Gitlab安装.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.常用较多命名查询/index.html">1. 常用较多命名查询</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM红帽软件包管理.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS共享服务器搭建.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd服务器搭建.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.挂载硬盘mount命令.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache服务搭建.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.使用iSCSI服务部署网络存储.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.远程登录Linux系统.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba服务器的搭建.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync数据同步.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat服务搭建配置.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7安装VNC，手动网络重装VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows上搭建yum源站点.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.用Python快速实现HTTP和FTP服务器.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.使用图形配置网络服务nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh更新升级.html">2.23. Openssh更新升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq服务部署.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler无人值守安装.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux运维工具Supervisor(进程管理工具).html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.目前流行的开源监控框架.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.32. Rsync数据复制软件应用实践</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.32.1. 第1章 rsync 软件介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.32.2. 第2章.Rsync工作方式介绍与实践</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rsycn-rsyncd-conf">2.32.3. 第3章 rsycn配置文件详解 rsyncd.conf</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id29">2.32.4. 第4章 常见问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linuxrsync6">2.32.5. 在Linux下使用rsync的6个实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../11.Jenkins持续化集成/index.html">11. Jenkins持续化集成</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">2. Linux服务器架设</a> &raquo;</li>
+        
+      <li>2.32. Rsync数据复制软件应用实践</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#rsync" id="id33">Rsync数据复制软件应用实践</a><ul>
+<li><a class="reference internal" href="#id1" id="id34">第1章 rsync 软件介绍</a><ul>
+<li><a class="reference internal" href="#rsyncrsync" id="id35">1. 什么是RsyncRsync？</a></li>
+<li><a class="reference internal" href="#id2" id="id36">2. Rsync功能介绍</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id37">第2章.Rsync工作方式介绍与实践</a><ul>
+<li><a class="reference internal" href="#rsync3" id="id38">2.1 Rsync有3种传输数据模式</a></li>
+<li><a class="reference internal" href="#id6" id="id39">2.2 本地数据传输模式</a></li>
+<li><a class="reference internal" href="#shell-1" id="id40">2.3 远程Shell数据传输模式</a></li>
+<li><a class="reference internal" href="#id10" id="id41">2.4 守护进程传输模式</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#rsycn-rsyncd-conf" id="id42">第3章 rsycn配置文件详解 rsyncd.conf</a><ul>
+<li><a class="reference internal" href="#id12" id="id43">3.1 部分知识补充</a></li>
+<li><a class="reference internal" href="#etc-init-d-rsync" id="id44">3.2 利用/etc/init.d/启动rsync服务方式</a></li>
+<li><a class="reference internal" href="#id16" id="id45">3.3 定义变量信息实现免秘钥交互</a></li>
+<li><a class="reference internal" href="#id17" id="id46">3.4 守护进程多模块功能配置</a></li>
+<li><a class="reference internal" href="#id28" id="id47">3.9 守护进程的列表功能配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id29" id="id48">第4章 常见问题</a></li>
+<li><a class="reference internal" href="#linuxrsync6" id="id49">在Linux下使用rsync的6个实例</a></li>
+<li><a class="reference internal" href="#id30" id="id50">第五章 Rsync企业级全网备份项目案例介绍与实践</a><ul>
+<li><a class="reference internal" href="#id31" id="id51">5.1 具体备份需求具体的备份需求如下。</a></li>
+<li><a class="reference internal" href="#id32" id="id52">5.2 项目逻辑架构</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="rsync">
+<h1><a class="toc-backref" href="#id33">2.32. Rsync数据复制软件应用实践</a><a class="headerlink" href="#rsync" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id34">2.32.1. 第1章 rsync 软件介绍</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rsyncrsync">
+<h3><a class="toc-backref" href="#id35">1. 什么是RsyncRsync？</a><a class="headerlink" href="#rsyncrsync" title="Permalink to this headline">¶</a></h3>
+<p>是一款开源的快速的、可实现全量及增量的本地或远程数据备份的多功能优秀工具。并且在复制时可以不改变原有数据的属性信息，即可实现数据的备份迁移特性。Rsync软件适用于Unix/Linux/Windows等多种操作系统平台。</p>
+<p>Rsync提供了大量参数来控制复制行为的各个方面，并且允许多种灵活的方式来实现文件的传输复制。它以其delta-transfer算法闻名。通过减少网络数据发送数量，只发送源文件和目标文件之间的差异信息，从而实现数据的增量复制。</p>
+<p>Rsync被广泛应用于数据备份和镜像，并作为一种改进后的复制命令用于日常系统中。</p>
+<p>官方链接：<a class="reference external" href="http://www.samba.org/ftp/rsync/rsync.html">http://www.samba.org/ftp/rsync/rsync.html</a></p>
+<p>官方手册：man rsync/man rsync.conf</p>
+<p>rsync
+是一款开源的、快速的、多功能的、可实现全量及增量的本地或远程数据同步备份的优秀工具。</p>
+<p><a class="reference external" href="http://www.samba.org/ftp/rsync/rsync.html">http://www.samba.org/ftp/rsync/rsync.html</a></p>
+</div>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id36">2. Rsync功能介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Rsync英文全称为Remote
+synchronization，从软件名称可以看出来，Rsync具有可使本地和远程两台主机之间的数据快速复制、远程备份的功能。</p>
+<p>Rsync软件自带的rsync命令本身就可以实现异地主机复制数据，这个功能类似scp命令（借助SSH服务实现远程传输数据），但又优于scp命令的功能，scp每次都是全量拷贝，而rsync可以增量拷贝（同样需借助SSH服务传输数据），此外，Rsync软件还支持以配置守护进程方式实现异机数据复制。</p>
+<div class="section" id="id3">
+<h4>2.1 rsync命令可以实现的功能如下<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）实现本地数据同步复制（本地工作模式，相当于cp命令）。
+
+2）实现远程数据同步复制（远程Shell工作模式，相当于scp命令）。
+
+3）实现数据信息删除功能（本地工作模式，相当于rm命令）。
+
+4）实现数据信息查看功能（本地或远程工作模式，相当于ls命令）。
+</pre></div>
+</div>
+</div>
+<div class="section" id="rsync-7">
+<h4>2.2 Rsync的特性如下（7个特性信息说明）<a class="headerlink" href="#rsync-7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>❑ 支持拷贝普通文件与特殊文件，如链接文件、设备文件等。
+
+❑ 支持排除指定文件或目录同步的功能，相当于打包命令tar的排除功能。
+
+❑ 可以做到保持原文件或目录的权限、时间、软硬链接、属主、组等所有属性均不改变。
+
+❑ 可实现增量复制，即只复制发生变化的数据，因此数据传输效率很高。
+
+❑ 可以使用rcp、rsh、SSH等方式来配合进行隧道加密传输文件（Rsync本身不对数据加密）。
+
+❑ 可以通过socket（进程方式）传输文件和数据（服务端和客户端)。
+
+❑ 支持匿名或认证（无须系统用户）进程模式传输，安全地进行数据备份及镜像。
+</pre></div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>2.3 Rsync软件复制原理<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>默认情况下，在备份复制数据时，Rsync通过其独特的quick
+check算法，仅复制大小或者最后修改时间发生变化的文件或目录，当然也可根据权限、属主等属性的变化复制，但需要指定相应的参数，甚至可以实现只复制一个文件里有变化的部分内容，所以可以实现快速地备份复制数据，即采用增量复制方法对数据信息进行复制，与传统cp、scp复制工具的全量复制截然不同，增量复制数据在效率上远远高于全量复制。</p>
+<p><img alt="image0" src="../../_images/rsync_oldboy00001.png" /></p>
+<p>可以利用rsync命令参数查看当前系统中Rsync软件版本信息。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">rsync</span><span class="o">-</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">3</span><span class="p">]</span><span class="c1"># rsync --version</span>
+<span class="n">rsync</span>  <span class="n">version</span> <span class="mf">3.1</span><span class="o">.</span><span class="mi">3</span>  <span class="n">protocol</span> <span class="n">version</span> <span class="mi">31</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id37">2.32.2. 第2章.Rsync工作方式介绍与实践</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="rsync3">
+<h3><a class="toc-backref" href="#id38">2.1 Rsync有3种传输数据模式</a><a class="headerlink" href="#rsync3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="local">
+<h4>2.1.1．本地（Local）数据传输模式<a class="headerlink" href="#local" title="Permalink to this headline">¶</a></h4>
+<p>Rsync的本地数据传输模式，很类似于cp本地复制命令，可以实现文件、目录的移动备份等功能，所不同的是Rsync有增量复制的功能。</p>
+</div>
+<div class="section" id="shell">
+<h4>2.1.2．远程Shell数据传输模式<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h4>
+<p>远程Shell数据传输模式一般是借助通道（如SSH）在两台服务器之间进行复制数据，这两台服务器之间是对等的，没有客户端与服务端之分，整个过程类似于scp远程复制命令，所不同的是Rsync有增量复制的功能，但缺少scp的加密复制的功能。</p>
+</div>
+<div class="section" id="daemon">
+<h4>2.1.3 守护进程(Daemon)传输模式<a class="headerlink" href="#daemon" title="Permalink to this headline">¶</a></h4>
+<p>守护进程传输模式是在客户端与服务端之间进行数据复制的，通常需要服务端部署守护进程服务，然后在客户端执行命令，实现数据的拉取和推送复制。</p>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id39">2.2 本地数据传输模式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>本地数据传输模式语法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span>  <span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="n">SRC</span><span class="o">....</span>  <span class="n">dest</span><span class="o">...</span>
+</pre></div>
+</div>
+<div class="section" id="id7">
+<h4>2.2.1 本地数据传输模式实践<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="cp">
+<h5>(1)作为本地复制命令应用（类似cp命令）<a class="headerlink" href="#cp" title="Permalink to this headline">¶</a></h5>
+<p>实例1：利用rsync命令实现本地文件的复制，命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync /etc/hosts /tmp/</span>
+</pre></div>
+</div>
+<p>实例2：利用rsync命令实现复制本地目录，命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># mkdir /hujianli/achang{1..9}.txt -p</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -r /hujianli /tmp/</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># ll hujianli/</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="rm">
+<h4>（2）作为删除数据命令应用（类似rm命令）<a class="headerlink" href="#rm" title="Permalink to this headline">¶</a></h4>
+<p>实例1：利用rsync命令的删除功能清空目录内容，命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># mkdir /opt/null -p       #创建一个空目录</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -r --delete /opt/null/ /tmp/hujianli/</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># ll hujianli/</span>
+<span class="n">总用量</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>实例2：利用rsync命令的删除功能清空文件内容，命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># echo &quot;hujianli hello shengzheng&quot; &gt; file.txt</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># cat file.txt</span>
+<span class="n">hujianli</span> <span class="n">hello</span> <span class="n">shengzheng</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># touch null1.txt</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -r --delete null1.txt /tmp/file.txt</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># cat file.txt</span>
+</pre></div>
+</div>
+<p>提示：在使用rsync命令对目录数据进行本地或远程复制时，目录名称后面是否加“/”，产生的复制效果是不一样的。</p>
+</div>
+<div class="section" id="ls">
+<h4>（3）作为查询数据命令应用（类似ls命令）<a class="headerlink" href="#ls" title="Permalink to this headline">¶</a></h4>
+<p>实例1：利用rsync命令的查询功能查看文件和目录信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync /etc/hosts</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span>            <span class="mi">241</span> <span class="mi">2020</span><span class="o">/</span><span class="mi">08</span><span class="o">/</span><span class="mi">14</span> <span class="mi">11</span><span class="p">:</span><span class="mi">07</span><span class="p">:</span><span class="mi">50</span> <span class="n">hosts</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="shell-1">
+<span id="id8"></span><h3><a class="toc-backref" href="#id40">2.3 远程Shell数据传输模式</a><a class="headerlink" href="#shell-1" title="Permalink to this headline">¶</a></h3>
+<p>远程Shell数据传输模式语法远程Shell数据传输模式分为拉取和推送两种模式，拉取是指从远端服务器把数据拉取到本地服务器；推送是指把数据从本地服务器推送到远端服务器，这两种传输方式的语法格式如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="p">[</span><span class="n">USER</span><span class="o">@</span><span class="p">]</span><span class="n">HOST</span><span class="p">:</span><span class="n">SRC</span><span class="o">...</span>   <span class="n">DEST</span>
+</pre></div>
+</div>
+<p>(1)推送</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="p">[</span><span class="n">OPTION</span><span class="o">..</span><span class="p">]</span> <span class="n">SRC</span><span class="o">...</span> <span class="p">[</span><span class="n">USER</span><span class="o">@</span><span class="p">]</span><span class="n">HOST</span><span class="p">:</span><span class="n">DEST</span>
+</pre></div>
+</div>
+<p>Pull和Push的区别就是<code class="docutils literal notranslate"><span class="pre">[USER&#64;]HOST:SRC..</span></code>和DEST位置对调而已。</p>
+<p><img alt="image1" src="../../_images/rsync_oldboy00002.png" /></p>
+<div class="section" id="id9">
+<h4>3.3.1 远程Shell数据传输模式实践<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>实践1：利用拉取模式从远端服务器把/etc/hosts复制到本地/tmp</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync root@172.16.61.214:/etc/hosts /tmp/</span>
+<span class="c1">#或者</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -av -e &quot;ssh -p 22&quot; root@172.16.61.214:/etc/hosts /tmp/</span>
+
+<span class="c1">#-e 参数指定隧道加密，指定端口</span>
+</pre></div>
+</div>
+<p>实践2：利用推送模式从本地服务器把/etc/hosts复制到远端主机的/tmp</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -av /etc/hosts root@172.16.61.214:/temp</span>
+</pre></div>
+</div>
+<p>1）采用远程Shell数据传输模式，每次都需要输入远程主机密码信息，无法实现免交互；因此需要配合SSH
+key免密码登录来完成数据免交互同步。</p>
+<p>2）该复制使用系统用户进行存在安全隐患，而使用普通用户进行又会导致权限不足。</p>
+<p>3）实际工作中守护进程传输方式是更重要的方式。</p>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id41">2.4 守护进程传输模式</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><img alt="image2" src="../../_images/rsync_old00003.png" /></p>
+<p>Rsync守护进程模式服务需要部署在BACKUP服务器上。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa |grep rsync</span>
+<span class="n">rsync</span><span class="o">-</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">4.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p><strong>①BACKUP服务器</strong></p>
+<p>1）配置rsyncd.conf。</p>
+<p>编写rsyncd.conf单模块配置文件，命令如下。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span><span class="p">{,</span><span class="n">_bak</span><span class="p">}</span>
+    <span class="n">cat</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span> <span class="o">&lt;&lt;</span><span class="n">eof</span>
+    <span class="c1"># This line is required by the /etc/init.d/rsyncd script</span>
+    <span class="n">uid</span> <span class="o">=</span> <span class="n">rsync</span>
+    <span class="n">gid</span> <span class="o">=</span> <span class="n">rsync</span>
+    <span class="n">fake</span> <span class="nb">super</span> <span class="o">=</span> <span class="n">yes</span>
+    <span class="n">use</span> <span class="n">chroot</span> <span class="o">=</span> <span class="n">no</span>
+    <span class="nb">max</span> <span class="n">connections</span> <span class="o">=</span> <span class="mi">2000</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">600</span>
+    <span class="n">pid</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">pid</span>
+    <span class="n">lock</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">lock</span>
+    <span class="n">log</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">log</span>
+    <span class="n">ignore</span> <span class="n">errors</span>
+    <span class="n">read</span> <span class="n">only</span> <span class="o">=</span> <span class="n">false</span>
+    <span class="nb">list</span> <span class="o">=</span> <span class="n">false</span>
+    <span class="n">hosts</span> <span class="n">allow</span> <span class="o">=</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">61.0</span><span class="o">/</span><span class="mi">24</span>
+    <span class="n">hosts</span> <span class="n">deny</span> <span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">32</span>
+    <span class="n">auth</span> <span class="n">users</span> <span class="o">=</span> <span class="n">rsync_backup</span>
+    <span class="n">secrets</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">password</span>
+    <span class="c1">############################</span>
+    <span class="p">[</span><span class="n">backup</span><span class="p">]</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">backup</span> <span class="n">server</span> <span class="n">by</span> <span class="n">oldboy</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">backup</span>
+    <span class="n">eof</span>
+
+<span class="c1"># 启动rsync程序</span>
+<span class="n">rsync</span> <span class="o">--</span><span class="n">daemon</span>
+<span class="c1"># 加入开机自启动</span>
+<span class="n">echo</span> <span class="s2">&quot;rsync --daemon&quot;</span> <span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">rc</span><span class="o">.</span><span class="n">local</span>
+
+<span class="c1"># 查看进程信息</span>
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span><span class="n">grep</span> <span class="n">rsync</span><span class="o">|</span><span class="n">grep</span> <span class="o">-</span><span class="n">v</span> <span class="n">grep</span>
+
+<span class="n">netstat</span> <span class="o">-</span><span class="n">lntup</span><span class="o">|</span><span class="n">grep</span> <span class="n">rsync</span>
+<span class="n">ss</span> <span class="o">-</span><span class="n">lntup</span><span class="o">|</span><span class="n">grep</span> <span class="n">rsync</span>
+</pre></div>
+</div>
+<p>2）创建数据备份储存目录,目录修改属主</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="o">-</span><span class="n">M</span> <span class="n">rsync</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="o">~</span><span class="p">]</span><span class="c1"># id rsync</span>
+<span class="n">uid</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">rsync</span><span class="p">)</span> <span class="n">gid</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">rsync</span><span class="p">)</span> <span class="n">组</span><span class="o">=</span><span class="mi">1000</span><span class="p">(</span><span class="n">rsync</span><span class="p">)</span>
+
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">backup</span> <span class="o">&amp;&amp;</span> <span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">rsync</span><span class="o">.</span><span class="n">rsync</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>3)配置用于Rsync复制的账号、密码及账号文件权限。</p>
+<p>在Rsync服务端创建用于在Rsync客户端与服务端进行验证的账号和密码，并将其写入文件。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo &quot;rsync_backup:oldboy&quot; &gt;/etc/rsync.password</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/rsync.password</span>
+<span class="n">rsync_backup</span><span class="p">:</span><span class="n">oldboy</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /etc/rsync.password</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-------</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">20</span> <span class="n">Jun</span> <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">31</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">password</span>
+</pre></div>
+</div>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -lntup |grep rsync</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">873</span>             <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">22051</span><span class="o">/</span><span class="n">rsync</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">873</span>                  <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">22051</span><span class="o">/</span><span class="n">rsync</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ps -ef|grep rsync</span>
+</pre></div>
+</div>
+<p><strong>②配置rsync客户端（其他服务器为客户端）</strong></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lamp01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo &quot;oldboy&quot; &gt;/etc/rsync.password</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@lamp01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># chmod 600 /etc/rsync.password</span>
+</pre></div>
+</div>
+<p>实现数据传输</p>
+<p>交互式</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/hosts rsync_backup@172.16.61.23::backup</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">hosts</span>
+            <span class="mi">241</span> <span class="mi">100</span><span class="o">%</span>    <span class="mf">0.00</span><span class="n">kB</span><span class="o">/</span><span class="n">s</span>    <span class="mi">0</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="p">(</span><span class="n">xfr</span><span class="c1">#1, to-chk=0/1)</span>
+
+<span class="n">sent</span> <span class="mi">185</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">43</span> <span class="nb">bytes</span>  <span class="mf">65.14</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">241</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">1.06</span>
+</pre></div>
+</div>
+<p>非交互式</p>
+<p>方法1</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/hosts rsync_backup@172.16.61.23::backup --password-file=/etc/rsync.password</span>
+</pre></div>
+</div>
+<p>方法2</p>
+<p>使用 RSYNC_PASSWORD 变量实现免交互</p>
+<p>添加上环境变量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># export RSYNC_PASSWORD=clsn123</span>
+</pre></div>
+</div>
+<p>测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.1.41::backup</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">sent</span> <span class="mi">29</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">8</span> <span class="nb">bytes</span>  <span class="mf">24.67</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">641020</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">17324.86</span>
+</pre></div>
+</div>
+<p><strong>③rsync 命令同步参数选项&amp;特殊参数</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>| **目录参数**                                                 | **参数说明**                                                 |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| -v ,--verbose                                                | 详细模式输出，传输时的信息                                   |
+| -z,--compress                                                | 传输时进行压缩以提高传输效率--compress-level=NUM 可按级别压缩局域网可以不用压缩 |
+| -a,--archive （主要）                                        | 归档模式，表示以递归方式传输文件，并保持文件属性。等于 -rtopgDl |
+| -r,--recursive  **归档于-a**                                 | 对子目录以递归模式，即目录下的所有目录都同样传输。小写r      |
+| -t,--times       **归档于-a**                                | 保持文件时间信息                                             |
+| -o,--owner       **归档于-a**                                | 保持文件属主信息                                             |
+| -p,--perms       **归档于-a**                                | 保持文件权限                                                 |
+| -g,--group       **归档于-a**                                | 保持文件属组信息                                             |
+| -P，--progress                                               | 显示同步的过程及传输时的进度等信息（大P）                    |
+| -D,--devices    **归档于-a**                                 | 保持设备文件信息                                             |
+| -l,--links       **归档于-a**                                | 保留软连接（小写字母l）                                      |
+| -e，--rsh=COMMAND                                            | 使用的信道协议（remote shell），指定替代rsh的shell程序。例如 ssh |
+| --exclude=*PATTERN*                                          | 指定排除不需要传输的文件信息                                 |
+| --exclude-from=*file*                                        | 文件名所在目录文件，即可以实现排除多个文件                   |
+| --bwlimit=RATE                                               | 限速功能                                                     |
+| --delete                                                     | 让目标目录SRC和源目录数据DST一致，即无差异数据同步           |
+| **保持同步目录及文件属性：**这里的-avzP相当于 -vzetopdDlP，生产环境常用的参数为 -avzP在脚本中可以报-vP去掉--progress可以用-P代替 |                                                              |
+| **daemon****启动扩展参数**                                   |                                                              |
+| --daemon                                                     | daemon表示以守护进程的方式启动rsync服务。                    |
+| --address                                                    | 绑定指定IP地址提供服务。                                     |
+| --config=FILE                                                | 更改配置文件路径，而不是默认的/etc/rsyncd.conf               |
+| --port=PORT                                                  | 更改其它端口提供服务，而不是缺省的873端口                    |
+</pre></div>
+</div>
+<div class="section" id="id11">
+<h4>2.4.1 特殊参数实践<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<p>指定ip：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@backup ~]# rsync --daemon --address=172.16.1.41
+[root@backup ~]# netstat -lntup |grep 873
+tcp     0   0 172.16.1.41:873     0.0.0.0:*        LISTEN      2583/rsync
+参数测试：
+[root@nfs01 ~]# rsync -avzP /etc/services rsync_backup@172.16.1.41::backup --password-file=/etc/rsync.password
+sending incremental file list
+services
+      641020 100%   19.34MB/s    0:00:00 (xfer#1, to-check=0/1)
+
+sent 127417 bytes  received 27 bytes  254888.00 bytes/sec
+total size is 641020  speedup is 5.03
+</pre></div>
+</div>
+<p>指定配置文件路径</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync --daemon --config=/etc/rsyncd.conf</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.1.41::backup --password-file=/etc/rsync.password</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">sent</span> <span class="mi">29</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">8</span> <span class="nb">bytes</span>  <span class="mf">74.00</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">641020</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">17324.86</span>
+</pre></div>
+</div>
+<p>服务端指定服务端口：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync --daemon --port=5222</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -lntup|grep rsync</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">5222</span>      <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>           <span class="n">LISTEN</span>      <span class="mi">2598</span><span class="o">/</span><span class="n">rsync</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">5222</span>            <span class="p">:::</span><span class="o">*</span>                 <span class="n">LISTEN</span>      <span class="mi">2598</span><span class="o">/</span><span class="n">rsync</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="rsycn-rsyncd-conf">
+<h2><a class="toc-backref" href="#id42">2.32.3. 第3章 rsycn配置文件详解 rsyncd.conf</a><a class="headerlink" href="#rsycn-rsyncd-conf" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id43">3.1 部分知识补充</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h4>3.1.1 配置文件内容参考资料<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id14">
+<h4>3.1.2 配置文件内容总结<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<p>​ 模块之上内容为全局变量信息</p>
+<p>​ 模块之下内容为局部变量信息</p>
+<p><strong>说明：</strong></p>
+<p>无论是全局变量发生变化，还是局部变量发生变化，都建议重启rsync服务使配置生效。</p>
+</div>
+</div>
+<div class="section" id="etc-init-d-rsync">
+<h3><a class="toc-backref" href="#id44">3.2 利用/etc/init.d/启动rsync服务方式</a><a class="headerlink" href="#etc-init-d-rsync" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h4>3.2.1 可以实现方式：<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>a. 编写rsync启动脚本（有一定的shell能力 if case）
+b. 利用xinetd服务，管理启动rsync服务
+</pre></div>
+</div>
+</div>
+<div class="section" id="xinetd-rsync">
+<h4>3.2.2 利用 xinetd服务 管理rsync<a class="headerlink" href="#xinetd-rsync" title="Permalink to this headline">¶</a></h4>
+<p>第一个里程碑： 安装xinetd软件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># yum install -y xinetd</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa |grep xin</span>
+<span class="n">xinetd</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="mi">14</span><span class="o">-</span><span class="mf">40.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>第二个里程碑：编辑配置文件</p>
+<p>修改disable = yes 改为disable = no</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/xinetd.d/rsync</span>
+<span class="c1"># default: off</span>
+<span class="c1"># description: The rsync server is a good addition to an ftp server, as it \</span>
+<span class="c1">#   allows crc checksumming etc.</span>
+<span class="n">service</span> <span class="n">rsync</span>
+<span class="p">{</span>
+<span class="n">disable</span>   <span class="o">=</span> <span class="n">no</span>
+<span class="n">flags</span>     <span class="o">=</span> <span class="n">IPv6</span>
+<span class="n">socket_type</span>     <span class="o">=</span> <span class="n">stream</span>
+<span class="n">wait</span>            <span class="o">=</span> <span class="n">no</span>
+<span class="n">user</span>            <span class="o">=</span> <span class="n">root</span>
+<span class="n">server</span>          <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">rsync</span>
+<span class="n">server_args</span>     <span class="o">=</span> <span class="o">--</span><span class="n">daemon</span>
+<span class="n">log_on_failure</span>  <span class="o">+=</span> <span class="n">USERID</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>第三个里程碑：重启xinetd服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># /etc/init.d/xinetd restart</span>
+<span class="n">Stopping</span> <span class="n">xinetd</span><span class="p">:</span>                                           <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
+<span class="n">Starting</span> <span class="n">xinetd</span><span class="p">:</span>                                           <span class="p">[</span>  <span class="n">OK</span>  <span class="p">]</span>
+</pre></div>
+</div>
+<p>传输测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.1.41::backup --password-file=/etc/rsync.password</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">sent</span> <span class="mi">29</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">8</span> <span class="nb">bytes</span>  <span class="mf">74.00</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">641020</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">17324.86</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id16">
+<h3><a class="toc-backref" href="#id45">3.3 定义变量信息实现免秘钥交互</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="man">
+<h4>3.3.1 通过man手册获得方法<a class="headerlink" href="#man" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Some</span>  <span class="n">modules</span>  <span class="n">on</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">daemon</span> <span class="n">may</span> <span class="n">require</span> <span class="n">authentication</span><span class="o">.</span> <span class="n">If</span> <span class="n">so</span><span class="p">,</span> <span class="n">you</span> <span class="n">will</span> <span class="n">receive</span> <span class="n">a</span> <span class="n">password</span> <span class="n">prompt</span> <span class="n">when</span> <span class="n">you</span> <span class="n">connect</span><span class="o">.</span>  <span class="n">You</span>  <span class="n">can</span> <span class="n">avoid</span>  <span class="n">the</span>  <span class="n">password</span>  <span class="n">prompt</span>  <span class="n">by</span>  <span class="n">setting</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">variable</span> <span class="n">RSYNC_PASSWORD</span> <span class="n">to</span> <span class="n">the</span> <span class="n">password</span>  <span class="n">you</span>  <span class="n">want</span>  <span class="n">to</span>  <span class="n">use</span>  <span class="ow">or</span>  <span class="n">using</span>  <span class="n">the</span> <span class="o">--</span><span class="n">password</span><span class="o">-</span><span class="n">file</span> <span class="n">option</span><span class="o">.</span> <span class="n">This</span> <span class="n">may</span> <span class="n">be</span> <span class="n">useful</span> <span class="n">when</span> <span class="n">scripting</span> <span class="n">rsync</span><span class="o">.</span>
+<span class="n">WARNING</span><span class="p">:</span>  <span class="n">On</span> <span class="n">some</span> <span class="n">systems</span> <span class="n">environment</span> <span class="n">variables</span> <span class="n">are</span> <span class="n">visible</span> <span class="n">to</span> <span class="nb">all</span> <span class="n">users</span><span class="o">.</span> <span class="n">On</span> <span class="n">those</span> <span class="n">systems</span> <span class="n">using</span> <span class="o">--</span><span class="n">password</span><span class="o">-</span><span class="n">file</span> <span class="ow">is</span> <span class="n">recommended</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>在远程进程的一些模块可能需要认证。如果是这样的话，你将得到一个密码提示当您连接。你可以通过设置环境变量rsync_password要使用或使用密码文件选项密码避免密码提示。这可能是有用的脚本文件。</p>
+<p>警告：在一些系统环境变量，对所有用户都是可见的。在这些系统中使用的密码文件的建议。</p>
+</div>
+<div class="section" id="rsync-password">
+<h4>3.3.2 使用 RSYNC_PASSWORD 变量实现免交互<a class="headerlink" href="#rsync-password" title="Permalink to this headline">¶</a></h4>
+<p>未设置变量之前</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.1.41::backup</span>
+<span class="n">Password</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>添加上环境变量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># export RSYNC_PASSWORD=clsn123</span>
+</pre></div>
+</div>
+<p>测试</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.1.41::backup</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">sent</span> <span class="mi">29</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">8</span> <span class="nb">bytes</span>  <span class="mf">24.67</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">641020</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">17324.86</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id17">
+<h3><a class="toc-backref" href="#id46">3.4 守护进程多模块功能配置</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>第一个里程碑： 编写配置信息创建多模块</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This line is required by the /etc/init.d/rsyncd script</span>
+<span class="n">uid</span> <span class="o">=</span> <span class="n">rsync</span>
+<span class="n">gid</span> <span class="o">=</span> <span class="n">rsync</span>
+<span class="n">fake</span> <span class="nb">super</span> <span class="o">=</span> <span class="n">yes</span>
+<span class="n">use</span> <span class="n">chroot</span> <span class="o">=</span> <span class="n">no</span>
+<span class="nb">max</span> <span class="n">connections</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">timeout</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">pid</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">lock</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">lock</span>
+<span class="n">log</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">log</span>
+<span class="n">ignore</span> <span class="n">errors</span>
+<span class="n">read</span> <span class="n">only</span> <span class="o">=</span> <span class="n">false</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="n">false</span>
+<span class="n">hosts</span> <span class="n">allow</span> <span class="o">=</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">61.0</span><span class="o">/</span><span class="mi">24</span>
+<span class="n">hosts</span> <span class="n">deny</span> <span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">32</span>
+<span class="n">auth</span> <span class="n">users</span> <span class="o">=</span> <span class="n">rsync_backup</span>
+<span class="n">secrets</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">password</span>
+<span class="c1">############################</span>
+
+<span class="p">[</span><span class="n">nfsdata</span><span class="p">]</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;nfsdata dir by clsn&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">nfsdata</span>
+<span class="p">[</span><span class="n">nfsbackup</span><span class="p">]</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;nfsbackup dir by clsn&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">nfsbackup</span>
+</pre></div>
+</div>
+<p>第二个里程碑： 创建多模块指定的目录</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建目录，并修改目录的权限</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkdir /backup/nfs{data,backup} -p</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># chown rsync.rsync  /backup/nfs{data,backup</span>
+
+<span class="c1"># 查看：</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /backup/nfs{data,backup} -d</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">2</span> <span class="n">rsync</span> <span class="n">rsync</span> <span class="mi">4096</span> <span class="n">Oct</span> <span class="mi">12</span> <span class="mi">10</span><span class="p">:</span><span class="mi">05</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">nfsbackup</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">2</span> <span class="n">rsync</span> <span class="n">rsync</span> <span class="mi">4096</span> <span class="n">Oct</span> <span class="mi">12</span> <span class="mi">10</span><span class="p">:</span><span class="mi">05</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">nfsdata</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>第三里程碑： 利用rsync客户端进行测试</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># mkdir /data1/hujianli{1..9} -p</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># touch /data1/hujianli{1..9}/{1..9}.txt</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># ll /data1</span>
+<span class="n">总用量</span> <span class="mi">0</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli1</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli2</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli3</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli4</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli5</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli6</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli7</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli8</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli9</span>
+</pre></div>
+</div>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># rsync -avz /data1/ rsync_backup@172.16.61.23::nfsdata --password-file=/etc/rsync.password</span>
+</pre></div>
+</div>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># rsync -avz /data1/ rsync_backup@172.16.61.23::nfsbackup --password-file=/etc/rsync.password</span>
+</pre></div>
+</div>
+<p>说明：</p>
+<blockquote>
+<div><p>rsyncd.conf配置文件中，添加多模块信息，可以不用重启rsync服务，即时生效~</p>
+<p>全局变量参数针对所有模块生效；局部变量参数只针对指定模块生效</p>
+<p>read only参数默认配置为ture，即为只读模式</p>
+<p>全局变量发生变化，不用重启rsync服务；局部变量发生变化，需要重启rsync服务</p>
+</div></blockquote>
+<div class="section" id="id18">
+<h4>3.5 守护进程的排除功能实践<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id19">
+<h5>3.5.1 排除的方式<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h5>
+<p>a） –exclude=要配置的目录或文件名称</p>
+<p>b） –exclude-from=要排除多个目录或文件汇总文件名称</p>
+<p>c） 在配置文件中进行修改，指定要排除的信息</p>
+</div>
+<div class="section" id="id20">
+<h5>3.5.2 排除测试<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h5>
+<p>第一个里程碑: 创建模拟测试环境</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># mkdir /data1/hujianli{1..9} -p</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># touch /data1/hujianli{1..9}/{1..9}.txt</span>
+</pre></div>
+</div>
+<p>第二个里程碑 利用 –exclude参数测试排除功能</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># # 需求：排除hujianli1~hujianli4目录</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># rsync -avz /data1/ --exclude=a/3.txt --exclude=hujianli1 --exclude=hujianli2 --exclude=hujianli3 --exclude=hujianli4 rsync_backup@172.16.61.23::nfsdata --password-file=/etc/rsync.password</span>
+</pre></div>
+</div>
+<p>精简方式排除</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># rsync -avz /data1/ --exclude=a/3.txt --exclude=hujianli{1..4} rsync_backup@172.16.61.23::nfsdata --password-file=/etc/rsync.password</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="exclude-from">
+<h5>3.5.3 利用–exclude-from 方式进行排除<a class="headerlink" href="#exclude-from" title="Permalink to this headline">¶</a></h5>
+<p>第一个里程碑: 创建模拟测试环境</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># mkdir /data1/hujianli{1..9} -p</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data</span><span class="p">]</span><span class="c1"># touch /data1/hujianli{1..9}/{1..9}.txt</span>
+</pre></div>
+</div>
+<p>第二个里程碑：利用–exlude-from参数，测试排除功能</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># cat /tmp/paichu.txt</span>
+<span class="n">hujianli1</span>
+<span class="n">hujianli2</span>
+<span class="n">hujianli3</span>
+<span class="n">hujianli4</span>
+<span class="n">hujianli5</span>
+<span class="n">hujianli6</span>
+<span class="n">hujianli7</span>
+</pre></div>
+</div>
+<p>第三个里程碑：进行排除</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avz /data1/ --exclude-from=/tmp/paichu.txt rsync_backup@172.16.61.23::nfsdata --password-file=/etc/rsync.password</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="o">./</span>
+<span class="n">hujianli8</span><span class="o">/</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">4.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">5.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">6.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">7.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">8.</span><span class="n">txt</span>
+<span class="n">hujianli8</span><span class="o">/</span><span class="mf">9.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">4.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">5.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">6.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">7.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">8.</span><span class="n">txt</span>
+<span class="n">hujianli9</span><span class="o">/</span><span class="mf">9.</span><span class="n">txt</span>
+</pre></div>
+</div>
+<p>说明：</p>
+<blockquote>
+<div><p>\01. 排除文件中，需要利用相对路径指定排除信息（不能利用绝对路径）</p>
+<p>\02. 相对路径指的是相对同步的目录信息而言，是对rsync -avz /data/
+后面的data目录进行相对</p>
+</div></blockquote>
+</div>
+<div class="section" id="id21">
+<h5>3.5.4 在配置文件中修改要排除的文件<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h5>
+<p>第一个里程碑： 编写修改服务端配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span>
+<span class="p">[</span><span class="n">nfsdata</span><span class="p">]</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;nfsdata dir by clsn&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="n">nfsdata</span>
+<span class="n">exclude</span><span class="o">=</span><span class="n">a</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span> <span class="n">b</span> <span class="n">c</span>
+</pre></div>
+</div>
+<p>第二个里程碑：重启rsync服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">killall</span> <span class="n">rsync</span> <span class="o">&amp;&amp;</span> <span class="n">sleep</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">rsync</span> <span class="o">--</span><span class="n">daemon</span>
+</pre></div>
+</div>
+<p>第三里程碑： 进行测试</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">data</span><span class="p">]</span><span class="c1"># rsync -avz /data/  rsync_backup@172.16.1.41::nfsdata</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="o">./</span>
+<span class="n">a</span><span class="o">/</span>
+<span class="n">a</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">a</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">skipping</span> <span class="n">daemon</span><span class="o">-</span><span class="n">excluded</span> <span class="n">file</span> <span class="s2">&quot;a/3.txt&quot;</span>
+<span class="n">skipping</span> <span class="n">daemon</span><span class="o">-</span><span class="n">excluded</span> <span class="n">directory</span> <span class="s2">&quot;b&quot;</span>
+<span class="o">***</span> <span class="n">Skipping</span> <span class="nb">any</span> <span class="n">contents</span> <span class="kn">from</span> <span class="nn">this</span> <span class="n">failed</span> <span class="n">directory</span> <span class="o">***</span>
+<span class="n">skipping</span> <span class="n">daemon</span><span class="o">-</span><span class="n">excluded</span> <span class="n">directory</span> <span class="s2">&quot;c&quot;</span>
+<span class="o">***</span> <span class="n">Skipping</span> <span class="nb">any</span> <span class="n">contents</span> <span class="kn">from</span> <span class="nn">this</span> <span class="n">failed</span> <span class="n">directory</span> <span class="o">***</span>
+<span class="n">d</span><span class="o">/</span>
+<span class="n">d</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">d</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">d</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">sent</span> <span class="mi">407</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">116</span> <span class="nb">bytes</span>  <span class="mf">1046.00</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">0</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">0.00</span>
+<span class="n">rsync</span> <span class="n">error</span><span class="p">:</span> <span class="n">some</span> <span class="n">files</span><span class="o">/</span><span class="n">attrs</span> <span class="n">were</span> <span class="ow">not</span> <span class="n">transferred</span> <span class="p">(</span><span class="n">see</span> <span class="n">previous</span> <span class="n">errors</span><span class="p">)</span> <span class="p">(</span><span class="n">code</span> <span class="mi">23</span><span class="p">)</span> <span class="n">at</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id22">
+<h4>3.6 守护进程来创建备份目录<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<p>通过客户端命令创建服务端备份目录中子目录</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="n">backup</span><span class="p">]</span><span class="c1"># cat /etc/rsyncd.conf</span>
+<span class="o">.....</span>
+<span class="p">[</span><span class="n">backup</span><span class="p">]</span>
+<span class="n">comment</span> <span class="o">=</span> <span class="s2">&quot;backup&quot;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">backup</span>
+</pre></div>
+</div>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 推送/etc/services文件到 服务器/backup/sda/目录</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.61.23::backup/dba/</span>
+
+<span class="c1"># 推送/etc/services文件到 服务器/backup/sa/目录</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.61.23::backup/sa/</span>
+
+<span class="c1"># 推送/etc/services文件到 服务器/backup/dev/目录</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avzP /etc/services rsync_backup@172.16.61.23::backup/dev/</span>
+</pre></div>
+</div>
+<p><strong>检查结果：</strong></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@swarm1 backup]# tree
+.
+├── dba
+│   └── services
+├── dev
+│   └── services
+└── sa
+    └── services
+</pre></div>
+</div>
+</div>
+<div class="section" id="id23">
+<h4>3.7 守护进程的访问控制配置<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<p>第一个里程碑：在服务端配置文件，编写白名单策略或黑名单策略（只能取其一）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">hosts</span> <span class="n">allow</span> <span class="o">=</span> <span class="mf">172.16</span><span class="o">.</span><span class="mf">1.0</span><span class="o">/</span><span class="mi">24</span>
+<span class="c1">#hosts deny = 0.0.0.0/32</span>
+</pre></div>
+</div>
+<p>关于访问控制的说明：</p>
+<p>\01.
+白名单和黑名单同时存在时，默认控制策略为不匹配的传输数据信息全部放行</p>
+<p>​ \02. 白名单单一存在时，默认控制策略为不匹配的传输数据信息全部禁止</p>
+<p>​ \03. 黑名单单一存在时，默认控制策略为不匹配的传输数据信息全部放行</p>
+<p><strong>全局变量修改控制策略信息，rsync服务必须重启</strong></p>
+<p>第二个里程碑：客户端进行测试</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">backup</span><span class="p">]</span><span class="c1"># rsync -avz /etc/services rsync_backup@10.0.0.41::data</span>
+<span class="nd">@ERROR</span><span class="p">:</span> <span class="n">Unknown</span> <span class="n">module</span> <span class="s1">&#39;data&#39;</span>
+<span class="n">rsync</span> <span class="n">error</span><span class="p">:</span> <span class="n">error</span> <span class="n">starting</span> <span class="n">client</span><span class="o">-</span><span class="n">server</span> <span class="n">protocol</span> <span class="p">(</span><span class="n">code</span> <span class="mi">5</span><span class="p">)</span> <span class="n">at</span> <span class="n">main</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="mi">1503</span><span class="p">)</span> <span class="p">[</span><span class="n">sender</span><span class="o">=</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">6</span><span class="p">]</span>
+<span class="o">--------------------------------------------------------------------------------</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">backup</span><span class="p">]</span><span class="c1"># rsync -avz /etc/services sync_backup@172.16.1.41::data</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">sent</span> <span class="mi">29</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">8</span> <span class="nb">bytes</span>  <span class="mf">74.00</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">641020</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">17324.86</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id24">
+<h4>3.8 守护进程无差异同步配置<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id25">
+<h5>3.8.1 什么是无差异：<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h5>
+<p>​ 推模式：我有什么，你就有什么；我没有，你也不能有</p>
+<p>​ 拉模式：你有什么，我就有什么；你没有，我也不能有</p>
+<p>​ 总结：<strong>服务端客户端数据完全一致（一模一样）</strong></p>
+</div>
+<div class="section" id="id26">
+<h5>3.8.2 实现无差异同步方法<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h5>
+<p>第一个里程碑： 创建实验环境</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># ll</span>
+<span class="n">总用量</span> <span class="mi">0</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli1</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli2</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli3</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli4</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli5</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli6</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli7</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli8</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli9</span>
+</pre></div>
+</div>
+<p>第二个里程：进行第一次数据同步</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avz --delete  /data1/ rsync_backup@172.16.61.23::backup/</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">deleting</span> <span class="n">sa</span><span class="o">/</span><span class="n">services</span>
+<span class="n">deleting</span> <span class="n">sa</span><span class="o">/</span>
+<span class="n">deleting</span> <span class="n">dev</span><span class="o">/</span><span class="n">services</span>
+<span class="n">deleting</span> <span class="n">dev</span><span class="o">/</span>
+<span class="n">deleting</span> <span class="n">dba</span><span class="o">/</span><span class="n">services</span>
+<span class="n">deleting</span> <span class="n">dba</span><span class="o">/</span>
+<span class="n">deleting</span> <span class="o">.</span><span class="n">updated</span>
+<span class="n">deleting</span> <span class="o">.</span><span class="n">pwd</span><span class="o">.</span><span class="n">lock</span>
+<span class="o">./</span>
+<span class="n">hujianli1</span><span class="o">/</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">4.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">5.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">6.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">7.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">8.</span><span class="n">txt</span>
+<span class="n">hujianli1</span><span class="o">/</span><span class="mf">9.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">4.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">5.</span><span class="n">txt</span>
+<span class="n">hujianli2</span><span class="o">/</span><span class="mf">6.</span><span class="n">txt</span>
+<span class="o">......</span>
+</pre></div>
+</div>
+<p>第三个里程：删除指定目录，并添加指定文件，测试无差异功能</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 删除客户端中的 hujianli{1..5} 目录，再进行无差异传输</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rm -rf hujianli{1..5}</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># ll</span>
+<span class="n">总用量</span> <span class="mi">0</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli6</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli7</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli8</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span><span class="o">.</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">123</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">23</span> <span class="mi">21</span><span class="p">:</span><span class="mi">38</span> <span class="n">hujianli9</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync -avz --delete  /data1/ rsync_backup@172.16.61.23::backup/ --password-file=/etc/rsync.password</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">9.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">8.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">7.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">6.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">5.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">4.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">3.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">2.</span><span class="n">txt</span>
+<span class="n">deleting</span> <span class="n">hujianli5</span><span class="o">/</span><span class="mf">1.</span><span class="n">txt</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id27">
+<h5>3.8.3 【注意】无差异同步方法的应用<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h5>
+<p>\01. 实现储存数据与备份数据完全一致（<strong>慎用</strong>）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="o">-</span><span class="n">avz</span> <span class="o">--</span><span class="n">delete</span>  <span class="o">/</span><span class="n">data</span><span class="o">/</span> <span class="n">rsync_backup</span><span class="nd">@172</span><span class="o">.</span><span class="mf">16.1</span><span class="o">.</span><span class="mi">41</span><span class="p">::</span><span class="n">backup</span> <span class="o">/</span>
+</pre></div>
+</div>
+<p>\02. 快速删除大文件数据</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>1.mkdir /null      --创建出一个空目录。
+2.rsync -avz --delete /null/ /bigdata/
+# 删除效率高于 rm -rf /bigdata
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id28">
+<h3><a class="toc-backref" href="#id47">3.9 守护进程的列表功能配置</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>第一个里程碑： 在服务端配置文件中开启list列表功能</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/rsyncd.conf</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="n">true</span>
+</pre></div>
+</div>
+<p>第二个里程碑：重启rsync服务</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># killall rsync &amp;&amp; sleep 1 &amp;&amp; rsync --daemon</span>
+</pre></div>
+</div>
+<p>第三个里程碑： 客户端查看服务端模块信息</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm3</span> <span class="n">data1</span><span class="p">]</span><span class="c1"># rsync rsync_backup@172.16.61.23::</span>
+<span class="n">backup</span>          <span class="s2">&quot;backup dir&quot;</span>
+</pre></div>
+</div>
+<p>说明：</p>
+<blockquote>
+<div>为了提升备份服务器安全性，建议关闭list列表功能.</div></blockquote>
+</div>
+</div>
+<div class="section" id="id29">
+<h2><a class="toc-backref" href="#id48">2.32.4. 第4章 常见问题</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -avz /etc/hosts  rsync_backup@172.16.1.41::backup</span>
+<span class="n">Password</span><span class="p">:</span>
+<span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
+<span class="n">hosts</span>
+<span class="n">rsync</span><span class="p">:</span> <span class="n">mkstemp</span> <span class="s2">&quot;.hosts.U5OCyR&quot;</span> <span class="p">(</span><span class="ow">in</span> <span class="n">backup</span><span class="p">)</span> <span class="n">failed</span><span class="p">:</span> <span class="n">Permission</span> <span class="n">denied</span> <span class="p">(</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">sent</span> <span class="mi">200</span> <span class="nb">bytes</span>  <span class="n">received</span> <span class="mi">27</span> <span class="nb">bytes</span>  <span class="mf">13.76</span> <span class="nb">bytes</span><span class="o">/</span><span class="n">sec</span>
+<span class="n">total</span> <span class="n">size</span> <span class="ow">is</span> <span class="mi">371</span>  <span class="n">speedup</span> <span class="ow">is</span> <span class="mf">1.63</span>
+<span class="n">rsync</span> <span class="n">error</span><span class="p">:</span> <span class="n">some</span> <span class="n">files</span><span class="o">/</span><span class="n">attrs</span> <span class="n">were</span> <span class="ow">not</span> <span class="n">transferred</span> <span class="p">(</span><span class="n">see</span> <span class="n">previous</span> <span class="n">errors</span><span class="p">)</span> <span class="p">(</span><span class="n">code</span> <span class="mi">23</span><span class="p">)</span> <span class="n">at</span> <span class="n">main</span><span class="o">.</span><span class="n">c</span><span class="p">(</span><span class="mi">1039</span><span class="p">)</span> <span class="p">[</span><span class="n">sender</span><span class="o">=</span><span class="mf">3.0</span><span class="o">.</span><span class="mi">6</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>说明：备份目录权限设置不正确</p>
+<p>解决办法：</p>
+<p>​ 将服务端的备份存放目录（path值），属主和属组修改为rsync。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># chown -R rsync.rsync /backup/</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="linuxrsync6">
+<h2><a class="toc-backref" href="#id49">2.32.5. 在Linux下使用rsync的6个实例</a><a class="headerlink" href="#linuxrsync6" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.linuxprobe.com/how-linux-rsync.html">https://www.linuxprobe.com/how-linux-rsync.html</a></p>
+</div>
+<div class="section" id="id30">
+<h2><a class="toc-backref" href="#id50">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<p>某公司里有一台Web服务器，里面的数据很重要，但是如果硬盘坏了数据就会丢失，现在领导要求把数据做备份，这样Web服务器数据丢失在可以进行恢复，要求如下：每天晚上00点整在Web服务器A上打包备份系统配置文件、网站程序目录及访问日志并通过rsync命令推送到服务器B上备份保留（备份思路可以是先在本地按日期打包，然后再推到备份服务器B上）。</p>
+<p>已知3台服务器主机名分别为Web01、BACKUP、NFS01，主机信息见表</p>
+<p>全网备份主机信息表</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="23%" />
+<col width="30%" />
+<col width="35%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">服务器说明</th>
+<th class="head">外网IP（NAT）SSH用</th>
+<th class="head">内网IP(NAT)交换数据用</th>
+<th class="head">&#160;</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Nginx Web</td>
+<td>10.0.0.7/24</td>
+<td>172.16.61.23</td>
+<td>web01</td>
+</tr>
+<tr class="row-odd"><td>NFS存储服务器</td>
+<td>10.0.0.31/24</td>
+<td>172.16.61.214</td>
+<td>nfs01</td>
+</tr>
+<tr class="row-even"><td>Rsync服务器</td>
+<td>10.0.0.41/24</td>
+<td>172.16.61.229</td>
+<td>backup</td>
+</tr>
+</tbody>
+</table>
+<p>（1）备份要求每天晚上00点整在Web服务器上打包备份系统配置文件、网站程序目录及访问日志并通过rsync命令推送到备份服务器BACKUP上备份保留。</p>
+<div class="section" id="id31">
+<h3><a class="toc-backref" href="#id51">5.1 具体备份需求具体的备份需求如下。</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<p>1）所有服务器的备份目录必须都为/backup。</p>
+<p>2）要备份的系统配置文件包括但不限于：</p>
+<p>❑ 定时任务服务的配置文件 (/var/spool/cron/root)（适合Web和NFS服务器）。</p>
+<p>❑ 开机自启动的配置文件 (/etc/rc.local)（适合Web和NFS服务器）。</p>
+<p>❑ 日常脚本的目录 (/server/scripts)。</p>
+<p>3）Web服务器站点目录假定为/var/html/www，如果没有，可以先模拟创建。</p>
+<p>4）Web服务器访问日志路径假定为/app/logs，如果没有，可以先模拟创建。</p>
+<p>服务器备份信息汇总表</p>
+<p><img alt="image3" src="../../_images/server_backup001.png" /></p>
+</div>
+<div class="section" id="id32">
+<h3><a class="toc-backref" href="#id52">5.2 项目逻辑架构</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<p>全网备份架构逻辑示意图</p>
+<p><img alt="image4" src="../../_images/rsync_backup0002.png" /></p>
+<p>第一个里程碑：</p>
+<p>在BACKUP上部署Rsync服务在BACKUP Server上部署Rsync服务。</p>
+<p>第二个里程碑：</p>
+<p>客户端本地开发打包脚本Nginx webserver, NFS
+dataserver本地打包备份脚本实现。</p>
+<p>1）Web01服务器待备份信息。</p>
+<p>❑ /var/spool/cron/root、/etc/rc.local、/server/scripts。</p>
+<p>❑ /var/html/www、/app/logs。</p>
+<p>2）NFS01服务器待备份信息。Rsync客户端（Nginx
+NFS）上进行信息备份压缩脚本编写进行备份压缩脚本编写前，需要进行Web站点目录与日志目录的创建（在172.16.61.23上执行），以及创建模拟数据。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@web01 ~]# mkdir /var/html/www -p
+[root@web01 ~]# touch /var/html/www/{1..3}.txt
+[root@web01 ~]# mkdir /app/logs -p
+[root@web01 ~]# touch /app/logs/{a..c}.log
+[root@web01 ~]# tree /var/html/www/
+/var/html/www/
+├── 1.txt
+├── 2.txt
+└── 3.txt
+
+0 directories, 3 files
+[root@web01 ~]# tree /app/logs/
+/app/logs/
+├── a.log
+├── b.log
+└── c.log
+
+0 directories, 3 files
+</pre></div>
+</div>
+<p>Web站点目录与日志目录创建完毕后，开始编写脚本信息（脚本编写信息需要在命令行测试成功后再放入脚本文件中）。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+Date=$(date +%F_Week0%w)
+
+Host_IP=$(hostname -I|awk &#39;{print $1}&#39;)     # 获取内网IP
+Backup_Dir=&quot;/backup/&quot;                       # 备份路径
+Backup_Server_IP=172.16.61.229              # 备份服务器IP
+
+[ ! -d $Backup_Dir/$Host_IP ] &amp;&amp; mkdir -p $Backup_Dir/$Host_IP              # 创建执行目录和IP目录
+cd / &amp;&amp; tar cf $Backup_Dir/$Host_IP/sys_file_bak_${Date}_tar.gz var/spool/cron/root &amp;&amp; \
+tar rf $Backup_Dir/$Host_IP/sys_file_bak_${Date}_tar.gz etc/rc.d/rc.local &amp;&amp; \
+tar rf $Backup_Dir/$Host_IP/sys_file_bak_${Date}_tar.gz server/scripts/ &amp;&amp; \
+tar zcf $Backup_Dir/$Host_IP/www_${Date}_tar.gz var/html/www/ &amp;&amp; \
+tar zcf $Backup_Dir/$Host_IP/app_logs_${Date}_tar.gz app/logs/ &amp;&amp; \
+#给压缩备份的文件创建指纹，放入指纹库flag中，后面验证完整性
+find ${Backup_Dir:-/tmp} -type f -name &quot;*${Date}_tar.gz&quot; |xargs md5sum &gt; $Backup_Dir/$Host_IP/${Date}.flag
+
+# 把备份推送到备份服务器
+rsync -az $Backup_Dir rsync_backup@${Backup_Server_IP}::backup --password-file=/etc/rsync.password
+
+# 删除7天以前的所有本地备份数据
+find ${Backup_Dir:-/tmp} -type f -name &quot;*.tar.gz&quot; -a -name &quot;*.flag*&quot; -mtime +7|xargs rm -f
+</pre></div>
+</div>
+<p>至此，脚本编写完成，放在所有的客户端脚本目录中执行测试即可，通过上面的配置已经完成了一部分项目需求；下面简单回顾一下之前的需求都完成了哪些，还剩哪些需求没有完成。</p>
+<p>第三个里程碑：</p>
+<p>配置定时任务1）编辑定时任务，实现每天00:00定时备份本地数据，并推送到备份数据Rsync服务器上。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">scripts</span><span class="p">]</span><span class="c1"># crontab -l</span>
+<span class="mi">00</span> <span class="mi">00</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">backup</span><span class="o">.</span><span class="n">sh</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>至此，在所有客户端的本地数据备份及定时备份删除都配置完成了。</p>
+<p>下面是Rsync服务器端相关配置。</p>
+<p>2）编辑服务端删除文件脚本文件，删除180天前的所有备份数据，但保存每周一的。</p>
+<p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">/server/scripts/del_bak_data.sh</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+
+Backup_Dir=&quot;/backup&quot;
+
+# 删除7天前的压缩包和flag文件，每周一的不删
+find ${Backup_Dir:-/tmp} -type f -name &quot;*tar.gz*&quot; ! -name &quot;*Week01*&quot; -o -name &quot;*flag*&quot; -mtime +7|xargs rm -f
+# 删除180天前的所有压缩包和flag文件
+find ${Backup_Dir:-/tmp} -type f -name &quot;*tar.gz*&quot;  -name &quot;*flag*&quot; -mtime +180|xargs rm -f
+</pre></div>
+</div>
+<p>3）配置定时任务，实现服务端180天前数据自动删除。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="n">scripts</span><span class="p">]</span><span class="c1"># crontab -l</span>
+<span class="mi">00</span> <span class="mi">00</span> <span class="o">*</span> <span class="o">*</span> <span class="o">*</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">del_bak_data</span><span class="o">.</span><span class="n">sh</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>第四个里程碑：</p>
+<p>数据传输完整性验证与监控告警服务端针对客户端备份时的md5指纹数据，利用MD5命令进行验证，完成数据传输过程完整性验证。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+Date=$(date +%F_Week0%w)
+Backup_Dir=&quot;/backup/&quot;
+Check_Log=&quot;/tmp/bak.log.$(date +%F)&quot;            #&lt;==定时检测备份结果的文件
+
+Admin_Mail=1879324764@qq.com
+
+find $Backup_Dir -type f -name &quot;${Date}.flag&quot; |xargs md5sum -c &gt;&gt; $Check_Log            #《===对比文件指纹
+if test -n $Check_Log; then     #&lt;== 如果校验不为空
+       mail -s &quot;$Date backup date info $Admin_Mail &lt;$Check_Log&quot;     #&lt;==发邮件
+else
+    echo &quot;$Date backup date error, pls check it.&quot; &lt;$Check_Log           #&lt;==报错
+    mail -s &quot;$Date backup data info &quot; $Admin_Mail &lt;$Check_Log
+    cp $Check_Log{,.ori} &amp;&amp; &gt;$Check_Log             #&lt;== 备份并清空结果文件
+fi
+</pre></div>
+</div>
+<p>第五个里程碑：</p>
+<p>配置mail使用外部SMTP发邮件需提前注册邮箱账号，并开启SMTP功能，这里推荐使用163邮箱。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vi /etc/mail.rc  //如果不存在，则编辑/etc/nail.rc
+</pre></div>
+</div>
+<p>在文件的末尾加入下面代码，相应帐号密码填写自己的帐号密码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>set from=&quot;xxx@163.com&quot;
+set smtp=smtp.163.com
+set smtp-auth-user=xxx
+set smtp-auth-password=邮箱密码   注：smtp的密码
+set smtp-auth=login
+</pre></div>
+</div>
+<p><strong>使用mailx发送邮件</strong></p>
+<p>发件人名称可不添加，第二步已配置过</p>
+<p>假设邮件内容存储于mesg文件中，那么可以用如下2个方法：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mailx</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;发件人名称  邮件标题&quot;</span> <span class="n">xxx</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span> <span class="o">&lt;</span> <span class="n">mesg</span>
+<span class="n">cat</span> <span class="n">mesg</span> <span class="o">|</span> <span class="n">mailx</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;发件人名称 邮件标题&quot;</span> <span class="n">xxx</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>多个收件人之间用逗号分隔：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">mesg</span> <span class="o">|</span> <span class="n">mailx</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;发件人名称 邮件标题&quot;</span> <span class="n">xxx</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">xxx2</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span><span class="p">,</span><span class="n">xxx3</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+<p>也可以直接从命令行输入邮件内容：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mailx</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot;发件人名称 邮件标题&quot;</span> <span class="n">xxx</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span>         <span class="c1">##输入完后回车按Ctrl+D提交发送</span>
+<span class="n">echo</span>  <span class="n">hello</span> <span class="n">word</span> <span class="o">|</span> <span class="n">mailx</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">s</span> <span class="s2">&quot; title&quot;</span> <span class="n">xxx3</span><span class="nd">@163</span><span class="o">.</span><span class="n">com</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../03.玩转shell脚本编程/index.html" class="btn btn-neutral float-right" title="3. 玩转shell脚本编程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="33.Gitlab安装.html" class="btn btn-neutral float-left" title="2.31. Gitlab安装" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

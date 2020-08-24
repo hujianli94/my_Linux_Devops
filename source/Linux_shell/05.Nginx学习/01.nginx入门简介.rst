@@ -55,7 +55,6 @@ IMAP/POP3/SMTP
 ::
 
     wget -c http://nginx.org/download/nginx-1.12.0.tar.gz 
-    
 
 创建nginx用户，并且设置为不能登录
 
@@ -135,5 +134,7 @@ IMAP/POP3/SMTP
 参考文献 https://blog.51cto.com/3241766/2094315
 
 易百教程Nginx专题 https://www.yiibai.com/nginx/nginx-install.html
+
+​
 
 .. |image0| image:: ../../_static/nginx01.png
