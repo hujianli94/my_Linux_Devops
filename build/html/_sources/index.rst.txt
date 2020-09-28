@@ -21,7 +21,9 @@ Devops学院【Linux架构|shell】专栏二
     :maxdepth: 4
     :glob:
 
+    Cloud_migration/index
     DevOps_Study/index
+    KVM_Practice/index
     KVM_Study/index
     Linux_Cluster_combat/index
     Linux_shell/index

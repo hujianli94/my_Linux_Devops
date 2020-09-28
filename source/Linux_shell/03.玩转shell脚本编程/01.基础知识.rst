@@ -114,6 +114,10 @@ Shell。还有许多 Unix 上Shell。
    [root@shell workspace]# source 01-scripts.sh
    this is my first script
 
+..
+
+   ``注意 source执行的时候，不会生成子shell。默认在父shell中执行相关的指令和命令。``
+
 5 Shell变量
 -----------
 

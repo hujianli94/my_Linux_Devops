@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -114,17 +116,23 @@
 <li class="toctree-l3"><a class="reference internal" href="03.nginx版本升级.html">5.3. nginx版本升级</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.nginx配置文件优化一.html">5.4. nginx配置文件优化一</a></li>
 <li class="toctree-l3"><a class="reference internal" href="05.nginx配置文件优化二.html">5.5. nginx配置文件优化二</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">5.6. nginx多站点配置</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.6. nginx多站点配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">5.6.1. Nginx多站点的配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">5.6.2. Nginx静态资源服务器搭建</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="07.nginx负载均衡配置+健康检查.html">5.7. nginx负载均衡配置+健康检查</a></li>
 <li class="toctree-l3"><a class="reference internal" href="08.nginx反向代理做下载文件.html">5.8. nginx反向代理做下载文件</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Nginx-location深入解析.html">5.9. Nginx location 深入解析</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.Nginx实战-动静分离配置.html">5.10. Nginx实战-动静分离配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志格式、日志分析与切割.html">5.11. Nginx日志格式、日志分析与切割</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.nginx正向代理配置.html">5.16. Nginx 正向代理配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.17. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Nginx文件下载服务器搭建.html">5.18. Nginx文件下载服务器搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -210,17 +218,31 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nginx" id="id1">nginx多站点配置</a></li>
+<li><a class="reference internal" href="#nginx" id="id3">nginx多站点配置</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">Nginx多站点的配置</a></li>
+<li><a class="reference internal" href="#id2" id="id5">Nginx静态资源服务器搭建</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="nginx">
-<h1><a class="toc-backref" href="#id1">5.6. nginx多站点配置</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id3">5.6. nginx多站点配置</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">5.6.1. Nginx多站点的配置</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>① 基于域名访问多站点
+② 基于IP访问多站点
+③ 基于端口访问多站点
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8393804.html">Nginx
+虚拟主机配置</a></p>
 <p>在真实的服务器环境，为了充分利用服务器资源，一台nginx
 web服务器同时会配置N个虚拟域名主机，
 即多个域名对于同样一个80（亦可以非常规）端口。然后服务器IP数量很多，
 也可以配置基于多个IP对应同一个端口。</p>
-<p>这里具体介绍两种种类，方法大概相同，实现结果不同。</p>
-<p>方法一 需求：同个端口，访问域名不同，访问页面不同。</p>
+<p>这里具体介绍两种种类，方法大概相同，实现结果不同。 方法一
+需求：同个端口，访问域名不同，访问页面不同。</p>
 <p>vim修改nginx.conf server段配置内容如下:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
         <span class="n">listen</span>       <span class="mi">80</span><span class="p">;</span>
@@ -241,8 +263,7 @@ web服务器同时会配置N个虚拟域名主机，
         <span class="p">}</span>
 </pre></div>
 </div>
-<p>测试工作：</p>
-<p>创建两个不同的目录mkdir –p /usr/local/nginx/html/{a,b}，
+<p>测试工作： 创建两个不同的目录mkdir –p /usr/local/nginx/html/{a,b}，
 然后分别在两个目录创建两个不同的index.html网站页面即可。
 通过客户端配置hosts指向两个域名，然后在IE浏览器访问测试效果。</p>
 <p>方法二
@@ -281,6 +302,27 @@ location ^~ /a/ {
 </pre></div>
 </div>
 <p>至此，基本上多站点访问配置也解释的差不多了。</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">5.6.2. Nginx静态资源服务器搭建</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>HTML 是一种标记语言，提供 HTML
+文件读取是静态服务器最基本的功能，静态服务器的配置样例如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+    <span class="n">listen</span> <span class="mi">8080</span><span class="p">;</span>
+    <span class="n">root</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">web</span><span class="o">/</span><span class="n">www</span><span class="p">;</span>                <span class="c1"># 存放静态文件的文件目录</span>
+    <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
+        <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="n">location</span> <span class="o">/</span><span class="n">js</span> <span class="p">{</span>
+        <span class="n">alias</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">web</span><span class="o">/</span><span class="n">static</span><span class="o">/</span><span class="n">js</span><span class="o">/</span><span class="p">;</span>    <span class="c1"># 存放JavaScript文件的文件目录</span>
+        <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>在以上配置中，每个 server 指令域等同于一个虚拟服务器，每个 location
+指令域等同于一个虚拟目录。</p>
+</div>
 </div>
 
 

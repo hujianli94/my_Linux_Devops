@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -168,6 +170,8 @@
 <li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
 <li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.快捷安装不同版本Python.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.常用shell脚本大全.html">3.54. 常用shell脚本大全</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
@@ -300,6 +304,40 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>if ! condition:
 then
     commad1
+fi
+</pre></div>
+</div>
+<p>举例说明</p>
+<div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+echo &quot;非空时候 if判断的返回&quot;
+if [ 0 ];then
+    echo &quot;Not None&quot;
+else
+    echo &quot;None&quot;
+fi
+
+echo &quot;为空时 if判断的返回&quot;
+
+if [ &quot;&quot; ];then
+    echo &quot;Not None&quot;
+else
+    echo &quot;None&quot;
+fi
+
+echo &quot;使用！取反空 if判断的返回&quot;
+
+if [ ! &quot;&quot; ];then
+    echo &quot;Not None&quot;
+else
+    echo &quot;None&quot;
+fi
+
+echo &quot;使用！取反非空 if判断的返回&quot;
+
+if [ ! 1 ];then
+    echo &quot;Not None&quot;
+else
+    echo &quot;None&quot;
 fi
 </pre></div>
 </div>

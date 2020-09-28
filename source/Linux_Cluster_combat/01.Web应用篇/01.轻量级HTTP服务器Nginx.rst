@@ -201,6 +201,7 @@ SSL模块、Http Gzip Static模块和Http Addition模块等。
    error_log logs/error.log notice；
    pid logs/nginx.pid；
    worker_rlimit_nofile65535；
+
    events{
        use epoll；
        worker_connections 65536；
@@ -932,7 +933,8 @@ Nginx反向代理，通过一台服务器作为入口，访问后端某一台Web
            proxy_pass http://61.135.163.121/;
            proxy_set_header HOST $host;
            proxy_set_header X-Real-IP $remote_addr;
-           proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+           proxy_set_header X-Forwarded-For
+           $proxy_add_x_forwarded_for;
        }
    }
 
@@ -1020,10 +1022,84 @@ proxy模块。
    proxy_busy_buffers_size：用于设置系统很忙时可以使用的proxy_buffers大小，官方推荐的大小为proxy_buffers×2。
    proxy_temp_file_write_size：指定proxy缓存临时文件的大小。
 
-.. _配置示例-1:
+11.2 Nginx负载均衡策略
+^^^^^^^^^^^^^^^^^^^^^^
 
-11.2 配置示例
-^^^^^^^^^^^^^
+轮询
+''''
+
+轮询（Round Robin）策略是 Nginx
+配置中默认的负载均衡策略，该策略将客户端的请求依次分配给后端的服务器节点，对后端集群中的服务器实现轮流分配。轮询策略绝对均衡，且实现简单，但也会因后端服务器处理能力的不同而影响整个集群的处理性能。
+
+*1) 加权轮询*
+
+在 Nginx
+的轮询策略中，为了避免因集群中服务器性能的差异对整个集群性能造成影响，在轮询策略的基础上增加了权重参数，让使用者可以手动根据集群中各服务器的性能将请求数量按照权重比例分配给不同的被代理服务器。
+
+*2) 平滑轮询*
+
+在加权轮询策略中，会按照权重的高低分配客户端请求，若按照高权重分配完再进行低权重分配的话，可能会出现的情况是高权重的服务器一直处于繁忙状态，压力相对集中。Nginx
+通过平滑轮询算法，使得上游服务器组中的每台服务器在总权重比例分配不变的情况下，均能参与客户端请求的处理，有效避免了在一段时间内集中将请求都分配给高权重服务器的情况发生。
+
+配置样例如下：
+
+::
+
+   http {
+       upstream backend {
+           server a weight=5;
+           server b weight=1;
+           server c weight=1;
+       }
+
+       server {
+           listen 80;
+
+           location / {
+               proxy_pass http://backend;
+           }
+       }
+   }
+
+一致性哈希
+''''''''''
+
+Nginx 启用哈希的负载均衡策略，是用 hash
+指令来设置的。哈希策略方法可以针对客户端访问的 URL 计算哈希值，对相同的
+URL 请求，Nginx
+可以因相同的哈希值而将其分配到同一后端服务器。当后端服务器为缓存服务器时，将极大提高命中率，提升访问速度。
+
+一致性哈希的优点是，可以使不同客户端的相似请求发送给同一被代理服务器，当被代理服务器为缓存服务器场景应用时，可以极大提高缓存的命中率。
+
+一致性哈希的缺点是，当上游服务器组中的节点数量发生变化时，将导致所有绑定被代理服务器的哈希值重新计算，影响整个集群的绑定关系，产生大量回源请求。
+
+配置样例如下：
+
+::
+
+   http {
+       upstream backend {
+           hash $request_uri;  # 以客户端请求URI为计算哈希值的key
+           server a weight=5;
+           server b weight=1;
+           server c weight=1;
+       }
+
+       server {
+           listen 80;
+
+           location / {
+               proxy_pass http://backend;
+           }
+       }
+   }
+
+IP哈希
+''''''
+
+IP 哈希（IP
+Hash）负载均衡策略根据客户端IP计算出哈希值，然后把请求分配给该数值对应的被代理服务器。在哈希值不变且被代理服务器可用的前提下，同一客户端的请求始终会被分配到同一台被代理服务器上。IP
+哈希负载均衡策略常被应用在会话（Session）保持的场景。
 
 ::
 
@@ -1046,6 +1122,63 @@ proxy模块。
            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
        }
    }
+
+最少连接
+''''''''
+
+默认配置下轮询算法是把客户端的请求平均分配给每个被代理服务器，每个被代理服务器的负载大致相同，该场景有个前提就是每个被代理服务器的请求处理能力是相当的。如果集群中某个服务器处理请求的时间比较长，那么该服务器的负载也相对增高。在最少连接（least_conn）负载均衡策略下，会在上游服务器组中各服务器权重的前提下将客户端请求分配给活跃连接最少的被代理服务器，进而有效提高处理性能高的被代理服务器的使用率。
+
+配置样例如下：
+
+::
+
+   upstream backend {
+       least_conn;         # 启用最少连接负载均衡策略
+       server a weight=4;
+       server b weight=2;
+       server c weight=1;
+   }
+
+   server {
+       listen 80;
+       location / {
+           proxy_pass http://backend;
+       }
+   }
+
+随机负载算法
+''''''''''''
+
+在 Nginx 集群环境下，每个 Nginx
+均通过自身对上游服务器的了解情况进行负载均衡处理，这种场景下，很容易出现多台
+Nginx
+同时把请求都分配给同一台被代理服务器的场景，该场景被称为羊群行为（Herd
+Behavior）。
+
+Nginx 基于两种选择的力量（Power of Two
+Choices）原理，设计了随机（Random）负载算法。该算法使 Nginx
+不再基于片面的情况了解使用固有的负载均衡策略进行被代理服务器的选择，而是随机选择两个，在经过比较后进行最终的选择。随机负载算法提供了一个参数
+two，当这个参数被指定时，Nginx
+会在考虑权重的前提下，随机选择两台服务器，然后用以下几种方法选择一个服务器。
+
+-  最少连接数，配置指令为 least_conn，默认配置；
+-  响应头最短平均时间，配置指令为 least_time=header，仅对商业版本有效；
+-  完整请求最短平均时间，配置指令为
+   least_time=last_byte，仅对商业版本有效。
+
+配置样例如下：
+
+::
+
+   upstream backend {
+       random two least_conn;
+       server backend1.example.com;
+       server backend2.example.com;
+       server backend3.example.com;
+       server backend4.example.com;
+   }
+
+在只有单台 Nginx 服务器时，一般不建议使用随机负载算法。
 
 12.Nginx的压缩输出配置
 ~~~~~~~~~~~~~~~~~~~~~~

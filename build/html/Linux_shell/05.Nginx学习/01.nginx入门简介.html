@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -110,10 +112,14 @@
 <li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Nginx学习</a><ul class="current">
 <li class="toctree-l3 current"><a class="current reference internal" href="#">5.1. nginx入门简介</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#nginxapache">5.1.1. 一：Nginx相对于Apache优点：</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id1">5.1.2. 二：nginx的模块</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">5.1.3. 三：nginx的安装</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#yumnginx">5.1.4. 四：yum安装nginx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tengine">5.1.1. 1.分支版本Tengine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openresty">5.1.2. 2.扩展版本OpenResty</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginxapache">5.1.3. 3.Nginx相对于Apache优点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">5.1.4. 4. nginx的模块</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">5.1.5. 5.nginx的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#yumnginx">5.1.6. 6.yum安装nginx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">5.1.7. 7.Tengine源码编译</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginxdocker">5.1.8. 8.Nginx的Docker容器化配置</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="02.nginx常用命令管理.html">5.2. nginx常用命令管理</a></li>
@@ -125,12 +131,14 @@
 <li class="toctree-l3"><a class="reference internal" href="08.nginx反向代理做下载文件.html">5.8. nginx反向代理做下载文件</a></li>
 <li class="toctree-l3"><a class="reference internal" href="09.Nginx-location深入解析.html">5.9. Nginx location 深入解析</a></li>
 <li class="toctree-l3"><a class="reference internal" href="10.Nginx实战-动静分离配置.html">5.10. Nginx实战-动静分离配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Nginx日志格式、日志分析与切割.html">5.11. Nginx日志格式、日志分析与切割</a></li>
 <li class="toctree-l3"><a class="reference internal" href="12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="13.Nginx部署HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.nginx正向代理配置.html">5.16. Nginx 正向代理配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.17. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Nginx文件下载服务器搭建.html">5.18. Nginx文件下载服务器搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -216,84 +224,221 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nginx" id="id3">nginx入门简介</a><ul>
-<li><a class="reference internal" href="#nginxapache" id="id4">一：Nginx相对于Apache优点：</a></li>
-<li><a class="reference internal" href="#id1" id="id5">二：nginx的模块</a></li>
-<li><a class="reference internal" href="#id2" id="id6">三：nginx的安装</a></li>
-<li><a class="reference internal" href="#yumnginx" id="id7">四：yum安装nginx</a></li>
+<li><a class="reference internal" href="#nginx" id="id13">nginx入门简介</a><ul>
+<li><a class="reference internal" href="#tengine" id="id14">1.分支版本Tengine</a></li>
+<li><a class="reference internal" href="#openresty" id="id15">2.扩展版本OpenResty</a></li>
+<li><a class="reference internal" href="#nginxapache" id="id16">3.Nginx相对于Apache优点</a></li>
+<li><a class="reference internal" href="#id1" id="id17">4. nginx的模块</a></li>
+<li><a class="reference internal" href="#id2" id="id18">5.nginx的安装</a><ul>
+<li><a class="reference internal" href="#id3" id="id19">5.1 Nginx编译安装</a></li>
+<li><a class="reference internal" href="#id7" id="id20">5.2 注册系统服务</a></li>
+<li><a class="reference internal" href="#id8" id="id21">5.3 添加第三方模块</a></li>
+<li><a class="reference internal" href="#id9" id="id22">5.4 命令行参数</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#yumnginx" id="id23">6.yum安装nginx</a></li>
+<li><a class="reference internal" href="#id10" id="id24">7.Tengine源码编译</a></li>
+<li><a class="reference internal" href="#nginxdocker" id="id25">8.Nginx的Docker容器化配置</a><ul>
+<li><a class="reference internal" href="#docker" id="id26">8.1 Docker环境安装</a></li>
+<li><a class="reference internal" href="#dockerfile" id="id27">8.2 Dockerfile常用命令及编写</a></li>
+<li><a class="reference internal" href="#nginx-docker" id="id28">8.3 Nginx Docker运行</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="nginx">
-<h1><a class="toc-backref" href="#id3">5.1. nginx入门简介</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id13">5.1. nginx入门简介</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
 <p>Nginx (“engine x”) 是一个高性能的 HTTP 和 反向代理 服务器，也是一个
 IMAP/POP3/SMTP
 代理服务器，目前中国互联网企业70%以上公司都在使用nginx作为自己的web服务器。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Nginx特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。
 </pre></div>
 </div>
+<p>2019年3月，著名硬件负载均衡厂商F5宣布收购Nginx，Nginx成为F5的一部分。F5表示，将加强对开源和Nginx应用平台的投资，致力于Nginx开源技术、开发人员和社区的发展，更大的投资将为开放源码计划注入新的活力，会主办更多的开放源码活动，并产生更多的开放源码内容。</p>
+<p>官方目前有Nginx开源版和Nginx
+Plus商业版两个版本，开源版是目前使用最多的版本，商业版除了包含开源版本的全部功能外，还提供了一些独有的企业级功能。Nginx在国内互联网企业中也得到了广泛应用，企业在实际使用中会根据自身的需求进行相应的扩展和增强。</p>
+<p>目前国内流行的Nginx主要有两个开源版本，</p>
+<p>分别是由淘宝网技术团队维护的<code class="docutils literal notranslate"><span class="pre">Tengine项目</span></code>和由章亦春发起的<code class="docutils literal notranslate"><span class="pre">OpenResty项目</span></code>。</p>
+<p>想了解更多内容的用户可参阅官方网站http://www.nginx.org。</p>
+<p>Nginx不仅提供了Web服务器的功能，还极大满足了这一主流架构的需求并提供了如下应用特性。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）访问路由现今大型网站的请求量早已不是单一Web服务器可以支撑的了。单一入口、访问请求被分配到不同的业务功能服务器集群，是目前大型网站的通用应用架构。Nginx可以通过访问路径、URL关键字、客户端IP、灰度分流等多种手段实现访问路由分配。
+
+（2）反向代理就反向代理功能而言，Nginx本身并不产生响应数据，只是应用自身的异步非阻塞事件驱动架构，高效、稳定地将请求反向代理给后端的目标应用服务器，并把响应数据返回给客户端。其不仅可以代理HTTP协议，还支持HTTPS、HTTP/2、FastCGI、uWSGI、SCGI、gRPC及TCP/UDP等目前大部分协议的反向代理。
+
+（3）负载均衡Nginx在反向代理的基础上集合自身的上游（upstream）模块支持多种负载均衡算法，使后端服务器可以非常方便地进行横向扩展，从而有效提升应用的处理能力，使整体应用架构可轻松应对高并发的应用场景。
+
+（4）内容缓存动态处理与静态内容分离是应用架构优化的主要手段之一，Nginx的内容缓存技术不仅可以实现预置静态文件的高速缓存，还可以对应用响应的动态结果实现缓存，为响应结果变化不大的应用提供更高速的响应能力。
+
+（5）可编程Nginx模块化的代码架构方式为其提供了高度可定制的特性，但可以用C语言开发Nginx模块以满足自身使用需求的用户只是少数。Nginx在开发之初就具备了使用Perl脚本语言实现功能增强的能力。Nginx对JavaScript语言及第三方模块对Lua语言的支持，使得其可编程能力更强。
+</pre></div>
+</div>
+<div class="section" id="tengine">
+<h2><a class="toc-backref" href="#id14">5.1.1. 1.分支版本Tengine</a><a class="headerlink" href="#tengine" title="Permalink to this headline">¶</a></h2>
+<p>Tengine是由淘宝网技术团队发起的Nginx二次开发项目，是在开源版Nginx及诸多第三方模块的基础上，针对淘宝网的高并发需求进行的二次开发。其中添加了很多针对互联网网站中使用Nginx应对高并发负载、安全及维护等的功能和特性。</p>
+<p>Tengine是基于Nginx开发的轻量级开源Web服务器，作为阿里巴巴七层流量入口的核心系统，支撑着阿里巴巴“双11”等大促活动的平稳度过，并提供了智能的流量转发策略、HTTPS加速、安全防攻击、链路追踪等众多高级特性，同时秉着软硬件结合的性能优化思路，在高性能、高并发方面取得了重大突破。</p>
+<p>目前，Tengine正通过打通Ingress
+Controller和Kubernetes使Tengine具备动态感知某个服务整个生命周期的能力。未来，Tengine将定期开源内部通用组件功能模块，并同步Nginx官方的最新代码，丰富开发者们的开源Web服务器选项。想了解更多内容请参阅官方网站http://tengine.taobao.org/。</p>
+</div>
+<div class="section" id="openresty">
+<h2><a class="toc-backref" href="#id15">5.1.2. 2.扩展版本OpenResty</a><a class="headerlink" href="#openresty" title="Permalink to this headline">¶</a></h2>
+<p>OpenResty是基于Nginx开源版本的扩展版本，它利用Nginx的模块特性，使Nginx支持Lua语言的脚本编程，鉴于Lua本身嵌入应用程序中增强应用程序扩展和定制功能的设计初衷，开源版本Nginx的可编程性得到大大增强。</p>
+<p>OpenResty构架在Nginx和LuaJIT的基础之上，利用Nginx的模块特性集成了大量Lua支持库，用户可以很方便地使用Lua编程语言对Nginx的功能进行扩展和增强。</p>
+<p>OpenResty项目开始于2007年10月，最早是为雅虎中国搜索部门开发的项目，后由章亦春进行开发和维护，并得到了国内外诸多企业的应用，目前主要由OpenResty软件基金会和OpenResty
+Inc.公司提供支持。</p>
+</div>
 <div class="section" id="nginxapache">
-<h2><a class="toc-backref" href="#id4">5.1.1. 一：Nginx相对于Apache优点：</a><a class="headerlink" href="#nginxapache" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1)     高并发响应性能非常好，官方Nginx处理静态文件并发5w/s
+<h2><a class="toc-backref" href="#id16">5.1.3. 3.Nginx相对于Apache优点</a><a class="headerlink" href="#nginxapache" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1)高并发响应性能非常好，官方Nginx处理静态文件并发5w/s
 
-2)     反向代理性能非常强。（可用于负载均衡）
+2)反向代理性能非常强。（可用于负载均衡）
 
-3)     内存和cpu占用率低。（为Apache的1/5-1/10）
+3)内存和cpu占用率低。（为Apache的1/5-1/10）
 
-4)     对后端服务有健康检查功能。
+4)对后端服务有健康检查功能。
 
-5)     支持PHP cgi方式和fastcgi方式。
+5)支持PHP cgi方式和fastcgi方式。
 
-6)     配置代码简洁且容易上手。
+6)配置代码简洁且容易上手。
 </pre></div>
 </div>
 </div>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id5">5.1.2. 二：nginx的模块</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>① 核心模块：HTTP模块、EVENT模块和MAIL模块
+<h2><a class="toc-backref" href="#id17">5.1.4. 4. nginx的模块</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>① 核心模块：HTTP模块、EVENT模块和MAIL模块</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·核心模块（core）。该模块提供了Nginx服务运行的基本功能，如Nginx的进程管理、CPU亲缘性、内存管理、配置文件解析、日志等功能。
 
-② 基础模块：HTTP Access模块、HTTP FastCGI模块、HTTP Proxy模块和HTTP Rewrite模块，
+·事件模块（event）。该模块负责进行连接处理，提供对不同操作系统的I/O网络模型支持和自动根据系统平台选择最有效I/O网络模型的方法。
 
-③ 第三方模块：HTTP Upstream Request Hash模块、Notice模块和HTTP Access Key模块
+·Mail模块（mail）。该模块实现邮件代理功能，代理IMAP、POP3、SMTP协议。
+
+·Stream模块（stream）。该模块提供TCP/UDP会话的代理和负载相关功能。
+</pre></div>
+</div>
+<p>② 基础模块：HTTP Access模块、HTTP FastCGI模块、HTTP Proxy模块和HTTP
+Rewrite模块</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·HTTP模块（http）。该模块提供HTTP处理的核心功能和部分功能模块，HTTP核心功能维护了HTTP多个阶段的工作流，并实现了对各种HTTP功能模块的管理和调用。
+</pre></div>
+</div>
+<p>③ 第三方模块：HTTP Upstream Request Hash模块、Notice模块和HTTP Access
+Key模块</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· 第三方模块即非Nginx官方开发的功能模块，据统计，在开源社区发布的第三方模块已经达到100多个，其中lua-resty、nginx-module-vts等模块的使用度非常高。
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">5.1.3. 三：nginx的安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>注意：首先需要安装pcre库，安装pcre支持rewrite库,也可以安装源码，注*安装源码时，指定pcre路径为解压源码的路径，而不是编译后的路径，否则会报错。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">vim</span> <span class="n">gcc</span> <span class="n">telnet</span> <span class="n">lrzsz</span> <span class="n">openssl</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">pcre</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span>
+<h2><a class="toc-backref" href="#id18">5.1.5. 5.nginx的安装</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id19">5.1 Nginx编译安装</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h4>① 系统服务安装<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>CentOS 可用最小化安装，安装完毕后，用如下命令补充工具。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 安装扩展工具包yum源</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+
+<span class="c1"># 安装工具</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">net</span><span class="o">-</span><span class="n">tools</span> <span class="n">wget</span> <span class="n">nscd</span> <span class="n">lsof</span>
 </pre></div>
 </div>
-<p>下载Nginx源码包</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</div>
+<div class="section" id="dns">
+<h4>② DNS 缓存<a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h4>
+<p>编辑 /etc/resolv.conf 配置 DNS 服务器，打开 NSCD 服务，缓存
+DNS，提高域名解析响应速度。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#启动NSCD服务</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">nscd</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">nscd</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
 </div>
-<p>创建nginx用户，并且设置为不能登录</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">nginx</span>
+</div>
+<div class="section" id="id5">
+<h4>③ 修改文件打开数限制<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>操作系统默认单进程最大打开文件数为
+1024，要想实现高并发，可以把单进程的文件打开数调整为 65536。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;* soft nofile 65536</span>
+<span class="o">*</span> <span class="n">hard</span> <span class="n">nofile</span> <span class="mi">65536</span><span class="s2">&quot; &gt;&gt;/etc/security/limits.conf</span>
 </pre></div>
 </div>
-<p>解压，进入解压目录，然后sed修改Nginx版本信息为JSW</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="n">zxvf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">cd</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mi">0</span><span class="p">;</span><span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/1.12.0//g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/nginx\//JWS/g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/&quot;NGINX&quot;/&quot;JWS&quot;/g&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">h</span>
+</div>
+<div class="section" id="id6">
+<h4>④Nginx源码获取<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>Nginx 源码可通过官网直接下载，源码获取命令如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">source</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">source</span> <span class="o">&amp;&amp;</span> <span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.17</span><span class="o">.</span><span class="mf">4.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">zxmf</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.17</span><span class="o">.</span><span class="mf">4.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.17</span><span class="o">.</span><span class="mi">4</span><span class="o">/</span>
+
+<span class="c1">#创建nginx用户，并且设置为不能登录</span>
+<span class="n">useradd</span> <span class="o">-</span><span class="n">r</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+<p>安装编译工具及依赖库，脚本如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">gcc</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span>  <span class="n">zlib</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libxml2</span><span class="o">-</span><span class="n">devel</span> \
+    <span class="n">libxslt</span><span class="o">-</span><span class="n">devel</span> <span class="n">gd</span><span class="o">-</span><span class="n">devel</span> <span class="n">GeoIP</span><span class="o">-</span><span class="n">devel</span> <span class="n">jemalloc</span><span class="o">-</span><span class="n">devel</span> <span class="n">libatomic_ops</span><span class="o">-</span><span class="n">devel</span> \
+    <span class="n">perl</span><span class="o">-</span><span class="n">devel</span>  <span class="n">perl</span><span class="o">-</span><span class="n">ExtUtils</span><span class="o">-</span><span class="n">Embed</span>
 </pre></div>
 </div>
 <p>编译，预编译nginx</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">www</span><span class="p">;</span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span> \
+<span class="o">--</span><span class="n">pid</span><span class="o">-</span><span class="n">path</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">pid</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> \
+<span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">nginx</span> \
+<span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="n">nginx</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">pcre</span> \
+<span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">mail_pop3_module</span> \
+<span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">mail_imap_module</span> \
+<span class="o">--</span><span class="n">without</span><span class="o">-</span><span class="n">mail_smtp_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">threads</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">file</span><span class="o">-</span><span class="n">aio</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_v2_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_realip_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_addition_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_xslt_module</span><span class="o">=</span><span class="n">dynamic</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_image_filter_module</span><span class="o">=</span><span class="n">dynamic</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_geoip_module</span><span class="o">=</span><span class="n">dynamic</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_sub_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_dav_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_flv_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_mp4_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_gunzip_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_gzip_static_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_auth_request_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_random_index_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_secure_link_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_degradation_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_slice_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">stream</span><span class="o">=</span><span class="n">dynamic</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">stream_ssl_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">stream_realip_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">stream_geoip_module</span><span class="o">=</span><span class="n">dynamic</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">stream_ssl_preread_module</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">compat</span> \
+<span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">pcre</span><span class="o">-</span><span class="n">jit</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
 </pre></div>
 </div>
-<p>至此nginx web服务安装完毕</p>
+<p>至此nginx web服务安装完毕。</p>
 <p>检查nginx配置文件是否正确，返回OK即正确。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx -t
-nginx: the configuration file /usr/local/nginx//conf/nginx.conf syntax is ok
-nginx: configuration file /usr/local/nginx//conf/nginx.conf test is successful
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.17</span><span class="o">.</span><span class="mi">4</span><span class="p">]</span><span class="c1"># /usr/local/nginx/sbin/nginx -t</span>
+<span class="n">nginx</span><span class="p">:</span> <span class="n">the</span> <span class="n">configuration</span> <span class="n">file</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span> <span class="n">syntax</span> <span class="ow">is</span> <span class="n">ok</span>
+<span class="n">nginx</span><span class="p">:</span> <span class="n">configuration</span> <span class="n">file</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span> <span class="n">test</span> <span class="ow">is</span> <span class="n">successful</span>
 
-将nginx加入到环境变量中，开机自动加载
-echo &quot;export PATH=$PATH:/usr/local/nginx/sbin/&quot; &gt;&gt; /etc/profile
+
+<span class="c1"># 将nginx加入到环境变量中，开机自动加载</span>
+<span class="n">echo</span> <span class="s2">&quot;export PATH=$PATH:/usr/local/nginx/sbin/&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+</pre></div>
+</div>
+<p>在 CentOS 操作系统中，配置文件通常放在 /etc 目录下，建议将 Nginx 的 conf
+目录软连接到 /etc 目录下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span>
 </pre></div>
 </div>
 <p>启动nginx</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# /usr/local/nginx/sbin/nginx
 [root@iZbp13qhd2a20s0a3p6qzxZ nginx-1.12.0]# ps aux | grep nginx
 root     10952  0.0  0.0  45932  1120 ?        Ss   23:28   0:00 nginx: master process /usr/local/nginx/sbin/nginx
 www      10953  0.0  0.0  46380  1896 ?        S    23:28   0:00 nginx: worker process
@@ -302,11 +447,105 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 </div>
 <p><img alt="image0" src="../../_images/nginx01.png" /></p>
 </div>
+</div>
+<div class="section" id="id7">
+<h3><a class="toc-backref" href="#id20">5.2 注册系统服务</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>CentOS 系统环境中使用 systemd
+进行系统和服务管理，可以按需守护进程，并通过 systemctl 命令进行 systemd
+的监测和控制。为了方便 Nginx 应用进程的维护和管理，此处把 Nginx
+注册成系统服务，由 systemd 进行服务管理，命令如下。</p>
+<p>创建 systemd 服务文件：
+<code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/nginx.service</span></code>，内容如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>cat &gt;/usr/lib/systemd/system/nginx.service &lt;&lt;EOF
+[Unit]
+Description=The Nginx HTTP and reverse proxy server
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/bin/rm -f /run/nginx.pid
+ExecStartPre=/usr/local/nginx/sbin/nginx -t -q
+ExecStart=/usr/local/nginx/sbin/nginx -g &quot;pid /run/nginx.pid;&quot;
+ExecReload=/usr/local/nginx/sbin/nginx -t -q
+ExecReload=/usr/local/nginx/sbin/nginx -s reload -g &quot;pid/run/nginx.pid;&quot;
+ExecStop=/bin/kill -s HUP $MAINPID
+KillSignal=SIGQUIT
+TimeoutStopSec=5
+KillMode=process
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+EOF
+</pre></div>
+</div>
+<p>设置自启动</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+<p>通过 systemd 管理 nginx</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将Nginx服务注册为系统启动后自动启动</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">nginx</span>
+<span class="c1"># 启动Nginx服务命令</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">nginx</span>
+<span class="c1"># reload Nginx服务命令</span>
+<span class="n">systemctl</span> <span class="n">reload</span> <span class="n">nginx</span>
+<span class="c1">#stop Nginx服务命令</span>
+<span class="n">systemctl</span> <span class="n">stop</span> <span class="n">nginx</span>
+<span class="c1"># 查看Nginx服务运行状态命令</span>
+<span class="n">systemctl</span> <span class="n">status</span> <span class="n">nginx</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id8">
+<h3><a class="toc-backref" href="#id21">5.3 添加第三方模块</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>Nginx 的功能是以模块方式存在的，同时也支持添加第三方开发的功能模块。执行
+configure 时，通过</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">module</span><span class="o">=</span><span class="n">PATH</span>
+</pre></div>
+</div>
+<p>参数指定第三方模块的代码路径，在 make 时就可以进行同步编译了。</p>
+<p>添加第三方静态模块的方法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">module</span><span class="o">=../</span><span class="n">ngx_http_proxy_connect_module</span>
+</pre></div>
+</div>
+<p>添加第三方动态模块的方法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">dynamic</span><span class="o">-</span><span class="n">module</span><span class="o">=../</span><span class="n">ngx_http_proxy_connect_module</span> \
+    <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">compat</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id22">5.4 命令行参数</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 执行配置文件检测</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">t</span>
+<span class="c1"># 执行配置文件检测，且只输出错误信息</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">t</span> <span class="o">-</span><span class="n">q</span>
+<span class="c1"># 快速停止Nginx</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">stop</span>
+<span class="c1"># 正常关闭Nginx</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">quit</span>
+<span class="c1"># 重新打开日志文件</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reopen</span>
+<span class="c1"># 重新加载配置文件</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
+<span class="c1"># 指定Nginx的执行目录</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">newnginx</span>
+<span class="c1"># 指定nginx.conf文件的位置</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">conf</span>
+<span class="c1"># 外部指定pid和worker_processes配置指令参数</span>
+<span class="n">nginx</span> <span class="o">-</span><span class="n">g</span> <span class="s2">&quot;pid /var/run/nginx.pid; worker_processes &#39;sysctl -n hw.ncpu&#39;;&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="yumnginx">
-<h2><a class="toc-backref" href="#id7">5.1.4. 四：yum安装nginx</a><a class="headerlink" href="#yumnginx" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">5.1.6. 6.yum安装nginx</a><a class="headerlink" href="#yumnginx" title="Permalink to this headline">¶</a></h2>
 <p>环境 Centos 7</p>
 <p>安装步骤</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">添加Nginx到YUM源</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">添加Nginx到YUM源</span>
 <span class="n">sudo</span> <span class="n">rpm</span> <span class="o">-</span><span class="n">Uvh</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">packages</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">noarch</span><span class="o">/</span><span class="n">RPMS</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="n">release</span><span class="o">-</span><span class="n">centos</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="mf">0.</span><span class="n">el7</span><span class="o">.</span><span class="n">ngx</span><span class="o">.</span><span class="n">noarch</span><span class="o">.</span><span class="n">rpm</span>
 <span class="n">或者</span>
 <span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
@@ -329,9 +568,297 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 <span class="o">*</span> <span class="n">Nginx启动</span>                           <span class="n">nginx</span> <span class="o">-</span><span class="n">c</span> <span class="n">nginx</span><span class="o">.</span><span class="n">conf</span>
 </pre></div>
 </div>
-<p>参考文献 <a class="reference external" href="https://blog.51cto.com/3241766/2094315">https://blog.51cto.com/3241766/2094315</a></p>
+</div>
+<div class="section" id="id10">
+<h2><a class="toc-backref" href="#id24">5.1.7. 7.Tengine源码编译</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>Tengine目前的版本是Tengine 2.3.2，据其官网介绍，该版本继承了Nginx
+1.17.3版本的所有特性，并兼容了Nginx的配置参数。Tengine开发了很多自有模块，同时也集成了很多优秀的第三方模块，源代码可以通过Tengine的官方网站获得，获取命令如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">source</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">source</span>
+<span class="n">wget</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">tengine</span><span class="o">.</span><span class="n">taobao</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">tengine</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="mf">2.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">zxmf</span> <span class="n">tengine</span><span class="o">-</span><span class="mf">2.3</span><span class="o">.</span><span class="mf">2.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>代码编译代码编译过程如下</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>$ yum -y install gcc pcre-devel zlib-devel openssl-devel \
+libxml2-devel yajl-devel luajit luajit-dev libxslt-devel gd-devel GeoIP-devel jemalloc-devel \
+libatomic_ops-devel perl-devel perl-ExtUtils-Embed
+
+# 执行编译配置
+./configure
+
+# 编译及安装
+make &amp;&amp; make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="nginxdocker">
+<h2><a class="toc-backref" href="#id25">5.1.8. 8.Nginx的Docker容器化配置</a><a class="headerlink" href="#nginxdocker" title="Permalink to this headline">¶</a></h2>
+<p>Docker 是一款基于Go语言开发的开源应用容器引擎，Docker
+可以让用户将需要运行的应用服务和依赖环境打包在一个小体积的应用容器中，被打包的容器可以移植到任意可运行
+Docker
+环境的操作系统中，极大地缩短了应用服务编译和部署所需的时间。Docker
+的虚拟化机制也使得在不同操作系统环境下编译的应用服务都可运行在同一Docker
+宿主机中。</p>
+<p>Docker 中有两个基本概念：镜像（Image）和容器（Container）。Docker 使用
+AUFS
+文件系统进行文件管理，这种文件系统的文件是分层叠加存储的，镜像是存储在只读层的文件，而运行的容器则是镜像运行的实例，它的实例文件存储在可写层中，所以通常需要先通过
+Docker 命令制作镜像，然后再通过 Docker 编排命令将镜像运行成容器。</p>
+<div class="section" id="docker">
+<h3><a class="toc-backref" href="#id26">8.1 Docker环境安装</a><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h3>
+<p>Docker 的虚拟化机制是基于操作系统的进程级别虚拟化技术，所以 Docker
+也可以安装在其他虚拟机中。在物理机或云环境的 CentOS 7 环境下均可通过 yum
+命令实现快速安装，安装命令如下。</p>
+<div class="section" id="yum">
+<h4>8.1.1 安装yum工具<a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dockeryum">
+<h4>8.1.2 安装Docker官方yum源<a class="headerlink" href="#dockeryum" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span><span class="o">-</span><span class="n">config</span><span class="o">-</span><span class="n">manager</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">repo</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">linux</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">ce</span><span class="o">.</span><span class="n">repo</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dockerdocker-compose">
+<h4>8.1.3 安装Docker及docker-compose应用<a class="headerlink" href="#dockerdocker-compose" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">docker</span><span class="o">-</span><span class="n">ce</span> <span class="n">docker</span><span class="o">-</span><span class="n">compose</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>8.1.4 设置Docker服务开机自启动<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">enable</span> <span class="n">docker</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4>8.1.5 启动Docker服务<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">start</span> <span class="n">docker</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="dockerfile">
+<h3><a class="toc-backref" href="#id27">8.2 Dockerfile常用命令及编写</a><a class="headerlink" href="#dockerfile" title="Permalink to this headline">¶</a></h3>
+<p>Dockerfile 是按照 Docker Build 语法约定的顺序结构规则脚本文件。通过
+Dockerfile 的编写可以实现 Docker
+镜像的自动化制作，本节所介绍的编译过程均可被编写在 Dockerfile 中，使用
+Docker 命令打包为 Nginx 的 Docker 镜像。</p>
+<p>Dockerfile 常用命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1) FROM 用于指定构建当前镜像的基础镜像名，使用方法如下。
+FROM centos
+
+2) MAINTAINER 用于填写作者声明的描述信息，使用方法如下。
+MAINTAINER Nginx Dockerfile Write by John.Wang
+
+3) ADD 命令会向 Image 中添加文件，支持文件、目录、URL 的源，使用方法如下。
+ADD /tmp/init_nginx.sh /usr/local/nginx/sbin/
+
+4) COPY 用于向镜像内复制文件夹，使用方法如下。
+COPY . /tmp
+
+5) ENV 设置 Container 启动后的环境变量，使用方法如下。
+ENV PATH $PATH:/usr/local/nginx/sbin
+
+6) EXPOSE 设置 Container 启动后对外开放的端口，它只相当于一个防火墙开放端口的概念，与实际运行的服务无关，使用方法如下。
+EXPOSE 8080
+
+7) RUN 用于在制作 Image 时执行指定的脚本或 shell 命令，使用方法如下。
+RUM yum -y install net-tools
+
+8) USER 设置运行 Image 或 Container 的系统用户，使用方法如下。
+USER nginx:nginx
+
+9) VOLUME 定义 Image 挂载点，该挂载点可被其他 Container 使用，且目录中的内容是共享的，将会同步更新，使用方法如下。
+VOLUME [&quot;/data1&quot;,&quot;/data2&quot;]
+
+10) WORKDIR 设置 CMD 参数指定命令的运行目录，使用方法如下。
+WORKDIR ~/
+
+11) CMD 命令是设定于 Container 启动后执行的命令，可被外部
+docker run
+命令参数覆盖，使用方法如下。
+CMD &quot;Hello Nginx&quot;
+
+12) ENTRYPOINT 命令是设定于 Container 启动后执行的命令，不可被外部
+docker run
+命令参数覆盖。
+
+ENTRYPOINT /usr/local/nginx/sbin/init_nginx.sh
+
+现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用 CentOS
+</pre></div>
+</div>
+<ol class="arabic simple">
+<li>FROM 用于指定构建当前镜像的基础镜像名，使用方法如下。</li>
+</ol>
+<p>FROM centos</p>
+<ol class="arabic simple" start="2">
+<li>MAINTAINER 用于填写作者声明的描述信息，使用方法如下。</li>
+</ol>
+<p>MAINTAINER Nginx Dockerfile Write by John.Wang</p>
+<ol class="arabic simple" start="3">
+<li>ADD 命令会向 Image 中添加文件，支持文件、目录、URL
+的源，使用方法如下。</li>
+</ol>
+<p>ADD /tmp/init_nginx.sh /usr/local/nginx/sbin/</p>
+<ol class="arabic simple" start="4">
+<li>COPY 用于向镜像内复制文件夹，使用方法如下。</li>
+</ol>
+<p>COPY . /tmp</p>
+<ol class="arabic simple" start="5">
+<li>ENV 设置 Container 启动后的环境变量，使用方法如下。</li>
+</ol>
+<p>ENV PATH $PATH:/usr/local/nginx/sbin</p>
+<ol class="arabic simple" start="6">
+<li>EXPOSE 设置 Container
+启动后对外开放的端口，它只相当于一个防火墙开放端口的概念，与实际运行的服务无关，使用方法如下。</li>
+</ol>
+<p>EXPOSE 8080</p>
+<ol class="arabic simple" start="7">
+<li>RUN 用于在制作 Image 时执行指定的脚本或 shell 命令，使用方法如下。</li>
+</ol>
+<p>RUM yum -y install net-tools</p>
+<ol class="arabic simple" start="8">
+<li>USER 设置运行 Image 或 Container 的系统用户，使用方法如下。</li>
+</ol>
+<p>USER nginx:nginx</p>
+<ol class="arabic simple" start="9">
+<li>VOLUME 定义 Image 挂载点，该挂载点可被其他 Container
+使用，且目录中的内容是共享的，将会同步更新，使用方法如下。</li>
+</ol>
+<p>VOLUME [“/data1”,“/data2”]</p>
+<ol class="arabic simple" start="10">
+<li>WORKDIR 设置 CMD 参数指定命令的运行目录，使用方法如下。</li>
+</ol>
+<p>WORKDIR ~/</p>
+<ol class="arabic simple" start="11">
+<li>CMD 命令是设定于 Container 启动后执行的命令，可被外部</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p>命令参数覆盖，使用方法如下。</p>
+<p>CMD “Hello Nginx”</p>
+<ol class="arabic simple" start="12">
+<li>ENTRYPOINT 命令是设定于 Container 启动后执行的命令，不可被外部</li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p>命令参数覆盖。</p>
+<p>ENTRYPOINT /usr/local/nginx/sbin/init_nginx.sh</p>
+<p>现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用
+CentOS 7，Nginx 选用 Nginx 的扩展版本 OpenResty 1.15.8.2。</p>
+<p>Nginx 镜像 Dockerfile 脚本如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>FROM centos:centos7
+MAINTAINER Nginx Dockerfile Write by John.Wang
+RUN yum -y install epel-release &amp;&amp; yum -y install wget gcc make pcre-devel \
+    zlib-devel openssl-devel libxml2-devel libxslt-devel luajit GeoIP-devel \
+    gd-devel libatomic_ops-devel luajit-devel perl-devel perl-ExtUtils-Embed
+
+RUN cd /tmp &amp;&amp; wget https://openresty.org/download/openresty-1.15.8.2.tar.gz  &amp;&amp; \
+    tar zxmf openresty-1.15.8.2.tar.gz &amp;&amp; \
+    cd openresty-1.15.8.2 &amp;&amp; \
+    ./configure \
+        --with-threads \
+        --with-file-aio \
+        --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-http_realip_module \
+        --with-http_addition_module \
+        --with-http_xslt_module=dynamic \
+        --with-http_image_filter_module=dynamic \
+        --with-http_geoip_module=dynamic \
+        --with-http_sub_module \
+        --with-http_dav_module \
+        --with-http_flv_module \
+        --with-http_mp4_module \
+        --with-http_gunzip_module \
+        --with-http_gzip_static_module \
+        --with-http_auth_request_module \
+        --with-http_random_index_module \
+        --with-http_secure_link_module \
+        --with-http_degradation_module \
+        --with-http_slice_module \
+        --with-http_stub_status_module \
+        --with-stream=dynamic \
+        --with-stream_ssl_module \
+        --with-stream_realip_module \
+        --with-stream_geoip_module=dynamic \
+        --with-libatomic \
+        --with-pcre-jit \
+        --with-stream_ssl_preread_module &amp;&amp; \
+    gmake &amp;&amp; gmake install
+ENV PATH $PATH:/usr/local/nginx/sbin
+RUN ln -s /usr/local/openresty/nginx /usr/local/nginx
+RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log &amp;&amp;\
+    ln -sf /dev/stderr /usr/local/nginx/logs/error.log
+EXPOSE 80
+ENTRYPOINT [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]
+</pre></div>
+</div>
+<p>在 Dockerfile 文件的同一目录下，执行如下命令构建 Nginx 的 Dokcer 镜像。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">build</span> <span class="o">-</span><span class="n">t</span> <span class="n">nginx</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>在脚本执行结束后，当尾行出现“Successfully tagged nginx:v1.0”时表示
+Dokcer 镜像已经构建成功，可以通过 Docker 命令 docker images
+查看镜像是否已经存在于本地的镜像仓库中，查询结果如下图所示。</p>
+<p><img alt="本地镜像仓库中的所有 Docker 镜像" src="http://www.weixueyuan.net/uploads/allimg/200831/8-200S116131ER.gif" /> 图：本地镜像仓库中的所有 Docker 镜像</p>
+</div>
+<div class="section" id="nginx-docker">
+<h3><a class="toc-backref" href="#id28">8.3 Nginx Docker运行</a><a class="headerlink" href="#nginx-docker" title="Permalink to this headline">¶</a></h3>
+<p>Docker 镜像在 AUFS 文件系统中是只读的，需要通过</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>
+</pre></div>
+</div>
+<p>命令以容器方式运行，脚本如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">nginx</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">80</span> <span class="o">-</span><span class="n">d</span> <span class="n">nginx</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">docker</span> <span class="n">ps</span> <span class="o">-</span><span class="n">a</span>
+<span class="n">CONTAINER</span> <span class="n">ID</span>        <span class="n">IMAGE</span>               <span class="n">COMMAND</span>                  <span class="n">CREATED</span>
+<span class="n">STATUS</span>                    <span class="n">PORTS</span>               <span class="n">NAMES</span>
+<span class="mi">26</span><span class="n">ffd54950e8</span>          <span class="n">nginx</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>          <span class="s2">&quot;nginx -g &#39;daemon of…&quot;</span>  <span class="mi">7</span> <span class="n">seconds</span> <span class="n">ago</span>
+<span class="n">Up</span> <span class="mi">7</span> <span class="n">seconds</span>          <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">80</span><span class="o">-&gt;</span><span class="mi">80</span><span class="o">/</span><span class="n">tcp</span>  <span class="n">nginx</span>
+</pre></div>
+</div>
+<p>通过 curl 命令访问本地 80 端口，可以返回 OpenResty 的提示信息。</p>
+<p>Docker
+容器如果被移除，所有的修改文件同样会被删除，为了把变更的配置保存下来，需要把配置文件目录复制出来进行持久化，所以需要通过卷挂载的方式实现配置的使用和维护，脚本如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span>
+<span class="n">docker</span> <span class="n">cp</span> <span class="n">nginx</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span>
+<span class="n">docker</span> <span class="n">stop</span> <span class="n">nginx</span>
+<span class="n">docker</span> <span class="n">rm</span> <span class="n">nginx</span>
+<span class="n">docker</span> <span class="n">run</span> <span class="o">--</span><span class="n">name</span> <span class="n">nginx</span> <span class="o">-</span><span class="n">h</span> <span class="n">nginx</span> <span class="o">-</span><span class="n">p</span> <span class="mi">80</span><span class="p">:</span><span class="mi">80</span> <span class="o">-</span><span class="n">v</span>
+<span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span> <span class="o">-</span><span class="n">d</span> <span class="n">nginx</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>如下图所示，Docker 容器已经把本地目录挂载到容器中。</p>
+<p><img alt="目录挂载" src="http://www.weixueyuan.net/uploads/allimg/200831/8-200S1161431M9.gif" /> 图：目录挂载</p>
+<p>在使用 docker run 命令时，每次都需要使用很多参数，为了便于维护，可以用
+Docker-Compose 工具进行容器编排，Docker-Compose 是使用基于 YAML
+语法的脚本配置文件来实现容器的运行管理的。Nginx 的 docker-compose.yaml
+脚本文件如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nginx</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">nginx</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">restart</span><span class="p">:</span> <span class="n">always</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">nginx</span>
+    <span class="n">hostname</span><span class="p">:</span> <span class="s1">&#39;nginx&#39;</span>
+    <span class="n">ports</span><span class="p">:</span>
+        <span class="o">-</span> <span class="mi">80</span><span class="p">:</span><span class="mi">80</span>
+    <span class="n">volumes</span><span class="p">:</span>
+        <span class="o">-</span> <span class="s1">&#39;/opt/data/apps/nginx/conf:/usr/local/nginx/conf&#39;</span>
+</pre></div>
+</div>
+<p>参考文献 <a class="reference external" href="http://www.weixueyuan.net/a/608.html">http://www.weixueyuan.net/a/608.html</a></p>
+<p>参考文献</p>
+<p><a class="reference external" href="http://www.weixueyuan.net/nginx/">http://www.weixueyuan.net/nginx/</a></p>
+<p><a class="reference external" href="https://blog.51cto.com/3241766/2094315">https://blog.51cto.com/3241766/2094315</a></p>
 <p>易百教程Nginx专题 <a class="reference external" href="https://www.yiibai.com/nginx/nginx-install.html">https://www.yiibai.com/nginx/nginx-install.html</a></p>
 <p>​</p>
+</div>
 </div>
 </div>
 

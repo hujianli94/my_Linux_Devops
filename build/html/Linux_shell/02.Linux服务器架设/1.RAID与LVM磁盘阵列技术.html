@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -110,7 +112,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. RAID与LVM磁盘阵列</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#raid">2.2.1. RAID 技术</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id1">2.2.2. 创建管理RAID实例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#raid-raid0raid5">2.2.3. 创建Raid（ 创建Raid0和Raid5）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raid-raid0raid5">2.2.3. 创建Raid(创建Raid0和Raid5)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">2.2.4. Raid性能测试</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id3">2.2.5. Raid故障模拟</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#raid-10">2.2.6. 制作一个RAID 10磁盘阵列</a></li>
@@ -150,6 +152,8 @@
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete数据恢复.html">2.33. Extundelete 数据恢复</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -247,7 +251,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#id1" id="id14">创建管理RAID实例</a></li>
-<li><a class="reference internal" href="#raid-raid0raid5" id="id15">创建Raid（ 创建Raid0和Raid5）</a></li>
+<li><a class="reference internal" href="#raid-raid0raid5" id="id15">创建Raid(创建Raid0和Raid5)</a></li>
 <li><a class="reference internal" href="#id2" id="id16">Raid性能测试</a></li>
 <li><a class="reference internal" href="#id3" id="id17">Raid故障模拟</a></li>
 <li><a class="reference internal" href="#raid-10" id="id18">制作一个RAID 10磁盘阵列</a></li>
@@ -369,7 +373,7 @@ vdd    253:48   0  40G  0 disk
 </div>
 </div>
 <div class="section" id="raid-raid0raid5">
-<h2><a class="toc-backref" href="#id15">2.2.3. 创建Raid（ 创建Raid0和Raid5）</a><a class="headerlink" href="#raid-raid0raid5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">2.2.3. 创建Raid(创建Raid0和Raid5)</a><a class="headerlink" href="#raid-raid0raid5" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mdadm [模式] 选项 &lt;raid设备&gt;
 
 选项：
@@ -384,8 +388,8 @@ vdd    253:48   0  40G  0 disk
 -D          查看详细信息
 -S          停止RAID磁盘阵列
 
- 使用mdadm命令创建RAID0，名称为“/dev/md0”
- 使用mdadm命令创建RAID5，名称为“/dev/md1”
+使用mdadm命令创建RAID0，名称为“/dev/md0”
+使用mdadm命令创建RAID5，名称为“/dev/md1”
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建RAID0</span>
@@ -445,7 +449,7 @@ vdd    253:48   0  40G  0 disk
 </pre></div>
 </div>
 <p>将磁盘设备设置为开机自动挂载项，Centos系统开机会读磁盘阵列的配置文件/etc/mdadm.conf以启动RAID设备。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo &quot;DEVICE /dev/vdb1 /dev/vdb2  /dev/vdc1 /dev/vdc2 /dev/vdd1 /dev/vdd2&quot; &gt; /etc/mdadm.conf</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># echo &quot;DEVICE /dev/vdb1 /dev/vdb2  /dev/vdc1 /dev/vdc2 /dev/vdd1 /dev/vdd2&quot; &gt; /etc/mdadm.conf</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm -Evs &gt;&gt;/dev/mdadm.conf</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /dev/mdadm.conf</span>
@@ -459,7 +463,7 @@ vdd    253:48   0  40G  0 disk
 </div>
 <div class="section" id="id2">
 <h2><a class="toc-backref" href="#id16">2.2.4. Raid性能测试</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***************************************</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***************************************</span>
 <span class="o">******</span>  <span class="n">普通磁盘写入模拟</span> <span class="o">**************</span>
 <span class="o">***************************************</span>
 
@@ -476,7 +480,7 @@ vdd    253:48   0  40G  0 disk
 <span class="n">普通磁盘写入1GB的数据所需要总时间为4</span><span class="o">.</span><span class="mi">252</span><span class="n">s</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***************************************</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">***************************************</span>
 <span class="o">******</span>  <span class="n">RAID5磁盘写入模拟</span> <span class="o">**************</span>
 <span class="o">***************************************</span>
 
@@ -495,7 +499,7 @@ vdd    253:48   0  40G  0 disk
 </div>
 <div class="section" id="id3">
 <h2><a class="toc-backref" href="#id17">2.2.5. Raid故障模拟</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm /dev/md1 -f /dev/vdb2</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm /dev/md1 -f /dev/vdb2</span>
 <span class="n">mdadm</span><span class="p">:</span> <span class="nb">set</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb2</span> <span class="n">faulty</span> <span class="ow">in</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">md1</span>
 
 
@@ -1038,13 +1042,43 @@ vdc    253:32   0  500G  0 disk
 </pre></div>
 </div>
 <p>使用vgcreate创建卷组并使用vgdisplay查看结果</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vgcreate test_vg /dev/vdc{1,2,3,5}</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vgcreate test_vg /dev/vdc{1,2,3,5}</span>
   <span class="n">Volume</span> <span class="n">group</span> <span class="s2">&quot;test_vg&quot;</span> <span class="n">successfully</span> <span class="n">created</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vgdisplay</span>
 </pre></div>
 </div>
+<p>新增PV加入到现有的VG中</p>
+<p>VG名称<code class="docutils literal notranslate"><span class="pre">vg00</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@cnsz02vl07124</span> <span class="o">/</span><span class="p">]</span><span class="c1"># pvcreate /dev/vdb1</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@cnsz02vl07124</span> <span class="o">/</span><span class="p">]</span><span class="c1"># vgdisplay</span>
+  <span class="o">---</span> <span class="n">Volume</span> <span class="n">group</span> <span class="o">---</span>
+  <span class="n">VG</span> <span class="n">Name</span>               <span class="n">vg00</span>
+  <span class="n">System</span> <span class="n">ID</span>
+  <span class="n">Format</span>                <span class="n">lvm2</span>
+  <span class="n">Metadata</span> <span class="n">Areas</span>        <span class="mi">1</span>
+  <span class="n">Metadata</span> <span class="n">Sequence</span> <span class="n">No</span>  <span class="mi">6</span>
+  <span class="n">VG</span> <span class="n">Access</span>             <span class="n">read</span><span class="o">/</span><span class="n">write</span>
+  <span class="n">VG</span> <span class="n">Status</span>             <span class="n">resizable</span>
+  <span class="n">MAX</span> <span class="n">LV</span>                <span class="mi">0</span>
+  <span class="n">Cur</span> <span class="n">LV</span>                <span class="mi">5</span>
+  <span class="n">Open</span> <span class="n">LV</span>               <span class="mi">5</span>
+  <span class="n">Max</span> <span class="n">PV</span>                <span class="mi">0</span>
+  <span class="n">Cur</span> <span class="n">PV</span>                <span class="mi">1</span>
+  <span class="n">Act</span> <span class="n">PV</span>                <span class="mi">1</span>
+  <span class="n">VG</span> <span class="n">Size</span>               <span class="o">&lt;</span><span class="mf">59.08</span> <span class="n">GiB</span>
+  <span class="n">PE</span> <span class="n">Size</span>               <span class="mf">4.00</span> <span class="n">MiB</span>
+  <span class="n">Total</span> <span class="n">PE</span>              <span class="mi">15124</span>
+  <span class="n">Alloc</span> <span class="n">PE</span> <span class="o">/</span> <span class="n">Size</span>       <span class="mi">14875</span> <span class="o">/</span> <span class="o">&lt;</span><span class="mf">58.11</span> <span class="n">GiB</span>
+  <span class="n">Free</span>  <span class="n">PE</span> <span class="o">/</span> <span class="n">Size</span>       <span class="mi">249</span> <span class="o">/</span> <span class="mf">996.00</span> <span class="n">MiB</span>
+  <span class="n">VG</span> <span class="n">UUID</span>               <span class="n">kn6dRr</span><span class="o">-</span><span class="n">B7k5</span><span class="o">-</span><span class="n">TsIL</span><span class="o">-</span><span class="mi">2</span><span class="n">C27</span><span class="o">-</span><span class="n">VZ7d</span><span class="o">-</span><span class="n">e0wy</span><span class="o">-</span><span class="n">XHG9OJ</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@cnsz02vl07124</span> <span class="o">/</span><span class="p">]</span><span class="c1"># vgextend vg00 /dev/vdb1</span>
+  <span class="n">Volume</span> <span class="n">group</span> <span class="s2">&quot;vg00&quot;</span> <span class="n">successfully</span> <span class="n">extended</span>
+</pre></div>
+</div>
 <p>使用lvcreate创建逻辑卷并使用lvdisplay查看结果</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lvcreate -n test_web -L 120G test_vg</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lvcreate -n test_web -L 120G test_vg</span>
   <span class="n">Logical</span> <span class="n">volume</span> <span class="s2">&quot;test_web&quot;</span> <span class="n">created</span><span class="o">.</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lvcreate -n test_data -l 30720 test_vg</span>
   <span class="n">Logical</span> <span class="n">volume</span> <span class="s2">&quot;test_data&quot;</span> <span class="n">created</span><span class="o">.</span>
@@ -1085,7 +1119,7 @@ vdc    253:32   0  500G  0 disk
 </pre></div>
 </div>
 <p>格式化并挂载</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.xfs /dev/test_vg/test_web</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.xfs /dev/test_vg/test_web</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.xfs /dev/test_vg/test_data</span>
 
@@ -1110,15 +1144,19 @@ vdc    253:32   0  500G  0 disk
 <h2><a class="toc-backref" href="#id22">2.2.10. 修改LVM分区容量</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>当逻辑卷test_data现有的存储空间以及不能满足企业大业务量的需要，我们需要将存储容量增大至240GB时。
 LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如下：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lvextend</span> <span class="o">-</span><span class="n">L</span> <span class="o">+</span><span class="mi">120</span><span class="n">G</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">test_vg</span><span class="o">/</span><span class="n">test_data</span>        <span class="c1">#扩容逻辑卷</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">lvextend</span> <span class="o">-</span><span class="n">L</span> <span class="o">+</span><span class="mi">120</span><span class="n">G</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">test_vg</span><span class="o">/</span><span class="n">test_data</span>        <span class="c1">#扩容逻辑卷</span>
+
 <span class="n">lvs</span>                                             <span class="c1">#查看逻辑卷以及扩容完成</span>
+
 <span class="n">df</span> <span class="o">-</span><span class="n">h</span>                                           <span class="c1">#文件系统没有变化</span>
+
 <span class="n">xfs_growfs</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">test_vg</span><span class="o">/</span><span class="n">test_data</span>               <span class="c1">#调整文件系统大小</span>
+
 <span class="n">df</span> <span class="o">-</span><span class="n">h</span>                                           <span class="c1">#调整后查看文件系统大小，有变化</span>
 </pre></div>
 </div>
 <p>示例</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># fdisk /dev/vdc</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># fdisk /dev/vdc</span>
 
 <span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">n</span>
 <span class="n">All</span> <span class="n">primary</span> <span class="n">partitions</span> <span class="n">are</span> <span class="ow">in</span> <span class="n">use</span>
@@ -1138,7 +1176,7 @@ LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如�
 <span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">w</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pvcreate /dev/vdc6</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pvcreate /dev/vdc6</span>
   <span class="n">Physical</span> <span class="n">volume</span> <span class="s2">&quot;/dev/vdc6&quot;</span> <span class="n">successfully</span> <span class="n">created</span><span class="o">.</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vgextend test_vg /dev/vdc6</span>
@@ -1154,7 +1192,7 @@ LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如�
   <span class="n">VG</span> <span class="n">UUID</span>               <span class="mi">5</span><span class="n">PNXxs</span><span class="o">-</span><span class="n">QU9C</span><span class="o">-</span><span class="n">Goe1</span><span class="o">-</span><span class="n">Dyvi</span><span class="o">-</span><span class="n">dt40</span><span class="o">-</span><span class="n">rlQp</span><span class="o">-</span><span class="n">Nvegcc</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lvextend -L 360G /dev/test_vg/test_data   #将逻辑卷扩展至360GB</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lvextend -L 360G /dev/test_vg/test_data   #将逻辑卷扩展至360GB</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># xfs_growfs /dev/test_vg/test_data          #开始调整</span>
 
@@ -1170,7 +1208,7 @@ LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如�
 <h2><a class="toc-backref" href="#id23">2.2.11. 删除LVM分区</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p>当我们不需要逻辑分区时，可以使用LVM命令轻松的删除之前创建的物理卷、卷组、逻辑卷。
 删除的顺序与创建的顺序相反：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.先卸载文件系统
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>1.先卸载文件系统
 2.删除逻辑卷
 3.删除卷组
 4.删除物理卷
@@ -1178,7 +1216,7 @@ LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如�
 卸载文件系统时需要注意，有必要更新一下/etc/fstab文件。
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">先卸载文件系统</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">先卸载文件系统</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># umount /dev/test_vg/test_data</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># umount /dev/test_vg/test_web</span>
 

@@ -23,7 +23,6 @@ def log():
             print("-----------------------------------------------------")
             print("运行时间:%s " % (end_time - start_time))
             print("-----------------------------------------------------")
-
         return Internal
 
     return Out_Wrapper

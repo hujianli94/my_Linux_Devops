@@ -5,14 +5,27 @@
 nginx多站点配置
 ===============
 
+Nginx多站点的配置
+-----------------
+
+::
+
+   ① 基于域名访问多站点
+   ② 基于IP访问多站点
+   ③ 基于端口访问多站点
+
+参考文献：
+
+`Nginx
+虚拟主机配置 <https://www.cnblogs.com/xiangsikai/p/8393804.html>`__
+
 在真实的服务器环境，为了充分利用服务器资源，一台nginx
 web服务器同时会配置N个虚拟域名主机，
 即多个域名对于同样一个80（亦可以非常规）端口。然后服务器IP数量很多，
 也可以配置基于多个IP对应同一个端口。
 
-这里具体介绍两种种类，方法大概相同，实现结果不同。
-
-方法一 需求：同个端口，访问域名不同，访问页面不同。
+这里具体介绍两种种类，方法大概相同，实现结果不同。 方法一
+需求：同个端口，访问域名不同，访问页面不同。
 
 vim修改nginx.conf server段配置内容如下:
 
@@ -36,9 +49,7 @@ vim修改nginx.conf server段配置内容如下:
                index  index.html index.htm;
            }
 
-测试工作：
-
-创建两个不同的目录mkdir –p /usr/local/nginx/html/{a,b}，
+测试工作： 创建两个不同的目录mkdir –p /usr/local/nginx/html/{a,b}，
 然后分别在两个目录创建两个不同的index.html网站页面即可。
 通过客户端配置hosts指向两个域名，然后在IE浏览器访问测试效果。
 
@@ -84,3 +95,26 @@ vim修改nginx.conf server段配置内容如下：
    3 访问域名的时候，如下所诉相同，域名+location关键词 访问的时候，必须以/结尾，如：http://sjb.suhuayue.com/a/是正确的。http://sjb.suhuayue.com/a为错误的。
 
 至此，基本上多站点访问配置也解释的差不多了。
+
+Nginx静态资源服务器搭建
+-----------------------
+
+HTML 是一种标记语言，提供 HTML
+文件读取是静态服务器最基本的功能，静态服务器的配置样例如下：
+
+::
+
+   server {
+       listen 8080;
+       root /opt/nginx-web/www;                # 存放静态文件的文件目录
+       location / {
+           index index.html;
+       }
+       location /js {
+           alias /opt/nginx-web/static/js/;    # 存放JavaScript文件的文件目录
+           index index.html;
+       }
+   }
+
+在以上配置中，每个 server 指令域等同于一个虚拟服务器，每个 location
+指令域等同于一个虚拟目录。

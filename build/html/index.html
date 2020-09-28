@@ -46,7 +46,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="DevOps与自动化运维" href="DevOps_Study/index.html" /> 
+    <link rel="next" title="Cloud_migration" href="Cloud_migration/index.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -99,7 +99,9 @@
             
             
               <ul>
+<li class="toctree-l1"><a class="reference internal" href="Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_shell/index.html">Linux_shell</a></li>
@@ -180,6 +182,10 @@
 <h2>Ŀ¼:<a class="headerlink" href="#l14" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
+<li class="toctree-l1"><a class="reference internal" href="Cloud_migration/index.html">Cloud_migration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Cloud_migration/01.阿里云的迁云工具.html">1. 阿里云的迁云工具</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="DevOps_Study/index.html">DevOps与自动化运维</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html">1. 01.Devops与自动化运维的意义</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="DevOps_Study/01.Devops与自动化运维的意义.html#id1">1.1. 1.1 为什么企业需要自动化运维</a></li>
@@ -327,8 +333,95 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="KVM_Practice/index.html">KVM_Practice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html">1. 构建KVM环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#cpu">1.1. 1.开启CPU虚拟化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#linux">1.2. 2.安装宿主机Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#id1">1.3. 3.编译和安装KVM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#id2">1.3.1. 3.1 下载KVM源代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#yumkvm">1.3.2. 3.2 Yum安装KVM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#qemu">1.3.3. 3.3 编译和安装QEMU</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#id4">1.3.4. 3.4 安装客户机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/01构建KVM环境.html#id5">1.3.5. 3.5 启动第一个KVM客户机</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html">2. KVM管理工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#libvirt">2.1. 1.libvirt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id1">2.1.1. 1.1 libvirt的安装与配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virsh">2.2. 2.virsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id4">2.2.1. 2.1 virsh简介</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virt-manager">2.3. 3.virt-manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id5">2.3.1. 3.1 打开virt-manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id6">2.3.2. 3.2 使用virt-manager来动态迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virt-viewervirt-installvirt-toplibguestfs">2.4. 4.virt-viewer、virt-install、virt-top和libguestfs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virt-viewer">2.4.1. 4.1 virt-viewer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virt-install">2.4.2. 4.2 virt-install</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#virt-top">2.4.3. 4.3 virt-top</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#libguestfs">2.4.4. 4.4 libguestfs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id7">2.5. 5.云计算管理平台</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#openstack">2.5.1. 5.1 Openstack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#zstack">2.5.2. 5.2 ZStack简介</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id8">2.6. 6.本章小结</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id9">2.6.1. 6.1 KVM常用工具总结</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/02KVM管理工具.html#id10">2.6.2. 6.2 私有云相关的平台</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html">3. qemu-img命令学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#qemu">3.1. 1.QEMU常见操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#id1">3.2. 2.QEMU支持的镜像文件格式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#raw">3.2.1. 2.1 raw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#qcow2">3.2.2. 2.2 qcow2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#qcow">3.2.3. 3.3 qcow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#vdi">3.2.4. 3.4 vdi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#vmdk">3.2.5. 3.5 vmdk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#vpc">3.2.6. 3.6 vpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#vhdx">3.2.7. 3.7 vhdx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#sheepdog">3.2.8. 3.8 sheepdog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#id2">3.3. 3.客户机存储方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#id3">3.4. 4.图形显示</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#sdl">3.4.1. 4.1 SDL的使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#vnc">3.4.2. 4.2 VNC的使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#id7">3.4.3. 4.3 VNC显示中的鼠标偏移</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/03.qemu-img命令学习.html#id8">3.4.4. 4.4 非图形模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html">4. KVM设备高级管理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#id1">4.1. 1.半虚拟化驱动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#virtio">4.1.1. 1.1 virtio概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#id2">4.1.2. 1.2 virtio的基本原理和优缺点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#linuxvirtio">4.1.3. 1.3 Linux下virtio的支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#windowsvirtio">4.1.4. 1.4 Windows下的virtio驱动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/04.KVM设备高级管理.html#virtio-balloon">4.1.5. 1.5 使用virtio_balloon(气球内存)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="KVM_Study/index.html">KVM_Study</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="KVM_Study/01.参考文献.html">1. 参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/01.参考文献.html">1. 参考文献</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/01.参考文献.html#esxi-kvm-v2v">1.1. ESXI 迁移至KVM (V2V迁移)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Study/01.参考文献.html#kvm">1.2. 管理配置KVM，热添加、热迁移</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html">2. 镜像转换V2V</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#vmwarekvm">2.1. VMware产品转KVM</a></li>
 <li class="toctree-l3"><a class="reference internal" href="KVM_Study/02.镜像转换V2V.html#vmdk-qcow2">2.2. VMDK–&gt;qcow2</a></li>
@@ -348,6 +441,8 @@
 <li class="toctree-l3"><a class="reference internal" href="KVM_Study/04.Proxmox_VE.html#id2">4.2. 推荐说明</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/05.CentOS7-ks.cfg系统安装与配置技巧.html">5. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="KVM_Study/06.KVM虚拟化学习笔记系列文章列表(转).html">6. KVM虚拟化学习笔记系列文章列表(转)</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a><ul>
@@ -361,7 +456,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id5">配置与调试Nginx</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id8">Nginx的启动、关闭和平滑重启</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id9">Nginx常用配置实例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id33">Nginx性能优化技巧</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#id36">Nginx性能优化技巧</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginxphp-fastcgi">实战Nginx与PHP（FastCGI）的安装、配置与优化</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginxperljava">实战Nginx与Perl、Java的安装与配置</a></li>
 </ul>
@@ -636,6 +731,11 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/46.Linux性能监控工具PyDash.html#glances">1.40.2. 交互式监控工具glances</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/47.system用法.html">1.41. system用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/48.恢复文件相关工具.html">1.42. 恢复文件相关工具</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/48.恢复文件相关工具.html#id2">1.42.1. 常见工具</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/index.html">2. Linux服务器架设</a><ul>
@@ -643,7 +743,7 @@
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html">2.2. RAID与LVM磁盘阵列</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#raid">2.2.1. RAID 技术</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#id1">2.2.2. 创建管理RAID实例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#raid-raid0raid5">2.2.3. 创建Raid（ 创建Raid0和Raid5）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#raid-raid0raid5">2.2.3. 创建Raid(创建Raid0和Raid5)</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#id2">2.2.4. Raid性能测试</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#id3">2.2.5. Raid故障模拟</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.html#raid-10">2.2.6. 制作一个RAID 10磁盘阵列</a></li>
@@ -802,6 +902,12 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.html#id29">2.32.4. 第4章 常见问题</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.html#linuxrsync6">2.32.5. 在Linux下使用rsync的6个实例</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.html#id30">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.html#rsync-inotify">2.32.7. 第六章 配置rsync+inotify实时同步</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/34.Rsync数据复制软件应用实践.html#id35">2.32.8. 参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/35.Extundelete数据恢复.html">2.33. Extundelete 数据恢复</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/35.Extundelete数据恢复.html#id1">2.33.1. 参考文献</a></li>
 </ul>
 </li>
 </ul>
@@ -1082,14 +1188,15 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id6">3.52.9. 批量检查多个网站地址是否正常。</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#mysql">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id7">3.52.11. Shell脚本调试技巧</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#expect">3.52.12. 企业生产场景下的Expect案例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ssh-ansible">3.52.13. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#exec">3.52.14. 使用exec调用其他外部命令或脚本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#fork">3.52.15. fork子进程的示例.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping1">3.52.16. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping2">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping">3.52.18. 控制进程数量的ping测试脚本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#sshd-ssh">3.52.19. 修改SSHD配置文件,提升SSH安全性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#expect">3.52.12. Expect用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id11">3.52.13. 企业生产场景下的Expect案例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ssh-ansible">3.52.14. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#exec">3.52.15. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#fork">3.52.16. fork子进程的示例.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping1">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping2">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping">3.52.19. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#sshd-ssh">3.52.20. 修改SSHD配置文件,提升SSH安全性</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/53.快捷安装不同版本Python.html">3.53. 快捷安装不同版本Python</a></li>
@@ -1154,16 +1261,23 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/05.Nginx学习/index.html">5. Nginx学习</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html">5.1. nginx入门简介</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#nginxapache">5.1.1. 一：Nginx相对于Apache优点：</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#id1">5.1.2. 二：nginx的模块</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#id2">5.1.3. 三：nginx的安装</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#yumnginx">5.1.4. 四：yum安装nginx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#tengine">5.1.1. 1.分支版本Tengine</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#openresty">5.1.2. 2.扩展版本OpenResty</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#nginxapache">5.1.3. 3.Nginx相对于Apache优点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#id1">5.1.4. 4. nginx的模块</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#id2">5.1.5. 5.nginx的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#yumnginx">5.1.6. 6.yum安装nginx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#id10">5.1.7. 7.Tengine源码编译</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/01.nginx入门简介.html#nginxdocker">5.1.8. 8.Nginx的Docker容器化配置</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html">5.2. nginx常用命令管理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id1">5.2.1. 查看nginx进程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id2">5.2.2. 平滑启动nginx</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id3">5.2.3. Nginx配置文件的结构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id1">5.2.1. 1. 查看nginx进程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id2">5.2.2. 2. 平滑启动nginx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id3">5.2.3. 3.Nginx核心配置指令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id4">5.2.4. 4.Nginx配置文件的结构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id5">5.2.5. 5.Nginx 配置文件解读</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/02.nginx常用命令管理.html#id6">5.2.6. 6. Nginx启动脚本</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/03.nginx版本升级.html">5.3. nginx版本升级</a><ul>
@@ -1172,7 +1286,11 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/04.nginx配置文件优化一.html">5.4. nginx配置文件优化一</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/05.nginx配置文件优化二.html">5.5. nginx配置文件优化二</a></li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/06.nginx多站点配置.html">5.6. nginx多站点配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/06.nginx多站点配置.html">5.6. nginx多站点配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/06.nginx多站点配置.html#id1">5.6.1. Nginx多站点的配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/06.nginx多站点配置.html#id2">5.6.2. Nginx静态资源服务器搭建</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/07.nginx负载均衡配置+健康检查.html">5.7. nginx负载均衡配置+健康检查</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/07.nginx负载均衡配置+健康检查.html#id1">5.7.1. nginx负载均衡原理图</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/07.nginx负载均衡配置+健康检查.html#id2">5.7.2. 负载均衡</a></li>
@@ -1192,9 +1310,10 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/10.Nginx实战-动静分离配置.html#id2">5.10.2. 二、Nginx实现动静分离</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志分析与切割.html">5.11. Nginx日志分析与切割</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志分析与切割.html#id1">5.11.1. 一：nginx日志分析</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志分析与切割.html#id2">5.11.2. 二：nginx日志切割案例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志格式、日志分析与切割.html">5.11. Nginx日志格式、日志分析与切割</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志格式、日志分析与切割.html#id1">5.11.1. 1. Nginx日志格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志格式、日志分析与切割.html#id2">5.11.2. 2. Nginx日志分析</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/11.Nginx日志格式、日志分析与切割.html#id3">5.11.3. 3. Nginx日志切割案例</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/12.Nginx访问控制.html">5.12. Nginx访问控制</a></li>
@@ -1213,7 +1332,13 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/15.案例-Nginx作为负载均衡服务器应用.html#id2">5.15.2. 2　Nginx的负载均衡配置实例</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.16. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/16.nginx正向代理配置.html">5.16. Nginx 正向代理配置</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/16.nginx正向代理配置.html#id1">5.16.1. 案例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/16.nginx正向代理配置.html#id2">5.16.2. 参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.17. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.18. Nginx文件下载服务器搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a><ul>
@@ -1800,8 +1925,8 @@
 <li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.3. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id4">7.1.4. 网站运维</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id13">7.1.5. 开发工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id18">7.1.6. 文档处理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id20">7.1.7. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id19">7.1.6. 文档处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id21">7.1.7. 5款优秀的开源克隆软件</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#linux">7.1.8. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
 </ul>
 </li>
@@ -1961,7 +2086,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="DevOps_Study/index.html" class="btn btn-neutral float-right" title="DevOps与自动化运维" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="Cloud_migration/index.html" class="btn btn-neutral float-right" title="Cloud_migration" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
     </div>

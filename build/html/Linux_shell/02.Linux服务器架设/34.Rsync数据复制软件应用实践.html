@@ -144,6 +144,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#id29">2.32.4. 第4章 常见问题</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#linuxrsync6">2.32.5. 在Linux下使用rsync的6个实例</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id30">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rsync-inotify">2.32.7. 第六章 配置rsync+inotify实时同步</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id35">2.32.8. 参考文献</a></li>
 </ul>
 </li>
 </ul>
@@ -234,44 +236,50 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#rsync" id="id33">Rsync数据复制软件应用实践</a><ul>
-<li><a class="reference internal" href="#id1" id="id34">第1章 rsync 软件介绍</a><ul>
-<li><a class="reference internal" href="#rsyncrsync" id="id35">1. 什么是RsyncRsync？</a></li>
-<li><a class="reference internal" href="#id2" id="id36">2. Rsync功能介绍</a></li>
+<li><a class="reference internal" href="#rsync" id="id36">Rsync数据复制软件应用实践</a><ul>
+<li><a class="reference internal" href="#id1" id="id37">第1章 rsync 软件介绍</a><ul>
+<li><a class="reference internal" href="#rsyncrsync" id="id38">1. 什么是RsyncRsync？</a></li>
+<li><a class="reference internal" href="#id2" id="id39">2. Rsync功能介绍</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id37">第2章.Rsync工作方式介绍与实践</a><ul>
-<li><a class="reference internal" href="#rsync3" id="id38">2.1 Rsync有3种传输数据模式</a></li>
-<li><a class="reference internal" href="#id6" id="id39">2.2 本地数据传输模式</a></li>
-<li><a class="reference internal" href="#shell-1" id="id40">2.3 远程Shell数据传输模式</a></li>
-<li><a class="reference internal" href="#id10" id="id41">2.4 守护进程传输模式</a></li>
+<li><a class="reference internal" href="#id5" id="id40">第2章.Rsync工作方式介绍与实践</a><ul>
+<li><a class="reference internal" href="#rsync3" id="id41">2.1 Rsync有3种传输数据模式</a></li>
+<li><a class="reference internal" href="#id6" id="id42">2.2 本地数据传输模式</a></li>
+<li><a class="reference internal" href="#shell-1" id="id43">2.3 远程Shell数据传输模式</a></li>
+<li><a class="reference internal" href="#id10" id="id44">2.4 守护进程传输模式</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#rsycn-rsyncd-conf" id="id42">第3章 rsycn配置文件详解 rsyncd.conf</a><ul>
-<li><a class="reference internal" href="#id12" id="id43">3.1 部分知识补充</a></li>
-<li><a class="reference internal" href="#etc-init-d-rsync" id="id44">3.2 利用/etc/init.d/启动rsync服务方式</a></li>
-<li><a class="reference internal" href="#id16" id="id45">3.3 定义变量信息实现免秘钥交互</a></li>
-<li><a class="reference internal" href="#id17" id="id46">3.4 守护进程多模块功能配置</a></li>
-<li><a class="reference internal" href="#id28" id="id47">3.9 守护进程的列表功能配置</a></li>
+<li><a class="reference internal" href="#rsycn-rsyncd-conf" id="id45">第3章 rsycn配置文件详解 rsyncd.conf</a><ul>
+<li><a class="reference internal" href="#id12" id="id46">3.1 部分知识补充</a></li>
+<li><a class="reference internal" href="#etc-init-d-rsync" id="id47">3.2 利用/etc/init.d/启动rsync服务方式</a></li>
+<li><a class="reference internal" href="#id16" id="id48">3.3 定义变量信息实现免秘钥交互</a></li>
+<li><a class="reference internal" href="#id17" id="id49">3.4 守护进程多模块功能配置</a></li>
+<li><a class="reference internal" href="#id28" id="id50">3.9 守护进程的列表功能配置</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id29" id="id48">第4章 常见问题</a></li>
-<li><a class="reference internal" href="#linuxrsync6" id="id49">在Linux下使用rsync的6个实例</a></li>
-<li><a class="reference internal" href="#id30" id="id50">第五章 Rsync企业级全网备份项目案例介绍与实践</a><ul>
-<li><a class="reference internal" href="#id31" id="id51">5.1 具体备份需求具体的备份需求如下。</a></li>
-<li><a class="reference internal" href="#id32" id="id52">5.2 项目逻辑架构</a></li>
+<li><a class="reference internal" href="#id29" id="id51">第4章 常见问题</a></li>
+<li><a class="reference internal" href="#linuxrsync6" id="id52">在Linux下使用rsync的6个实例</a></li>
+<li><a class="reference internal" href="#id30" id="id53">第五章 Rsync企业级全网备份项目案例介绍与实践</a><ul>
+<li><a class="reference internal" href="#id31" id="id54">5.1 具体备份需求具体的备份需求如下。</a></li>
+<li><a class="reference internal" href="#id32" id="id55">5.2 项目逻辑架构</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#rsync-inotify" id="id56">第六章 配置rsync+inotify实时同步</a><ul>
+<li><a class="reference internal" href="#id33" id="id57">6.1 同步的方向</a></li>
+<li><a class="reference internal" href="#id34" id="id58">以上软件包下载地址</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id35" id="id59">参考文献</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="rsync">
-<h1><a class="toc-backref" href="#id33">2.32. Rsync数据复制软件应用实践</a><a class="headerlink" href="#rsync" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id36">2.32. Rsync数据复制软件应用实践</a><a class="headerlink" href="#rsync" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id34">2.32.1. 第1章 rsync 软件介绍</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">2.32.1. 第1章 rsync 软件介绍</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="rsyncrsync">
-<h3><a class="toc-backref" href="#id35">1. 什么是RsyncRsync？</a><a class="headerlink" href="#rsyncrsync" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id38">1. 什么是RsyncRsync？</a><a class="headerlink" href="#rsyncrsync" title="Permalink to this headline">¶</a></h3>
 <p>是一款开源的快速的、可实现全量及增量的本地或远程数据备份的多功能优秀工具。并且在复制时可以不改变原有数据的属性信息，即可实现数据的备份迁移特性。Rsync软件适用于Unix/Linux/Windows等多种操作系统平台。</p>
 <p>Rsync提供了大量参数来控制复制行为的各个方面，并且允许多种灵活的方式来实现文件的传输复制。它以其delta-transfer算法闻名。通过减少网络数据发送数量，只发送源文件和目标文件之间的差异信息，从而实现数据的增量复制。</p>
 <p>Rsync被广泛应用于数据备份和镜像，并作为一种改进后的复制命令用于日常系统中。</p>
@@ -282,7 +290,7 @@
 <p><a class="reference external" href="http://www.samba.org/ftp/rsync/rsync.html">http://www.samba.org/ftp/rsync/rsync.html</a></p>
 </div>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id36">2. Rsync功能介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id39">2. Rsync功能介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>Rsync英文全称为Remote
 synchronization，从软件名称可以看出来，Rsync具有可使本地和远程两台主机之间的数据快速复制、远程备份的功能。</p>
 <p>Rsync软件自带的rsync命令本身就可以实现异地主机复制数据，这个功能类似scp命令（借助SSH服务实现远程传输数据），但又优于scp命令的功能，scp每次都是全量拷贝，而rsync可以增量拷贝（同样需借助SSH服务传输数据），此外，Rsync软件还支持以配置守护进程方式实现异机数据复制。</p>
@@ -330,9 +338,9 @@ check算法，仅复制大小或者最后修改时间发生变化的文件或目
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id37">2.32.2. 第2章.Rsync工作方式介绍与实践</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">2.32.2. 第2章.Rsync工作方式介绍与实践</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="rsync3">
-<h3><a class="toc-backref" href="#id38">2.1 Rsync有3种传输数据模式</a><a class="headerlink" href="#rsync3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id41">2.1 Rsync有3种传输数据模式</a><a class="headerlink" href="#rsync3" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="local">
 <h4>2.1.1．本地（Local）数据传输模式<a class="headerlink" href="#local" title="Permalink to this headline">¶</a></h4>
 <p>Rsync的本地数据传输模式，很类似于cp本地复制命令，可以实现文件、目录的移动备份等功能，所不同的是Rsync有增量复制的功能。</p>
@@ -347,7 +355,7 @@ check算法，仅复制大小或者最后修改时间发生变化的文件或目
 </div>
 </div>
 <div class="section" id="id6">
-<h3><a class="toc-backref" href="#id39">2.2 本地数据传输模式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id42">2.2 本地数据传输模式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>本地数据传输模式语法</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span>  <span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="n">SRC</span><span class="o">....</span>  <span class="n">dest</span><span class="o">...</span>
 </pre></div>
@@ -398,7 +406,7 @@ check算法，仅复制大小或者最后修改时间发生变化的文件或目
 </div>
 </div>
 <div class="section" id="shell-1">
-<span id="id8"></span><h3><a class="toc-backref" href="#id40">2.3 远程Shell数据传输模式</a><a class="headerlink" href="#shell-1" title="Permalink to this headline">¶</a></h3>
+<span id="id8"></span><h3><a class="toc-backref" href="#id43">2.3 远程Shell数据传输模式</a><a class="headerlink" href="#shell-1" title="Permalink to this headline">¶</a></h3>
 <p>远程Shell数据传输模式语法远程Shell数据传输模式分为拉取和推送两种模式，拉取是指从远端服务器把数据拉取到本地服务器；推送是指把数据从本地服务器推送到远端服务器，这两种传输方式的语法格式如下。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rsync</span> <span class="p">[</span><span class="n">option</span><span class="p">]</span> <span class="p">[</span><span class="n">USER</span><span class="o">@</span><span class="p">]</span><span class="n">HOST</span><span class="p">:</span><span class="n">SRC</span><span class="o">...</span>   <span class="n">DEST</span>
 </pre></div>
@@ -430,7 +438,7 @@ key免密码登录来完成数据免交互同步。</p>
 </div>
 </div>
 <div class="section" id="id10">
-<h3><a class="toc-backref" href="#id41">2.4 守护进程传输模式</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id44">2.4 守护进程传输模式</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <p><img alt="image2" src="../../_images/rsync_old00003.png" /></p>
 <p>Rsync守护进程模式服务需要部署在BACKUP服务器上。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@swarm1</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa |grep rsync</span>
@@ -601,9 +609,9 @@ total size is 641020  speedup is 5.03
 </div>
 </div>
 <div class="section" id="rsycn-rsyncd-conf">
-<h2><a class="toc-backref" href="#id42">2.32.3. 第3章 rsycn配置文件详解 rsyncd.conf</a><a class="headerlink" href="#rsycn-rsyncd-conf" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id45">2.32.3. 第3章 rsycn配置文件详解 rsyncd.conf</a><a class="headerlink" href="#rsycn-rsyncd-conf" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id12">
-<h3><a class="toc-backref" href="#id43">3.1 部分知识补充</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id46">3.1 部分知识补充</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id13">
 <h4>3.1.1 配置文件内容参考资料<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">man</span> <span class="n">rsyncd</span><span class="o">.</span><span class="n">conf</span>
@@ -619,7 +627,7 @@ total size is 641020  speedup is 5.03
 </div>
 </div>
 <div class="section" id="etc-init-d-rsync">
-<h3><a class="toc-backref" href="#id44">3.2 利用/etc/init.d/启动rsync服务方式</a><a class="headerlink" href="#etc-init-d-rsync" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id47">3.2 利用/etc/init.d/启动rsync服务方式</a><a class="headerlink" href="#etc-init-d-rsync" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="id15">
 <h4>3.2.1 可以实现方式：<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>a. 编写rsync启动脚本（有一定的shell能力 if case）
@@ -670,7 +678,7 @@ b. 利用xinetd服务，管理启动rsync服务
 </div>
 </div>
 <div class="section" id="id16">
-<h3><a class="toc-backref" href="#id45">3.3 定义变量信息实现免秘钥交互</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id48">3.3 定义变量信息实现免秘钥交互</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="man">
 <h4>3.3.1 通过man手册获得方法<a class="headerlink" href="#man" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Some</span>  <span class="n">modules</span>  <span class="n">on</span> <span class="n">the</span> <span class="n">remote</span> <span class="n">daemon</span> <span class="n">may</span> <span class="n">require</span> <span class="n">authentication</span><span class="o">.</span> <span class="n">If</span> <span class="n">so</span><span class="p">,</span> <span class="n">you</span> <span class="n">will</span> <span class="n">receive</span> <span class="n">a</span> <span class="n">password</span> <span class="n">prompt</span> <span class="n">when</span> <span class="n">you</span> <span class="n">connect</span><span class="o">.</span>  <span class="n">You</span>  <span class="n">can</span> <span class="n">avoid</span>  <span class="n">the</span>  <span class="n">password</span>  <span class="n">prompt</span>  <span class="n">by</span>  <span class="n">setting</span> <span class="n">the</span> <span class="n">environment</span> <span class="n">variable</span> <span class="n">RSYNC_PASSWORD</span> <span class="n">to</span> <span class="n">the</span> <span class="n">password</span>  <span class="n">you</span>  <span class="n">want</span>  <span class="n">to</span>  <span class="n">use</span>  <span class="ow">or</span>  <span class="n">using</span>  <span class="n">the</span> <span class="o">--</span><span class="n">password</span><span class="o">-</span><span class="n">file</span> <span class="n">option</span><span class="o">.</span> <span class="n">This</span> <span class="n">may</span> <span class="n">be</span> <span class="n">useful</span> <span class="n">when</span> <span class="n">scripting</span> <span class="n">rsync</span><span class="o">.</span>
@@ -701,7 +709,7 @@ b. 利用xinetd服务，管理启动rsync服务
 </div>
 </div>
 <div class="section" id="id17">
-<h3><a class="toc-backref" href="#id46">3.4 守护进程多模块功能配置</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id49">3.4 守护进程多模块功能配置</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>第一个里程碑： 编写配置信息创建多模块</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># This line is required by the /etc/init.d/rsyncd script</span>
 <span class="n">uid</span> <span class="o">=</span> <span class="n">rsync</span>
@@ -1038,7 +1046,7 @@ b. 利用xinetd服务，管理启动rsync服务
 </div>
 </div>
 <div class="section" id="id28">
-<h3><a class="toc-backref" href="#id47">3.9 守护进程的列表功能配置</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id50">3.9 守护进程的列表功能配置</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <p>第一个里程碑： 在服务端配置文件中开启list列表功能</p>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@backup</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/rsyncd.conf</span>
 <span class="nb">list</span> <span class="o">=</span> <span class="n">true</span>
@@ -1059,7 +1067,7 @@ b. 利用xinetd服务，管理启动rsync服务
 </div>
 </div>
 <div class="section" id="id29">
-<h2><a class="toc-backref" href="#id48">2.32.4. 第4章 常见问题</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id51">2.32.4. 第4章 常见问题</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nfs01</span> <span class="n">tmp</span><span class="p">]</span><span class="c1"># rsync -avz /etc/hosts  rsync_backup@172.16.1.41::backup</span>
 <span class="n">Password</span><span class="p">:</span>
 <span class="n">sending</span> <span class="n">incremental</span> <span class="n">file</span> <span class="nb">list</span>
@@ -1078,11 +1086,11 @@ b. 利用xinetd服务，管理启动rsync服务
 </div>
 </div>
 <div class="section" id="linuxrsync6">
-<h2><a class="toc-backref" href="#id49">2.32.5. 在Linux下使用rsync的6个实例</a><a class="headerlink" href="#linuxrsync6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id52">2.32.5. 在Linux下使用rsync的6个实例</a><a class="headerlink" href="#linuxrsync6" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://www.linuxprobe.com/how-linux-rsync.html">https://www.linuxprobe.com/how-linux-rsync.html</a></p>
 </div>
 <div class="section" id="id30">
-<h2><a class="toc-backref" href="#id50">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id53">2.32.6. 第五章 Rsync企业级全网备份项目案例介绍与实践</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
 <p>某公司里有一台Web服务器，里面的数据很重要，但是如果硬盘坏了数据就会丢失，现在领导要求把数据做备份，这样Web服务器数据丢失在可以进行恢复，要求如下：每天晚上00点整在Web服务器A上打包备份系统配置文件、网站程序目录及访问日志并通过rsync命令推送到服务器B上备份保留（备份思路可以是先在本地按日期打包，然后再推到备份服务器B上）。</p>
 <p>已知3台服务器主机名分别为Web01、BACKUP、NFS01，主机信息见表</p>
 <p>全网备份主机信息表</p>
@@ -1120,7 +1128,7 @@ b. 利用xinetd服务，管理启动rsync服务
 </table>
 <p>（1）备份要求每天晚上00点整在Web服务器上打包备份系统配置文件、网站程序目录及访问日志并通过rsync命令推送到备份服务器BACKUP上备份保留。</p>
 <div class="section" id="id31">
-<h3><a class="toc-backref" href="#id51">5.1 具体备份需求具体的备份需求如下。</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id54">5.1 具体备份需求具体的备份需求如下。</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
 <p>1）所有服务器的备份目录必须都为/backup。</p>
 <p>2）要备份的系统配置文件包括但不限于：</p>
 <p>❑ 定时任务服务的配置文件 (/var/spool/cron/root)（适合Web和NFS服务器）。</p>
@@ -1132,7 +1140,7 @@ b. 利用xinetd服务，管理启动rsync服务
 <p><img alt="image3" src="../../_images/server_backup001.png" /></p>
 </div>
 <div class="section" id="id32">
-<h3><a class="toc-backref" href="#id52">5.2 项目逻辑架构</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id55">5.2 项目逻辑架构</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <p>全网备份架构逻辑示意图</p>
 <p><img alt="image4" src="../../_images/rsync_backup0002.png" /></p>
 <p>第一个里程碑：</p>
@@ -1273,6 +1281,68 @@ set smtp-auth=login
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="rsync-inotify">
+<h2><a class="toc-backref" href="#id56">2.32.7. 第六章 配置rsync+inotify实时同步</a><a class="headerlink" href="#rsync-inotify" title="Permalink to this headline">¶</a></h2>
+<p>inotify用来监控文件系统的各种变化情况，如文件存储、删除、移动、修改等。</p>
+<p>将rsync工具与inotify机制相结合，可以实现触发式备份（实时同步）
+—只要原始位置文档发送变化，就立即启动增量备份操作。否则处于静止等待状态，这样就避免了按固定周期备份时存储在延迟性、周期过密等问题。</p>
+<div class="section" id="id33">
+<h3><a class="toc-backref" href="#id57">6.1 同步的方向</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>1)上行同步(上传)：备份源提供文档的目标位置(date在发起端)，发起端使用用户必须对目录有写入权限</li>
+<li>2)下行同步(下载)：备份源负责提供文档原始位置(date在备份源)，发起端使用用户只需对data有读取权限即可</li>
+<li></li>
+</ul>
+<p>因为inotify通知机制由Linux内核提供，因此主要做本机监控，在触发式备份中应用时更适合上行同步，如图所示：</p>
+<p><img alt="image5" src="../../_images/rsync_inotify00001.png" /></p>
+<p>安装inotify-tools</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>1）安装inotify-tools
+tar  zxvf  inotify-tools-*.tar.gz  -C  /usr/src/
+cd  /usr/src/inotify-tools-*/
+./configure
+make &amp;&amp; make install
+
+
+2)inotify的使用
+vi  /etc/sysctl.conf
+
+  fs.inotify.max_queued_events = 16384   ##监控事件队列数
+
+  fs.inotify.max_user_instances = 1024   ##监控实例数
+
+  fs.inotify.max_user_watches = 1048576  ##监控的文件数量
+
+sysctl  -p
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">/server/scripts/rsync_inotify.sh</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
+
+RSYNC=&quot;rsync -avzHu --delete /backup/ rsync://rsync_backup@172.16.61.229/backup/&quot;
+INT_CMD=&quot;inotifywait -mrq -e modify,create,move,delete,attrib /backup/&quot;
+
+export RSYNC_PASSWORD=oldboy                            #//可解决rsync同步时，无需输入密码
+
+$INT_CMD | while true;do
+        $RSYNC  &amp;&gt;/dev/null
+done
+</pre></div>
+</div>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span>  <span class="o">+</span><span class="n">x</span>  <span class="n">rsync_inotify</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">sh</span> <span class="n">rsync_inotify</span><span class="o">.</span><span class="n">sh</span> <span class="o">&amp;</span>    <span class="c1">##启动脚本</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id34">
+<h3><a class="toc-backref" href="#id58">以上软件包下载地址</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p>链接:<a class="reference external" href="https://pan.baidu.com/s/1Ytnqyqt_frW5FGHu-onDZQ">https://pan.baidu.com/s/1Ytnqyqt_frW5FGHu-onDZQ</a> 密码:9fdj</p>
+</div>
+</div>
+<div class="section" id="id35">
+<h2><a class="toc-backref" href="#id59">2.32.8. 参考文献</a><a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://blog.linuxli.com/2018/10/Rsync/">http://blog.linuxli.com/2018/10/Rsync/</a></p>
 </div>
 </div>
 

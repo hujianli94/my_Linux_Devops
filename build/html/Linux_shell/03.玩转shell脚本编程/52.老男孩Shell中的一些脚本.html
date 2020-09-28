@@ -46,7 +46,7 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="4. 玩转数据库(mysql、Redis)" href="../04.玩转数据库（mysql、Redis）/index.html" />
+    <link rel="next" title="3.53. 快捷安装不同版本Python" href="53.快捷安装不同版本Python.html" />
     <link rel="prev" title="3.51. 检测函数执行是否超时" href="51.检测函数执行是否超时.html" /> 
 </head>
 
@@ -101,6 +101,7 @@
             
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -170,16 +171,19 @@
 <li class="toctree-l4"><a class="reference internal" href="#id6">3.52.9. 批量检查多个网站地址是否正常。</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#mysql">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id7">3.52.11. Shell脚本调试技巧</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#expect">3.52.12. 企业生产场景下的Expect案例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ssh-ansible">3.52.13. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#exec">3.52.14. 使用exec调用其他外部命令或脚本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#fork">3.52.15. fork子进程的示例.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ping1">3.52.16. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ping2">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#ping">3.52.18. 控制进程数量的ping测试脚本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#sshd-ssh">3.52.19. 修改SSHD配置文件,提升SSH安全性</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expect">3.52.12. Expect用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">3.52.13. 企业生产场景下的Expect案例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ssh-ansible">3.52.14. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exec">3.52.15. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fork">3.52.16. fork子进程的示例.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping1">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping2">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping">3.52.19. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sshd-ssh">3.52.20. 修改SSHD配置文件,提升SSH安全性</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="53.快捷安装不同版本Python.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.常用shell脚本大全.html">3.54. 常用shell脚本大全</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
@@ -267,44 +271,49 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#shell" id="id11">老男孩Shell中的一些脚本</a><ul>
-<li><a class="reference internal" href="#id1" id="id12">初始化操作系统脚本</a></li>
-<li><a class="reference internal" href="#id2" id="id13">开发检测脚本</a></li>
-<li><a class="reference internal" href="#shellrsync" id="id14">利用Shell函数开发rsync服务启动脚本</a></li>
-<li><a class="reference internal" href="#id3" id="id15">一个颜色打印示例脚本</a></li>
-<li><a class="reference internal" href="#case" id="id16">结合case给输出的语句加颜色</a></li>
-<li><a class="reference internal" href="#while" id="id17">while循环</a></li>
-<li><a class="reference internal" href="#id4" id="id18">数组用法</a></li>
-<li><a class="reference internal" href="#id5" id="id19">while循环按行读文件的方式总结</a></li>
-<li><a class="reference internal" href="#id6" id="id20">批量检查多个网站地址是否正常。</a></li>
-<li><a class="reference internal" href="#mysql" id="id21">开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
-<li><a class="reference internal" href="#id7" id="id22">Shell脚本调试技巧</a><ul>
-<li><a class="reference internal" href="#echo" id="id23">使用echo命令调试</a></li>
-<li><a class="reference internal" href="#bash" id="id24">使用bash命令参数调试</a></li>
-<li><a class="reference internal" href="#set" id="id25">使用set命令调试部分脚本内容</a></li>
-<li><a class="reference internal" href="#id8" id="id26">其他调试Shell脚本的工具</a></li>
+<li><a class="reference internal" href="#shell" id="id14">老男孩Shell中的一些脚本</a><ul>
+<li><a class="reference internal" href="#id1" id="id15">初始化操作系统脚本</a></li>
+<li><a class="reference internal" href="#id2" id="id16">开发检测脚本</a></li>
+<li><a class="reference internal" href="#shellrsync" id="id17">利用Shell函数开发rsync服务启动脚本</a></li>
+<li><a class="reference internal" href="#id3" id="id18">一个颜色打印示例脚本</a></li>
+<li><a class="reference internal" href="#case" id="id19">结合case给输出的语句加颜色</a></li>
+<li><a class="reference internal" href="#while" id="id20">while循环</a></li>
+<li><a class="reference internal" href="#id4" id="id21">数组用法</a></li>
+<li><a class="reference internal" href="#id5" id="id22">while循环按行读文件的方式总结</a></li>
+<li><a class="reference internal" href="#id6" id="id23">批量检查多个网站地址是否正常。</a></li>
+<li><a class="reference internal" href="#mysql" id="id24">开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
+<li><a class="reference internal" href="#id7" id="id25">Shell脚本调试技巧</a><ul>
+<li><a class="reference internal" href="#echo" id="id26">使用echo命令调试</a></li>
+<li><a class="reference internal" href="#bash" id="id27">使用bash命令参数调试</a></li>
+<li><a class="reference internal" href="#set" id="id28">使用set命令调试部分脚本内容</a></li>
+<li><a class="reference internal" href="#id8" id="id29">其他调试Shell脚本的工具</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#expect" id="id27">企业生产场景下的Expect案例</a><ul>
-<li><a class="reference internal" href="#id9" id="id28">批量执行命令</a></li>
-<li><a class="reference internal" href="#id10" id="id29">批量执行Shell脚本</a></li>
+<li><a class="reference internal" href="#expect" id="id30">Expect用法</a><ul>
+<li><a class="reference internal" href="#id9" id="id31">在不使用密钥的情况下，实现非人为交互登录。</a></li>
+<li><a class="reference internal" href="#id10" id="id32">对服务器批量管理（了解)</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#ssh-ansible" id="id30">自动化部署SSH密钥认证+ansible的项目实战</a></li>
-<li><a class="reference internal" href="#exec" id="id31">使用exec调用其他外部命令或脚本</a></li>
-<li><a class="reference internal" href="#fork" id="id32">fork子进程的示例.</a></li>
-<li><a class="reference internal" href="#ping1" id="id33">使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
-<li><a class="reference internal" href="#ping2" id="id34">使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
-<li><a class="reference internal" href="#ping" id="id35">控制进程数量的ping测试脚本</a></li>
-<li><a class="reference internal" href="#sshd-ssh" id="id36">修改SSHD配置文件,提升SSH安全性</a></li>
+<li><a class="reference internal" href="#id11" id="id33">企业生产场景下的Expect案例</a><ul>
+<li><a class="reference internal" href="#id12" id="id34">批量执行命令</a></li>
+<li><a class="reference internal" href="#id13" id="id35">批量执行Shell脚本</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#ssh-ansible" id="id36">自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li><a class="reference internal" href="#exec" id="id37">使用exec调用其他外部命令或脚本</a></li>
+<li><a class="reference internal" href="#fork" id="id38">fork子进程的示例.</a></li>
+<li><a class="reference internal" href="#ping1" id="id39">使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li><a class="reference internal" href="#ping2" id="id40">使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li><a class="reference internal" href="#ping" id="id41">控制进程数量的ping测试脚本</a></li>
+<li><a class="reference internal" href="#sshd-ssh" id="id42">修改SSHD配置文件,提升SSH安全性</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="shell">
-<h1><a class="toc-backref" href="#id11">3.52. 老男孩Shell中的一些脚本</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id14">3.52. 老男孩Shell中的一些脚本</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id12">3.52.1. 初始化操作系统脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id15">3.52.1. 初始化操作系统脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -473,7 +482,7 @@ main
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id13">3.52.2. 开发检测脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id16">3.52.2. 开发检测脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -538,7 +547,7 @@ main
 </div>
 </div>
 <div class="section" id="shellrsync">
-<h2><a class="toc-backref" href="#id14">3.52.3. 利用Shell函数开发rsync服务启动脚本</a><a class="headerlink" href="#shellrsync" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id17">3.52.3. 利用Shell函数开发rsync服务启动脚本</a><a class="headerlink" href="#shellrsync" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -613,7 +622,7 @@ main $*
 </div>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id15">3.52.4. 一个颜色打印示例脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id18">3.52.4. 一个颜色打印示例脚本</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1">#usage:xxx</span>
 <span class="c1">#scripts_name:${NAME}.sh</span>
@@ -665,7 +674,7 @@ main $*
 </div>
 </div>
 <div class="section" id="case">
-<h2><a class="toc-backref" href="#id16">3.52.5. 结合case给输出的语句加颜色</a><a class="headerlink" href="#case" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id19">3.52.5. 结合case给输出的语句加颜色</a><a class="headerlink" href="#case" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -708,7 +717,7 @@ plus_color &quot;hujianli&quot; blue
 </div>
 </div>
 <div class="section" id="while">
-<h2><a class="toc-backref" href="#id17">3.52.6. while循环</a><a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id20">3.52.6. while循环</a><a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
 <span class="c1">#usage:xxx</span>
 <span class="c1">#scripts_name:${NAME}.sh</span>
@@ -728,7 +737,7 @@ plus_color &quot;hujianli&quot; blue
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id18">3.52.7. 数组用法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id21">3.52.7. 数组用法</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -784,7 +793,7 @@ done
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id19">3.52.8. while循环按行读文件的方式总结</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id22">3.52.8. while循环按行读文件的方式总结</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>方式1：采用exec读取文件，然后进入while循环处理。</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="o">&lt;</span><span class="n">FILE</span>
 <span class="nb">sum</span><span class="o">=</span><span class="mi">0</span>
@@ -809,7 +818,7 @@ done
 </div>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id20">3.52.9. 批量检查多个网站地址是否正常。</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id23">3.52.9. 批量检查多个网站地址是否正常。</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -860,7 +869,7 @@ main
 </div>
 </div>
 <div class="section" id="mysql">
-<h2><a class="toc-backref" href="#id21">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id24">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:${NAME}.sh
@@ -898,9 +907,9 @@ main
 </div>
 </div>
 <div class="section" id="id7">
-<h2><a class="toc-backref" href="#id22">3.52.11. Shell脚本调试技巧</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id25">3.52.11. Shell脚本调试技巧</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="echo">
-<h3><a class="toc-backref" href="#id23">使用echo命令调试</a><a class="headerlink" href="#echo" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id26">使用echo命令调试</a><a class="headerlink" href="#echo" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>echo命令是最有用的调试脚本的工具之一。
 一般应在可能出现问题的脚本的重要部分加入echo命令，
 例如在变量读取或修改操作的前后加入echo命令，并紧挨着退出命令exit。
@@ -908,7 +917,7 @@ main
 </div>
 </div>
 <div class="section" id="bash">
-<h3><a class="toc-backref" href="#id24">使用bash命令参数调试</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id27">使用bash命令参数调试</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sh [-nvx] scripts.sh
 
 参数说明如下。
@@ -923,7 +932,7 @@ main
 </div>
 </div>
 <div class="section" id="set">
-<h3><a class="toc-backref" href="#id25">使用set命令调试部分脚本内容</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id28">使用set命令调试部分脚本内容</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>set命令也可以用于辅助脚本调试。
 
 以下是set命令常用的调试选项。
@@ -934,7 +943,7 @@ main
 </div>
 </div>
 <div class="section" id="id8">
-<h3><a class="toc-backref" href="#id26">其他调试Shell脚本的工具</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id29">其他调试Shell脚本的工具</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <p>（1）Shell调试工具：bashdb</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Shell调试器bashdb是一个类似于GDB的调试工具，可以完成对Shell脚本的断点设置、单步执行、变量观察等许多功能，
 </pre></div>
@@ -946,7 +955,84 @@ main
 </div>
 </div>
 <div class="section" id="expect">
-<h2><a class="toc-backref" href="#id27">3.52.12. 企业生产场景下的Expect案例</a><a class="headerlink" href="#expect" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id30">3.52.12. Expect用法</a><a class="headerlink" href="#expect" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id31">在不使用密钥的情况下，实现非人为交互登录。</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ssh.exp</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+
+set IP &quot;192.168.1.9&quot;
+set USER &quot;root&quot;
+set PASS &quot;admin#123&quot;
+set timeout 30
+spawn ssh $USER@$IP
+expect {
+&quot;(yes/no)&quot; {send &quot;yes\r&quot;; exp_continue}
+&quot;password:&quot; {send &quot;$PASS\r&quot;}
+}
+expect &quot;#&quot;          # 判断上次输入结果中是否包含&quot;password:&quot;字符串，如果有则立即返回，向下执行，否则就一直等待，知道超时时间到
+send &quot;touch /root/hujianli001.txt\r&quot;
+send &quot;ls /etc &gt; /root/hujianli001.txt\r&quot;
+send &quot;mkdir /tmp/hujianli001\r&quot;
+send &quot;exit\r&quot;
+expect eof
+</pre></div>
+</div>
+<p>执行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id32">对服务器批量管理（了解)</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">login.sh</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+echo
+for ip in `awk &#39;{print $1}&#39; /root/ip_pass.txt` ; do
+    pass=`grep $ip /root/ip_pass.txt|awk &#39;{print $2}&#39;`
+    expect /root/ssh2.exp $ip $pass
+done
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ip_pass.txt</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.9</span> <span class="n">admin</span><span class="c1">#123</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ssh2.exp</span></code></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
+
+set IP [lindex $argv 0]
+set USER &quot;root&quot;
+set PASS [lindex $argv 1]
+set timeout 30
+spawn ssh $USER@$IP
+expect {
+&quot;(yes/no)&quot; {send &quot;yes\r&quot;; exp_continue}
+&quot;password:&quot; {send &quot;$PASS\r&quot;}
+}
+
+expect &quot;#&quot;          # 判断上次输入结果中是否包含&quot;password:&quot;字符串，如果有则立即返回，向下执行，否则就一直等待，知道超时时间到
+
+send &quot;touch /root/hujianli001.txt\r&quot;
+send &quot;ls /etc &gt; /root/hujianli001.txt\r&quot;
+send &quot;mkdir /tmp/hujianli001\r&quot;
+send &quot;exit\r&quot;
+expect eof
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id33">3.52.13. 企业生产场景下的Expect案例</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
 <table border="1" class="docutils">
 <colgroup>
 <col width="42%" />
@@ -974,8 +1060,8 @@ main
 </tr>
 </tbody>
 </table>
-<div class="section" id="id9">
-<h3><a class="toc-backref" href="#id28">批量执行命令</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3><a class="toc-backref" href="#id34">批量执行命令</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <p>1）实现Expect自动交互的脚本： <code class="docutils literal notranslate"><span class="pre">sample1.exp</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
 
@@ -1070,8 +1156,8 @@ done
 </pre></div>
 </div>
 </div>
-<div class="section" id="id10">
-<h3><a class="toc-backref" href="#id29">批量执行Shell脚本</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3><a class="toc-backref" href="#id35">批量执行Shell脚本</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>1）准备脚本文件：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
@@ -1088,7 +1174,7 @@ done
 </div>
 </div>
 <div class="section" id="ssh-ansible">
-<h2><a class="toc-backref" href="#id30">3.52.13. 自动化部署SSH密钥认证+ansible的项目实战</a><a class="headerlink" href="#ssh-ansible" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id36">3.52.14. 自动化部署SSH密钥认证+ansible的项目实战</a><a class="headerlink" href="#ssh-ansible" title="Permalink to this headline">¶</a></h2>
 <p>1）本地生成密钥对，代码如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
 </pre></div>
@@ -1157,7 +1243,7 @@ done
 </div>
 </div>
 <div class="section" id="exec">
-<h2><a class="toc-backref" href="#id31">3.52.14. 使用exec调用其他外部命令或脚本</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">3.52.15. 使用exec调用其他外部命令或脚本</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h2>
 <p>exec调用后会自动退出</p>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#功能描述(Description):使用exec调用其他外部命令或脚本示例.</span>
@@ -1172,7 +1258,7 @@ done
 </div>
 </div>
 <div class="section" id="fork">
-<h2><a class="toc-backref" href="#id32">3.52.15. fork子进程的示例.</a><a class="headerlink" href="#fork" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id38">3.52.16. fork子进程的示例.</a><a class="headerlink" href="#fork" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
 <span class="c1">#功能描述(Description):fork子进程的示例.</span>
 
@@ -1186,7 +1272,7 @@ done
 </div>
 </div>
 <div class="section" id="ping1">
-<h2><a class="toc-backref" href="#id33">3.52.16. 使用函数与&amp;后台进程实现多进程ping测试1.</a><a class="headerlink" href="#ping1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试1.</a><a class="headerlink" href="#ping1" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:1.0
 #功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.
@@ -1211,7 +1297,7 @@ done
 </div>
 </div>
 <div class="section" id="ping2">
-<h2><a class="toc-backref" href="#id34">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试2.</a><a class="headerlink" href="#ping2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试2.</a><a class="headerlink" href="#ping2" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:2.0
 #功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.
@@ -1238,7 +1324,7 @@ wait
 </div>
 </div>
 <div class="section" id="ping">
-<h2><a class="toc-backref" href="#id35">3.52.18. 控制进程数量的ping测试脚本</a><a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id41">3.52.19. 控制进程数量的ping测试脚本</a><a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #Version:3.0
 #功能描述(Description):控制进程数量的ping测试脚本.
@@ -1283,7 +1369,7 @@ rm -rf $pipfile
 </div>
 </div>
 <div class="section" id="sshd-ssh">
-<h2><a class="toc-backref" href="#id36">3.52.19. 修改SSHD配置文件,提升SSH安全性</a><a class="headerlink" href="#sshd-ssh" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id42">3.52.20. 修改SSHD配置文件,提升SSH安全性</a><a class="headerlink" href="#sshd-ssh" title="Permalink to this headline">¶</a></h2>
 <div class="code bash highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #功能描述(Description):修改SSHD配置文件,提升SSH安全性.
 
@@ -1337,7 +1423,7 @@ fi
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../04.玩转数据库（mysql、Redis）/index.html" class="btn btn-neutral float-right" title="4. 玩转数据库(mysql、Redis)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="53.快捷安装不同版本Python.html" class="btn btn-neutral float-right" title="3.53. 快捷安装不同版本Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="51.检测函数执行是否超时.html" class="btn btn-neutral float-left" title="3.51. 检测函数执行是否超时" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
