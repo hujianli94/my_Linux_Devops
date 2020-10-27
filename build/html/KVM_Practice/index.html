@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>KVM_Practice &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. 构建KVM环境" href="01构建KVM环境.html" />
+    <link rel="prev" title="10. 分布式队列管理Cerely" href="../DevOps_Study/10.分布式队列管理Cerely.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">KVM_Practice</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html">2. KVM管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM设备高级管理.html">4. KVM设备高级管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>KVM_Practice</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/KVM_Practice/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="kvm-practice">
+<h1>KVM_Practice<a class="headerlink" href="#kvm-practice" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01构建KVM环境.html">1. 构建KVM环境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html#cpu">1.1. 1.开启CPU虚拟化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html#linux">1.2. 2.安装宿主机Linux系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html#id1">1.3. 3.编译和安装KVM</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01构建KVM环境.html#id2">1.3.1. 3.1 下载KVM源代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01构建KVM环境.html#yumkvm">1.3.2. 3.2 Yum安装KVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01构建KVM环境.html#qemu">1.3.3. 3.3 编译和安装QEMU</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01构建KVM环境.html#id4">1.3.4. 3.4 安装客户机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01构建KVM环境.html#id5">1.3.5. 3.5 启动第一个KVM客户机</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02KVM管理工具.html">2. KVM管理工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#libvirt">2.1. 1.libvirt</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id1">2.1.1. 1.1 libvirt的安装与配置</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#virsh">2.2. 2.virsh</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id4">2.2.1. 2.1 virsh简介</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#virt-manager">2.3. 3.virt-manager</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id5">2.3.1. 3.1 打开virt-manager</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id6">2.3.2. 3.2 使用virt-manager来动态迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#virt-viewervirt-installvirt-toplibguestfs">2.4. 4.virt-viewer、virt-install、virt-top和libguestfs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#virt-viewer">2.4.1. 4.1 virt-viewer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#virt-install">2.4.2. 4.2 virt-install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#virt-top">2.4.3. 4.3 virt-top</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#libguestfs">2.4.4. 4.4 libguestfs</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#id7">2.5. 5.云计算管理平台</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#openstack">2.5.1. 5.1 Openstack</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#zstack">2.5.2. 5.2 ZStack简介</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html#id8">2.6. 6.本章小结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id9">2.6.1. 6.1 KVM常用工具总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02KVM管理工具.html#id10">2.6.2. 6.2 私有云相关的平台</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.qemu-img命令学习.html">3. qemu-img命令学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html#qemu">3.1. 1.QEMU常见操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html#id1">3.2. 2.QEMU支持的镜像文件格式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#raw">3.2.1. 2.1 raw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#qcow2">3.2.2. 2.2 qcow2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#qcow">3.2.3. 3.3 qcow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#vdi">3.2.4. 3.4 vdi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#vmdk">3.2.5. 3.5 vmdk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#vpc">3.2.6. 3.6 vpc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#vhdx">3.2.7. 3.7 vhdx</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#sheepdog">3.2.8. 3.8 sheepdog</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html#id2">3.3. 3.客户机存储方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html#id3">3.4. 4.图形显示</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#sdl">3.4.1. 4.1 SDL的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#vnc">3.4.2. 4.2 VNC的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#id7">3.4.3. 4.3 VNC显示中的鼠标偏移</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.qemu-img命令学习.html#id8">3.4.4. 4.4 非图形模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.KVM设备高级管理.html">4. KVM设备高级管理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM设备高级管理.html#id1">4.1. 1.半虚拟化驱动</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.KVM设备高级管理.html#virtio">4.1.1. 1.1 virtio概述</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.KVM设备高级管理.html#id2">4.1.2. 1.2 virtio的基本原理和优缺点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.KVM设备高级管理.html#linuxvirtio">4.1.3. 1.3 Linux下virtio的支持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.KVM设备高级管理.html#windowsvirtio">4.1.4. 1.4 Windows下的virtio驱动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.KVM设备高级管理.html#virtio-balloon">4.1.5. 1.5 使用virtio_balloon(气球内存)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01构建KVM环境.html" class="btn btn-neutral float-right" title="1. 构建KVM环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../DevOps_Study/10.分布式队列管理Cerely.html" class="btn btn-neutral float-left" title="10. 分布式队列管理Cerely" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

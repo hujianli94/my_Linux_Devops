@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>2. KVM管理工具 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3. qemu-img命令学习" href="03.qemu-img命令学习.html" />
+    <link rel="prev" title="1. 构建KVM环境" href="01构建KVM环境.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM_Practice</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. KVM管理工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#libvirt">2.1. 1.libvirt</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1.1. 1.1 libvirt的安装与配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#virsh">2.2. 2.virsh</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.2.1. 2.1 virsh简介</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#virt-manager">2.3. 3.virt-manager</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.3.1. 3.1 打开virt-manager</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.3.2. 3.2 使用virt-manager来动态迁移</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#virt-viewervirt-installvirt-toplibguestfs">2.4. 4.virt-viewer、virt-install、virt-top和libguestfs</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#virt-viewer">2.4.1. 4.1 virt-viewer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virt-install">2.4.2. 4.2 virt-install</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virt-top">2.4.3. 4.3 virt-top</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#libguestfs">2.4.4. 4.4 libguestfs</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">2.5. 5.云计算管理平台</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#openstack">2.5.1. 5.1 Openstack</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zstack">2.5.2. 5.2 ZStack简介</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">2.6. 6.本章小结</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id9">2.6.1. 6.1 KVM常用工具总结</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">2.6.2. 6.2 私有云相关的平台</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM设备高级管理.html">4. KVM设备高级管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">KVM_Practice</a> &raquo;</li>
+        
+      <li>2. KVM管理工具</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/KVM_Practice/02KVM管理工具.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#kvm" id="id11">KVM管理工具</a><ul>
+<li><a class="reference internal" href="#libvirt" id="id12">1.libvirt</a><ul>
+<li><a class="reference internal" href="#id1" id="id13">1.1 libvirt的安装与配置</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#virsh" id="id14">2.virsh</a><ul>
+<li><a class="reference internal" href="#id4" id="id15">2.1 virsh简介</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#virt-manager" id="id16">3.virt-manager</a><ul>
+<li><a class="reference internal" href="#id5" id="id17">3.1 打开virt-manager</a></li>
+<li><a class="reference internal" href="#id6" id="id18">3.2 使用virt-manager来动态迁移</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#virt-viewervirt-installvirt-toplibguestfs" id="id19">4.virt-viewer、virt-install、virt-top和libguestfs</a><ul>
+<li><a class="reference internal" href="#virt-viewer" id="id20">4.1 virt-viewer</a></li>
+<li><a class="reference internal" href="#virt-install" id="id21">4.2 virt-install</a></li>
+<li><a class="reference internal" href="#virt-top" id="id22">4.3 virt-top</a></li>
+<li><a class="reference internal" href="#libguestfs" id="id23">4.4 libguestfs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7" id="id24">5.云计算管理平台</a><ul>
+<li><a class="reference internal" href="#openstack" id="id25">5.1 Openstack</a></li>
+<li><a class="reference internal" href="#zstack" id="id26">5.2 ZStack简介</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id8" id="id27">6.本章小结</a><ul>
+<li><a class="reference internal" href="#id9" id="id28">6.1 KVM常用工具总结</a></li>
+<li><a class="reference internal" href="#id10" id="id29">6.2 私有云相关的平台</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="kvm">
+<h1><a class="toc-backref" href="#id11">2. KVM管理工具</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="libvirt">
+<h2><a class="toc-backref" href="#id12">2.1. 1.libvirt</a><a class="headerlink" href="#libvirt" title="Permalink to this headline">¶</a></h2>
+<p>libvirt是目前使用最为广泛的对KVM虚拟机进行管理的工具和应用程序接口，而且一些常用的虚拟机管理工具（如virsh、virt-install、virt-manager等）和云计算框架平台（如OpenStack、ZStack、OpenNebula、Eucalyptus等）都在底层使用libvirt的应用程序接口。</p>
+<p>虚拟机管理工具通过libvirt管理各种类型的虚拟机</p>
+<p><img alt="image0" src="../_images/kvm_libvirt001.png" /></p>
+<div class="section" id="id1">
+<h3><a class="toc-backref" href="#id13">2.1.1. 1.1 libvirt的安装与配置</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h4>1.1.1 libvirt安装<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>查看某系统中已经安装的libvirt相关的RPM包，命令行如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa | grep libvirt</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa | grep &#39;^qemu&#39;</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="mf">173.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">3.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span><span class="o">-</span><span class="n">common</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="mf">173.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">3.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">img</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="mf">173.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">3.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">3</span><span class="o">-</span><span class="mf">173.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">3.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">guest</span><span class="o">-</span><span class="n">agent</span><span class="o">-</span><span class="mf">2.12</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">3.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>由于libvirt是跨平台的，而且还支持微软公司的Hyper-V虚拟化，所以在Windows上也可以安装libvirt，甚至可以编译libvirt。可以到libvirt官方的网页
+（<a class="reference external" href="https://libvirt.org/windows.html">https://libvirt.org/windows.html</a>）中查看更多关于libvirt对Windows的支持</p>
+</div>
+<div class="section" id="id3">
+<h4>1.1.2 libvirt的配置文件<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>libvirt相关的配置文件都在/etc/libvirt/目录之中，如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /etc/libvirt</span>
+<span class="n">总用量</span> <span class="mi">88</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">6</span> <span class="mi">11</span><span class="n">月</span> <span class="mi">20</span> <span class="mi">2015</span> <span class="n">cim</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">450</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">libvirt</span><span class="o">-</span><span class="n">admin</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>   <span class="mi">547</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">libvirt</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">16529</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">libvirtd</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">1175</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">lxc</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">drwx</span><span class="o">------</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">4096</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span> <span class="n">nwfilter</span>
+<span class="n">drwx</span><span class="o">------</span> <span class="mi">3</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">22</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">40</span> <span class="n">qemu</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">30306</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">qemu</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">2169</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">qemu</span><span class="o">-</span><span class="n">lockd</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">2465</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">qemu</span><span class="o">-</span><span class="n">sanlock</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">drwx</span><span class="o">------</span> <span class="mi">2</span> <span class="n">root</span> <span class="n">root</span>     <span class="mi">6</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">41</span> <span class="n">secrets</span>
+<span class="n">drwxr</span><span class="o">-</span><span class="n">xr</span><span class="o">-</span><span class="n">x</span> <span class="mi">3</span> <span class="n">root</span> <span class="n">root</span>    <span class="mi">42</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">26</span> <span class="mi">21</span><span class="p">:</span><span class="mi">35</span> <span class="n">storage</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">3202</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">virtlockd</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">3247</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">virtlogd</span><span class="o">.</span><span class="n">conf</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span>  <span class="mi">1883</span> <span class="mi">5</span><span class="n">月</span>  <span class="mi">13</span> <span class="mi">00</span><span class="p">:</span><span class="mi">30</span> <span class="n">virt</span><span class="o">-</span><span class="n">login</span><span class="o">-</span><span class="n">shell</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+<p>省略……..</p>
+</div>
+</div>
+</div>
+<div class="section" id="virsh">
+<h2><a class="toc-backref" href="#id14">2.2. 2.virsh</a><a class="headerlink" href="#virsh" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id15">2.2.1. 2.1 virsh简介</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>4.2.1　virsh简介
+libvirt项目的源代码中就包含了virsh这个虚拟化管理工具的代码。virsh
+是用于管理虚拟化环境中的客户机和Hypervisor的命令行工具，与virt-manager等工具类似，它也是通过调用libvirt
+API来实现虚拟化的管理的。virsh是完全在命令行文本模式下运行的用户态工具，它是系统管理员通过脚本程序实现虚拟化自动部署和管理的理想工具之一。</p>
+<p>virsh的常用操作可以参考：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/clsn/p/8366251.html#auto-id-9">https://www.cnblogs.com/clsn/p/8366251.html#auto-id-9</a></p>
+</div>
+</div>
+<div class="section" id="virt-manager">
+<h2><a class="toc-backref" href="#id16">2.3. 3.virt-manager</a><a class="headerlink" href="#virt-manager" title="Permalink to this headline">¶</a></h2>
+<p>virt-manager是用于管理虚拟机的图形化的桌面用户接口，
+目前仅支持在Linux或其他类UNIX系统中运行。和libvirt、oVirt等类似，virt-manager是由Redhat公司发起的项目，在RHEL
+7.x、Fedora、CentOS等Linux发行版中有较广泛的使用，当然在Ubuntu、Debian、OpenSuse等系统中也可以正常使用virt-manager。为了实现快速开发而不太多地降低程序运行性能的需求，virt-manager项目选择使用Python语言开发其应用程序部分，使用GNU
+AutoTools（包括autoconf、automake等工具）进行项目的构建。virt-manager是一个完全开源的软件，使用Linux界广泛采用的GNU
+GPL许可证发布。virt-manager依赖的一些程序库主要包括Python（用于应用程序逻辑部分的实现）、GTK+PyGTK（用于UI界面）和libvirt（用于底层的API）。</p>
+<p>virt-manager工具在图形界面中实现了一些易用且丰富的虚拟化管理功能。已经为用户提供的功能如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）对虚拟机（即客户机）生命周期的管理，如创建、修改、启动、暂停、恢复和停止虚拟机，还包括虚拟快照、动态迁移等功能。
+
+2）对运行中客户机实时性能、资源利用率等监控，统计结果的图形化展示。
+
+3）对创建客户机的图形化的引导，对客户机的资源分配和虚拟硬件的配置和调整等功能也提供了图形化的支持。
+
+4）内置了一个VNC和SPICE客户端，可以用于连接到客户机的图形界面进行交互。
+
+5）支持本地或远程管理KVM、Xen、QEMU、LXC、ESX等Hypervisor上的客户机。
+</pre></div>
+</div>
+<p>在没有成熟的图形化的管理工具之时，由于需要记忆大量的命令行参数，
+QEMU/KVM的使用和学习曲线比较陡峭，常常让部分习惯于GUI界面的初学者望而却步。不过现在情况有所改观，已经出现了一些开源的、免费的、易用的图形化管理工具，可以用于KVM虚拟化管理。virt-manager作为KVM虚拟化管理工具中最易用的工具之一，其最新的版本已经提供了比较成熟的功能、易用的界面和不错的性能。对于习惯于图形界面或不需要了解KVM原理和qemu-kvm命令细节的部分读者来说，通过virt-manager工具来使用KVM是一个不错的选择。</p>
+<p>virt-manager的官方网站：<a class="reference external" href="http://virt-manager.org/">http://virt-manager.org/</a></p>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id17">2.3.1. 3.1 打开virt-manager</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virt</span><span class="o">-</span><span class="n">manager</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id18">2.3.2. 3.2 使用virt-manager来动态迁移</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>需要满足如下前提条件才能使动态迁移成功实施。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）源宿主机和目的宿主机使用共享存储，如NFS、iSCSI、基于光纤通道的LUN、
+GFS2等，而且它们挂载共享存储到本地的挂载路径需要完全一致，被迁移的客户机就是使用该共享存储上的镜像文件。
+
+2）硬件平台和libvirt软件的版本要尽可能的一致，如果软硬件平台差异较大，可能会增加动态迁移失败的概率。
+
+3）源宿主机和目的宿主机的网络通畅并且打开了对应的端口。
+
+4）源宿主机和目的宿主机必须有相同的网络配置，否则可能出现动态迁移之后客户机的网络不能正常工作的情况。
+
+5）如果客户机使用了和源宿主机建立桥接的方式获得网络，那么只能在同一个局域网（LAN）中进行迁移，否则客户机在迁移后，其网络将无法正常工作。
+</pre></div>
+</div>
+<p>参考以下文档，进行热迁移（动态迁移）</p>
+<p><a class="reference external" href="https://www.cnblogs.com/clsn/p/8366251.html#auto-id-22">https://www.cnblogs.com/clsn/p/8366251.html#auto-id-22</a></p>
+<p>然后就是一顿图形界面的操作，这里省略不做演示了…</p>
+</div>
+</div>
+<div class="section" id="virt-viewervirt-installvirt-toplibguestfs">
+<h2><a class="toc-backref" href="#id19">2.4. 4.virt-viewer、virt-install、virt-top和libguestfs</a><a class="headerlink" href="#virt-viewervirt-installvirt-toplibguestfs" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="virt-viewer">
+<h3><a class="toc-backref" href="#id20">2.4.1. 4.1 virt-viewer</a><a class="headerlink" href="#virt-viewer" title="Permalink to this headline">¶</a></h3>
+<p>virt-viewer是“Virtual Machine
+Viewer”（虚拟机查看器）工具的软件包和命令行工具名称，它是一个显示虚拟化客户机的图形界面的工具。virt-viewer使用GTK-VNC或SPICE-GTK作为它的显示能力，使用libvirt
+API去查询客户机的VNC或SPICE服务器端的信息。virt-viewer经常用于替换传统的VNC客户端查看器，因为后者通常不支持x509认证授权的SSL/TLS加密，而virt-viewer是支持的。</p>
+<p>简单来说就是 替代VNC的一个更好的方案。</p>
+<p>在Centos7系统中查看virt-viewer的RPM包信息，命令行如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -q virt-viewer</span>
+<span class="n">virt</span><span class="o">-</span><span class="n">viewer</span><span class="o">-</span><span class="mf">2.0</span><span class="o">-</span><span class="mf">11.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>virt-viewer的使用语法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virt</span><span class="o">-</span><span class="n">viewer</span> <span class="p">[</span><span class="n">OPTION</span><span class="o">...</span><span class="p">]</span> <span class="o">--</span> <span class="n">DOMAIN</span><span class="o">-</span><span class="n">NAME</span><span class="o">|</span><span class="n">ID</span><span class="o">|</span><span class="n">UUID</span>
+</pre></div>
+</div>
+<p>virt-viewer连接到的客户机可以通过客户机的名称、域ID、UUID等表示来唯一指定。</p>
+<p>virt-viewer还支持“-c URI”或“–connection
+URI”参数来指定连接到远程宿主机上的一个客户机，当然远程连接时一些必要的认证还是必需的。关于virt-viewer工具更多详细的参数和解释，可以通过“man
+virt-viewer”命令查看使用手册</p>
+</div>
+<div class="section" id="virt-install">
+<h3><a class="toc-backref" href="#id21">2.4.2. 4.2 virt-install</a><a class="headerlink" href="#virt-install" title="Permalink to this headline">¶</a></h3>
+<p>virt-install是“Virt Install”工具的命令名称和软件包名称（在RHEL
+6.x系统中，包名是python-virtinst）。virt-install命令行工具为虚拟客户机的安装提供了一个便捷易用的方式，它也是用libvirt
+API来创建KVM、Xen、LXC等各种类型的客户机，同时，它也为virt-manager的图形界面创建客户机提供了安装系统的API。</p>
+<p>virt-install中使用到的安装介质（如光盘、ISO文件）可以存放在本地系统上，也可以存放在远程的NFS、HTTP、FTP服务器上。virt-install支持本地的客户机系统，也可以通过“–connect
+URI”（或“-c
+URI”）参数来支持在远程宿主机中安装客户机。使用virt-install中的一些选项（–initrd-inject、–extra-args等）和Kickstart
+文件，可以实现无人值守的自动化安装客户机系统。</p>
+<p>在Centos7中，virt-install工具存在于“virt-install”RPM包中，查询的命令行如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -q virt-install</span>
+<span class="n">virt</span><span class="o">-</span><span class="n">install</span><span class="o">-</span><span class="mf">1.5</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">7.</span><span class="n">el7</span><span class="o">.</span><span class="n">noarch</span>
+</pre></div>
+</div>
+<p>使用virt-install命令启动一个客户机的安装过程，其命令行操作如下：</p>
+<p>先在/data/下放置CentOS-7-x86_64-Minimal-1810.iso镜像文件。</p>
+<hr class="docutils" />
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-install \</span>
+<span class="o">--</span><span class="n">virt</span><span class="o">-</span><span class="nb">type</span> <span class="n">kvm</span> \
+<span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="nb">type</span><span class="o">=</span><span class="n">linux</span> <span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="n">variant</span> <span class="n">rhel7</span> \
+<span class="o">--</span><span class="n">name</span> <span class="n">centos7</span> <span class="o">--</span><span class="n">memory</span> <span class="mi">1024</span> <span class="o">--</span><span class="n">vcpus</span> <span class="mi">1</span> \
+<span class="o">--</span><span class="n">disk</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">centos7</span><span class="o">.</span><span class="n">raw</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="n">raw</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">10</span> \
+<span class="o">--</span><span class="n">cdrom</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">Minimal</span><span class="o">-</span><span class="mf">1810.</span><span class="n">iso</span> \
+<span class="o">--</span><span class="n">network</span> <span class="n">network</span><span class="o">=</span><span class="n">default</span> <span class="o">--</span><span class="n">graphics</span> <span class="n">vnc</span><span class="p">,</span><span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">5900</span>
+
+<span class="n">Starting</span> <span class="n">install</span><span class="o">...</span>
+<span class="n">Creating</span> <span class="n">domain</span><span class="o">...</span>                       <span class="o">|</span>    <span class="mi">0</span> <span class="n">B</span>  <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+<p>上面virt-install的命令行参数中.解释如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>“--connect”用于连接到本地或远程的Hypervisor（无该参数时，默认连接本地Hypervisor）；
+
+“--memory”用于配置客户机的内存大小（单位是MB）；
+
+“--disk”用于配置客户机的磁盘镜像文件，其中path属性表示路径，size属性表示磁盘大小（默认单位为GB）；
+
+“--cdrom”用于指定用于安装的ISO光盘镜像文件；
+
+“--os-variant rhel7”表示客户机是RHEL 7类型的系统（virt-install会根据这个值自动优化一些安装配置）；
+
+“--graphics vnc”表示使用VNC图形接口连接到客户机的控制台。
+
+“--noautoconsole” 表示不要自动尝试连接到客户端控制台
+</pre></div>
+</div>
+<p>关于virt-install工具的更多更详细参数配置，可以通过“man
+virt-install”命令查看相应的帮助文档。</p>
+<p>上面的示例中使用VNC接口连接到客户机，会默认用virt-viewer自动打开客户机的控制台。</p>
+<p><strong>在kvm上部署EXSI</strong></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># virt-install \</span>
+<span class="o">--</span><span class="n">name</span> <span class="n">esxi65</span> \
+<span class="o">--</span><span class="n">ram</span> <span class="mi">32768</span> \
+<span class="o">--</span><span class="n">disk</span> <span class="n">path</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">kvm</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">esxi65</span><span class="o">.</span><span class="n">img</span><span class="p">,</span><span class="n">size</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span><span class="n">bus</span><span class="o">=</span><span class="n">sata</span> \
+<span class="o">--</span><span class="n">cpu</span> <span class="n">host</span><span class="o">-</span><span class="n">passthrough</span> \
+<span class="o">--</span><span class="n">vcpus</span><span class="o">=</span><span class="mi">16</span> \
+<span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="nb">type</span> <span class="n">linux</span> \
+<span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="n">variant</span><span class="o">=</span><span class="n">virtio26</span> \
+<span class="o">--</span><span class="n">network</span> <span class="n">bridge</span><span class="o">=</span><span class="n">br1</span><span class="p">,</span><span class="n">model</span><span class="o">=</span><span class="n">e1000</span> \
+<span class="o">--</span><span class="n">graphics</span> <span class="n">vnc</span><span class="p">,</span><span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">,</span><span class="n">password</span><span class="o">=</span><span class="n">password</span> \
+<span class="o">--</span><span class="n">video</span> <span class="n">qxl</span> \
+<span class="o">--</span><span class="n">cdrom</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">VMware</span><span class="o">-</span><span class="n">VMvisor</span><span class="o">-</span><span class="n">Installer</span><span class="o">-</span><span class="mi">201701001</span><span class="o">-</span><span class="mf">4887370.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">iso</span> \
+<span class="o">--</span><span class="n">features</span> <span class="n">kvm_hidden</span><span class="o">=</span><span class="n">on</span> \
+<span class="o">--</span><span class="n">machine</span> <span class="n">q35</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="virt-top">
+<h3><a class="toc-backref" href="#id22">2.4.3. 4.3 virt-top</a><a class="headerlink" href="#virt-top" title="Permalink to this headline">¶</a></h3>
+<p>virt-top是一个用于展示虚拟化客户机运行状态和资源使用率的工具，它与Linux系统上常用的“top”工具类似，而且它的许多快捷键和命令行参数的设置都与“top”工具相同。</p>
+<p>virt-top也是使用libvirt
+API来获取客户机的运行状态和资源使用情况的，所以只要是libvirt支持的Hypervisor，就可以用virt-top监控该Hypervisor上的客户机状态。</p>
+<p>在Centos7系统上，virt-top命令就是在名为virt-top的RPM包中用命令行查看：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -q virt-top</span>
+<span class="n">virt</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">8</span><span class="o">-</span><span class="mf">24.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>直接运行“virt-top”命令后，将会显示出当前宿主机上各个客户机的运行情况，其中包括宿主机的CPU、内存的总数，也包括各个客户机的运行状态、CPU、内存的使用率。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-top</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="libguestfs">
+<h3><a class="toc-backref" href="#id23">2.4.4. 4.4 libguestfs</a><a class="headerlink" href="#libguestfs" title="Permalink to this headline">¶</a></h3>
+<p>libguestfs是用于访问和修改虚拟机的磁盘镜像的一组工具集合。libguestfs提供了访问和编辑客户机中的文件、脚本化修改客户机中的信息、监控磁盘使用和空闲的统计信息、P2V、V2V、创建客户机、克隆客户机、备份磁盘内容、格式化磁盘、调整磁盘大小等非常丰富的功能。libguestfs支持大部分的主流客户机操作系统，如：CentOS、Fedora、Ubuntu、Windows等操作系统；libguestfs除了支持KVM虚拟机，它甚至支持VMware、Hyper-V等非开源的虚拟机。同时，libguestfs还提供了一套C库以方便被链接到自己用C/C++开发的管理程序之中。它还有对其他很多流程编程语言（如：Python）的绑定，让开发者可以方便地使用libgeustfs提供的功能构建自己的虚拟机磁盘镜像管理程序。</p>
+<p>在Centos7系统上，查看libguestfs的常用工具在一个名为libguestfs-tools的RPM包中，可以使用如下命令查看：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># yum -y install libguestfs-tools libguestfs-tools-c</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -q libguestfs-tools libguestfs-tools-c</span>
+<span class="n">libguestfs</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="mf">1.40</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">9.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">1.</span><span class="n">noarch</span>
+<span class="n">libguestfs</span><span class="o">-</span><span class="n">tools</span><span class="o">-</span><span class="n">c</span><span class="o">-</span><span class="mf">1.40</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">9.</span><span class="n">el7_8</span><span class="o">.</span><span class="mf">1.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>libguestfs-tools提供了很多工具，可以分别对应不同的功能和使用场景，如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>virt-ls用于列出虚拟机中的文件，
+virt-copy-in用于往虚拟机中复制文件或目录，
+virt-copy-out用于从虚拟机往外复制文件或目录，
+virt-resize用于调整磁盘大小，
+virt-cat用于显示虚拟机中的一个文件的内容，
+virt-edit用于编辑虚拟机中的文件，
+virt-df用于查看虚拟机中文件系统空间使用情况，等等。
+</pre></div>
+</div>
+<p>下面演示virt-df、virt-copy-out命令来操作一个Linux客户机</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh list</span>
+ <span class="n">Id</span>    <span class="n">名称</span>                         <span class="n">状态</span>
+<span class="o">----------------------------------------------------</span>
+ <span class="mi">3</span>     <span class="n">centos7</span>                        <span class="n">running</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-df -d centos7</span>
+<span class="n">文件系统</span>                         <span class="mi">1</span><span class="n">K</span><span class="o">-</span><span class="n">blocks</span> <span class="n">已用空间</span> <span class="n">可用空间</span> <span class="n">使用百分比</span><span class="o">%</span>
+<span class="n">centos7</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span>                      <span class="mi">1038336</span>     <span class="mi">102432</span>     <span class="mi">935904</span>   <span class="mi">10</span><span class="o">%</span>
+<span class="n">centos7</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="n">root</span>               <span class="mi">8374272</span>     <span class="mi">993164</span>    <span class="mi">7381108</span>   <span class="mi">12</span><span class="o">%</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-copy-out -d centos7 /tmp/hujianli.txt /tmp</span>
+</pre></div>
+</div>
+<p>libguestfs的一些工具用于Windows客户机镜像的操作时，需要先安装libguestfs-
+winsupport这个软件包；当使用guestmount来挂载Windows镜像时，还需要安装ntfs-3g软件包（可以到EPEL中找RPM，也可以自行编译安装）</p>
+<p>libguestfs的官方网站：<a class="reference external" href="http://libguestfs.org/">http://libguestfs.org/</a>。</p>
+</div>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id24">2.5. 5.云计算管理平台</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>在计算设备（包括PC、智能手机、平板电脑等）、互联网技术、智能家电设备等非
+常普及的今天，从技术热点上看，云计算无疑是其中最热门的概念之一。公共云计算服务的主要优势是，向用户提供按需付费的弹性的计算能力，以及简化软硬件计算环境的搭建，让用户更专注于自身的计算任务或应用程序的开发。而私有云计算服务的主要优势是，让一个公司或组织的计算资源得到充分整合，从而实现按需分配计算资源，提升现有硬件资源的利用率，而且更加方便管理，降低资源管理成本。</p>
+<p>云计算的强烈需求，一方面推动了包括VMware、KVM、Xen等虚拟化技术的迅速发展，另一方面也促进了云计算管理平台的产生和发展。在众多的开源云计算平台中，<code class="docutils literal notranslate"><span class="pre">OpenStack、CloudStack、CloudFoundry、OpenNebula、Eucalyptus</span></code>等无疑是其中的佼佼者，在国内，ZStack也是这两年发展起来的云管理平台。简单介绍其中的OpenStack和ZStack云计算平台。</p>
+<div class="section" id="openstack">
+<h3><a class="toc-backref" href="#id25">2.5.1. 5.1 Openstack</a><a class="headerlink" href="#openstack" title="Permalink to this headline">¶</a></h3>
+<p>（1） OpenStack的官方参考文档：<a class="reference external" href="http://docs.openstack.org/">http://docs.openstack.org/</a></p>
+<p>（2）
+Openstack的安装和配置的入门文档：<a class="reference external" href="http://www.openstack.org/software/start/">http://www.openstack.org/software/start/</a></p>
+</div>
+<div class="section" id="zstack">
+<h3><a class="toc-backref" href="#id26">2.5.2. 5.2 ZStack简介</a><a class="headerlink" href="#zstack" title="Permalink to this headline">¶</a></h3>
+<p>ZStack
+是2015年在国内创立的一个开源IaaS项目，其核心系统使用Java语言开发。ZStack创始人认为，OpenStack等IaaS管理软件都过于复杂，导致其部署、维护、二次开发的成本都比较高，所以ZStack的首要目标是部署简单和稳定性强。ZStack的主要特点是：容易部署和升级、可扩展性（可以管理成千上万个物理节点和支持高并发的API访问）、快速（启动虚拟机速度非常快）、默认网络就是NFV（Network
+Functions Virtualization）、全API的管理功能（当然也提供一个Web
+UI管理界面）、插件系统（添加或删除某个特性不会影响核心功能）等。</p>
+<p>ZStack在GitHub上的地址是：<a class="reference external" href="https://github.com/zstackorg/zstack">https://github.com/zstackorg/zstack</a></p>
+<p>[<a class="reference external" href="http://reader.epubee.com/books/mobile/fe/fe4d89f8fa873db44d15079bb4dec072/text00065.html#ch1">1]</a>
+ZStack官方网站：<a class="reference external" href="http://zstack.org/">http://zstack.org/</a></p>
+</div>
+</div>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id27">2.6. 6.本章小结</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>经过这几年的发展，KVM虚拟化方案的功能完善、性能良好、架构清晰而简单。不
+过由于其用户空间的qemu命令行工具的参数有一定的复杂度，提高了初学者和系统管理员学习和部署KVM的难度。然而，本章中介绍的一些比较流行的虚拟化管理工具，可以让用户更加方便地使用KVM，也可使上层应用程序更方便地调用KVM的功能。</p>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id28">2.6.1. 6.1 KVM常用工具总结</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>在这些工具中</p>
+<p>有libvirt
+API为其他虚拟化管理工具提供一套通用的API来管理包括QEMU/KVM在内的多种Hypervisor，有基于libvirt
+API的virsh这个命令行管理工具</p>
+<ol class="arabic simple">
+<li>virt-manager这个图形化的虚拟机管理器</li>
+<li>virt-install 用于安装客户机</li>
+<li>virt-viewer 查看客户机控制台</li>
+<li>virt-top 查看资源占用率的工具</li>
+<li>libguestfs用于管理客户机磁盘镜像的工具。</li>
+</ol>
+</div>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id29">2.6.2. 6.2 私有云相关的平台</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>OpenStack类似的开源云计算平台——CloudStack、Eucalyptus、OpenNebula、
+CloudFoundry等。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="03.qemu-img命令学习.html" class="btn btn-neutral float-right" title="3. qemu-img命令学习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01构建KVM环境.html" class="btn btn-neutral float-left" title="1. 构建KVM环境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

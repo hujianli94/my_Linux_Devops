@@ -1,0 +1,586 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1. 构建KVM环境 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="2. KVM管理工具" href="02KVM管理工具.html" />
+    <link rel="prev" title="KVM_Practice" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM_Practice</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 构建KVM环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cpu">1.1. 1.开启CPU虚拟化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">1.2. 2.安装宿主机Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1.3. 3.编译和安装KVM</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.3.1. 3.1 下载KVM源代码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#yumkvm">1.3.2. 3.2 Yum安装KVM</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qemu">1.3.3. 3.3 编译和安装QEMU</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.3.4. 3.4 安装客户机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.3.5. 3.5 启动第一个KVM客户机</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html">2. KVM管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM设备高级管理.html">4. KVM设备高级管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">KVM_Practice</a> &raquo;</li>
+        
+      <li>1. 构建KVM环境</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/KVM_Practice/01构建KVM环境.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#kvm" id="id6">构建KVM环境</a><ul>
+<li><a class="reference internal" href="#cpu" id="id7">1.开启CPU虚拟化</a></li>
+<li><a class="reference internal" href="#linux" id="id8">2.安装宿主机Linux系统</a></li>
+<li><a class="reference internal" href="#id1" id="id9">3.编译和安装KVM</a><ul>
+<li><a class="reference internal" href="#id2" id="id10">3.1 下载KVM源代码</a></li>
+<li><a class="reference internal" href="#yumkvm" id="id11">3.2 Yum安装KVM</a></li>
+<li><a class="reference internal" href="#qemu" id="id12">3.3 编译和安装QEMU</a></li>
+<li><a class="reference internal" href="#id4" id="id13">3.4 安装客户机</a></li>
+<li><a class="reference internal" href="#id5" id="id14">3.5 启动第一个KVM客户机</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="kvm">
+<h1><a class="toc-backref" href="#id6">1. 构建KVM环境</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="cpu">
+<h2><a class="toc-backref" href="#id7">1.1. 1.开启CPU虚拟化</a><a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
+<p>在x86-64架构的处理器中，KVM需要的硬件虚拟化扩展分别为Intel的虚拟化技术
+（Intel
+VT）和AMD的AMD-V技术。其中，Intel在2005年11月发布的奔腾四处理器（型
+号：662和672）中第一次正式支持VT技术（Virtualization
+Technology），之后不久的2006
+年5月AMD也发布了支持AMD-V的处理器。现在比较流行的针对服务器和桌面的Intel处
+理器多数都是支持VT技术的。</p>
+<p>设置好了VT和VT-d的相关选项，保存BIOS的设置并退出，系统重启后生效。在
+Linux系统中，可以通过检查/proc/cpuinfo文件中的CPU特性标志（flags）来查看CPU目前是否支持硬件虚拟化。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># grep -E &quot;svm|vmx&quot; /proc/cpuinfo</span>
+<span class="n">flags</span>       <span class="p">:</span> <span class="n">fpu</span> <span class="n">vme</span> <span class="n">de</span> <span class="n">pse</span> <span class="n">tsc</span> <span class="n">msr</span> <span class="n">pae</span> <span class="n">mce</span> <span class="n">cx8</span> <span class="n">apic</span> <span class="n">sep</span> <span class="n">mtrr</span> <span class="n">pge</span> <span class="n">mca</span> <span class="n">cmov</span> <span class="n">pat</span> <span class="n">pse36</span> <span class="n">clflush</span> <span class="n">dts</span> <span class="n">mmx</span> <span class="n">fxsr</span> <span class="n">sse</span> <span class="n">sse2</span> <span class="n">ss</span> <span class="n">syscall</span> <span class="n">nx</span> <span class="n">pdpe1gb</span> <span class="n">rdtscp</span> <span class="n">lm</span> <span class="n">constant_tsc</span> <span class="n">arch_perfmon</span>
+ <span class="n">pebs</span> <span class="n">bts</span> <span class="n">nopl</span> <span class="n">xtopology</span> <span class="n">tsc_reliable</span> <span class="n">nonstop_tsc</span> <span class="n">aperfmperf</span> <span class="n">eagerfpu</span> <span class="n">pni</span> <span class="n">pclmulqdq</span> <span class="n">vmx</span> <span class="n">ssse3</span> <span class="n">fma</span> <span class="n">cx16</span> <span class="n">pcid</span> <span class="n">sse4_1</span> <span class="n">sse4_2</span> <span class="n">x2apic</span> <span class="n">movbe</span> <span class="n">popcnt</span> <span class="n">tsc_deadline_timer</span> <span class="n">aes</span> <span class="n">xsave</span> <span class="n">avx</span> <span class="n">f16c</span> <span class="n">rdrand</span> <span class="n">hypervisor</span> <span class="n">lahf_lm</span> <span class="n">abm</span> <span class="mi">3</span><span class="n">dnowprefetch</span> <span class="n">epb</span> <span class="n">tpr_shadow</span> <span class="n">vnmi</span> <span class="n">ept</span> <span class="n">vpid</span> <span class="n">fsgsbase</span> <span class="n">tsc_adjust</span> <span class="n">bmi1</span> <span class="n">avx2</span> <span class="n">smep</span> <span class="n">bmi2</span> <span class="n">invpcid</span> <span class="n">rdseed</span> <span class="n">adx</span> <span class="n">smap</span> <span class="n">xsaveopt</span> <span class="n">dtherm</span> <span class="n">ida</span> <span class="n">arat</span> <span class="n">pln</span> <span class="n">pts</span> <span class="n">hwp</span> <span class="n">hwp_notify</span> <span class="n">hwp_act_window</span> <span class="n">hwp_eppflags</span>        <span class="p">:</span> <span class="n">fpu</span> <span class="n">vme</span> <span class="n">de</span> <span class="n">pse</span> <span class="n">tsc</span> <span class="n">msr</span> <span class="n">pae</span> <span class="n">mce</span> <span class="n">cx8</span> <span class="n">apic</span> <span class="n">sep</span> <span class="n">mtrr</span> <span class="n">pge</span> <span class="n">mca</span> <span class="n">cmov</span> <span class="n">pat</span> <span class="n">pse36</span> <span class="n">clflush</span> <span class="n">dts</span> <span class="n">mmx</span> <span class="n">fxsr</span> <span class="n">sse</span> <span class="n">sse2</span> <span class="n">ss</span> <span class="n">syscall</span> <span class="n">nx</span> <span class="n">pdpe1gb</span> <span class="n">rdtscp</span> <span class="n">lm</span> <span class="n">constant_tsc</span> <span class="n">arch_perfmon</span>
+ <span class="n">pebs</span> <span class="n">bts</span> <span class="n">nopl</span> <span class="n">xtopology</span> <span class="n">tsc_reliable</span> <span class="n">nonstop_tsc</span> <span class="n">aperfmperf</span> <span class="n">eagerfpu</span> <span class="n">pni</span> <span class="n">pclmulqdq</span> <span class="n">vmx</span> <span class="n">ssse3</span> <span class="n">fma</span> <span class="n">cx16</span> <span class="n">pcid</span> <span class="n">sse4_1</span> <span class="n">sse4_2</span> <span class="n">x2apic</span> <span class="n">movbe</span> <span class="n">popcnt</span> <span class="n">tsc_deadline_timer</span> <span class="n">aes</span> <span class="n">xsave</span> <span class="n">avx</span> <span class="n">f16c</span> <span class="n">rdrand</span> <span class="n">hypervisor</span> <span class="n">lahf_lm</span> <span class="n">abm</span> <span class="mi">3</span><span class="n">dnowprefetch</span> <span class="n">epb</span> <span class="n">tpr_shadow</span> <span class="n">vnmi</span> <span class="n">ept</span> <span class="n">vpid</span> <span class="n">fsgsbase</span> <span class="n">tsc_adjust</span> <span class="n">bmi1</span> <span class="n">avx2</span> <span class="n">smep</span> <span class="n">bmi2</span> <span class="n">invpcid</span> <span class="n">rdseed</span> <span class="n">adx</span> <span class="n">smap</span> <span class="n">xsaveopt</span> <span class="n">dtherm</span> <span class="n">ida</span> <span class="n">arat</span> <span class="n">pln</span> <span class="n">pts</span> <span class="n">hwp</span> <span class="n">hwp_notify</span> <span class="n">hwp_act_window</span> <span class="n">hwp_epp</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="linux">
+<h2><a class="toc-backref" href="#id8">1.2. 2.安装宿主机Linux系统</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p>操作系统的安装在此省略….</p>
+<p>系统安装过程中我们需要选上“Development
+Tools”，因为在本书的KVM编译过程中以及其他实验中可能会用到，其中包括一些比较重要的软件包，比如：gcc、git、make等（一般被默认选中）。可以看到还有“Virtualization
+Hypervisor”“Virtualization Tools”。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">tree</span> <span class="n">telnet</span> <span class="n">dos2unix</span> <span class="n">sysstat</span> <span class="n">lrzsz</span> <span class="n">vim</span> <span class="n">git</span> <span class="n">net</span><span class="o">-</span><span class="n">tools</span> <span class="n">wget</span> <span class="n">nc</span> <span class="n">nmap</span> <span class="o">-</span><span class="n">y</span>
+
+<span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS7</span><span class="o">-</span><span class="n">Base</span><span class="o">-</span><span class="mf">163.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span><span class="o">/.</span><span class="n">help</span><span class="o">/</span><span class="n">CentOS7</span><span class="o">-</span><span class="n">Base</span><span class="o">-</span><span class="mf">163.</span><span class="n">repo</span>
+
+<span class="n">sudo</span> <span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span>
+
+<span class="c1"># Development Tools</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">groupinfo</span> <span class="n">Development</span> <span class="n">tools</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id9">1.3. 3.编译和安装KVM</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h3><a class="toc-backref" href="#id10">1.3.1. 3.1 下载KVM源代码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>总的来说，下载最新KVM源代码，主要有以下3种方式：
+1）下载KVM项目开发中的代码仓库kvm.git。</p>
+<p>2）下载Linux内核的代码仓库linux.git。</p>
+<p>3）打包下载Linux内核的源代码（Tarball格式）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Clone</span>
+<span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">scm</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">kvm</span><span class="o">/</span><span class="n">kvm</span><span class="o">.</span><span class="n">git</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">kernel</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">scm</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">kvm</span><span class="o">/</span><span class="n">kvm</span><span class="o">.</span><span class="n">git</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">kernel</span><span class="o">.</span><span class="n">googlesource</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">scm</span><span class="o">/</span><span class="n">virt</span><span class="o">/</span><span class="n">kvm</span><span class="o">/</span><span class="n">kvm</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>kvm.git的下载方式和过程为以下命令行所示</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># git clone git://git.kernel.org/pub/scm/virt/kvm/kvm.git</span>
+<span class="n">正克隆到</span> <span class="s1">&#39;kvm&#39;</span><span class="o">...</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">Enumerating</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">7660907</span><span class="p">,</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">接收对象中</span><span class="p">:</span>   <span class="mi">0</span><span class="o">%</span> <span class="p">(</span><span class="mi">280</span><span class="o">/</span><span class="mi">7660907</span><span class="p">),</span> <span class="mf">220.00</span> <span class="n">KiB</span> <span class="o">|</span> <span class="mf">9.00</span> <span class="n">KiB</span><span class="o">/</span><span class="n">s</span>
+</pre></div>
+</div>
+<p>编译安装的方式安装比较慢，在此不继续深入安装了，一般使用yum的方式。</p>
+</div>
+<div class="section" id="yumkvm">
+<h3><a class="toc-backref" href="#id11">1.3.2. 3.2 Yum安装KVM</a><a class="headerlink" href="#yumkvm" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/redhat-release</span>
+<span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># uname -r</span>
+<span class="mf">3.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">957.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sestatus</span>
+<span class="n">SELinux</span> <span class="n">status</span><span class="p">:</span>                 <span class="n">disabled</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># systemctl stop firewalld.service</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># hostname -I</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">7.9</span>
+<span class="c1"># kvm主机内存不能低于4GB</span>
+</pre></div>
+</div>
+<p><strong>安装KVM虚拟化软件</strong></p>
+<p>安装依赖包(可以使用本地yum源)</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">libvirt</span><span class="o">*</span> <span class="n">virt</span><span class="o">-*</span> <span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span><span class="o">*</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>安装软件说明内容：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">libvirt</span>    <span class="c1"># 虚拟机管理</span>
+<span class="n">virt</span>       <span class="c1"># 虚拟机安装克隆</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span>   <span class="c1"># 管理虚拟机磁盘</span>
+</pre></div>
+</div>
+<p>启动服务</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># systemctl start libvirtd.service</span>
+<span class="c1"># systemctl status libvirtd.service</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="qemu">
+<h3><a class="toc-backref" href="#id12">1.3.3. 3.3 编译和安装QEMU</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h3>
+<p>除了在内核空间的KVM模块之外，在用户空间需要QEMU [1]
+来模拟所需要的CPU和设备模型，以及启动客户机进程，这样才有了一个完整的KVM运行环境。</p>
+<p>QEMU开发代码仓库的网页连接为：<a class="reference external" href="http://git.qemu.org/qemu.git">http://git.qemu.org/qemu.git</a>。</p>
+<p>其中，可以看到有如下2个URL链接可供下载开发中的最新qemu-kvm的代码仓库。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">qemu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">qemu</span><span class="o">.</span><span class="n">git</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">.</span><span class="n">qemu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">qemu</span><span class="o">.</span><span class="n">git</span>
+</pre></div>
+</div>
+<p>可以根据自己实际需要选择当中任一个，用git
+clone命令下载即可，它们是完全一样的。
+另外，也可以到以下下载链接中根据需要下载最近几个发布版本的代码压缩包。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">wiki</span><span class="o">.</span><span class="n">qemu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Download</span>
+</pre></div>
+</div>
+<p>下载qemu.git，获取代码仓库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># git clone git://git.qemu.org/qemu.git</span>
+<span class="n">正克隆到</span> <span class="s1">&#39;qemu&#39;</span><span class="o">...</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">Counting</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">508702</span><span class="p">,</span> <span class="n">done</span><span class="o">.</span>
+</pre></div>
+</div>
+<p><strong>各x86平台上qemu的安装</strong></p>
+<p>QEMU is packaged by most Linux distributions:</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Arch</span><span class="p">:</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">qemu</span>
+
+<span class="n">Debian</span><span class="o">/</span><span class="n">Ubuntu</span><span class="p">:</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="n">qemu</span>
+
+<span class="n">Fedora</span><span class="p">:</span> <span class="n">dnf</span> <span class="n">install</span> <span class="nd">@virtualization</span>
+
+<span class="n">Gentoo</span><span class="p">:</span> <span class="n">emerge</span> <span class="o">--</span><span class="n">ask</span> <span class="n">app</span><span class="o">-</span><span class="n">emulation</span><span class="o">/</span><span class="n">qemu</span>
+
+<span class="n">RHEL</span><span class="o">/</span><span class="n">CentOS</span><span class="p">:</span> <span class="n">yum</span> <span class="n">install</span> <span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span>
+
+<span class="n">SUSE</span><span class="p">:</span> <span class="n">zypper</span> <span class="n">install</span> <span class="n">qemu</span>
+</pre></div>
+</div>
+<div class="section" id="id3">
+<h4>源码安装<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">glib</span><span class="o">*</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">qemu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">qemu</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
+<span class="n">tar</span> <span class="n">xvJf</span> <span class="n">qemu</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
+<span class="n">cd</span> <span class="n">qemu</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span> <span class="o">&amp;&amp;</span> <span class="o">./</span><span class="n">configure</span>
+<span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.qemu.org/download/#source">https://www.qemu.org/download/#source</a></p>
+</div>
+<div class="section" id="git">
+<h4>使用Git包编译安装<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h4>
+<p>Git安装方式不推荐，除非参与开发</p>
+<p>配置和编译QEMU</p>
+<p>指定<code class="docutils literal notranslate"><span class="pre">--target-list=x86_64-softmmu</span></code>，可以节省大量的编译时间。</p>
+<p>执行configure文件进行配置的过程如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="n">qemu</span><span class="p">]</span><span class="c1">#./configure --target-list=x86_64-softmmu</span>
+<span class="n">Using</span> <span class="s1">&#39;./build&#39;</span> <span class="k">as</span> <span class="n">the</span> <span class="n">directory</span> <span class="k">for</span> <span class="n">build</span> <span class="n">output</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">Enumerating</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">76</span><span class="p">,</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">Counting</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">(</span><span class="mi">76</span><span class="o">/</span><span class="mi">76</span><span class="p">),</span> <span class="n">done</span><span class="o">.</span>
+<span class="n">remote</span><span class="p">:</span> <span class="n">Compressing</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">(</span><span class="mi">72</span><span class="o">/</span><span class="mi">72</span><span class="p">),</span> <span class="n">done</span><span class="o">.</span>
+</pre></div>
+</div>
+<blockquote>
+<div>前提：是Python版本&gt;=3.5</div></blockquote>
+<p><strong>升级python版本的脚本如下</strong></p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+
+<span class="n">function</span> <span class="n">install_python3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">yum</span> <span class="n">install</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span> <span class="n">gcc</span> <span class="n">make</span> <span class="n">cmake</span> <span class="n">zlib</span><span class="o">-</span><span class="n">devel</span> <span class="n">bzip2</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">ncurse</span><span class="o">-</span><span class="n">devel</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="o">-</span><span class="n">y</span>
+    <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">3.7</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span> <span class="o">&amp;&amp;</span> <span class="n">tar</span> <span class="n">xvJf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mi">0</span> <span class="o">||</span> <span class="n">exit</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">ssl</span>
+    <span class="k">if</span> <span class="n">test</span> <span class="s2">&quot;$?&quot;</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span><span class="p">;</span> <span class="n">then</span>
+        <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+    <span class="n">fi</span>
+    <span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$?&quot;</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
+        <span class="n">echo</span> <span class="s2">&quot;Python3 install successful.....&quot;</span>
+    <span class="n">fi</span>
+<span class="p">}</span>
+
+<span class="n">function</span> <span class="n">install_pip3</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">cp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="p">{,</span><span class="n">_bak</span><span class="p">}</span>
+    <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS7</span><span class="o">-</span><span class="n">Aliyun</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+    <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
+    <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
+<span class="p">}</span>
+
+
+<span class="n">function</span> <span class="n">Set_soft_Link_And_Config</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1"># 删除软链接，建立新的软连接</span>
+    <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
+    <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+    <span class="n">cp</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="p">{,</span><span class="n">_2</span><span class="o">.</span><span class="mi">7</span><span class="n">_bak</span><span class="p">}</span>
+    <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">7</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span>
+    <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span><span class="o">.</span><span class="mi">7</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
+
+   <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">yum</span>
+   <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">urlgrabber</span><span class="o">-</span><span class="n">ext</span><span class="o">-</span><span class="n">down</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">firewalld</span>
+    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span>
+    <span class="p">:</span>
+<span class="p">}</span>
+
+
+<span class="n">function</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">install_python3</span>
+    <span class="n">install_pip3</span>
+    <span class="n">Set_soft_Link_And_Config</span>
+<span class="p">}</span>
+<span class="n">main</span>
+</pre></div>
+</div>
+<blockquote>
+<div>‘ERROR: pixman &gt;= 0.21.8 not present.’ 解决方案</div></blockquote>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="n">qemu</span><span class="p">]</span><span class="c1"># yum -y install pixman.i686 pixman.x86_64 pixman-devel.i686 pixman-devel.x86_64</span>
+</pre></div>
+</div>
+<p>后续要重新configure时，只要执行“./config.status”就可以恢复上一次configure的配置。</p>
+<p>直接执行make</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@bogon qemu]# make &amp;&amp; make install
+changing dir to build for make &quot;&quot;...
+make[1]: 进入目录“/root/qemu/build”
+</pre></div>
+</div>
+<p>最后，编译生成x86_64-softmmu/qemu-system-x86_64文件，就是我们需要的用户空间用于其KVM客户机的工具了（在多数Linux发行版中自带的qemu-kvm软件包的命令行是qemu-kvm，只是名字不同的downstream，用户可以等同视之）。</p>
+<p>QEMU安装过程的<strong>主要任务</strong>有这几个：</p>
+<ul class="simple">
+<li>创建QEMU的一些目录，复制一些<strong>配置文件</strong>到相应的目录下，复制一些<strong>firmware文件</strong>（如：<strong>sgabios.bin</strong>、<strong>kvmvapic.bin</strong>）到目录下，以便<strong>qemu命令行启动</strong>时可以找到<strong>对应的固件！！！</strong>
+供<strong>客户机使用</strong>；</li>
+<li>复制<strong>keymaps</strong>到相应的目录下，以便在<strong>客户机中</strong>支持各种所需<strong>键盘类型！！！</strong>；</li>
+<li>复制<strong>qemu-system-x86_64</strong>、<strong>qemu-img</strong>等可执行程序到对应的目录下。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id13">1.3.4. 3.4 安装客户机</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>现在开始快速地演示安装一个客户机，采用了本地创建一个镜像文件，然
+后将镜像文件作为客户机的硬盘，将客户机操作系统（以centos7为例）安装在其中。</p>
+<p>安装客户机（Guest）之前，我们需要创建一个镜像文件或者磁盘分区等，来存储客户机中的系统和文件。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-img create -f raw centos7.img 40G</span>
+<span class="n">Formatting</span> <span class="s1">&#39;centos7.img&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">raw</span> <span class="n">size</span><span class="o">=</span><span class="mi">42949672960</span>
+</pre></div>
+</div>
+<p>上述就是用<code class="docutils literal notranslate"><span class="pre">qemu-img</span> <span class="pre">create</span></code>命令创建了一个空白的guest
+image，以raw格式，image文件的名字是“centos7.img”，大小是40G。虽然我们看到它的大小是40G，但是它并不占用任何磁盘空间。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ls -lh centos7.img</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">40</span><span class="n">G</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">46</span> <span class="n">centos7</span><span class="o">.</span><span class="n">img</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># du centos7.img</span>
+<span class="mi">0</span>   <span class="n">centos7</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+<p>这是因为qemu-img聪明地为你按实际需求分配文件的实际大小，它将随着image实际的使用而增大。(qemu-img默认的方式是按需分配的),下面演示qemu-img支持设置参数让你可以一开始就实际占有20G</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-img create -f raw -o preallocation=full centos7.img 20G</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ls -lh centos7.img</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">20</span><span class="n">G</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">51</span> <span class="n">rhel7</span><span class="o">.</span><span class="n">img</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># du -sh centos7.img</span>
+<span class="mi">20</span><span class="n">G</span> <span class="n">rhel7</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+<p>除raw格式以外，qemu-img还支持创建其他格式的image文件，比如qcow2，甚至是其他虚拟机用到的文件格式，比如VMware的vmdk、vdi、vhd等。不同的文件格式会有不同的“-o”选项。</p>
+<p>查看镜像的信息</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@desktop</span><span class="o">-</span><span class="n">pmjtngi</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-img info centos7.img</span>
+<span class="n">image</span><span class="p">:</span> <span class="n">centos7</span><span class="o">.</span><span class="n">img</span>
+<span class="n">file</span> <span class="nb">format</span><span class="p">:</span> <span class="n">raw</span>
+<span class="n">virtual</span> <span class="n">size</span><span class="p">:</span> <span class="mi">40</span> <span class="n">GiB</span> <span class="p">(</span><span class="mi">42949672960</span> <span class="nb">bytes</span><span class="p">)</span>
+<span class="n">disk</span> <span class="n">size</span><span class="p">:</span> <span class="mi">0</span> <span class="n">B</span>
+</pre></div>
+</div>
+<p>创建完空白guest
+image之后，我们将<code class="docutils literal notranslate"><span class="pre">CentOS-7-x86_64-Minimal-1810.iso</span></code>安装所需的ISO文件准备好。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ls -l CentOS-7-x86_64-Minimal-1810.iso</span>
+<span class="o">-</span><span class="n">rw</span><span class="o">-</span><span class="n">r</span><span class="o">--</span><span class="n">r</span><span class="o">--</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">962592768</span> <span class="mi">8</span><span class="n">月</span>  <span class="mi">25</span> <span class="mi">15</span><span class="p">:</span><span class="mi">58</span> <span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">Minimal</span><span class="o">-</span><span class="mf">1810.</span><span class="n">iso</span>
+</pre></div>
+</div>
+<p>启动客户机，并在其中用准备好的ISO安装系统，命令行如下：</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@desktop</span><span class="o">-</span><span class="n">pmjtngi</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-system-x86_64 -enable-kvm -m 2G -smp 2 -boot once=d -cdrom CentOS-7-x86_64-Minimal-1810.iso centos7.img</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">Image</span> <span class="nb">format</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">specified</span> <span class="k">for</span> <span class="s1">&#39;centos7.img&#39;</span> <span class="ow">and</span> <span class="n">probing</span> <span class="n">guessed</span> <span class="n">raw</span><span class="o">.</span>
+         <span class="n">Automatically</span> <span class="n">detecting</span> <span class="n">the</span> <span class="nb">format</span> <span class="ow">is</span> <span class="n">dangerous</span> <span class="k">for</span> <span class="n">raw</span> <span class="n">images</span><span class="p">,</span> <span class="n">write</span> <span class="n">operations</span> <span class="n">on</span> <span class="n">block</span> <span class="mi">0</span> <span class="n">will</span> <span class="n">be</span> <span class="n">restricted</span><span class="o">.</span>
+         <span class="n">Specify</span> <span class="n">the</span> <span class="s1">&#39;raw&#39;</span> <span class="nb">format</span> <span class="n">explicitly</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">the</span> <span class="n">restrictions</span><span class="o">.</span>
+<span class="n">VNC</span> <span class="n">server</span> <span class="n">running</span> <span class="n">on</span> <span class="p">::</span><span class="mi">1</span><span class="p">:</span><span class="mi">5900</span>
+</pre></div>
+</div>
+<p>其中</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-m 1G是给客户机分配1G内存，
+-smp 1是指定客户机为对称多处理器结构并分配个1CPU，
+-boot once=d是指定系统的启动顺序为首次光驱，以后再使用默认启动项（硬盘）
+-cdrom**是分配客户机的光驱。默认情况下，QEMU会启动一个VNC server端口
+（5900），可以用vncviwer工具 来连接到QEMU的VNC端口查看客户机。
+</pre></div>
+</div>
+<p>安装vncviwer工具</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">tigervnc</span><span class="o">-</span><span class="n">server</span> <span class="n">tigervnc</span>
+</pre></div>
+</div>
+<p>通过启动时的提示，这里可以使用“vncviewer：5900”命令连接到QEMU启动的窗口。根据命令行指定的启动顺序，当有CDROM时，客户机默认会从光驱引导，启动后即可进入客户机系统安装界面</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vncviewer :5900</span>
+</pre></div>
+</div>
+<p>和普通的Linux系统安装一样，安装完成后，重启系统即可进入刚才安装的客户机操作系统。</p>
+<p>在宿主机中需要安装包含vncserver和vncviewer工具的软件包，如在RHEL
+7系统中，可以安装<code class="docutils literal notranslate"><span class="pre">tigervnc-server</span></code>和<code class="docutils literal notranslate"><span class="pre">tigervnc</span></code>这两个RPM软件包。</p>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id14">1.3.5. 3.5 启动第一个KVM客户机</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>在安装好了系统之后，就可以使用镜像文件来启动并登录到自己安装的系统之中了。
+通过如下的简单命令行即可启动一个KVM的客户机。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@desktop</span><span class="o">-</span><span class="n">pmjtngi</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-system-x86_64 -m 1G -smp 1 /root/centos7.img</span>
+</pre></div>
+</div>
+<p>如下的3个等价命令之一启动一个客户机。</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">smp</span> <span class="mi">2</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">centos7</span><span class="o">.</span><span class="n">img</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">smp</span> <span class="mi">2</span> <span class="o">-</span><span class="n">hda</span> <span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">centos7</span><span class="o">.</span><span class="n">img</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">-</span><span class="n">m</span> <span class="mi">1024</span> <span class="o">-</span><span class="n">smp</span> <span class="mi">2</span> <span class="o">-</span><span class="n">drive</span> <span class="n">file</span><span class="o">=/</span><span class="n">root</span><span class="o">/</span><span class="n">centos7</span><span class="o">.</span><span class="n">img</span><span class="p">,</span><span class="k">if</span><span class="o">=</span><span class="n">ide</span>
+</pre></div>
+</div>
+<p>用vncviwer命令（此处命令为vncviwer：5900）查看客户机的启动情况。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="02KVM管理工具.html" class="btn btn-neutral float-right" title="2. KVM管理工具" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="KVM_Practice" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

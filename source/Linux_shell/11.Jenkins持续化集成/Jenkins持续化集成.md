@@ -93,6 +93,16 @@ admin_6215967324725742951  users.xml
 
 如果需要备份Jenkins，直接把/var/lib/jenkins目录下的文件或目录打包到新服务器上即可，Jenkins无需借助数据库存储数据，它的配置全部存放在XML格式文件中。
 
+
+参考文献
+
+[Centos7安装jenkins](https://www.cnblogs.com/xiao987334176/p/13032339.html)
+
+[CentOS7搭建jenkins](https://www.cnblogs.com/xiao987334176/p/11903724.html)
+
+[ubuntu 安装Jenkins](https://www.cnblogs.com/xiao987334176/p/11323795.html)
+
+
 ## Jenkins发布PHP代码
 
 打开Jenkins后台Web界面，选择“系统管理”->"管理插件"->"已安装"，检查
@@ -199,7 +209,22 @@ root@desktop-pmjtngi www]# cat README.md
 在本地修改完代码，提交到Github上，然后在Jenkins中重写构建此项目，那么代码就自动在服务器上更新了。
 
 
+## Jenkins+Gitlab配置Webhook实现提交自动部署
 
+参考文献
+https://www.cnblogs.com/xiao987334176/p/11443002.html
+
+
+## GitLab+Jenkins持续集成
+参考文献
+https://www.cnblogs.com/xiao987334176/p/11425560.html
+
+
+## jenkins pipeline持续集成
+### pipeline基本使用
+
+参考文献
+https://www.cnblogs.com/xiao987334176/p/12427209.html
 
 
 

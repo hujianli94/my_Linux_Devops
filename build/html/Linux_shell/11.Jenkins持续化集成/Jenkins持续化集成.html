@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -118,7 +120,10 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">11.1. Jenkins持续化集成</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id1">11.1.1. Jenkins安装</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#jenkinsphp">11.1.2. Jenkins发布PHP代码</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">11.1.3. 相关参考文献</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkins-gitlabwebhook">11.1.3. Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gitlab-jenkins">11.1.4. GitLab+Jenkins持续集成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkins-pipeline">11.1.5. jenkins pipeline持续集成</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">11.1.6. 相关参考文献</a></li>
 </ul>
 </li>
 </ul>
@@ -203,7 +208,13 @@
 <li><a class="reference internal" href="#jenkins" id="id3">Jenkins持续化集成</a><ul>
 <li><a class="reference internal" href="#id1" id="id4">Jenkins安装</a></li>
 <li><a class="reference internal" href="#jenkinsphp" id="id5">Jenkins发布PHP代码</a></li>
-<li><a class="reference internal" href="#id2" id="id6">相关参考文献</a></li>
+<li><a class="reference internal" href="#jenkins-gitlabwebhook" id="id6">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
+<li><a class="reference internal" href="#gitlab-jenkins" id="id7">GitLab+Jenkins持续集成</a></li>
+<li><a class="reference internal" href="#jenkins-pipeline" id="id8">jenkins pipeline持续集成</a><ul>
+<li><a class="reference internal" href="#pipeline" id="id9">pipeline基本使用</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id2" id="id10">相关参考文献</a></li>
 </ul>
 </li>
 </ul>
@@ -282,6 +293,11 @@
 </pre></div>
 </div>
 <p>如果需要备份Jenkins，直接把/var/lib/jenkins目录下的文件或目录打包到新服务器上即可，Jenkins无需借助数据库存储数据，它的配置全部存放在XML格式文件中。</p>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/13032339.html">Centos7安装jenkins</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11903724.html">CentOS7搭建jenkins</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11323795.html">ubuntu
+安装Jenkins</a></p>
 </div>
 <div class="section" id="jenkinsphp">
 <h2><a class="toc-backref" href="#id5">11.1.2. Jenkins发布PHP代码</a><a class="headerlink" href="#jenkinsphp" title="Permalink to this headline">¶</a></h2>
@@ -367,8 +383,23 @@ root@desktop-pmjtngi www]# cat README.md
 </div>
 <p>在本地修改完代码，提交到Github上，然后在Jenkins中重写构建此项目，那么代码就自动在服务器上更新了。</p>
 </div>
+<div class="section" id="jenkins-gitlabwebhook">
+<h2><a class="toc-backref" href="#id6">11.1.3. Jenkins+Gitlab配置Webhook实现提交自动部署</a><a class="headerlink" href="#jenkins-gitlabwebhook" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11443002.html">https://www.cnblogs.com/xiao987334176/p/11443002.html</a></p>
+</div>
+<div class="section" id="gitlab-jenkins">
+<h2><a class="toc-backref" href="#id7">11.1.4. GitLab+Jenkins持续集成</a><a class="headerlink" href="#gitlab-jenkins" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11425560.html">https://www.cnblogs.com/xiao987334176/p/11425560.html</a></p>
+</div>
+<div class="section" id="jenkins-pipeline">
+<h2><a class="toc-backref" href="#id8">11.1.5. jenkins pipeline持续集成</a><a class="headerlink" href="#jenkins-pipeline" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="pipeline">
+<h3><a class="toc-backref" href="#id9">pipeline基本使用</a><a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h3>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/12427209.html">https://www.cnblogs.com/xiao987334176/p/12427209.html</a></p>
+</div>
+</div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">11.1.3. 相关参考文献</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">11.1.6. 相关参考文献</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://www.cnblogs.com/opesn/p/11794465.html">https://www.cnblogs.com/opesn/p/11794465.html</a></p>
 </div>
 </div>

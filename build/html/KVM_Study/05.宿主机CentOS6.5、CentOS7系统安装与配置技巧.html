@@ -1,0 +1,388 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>5. 宿主机CentOS6.5、CentOS7系统安装与配置技巧 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="高性能Linux服务构建实战" href="../Linux_Cluster_combat/index.html" />
+    <link rel="prev" title="4. Proxmox VE" href="04.Proxmox_VE.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM_Study</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.参考文献.html">1. 参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.镜像转换V2V.html">2. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.KVM带web管理界面.html">3. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.Proxmox_VE.html">4. Proxmox VE</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. 宿主机CentOS6.5、CentOS7系统安装与配置技巧</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">KVM_Study</a> &raquo;</li>
+        
+      <li>5. 宿主机CentOS6.5、CentOS7系统安装与配置技巧</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/KVM_Study/05.宿主机CentOS6.5、CentOS7系统安装与配置技巧.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#centos6-5centos7" id="id1">宿主机CentOS6.5、CentOS7系统安装与配置技巧</a></li>
+</ul>
+</div>
+<div class="section" id="centos6-5centos7">
+<h1><a class="toc-backref" href="#id1">5. 宿主机CentOS6.5、CentOS7系统安装与配置技巧</a><a class="headerlink" href="#centos6-5centos7" title="Permalink to this headline">¶</a></h1>
+<p>1.CentOS 6.5宿主机系统安装及配置</p>
+<p>在生产环境中，安装CentOS
+6.5系统的宿主机，采用pxe方式来完成批量的宿主机部署。
+下面分享一个宿主机安装kickstart文件的内容，是一个实际在生产环境中使用的。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># Kickstart file automatically generated by anaconda
+#系统安装自动生成的
+
+install
+# Keyboard layouts
+keyboard &#39;us&#39;
+
+# System language
+lang en_US
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use CDROM installation media
+cdrom
+
+# Use graphical install
+graphical
+firstboot --disable
+
+#设置网络，装机的时候，一般第一个网卡使用dhcp分配IP，第二个网卡关闭
+network --onboot yes --device eth0 --mtu=1500 --bootproto dhcp
+network --onboot yes --device eth1 --noipv4 --noipv6
+
+#配置系统密码 Root password
+rootpw --iscrypted $1$uE0tbJgm$y8kjiD/HhTdN.IlsQHySj/
+
+#文本方式安装，安装后重启
+text
+reboot
+
+# 关闭防火墙
+firewall --disabled
+
+
+# SELinux configuration
+selinux --disabled
+
+##################################################
+# Installation logging level
+logging --level=info
+
+# Do not configure the X Window System
+skipx
+##################################################
+ #配置时区
+timezone Asia/Shanghai
+
+
+
+# Reboot after installation
+# System timezone
+timezone Asia/Shanghai --isUtc
+# System bootloader configuration
+bootloader --location=mbr --driveorder=sda --append=&quot;&quot;
+#清除硬盘数据，并创建相应分区
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --none
+
+
+part /boot --fstype ext3 --size=256
+part pv.3 --size=40960
+part pv.4 --size=100 --grow
+volgroup datavg --pesize=32768 pv.4
+volgroup KVMvg --pesize=32768 pv.3
+
+#此处创建了一个目录，用于存放虚拟机，笔者习惯的目录是/datapool
+logvol /datapool --fstype ext4 --name=datapool --vgname=datavg --size=10240 --grow
+logvol swap --fstype swap --name=swap --vgname=KVMvg --size=8192
+logvol / --fstype ext4 --name=root --vgname=KVMvg --size=30720
+
+
+%packages
+#安装虚拟化需要的包，主要有：
+@virtualization
+@Base
+@Core
+@additional-devel
+@base
+@large-systems
+@storage-client-iscsi
+@system-management-snmp
+@virtualization
+@virtualization-client
+@virtualization-platform
+@virtualization-tools
+#####################################################
+%end
+
+%post
+#history size
+cat &gt;&gt;/etc/bashrc &lt;&lt;EOF
+HISTSIZE=2000
+HISTFILESIZE=2000
+HISTTIMEFORMAT=&quot;%Y-%m-%d %H:%M:%S &quot;
+EOF
+
+# Set prompt
+cat &lt;&lt; EOF &gt; /etc/issue
+ _   _    _     _       ___  ___
+| | / /  | |   / /     /   |/   |
+| |/ /   | |  / /     / /|   /| |
+| |\ \   | | / /     / / |__/ | |
+| | \ \  | |/ /     / /       | |
+|_|  \_\ |___/     /_/        |_|
+
+
+EOF
+cat &lt;&lt; EOF &gt; /etc/issue.net
+
+ _   _    _     _       ___  ___
+| | / /  | |   / /     /   |/   |
+| |/ /   | |  / /     / /|   /| |
+| |\ \   | | / /     / / |__/ | |
+| | \ \  | |/ /     / /       | |
+|_|  \_\ |___/     /_/        |_|
+
+EOF
+
+#!/bin/sh
+# 设置Bash Color
+echo &#39;PS1=&quot;\[\e[32;1m\][\u@\h \W]\\$ \[\e[0m\]&quot;&#39; &gt;&gt; /root/.bashrc
+. /root/.bashrc
+%end
+</pre></div>
+</div>
+<p>使用上面的kickstart配置文件安装完宿主机系统，可以通过rpm-q命令检查一下具体安装了哪些包。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa|grep -E &#39;qemu|libvirt|virt&#39;</span>
+</pre></div>
+</div>
+<p>2.CentOS 7宿主机系统安装及配置</p>
+<p>CentOS 7宿主机的安装与CentOS
+6的系统安装方式类似，系统安装完之后，确认已经安装了如下的rpm相关包。Libvirt还包含了很多工具的库，可以使用yum
+install libvirt*命令安装。</p>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Linux_Cluster_combat/index.html" class="btn btn-neutral float-right" title="高性能Linux服务构建实战" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="04.Proxmox_VE.html" class="btn btn-neutral float-left" title="4. Proxmox VE" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
