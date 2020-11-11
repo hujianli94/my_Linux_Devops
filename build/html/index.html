@@ -626,7 +626,8 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/15.grep.html">1.16. grep</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/15.grep.html#id1">1.16.1. 参数说明</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/15.grep.html#grepif">1.16.2. grep用于if判断</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/15.grep.html#grep-help">1.16.2. grep–help</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/15.grep.html#grepif">1.16.3. grep用于if判断</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/16.route.html">1.17. route路由和网关设置</a><ul>
@@ -682,6 +683,7 @@
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/30.tcpdump跟踪分组.html#tcpdum">1.31.1. 安装tcpdum</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/30.tcpdump跟踪分组.html#linux">1.31.2. Linux系统下的网络抓包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/30.tcpdump跟踪分组.html#id2">1.31.3. 使用方法举例</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a><ul>
@@ -938,15 +940,15 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#shell">3.3.1. 1 Shell表达式</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id2">3.3.2. 1.1 整数测试</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id3">3.3.3. 1.2 算术运算符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id7">3.3.4. 2 复合算术运算符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id8">3.3.5. 3 自增/自减运算符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id9">3.3.6. 4 数字常量的进制</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id10">3.3.7. 条件测试</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id11">3.3.8. 5 布尔运算符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id12">3.3.9. 6 逻辑运算符</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id13">3.3.10. 7 文件测试</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id14">3.3.11. 8 字符串测试</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id15">3.3.12. Shell 中的中括号用法总结</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id6">3.3.4. 2 复合算术运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id7">3.3.5. 3 自增/自减运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id8">3.3.6. 4 数字常量的进制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id9">3.3.7. 条件测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id10">3.3.8. 5 布尔运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id11">3.3.9. 6 逻辑运算符</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id12">3.3.10. 7 文件测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id13">3.3.11. 8 字符串测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/03.运算符.html#id14">3.3.12. Shell 中的中括号用法总结</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/03.玩转shell脚本编程/04.流程控制.html">3.4. 4 流程控制</a><ul>
@@ -1928,20 +1930,23 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/07.一些常用的工具/index.html">7. 一些常用的工具</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html">7.1. 常用工具合集</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 常用的开源镜像站（不定期更新）</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id3">7.1.2. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.3. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id4">7.1.4. 网站运维</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id13">7.1.5. 开发工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id19">7.1.6. 文档处理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id21">7.1.7. 5款优秀的开源克隆软件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#linux">7.1.8. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id2">7.1.1. 吐血整理程序员工具集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id3">7.1.2. 常用的开源镜像站（不定期更新）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id4">7.1.3. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#nextcloud">7.1.4. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id5">7.1.5. 网站运维</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id14">7.1.6. 开发工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id20">7.1.7. 文档处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#id22">7.1.8. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/01.常用工具合集.html#linux">7.1.9. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html">7.2. 日常工具</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#web">7.2.1. web服务压力测试工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#github">7.2.2. Github代码搜索技巧</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#id2">7.2.3. 免费无线投屏神器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#id2">7.2.1. 吐血整理程序员工具集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#md">7.2.2. MD文档编辑器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#web">7.2.3. web服务压力测试工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#github">7.2.4. Github代码搜索技巧</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/07.一些常用的工具/02.日常工具.html#id3">7.2.5. 免费无线投屏神器</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/07.一些常用的工具/03.博客写书软件.html">7.3. 博客写书软件</a></li>
