@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9.2. Git的导入 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9.3. 实际操作学习Git" href="03.实际操作学习Git.html" />
+    <link rel="prev" title="9.1. 什么是Github" href="01.什么是Github.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git入门到熟练/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.构建自己的写书博客/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim教程/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server学习/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows系统相关/index.html">8. Windows系统相关</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">9. Github入门到实践</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html">9.1. 什么是Github</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">9.2. Git的导入</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">9.2.1. 什么是版本管理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">9.2.2. 集中型与分散型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">9.2.3. 初始设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#clone">9.2.4. clone已有仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html">9.3. 实际操作学习Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html">9.4. 详细解说GitHub的功能</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Other</a> &raquo;</li>
+        
+          <li><a href="index.html">9. Github入门到实践</a> &raquo;</li>
+        
+      <li>9.2. Git的导入</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/other/09.Github入门与实践/02.Git的导入.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#git" id="id6">Git的导入</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">什么是版本管理</a></li>
+<li><a class="reference internal" href="#id2" id="id8">集中型与分散型</a><ul>
+<li><a class="reference internal" href="#id3" id="id9">集中型</a></li>
+<li><a class="reference internal" href="#id4" id="id10">分散型</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id11">初始设置</a></li>
+<li><a class="reference internal" href="#clone" id="id12">clone已有仓库</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="git">
+<h1><a class="toc-backref" href="#id6">9.2. Git的导入</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id7">9.2.1. 什么是版本管理</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>版本管理就是管理更新的历史记录。它为我们提供了一些在软件开发过程中必不可少的功能，例如记录一款软件添加或更改源代码的过程，回滚到特定阶段，恢复误删除的文件等。</p>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id8">9.2.2. 集中型与分散型</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id9">集中型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>以Subversion为代表的集中型</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id10">分散型</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>Git为代表的分散型</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>所有仓库之间都可以进行push和pull。即便不通过GitHub，开发者A也可以直接向开发者B的仓库进行push或pull。因此在使用前如果不事先制定规范，初学者往往会搞不清最新的源代码保存在哪里，导致开发失去控制。
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id11">9.2.3. 初始设置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>●设置姓名和邮箱地址首先来设置使用Git时的姓名和邮箱地址。名字请用英文输入。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git config --global user.name &quot;hujianli&quot;
+$ git config --global user.email &quot;hujiainli@126.com&quot;
+</pre></div>
+</div>
+</div>
+<div class="section" id="clone">
+<h2><a class="toc-backref" href="#id12">9.2.4. clone已有仓库</a><a class="headerlink" href="#clone" title="Permalink to this headline">¶</a></h2>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:hujianli94/jenkins001.git
+Cloning into &#39;jenkins001&#39;...
+remote: Enumerating objects: 29, done.
+remote: Counting objects: 100% (29/29), done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 29 (delta 5), reused 27 (delta 3), pack-reused 0
+Receiving objects: 100% (29/29), 2.42 KiB | 130.00 KiB/s, done.
+Resolving deltas: 100% (5/5), done.
+
+
+# 编写代码
+$ cat hello_world.php
+&lt;? php
+echo &quot;hello world&quot;
+?&gt;
+
+# 查看状态
+$ git status
+On branch master
+Your branch is up to date with &#39;origin/master&#39;.
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        hello_world.php
+
+# 提交
+//git add命令将文件加入暂存区
+$ git add hello_world.php
+
+//git commit命令提交
+$ git commit -m &quot;Add hello world php file&quot;
+
+# git log命令查看提交日志。
+$ git log
+commit ffad5f8c525e690dfd58c772f6a746f5e532587a (HEAD -&gt; master)
+Author: hujianli &lt;hujiainli@126.com&gt;
+Date:   Thu Nov 19 21:13:43 2020 +0800
+
+    Add hello world php file
+
+# 进行push
+$ git push
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="03.实际操作学习Git.html" class="btn btn-neutral float-right" title="9.3. 实际操作学习Git" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="01.什么是Github.html" class="btn btn-neutral float-left" title="9.1. 什么是Github" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

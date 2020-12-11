@@ -1,0 +1,414 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>9. Github入门到实践 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="9.1. 什么是Github" href="01.什么是Github.html" />
+    <link rel="prev" title="8.4. Windows-Server-2008-R2-部署nginx、tomcat、mysql" href="../08.Windows系统相关/04.Windows-Server-2008-R2-部署nginx、tomcat、mysql.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git入门到熟练/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.构建自己的写书博客/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim教程/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server学习/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows系统相关/index.html">8. Windows系统相关</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">9. Github入门到实践</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html">9.1. 什么是Github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Git的导入.html">9.2. Git的导入</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html">9.3. 实际操作学习Git</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html">9.4. 详细解说GitHub的功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html">9.5. 尝试Pull Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html">9.6. 接收Pull Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html">9.7. 模拟体验GitHub Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html">9.8. 便于理解的标准流程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Other</a> &raquo;</li>
+        
+      <li>9. Github入门到实践</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/other/09.Github入门与实践/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="github">
+<h1>9. Github入门到实践<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.什么是Github.html">9.1. 什么是Github</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.什么是Github.html#id1">9.1.1. Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.什么是Github.html#githubgit">9.1.2. GitHub与Git的区别</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.什么是Github.html#pull-request">9.1.3. Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.什么是Github.html#id2">9.1.4. GitHub提供的主要功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html#git">●Git仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html#organization">●Organization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html#issue">●Issue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html#wiki">●Wiki</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.什么是Github.html#id3">●Pull Request</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.Git的导入.html">9.2. Git的导入</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Git的导入.html#id1">9.2.1. 什么是版本管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git的导入.html#id2">9.2.2. 集中型与分散型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Git的导入.html#id3">集中型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Git的导入.html#id4">分散型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git的导入.html#id5">9.2.3. 初始设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git的导入.html#clone">9.2.4. clone已有仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.实际操作学习Git.html">9.3. 实际操作学习Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.实际操作学习Git.html#id1">9.3.1. 基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.实际操作学习Git.html#id2">9.3.2. 分支的操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id3">●特性分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id4">●主干分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id5">合并分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id6">更改提交的操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id7">消除冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id8">提交解决后的结果冲突解决后</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id9">修改提交信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id10">压缩历史</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.实际操作学习Git.html#id11">9.3.3. 推送至远程仓库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#master">推送至master分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#id12">推送至master以外的分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.实际操作学习Git.html#id13">9.3.4. 从远程仓库获取</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.实际操作学习Git.html#git-clone">git clone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.详细解说GitHub的功能.html">9.4. 详细解说GitHub的功能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.详细解说GitHub的功能.html#id1">9.4.1. 控制面板</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#ui">*UI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.详细解说GitHub的功能.html#id2">9.4.2. 仓库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#id3">用户名（组织名）/仓库名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#watch-star-fork">Watch/Star/Fork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#code">Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#issue">Issue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#id4">Pull Requests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.详细解说GitHub的功能.html#wiki">Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.详细解说GitHub的功能.html#id5">9.4.3. Issue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.详细解说GitHub的功能.html#pull-request">9.4.4. Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.详细解说GitHub的功能.html#id6">9.4.5. Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.尝试Pull-Request.html">9.5. 尝试Pull Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.尝试Pull-Request.html#id1">9.5.1. 什么是Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.尝试Pull-Request.html#id2">9.5.2. 让Pull Request更加有效的方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html#id3">●明确标出“正在开发过程中”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html#forkpull-request">●不进行Fork直接从分支发送Pull Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.尝试Pull-Request.html#id4">9.5.3. 仓库的维护</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html#forkclone">●仓库的Fork与clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html#id5">●给原仓库设置名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.尝试Pull-Request.html#id6">●获取最新数据</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.尝试Pull-Request.html#id7">9.5.4. 小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.接收Pull-Request.html">9.6. 接收Pull Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.接收Pull-Request.html#id1">9.6.1. 采纳Pull Request前的准备</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id2">●代码审查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id3">1.在本地开发环境中反映Pull Request的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id4">2. 获取发送方的远程仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id5">3.创建用于检查的分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id6">4.合并</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id7">5.删除分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.接收Pull-Request.html#id8">9.6.2. 采纳Pull Request</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#id9">●合并到主分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#push">●push修改内容</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.接收Pull-Request.html#fork">9.6.3. 不Fork仓库的方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.接收Pull-Request.html#github-flow">GitHub Flow的流程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.模拟体验GitHub-Flow.html">9.7. 模拟体验GitHub Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id1">9.7.1. 1. 创建新的分支</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#clone">1.1 如果尚未clone仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id2">1.2 如果之前clone过仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id3">9.7.2. 2. 创建特性分支</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id4">9.7.3. 3. 实现新功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#pull-request">9.7.4. 4. 创建Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id5">9.7.5. 5. 接收反馈</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id6">9.7.6. 6. 修正被指出的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id7">9.7.7. 7. 添加测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id8">9.7.8. 8. 培育Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id9">9.7.9. 9. Pull Request被合并</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id10">9.7.10. 团队实践GitHub Flow时的几点建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id11">●减小Pull Request的体积</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id12">●准备可供试运行的环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id13">●不要让Pull Request中有太多反馈</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id14">●不要积攒Pull Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.模拟体验GitHub-Flow.html#id15">9.7.11. GitHub Flow的小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.便于理解的标准流程.html">9.8. 便于理解的标准流程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.便于理解的标准流程.html#git-flow">9.8.1. 模拟体验Git Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id2">1.创建分支(前期工作)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.便于理解的标准流程.html#id4">9.8.2. 实践 Git Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#masterdevelop"><strong>1. master分支与develop分支的区别</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id6"><strong>2. 创建分支</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id7"><strong>3.在分支中进行作业</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#pull-request"><strong>4.发送Pull Request</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id8"><strong>5.通过代码审查提高代码质量</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id9"><strong>6.更新本地的 develop 分支</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#release"><strong>7.在 release 分支中进行的工作</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#id14"><strong>8.更新到远程仓库</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.便于理解的标准流程.html#hotfix"><strong>9.在 hotfix 分支中进行的工作</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.便于理解的标准流程.html#id15">9.8.3. Git Flow的小结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.便于理解的标准流程.html#git">9.8.4. 能实现Git托管的软件</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="01.什么是Github.html" class="btn btn-neutral float-right" title="9.1. 什么是Github" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../08.Windows系统相关/04.Windows-Server-2008-R2-部署nginx、tomcat、mysql.html" class="btn btn-neutral float-left" title="8.4. Windows-Server-2008-R2-部署nginx、tomcat、mysql" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

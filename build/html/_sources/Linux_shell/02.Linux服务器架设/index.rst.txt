@@ -40,3 +40,5 @@ Linux服务器架设
     33.Gitlab安装
     34.Rsync数据复制软件应用实践
     35.Extundelete数据恢复
+    36.Openvpn部署
+    37.CentOS8安装Docker和Docker-componse

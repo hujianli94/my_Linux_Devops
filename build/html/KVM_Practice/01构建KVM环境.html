@@ -100,6 +100,7 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM_Practice</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. 构建KVM环境</a><ul>
@@ -109,8 +110,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#id2">1.3.1. 3.1 下载KVM源代码</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#yumkvm">1.3.2. 3.2 Yum安装KVM</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#qemu">1.3.3. 3.3 编译和安装QEMU</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">1.3.4. 3.4 安装客户机</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">1.3.5. 3.5 启动第一个KVM客户机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.3.4. 3.4 安装客户机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.3.5. 3.5 启动第一个KVM客户机</a></li>
 </ul>
 </li>
 </ul>
@@ -196,15 +197,15 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#kvm" id="id6">构建KVM环境</a><ul>
-<li><a class="reference internal" href="#cpu" id="id7">1.开启CPU虚拟化</a></li>
-<li><a class="reference internal" href="#linux" id="id8">2.安装宿主机Linux系统</a></li>
-<li><a class="reference internal" href="#id1" id="id9">3.编译和安装KVM</a><ul>
-<li><a class="reference internal" href="#id2" id="id10">3.1 下载KVM源代码</a></li>
-<li><a class="reference internal" href="#yumkvm" id="id11">3.2 Yum安装KVM</a></li>
-<li><a class="reference internal" href="#qemu" id="id12">3.3 编译和安装QEMU</a></li>
-<li><a class="reference internal" href="#id4" id="id13">3.4 安装客户机</a></li>
-<li><a class="reference internal" href="#id5" id="id14">3.5 启动第一个KVM客户机</a></li>
+<li><a class="reference internal" href="#kvm" id="id7">构建KVM环境</a><ul>
+<li><a class="reference internal" href="#cpu" id="id8">1.开启CPU虚拟化</a></li>
+<li><a class="reference internal" href="#linux" id="id9">2.安装宿主机Linux系统</a></li>
+<li><a class="reference internal" href="#id1" id="id10">3.编译和安装KVM</a><ul>
+<li><a class="reference internal" href="#id2" id="id11">3.1 下载KVM源代码</a></li>
+<li><a class="reference internal" href="#yumkvm" id="id12">3.2 Yum安装KVM</a></li>
+<li><a class="reference internal" href="#qemu" id="id13">3.3 编译和安装QEMU</a></li>
+<li><a class="reference internal" href="#id5" id="id14">3.4 安装客户机</a></li>
+<li><a class="reference internal" href="#id6" id="id15">3.5 启动第一个KVM客户机</a></li>
 </ul>
 </li>
 </ul>
@@ -212,9 +213,9 @@
 </ul>
 </div>
 <div class="section" id="kvm">
-<h1><a class="toc-backref" href="#id6">1. 构建KVM环境</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id7">1. 构建KVM环境</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="cpu">
-<h2><a class="toc-backref" href="#id7">1.1. 1.开启CPU虚拟化</a><a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">1.1. 1.开启CPU虚拟化</a><a class="headerlink" href="#cpu" title="Permalink to this headline">¶</a></h2>
 <p>在x86-64架构的处理器中，KVM需要的硬件虚拟化扩展分别为Intel的虚拟化技术
 （Intel
 VT）和AMD的AMD-V技术。其中，Intel在2005年11月发布的奔腾四处理器（型
@@ -232,7 +233,7 @@ Linux系统中，可以通过检查/proc/cpuinfo文件中的CPU特性标志（fl
 </div>
 </div>
 <div class="section" id="linux">
-<h2><a class="toc-backref" href="#id8">1.2. 2.安装宿主机Linux系统</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">1.2. 2.安装宿主机Linux系统</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <p>操作系统的安装在此省略….</p>
 <p>系统安装过程中我们需要选上“Development
 Tools”，因为在本书的KVM编译过程中以及其他实验中可能会用到，其中包括一些比较重要的软件包，比如：gcc、git、make等（一般被默认选中）。可以看到还有“Virtualization
@@ -249,9 +250,9 @@ Hypervisor”“Virtualization Tools”。</p>
 </div>
 </div>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id9">1.3. 3.编译和安装KVM</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">1.3. 3.编译和安装KVM</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id10">1.3.1. 3.1 下载KVM源代码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">1.3.1. 3.1 下载KVM源代码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>总的来说，下载最新KVM源代码，主要有以下3种方式：
 1）下载KVM项目开发中的代码仓库kvm.git。</p>
 <p>2）下载Linux内核的代码仓库linux.git。</p>
@@ -272,7 +273,7 @@ Hypervisor”“Virtualization Tools”。</p>
 <p>编译安装的方式安装比较慢，在此不继续深入安装了，一般使用yum的方式。</p>
 </div>
 <div class="section" id="yumkvm">
-<h3><a class="toc-backref" href="#id11">1.3.2. 3.2 Yum安装KVM</a><a class="headerlink" href="#yumkvm" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">1.3.2. 3.2 Yum安装KVM</a><a class="headerlink" href="#yumkvm" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/redhat-release</span>
 <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># uname -r</span>
@@ -301,9 +302,14 @@ Hypervisor”“Virtualization Tools”。</p>
 <span class="c1"># systemctl status libvirtd.service</span>
 </pre></div>
 </div>
+<div class="section" id="id3">
+<h4>3.2.1 Yum安装KVM案例二<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>参考文献：</p>
+<p><a class="reference external" href="http://blog.linuxli.com/2019/05/Hypervisor_kvm/">http://blog.linuxli.com/2019/05/Hypervisor_kvm/</a></p>
+</div>
 </div>
 <div class="section" id="qemu">
-<h3><a class="toc-backref" href="#id12">1.3.3. 3.3 编译和安装QEMU</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id13">1.3.3. 3.3 编译和安装QEMU</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h3>
 <p>除了在内核空间的KVM模块之外，在用户空间需要QEMU [1]
 来模拟所需要的CPU和设备模型，以及启动客户机进程，这样才有了一个完整的KVM运行环境。</p>
 <p>QEMU开发代码仓库的网页连接为：<a class="reference external" href="http://git.qemu.org/qemu.git">http://git.qemu.org/qemu.git</a>。</p>
@@ -339,8 +345,8 @@ clone命令下载即可，它们是完全一样的。
 <span class="n">SUSE</span><span class="p">:</span> <span class="n">zypper</span> <span class="n">install</span> <span class="n">qemu</span>
 </pre></div>
 </div>
-<div class="section" id="id3">
-<h4>源码安装<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id4">
+<h4>3.3.1 源码安装<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">glib</span><span class="o">*</span>
 <span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">qemu</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">qemu</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
 <span class="n">tar</span> <span class="n">xvJf</span> <span class="n">qemu</span><span class="o">-</span><span class="mf">5.1</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span>
@@ -352,73 +358,73 @@ clone命令下载即可，它们是完全一样的。
 <p><a class="reference external" href="https://www.qemu.org/download/#source">https://www.qemu.org/download/#source</a></p>
 </div>
 <div class="section" id="git">
-<h4>使用Git包编译安装<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h4>
+<h4>3.3.2 使用Git包编译安装<a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h4>
 <p>Git安装方式不推荐，除非参与开发</p>
 <p>配置和编译QEMU</p>
 <p>指定<code class="docutils literal notranslate"><span class="pre">--target-list=x86_64-softmmu</span></code>，可以节省大量的编译时间。</p>
 <p>执行configure文件进行配置的过程如下：</p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="n">qemu</span><span class="p">]</span><span class="c1">#./configure --target-list=x86_64-softmmu</span>
-<span class="n">Using</span> <span class="s1">&#39;./build&#39;</span> <span class="k">as</span> <span class="n">the</span> <span class="n">directory</span> <span class="k">for</span> <span class="n">build</span> <span class="n">output</span>
-<span class="n">remote</span><span class="p">:</span> <span class="n">Enumerating</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">76</span><span class="p">,</span> <span class="n">done</span><span class="o">.</span>
-<span class="n">remote</span><span class="p">:</span> <span class="n">Counting</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">(</span><span class="mi">76</span><span class="o">/</span><span class="mi">76</span><span class="p">),</span> <span class="n">done</span><span class="o">.</span>
-<span class="n">remote</span><span class="p">:</span> <span class="n">Compressing</span> <span class="n">objects</span><span class="p">:</span> <span class="mi">100</span><span class="o">%</span> <span class="p">(</span><span class="mi">72</span><span class="o">/</span><span class="mi">72</span><span class="p">),</span> <span class="n">done</span><span class="o">.</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>[root@bogon qemu]#./configure --target-list=x86_64-softmmu
+Using &#39;./build&#39; as the directory for build output
+remote: Enumerating objects: 76, done.
+remote: Counting objects: 100% (76/76), done.
+remote: Compressing objects: 100% (72/72), done.
+
+前提：是Python版本&gt;=3.5
 </pre></div>
 </div>
-<blockquote>
-<div>前提：是Python版本&gt;=3.5</div></blockquote>
 <p><strong>升级python版本的脚本如下</strong></p>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
-<span class="c1">#usage:xxx</span>
-<span class="c1">#scripts_name:${NAME}.sh</span>
-<span class="c1"># author：xiaojian</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:${NAME}.sh
+# author：xiaojian
 
 
-<span class="n">function</span> <span class="n">install_python3</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">yum</span> <span class="n">install</span> <span class="n">gcc</span><span class="o">-</span><span class="n">c</span><span class="o">++</span> <span class="n">gcc</span> <span class="n">make</span> <span class="n">cmake</span> <span class="n">zlib</span><span class="o">-</span><span class="n">devel</span> <span class="n">bzip2</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span> <span class="n">ncurse</span><span class="o">-</span><span class="n">devel</span> <span class="n">libffi</span><span class="o">-</span><span class="n">devel</span> <span class="o">-</span><span class="n">y</span>
-    <span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">python</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ftp</span><span class="o">/</span><span class="n">python</span><span class="o">/</span><span class="mf">3.7</span><span class="o">.</span><span class="mi">0</span><span class="o">/</span><span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span> <span class="o">&amp;&amp;</span> <span class="n">tar</span> <span class="n">xvJf</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">xz</span> <span class="o">&amp;&amp;</span> <span class="n">cd</span> <span class="n">Python</span><span class="o">-</span><span class="mf">3.7</span><span class="o">.</span><span class="mi">0</span> <span class="o">||</span> <span class="n">exit</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">ssl</span>
-    <span class="k">if</span> <span class="n">test</span> <span class="s2">&quot;$?&quot;</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span><span class="p">;</span> <span class="n">then</span>
-        <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
-    <span class="n">fi</span>
-    <span class="k">if</span> <span class="p">[</span> <span class="s2">&quot;$?&quot;</span> <span class="o">-</span><span class="n">eq</span> <span class="mi">0</span> <span class="p">];</span> <span class="n">then</span>
-        <span class="n">echo</span> <span class="s2">&quot;Python3 install successful.....&quot;</span>
-    <span class="n">fi</span>
-<span class="p">}</span>
+function install_python3() {
+    yum install gcc-c++ gcc make cmake zlib-devel bzip2-devel openssl-devel ncurse-devel libffi-devel -y
+    wget https://www.python.org/ftp/python/3.7.0/Python-3.7.0.tar.xz &amp;&amp; tar xvJf Python-3.7.0.tar.xz &amp;&amp; cd Python-3.7.0 || exit -1
+    ./configure --with-ssl
+    if test &quot;$?&quot; -eq 0; then
+        make &amp;&amp; make install
+    fi
+    if [ &quot;$?&quot; -eq 0 ]; then
+        echo &quot;Python3 install successful.....&quot;
+    fi
+}
 
-<span class="n">function</span> <span class="n">install_pip3</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">cp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="p">{,</span><span class="n">_bak</span><span class="p">}</span>
-    <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS7</span><span class="o">-</span><span class="n">Aliyun</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
-    <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>
-    <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python3</span><span class="o">-</span><span class="n">pip</span>
-<span class="p">}</span>
-
-
-<span class="n">function</span> <span class="n">Set_soft_Link_And_Config</span><span class="p">()</span> <span class="p">{</span>
-    <span class="c1"># 删除软链接，建立新的软连接</span>
-    <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
-    <span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
-    <span class="n">cp</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span><span class="p">{,</span><span class="n">_2</span><span class="o">.</span><span class="mi">7</span><span class="n">_bak</span><span class="p">}</span>
-    <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">7</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span>
-    <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span><span class="o">.</span><span class="mi">7</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
-
-   <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">yum</span>
-   <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">urlgrabber</span><span class="o">-</span><span class="n">ext</span><span class="o">-</span><span class="n">down</span>
-    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">firewalld</span>
-    <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span>
-    <span class="p">:</span>
-<span class="p">}</span>
+function install_pip3() {
+    cp /etc/yum.repos.d/CentOS-Base.repo{,_bak}
+    wget -O /etc/yum.repos.d/CentOS7-Aliyun.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+    wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+    yum -y install python3-pip
+}
 
 
-<span class="n">function</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-    <span class="n">install_python3</span>
-    <span class="n">install_pip3</span>
-    <span class="n">Set_soft_Link_And_Config</span>
-<span class="p">}</span>
-<span class="n">main</span>
+function Set_soft_Link_And_Config() {
+    # 删除软链接，建立新的软连接
+    rm -rf /usr/bin/pip3
+    rm -rf /usr/bin/python3
+    cp -rf /usr/bin/python{,_2.7_bak}
+    ln -s /usr/local/bin/python3.7 /usr/bin/python
+    ln -s /usr/local/bin/pip3.7 /usr/bin/pip3
+
+   sed -i &#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39; /usr/bin/yum
+   sed -i &#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39;  /usr/libexec/urlgrabber-ext-down
+    sed -i &#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39; /usr/sbin/firewalld
+    sed -i &#39;s#\/usr/bin/python#\/usr/bin/python2.7#g&#39; /usr/bin/firewall-cmd
+    :
+}
+
+
+function main() {
+    install_python3
+    install_pip3
+    Set_soft_Link_And_Config
+}
+main
+
+‘ERROR: pixman &gt;= 0.21.8 not present.’ 解决方案
 </pre></div>
 </div>
-<blockquote>
-<div>‘ERROR: pixman &gt;= 0.21.8 not present.’ 解决方案</div></blockquote>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="n">qemu</span><span class="p">]</span><span class="c1"># yum -y install pixman.i686 pixman.x86_64 pixman-devel.i686 pixman-devel.x86_64</span>
 </pre></div>
 </div>
@@ -439,8 +445,8 @@ make[1]: 进入目录“/root/qemu/build”
 </ul>
 </div>
 </div>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id13">1.3.4. 3.4 安装客户机</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id14">1.3.4. 3.4 安装客户机</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <p>现在开始快速地演示安装一个客户机，采用了本地创建一个镜像文件，然
 后将镜像文件作为客户机的硬盘，将客户机操作系统（以centos7为例）安装在其中。</p>
 <p>安装客户机（Guest）之前，我们需要创建一个镜像文件或者磁盘分区等，来存储客户机中的系统和文件。</p>
@@ -509,8 +515,8 @@ image之后，我们将<code class="docutils literal notranslate"><span class="p
 <p>在宿主机中需要安装包含vncserver和vncviewer工具的软件包，如在RHEL
 7系统中，可以安装<code class="docutils literal notranslate"><span class="pre">tigervnc-server</span></code>和<code class="docutils literal notranslate"><span class="pre">tigervnc</span></code>这两个RPM软件包。</p>
 </div>
-<div class="section" id="id5">
-<h3><a class="toc-backref" href="#id14">1.3.5. 3.5 启动第一个KVM客户机</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id15">1.3.5. 3.5 启动第一个KVM客户机</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>在安装好了系统之后，就可以使用镜像文件来启动并登录到自己安装的系统之中了。
 通过如下的简单命令行即可启动一个KVM的客户机。</p>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@desktop</span><span class="o">-</span><span class="n">pmjtngi</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-system-x86_64 -m 1G -smp 1 /root/centos7.img</span>

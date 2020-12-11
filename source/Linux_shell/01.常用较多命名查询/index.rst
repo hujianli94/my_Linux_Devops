@@ -40,6 +40,8 @@
     30.tcpdump跟踪分组
     31.screen集中管理多个终端
     32.echo输出颜色
+    33.Ubuntu安装和初始化
+    34.DRBD详细解说及配置过程记录
     40.Linux初始化系统安全设置
     41.使用tar命令进行本地备份scripts
     42.配置Yum软件仓库
@@ -49,3 +51,4 @@
     46.Linux性能监控工具PyDash
     47.system用法
     48.恢复文件相关工具
+    49.Centos7服务封装为server

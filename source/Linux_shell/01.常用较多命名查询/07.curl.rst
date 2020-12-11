@@ -47,9 +47,9 @@ curl
     -A, --user-agent 指定客户端信息
 
 示例：
-------
+~~~~~~
 
-::
+.. code:: shell
 
     下载页面：
     # curl -o badu.html http://www.baidu.com
@@ -83,6 +83,27 @@ curl
 
     查看 HTTP 头信息：
     # curl -I http://www.baidu.com
+
+curl模拟delete/put/post/get请求
+-------------------------------
+
+.. code:: shell
+
+    -v 显示请求的信息
+    -X 选项指定其它协议
+
+    get:
+        curl -v 192.168.33.1:8080/girls/age/18
+
+    post:
+        curl -v 192.168.33.1:8080/girls -d 'age=14&cupSize=C'
+        curl -v -X POST 192.168.33.1:8080/girls -d 'age=14&cupSize=C'
+
+    put:
+        curl -v -X PUT -d "age=19&cupSize=C" 192.168.33.1:8080/girls/3
+
+    delete:
+        curl -v -X DELETE 192.168.33.1:8080/girls/3
 
 参考文献
 `Curl命令用法 <https://www.cnblogs.com/kevingrace/p/9030324.html>`__

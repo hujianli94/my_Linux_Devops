@@ -116,7 +116,7 @@
 <li class="toctree-l3 current"><a class="current reference internal" href="#">1.7. curl</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id1">1.7.1. 功能</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id2">1.7.2. 常用选项：</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.7.3. 示例：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#curldelete-put-post-get">1.7.3. curl模拟delete/put/post/get请求</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
@@ -245,8 +245,11 @@
 <ul class="simple">
 <li><a class="reference internal" href="#curl" id="id4">curl</a><ul>
 <li><a class="reference internal" href="#id1" id="id5">功能</a></li>
-<li><a class="reference internal" href="#id2" id="id6">常用选项：</a></li>
+<li><a class="reference internal" href="#id2" id="id6">常用选项：</a><ul>
 <li><a class="reference internal" href="#id3" id="id7">示例：</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#curldelete-put-post-get" id="id8">curl模拟delete/put/post/get请求</a></li>
 </ul>
 </li>
 </ul>
@@ -291,10 +294,9 @@
 -A, --user-agent 指定客户端信息
 </pre></div>
 </div>
-</div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">1.7.3. 示例：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>下载页面：
+<h3><a class="toc-backref" href="#id7">示例：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>下载页面：
 # curl -o badu.html http://www.baidu.com
 
 不输出下载信息：
@@ -326,6 +328,27 @@ FTP 下载多个文件：
 
 查看 HTTP 头信息：
 # curl -I http://www.baidu.com
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="curldelete-put-post-get">
+<h2><a class="toc-backref" href="#id8">1.7.3. curl模拟delete/put/post/get请求</a><a class="headerlink" href="#curldelete-put-post-get" title="Permalink to this headline">¶</a></h2>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">v</span> <span class="n">显示请求的信息</span>
+<span class="o">-</span><span class="n">X</span> <span class="n">选项指定其它协议</span>
+
+<span class="n">get</span><span class="p">:</span>
+    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="n">age</span><span class="o">/</span><span class="mi">18</span>
+
+<span class="n">post</span><span class="p">:</span>
+    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;age=14&amp;cupSize=C&#39;</span>
+    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;age=14&amp;cupSize=C&#39;</span>
+
+<span class="n">put</span><span class="p">:</span>
+    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;age=19&amp;cupSize=C&quot;</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="mi">3</span>
+
+<span class="n">delete</span><span class="p">:</span>
+    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">DELETE</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="mi">3</span>
 </pre></div>
 </div>
 <p>参考文献

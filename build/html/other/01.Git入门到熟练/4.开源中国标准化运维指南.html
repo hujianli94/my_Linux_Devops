@@ -1,0 +1,590 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.4. 开源中国标准化运维指南 &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.5. GitHelp" href="15.GitHelp.html" />
+    <link rel="prev" title="1.3. Github高级搜索方式" href="3.Github高级搜索方式.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. Git入门到熟练</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.Git基础操作.html">1.1. Git基础操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Git仓库的使用.html">1.2. Git仓库的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Github高级搜索方式.html">1.3. Github高级搜索方式</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.4. 开源中国标准化运维指南</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.4.1. 第一章 开源中国标准化运维指南介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.4.2. 第二章 运维标准化建设</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id24">1.4.3. 第三章 运维工作梳理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id29">1.4.4. 第四章 运维标准制定</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id42">1.4.5. 第五章 标准化运维实施规范</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="15.GitHelp.html">1.5. GitHelp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.构建自己的写书博客/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim教程/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server学习/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.程序员实用工具网站/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP后台开发运维_读书笔记/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.一些常用的工具/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows系统相关/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Other</a> &raquo;</li>
+        
+          <li><a href="index.html">1. Git入门到熟练</a> &raquo;</li>
+        
+      <li>1.4. 开源中国标准化运维指南</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/other/01.Git入门到熟练/4.开源中国标准化运维指南.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#id1" id="id46">开源中国标准化运维指南</a><ul>
+<li><a class="reference internal" href="#id2" id="id47">第一章 开源中国标准化运维指南介绍</a><ul>
+<li><a class="reference internal" href="#id3" id="id48">1.1 开源中国标准化运维指南编写目的、实用范围</a></li>
+<li><a class="reference internal" href="#id4" id="id49">1.2 开源中国标准化运维指南内容及简介</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5" id="id50">第二章 运维标准化建设</a><ul>
+<li><a class="reference internal" href="#id6" id="id51">2.1 精细化管理</a></li>
+<li><a class="reference internal" href="#itil" id="id52">2.2 运维 ITIL 框架</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id24" id="id53">第三章 运维工作梳理</a><ul>
+<li><a class="reference internal" href="#id25" id="id54">3.1 监控巡检</a></li>
+<li><a class="reference internal" href="#id26" id="id55">3.2 故障处理</a></li>
+<li><a class="reference internal" href="#id27" id="id56">3.3 变更管理</a></li>
+<li><a class="reference internal" href="#id28" id="id57">3.4 资产申购</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id29" id="id58">第四章 运维标准制定</a><ul>
+<li><a class="reference internal" href="#id30" id="id59">4.1 监控标准化</a></li>
+<li><a class="reference internal" href="#id34" id="id60">4.2 部署标准化</a></li>
+<li><a class="reference internal" href="#id41" id="id61">4.3 变更标准化</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id42" id="id62">第五章 标准化运维实施规范</a><ul>
+<li><a class="reference internal" href="#id43" id="id63">5.1 运维标准化平台集</a></li>
+<li><a class="reference internal" href="#id44" id="id64">5.2 运维标准化落地负责人</a></li>
+<li><a class="reference internal" href="#id45" id="id65">5.3 运维标准化实施</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h1><a class="toc-backref" href="#id46">1.4. 开源中国标准化运维指南</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id47">1.4.1. 第一章 开源中国标准化运维指南介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3><a class="toc-backref" href="#id48">1.1 开源中国标准化运维指南编写目的、实用范围</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>开源中国自 2008 年成立以来，已在互联网世界屹立十余年。开源中国通过社区
+、码云和众包等产品支持开源生态环境。开源中国社区 2008
+年上线，通过十余年的发展，用户超过 300
+万，已然成为国内最大开源技术社区。随后开源中国推出代码托管·协作开发平台——码云，目前（至本指南起草日：2019年平安夜）开发者近
+400 万，托管项目超过 600 万，汇聚几乎所有本土原创开源项目，并于 2016
+年推出企业版，提供企业级代码托管服务，成为开发领域领先的 SaaS
+服务提供商。开源中国众包专注开发领域众包，累计认证开发者 5
+万余人，认证企业 1 万余家。成交项目超过 7000 个，交易金额过亿元。</p>
+<p>随着开源中国业务不断增长，线上服务器设备也在不断增加，同时应用部署及系统架构复杂多变，基础设施方面涵盖了
+IDC
+机房、共有云等，应用方面也使用了部分第三方接口服务。为了更好提升用户体验，服务更多的开发者，不仅需要开发人员能够开发出优秀的应用，同时更要求运维人员具备确保线上服务高效、稳定运行的能力。运维是一个不断变化、实践性很强的工作。一个统一的标准和操作规范是多层次运维的基础，在此基础上运维人员可为上层的精细化运维和个性化运维做更多针对业务定制的运维工作。</p>
+<p>经过十余年的发展，我们累积了大量的设备规划、架构设计、运维知识和排错经验。开源中国标准化运维指南是对这些宝贵经验的总结和升华。本指南可作为开源中国实行标准化运维的指导文档，亦可供码云、社区、众包事业部运维负责人参考。</p>
+</div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id49">1.2 开源中国标准化运维指南内容及简介</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>本指南涵盖以下章节和内容：</p>
+<ul class="simple">
+<li>开源中国标准化运维指南介绍</li>
+</ul>
+<p>介绍了本指南编写的契机以及目的，总结多年的运维经验，为企业内部后续的基础设施体量增长提供高可靠的运维保障，也可供同行业的公司和个人进行参考，旨在建立满足自己实际业务需要的运维保障体系。</p>
+<ul class="simple">
+<li>运维标准化建设</li>
+</ul>
+<p>本章从运维的标准化出发，介绍了精细化管理的理论，以及在运维过程中的具体实践。</p>
+<p>介绍了 ITIL
+框架的基本信息，本章具体对事件管理、问题管理、变更管理方面进行详细的阐述。</p>
+<ul class="simple">
+<li>运维工作梳理</li>
+</ul>
+<p>本章介绍了开源中国运维工作内容，结合实际运维工作，对不同事业部运维工作及工作流程进行统一梳理。</p>
+<ul class="simple">
+<li>运维标准制定</li>
+</ul>
+<p>通过对运维工作的梳理，为离散的运维作业制定相应的执行标准文档，使得运维工作流程化、规范化。其中包括：
+IT 资源运维标准、服务运维标准、线上事件处理标准。</p>
+<ul class="simple">
+<li>标准化运维实施规范</li>
+</ul>
+<p>本章介绍了运维人员如何依据制定的运维标准，规范自己的操作及工作。通过运维工作梳理，进行标准化运维文档的编写之后，接下来就是最重要的落地执行。有了规范标准和流程，那么在日常运维工作中就不应该出现随心所欲、按照自己习惯进行运维工作的现象。</p>
+</div>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id50">1.4.2. 第二章 运维标准化建设</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>运维工作涉及两大方面：一是确保服务的稳定性而对服务各个环节进行维护；二是当服务出现问题时，能够及时定位并且解决，以缩短故障时间。围绕以上两个方面，开源中国运维标准化建设，采用精细化管理的方法，总结自己的经验教训，将国际领先的
+ISO 管理体系， ITIL 流程体系合理的融合起来，形成独具特色的运维体系。</p>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id51">2.1 精细化管理</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4>2.1.1精细化管理的概念<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>精细化管理是一种理念，一种文化。它是社会分工精细化、以及服务质量精细化对现代管理的必然要求。现代管理学认为，科学化管理有三个层次：第一个层次是规范化，第二层次是精细化，第三个层次是个性化。</p>
+</div>
+<div class="section" id="id8">
+<h4>2.1.2 精细化管理在运维工作中的应用<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>运维精细化管理，实际是一个为保障线上服务高可用性为目标分解细化和责任落实的过程，是高可用性这个目标能有效地贯彻到每个环节并发挥作用的过程，同时也是提升团队整体执行力的一个重要途径。</p>
+<p>精细化运维是一个全员参与的过程， 每一位员工既是精细化运维的对象、
+载体和参与者，也是精细化运维的主体和实施者。</p>
+<p>如何实施精细化管理，开源中国将运维工作流程进行精细化，
+人员职责分工进行精细化，运维平台设计进行精细化，设备维护保养流程进行精细化，客户服务进行精细化。“精准、协作、细分、严谨”为基本原则，通过提升改造员工素质技能，加强内部控制，强化精细化管理，从整体上提升线上服务的稳定和安全性。</p>
+<p>“精准”，代表了运维的规范、认真的规则意识。信息要保持准确性，包括现场设备物理信息准确性，标示标签的准确性，设备数据的准确性，时钟的准确性，监控平台设备数据、
+状态的准确性， 流程的准确性，
+手册的准确性，这些信息是运维过程中风险识别、故障判断、故障处理的必要参考，信息的准确度直接关系到设备的最佳运行状态，以及故障能否及时处理，避免人为引起的二次故障。线上服务设备的日常维护事项众多，维护变更的安排是基于全面的风险评估后制定的，
+每一项维护应该在规定的时间内，准时进行，避免在不当的时间内处理不当的事情。</p>
+<p>“协作”，线上服务迭代频繁，架构复杂，因此在服务发布、服务变更的运维过程中要求开发人员、架构师能够参与其中，加强沟通，做到服务准确发布，变更顺畅执行。同时在服务因应用缺陷故障时，需要开发人员及时参与到故障响应中，做到故障快速定位，快速恢复服务。</p>
+<p>“严谨”，体现在对运维各个环节的执行和过程的控制。对线上服务运维的各项规章制度严格落实，控制质量。线上服务运维过程中，宁可失之于严，不可失之于宽。</p>
+<p>“细致”，运维中人员责任分工要细，各司其职，保障运维中各项工作落实到位；制度、规范要细，是质量考核的标准；标准的维护手册、标准的操作手册、标准的应急手册要细，确保在最不利的情况下，按照手册一步一步执行是安全可靠的；</p>
+<p>开源中国运维团队要严格按照精细化管理的要求，建设自有的运维标准，不断去检视流程、制度、规范、人员，挖掘潜在的能力，保障线上服务的高可用性。</p>
+</div>
+</div>
+<div class="section" id="itil">
+<h3><a class="toc-backref" href="#id52">2.2 运维 ITIL 框架</a><a class="headerlink" href="#itil" title="Permalink to this headline">¶</a></h3>
+<p>我们参考 ITIL
+的流程，根据多年运维的实际情况，对模块进行精选，对应用最广的事件管理（包含事件、故障（问题）、变更）、资产管理、安全管理进行描述。</p>
+<p>我们对事件、故障（问题）、变更的管理均在自有 Autom
+系统的事件管理模块中进行，资产、安全等管理在自有 Autom
+系统资产管理模块和安全管理模块中进行。事件管理模块中记录事件、故障（问题）和变更的编号、上报人、上报时间、处理组、
+处理人、 事件类型、 事件来源、 处理优先级、 详细描述、 事件原因分析、
+处理方案、处理过程等信息；资产管理模块中记录资产 ID
+、所在机房、购买时间、过保（过期）时间、所属业务、性能配置等详细信息；安全管理模块中记录防火墙规则、安全组规则、规则
+ID 、规则描述、规则状态、申请人等信息。</p>
+<p>事件管理单中可以对事件、父事件、故障（问题）单、变更单四个信息相互关联。方便事件的升级和跟踪。系统中将一个事件、故障（问题）和变更实施闭环管理,分为新建、分派、处理中、等待、已解决、已关闭
+6 个状态,跟踪记录处理目标 SLA
+（服务等级协议）信息，关闭时经上报人审核完成后给予满意度评价。</p>
+<div class="section" id="id9">
+<h4>2.2.1 事件管理<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<p>事件管理的目标是在对线上服务有事件安排需求时，通过内部事件管理流程，采用既定的措施，尽可能的快速处理事件，做到功能快速上线。</p>
+<p>事件管理的要素包括事件上报记录、事件级别定义、事件处理过程、事件升级机制、事件响应机制、事件状态，我们通过制定事件管理流程，在
+Autom 系统中跟踪记录事件的整个过程。</p>
+<div class="section" id="id10">
+<h5>2.2.1.1 事件级别定义<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h5>
+<p>（1）紧急：需立刻处理，否则影响线上服务的事件</p>
+<p>（2）重要：目前没有影响到线上服务，但必须尽快处理的事件</p>
+<p>（3）次要：未影响到线上服务，但需要处理，且可以延期处理的事件</p>
+<p>（4）提醒：对线上服务不会有影响，可不处理但需要注意的事件</p>
+</div>
+</div>
+<div class="section" id="id11">
+<h4>2.2.2 故障（问题）管理<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id12">
+<h5>2.2.2.1 故障级别定义<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
+<p>（1）故障：收到监控系统故障报警通知，根据报警内容定义故障级别</p>
+<p>（2）三级故障：指对服务正常运行形成安全隐患但未造成实际影响的故障。</p>
+<p>（3）二级故障：线上服务中单个关键服务故障（需定义清楚关键服务）。</p>
+<p>（4）一级故障：参考运行 SLA
+要求，直接影响业务运行可靠性的故障定义为一级故障。</p>
+<p>（5）UIOC：服务运行异常导致应用层面发生严重故障，为解决相应故障所启动的重大事件管理流程。</p>
+</div>
+<div class="section" id="id13">
+<h5>2.2.2.2 问题发现<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h5>
+<p>运维人员通过例行巡检、监控系统、报警通知等方式了解到线上服务报警信息，第一时间登录监控系统了解报警情况，获得报警的完整信息。具体情况判断是一级故障、二级故障或三级故障。</p>
+</div>
+<div class="section" id="id14">
+<h5>2.2.2.3 故障分级上报制度<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>当运维人员判断为三级故障，由运维人员对故障进行排除和更进。</li>
+<li>如为二级故障，运维人员于 2
+分钟之内根据故障情况安排处理措施，并就故障排除进展适时通报管理者代表。</li>
+<li>如为一级故障，运维人员于 2 分钟之内通知管理者代表，管理者代表 2
+分钟之内参与到故障处理及决策，并每隔 30
+分钟汇报故障排除进展，管理者代表根据故障具体情况通报公司相关领导，并确定是否启动
+UIOC 。</li>
+<li>所有故障处理完毕后，均应在在相关管理系统中填报故障事件，并记录故障处理全过程。</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id15">
+<h4>2.2.3 变更管理<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>变更管理的目的，是确保以受控的方式去评估、批准、实施和评审所有变更，确保标准方法和过程得到使用，阻止未授权的变更发生，使得变更风险可以降至最低，同时将变更相关突发事件的影响减到最小，并且确保所有变更都必须可跟踪和可追溯。</p>
+<p>变更管理的要素包括变更的分类、变更管理的流程、变更管理的角色定义、变更的发起、变更的审批、变更的执行和关闭，变更的常规政策和预授权政策等。</p>
+<div class="section" id="id16">
+<h5>2.2.3.1 变更管理解释<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h5>
+<p>变更管理：在对基础设施进行日常运行、维护中所涉及具有一定风险性操作过程的管理描述。</p>
+<p>变更管理的目标旨在通过规范化、标准化、流程化的管理方式，规避在变更实施中的风险项。变更管理范围涉及例行变更，事件类变更，系统架构的更改，设备状态、参数、配置等方面的变更。</p>
+</div>
+<div class="section" id="id17">
+<h5>2.2.3.2 变更的分类<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h5>
+<p>按照变更的影响程度，分为三级变更、二级变更、一级变更。</p>
+<ul class="simple">
+<li>三级变更：主要针对服务正常状态下的配置参数修改、确认无风险且可回退的例行变更、运行状态变更；</li>
+<li>二级变更：单个服务的故障维护，单个服务的配置变更，对线上服务有一定风险或者难以回退甚至不可回退的例行变更；</li>
+<li>一级变更：又称为重大变更，主要指对线上服务有较大隐患的变更、影响服务稳定性的变更、对服务架构有实质性的改变且难以回退甚至不可回退的变更。</li>
+</ul>
+</div>
+<div class="section" id="id18">
+<h5>2.2.3.3 变更角色定义<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h5>
+<p>变更管理将变更流程中涉及的变更委员会、日常运维负责人、开发工程师、开发负责人角色及职责进行分别定义。</p>
+</div>
+<div class="section" id="id19">
+<h5>2.2.3.4 变更分级管理图<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h5>
+<center><p>图一 变更分级管理图</p>
+</center></div>
+<div class="section" id="id20">
+<h5>2.2.3.5 变更发起<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h5>
+<p>变更管理制度详细说明了变更的发起人，变更的主要要素。包括变更单的类型、变更基本信息、变更原因、变更方案、变更等级评定。</p>
+</div>
+<div class="section" id="id21">
+<h5>2.2.3.6 变更审批<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h5>
+<p>该步骤中，变更的审批者将评估和检查变更请求所产生的影响，确保能够在实施变更时既能满足业务的要求，同时又对服务造成的影响最小。该步骤将决定是否进行变更。</p>
+</div>
+<div class="section" id="id22">
+<h5>2.2.3.6 变更实施<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h5>
+<p>通过本步骤，将变更内容在生产环境中进行实施。根据变更单授权审批的实施时间、实施程序等内容，实施人组织筹备变更实施，并如实记录实施过程。</p>
+</div>
+<div class="section" id="id23">
+<h5>2.2.3.7 变更关闭<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h5>
+<p>本步骤的目的是考察变更是否达到了预期的效果，对变更结果进行确认，且变更单的信息是正确、完整的。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id24">
+<h2><a class="toc-backref" href="#id53">1.4.3. 第三章 运维工作梳理</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id25">
+<h3><a class="toc-backref" href="#id54">3.1 监控巡检</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>运维人员通过监控系统 Mortal
+对线上服务进行巡检，了解当前服务运行状态、服务器负载情况等。</p>
+</div>
+<div class="section" id="id26">
+<h3><a class="toc-backref" href="#id55">3.2 故障处理</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>在线上服务出现故障或者收到报警通知时，评估线上服务状态，及时处理线上故障并记录故障解决过程。</p>
+</div>
+<div class="section" id="id27">
+<h3><a class="toc-backref" href="#id56">3.3 变更管理</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p>管理并执行变更需求，在线上环境完成变更操作，其中包括：日常迭代、配置参数变更、版本升级、资产交付、服务部署等操作。</p>
+</div>
+<div class="section" id="id28">
+<h3><a class="toc-backref" href="#id57">3.4 资产申购</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>根据线上服务容量变化评估未来服务器容量需求，制定扩容计划，经领导审批后完成资产购置及上线。</p>
+</div>
+</div>
+<div class="section" id="id29">
+<h2><a class="toc-backref" href="#id58">1.4.4. 第四章 运维标准制定</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id30">
+<h3><a class="toc-backref" href="#id59">4.1 监控标准化</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p>所有监控数据采集及聚合由 Prometheus 及众多 agent 端的 exporter
+完成；监控可视化展示由 Grafana Dashboard 实现；告警消息发送由 Grafana
+Alert 模块完成， Slack 作为消息接收端。</p>
+<div class="section" id="id31">
+<h4>4.1.1 监控系统服务端标准化<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<p>监控服务端统一部署在 monitor 节点，服务端所有组建使用 docker
+部署，同时通过 docker-compose
+编排（项目地址：<a class="reference external" href="https://gitee.com/oscstudio/PromStack">https://gitee.com/oscstudio/PromStack</a>
+）。持久化数据卷挂载到 monitor 节点 <code class="docutils literal notranslate"><span class="pre">/data/PromStack</span></code> 目录下，
+Prometheus 监控数据保存 184 天（ 6 个月）。</p>
+</div>
+<div class="section" id="id32">
+<h4>4.1.2 监控系统客户端标准化<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
+<p>所有监控客户端均通过 Go
+语言（也可以是其它语言）编写的二进制文件部署，对于部分特殊的服务监控通过应用代码内埋点实现。统一部署在被监控节点的
+<code class="docutils literal notranslate"><span class="pre">/opt/promExporters</span></code> 目录下，通过将 metrics 采集入口注册到服务端
+consul 实现服务发现。</p>
+</div>
+<div class="section" id="id33">
+<h4>4.1.3 监控系统图表标准化<a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h4>
+<p>通过创建 Grafana Dashboard 将监控数据从数据源 Prometheus
+抽取并动态展示到可视化 web 界面。对于创建的每个 Dashboard 都实时到出为
+json 文件备份到项目 PromStack 的 <code class="docutils literal notranslate"><span class="pre">conf/grafana/dashboards/</span></code> 目录下。</p>
+</div>
+</div>
+<div class="section" id="id34">
+<h3><a class="toc-backref" href="#id60">4.2 部署标准化</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p>对于服务上线的基本要素：硬件环境、操作系统及软件依赖、应用及中间件，这些要素在部署服务时对服务部署成功率、服务稳定性都至关重要。部署标准化直接影响到整个软件生命周期的维护复杂度，因此服务上线时必须有一套部署标准。</p>
+<div class="section" id="id35">
+<h4>4.2.1 硬件配置标准化<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h4>
+<p>根据部署的应用对的资源需求，按资源容量需求采购服务器，合理规划系统架构，按需采购服务器数量，遇到机柜扩容需求时，需要根据当前
+IDC 机房布线规范合理设计机柜布线。</p>
+</div>
+<div class="section" id="id36">
+<h4>4.2.2 软件配置标准化<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h4>
+<p>包括操作系统版本 / Linux 发行版、软件依赖列表。</p>
+<div class="section" id="id37">
+<h5>4.2.2.1 码云：<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h5>
+<ul class="simple">
+<li>操作系统： Ubuntu Server 16.04 与 18.04</li>
+<li>软件依赖别表：</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ruby</span> <span class="mf">2.3</span><span class="o">.</span><span class="mi">8</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id38">
+<h5>4.2.2.2 社区：<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h5>
+</div>
+<div class="section" id="id39">
+<h5>4.2.2.3 众包：<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h5>
+</div>
+</div>
+<div class="section" id="id40">
+<h4>4.2.3 应用配置标准化<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+<p>应用及中间件配置文件统一在运维平台 Autom
+配置文件管理模块管理，配置管理模块负责完成配置文件聚合、分类、保存、更新、分发等配置文件整个生命周期的管理。</p>
+</div>
+</div>
+<div class="section" id="id41">
+<h3><a class="toc-backref" href="#id61">4.3 变更标准化</a><a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h3>
+<p>对每一个变更都要有一套风险评估体系，基本要素包括：变更对象、变更内容、变更影响范围、变更操作复杂度、回退复杂度。经过相应层级（详见第二章《变更分级管理图》）的评估后在变更申请但中上报变更明细。</p>
+</div>
+</div>
+<div class="section" id="id42">
+<h2><a class="toc-backref" href="#id62">1.4.5. 第五章 标准化运维实施规范</a><a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id43">
+<h3><a class="toc-backref" href="#id63">5.1 运维标准化平台集</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<p>监控系统：Mortal</p>
+<p>日志系统：Earthling</p>
+<p>运维平台：Autom</p>
+<p>CMDB：Autom</p>
+<p>平台操作指南统一在运维知识库中给出。</p>
+</div>
+<div class="section" id="id44">
+<h3><a class="toc-backref" href="#id64">5.2 运维标准化落地负责人</a><a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<p>变更委员会：</p>
+<p>运维标准化平台：</p>
+<p>故障响应：</p>
+<p>配置管理：</p>
+</div>
+<div class="section" id="id45">
+<h3><a class="toc-backref" href="#id65">5.3 运维标准化实施</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<p>变更实施：</p>
+<p>事件上报：</p>
+<p>故障处理：</p>
+<p>知识库管理：分为事件单历史纪录和运维 wiki
+，要求事件单中详细记录所有事件处理过程。对于当时未能得出缘由的事件、运维体系中各模块的操作指南、运维经验总结、技术探讨等知识积累可记录到
+wiki 中，分享给运维组成员及其他爱好者。</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="15.GitHelp.html" class="btn btn-neutral float-right" title="1.5. GitHelp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="3.Github高级搜索方式.html" class="btn btn-neutral float-left" title="1.3. Github高级搜索方式" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

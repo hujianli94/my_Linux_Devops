@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -132,6 +134,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id13">8.16.2. 1.2. keepalived</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id18">8.16.3. 实战案例1</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id25">8.16.4. 实战案例2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id33">8.16.5. 相关参考文献</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="17.Pacemaker实现双机热备.html">8.17. Pacemaker实现双机热备</a></li>
@@ -246,18 +249,19 @@
 </li>
 <li><a class="reference internal" href="#id25" id="id55">实战案例2</a><ul>
 <li><a class="reference internal" href="#id26" id="id56">环境</a></li>
-<li><a class="reference internal" href="#id28" id="id57">拓扑</a></li>
+<li><a class="reference internal" href="#id27" id="id57">拓扑</a></li>
 <li><a class="reference internal" href="#master" id="id58">master</a></li>
 <li><a class="reference internal" href="#backup" id="id59">backup</a></li>
 <li><a class="reference internal" href="#masterbackup" id="id60">master和backup上启动服务</a></li>
 <li><a class="reference internal" href="#web" id="id61">web服务器配置</a></li>
-<li><a class="reference internal" href="#id29" id="id62">配置虚拟地址</a></li>
-<li><a class="reference internal" href="#id30" id="id63">配置路由</a></li>
+<li><a class="reference internal" href="#id28" id="id62">配置虚拟地址</a></li>
+<li><a class="reference internal" href="#id29" id="id63">配置路由</a></li>
 <li><a class="reference internal" href="#arp" id="id64">配置ARP</a></li>
-<li><a class="reference internal" href="#id31" id="id65">测试</a></li>
-<li><a class="reference internal" href="#id33" id="id66">思考题</a></li>
+<li><a class="reference internal" href="#id30" id="id65">测试</a></li>
+<li><a class="reference internal" href="#id32" id="id66">思考题</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id33" id="id67">相关参考文献</a></li>
 </ul>
 </li>
 </ul>
@@ -280,7 +284,9 @@
 <p>通常用平均无故障时间(MTTF：mean time to
 failure)来度量系统的可靠性,用平均故障维修时间（MTTR：mean time to
 restoration）来度量系统的可维护性。于是可用性被定义为：HA=MTTF/(MTTF+MTTR)*100%。</p>
-<p><img alt="image0" src="../../_images/keepalived001.png" /></p>
+<div class="figure">
+<img alt="" src="../../_images/keepalived001.png" />
+</div>
 </div>
 <div class="section" id="failover">
 <h3><a class="toc-backref" href="#id38">自动切换/故障转移（FailOver）</a><a class="headerlink" href="#failover" title="Permalink to this headline">¶</a></h3>
@@ -390,7 +396,9 @@ VIP:192.168.0.10
 <h3><a class="toc-backref" href="#id48">原理示例图</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <p>相关文档链接：</p>
 <p><a class="reference external" href="https://www.cnblogs.com/cxbhakim/p/9068833.html">https://www.cnblogs.com/cxbhakim/p/9068833.html</a></p>
-<p><img alt="image1" src="../../_images/keepalived+nginx001.png" /></p>
+<div class="figure">
+<img alt="" src="../../_images/keepalived+nginx001.png" />
+</div>
 </div>
 <div class="section" id="server1">
 <h3><a class="toc-backref" href="#id49">server1</a><a class="headerlink" href="#server1" title="Permalink to this headline">¶</a></h3>
@@ -530,8 +538,8 @@ $ systemctl start keepalived.service
 </div>
 <div class="section" id="id21">
 <h3><a class="toc-backref" href="#id52">编辑监控脚本</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="server1-1">
-<span id="id22"></span><h4>server1<a class="headerlink" href="#server1-1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id22">
+<h4>server1<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span># 添加Nginx监控脚本
 
 vi /etc/keepalived/ck_ng.sh
@@ -552,8 +560,8 @@ chmod +x /etc/keepalived/ck_ng.sh
 </pre></div>
 </div>
 </div>
-<div class="section" id="server2-1">
-<span id="id23"></span><h4>server2<a class="headerlink" href="#server2-1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id23">
+<h4>server2<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span># 添加Nginx监控脚本
 
 vi /etc/keepalived/ck_ng.sh
@@ -587,7 +595,7 @@ chmod +x /etc/keepalived/ck_ng.sh
 <div class="section" id="id25">
 <h2><a class="toc-backref" href="#id55">8.16.4. 实战案例2</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id26">
-<span id="id27"></span><h3><a class="toc-backref" href="#id56">环境</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id56">环境</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <p>keepalived+lvs集群</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.116</span>   <span class="n">dr1</span>    <span class="n">负载均衡器</span>   <span class="n">master</span>
 <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.117</span>  <span class="n">dr2</span>    <span class="n">负载均衡器</span>
@@ -596,9 +604,11 @@ chmod +x /etc/keepalived/ck_ng.sh
 </pre></div>
 </div>
 </div>
-<div class="section" id="id28">
-<h3><a class="toc-backref" href="#id57">拓扑</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
-<p><img alt="image2" src="../../_images/keepalived+lvs001.png" /></p>
+<div class="section" id="id27">
+<h3><a class="toc-backref" href="#id57">拓扑</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<div class="figure">
+<img alt="" src="../../_images/keepalived+lvs001.png" />
+</div>
 </div>
 <div class="section" id="master">
 <h3><a class="toc-backref" href="#id58">master</a><a class="headerlink" href="#master" title="Permalink to this headline">¶</a></h3>
@@ -724,8 +734,8 @@ virtual_server 192.168.0.20 80 {                #LVS 配置，VIP
 </pre></div>
 </div>
 </div>
-<div class="section" id="id29">
-<h3><a class="toc-backref" href="#id62">配置虚拟地址</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id28">
+<h3><a class="toc-backref" href="#id62">配置虚拟地址</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cp /etc/sysconfig/network-scripts/{ifcfg-lo,ifcfg-lo:0}</span>
  \<span class="c1">#vim /etc/sysconfig/network-scripts/ifcfg-lo:0</span>
  <span class="n">DEVICE</span><span class="o">=</span><span class="n">lo</span><span class="p">:</span><span class="mi">0</span>
@@ -736,8 +746,8 @@ virtual_server 192.168.0.20 80 {                #LVS 配置，VIP
 </pre></div>
 </div>
 </div>
-<div class="section" id="id30">
-<h3><a class="toc-backref" href="#id63">配置路由</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id29">
+<h3><a class="toc-backref" href="#id63">配置路由</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#vim /etc/rc.local
 /sbin/route add -host 192.168.0.20  dev lo:0
 在两台机器（RS）上，添加一个路由：route add -host 192.168.0.20 dev lo:0
@@ -763,8 +773,8 @@ virtual_server 192.168.0.20 80 {                #LVS 配置，VIP
 </pre></div>
 </div>
 </div>
-<div class="section" id="id31">
-<h3><a class="toc-backref" href="#id65">测试</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id30">
+<h3><a class="toc-backref" href="#id65">测试</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
 <div class="section" id="lvs">
 <h4>1）观察lvs路由条目<a class="headerlink" href="#lvs" title="Permalink to this headline">¶</a></h4>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span># master上 查询
@@ -789,9 +799,11 @@ ens32:
 </pre></div>
 </div>
 </div>
-<div class="section" id="id32">
-<h4>3）客户端浏览器访问vip<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h4>
-<p><img alt="image3" src="../../_images/keepalived_lvs_0002.png" /></p>
+<div class="section" id="id31">
+<h4>3）客户端浏览器访问vip<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<div class="figure">
+<img alt="" src="../../_images/keepalived_lvs_0002.png" />
+</div>
 </div>
 <div class="section" id="masterkeepalived-vip">
 <h4>4）关闭master上的keepalived服务，再次访问vip<a class="headerlink" href="#masterkeepalived-vip" title="Permalink to this headline">¶</a></h4>
@@ -806,11 +818,13 @@ $ systemctl stop keepalived.service
 $ systemctl stop httpd
 </pre></div>
 </div>
-<p><img alt="image4" src="../../_images/keepalived_lvs0003.png" /></p>
+<div class="figure">
+<img alt="" src="../../_images/keepalived_lvs0003.png" />
 </div>
 </div>
-<div class="section" id="id33">
-<h3><a class="toc-backref" href="#id66">思考题</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="id32">
+<h3><a class="toc-backref" href="#id66">思考题</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.什么是集群？集群分为哪些类型？列举代表的产品。
 
 2.有些负载均衡集群服务？他们有什么区别？
@@ -824,6 +838,12 @@ $ systemctl stop httpd
 6.负载均衡集群的策略有哪些？能否举例说明？
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="id33">
+<h2><a class="toc-backref" href="#id67">8.16.5. 相关参考文献</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="mi">361</span><span class="n">way</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="n">framework</span><span class="o">/</span><span class="mf">5208.</span><span class="n">html</span>
+</pre></div>
 </div>
 </div>
 </div>

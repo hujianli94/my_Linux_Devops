@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -142,11 +144,17 @@
 <li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
 <li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
-<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.34. Linux初始化系统安全设置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.35. 使用tar命令进行本地备份scripts</a></li>
-<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.36. 配置Yum软件仓库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.37. Vim编辑器学习</a></li>
-<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.38. Linux下软件的安装与管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Ubuntu安装和初始化.html">1.34. Ubuntu安装和初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.DRBD详细解说及配置过程记录.html">1.35. DRBD详细解说及配置过程记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.36. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.37. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.38. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.39. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.40. Linux下软件的安装与管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.Linux下绑定网卡的操作记录.html">1.41. Linux下绑定网卡的操作记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.Linux性能监控工具PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.system用法.html">1.43. system用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.恢复文件相关工具.html">1.44. 恢复文件相关工具</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -286,6 +294,11 @@ $scp localpath ID@host:path
 以ssh协议，遍历下载path路径下的整个文件系统，到本地的localpath:
 
 $scp -r ID@site:path localpath
+
+# ssh 免密传输
+sshpass -p gitee@xxxx scp -P 222 roles/installpack/files/localrepos/localdrbd84repodir.tar.gz git@192.168.1.35:/tmp/
+
+sshpass -p gitee@xxxx scp -P 222 files/conf/drbd/r0.res git@&lt;ip&gt;:/tmp/
 </pre></div>
 </div>
 </div>

@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>3.8. 8 三剑客之sed &mdash; 运维开发修炼之路</title>
+  <title>3.14. 8 三剑客之sed &mdash; 运维开发修炼之路</title>
   
 
   
@@ -46,8 +46,8 @@
     
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="3.9. 9 三剑客之awk" href="09.三剑客-awk.html" />
-    <link rel="prev" title="3.7. 7 三剑客之grep" href="07.三剑客之grep.html" /> 
+    <link rel="next" title="3.15. 9 三剑客之awk" href="09.三剑客-awk.html" />
+    <link rel="prev" title="3.13. 7 三剑客之grep" href="07.三剑客之grep.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -111,71 +113,79 @@
 <li class="toctree-l3"><a class="reference internal" href="02.字符串与数组.html">3.2. 2 字符串与数组</a></li>
 <li class="toctree-l3"><a class="reference internal" href="03.运算符.html">3.3. 3 运算符</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.流程控制.html">3.4. 4 流程控制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.5. 5 函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.6. 6 正则表达式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.7. 7 三剑客之grep</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">3.8. 8 三剑客之sed</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">3.8.1. 概念</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id2">3.8.2. 适用场景</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id3">3.8.3. 语法</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id4">3.8.4. 使用举例</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#keepalive">3.8.5. 修改keepalive配置剔除后端服务器</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">3.8.6. sed练习</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">3.8.7. 使用sed修改文件流的方式</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id14">3.8.8. 查找和替换</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id16">3.8.9. 字符转换</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">3.8.10. 插入文本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id25">3.8.11. 读入文本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id26">3.8.12. 打印</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id29">3.8.13. 写文件</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id30">3.8.14. sed 脚本</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id33">3.8.15. 高级替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#dev-null">3.5. “2&gt;/dev/null”会隐藏错误的信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#bin-sh">3.6. !/bin/sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#author-anchen">3.7. &#64;Author: anchen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#date-2018-11-12-22-55-50">3.8. &#64;Date: 2018-11-12 22:55:50</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#last-modified-by-hujianli">3.9. &#64;Last Modified by: hujianli</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.流程控制.html#last-modified-time-2018-11-13-13-00-05">3.10. &#64;Last Modified time: 2018-11-13 13:00:05</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.函数.html">3.11. 5 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.正则表达式.html">3.12. 6 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.三剑客之grep.html">3.13. 7 三剑客之grep</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.14. 8 三剑客之sed</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.14.1. 概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.14.2. 适用场景</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">3.14.3. 语法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.14.4. 使用举例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#keepalive">3.14.5. 修改keepalive配置剔除后端服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.14.6. sed练习</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.14.7. 使用sed修改文件流的方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.14.8. 查找和替换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">3.14.9. 字符转换</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">3.14.10. 插入文本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">3.14.11. 读入文本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">3.14.12. 打印</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id29">3.14.13. 写文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">3.14.14. sed 脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id33">3.14.15. 高级替换</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.9. 9 三剑客之awk</a></li>
-<li class="toctree-l3"><a class="reference internal" href="10.杂项.html">3.10. shell 技巧与杂项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.11. xagrs使用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a></li>
-<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.16. 备份MongoDB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.17. 自动安装memcached</a></li>
-<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.18. 系统各项内容检测check_os</a></li>
-<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
-<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
-<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
-<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
-<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.32. 百宝箱脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
-<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.34. python实现端口扫描</a></li>
-<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.35. python检测ip存活状态</a></li>
-<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
-<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
-<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
-<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
-<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
-<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.46. 目录定时备份</a></li>
-<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a></li>
-<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
-<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.三剑客-awk.html">3.15. 9 三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell技巧与杂项.html">3.16. shell技巧与杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs使用.html">3.17. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.收集的一些shell脚本.html">3.18. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.自动安装zabbix服务器脚本.html">3.19. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.自动化安装cacti脚本.html">3.20. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.自动安装MongoDB脚本.html">3.21. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.备份MongoDB脚本.html">3.22. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.自动安装memcached脚本.html">3.23. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system检测脚本.html">3.24. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.安装tomcat脚本.html">3.25. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper脚本.html">3.26. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch脚本.html">3.27. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.自动Autoinstall_ELK_V1.3.html">3.28. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd脚本.html">3.29. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.30. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux下以秒为单位执行脚本.html">3.31. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.备份文件shell脚本.html">3.32. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux系统性能.html">3.33. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.修改IP_主机名_网卡信息脚本.html">3.34. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.检查恶意IP登录，拒绝SSH.html">3.35. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.备份数据库，删除7天前的数据.html">3.36. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6开机性能优化.html">3.37. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.百宝箱脚本.html">3.38. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.39. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python实现端口扫描.html">3.40. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python检测ip存活状态.html">3.41. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.42. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.43. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.44. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx日志切割脚本.html">3.45. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.46. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.47. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.48. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.用if语句编写选择菜单.html">3.49. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.使用while语句编写选择菜单.html">3.50. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.使用until编写选择菜单.html">3.51. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.目录定时备份.html">3.52. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.远程操作ftp进行上传和下载.html">3.53. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.批量创建用户脚本.html">3.54. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos升级内核版本(附带升级脚本).html">3.55. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU监控脚本.html">3.56. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.检测函数执行是否超时.html">3.57. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.老男孩Shell中的一些脚本.html">3.58. 老男孩Shell中的一些脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.快捷安装不同版本Python.html">3.59. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.常用shell脚本大全.html">3.60. 常用shell脚本大全</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
@@ -241,7 +251,7 @@
         
           <li><a href="index.html">3. 玩转shell脚本编程</a> &raquo;</li>
         
-      <li>3.8. 8 三剑客之sed</li>
+      <li>3.14. 8 三剑客之sed</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -326,21 +336,21 @@
 </ul>
 </div>
 <div class="section" id="sed">
-<h1><a class="toc-backref" href="#id36">3.8. 8 三剑客之sed</a><a class="headerlink" href="#sed" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id36">3.14. 8 三剑客之sed</a><a class="headerlink" href="#sed" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id37">3.8.1. 概念</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id37">3.14.1. 概念</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>sed是一种流编辑的文本处理工具， *
 工作模式：将当前处理的行存储在临时缓冲区（模式空间），对缓冲区中的内容利用制定的动作进行处理，完成后输出到屏幕，接着反复重复执行此操作完成整改文件的处理。</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id38">3.8.2. 适用场景</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id38">3.14.2. 适用场景</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>大文件</li>
 <li>有规律的文本</li>
 </ul>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id39">3.8.3. 语法</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id39">3.14.3. 语法</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <p>sed [option] ‘Addresscommand’ [file …]</p>
 <ul class="simple">
 <li>选项</li>
@@ -402,7 +412,7 @@ x\{m,n\} 重复字符x，至少m次，不多于n次，如：/0\{5,10\}/匹配5~1
 </div>
 </div>
 <div class="section" id="id4">
-<h2><a class="toc-backref" href="#id40">3.8.4. 使用举例</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id40">3.14.4. 使用举例</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、删除/etc/grub.conf文件中行首的空白符；
 sed -r &#39;s/^[[:space:]]+//g&#39; /etc/grub.conf
 2、替换/etc/inittab文件中&quot;id:3:initdefault:&quot;一行中的数字为5；
@@ -523,18 +533,18 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="keepalive">
-<h2><a class="toc-backref" href="#id41">3.8.5. 修改keepalive配置剔除后端服务器</a><a class="headerlink" href="#keepalive" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id41">3.14.5. 修改keepalive配置剔除后端服务器</a><a class="headerlink" href="#keepalive" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;/real_server.*10.0.1.158.*8888/,+8 s/^/#/&#39;</span> <span class="n">keepalived</span><span class="o">.</span><span class="n">conf</span>
 <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s1">&#39;/real_server.*10.0.1.158.*8888/,+8 s/^#//&#39;</span> <span class="n">keepalived</span><span class="o">.</span><span class="n">conf</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id42">3.8.6. sed练习</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id42">3.14.6. sed练习</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>修改源文件本身则需要使用“-i”参数</p>
 </div>
 <div class="section" id="id6">
-<h2><a class="toc-backref" href="#id43">3.8.7. 使用sed修改文件流的方式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id43">3.14.7. 使用sed修改文件流的方式</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">使用</span><span class="o">-</span><span class="n">e</span> <span class="n">参数和分号连接多编辑命令</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat sed.txt</span>
 <span class="n">this</span> <span class="ow">is</span> <span class="n">line</span> <span class="mi">1</span><span class="p">,</span><span class="n">this</span> <span class="ow">is</span> <span class="n">First</span> <span class="n">line</span>
@@ -642,7 +652,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id14">
-<h2><a class="toc-backref" href="#id53">3.8.8. 查找和替换</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id53">3.14.8. 查找和替换</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="line-1">
 <h3><a class="toc-backref" href="#id54">替换匹配到line的行，只替换匹配到的第1次</a><a class="headerlink" href="#line-1" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed &#39;s/line/LINE/&#39; sed.txt</span>
@@ -685,7 +695,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id16">
-<h2><a class="toc-backref" href="#id58">3.8.9. 字符转换</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id58">3.14.9. 字符转换</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
 <p>使用y命令可进行字符转换，其作用为将一系列字符逐个地变换为另外一系列字符，</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed &#39;y/1245/ABCD/&#39; sed.txt</span>
 <span class="n">this</span> <span class="ow">is</span> <span class="n">line</span> <span class="n">A</span><span class="p">,</span><span class="n">this</span> <span class="ow">is</span> <span class="n">First</span> <span class="n">line</span>
@@ -696,7 +706,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id17">
-<h2><a class="toc-backref" href="#id59">3.8.10. 插入文本</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id59">3.14.10. 插入文本</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id18">
 <h3><a class="toc-backref" href="#id60">在第2行后添加一行空行</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed &#39;2G&#39; sed.txt</span>
@@ -767,7 +777,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id25">
-<h2><a class="toc-backref" href="#id68">3.8.11. 读入文本</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id68">3.14.11. 读入文本</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="etc-passwdsed-txt">
 <h3><a class="toc-backref" href="#id69">将/etc/passwd的内容读入到sed.txt的空行之后</a><a class="headerlink" href="#etc-passwdsed-txt" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed &#39;/^$/r /etc/passwd&#39; sed.txt</span>
@@ -819,7 +829,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id26">
-<h2><a class="toc-backref" href="#id70">3.8.12. 打印</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id70">3.14.12. 打印</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id27">
 <h3><a class="toc-backref" href="#id71">打印第1行</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed -n &#39;1p&#39; sed.txt</span>
@@ -836,7 +846,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id29">
-<h2><a class="toc-backref" href="#id73">3.8.13. 写文件</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id73">3.14.13. 写文件</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">## 将匹配打印到的内容输出到 output文件中</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed -n &#39;1,2 w output&#39; sed.txt</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat output</span>
@@ -846,7 +856,7 @@ HJL hello world
 </div>
 </div>
 <div class="section" id="id30">
-<h2><a class="toc-backref" href="#id74">3.8.14. sed 脚本</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id74">3.14.14. sed 脚本</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id31">
 <h3><a class="toc-backref" href="#id75">编写一个sed脚本</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ~]# cat sed.rules
@@ -867,7 +877,7 @@ s/this/THAT/g
 </div>
 </div>
 <div class="section" id="id33">
-<h2><a class="toc-backref" href="#id77">3.8.15. 高级替换</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id77">3.14.15. 高级替换</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id34">
 <h3><a class="toc-backref" href="#id78">替换空白行后的一行的内容</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># sed &#39;/^$/{n;s/line/LINE/g}&#39; sed.txt</span>
@@ -895,10 +905,10 @@ s/this/THAT/g
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="09.三剑客-awk.html" class="btn btn-neutral float-right" title="3.9. 9 三剑客之awk" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="09.三剑客-awk.html" class="btn btn-neutral float-right" title="3.15. 9 三剑客之awk" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="07.三剑客之grep.html" class="btn btn-neutral float-left" title="3.7. 7 三剑客之grep" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="07.三剑客之grep.html" class="btn btn-neutral float-left" title="3.13. 7 三剑客之grep" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

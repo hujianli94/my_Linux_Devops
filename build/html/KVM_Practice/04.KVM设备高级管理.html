@@ -293,16 +293,26 @@ virt-install --virt-type kvm \
 </pre></div>
 </div>
 <p>此时客户机的Windows安装程序没有发现存在硬盘，如图</p>
-<p><img alt="image0" src="../_images/kvm_viostor001.png" /></p>
+<div class="figure">
+<img alt="" src="../_images/kvm_viostor001.png" />
+</div>
 <p>选择“加载驱动程序”选项，从启动客户机时给它的virtio-win的光驱中安装virtio-blk（viostor文件夹→win10→amd64）磁盘驱动程序，</p>
-<p><img alt="image1" src="../_images/kvm_virto0002.png" /></p>
-<p><img alt="image2" src="../_images/kvm_virt000010.png" /></p>
+<div class="figure">
+<img alt="" src="../_images/kvm_virto0002.png" />
+</div>
+<div class="figure">
+<img alt="" src="../_images/kvm_virt000010.png" />
+</div>
 <p>安装完以后，客户机的Windows 10安装程序就可以识别半虚拟硬盘了。</p>
-<p><img alt="image3" src="../_images/kvm_virt0000011.png" /></p>
+<div class="figure">
+<img alt="" src="../_images/kvm_virt0000011.png" />
+</div>
 <p>安装完virtio-win.iso中的半虚拟化网卡驱动（NetKVM目录中）后，网卡被识别并可以使用。</p>
 <p>对于已安装好Windows操作系统的客户机，我们可以将virtio-win.iso作为客户机的光驱分配给客户机，然后在客户机中安装或升级驱动。对于virtio磁盘驱动的安装，也可以以QEMU完全模拟硬盘的方式（前面章节中-hda参数），先安装好客户机。然后，另外分配给它一块半虚拟化硬盘，再在客户机中安装virtio-win.iso中的驱动程序即可。</p>
 <p>设备管理器中识别半虚拟化网卡</p>
-<p><img alt="image4" src="../_images/kvm_virtor0003.png" /></p>
+<div class="figure">
+<img alt="" src="../_images/kvm_virtor0003.png" />
+</div>
 <p>在64位的Windows系统中，从Windows
 Vista开始，所安装的驱动就要求有数字签名。如果使用的发行版并没有提供Windows
 virtio驱动的二进制文件，或者没有对应的数字签名，则可以选择从Fedora项目中下载二进制ISO文件，它们都进行了数字签名，并且通过了在Windows系统上的测试。</p>

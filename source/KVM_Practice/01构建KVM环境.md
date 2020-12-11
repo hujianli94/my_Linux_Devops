@@ -110,7 +110,14 @@ qemu-kvm   # 管理虚拟机磁盘
 # systemctl status libvirtd.service
 ```
 
+#### 3.2.1 Yum安装KVM案例二
+
+参考文献：
+
+http://blog.linuxli.com/2019/05/Hypervisor_kvm/
+
 ### 3.3 编译和安装QEMU
+
 除了在内核空间的KVM模块之外，在用户空间需要QEMU [1] 来模拟所需要的CPU和设备模型，以及启动客户机进程，这样才有了一个完整的KVM运行环境。
 
 QEMU开发代码仓库的网页连接为：http://git.qemu.org/qemu.git。
@@ -155,7 +162,7 @@ RHEL/CentOS: yum install qemu-kvm
 SUSE: zypper install qemu
 ```
 
-##### 源码安装
+##### 3.3.1 源码安装
 
 ```shell
 yum -y install glib*
@@ -169,7 +176,7 @@ make && make install
 
 <https://www.qemu.org/download/#source>
 
-##### 使用Git包编译安装
+##### 3.3.2 使用Git包编译安装
 
 Git安装方式不推荐，除非参与开发
 

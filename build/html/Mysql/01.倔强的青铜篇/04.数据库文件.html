@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_shell/index.html">Linux_shell</a></li>
@@ -501,8 +503,11 @@ noblob，记录除了blog和text的所有字段
 <h2><a class="toc-backref" href="#id10">1.4.5. 慢查询日志slow log</a><a class="headerlink" href="#slow-log" title="Permalink to this headline">¶</a></h2>
 <p>超过long_query_time时间的所有SQL语句记录。默认是开启慢查询日志的，long_query_time默认是10s
 生产环境中慢查询时间设置不用太小，0.1~0.5之间即可</p>
-<p>slow_query_log = 1 slow_query_log_file = /data/mysql/slow.log
-long_query_time = 0.5</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">slow_query_log</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">slow_query_log_file</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span>
+<span class="n">long_query_time</span> <span class="o">=</span> <span class="mf">0.5</span>
+</pre></div>
+</div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查看慢查询日志
 mysqldumpshow
 percona-toolkit （pt-query-digest)

@@ -100,7 +100,9 @@
             
             
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
@@ -119,11 +121,11 @@
 <li class="toctree-l3"><a class="reference internal" href="10.iptables与firewalld防火墙.html">2.11. iptables与firewalld 防火墙</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.12. Tomcat服务搭建配置</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id1">2.12.1. 安装tomcat</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#tomcat-1">2.12.2. 安装Tomcat</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id6">2.12.3. 配置tomcat</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#jpress">2.12.4. 部署开源站点（jpress）</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id9">2.12.5. Tomcat多实例配置</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id10">2.12.6. Tomcat反向代理集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.12.2. 安装Tomcat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.12.3. 配置tomcat</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">2.12.4. Tomcat多实例配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">2.12.5. Tomcat反向代理集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">2.12.6. 参考文献</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="12.autofs自动挂载服务.html">2.13. autofs自动挂载服务</a></li>
@@ -145,6 +147,9 @@
 <li class="toctree-l3"><a class="reference internal" href="31.Yum自动下载RPM包及其所有依赖的包.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
 <li class="toctree-l3"><a class="reference internal" href="33.Gitlab安装.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete数据恢复.html">2.33. Extundelete 数据恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.Openvpn部署.html">2.34. Openvpn部署</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -233,43 +238,41 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#tomcat" id="id13">Tomcat服务搭建配置</a><ul>
-<li><a class="reference internal" href="#id1" id="id14">安装tomcat</a><ul>
-<li><a class="reference internal" href="#jdk" id="id15">安装JDK</a></li>
+<li><a class="reference internal" href="#tomcat" id="id12">Tomcat服务搭建配置</a><ul>
+<li><a class="reference internal" href="#id1" id="id13">安装tomcat</a><ul>
+<li><a class="reference internal" href="#jdk" id="id14">安装JDK</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#tomcat-1" id="id16">安装Tomcat</a><ul>
-<li><a class="reference internal" href="#id3" id="id17">Tomcat目录介绍</a></li>
-<li><a class="reference internal" href="#webapps" id="id18">webapps目录介绍</a></li>
-<li><a class="reference internal" href="#id4" id="id19">Tomcat的管理</a></li>
-<li><a class="reference internal" href="#id5" id="id20">Tomcat管理功能使用</a></li>
+<li><a class="reference internal" href="#id2" id="id15">安装Tomcat</a><ul>
+<li><a class="reference internal" href="#id3" id="id16">Tomcat目录介绍</a></li>
+<li><a class="reference internal" href="#id4" id="id17">Tomcat管理功能使用</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id6" id="id21">配置tomcat</a></li>
-<li><a class="reference internal" href="#jpress" id="id22">部署开源站点（jpress）</a><ul>
-<li><a class="reference internal" href="#id7" id="id23">第一个里程碑：安装配置数据库</a></li>
-<li><a class="reference internal" href="#id8" id="id24">第二个里程碑：jpress站点上线</a></li>
+<li><a class="reference internal" href="#id5" id="id18">配置tomcat</a><ul>
+<li><a class="reference internal" href="#id6" id="id19">第一个里程碑：安装配置数据库</a></li>
+<li><a class="reference internal" href="#jpress" id="id20">第二个里程碑：jpress站点上线</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id9" id="id25">Tomcat多实例配置</a></li>
-<li><a class="reference internal" href="#id10" id="id26">Tomcat反向代理集群</a><ul>
-<li><a class="reference internal" href="#id11" id="id27">负载均衡器说明</a></li>
-<li><a class="reference internal" href="#id12" id="id28">配置负载均衡器</a></li>
+<li><a class="reference internal" href="#id7" id="id21">Tomcat多实例配置</a></li>
+<li><a class="reference internal" href="#id8" id="id22">Tomcat反向代理集群</a><ul>
+<li><a class="reference internal" href="#id9" id="id23">负载均衡器说明</a></li>
+<li><a class="reference internal" href="#id10" id="id24">配置负载均衡器</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#id11" id="id25">参考文献</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="tomcat">
-<h1><a class="toc-backref" href="#id13">2.12. Tomcat服务搭建配置</a><a class="headerlink" href="#tomcat" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id12">2.12. Tomcat服务搭建配置</a><a class="headerlink" href="#tomcat" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id14">2.12.1. 安装tomcat</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">2.12.1. 安装tomcat</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Tomcat的安装分为两个步骤：安装JDK和安装Tomcat.
 </pre></div>
 </div>
 <div class="section" id="jdk">
-<h3><a class="toc-backref" href="#id15">安装JDK</a><a class="headerlink" href="#jdk" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id14">安装JDK</a><a class="headerlink" href="#jdk" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>JDK(Java Development Kit)是Sun Microsystems针对Java开发员的产品。自从Java推出以来，JDK已经成为使用最广泛的Java SDK. JDK是整个Java的核心，包括了Java运行环境，Java工具和Java基础的类库。所以要想运行jsp的程序必须要有JDK的支持，理所当然安装Tomcat的前提是安装好JDK.
 JDK下载面页：
 http://www.oracle.com/technetwork/java/javase/downloads/index.html
@@ -298,8 +301,8 @@ java -version
 </div>
 </div>
 </div>
-<div class="section" id="tomcat-1">
-<span id="id2"></span><h2><a class="toc-backref" href="#id16">2.12.2. 安装Tomcat</a><a class="headerlink" href="#tomcat-1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id15">2.12.2. 安装Tomcat</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>上面介绍了那么多内容，仅仅是在为安装tomcat做准备工作而已，现在才是安装tomcat.
 wget http://mirrors.hust.edu.cn/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz
 
@@ -319,7 +322,7 @@ mv apache-tomcat-8.5.37 /usr/local/tomcat
 </pre></div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id17">Tomcat目录介绍</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id16">Tomcat目录介绍</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>tomcat主目录介绍
 [root@web03 ~]# cd /usr/local/tomcat
 [root@web03 tomcat]# tree -L 1
@@ -335,54 +338,46 @@ mv apache-tomcat-8.5.37 /usr/local/tomcat
 ├── temp             # 存放临时文件
 ├── webapps         # web程序存放目录
 └── work             # 存放编译产生的.java 与 .class文件
-
-
-            其中：
-        catalina.sh类似于SysV服务管理脚本，支持stop、start和configtest，但不支持restart和reload，如catalina.sh start。
-        startup.sh等价于catalina.sh start。
-        shudown.sh等价于catalina.sh stop。
-        configtest.sh等价于catalina.sh configtest。
-        daemon.sh是通过指定各种PATH参数将tomcat以daemon的方式运行，要指定的参数path较多。catalina.sh执行start也是在后台运行tomcat的，所以没有必要使用此脚本来实现daemon模式的tomcat。
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">其中：
+catalina.sh类似于SysV服务管理脚本，支持stop、start和configtest，但不支持restart和reload，如catalina.sh
+start。 startup.sh等价于catalina.sh start。
+shudown.sh等价于catalina.sh stop。 configtest.sh等价于catalina.sh
+configtest。
+daemon.sh是通过指定各种PATH参数将tomcat以daemon的方式运行，要指定的参数path较多。catalina.sh执行start也是在后台运行tomcat的，所以没有必要使用此脚本来实现daemon模式的tomcat。</div>
 </div>
-<div class="section" id="webapps">
-<h3><a class="toc-backref" href="#id18">webapps目录介绍</a><a class="headerlink" href="#webapps" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@web03 tomcat]# cd webapps/
-[root@web03 webapps]# tree -L 1
-.
-├── docs            # tomcat 帮助文档
-├── examples       # web应用实例
-├── host-manager  # 主机管理
-├── manager         # 管理
-└── ROOT             # 默认站点根目录
-
-
-
-        [root@iZ2zedrhfe7pfaztjqpsw6Z bin]# ./version.sh    //查看tomcat版本
-            Using CATALINA_BASE:   /usr/local/tomcat
-            Using CATALINA_HOME:   /usr/local/tomcat
-            Using CATALINA_TMPDIR: /usr/local/tomcat/temp
-            Using JRE_HOME:        /usr/local/jdk1.8/jre
-            Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin/tomcat-juli.jar
-            Server version: Apache Tomcat/7.0.93
-            Server built:   Feb 16 2019 17:13:17 UTC
-            Server number:  7.0.93.0
-            OS Name:        Linux
-            OS Version:     3.10.0-957.5.1.el7.x86_64
-            Architecture:   amd64
-            JVM Version:    1.8.0_131-b11
-            JVM Vendor:     Oracle Corporation
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">### webapps目录介绍 [<a class="reference external" href="mailto:root&#37;&#52;&#48;web03">root<span>&#64;</span>web03</a> tomcat]# cd webapps/ [<a class="reference external" href="mailto:root&#37;&#52;&#48;web03">root<span>&#64;</span>web03</a>
+webapps]# tree -L 1 . ├── docs # tomcat 帮助文档 ├── examples #
+web应用实例 ├── host-manager # 主机管理 ├── manager # 管理 └── ROOT #
+默认站点根目录</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zedrhfe7pfaztjqpsw6Z</span> <span class="nb">bin</span><span class="p">]</span><span class="c1"># ./version.sh    //查看tomcat版本</span>
+    <span class="n">Using</span> <span class="n">CATALINA_BASE</span><span class="p">:</span>   <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span>
+    <span class="n">Using</span> <span class="n">CATALINA_HOME</span><span class="p">:</span>   <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span>
+    <span class="n">Using</span> <span class="n">CATALINA_TMPDIR</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="n">temp</span>
+    <span class="n">Using</span> <span class="n">JRE_HOME</span><span class="p">:</span>        <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">jdk1</span><span class="o">.</span><span class="mi">8</span><span class="o">/</span><span class="n">jre</span>
+    <span class="n">Using</span> <span class="n">CLASSPATH</span><span class="p">:</span>       <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bootstrap</span><span class="o">.</span><span class="n">jar</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">tomcat</span><span class="o">-</span><span class="n">juli</span><span class="o">.</span><span class="n">jar</span>
+    <span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="n">Apache</span> <span class="n">Tomcat</span><span class="o">/</span><span class="mf">7.0</span><span class="o">.</span><span class="mi">93</span>
+    <span class="n">Server</span> <span class="n">built</span><span class="p">:</span>   <span class="n">Feb</span> <span class="mi">16</span> <span class="mi">2019</span> <span class="mi">17</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">17</span> <span class="n">UTC</span>
+    <span class="n">Server</span> <span class="n">number</span><span class="p">:</span>  <span class="mf">7.0</span><span class="o">.</span><span class="mf">93.0</span>
+    <span class="n">OS</span> <span class="n">Name</span><span class="p">:</span>        <span class="n">Linux</span>
+    <span class="n">OS</span> <span class="n">Version</span><span class="p">:</span>     <span class="mf">3.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">957.5</span><span class="o">.</span><span class="mf">1.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span>
+    <span class="n">Architecture</span><span class="p">:</span>   <span class="n">amd64</span>
+    <span class="n">JVM</span> <span class="n">Version</span><span class="p">:</span>    <span class="mf">1.8</span><span class="o">.</span><span class="mi">0</span><span class="n">_131</span><span class="o">-</span><span class="n">b11</span>
+    <span class="n">JVM</span> <span class="n">Vendor</span><span class="p">:</span>     <span class="n">Oracle</span> <span class="n">Corporation</span>
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">### Tomcat的管理 # 启动程序/usr/local/tomcat/bin/startup.sh #
+关闭程序/usr/local/tomcat/bin/shutdown.sh 启动停止</div>
 </div>
-<div class="section" id="id4">
-<h3><a class="toc-backref" href="#id19">Tomcat的管理</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#  启动程序/usr/local/tomcat/bin/startup.sh
-#  关闭程序/usr/local/tomcat/bin/shutdown.sh
-启动停止
-
-[root@web03 ~]# /usr/local/tomcat/bin/shutdown.sh
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@web03 ~]# /usr/local/tomcat/bin/shutdown.sh
 Using CATALINA_BASE:   /application/tomcat
 Using CATALINA_HOME:   /application/tomcat
 Using CATALINA_TMPDIR: /application/tomcat/temp
@@ -399,8 +394,8 @@ Tomcat started.
 </pre></div>
 </div>
 </div>
-<div class="section" id="id5">
-<h3><a class="toc-backref" href="#id20">Tomcat管理功能使用</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id17">Tomcat管理功能使用</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">tomcat</span><span class="o">-</span><span class="n">users</span><span class="o">.</span><span class="n">xml</span>
     <span class="mi">39</span> <span class="o">&lt;</span><span class="n">role</span> <span class="n">rolename</span><span class="o">=</span><span class="s2">&quot;manager-gui&quot;</span><span class="o">/&gt;</span>
     <span class="mi">40</span> <span class="o">&lt;</span><span class="n">role</span> <span class="n">rolename</span><span class="o">=</span><span class="s2">&quot;admin-gui&quot;</span><span class="o">/&gt;</span>
@@ -411,8 +406,8 @@ Tomcat started.
 <p><img alt="image0" src="../../_images/tomcat01.png" /> <img alt="image1" src="../../_images/tomcat1.png" /></p>
 </div>
 </div>
-<div class="section" id="id6">
-<h2><a class="toc-backref" href="#id21">2.12.3. 配置tomcat</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id18">2.12.3. 配置tomcat</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>tomcat默认启动的是8080，如果你想修改为80，则需要修改server.xml文件:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="n">xml</span>
 </pre></div>
@@ -451,16 +446,15 @@ Tomcat的默认页就是在appBase目录下面的ROOT里。
 <span class="n">Tomcat</span> <span class="n">test</span> <span class="n">page</span><span class="o">.</span>
 </pre></div>
 </div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">## 部署开源站点（jpress） jpress官网：<a class="reference external" href="http://jpress.io">http://jpress.io</a></div>
 </div>
-<div class="section" id="jpress">
-<h2><a class="toc-backref" href="#id22">2.12.4. 部署开源站点（jpress）</a><a class="headerlink" href="#jpress" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>jpress官网：http://jpress.io
-
-下载地址：https://github.com/JpressProjects/jpress
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>下载地址：https://github.com/JpressProjects/jpress
 </pre></div>
 </div>
-<div class="section" id="id7">
-<h3><a class="toc-backref" href="#id23">第一个里程碑：安装配置数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3><a class="toc-backref" href="#id19">第一个里程碑：安装配置数据库</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
 <span class="n">systemctl</span> <span class="n">start</span> <span class="n">mariadb</span><span class="o">.</span><span class="n">service</span>
 </pre></div>
@@ -473,8 +467,8 @@ Tomcat的默认页就是在appBase目录下面的ROOT里。
 </pre></div>
 </div>
 </div>
-<div class="section" id="id8">
-<h3><a class="toc-backref" href="#id24">第二个里程碑：jpress站点上线</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="jpress">
+<h3><a class="toc-backref" href="#id20">第二个里程碑：jpress站点上线</a><a class="headerlink" href="#jpress" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">git</span>
 <span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">tomcat</span><span class="o">/</span><span class="n">webapps</span><span class="o">/</span>
 </pre></div>
@@ -501,11 +495,13 @@ Using CLASSPATH:       /usr/local/tomcat/bin/bootstrap.jar:/usr/local/tomcat/bin
 <div class="line"><img alt="image2" src="../../_images/tomcat2.1.png" /> 访问地址如图：</div>
 <div class="line"><a class="reference external" href="http://39.96.27.148:8080/starter-tomcat-1.0/">http://39.96.27.148:8080/starter-tomcat-1.0/</a></div>
 </div>
-<p><img alt="image3" src="../../_images/tomcat3.png" /></p>
+<div class="figure">
+<img alt="" src="../../_images/tomcat3.png" />
 </div>
 </div>
-<div class="section" id="id9">
-<h2><a class="toc-backref" href="#id25">2.12.5. Tomcat多实例配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id7">
+<h2><a class="toc-backref" href="#id21">2.12.4. Tomcat多实例配置</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>多虚拟主机：nginx 多个Server标签（域名，ip，端口） 进程数量固定
 master+worker 多实例（多进程）：同一个程序启动多次，分为两种情况:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>第一种：一台机器跑多个站点；
@@ -549,12 +545,12 @@ master+worker 多实例（多进程）：同一个程序启动多次，分为两
 <span class="n">echo</span> <span class="mi">8082</span> <span class="o">&gt;&gt;/</span><span class="n">application</span><span class="o">/</span><span class="n">tomcat8_2</span><span class="o">/</span><span class="n">webapps</span><span class="o">/</span><span class="n">ROOT</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">jsp</span>
 </pre></div>
 </div>
-<p>在浏览器访问，进行测试 检查多实例的启动 <img alt="image4" src="../../_images/tomcat5.png" /> <img alt="image5" src="../../_images/tomcat6.png" /></p>
+<p>在浏览器访问，进行测试 检查多实例的启动 <img alt="image3" src="../../_images/tomcat5.png" /> <img alt="image4" src="../../_images/tomcat6.png" /></p>
 </div>
-<div class="section" id="id10">
-<h2><a class="toc-backref" href="#id26">2.12.6. Tomcat反向代理集群</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="id11">
-<h3><a class="toc-backref" href="#id27">负载均衡器说明</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h2><a class="toc-backref" href="#id22">2.12.5. Tomcat反向代理集群</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id9">
+<h3><a class="toc-backref" href="#id23">负载均衡器说明</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@iZ2ze2a95z0hmrb6l98sifZ</span> <span class="o">~</span><span class="p">]</span><span class="c1"># cat /etc/redhat-release</span>
 <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
 
@@ -626,8 +622,8 @@ nginx安装完毕！
 </pre></div>
 </div>
 </div>
-<div class="section" id="id12">
-<h3><a class="toc-backref" href="#id28">配置负载均衡器</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3><a class="toc-backref" href="#id24">配置负载均衡器</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    #备份原配置文件
    cp  /application/nginx/conf/nginx.conf{,_bak_2019}
    cd /application/nginx
@@ -686,6 +682,10 @@ nginx安装完毕！
 </pre></div>
 </div>
 </div>
+</div>
+<div class="section" id="id11">
+<h2><a class="toc-backref" href="#id25">2.12.6. 参考文献</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://cloud.tencent.com/developer/article/1622321">https://cloud.tencent.com/developer/article/1622321</a></p>
 </div>
 </div>
 

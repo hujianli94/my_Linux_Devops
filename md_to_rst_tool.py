@@ -5,10 +5,13 @@
 # filename: md_to_rst_tool.py
 import os
 import subprocess
-import sys
 import json
 import hashlib
 import time
+
+"""
+Script to convert markdown file to rst file format
+"""
 
 Search_Path = os.path.abspath(os.path.dirname(os.path.abspath(__file__))) + "/source"
 # ENV_PATH = sys.path.append("D:\\Users\\pandocc-2.2.3.2")
