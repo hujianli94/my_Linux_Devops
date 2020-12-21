@@ -3,13 +3,17 @@
 ###### 小健的Devops Linux 网络RS 自动化运维之路
 
 
-Ŀ¼目录详细
+目录详细
 
-- DevOps与自动化运维
-- 高性能Linux服务构建实战
-- Linux_shell
-- Mysql王者之路
-- Other
++ DevOps与自动化运维
++ jenkins2x CICD
++ KVM实践
++ 高性能Linux服务构建实战
++ Linux_shell
++ Mysql王者之路
++ Other
++ 网络RS-路由交换
+
 
 
 
