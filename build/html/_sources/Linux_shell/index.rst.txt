@@ -20,4 +20,3 @@ Linux_shell
     08.Linux构建高可用架构/index
     09.Zabbix3.0从入门到精通/index
     10.快速阅读Linux入门-阿铭Linux/index
-    11.Jenkins持续化集成/index
