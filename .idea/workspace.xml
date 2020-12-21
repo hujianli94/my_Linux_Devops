@@ -322,7 +322,8 @@
       <workItem from="1608530127064" duration="41000" />
       <workItem from="1608546786591" duration="289000" />
       <workItem from="1608559761526" duration="1362000" />
-      <workItem from="1608564242023" duration="91000" />
+      <workItem from="1608564242023" duration="246000" />
+      <workItem from="1608564858524" duration="183000" />
     </task>
     <task id="LOCAL-00001" summary="first commit01">
       <created>1587351837989</created>
@@ -548,7 +549,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607686288043</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="2020-12-11 first2 commit">
+      <created>1608564451814</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1608564451814</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView">
@@ -565,7 +573,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="2020-04-28 first2 commit" />
     <MESSAGE value="2020-04-29 first commit" />
     <MESSAGE value="2020-05-02 first commit" />
     <MESSAGE value="2020-05-02 first2 commit" />
@@ -590,7 +597,8 @@
     <MESSAGE value="2020-10-28 first commit" />
     <MESSAGE value="2020-11-11 first commit" />
     <MESSAGE value="2020-12-11 first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="2020-12-11 first commit" />
+    <MESSAGE value="2020-12-11 first2 commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="2020-12-11 first2 commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608014363440">
@@ -598,9 +606,10 @@
     </state>
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1607269483627" />
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920@0.0.1440.920" timestamp="1608014363440" />
-    <state x="324" y="13" key="CommitChangelistDialog2" timestamp="1607686274643">
+    <state x="324" y="13" key="CommitChangelistDialog2" timestamp="1608564435508">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
+    <state x="324" y="13" key="CommitChangelistDialog2/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564435508" />
     <state x="324" y="13" key="CommitChangelistDialog2/0.0.1440.920@0.0.1440.920" timestamp="1607686274643" />
     <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1608530175705">
       <screen x="0" y="0" width="1440" height="920" />
@@ -611,28 +620,28 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="571" y="358" key="Github.ShareDialog/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559912527" />
-    <state width="1397" height="312" key="GridCell.Tab.0.bottom" timestamp="1608561165505">
+    <state width="1397" height="312" key="GridCell.Tab.0.bottom" timestamp="1608564500471">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="312" key="GridCell.Tab.0.bottom/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608561165505" />
+    <state width="1397" height="312" key="GridCell.Tab.0.bottom/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564500471" />
     <state width="1877" height="362" key="GridCell.Tab.0.bottom/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
     <state width="1397" height="312" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1608547166721" />
-    <state width="1397" height="312" key="GridCell.Tab.0.center" timestamp="1608561165504">
+    <state width="1397" height="312" key="GridCell.Tab.0.center" timestamp="1608564500471">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="312" key="GridCell.Tab.0.center/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608561165504" />
+    <state width="1397" height="312" key="GridCell.Tab.0.center/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564500471" />
     <state width="1877" height="362" key="GridCell.Tab.0.center/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
     <state width="1397" height="312" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1608547166719" />
-    <state width="1397" height="312" key="GridCell.Tab.0.left" timestamp="1608561165504">
+    <state width="1397" height="312" key="GridCell.Tab.0.left" timestamp="1608564500470">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="312" key="GridCell.Tab.0.left/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608561165504" />
+    <state width="1397" height="312" key="GridCell.Tab.0.left/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564500470" />
     <state width="1877" height="362" key="GridCell.Tab.0.left/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
     <state width="1397" height="312" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1608547166717" />
-    <state width="1397" height="312" key="GridCell.Tab.0.right" timestamp="1608561165504">
+    <state width="1397" height="312" key="GridCell.Tab.0.right" timestamp="1608564500471">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state width="1397" height="312" key="GridCell.Tab.0.right/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608561165504" />
+    <state width="1397" height="312" key="GridCell.Tab.0.right/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564500471" />
     <state width="1877" height="362" key="GridCell.Tab.0.right/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
     <state width="1397" height="312" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1608547166719" />
     <state x="222" y="105" key="SettingsEditor" timestamp="1603880863647">
@@ -643,12 +652,13 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1440.920@0.0.1440.920" timestamp="1605871737102" />
-    <state x="313" y="193" key="Vcs.Push.Dialog.v2" timestamp="1607686541507">
+    <state x="313" y="193" key="Vcs.Push.Dialog.v2" timestamp="1608564461910">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
+    <state x="313" y="193" key="Vcs.Push.Dialog.v2/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608564461910" />
     <state x="313" y="193" key="Vcs.Push.Dialog.v2/0.0.1440.920@0.0.1440.920" timestamp="1607686541507" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool Coverage Results" MODIFIED="1608559767525" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool Coverage Results" MODIFIED="1608564347212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
