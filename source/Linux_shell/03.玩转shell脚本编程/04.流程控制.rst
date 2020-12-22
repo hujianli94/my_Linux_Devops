@@ -36,7 +36,7 @@ NOT
 
 举例说明
 
-.. code:: bash
+::
 
     #!/bin/bash
     echo "非空时候 if判断的返回"
@@ -160,15 +160,17 @@ eg:
 
 -  if不一定要使用test
 
-\`\`\`shell script #!/usr/bin/env bash dir=/home/bozo
+.. code:: shell
 
-"2>/dev/null"会隐藏错误的信息
-=============================
+    #!/usr/bin/env bash
+    dir=/home/bozo
 
-if cd "$dir" 2>/dev/null;then echo "Now in $dir" else echo "Can't change
-to $dir" fi
-
-\`\`\`
+    //"2>/dev/null"会隐藏错误的信息
+    if cd "$dir" 2>/dev/null;then
+        echo "Now in $dir"
+    else
+        echo "Can't change to $dir"
+    fi
 
 2 for循环
 ---------
@@ -176,7 +178,15 @@ to $dir" fi
 .. figure:: ../../_static/shell_for_0001.png
    :alt: 
 
-``shell script for var in item1 item2 ... itemN do     command1     command2     ...     commandN done``
+::
+
+    for var in item1 item2 ... itemN
+    do
+        command1
+        command2
+        ...
+        commandN
+    done
 
 2.1 带列表的for循环语句
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -412,80 +422,82 @@ eg1:
            sleep 5
        done
 
--  死循环的三种写法 \`\`\` #!/usr/bin/env bash while :; do echo "ctrl +c
-   to stop...." sleep 1 done
-
-while ((1)); do echo "ctrl +c to stop...." sleep 1 done
-
-while true; do echo "ctrl +c to stop...." sleep 1 done
+**死循环的三种写法**
 
 ::
 
+    #!/usr/bin/env bash
+    while :; do
+        echo "ctrl +c to stop...."
+        sleep 1
+    done
 
-    选择菜单，小例子
 
-!/bin/sh
-========
 
-@Author: anchen
-===============
+    while ((1)); do
+        echo "ctrl +c to stop...."
+        sleep 1
+    done
 
-@Date: 2018-11-12 22:55:50
-==========================
 
-@Last Modified by: hujianli
-===========================
 
-@Last Modified time: 2018-11-13 13:00:05
-========================================
+    while true; do
+        echo "ctrl +c to stop...."
+        sleep 1
+    done
 
-conntinue(){ read -p "Press [Enter] key to continue ...." readEnterKey }
-
-while :; do clear
+选择菜单，小例子
 
 ::
 
-    echo "======================================="
-    echo "          MAIN  -  MENU               "
-    echo "======================================="
-    echo "1. Display date and  time "
-    echo "2. Display system     information"
-    echo "3. Display what users are doing.  "
-    echo "4. Exit"
+    #!/bin/sh
 
-    read -p "Enter your choice [ 1-4]:" choice  #从标准输入中读取用户的输入，赋值给choice
-    case $choice in
-        1 )
-            echo "Today is $(date +%Y-%m-%d)" #打印当前日期
-            echo "Current time: $(date +%H:%M:%S)"
-            conntinue
-            ;;
-        2 )
-            uname -a
-            conntinue
-            ;;
-        3 )
-            w
-            conntinue
-            ;;
-        4 )
-            echo "Bye!"
-            exit 0
-            ;;
-        * )
-            echo "Error :INVALID OPTION!!"
-            conntinue
-            ;;
-    esac
+    conntinue(){
+        read -p "Press [Enter] key to continue ...." readEnterKey
+    }
 
-done
+    while :; do
+        clear
 
-\`\`\`
+        echo "======================================="
+        echo "          MAIN  -  MENU               "
+        echo "======================================="
+        echo "1. Display date and  time "
+        echo "2. Display system     information"
+        echo "3. Display what users are doing.  "
+        echo "4. Exit"
+
+        read -p "Enter your choice [ 1-4]:" choice  #从标准输入中读取用户的输入，赋值给choice
+        case $choice in
+            1 )
+                echo "Today is $(date +%Y-%m-%d)" #打印当前日期
+                echo "Current time: $(date +%H:%M:%S)"
+                conntinue
+                ;;
+            2 )
+                uname -a
+                conntinue
+                ;;
+            3 )
+                w
+                conntinue
+                ;;
+            4 )
+                echo "Bye!"
+                exit 0
+                ;;
+            * )
+                echo "Error :INVALID OPTION!!"
+                conntinue
+                ;;
+        esac
+
+    done
 
 条件表达式为 true，将会产生死循环,利用此可以将脚本一直放在后台进行执行
 eg2:
 
-.. code:: shell
+::
 
     #!/bin/bash
     IP=10.75.128.8
@@ -569,7 +581,7 @@ while读取文件的3种方法
 
 · 使用while循环处理文本文件 |image0|
 
-.. code:: shell
+::
 
     #!/bin/sh
     # @Author: huxiaojian
@@ -591,9 +603,9 @@ while读取文件的3种方法
     [root@localhost ~]# cat while04.sh 
     #!/bin/bash 
     while read LINE do
-        NAME=`echo $LINE | awk '{print $1}'`
-        AGE=`echo $LINE | awk '{print $2}'`  
-        Sex=`echo $LINE | awk '{print $3}'`         
+     NAME=`echo $LINE | awk '{print $1}'`
+     AGE=`echo $LINE | awk '{print $2}'` 
+     Sex=`echo $LINE | awk '{print $3}'` 
      echo "My name is $NAME, I'm $AGE years old, I'm a $Sex" 
      done < student_info.txt
      
@@ -602,14 +614,14 @@ while读取文件的3种方法
     举例
     #!/bin/sh
     file=$1 
-    if [ $# -lt 1 ]; then  
-        echo "Usage: $0 FILEPATH"   
+    if [ $# -lt ]; then
+        echo "Usage: $0 FILEPATH" 
         exit 
     fi 
-    while read -r f1 f2 f3 
-    do   
-        echo "Field 1: $f1 ===> Field 2: $f2 ===> Field 3: $f3" 
-    done < "$file"
+    while read -r f1 f2 f3 
+    do 
+        echo "Field 1: $f1 ===> Field2:$f2===>Field3:$f3" 
+    done <"$file"
 
 
 
@@ -862,47 +874,98 @@ eg
 7 select语句
 ------------
 
--  制作一个选择菜单 eg: \`\`\`shell #!/bin/sh # @Author: hujianli #
-   @Date: 2018-11-13 13:17:13 # @Last Modified by: hujianli # @Last
-   Modified time: 2018-11-13 13:22:57 PS3="Run command: "
+-  制作一个选择菜单
 
-select choice in date w hostname "uname -a" Exit do case $choice in date
-) echo "Current system date and time: " echo
-"=======================================" $choice ;; w ) echo
-"========================================" echo "Who is logged on and
-what they are doing" echo "========================================"
-$choice ;; hostname ) echo "========================================"
-echo "Hostname: " echo "========================================"
-$choice
+eg:
+
+.. code:: shell
+
+    #!/bin/sh
+    # @Author: hujianli
+    # @Date:   2018-11-13 13:17:13
+    # @Last Modified by:   hujianli
+    # @Last Modified time: 2018-11-13 13:22:57
+    PS3="Run command: "
+
+    select choice in date w hostname "uname -a" Exit
+    do
+        case $choice in
+            date )
+                echo "Current system date and time: "
+                echo "======================================="
+                $choice
+                ;;
+            w )
+                echo "========================================"
+                echo "Who is logged on and what they are doing"
+                echo "========================================"
+                $choice
+                ;;
+            hostname )
+                echo "========================================"
+                echo "Hostname: "
+                echo "========================================"
+                $choice
+
+                ;;
+            "uname -a" )
+                echo "========================================"
+                echo "System information"
+                echo "========================================"
+                $choice
+
+                ;;
+            Exit )
+                echo "Bye!"
+                exit
+                ;;
+
+        esac
+
+    done
+
+eg：
 
 ::
 
-            ;;
-        "uname -a" )
-            echo "========================================"
-            echo "System information"
-            echo "========================================"
-            $choice
+    #!/bin/sh
+    # @Author: hujianli
+    # @Date:   2018-11-18 16:24:36
+    # @Last Modified by:   hujianli
+    # @Last Modified time: 2018-11-18 16:39:08
+    echo "-------------------查询一周计划----------------------"
+    PS3="input you choice: "
+    select plan in 周一 周二 周三 周四 周五 周六 周日
+    do
+        case $plan in
+            周一 )
+                echo "今天是周一!!!"
+                ;;
+            周二 )
+                echo "今天是周二!!!"
+                ;;
+            周三 )
+                echo "今天是周三!!!"
+                ;;
+            周四 )
+                echo "今天是周四!!!"
+                ;;
+            周五 )
+                echo "今天是周五!!!"
+                ;;
+            周六 )
+                echo "今天是周六!!!"
+                ;;
+            周日 )
+                echo "今天是周日!!!"
+                ;;
+            * )
+                echo "输入错误，wait 5s ...退出!!!"
+                for (( i = 0; i <= 5; i++ )); do echo -en ".";sleep 0.1;done;exit 1  #简单的进度条
+                ;;
+            esac
 
-            ;;
-        Exit )
-            echo "Bye!"
-            exit
-            ;;
 
-    esac
-
-done ``eg：``\ shell #!/bin/sh # @Author: hujianli # @Date: 2018-11-18
-16:24:36 # @Last Modified by: hujianli # @Last Modified time: 2018-11-18
-16:39:08 echo "-------------------查询一周计划----------------------"
-PS3="input you choice: " select plan in 周一 周二 周三 周四 周五 周六
-周日 do case $plan in 周一 ) echo "今天是周一!!!" ;; 周二 ) echo
-"今天是周二!!!" ;; 周三 ) echo "今天是周三!!!" ;; 周四 ) echo
-"今天是周四!!!" ;; 周五 ) echo "今天是周五!!!" ;; 周六 ) echo
-"今天是周六!!!" ;; 周日 ) echo "今天是周日!!!" ;; \* ) echo
-"输入错误，wait 5s ...退出!!!" for (( i = 0; i <= 5; i++ )); do echo -en
-".";sleep 0.1;done;exit 1 #简单的进度条 ;; esac
-
-done \`\`\`
+    done
 
 .. |image0| image:: ../../_static/shell_while_file_read001.png
