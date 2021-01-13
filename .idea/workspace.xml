@@ -2,73 +2,157 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dad7f313-e91d-469a-aaf1-9f1653f7aa96" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/01.Jenkins-CICD学习.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/01.Jenkins实现一套CICD流程.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/47.恢复文件相关工具.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/05.Nginx学习/17.Nginx 部署HTTPS.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/other/09.Github入门与实践/20.GitHub上面找开源项目.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/doctrees/other/09.Github入门与实践/20.你会在 GitHub上面找开源项目吗？.doctree" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Jenkins_CICD/01.Jenkins-CICD学习.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Jenkins_CICD/01.Jenkins实现一套CICD流程.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/47.恢复文件相关工具.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/17.Nginx 部署HTTPS.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd00000011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd00000012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd00000013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd00000014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd0000009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_images/cicd_docker001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/01.Jenkins-CICD学习.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/01.Jenkins实现一套CICD流程.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/05.Nginx学习/17.Nginx 部署HTTPS.md.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/other/09.Github入门与实践/20.GitHub上面找开源项目.md.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/other/09.Github入门与实践/20.GitHub上面找开源项目.rst.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_sources/other/09.Github入门与实践/20.你会在 GitHub上面找开源项目吗？.md.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd00000011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd00000012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd00000013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd00000014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd0000009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/_static/cicd_docker001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/other/09.Github入门与实践/20.GitHub上面找开源项目.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/build/html/other/09.Github入门与实践/20.你会在 GitHub上面找开源项目吗？.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Jenkins_CICD/01.Jenkins-CICD学习.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Jenkins_CICD/01.Jenkins-CICD学习.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/47.恢复文件相关工具.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.rst" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd00000011.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd00000012.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd00000013.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd00000014.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000002.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000003.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000004.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000005.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000006.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000007.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000008.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd0000009.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/_static/cicd_docker001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/other/09.Github入门与实践/20.GitHub上面找开源项目.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/source/other/09.Github入门与实践/20.GitHub上面找开源项目.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_21_23_42_[默认更改列表]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_21_23_42___.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_21_23_43_[默认更改列表]/shelved.patch" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2020_12_21_23_43___.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Delete_staticPhoto.py" beforeDir="false" afterPath="$PROJECT_DIR$/Delete_staticPhoto.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/02.Jenkins2.x实践指南.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/02.Jenkins2.x实践指南.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Jenkins_CICD/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/KVM_Study/01.参考文献.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/KVM_Study/01.参考文献.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/KVM_Study/02.镜像转换V2V.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/KVM_Study/02.镜像转换V2V.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/KVM_Study/04.Proxmox_VE.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/KVM_Study/04.Proxmox_VE.doctree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/doctrees/KVM_Study/07.KVM部署实操.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/KVM_Study/07.KVM部署实操.doctree" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux_shell/03.玩转shell脚本编程/04.流程控制.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/03.玩转shell脚本编程/04.流程控制.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/07.curl.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/07.curl.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/01.常用较多命名查询/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux_shell/05.Nginx学习/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux_shell/05.Nginx学习/index.doctree" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/other/09.Github入门与实践/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/other/09.Github入门与实践/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Jenkins_CICD/02.Jenkins2.x实践指南.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Jenkins_CICD/02.Jenkins2.x实践指南.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Jenkins_CICD/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Jenkins_CICD/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/KVM_Study/01.参考文献.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/KVM_Study/01.参考文献.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/KVM_Study/02.镜像转换V2V.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/KVM_Study/02.镜像转换V2V.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/KVM_Study/04.Proxmox_VE.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/KVM_Study/04.Proxmox_VE.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/html/KVM_Study/07.KVM部署实操.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/KVM_Study/07.KVM部署实操.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/html/KVM_Study/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/KVM_Study/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/04.流程控制.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/04.流程控制.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/05.函数.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/05.函数.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/06.正则表达式.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/06.正则表达式.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/07.三剑客之grep.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/07.三剑客之grep.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/08.三剑客之sed.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/08.三剑客之sed.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/09.三剑客-awk.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/09.三剑客-awk.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/10.shell技巧与杂项.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/10.shell技巧与杂项.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/11.xagrs使用.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/11.xagrs使用.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/12.收集的一些shell脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/12.收集的一些shell脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/14.自动化安装cacti脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/14.自动化安装cacti脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/15.自动安装MongoDB脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/15.自动安装MongoDB脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/16.备份MongoDB脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/16.备份MongoDB脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/17.自动安装memcached脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/17.自动安装memcached脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/18.system检测脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/18.system检测脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/19.安装tomcat脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/19.安装tomcat脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/20.install_zookeeper脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/20.install_zookeeper脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/21.install_elasticserch脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/21.install_elasticserch脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/22.自动Autoinstall_ELK_V1.3.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/22.自动Autoinstall_ELK_V1.3.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/23.install_vsftpd脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/23.install_vsftpd脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/24.install_mysql5.7.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/24.install_mysql5.7.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/26.备份文件shell脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/26.备份文件shell脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/27.monitor_Linux系统性能.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/27.monitor_Linux系统性能.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/28.修改IP_主机名_网卡信息脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/28.修改IP_主机名_网卡信息脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/29.检查恶意IP登录，拒绝SSH.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/29.检查恶意IP登录，拒绝SSH.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/30.备份数据库，删除7天前的数据.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/30.备份数据库，删除7天前的数据.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/31.Centos6开机性能优化.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/31.Centos6开机性能优化.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/32.百宝箱脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/32.百宝箱脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/33.deploy_mongo.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/33.deploy_mongo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/34.python实现端口扫描.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/34.python实现端口扫描.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/35.python检测ip存活状态.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/35.python检测ip存活状态.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/36.k8s_deploy脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/36.k8s_deploy脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/37.example(字符串处理).html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/37.example(字符串处理).html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/39.Nginx日志切割脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/39.Nginx日志切割脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/40.一键安装Docker脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/40.一键安装Docker脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/41.shell实现多并发控制脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/41.shell实现多并发控制脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/42.判断文件类型.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/42.判断文件类型.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/43.用if语句编写选择菜单.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/43.用if语句编写选择菜单.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/44.使用while语句编写选择菜单.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/44.使用while语句编写选择菜单.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/45.使用until编写选择菜单.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/45.使用until编写选择菜单.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/46.目录定时备份.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/46.目录定时备份.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/48.批量创建用户脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/48.批量创建用户脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/50.CPU监控脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/50.CPU监控脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/51.检测函数执行是否超时.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/51.检测函数执行是否超时.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/53.快捷安装不同版本Python.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/53.快捷安装不同版本Python.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/54.常用shell脚本大全.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/54.常用shell脚本大全.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/03.玩转shell脚本编程/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/07.curl.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/07.curl.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/01.常用较多命名查询/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/04.玩转数据库（mysql、Redis）/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/04.玩转数据库（mysql、Redis）/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/05.Nginx学习/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux_shell/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux_shell/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/02.Jenkins2.x实践指南.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/02.Jenkins2.x实践指南.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Jenkins_CICD/index.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/KVM_Study/01.参考文献.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/KVM_Study/01.参考文献.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/KVM_Study/02.镜像转换V2V.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/KVM_Study/02.镜像转换V2V.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/KVM_Study/04.Proxmox_VE.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/KVM_Study/04.Proxmox_VE.rst.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/html/_sources/KVM_Study/07.KVM部署实操.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/KVM_Study/07.KVM部署实操.rst.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux_shell/03.玩转shell脚本编程/04.流程控制.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/03.玩转shell脚本编程/04.流程控制.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/07.curl.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/07.curl.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/index.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux_shell/05.Nginx学习/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/05.Nginx学习/index.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/other/09.Github入门与实践/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/other/09.Github入门与实践/index.rst.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/other/09.Github入门与实践/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/other/09.Github入门与实践/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/searchindex.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/file_md5.json" beforeDir="false" afterPath="$PROJECT_DIR$/file_md5.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Jenkins_CICD/01.Jenkins持续化集成.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Jenkins_CICD/01.Jenkins持续化集成.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Jenkins_CICD/02.Jenkins2.x实践指南.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Jenkins_CICD/02.Jenkins2.x实践指南.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Jenkins_CICD/02.Jenkins2.x实践指南.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Jenkins_CICD/02.Jenkins2.x实践指南.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Jenkins_CICD/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Jenkins_CICD/index.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/01.参考文献.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/01.参考文献.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/01.参考文献.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/01.参考文献.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/02.镜像转换V2V.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/02.镜像转换V2V.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/02.镜像转换V2V.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/02.镜像转换V2V.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/04.Proxmox_VE.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/04.Proxmox_VE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/04.Proxmox_VE.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/04.Proxmox_VE.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/KVM_Study/06.KVM虚拟化学习笔记系列文章列表(转).md" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/06.KVM虚拟化学习笔记系列文章列表(转).md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/KVM_Study/07.KVM部署实操.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/07.KVM部署实操.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/source/KVM_Study/07.KVM部署实操.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/KVM_Study/07.KVM部署实操.rst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/Linux_shell/03.玩转shell脚本编程/04.流程控制.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/03.玩转shell脚本编程/04.流程控制.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/source/Linux_shell/03.玩转shell脚本编程/04.流程控制.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/03.玩转shell脚本编程/04.流程控制.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/07.curl.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/07.curl.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/07.curl.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/07.curl.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/47.system用法.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/47.system用法.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/48.恢复文件相关工具.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/47.恢复文件相关工具.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/48.恢复文件相关工具.rst" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux_shell/01.常用较多命名查询/47.恢复文件相关工具.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/49.Centos7服务封装为server.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/49.Centos7服务封装为server.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/01.常用较多命名查询/index.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/04.玩转数据库（mysql、Redis）/01.Redis数据库.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux_shell/05.Nginx学习/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux_shell/05.Nginx学习/index.rst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/other/09.Github入门与实践/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/other/09.Github入门与实践/index.rst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -98,7 +182,7 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="JupyterTrust" id="c45f9f5c-1fc7-48fe-bab6-fcb2c1df8661" />
+  <component name="JupyterTrust" id="e860e166-54b5-4a04-b7a6-3bd02bacc9e2" />
   <component name="ProjectId" id="1jUcBwiYZy7EWJ8B5bHXFa7e92U" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="添加" />
@@ -392,7 +476,12 @@
       <workItem from="1608530127064" duration="41000" />
       <workItem from="1608546786591" duration="289000" />
       <workItem from="1608559761526" duration="838000" />
-      <workItem from="1608607283369" duration="687000" />
+      <workItem from="1608607283369" duration="939000" />
+      <workItem from="1609988901615" duration="931000" />
+      <workItem from="1610095199604" duration="861000" />
+      <workItem from="1610098951558" duration="270000" />
+      <workItem from="1610265541290" duration="554000" />
+      <workItem from="1610276025261" duration="178000" />
     </task>
     <task id="LOCAL-00001" summary="first commit01">
       <created>1587351837989</created>
@@ -618,7 +707,14 @@
       <option name="project" value="LOCAL" />
       <updated>1607686288043</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="2020-12-22 first commit">
+      <created>1608608299434</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1608608299436</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TodoView">
@@ -635,7 +731,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="2020-04-28 first2 commit" />
     <MESSAGE value="2020-04-29 first commit" />
     <MESSAGE value="2020-05-02 first commit" />
     <MESSAGE value="2020-05-02 first2 commit" />
@@ -660,7 +755,8 @@
     <MESSAGE value="2020-10-28 first commit" />
     <MESSAGE value="2020-11-11 first commit" />
     <MESSAGE value="2020-12-11 first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="2020-12-11 first commit" />
+    <MESSAGE value="2020-12-22 first commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="2020-12-22 first commit" />
   </component>
   <component name="WindowStateProjectService">
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1608014363440">
@@ -668,10 +764,14 @@
     </state>
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1607269483627" />
     <state x="557" y="260" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.920@0.0.1440.920" timestamp="1608014363440" />
-    <state x="324" y="13" key="CommitChangelistDialog2" timestamp="1607686274643">
+    <state x="476" y="162" key="#xdebugger.evaluate" timestamp="1610265864548">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state x="324" y="13" key="CommitChangelistDialog2/0.0.1440.920@0.0.1440.920" timestamp="1607686274643" />
+    <state x="476" y="162" key="#xdebugger.evaluate/0.0.1440.920@0.0.1440.920" timestamp="1610265864548" />
+    <state x="324" y="13" key="CommitChangelistDialog2" timestamp="1608608288147">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state x="324" y="13" key="CommitChangelistDialog2/0.0.1440.920@0.0.1440.920" timestamp="1608608288147" />
     <state x="501" y="215" key="FileChooserDialogImpl" timestamp="1608530175705">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
@@ -681,30 +781,46 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state x="571" y="358" key="Github.ShareDialog/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559912527" />
-    <state width="1397" height="312" key="GridCell.Tab.0.bottom" timestamp="1608607932174">
+    <state width="1397" height="229" key="GridCell.Tab.0.bottom" timestamp="1610266104767">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="1397" height="312" key="GridCell.Tab.0.bottom/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559878279" />
     <state width="1877" height="362" key="GridCell.Tab.0.bottom/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
-    <state width="1397" height="312" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1608607932174" />
-    <state width="1397" height="312" key="GridCell.Tab.0.center" timestamp="1608607932174">
+    <state width="1397" height="229" key="GridCell.Tab.0.bottom/0.0.1440.920@0.0.1440.920" timestamp="1610266104767" />
+    <state width="1397" height="229" key="GridCell.Tab.0.center" timestamp="1610266104767">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="1397" height="312" key="GridCell.Tab.0.center/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559878278" />
     <state width="1877" height="362" key="GridCell.Tab.0.center/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
-    <state width="1397" height="312" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1608607932174" />
-    <state width="1397" height="312" key="GridCell.Tab.0.left" timestamp="1608607932174">
+    <state width="1397" height="229" key="GridCell.Tab.0.center/0.0.1440.920@0.0.1440.920" timestamp="1610266104767" />
+    <state width="1397" height="229" key="GridCell.Tab.0.left" timestamp="1610266104767">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="1397" height="312" key="GridCell.Tab.0.left/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559878278" />
     <state width="1877" height="362" key="GridCell.Tab.0.left/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
-    <state width="1397" height="312" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1608607932174" />
-    <state width="1397" height="312" key="GridCell.Tab.0.right" timestamp="1608607932174">
+    <state width="1397" height="229" key="GridCell.Tab.0.left/0.0.1440.920@0.0.1440.920" timestamp="1610266104767" />
+    <state width="1397" height="229" key="GridCell.Tab.0.right" timestamp="1610266104767">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="1397" height="312" key="GridCell.Tab.0.right/0.0.1440.920/2160.0.1920.1040@0.0.1440.920" timestamp="1608559878278" />
     <state width="1877" height="362" key="GridCell.Tab.0.right/0.0.1440.920/2160.0.1920.1040@2160.0.1920.1040" timestamp="1607442191282" />
-    <state width="1397" height="312" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1608607932174" />
+    <state width="1397" height="229" key="GridCell.Tab.0.right/0.0.1440.920@0.0.1440.920" timestamp="1610266104767" />
+    <state width="1397" height="300" key="GridCell.Tab.1.bottom" timestamp="1610265868592">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1397" height="300" key="GridCell.Tab.1.bottom/0.0.1440.920@0.0.1440.920" timestamp="1610265868592" />
+    <state width="1397" height="300" key="GridCell.Tab.1.center" timestamp="1610265868592">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1397" height="300" key="GridCell.Tab.1.center/0.0.1440.920@0.0.1440.920" timestamp="1610265868592" />
+    <state width="1397" height="300" key="GridCell.Tab.1.left" timestamp="1610265868592">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1397" height="300" key="GridCell.Tab.1.left/0.0.1440.920@0.0.1440.920" timestamp="1610265868592" />
+    <state width="1397" height="300" key="GridCell.Tab.1.right" timestamp="1610265868592">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="1397" height="300" key="GridCell.Tab.1.right/0.0.1440.920@0.0.1440.920" timestamp="1610265868592" />
     <state x="222" y="105" key="SettingsEditor" timestamp="1603880863647">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
@@ -713,12 +829,17 @@
       <screen x="0" y="0" width="1440" height="920" />
     </state>
     <state width="498" height="446" key="SwitcherDM/0.0.1440.920@0.0.1440.920" timestamp="1605871737102" />
-    <state x="313" y="193" key="Vcs.Push.Dialog.v2" timestamp="1607686541507">
+    <state x="313" y="193" key="Vcs.Push.Dialog.v2" timestamp="1608608314581">
       <screen x="0" y="0" width="1440" height="920" />
     </state>
-    <state x="313" y="193" key="Vcs.Push.Dialog.v2/0.0.1440.920@0.0.1440.920" timestamp="1607686541507" />
+    <state x="313" y="193" key="Vcs.Push.Dialog.v2/0.0.1440.920@0.0.1440.920" timestamp="1608608314581" />
+    <state width="600" height="428" key="javadoc.popup" timestamp="1610265997741">
+      <screen x="0" y="0" width="1440" height="920" />
+    </state>
+    <state width="600" height="428" key="javadoc.popup/0.0.1440.920@0.0.1440.920" timestamp="1610265997741" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool Coverage Results" MODIFIED="1608607932145" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/my_Linux_Devops$Delete_staticPhoto.coverage" NAME="Delete_staticPhoto Coverage Results" MODIFIED="1610266076871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool Coverage Results" MODIFIED="1610265828493" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

@@ -155,9 +155,8 @@
 <li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.40. Linux下软件的安装与管理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="45.Linux下绑定网卡的操作记录.html">1.41. Linux下绑定网卡的操作记录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="46.Linux性能监控工具PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
-<li class="toctree-l3"><a class="reference internal" href="47.system用法.html">1.43. system用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="48.恢复文件相关工具.html">1.44. 恢复文件相关工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="49.Centos7服务封装为server.html">1.45. Centos7服务封装为server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.恢复文件相关工具.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd服务封装server.html">1.44. Centos7-systemd服务封装server.md</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -340,21 +339,28 @@
 </div>
 <div class="section" id="curldelete-put-post-get">
 <h2><a class="toc-backref" href="#id8">1.7.3. curl模拟delete/put/post/get请求</a><a class="headerlink" href="#curldelete-put-post-get" title="Permalink to this headline">¶</a></h2>
-<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">v</span> <span class="n">显示请求的信息</span>
-<span class="o">-</span><span class="n">X</span> <span class="n">选项指定其它协议</span>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>-v 显示请求的信息
+-X 选项指定其它协议
 
-<span class="n">get</span><span class="p">:</span>
-    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="n">age</span><span class="o">/</span><span class="mi">18</span>
+get:
+    curl -v 192.168.33.1:8080/girls/age/18
 
-<span class="n">post</span><span class="p">:</span>
-    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;age=14&amp;cupSize=C&#39;</span>
-    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">POST</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span> <span class="o">-</span><span class="n">d</span> <span class="s1">&#39;age=14&amp;cupSize=C&#39;</span>
+post:
+    curl -v 192.168.33.1:8080/girls -d &#39;age=14&amp;cupSize=C&#39;
+    curl -v -X POST 192.168.33.1:8080/girls -d &#39;age=14&amp;cupSize=C&#39;
 
-<span class="n">put</span><span class="p">:</span>
-    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">PUT</span> <span class="o">-</span><span class="n">d</span> <span class="s2">&quot;age=19&amp;cupSize=C&quot;</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="mi">3</span>
+    # 使用 curl 发送POST请求并读取网站的响应（HTML格式）：
+    $ curl URL -d &quot;postvar=postdata2&amp;postvar2=postdata2&quot;
+    例如：
+    $ curl http://127.0.0.1:8015/guestbook/newguest.html \
+    -d &quot;name=Clif&amp;url=www.noucorp.com&amp;http=www.noucorp.com&quot;
 
-<span class="n">delete</span><span class="p">:</span>
-    <span class="n">curl</span> <span class="o">-</span><span class="n">v</span> <span class="o">-</span><span class="n">X</span> <span class="n">DELETE</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.1</span><span class="p">:</span><span class="mi">8080</span><span class="o">/</span><span class="n">girls</span><span class="o">/</span><span class="mi">3</span>
+
+put:
+    curl -v -X PUT -d &quot;age=19&amp;cupSize=C&quot; 192.168.33.1:8080/girls/3
+
+delete:
+    curl -v -X DELETE 192.168.33.1:8080/girls/3
 </pre></div>
 </div>
 <p>参考文献

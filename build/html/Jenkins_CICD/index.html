@@ -46,7 +46,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Jenkins持续化集成" href="01.Jenkins持续化集成.html" />
+    <link rel="next" title="Jenkins-CICD学习" href="01.Jenkins-CICD学习.html" />
     <link rel="prev" title="10. 分布式队列管理Cerely" href="../DevOps_Study/10.分布式队列管理Cerely.html" /> 
 </head>
 
@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Jenkins持续化集成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html">Jenkins持续化集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html">Jenkins-CICD学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html">Jenkins2.x实践指南</a></li>
 </ul>
 </li>
@@ -183,22 +183,74 @@
 <h1>Jenkins持续化集成<a class="headerlink" href="#jenkins" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="01.Jenkins持续化集成.html">Jenkins持续化集成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#id1">Jenkins安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkinsphp">Jenkins发布PHP代码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#dockerjenkins">基于docker搭建jenkins</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#id2">Jenkins插件下载镜像加速</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.Jenkins-CICD学习.html">Jenkins-CICD学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#ci-cd">什么是 CI/CD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id1">传统的应用部署过程</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkins-gitlabwebhook">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#gitlab-jenkins">GitLab+Jenkins持续集成</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkins-pipeline">jenkins pipeline持续集成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#pipeline">pipeline基本使用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#id3">pipeline语法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#docker">安装 Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id2">配置阿里云镜像源</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#golang-jenkins">golang+jenkins自动化部署方案</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#id4">相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins">Jenkins安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#openjdk">1. 安装 OpenJDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#yum-jenkins">2. 使用 Yum 安装 Jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id3">3. 启动 Jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id4">4. 给 Jenkins 放行端口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id5">5.更换插件源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id6">6. 完成安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id7">7. 测试安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#unix-socket">8. Unix Socket 权限问题</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id8">使用 Jenkins 构建镜像：将你的应用打包成镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#nodejs">1. 安装 Nodejs 环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id9">如何使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#ssh-git">2. 使用 SSH 协议集成 Git 仓库源</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id10">2.1 生成公钥私钥</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#gitee">2.2 在 Gitee 配置公钥</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id11">2.3 在 Jenkins 配置私钥</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id12">3. 构建镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id13">4. 执行任务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id14">将镜像上传至私有镜像库：让镜像管理更私密</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#nexus">部署 Nexus 服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id15">登录制品库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinsphp">Jenkins发布PHP代码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#dockerjenkins">基于docker搭建jenkins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id16">Jenkins插件下载镜像加速</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id17">Jenkins系列</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id18">1. Jenkins忘记密码的修复方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id19">2.Jenkins初始化配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id20">3.Jenkins插件下载镜像加速</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinsgit">4.Jenkins添加git密钥对</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinspublish-over-ssh">5.Jenkins通过Publish over SSH插件实现远程部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id21">6.Jenkins用户权限和角色配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id22">7.Jenkins修改主目录步骤说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id23">8.Jenkins升级、迁移和备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id24">9.Jenkins插件备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id25">10.Jenkins邮件通知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id26">11.Jenkins构建触发器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#docker-jenkins-4-etcd-confd">12.Docker+Jenkins持续集成环境(4):使用etcd+confd实现容器服务注册与发现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id27">持续集成学习目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins-gitlabwebhook">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#gitlab-jenkins">GitLab+Jenkins持续集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins-pipeline">jenkins pipeline持续集成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#pipeline">pipeline基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id28">pipeline语法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#golang-jenkins">golang+jenkins自动化部署方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id29">相关参考文献</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02.Jenkins2.x实践指南.html">Jenkins2.x实践指南</a><ul>
@@ -309,7 +361,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="01.Jenkins持续化集成.html" class="btn btn-neutral float-right" title="Jenkins持续化集成" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="01.Jenkins-CICD学习.html" class="btn btn-neutral float-right" title="Jenkins-CICD学习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../DevOps_Study/10.分布式队列管理Cerely.html" class="btn btn-neutral float-left" title="10. 分布式队列管理Cerely" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
