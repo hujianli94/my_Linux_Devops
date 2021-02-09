@@ -119,6 +119,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id3">1.6.3. 示例：</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#curl">1.6.4. curl</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#shell">1.6.5. shell爬取网站图片的用例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wgetcurl">1.6.6. 这篇文章最全的介绍了wget和curl</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
@@ -157,9 +158,8 @@
 <li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.40. Linux下软件的安装与管理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="45.Linux下绑定网卡的操作记录.html">1.41. Linux下绑定网卡的操作记录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="46.Linux性能监控工具PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
-<li class="toctree-l3"><a class="reference internal" href="47.system用法.html">1.43. system用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="48.恢复文件相关工具.html">1.44. 恢复文件相关工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="49.Centos7服务封装为server.html">1.45. Centos7服务封装为server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.恢复文件相关工具.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd服务封装server.html">1.44. Centos7-systemd服务封装server.md</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -248,26 +248,31 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#wget" id="id4">wget</a><ul>
-<li><a class="reference internal" href="#id1" id="id5">功能</a></li>
-<li><a class="reference internal" href="#id2" id="id6">常用选项：</a></li>
-<li><a class="reference internal" href="#id3" id="id7">示例：</a></li>
-<li><a class="reference internal" href="#curl" id="id8">curl</a></li>
-<li><a class="reference internal" href="#shell" id="id9">shell爬取网站图片的用例</a></li>
+<li><a class="reference internal" href="#wget" id="id6">wget</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">功能</a></li>
+<li><a class="reference internal" href="#id2" id="id8">常用选项：</a></li>
+<li><a class="reference internal" href="#id3" id="id9">示例：</a></li>
+<li><a class="reference internal" href="#curl" id="id10">curl</a></li>
+<li><a class="reference internal" href="#shell" id="id11">shell爬取网站图片的用例</a><ul>
+<li><a class="reference internal" href="#id4" id="id12">wget 命令</a></li>
+<li><a class="reference internal" href="#id5" id="id13">curl 命令</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#wgetcurl" id="id14">这篇文章最全的介绍了wget和curl</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="wget">
-<h1><a class="toc-backref" href="#id4">1.6. wget</a><a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id6">1.6. wget</a><a class="headerlink" href="#wget" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id5">1.6.1. 功能</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">1.6.1. 功能</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>非交互式网络下载，类似于 HTTP 客户端
 </pre></div>
 </div>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id6">1.6.2. 常用选项：</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">1.6.2. 常用选项：</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-b, --background 后台运行日志记录和输入文件：
 -o, --output-file=FILE 日志写到文件
 -a, --append-output=FILE 日志追加到文件
@@ -317,9 +322,11 @@ FTP 选项：
 --exclude-domains=LIST 排除不被下载域的列表
 </pre></div>
 </div>
+<p>wget参数可以参考如下文章</p>
+<p><a class="reference external" href="https://www.bookstack.cn/read/linux-command-1.5.1/command-wget.md?wd=wget">https://www.bookstack.cn/read/linux-command-1.5.1/command-wget.md?wd=wget</a></p>
 </div>
 <div class="section" id="id3">
-<h2><a class="toc-backref" href="#id7">1.6.3. 示例：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id9">1.6.3. 示例：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>下载单个文件到当前目录：
 # wget http://nginx.org/download/nginx-1.11.7.tar.gz
 放到后台下载：
@@ -346,7 +353,7 @@ http://nginx.org/download/nginx-1.11.7.tar.gz
 </div>
 </div>
 <div class="section" id="curl">
-<h2><a class="toc-backref" href="#id8">1.6.4. curl</a><a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">1.6.4. curl</a><a class="headerlink" href="#curl" title="Permalink to this headline">¶</a></h2>
 <p>curl 命令的用途广泛，其功能包括下载、发送各种HTTP请求以及指定HTTP头部。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  使用下列命令将下载的文件输出到 stdout ：
 $ curl URL
@@ -367,7 +374,7 @@ $ curl URL/file -C offset
 </div>
 </div>
 <div class="section" id="shell">
-<h2><a class="toc-backref" href="#id9">1.6.5. shell爬取网站图片的用例</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id11">1.6.5. shell爬取网站图片的用例</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/bash
 #用途:图片下载工具
 #文件名: img_downloader.sh
@@ -424,6 +431,47 @@ $ ./img_downloader.sh -d DIR URL
 $ ./img_downloader.sh URL -d DIR
 </pre></div>
 </div>
+<div class="section" id="id4">
+<h3><a class="toc-backref" href="#id12">wget 命令</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">url</span> <span class="c1">#下载文件</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="n">demo</span><span class="o">.</span><span class="n">html</span> <span class="n">url</span> <span class="c1">#下载文件并改为指定名称</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">url</span> <span class="c1">#断点续传</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">i</span> <span class="n">url</span> <span class="n">url</span> <span class="n">url</span> <span class="c1">#下载多个文件</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">t</span> <span class="mi">5</span> <span class="n">url</span> <span class="c1">#网络不好时重试 5 次</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">t</span> <span class="mi">0</span> <span class="n">url</span> <span class="c1">#不断重试</span>
+<span class="n">wget</span> <span class="o">--</span><span class="n">limit</span><span class="o">-</span><span class="n">rate</span> <span class="mi">20</span><span class="n">k</span> <span class="n">url</span> <span class="c1">#限速下载</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">Q</span> <span class="mi">100</span><span class="n">m</span> <span class="n">url</span> <span class="c1">#设置下载最大额度</span>
+<span class="n">wget</span> <span class="o">--</span><span class="n">mirror</span> <span class="o">--</span><span class="n">convert</span><span class="o">-</span><span class="n">links</span> <span class="n">url</span> <span class="c1">#递归复制其他网站作为镜像，类似爬虫</span>
+<span class="n">wget</span> <span class="o">--</span><span class="n">user</span> <span class="n">username</span> <span class="o">--</span><span class="n">password</span> <span class="k">pass</span> <span class="n">url</span> <span class="c1">#认证</span>
+</pre></div>
+</div>
+<p>补充：<code class="docutils literal notranslate"><span class="pre">*wget*</span></code> 命令适用于下载。</p>
+</div>
+<div class="section" id="id5">
+<h3><a class="toc-backref" href="#id13">curl 命令</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>curl ifconfig.me #查看外网 IP
+curl www.baidu.com #请求指定网址并显示出来
+curl -o demo.html https://www.baidu.com/index.php #下载指定文件并重命名为 demo.html
+curl -v www.baidu.com #显示请求的过程信息
+curl url --silent #不显示下载进度信息
+curl url -o index.html --progress #显示下载进度信息
+curl --referer Referer_URL target_URL #设置 referer
+curl url --cookie &quot;user=username;pass=password&quot; #设置 cookie
+curl url --user-agent &quot;Mozilla/5.0 ...&quot; #设置 User-Agent
+curl url --limit-rate 20k  #限速
+curl url --max-filesize bytes #设置下载最大额度
+curl url -H &#39;HOST: 1.1.1.1&#39; -H &#39;X-Real-IP: 2.2.2.2&#39; #设置 http header
+curl -X GET www.baidu.com #指定请求方法，请求方法必须大写
+curl -C url #断点续传，适用网络不顺畅时下载大文件，无须重新下载
+curl --connect-timeout 20 https://wp.hellocode.name/?p=701 #指定 url 并限制连接时间
+</pre></div>
+</div>
+<p>补充：<code class="docutils literal notranslate"><span class="pre">curl</span></code> 命令适用于上传与请求。</p>
+</div>
+</div>
+<div class="section" id="wgetcurl">
+<h2><a class="toc-backref" href="#id14">1.6.6. 这篇文章最全的介绍了wget和curl</a><a class="headerlink" href="#wgetcurl" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/taosim/articles/4092572.html">https://www.cnblogs.com/taosim/articles/4092572.html</a></p>
 </div>
 </div>
 
