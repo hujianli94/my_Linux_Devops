@@ -15,53 +15,53 @@ VMDK–>qcow2
 
 .. code:: bash
 
-   ~$ qemu-img convert -f vmdk -O qcow2 SLES11SP1-single.vmdk SLES11SP1-single.img
+    ~$ qemu-img convert -f vmdk -O qcow2 SLES11SP1-single.vmdk SLES11SP1-single.img
 
 qcow2转raw
 ----------
 
 .. code:: bash
 
-   ~$ qemu-img convert -O qcow2 image-raw.raw image-raw-converted.qcow
+    ~$ qemu-img convert -O qcow2 image-raw.raw image-raw-converted.qcow
 
 raw转qcow2
 ----------
 
 .. code:: shell
 
-   # 参数说明
-   [root@kvm data]# qemu-img  --help |grep convert 
-   qemu-img convert [-f fmt] [-O output_fmt] filename  output_filename
+    # 参数说明
+    [root@kvm data]# qemu-img  --help |grep convert 
+    qemu-img convert [-f fmt] [-O output_fmt] filename  output_filename
 
 转换原有磁盘格式
 
 .. code:: shell
 
-   [root@kvm data]# qemu-img convert -f raw -O qcow2 clsn.raw clsn.qcow2
+    [root@kvm data]# qemu-img convert -f raw -O qcow2 clsn.raw clsn.qcow2
 
-   # 带有进度条的转换
-   # qemu-img convert Centos7.5.vmdk -O qcow2 Centos7.5.qcow2 -p
-       (100.00/100%)
-       
-   # 安装qcow2镜像的的虚拟机
-   virt-install --name VM01 --ram 4096 --vcpus=2 --disk path=/home/Centos7.5.qcow2 --network=bridge:virbr0 --force --import --autostart
+    # 带有进度条的转换
+    # qemu-img convert Centos7.5.vmdk -O qcow2 Centos7.5.qcow2 -p
+        (100.00/100%)
+        
+    # 安装qcow2镜像的的虚拟机
+    virt-install --name VM01 --ram 4096 --vcpus=2 --disk path=/home/Centos7.5.qcow2 --network=bridge:virbr0 --force --import --autostart
 
 ova转ovf
 --------
 
 .. code:: bash
 
-   ovftool --lax Centos6.6-lamp.ova Centos6.6-lamp.ovf
-   ovftool --overwrite --shaAlgorithm=sha1 --lax Centos6.6-lamp.ova Centos6.6-lamp.ovf
+    ovftool --lax Centos6.6-lamp.ova Centos6.6-lamp.ovf
+    ovftool --overwrite --shaAlgorithm=sha1 --lax Centos6.6-lamp.ova Centos6.6-lamp.ovf
 
-   #修改.ovf文件
-   <vssd:VirtualSystemType>virtualbox-2.2</vssd:VirtualSystemType>
+    #修改.ovf文件
+    <vssd:VirtualSystemType>virtualbox-2.2</vssd:VirtualSystemType>
 
-   #修改为
-   <vssd:VirtualSystemType>vmx-07</vssd:VirtualSystemType>
+    #修改为
+    <vssd:VirtualSystemType>vmx-07</vssd:VirtualSystemType>
 
-   #修改mf文件的sha1
-   echo sha1(file_get_contents('xxx.mf'))
+    #修改mf文件的sha1
+    echo sha1(file_get_contents('xxx.mf'))
 
 VirtualBox迁移到KVM
 -------------------
@@ -71,5 +71,24 @@ VirtualBox迁移到KVM
 
 .. code:: shell
 
-   [root@kvm-host ~]# qemu-img convert ubuntu.vdi -O qcow2 ubuntu.qcow2
-   [root@kvm-host ~]# qemu-img -m 1024 ubuntu.qcow2
+    [root@kvm-host ~]# qemu-img convert ubuntu.vdi -O qcow2 ubuntu.qcow2
+    [root@kvm-host ~]# qemu-img -m 1024 ubuntu.qcow2
+
+KVM虚机迁移到VMware
+-------------------
+
+::
+
+    1.将kvm下虚拟机关机；
+
+    2.将kvm下img文件格式的虚拟机转换成vmdk格式，命令如下：
+
+    # qemu-img convert testvm1.img –O vmdk /tmp/testvm1.vmdk 
+
+    3.在VMware vSphere环境里创建一个虚拟机和kvm环境虚拟机配置相同，不用创建磁盘使用刚刚转换的vmdk文件，开启虚拟机即可
+
+KVM虚拟机迁移至VMware参考：
+
+::
+
+    https://blog.csdn.net/zhongbeida_xue/article/details/95072123

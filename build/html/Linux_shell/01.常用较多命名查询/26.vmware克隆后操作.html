@@ -150,9 +150,8 @@
 <li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.40. Linux下软件的安装与管理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="45.Linux下绑定网卡的操作记录.html">1.41. Linux下绑定网卡的操作记录</a></li>
 <li class="toctree-l3"><a class="reference internal" href="46.Linux性能监控工具PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
-<li class="toctree-l3"><a class="reference internal" href="47.system用法.html">1.43. system用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="48.恢复文件相关工具.html">1.44. 恢复文件相关工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="49.Centos7服务封装为server.html">1.45. Centos7服务封装为server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.恢复文件相关工具.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd服务封装server.html">1.44. Centos7-systemd服务封装server.md</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
@@ -247,9 +246,14 @@
 <div class="section" id="vmware">
 <h1><a class="toc-backref" href="#id1">1.27. vmware克隆后操作</a><a class="headerlink" href="#vmware" title="Permalink to this headline">¶</a></h1>
 <p>右键–&gt;&gt;管理–&gt;&gt;克隆</p>
+<p>创建后的症状：启动之后使用ifconfig，发现无IP地址，只有回环地址为127.0.0.1。因此考虑是否因为MAC/IP地址及主机名都与克隆前的源主机相同。</p>
 <p>克隆的系统上网步骤</p>
 <p>（1）先setup设置网卡</p>
-<p>（2）删除网卡配置的两行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">init</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">network</span> <span class="n">restart</span>
+<span class="n">ifup</span> <span class="n">eth0</span>
+</pre></div>
+</div>
+<p>（2）编辑网卡对应的eth0的配置文件：vi/etc/sysconfig/network-scripts/ifcfg-eth0，删除配置文件中HWADDR地址及UUID所在的行</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysconfig</span><span class="o">/</span><span class="n">network</span><span class="o">-</span><span class="n">scripts</span><span class="o">/</span><span class="n">ifcfg</span><span class="o">-</span><span class="n">eth0</span>
 </pre></div>
 </div>
@@ -259,6 +263,7 @@
 <span class="n">重启后就可以上网了</span>
 </pre></div>
 </div>
+<p>原因猜测：这是VM克隆为了防止源机器和克隆机器启动网络配置地址冲突而做的保护策略。</p>
 </div>
 
 

@@ -110,7 +110,12 @@
 <li class="toctree-l2"><a class="reference internal" href="03.KVM带web管理界面.html">3. KVM带web管理界面</a></li>
 <li class="toctree-l2 current"><a class="current reference internal" href="#">4. Proxmox VE</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">4.1. 安装后相关补丁脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">4.2. 推荐说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.2. proxmox VE 国内镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#uproxmox-ve">4.3. U盘启动proxmox ve</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.4. Proxmox VE 部署维护</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#proxmox-veceph">4.5. Proxmox-VE搭配Ceph存储组建高可用虚拟化平台</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">4.6. Proxmox-VE系列文章</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">4.7. 推荐说明</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="05.CentOS7-ks.cfg系统安装与配置技巧.html">5. CentOS7-ks.cfg系统安装与配置技巧</a></li>
@@ -193,15 +198,20 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#proxmox-ve" id="id3">Proxmox VE</a><ul>
-<li><a class="reference internal" href="#id1" id="id4">安装后相关补丁脚本</a></li>
-<li><a class="reference internal" href="#id2" id="id5">推荐说明</a></li>
+<li><a class="reference internal" href="#proxmox-ve" id="id6">Proxmox VE</a><ul>
+<li><a class="reference internal" href="#id1" id="id7">安装后相关补丁脚本</a></li>
+<li><a class="reference internal" href="#id2" id="id8">proxmox VE 国内镜像</a></li>
+<li><a class="reference internal" href="#uproxmox-ve" id="id9">U盘启动proxmox ve</a></li>
+<li><a class="reference internal" href="#id3" id="id10">Proxmox VE 部署维护</a></li>
+<li><a class="reference internal" href="#proxmox-veceph" id="id11">Proxmox-VE搭配Ceph存储组建高可用虚拟化平台</a></li>
+<li><a class="reference internal" href="#id4" id="id12">Proxmox-VE系列文章</a></li>
+<li><a class="reference internal" href="#id5" id="id13">推荐说明</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="proxmox-ve">
-<h1><a class="toc-backref" href="#id3">4. Proxmox VE</a><a class="headerlink" href="#proxmox-ve" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id6">4. Proxmox VE</a><a class="headerlink" href="#proxmox-ve" title="Permalink to this headline">¶</a></h1>
 <p>OpenVZ 是开源软件，是基于 Linux 平台的操作系统级服务器虚拟化解决方案，
 它是基于 Linux 内核和作业系统的操作系统级虚拟化技术。 OpenVZ
 允许在单个物理服务器上创建多个隔离的虚拟专用服务器，
@@ -216,16 +226,38 @@ OS和guest
 OS都必须是Linux，这是出于对性能的考虑。根据OpenVZ网站的说法，使用OpenVZ与使用独立的服务器相比，性能只会有1%～3%的损失。这个特点可以让OpenVZ充分利用硬件资源，最大限度地发挥服务器虚拟化技术的优势。</p>
 <p>Proxmox VE的官方网站为</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://www.proxmox.com，
-可以从http://www.proxmox.com/en/downloads
 下载最新的Proxmox VE的ISO镜像，这里下载的是Proxmox VE 3.4。将下载下来的镜像文件刻录成CD
 </pre></div>
 </div>
+<p>ISO下载地址：</p>
+<p><a class="reference external" href="https://www.proxmox.com/en/downloads">https://www.proxmox.com/en/downloads</a></p>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id4">4.1. 安装后相关补丁脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id7">4.1. 安装后相关补丁脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://github.com/extremeshok/xshok-proxmox">https://github.com/extremeshok/xshok-proxmox</a></p>
+<p>官网下载速度喜人，15k，单线程，不支持断点续传</p>
 </div>
 <div class="section" id="id2">
-<h2><a class="toc-backref" href="#id5">4.2. 推荐说明</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">4.2. proxmox VE 国内镜像</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://my.oschina.net/u/4365362/blog/4268433">https://my.oschina.net/u/4365362/blog/4268433</a></p>
+</div>
+<div class="section" id="uproxmox-ve">
+<h2><a class="toc-backref" href="#id9">4.3. U盘启动proxmox ve</a><a class="headerlink" href="#uproxmox-ve" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://my.oschina.net/u/3585265/blog/4288226">https://my.oschina.net/u/3585265/blog/4288226</a></p>
+</div>
+<div class="section" id="id3">
+<h2><a class="toc-backref" href="#id10">4.4. Proxmox VE 部署维护</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://my.oschina.net/attacker/blog/2236913">https://my.oschina.net/attacker/blog/2236913</a></p>
+</div>
+<div class="section" id="proxmox-veceph">
+<h2><a class="toc-backref" href="#id11">4.5. Proxmox-VE搭配Ceph存储组建高可用虚拟化平台</a><a class="headerlink" href="#proxmox-veceph" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://blog.51cto.com/kerry/2287648?source=drt">https://blog.51cto.com/kerry/2287648?source=drt</a></p>
+</div>
+<div class="section" id="id4">
+<h2><a class="toc-backref" href="#id12">4.6. Proxmox-VE系列文章</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://blog.51cto.com/6222666">https://blog.51cto.com/6222666</a></p>
+</div>
+<div class="section" id="id5">
+<h2><a class="toc-backref" href="#id13">4.7. 推荐说明</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <p>如果说Openstack 的难度细说为10，Proxmox的难度系数为2，
 简单学习就可以上手，30分钟就可以建立企业私有云，适用于100~500的虚拟机/容器。
 不二之选，强烈推荐。</p>

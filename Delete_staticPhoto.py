@@ -36,13 +36,15 @@ def trav_walk(pathname):
                 continue
             fname = os.path.abspath(os.path.join(root, file))
             fname = fname.split("\\")
-            if fname[2] == ".git" or fname[2] == ".idea" or fname[2] == "build" or fname[2] == "exts" or fname[2] != "source":
+            if fname[2] == ".git" or fname[2] == ".idea" or fname[2] == "build" or fname[2] == "exts" or fname[
+                2] != "source":
                 continue
             fname_file = "\\".join(fname)
             if fname_file.endswith(".md"):
                 # print(fname_file)
                 Read_file(fname_file)
     print(list_photo)
+
 
 def Read_file(file):
     """ 读文件将使用了图片链接的信息加入到列表中 """

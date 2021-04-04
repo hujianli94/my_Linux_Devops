@@ -46,7 +46,7 @@
     
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Jenkins持续化集成" href="01.Jenkins持续化集成.html" />
+    <link rel="next" title="Jenkins-CICD学习" href="01.Jenkins-CICD学习.html" />
     <link rel="prev" title="10. 分布式队列管理Cerely" href="../DevOps_Study/10.分布式队列管理Cerely.html" /> 
 </head>
 
@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Jenkins持续化集成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html">Jenkins持续化集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html">Jenkins-CICD学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html">Jenkins2.x实践指南</a></li>
 </ul>
 </li>
@@ -183,22 +183,75 @@
 <h1>Jenkins持续化集成<a class="headerlink" href="#jenkins" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="01.Jenkins持续化集成.html">Jenkins持续化集成</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#id1">Jenkins安装</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkinsphp">Jenkins发布PHP代码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#dockerjenkins">基于docker搭建jenkins</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#id2">Jenkins插件下载镜像加速</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01.Jenkins-CICD学习.html">Jenkins-CICD学习</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#ci-cd">什么是 CI/CD</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id1">传统的应用部署过程</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkins-gitlabwebhook">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#gitlab-jenkins">GitLab+Jenkins持续集成</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#jenkins-pipeline">jenkins pipeline持续集成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#pipeline">pipeline基本使用</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.Jenkins持续化集成.html#id3">pipeline语法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#docker">安装 Docker</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id2">配置阿里云镜像源</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#golang-jenkins">golang+jenkins自动化部署方案</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.Jenkins持续化集成.html#id4">相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins">Jenkins安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#openjdk">1. 安装 OpenJDK</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#yum-jenkins">2. 使用 Yum 安装 Jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id3">3. 启动 Jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id4">4. 给 Jenkins 放行端口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id5">5.更换插件源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id6">6. 完成安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id7">7. 测试安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#unix-socket">8. Unix Socket 权限问题</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id8">使用 Jenkins 构建镜像：将你的应用打包成镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#nodejs">1. 安装 Nodejs 环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id9">如何使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#ssh-git">2. 使用 SSH 协议集成 Git 仓库源</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id10">2.1 生成公钥私钥</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#gitee">2.2 在 Gitee 配置公钥</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id11">2.3 在 Jenkins 配置私钥</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id12">3. 构建镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id13">4. 执行任务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id14">将镜像上传至私有镜像库：让镜像管理更私密</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#nexus">部署 Nexus 服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id15">登录制品库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinsphp">Jenkins发布PHP代码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinsjava">Jenkins部署Java项目</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#dockerjenkins">基于docker搭建jenkins</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id16">Jenkins插件下载镜像加速</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id17">Jenkins系列</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id18">1. Jenkins忘记密码的修复方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id19">2.Jenkins初始化配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id20">3.Jenkins插件下载镜像加速</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinsgit">4.Jenkins添加git密钥对</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkinspublish-over-ssh">5.Jenkins通过Publish over SSH插件实现远程部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id21">6.Jenkins用户权限和角色配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id22">7.Jenkins修改主目录步骤说明</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id23">8.Jenkins升级、迁移和备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id24">9.Jenkins插件备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id25">10.Jenkins邮件通知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id26">11.Jenkins构建触发器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#docker-jenkins-4-etcd-confd">12.Docker+Jenkins持续集成环境(4):使用etcd+confd实现容器服务注册与发现</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id27">持续集成学习目录</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins-gitlabwebhook">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#gitlab-jenkins">GitLab+Jenkins持续集成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#jenkins-pipeline">jenkins pipeline持续集成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#pipeline">pipeline基本使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Jenkins-CICD学习.html#id28">pipeline语法</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#golang-jenkins">golang+jenkins自动化部署方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Jenkins-CICD学习.html#id29">相关参考文献</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02.Jenkins2.x实践指南.html">Jenkins2.x实践指南</a><ul>
@@ -207,92 +260,93 @@
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id2">1.2 从版本控制库拉取pipeline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#mavenjava">1.3 使用Maven构建Java应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#jenkins">1.4 jenkins插件下载和加速</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id3">小结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id3">1.5 Jenkins更换皮肤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id4">小结</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id4">2. pipeline的组成</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id5">2.1 pipeline最简结构</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id6">2.2 步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id7">2.3 配置pipeline本身</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id8">2.4 pipeline内置基础步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id9">2.5 制品相关步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id10">2.6 命令相关步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id11">2.7 其他步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id12">小结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id5">2. pipeline的组成</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id6">2.1 pipeline最简结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id7">2.2 步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id8">2.3 配置pipeline本身</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id10">2.4 pipeline内置基础步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id13">2.5 制品相关步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id14">2.6 命令相关步骤</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id15">2.7 使用pipeline代码片段生成器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id16">小结</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id13">3.环境变量与构建工具</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id14">3.1 Jenkins内置变量</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id15">3.2 自定义pipeline环境变量</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id16">3.3 自定义全局环境变量</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id17">3.4 一些pipeline示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id17">3.环境变量与构建工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id18">3.1 Jenkins内置变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id19">3.2 自定义pipeline环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id20">3.3 自定义全局环境变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id21">3.4 一些pipeline示例</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id19">4.构建工具</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id23">4.构建工具</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#tools">4.1 tools指令介绍</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id20">4.2 利用环境变量支持更多的构建工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id24">4.2 利用环境变量支持更多的构建工具</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id23">5.触发Pipeline执行</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id24">5.1 时间触发</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id25">5.2 事件触发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id27">5.触发Pipeline执行</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id28">5.1 时间触发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id29">5.2 事件触发</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#upstream">5.2.1 由上游任务触发：upstream</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#gitlab">5.3 GitLab通知触发</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#pipelinegitlab-trigger">5.4 在pipeline中实现GitLab trigger</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#generic-webhook-trigger">5.5 使用Generic Webhook Trigger插件实现触发</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id30">6.将构建状态信息推送到GitLab</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id31">7.多分支构建</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id32">7.1 创建多分支pipeline</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id33">7.2 根据分支部署到不同的环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id34">6.将构建状态信息推送到GitLab</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id35">7.多分支构建</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id36">7.1 创建多分支pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id37">7.2 根据分支部署到不同的环境</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#when">7.3 when指令的用法</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#gitlab-triggerpipeline">7.4 GitLab trigger对多分支pipeline的支持</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id35">7.5 并发示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id39">7.5 并发示例</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id36">8 参数化pipeline</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id37">8.1 什么是参数化pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id40">8 参数化pipeline</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id41">8.1 什么是参数化pipeline</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#parameters">8.2 使用parameters指令</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id40">8.3 由另一个pipeline传参并触发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id44">8.3 由另一个pipeline传参并触发</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#conditional-buildstep">8.4 使用Conditional BuildStep插件处理复杂的判断逻辑</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#input">8.5 使用input步骤</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id43">8.6 小贴士</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id47">8.6 小贴士</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id46">9 凭证管理</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id47">9.1 为什么要管理凭证</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id48">9.2 凭证是什么</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id49">9.3 常用凭证</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id50">9.4 优雅地使用凭证</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id50">9 凭证管理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id51">9.1 为什么要管理凭证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id52">9.2 凭证是什么</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id53">9.3 常用凭证</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id54">9.4 优雅地使用凭证</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#hashicorp-vault">9.5 使用HashiCorp Vault</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id53">9.6 在Jenkins日志中隐藏敏感信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id57">9.6 在Jenkins日志中隐藏敏感信息</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id54">10 制品管理</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id55">12. 自动化部署</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id56">12.1 关于部署有什么好说的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id58">10 制品管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id59">12. 自动化部署</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id60">12.1 关于部署有什么好说的</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#jenkinsansible">12.2 Jenkins集成Ansible实现自动化部署</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id64">13 通知</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id65">13.1 邮件通知</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id66">13.2 钉钉通知</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id68">13 通知</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id69">13.1 邮件通知</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id70">13.2 钉钉通知</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#http">13.3 HTTP请求通知</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id67">16. Jenkins运维</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id68">16.1 认证管理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id70">16.2 授权管理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id74">16.3 Jenkins监控</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id75">16.4 Jenkins备份</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id76">16.5 汉化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id77">16.6 Jenkins配置即代码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id71">16. Jenkins运维</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id72">16.1 认证管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id74">16.2 授权管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id78">16.3 Jenkins监控</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id79">16.4 Jenkins备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id80">16.5 汉化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id81">16.6 Jenkins配置即代码</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#init-groovyjenkins">16.7 使用init.groovy配置Jenkins</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id78">17. 自动化运维经验</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id79">17.1 小团队自动化运维实践经验</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id82">17. 自动化运维经验</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Jenkins2.x实践指南.html#id83">17.1 小团队自动化运维实践经验</a></li>
 </ul>
 </li>
 </ul>
@@ -309,7 +363,7 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="01.Jenkins持续化集成.html" class="btn btn-neutral float-right" title="Jenkins持续化集成" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="01.Jenkins-CICD学习.html" class="btn btn-neutral float-right" title="Jenkins-CICD学习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../DevOps_Study/10.分布式队列管理Cerely.html" class="btn btn-neutral float-left" title="10. 分布式队列管理Cerely" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

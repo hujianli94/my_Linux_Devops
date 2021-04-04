@@ -1,0 +1,465 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html4" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>1.44. Centos7-systemd服务封装server.md &mdash; 运维开发修炼之路</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../../',
+              VERSION:'1.0.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../../_static/jquery.js"></script>
+        <script type="text/javascript" src="../../_static/underscore.js"></script>
+        <script type="text/javascript" src="../../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Linux服务器架设" href="../02.Linux服务器架设/index.html" />
+    <link rel="prev" title="1.43. 恢复文件相关工具" href="47.恢复文件相关工具.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> 小健_Linux-shell-Devops_Blog
+          
+
+          
+            
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps_Study/index.html">DevOps与自动化运维</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins_CICD/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Practice/index.html">KVM_Practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM_Study/index.html">KVM_Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux_shell</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 常用较多命名查询</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.正则表达式.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget和curl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.运算符.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc命令.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su命令与sudo服务.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7忘记root密码、修改网卡名称.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware克隆后操作.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell登录-采用密钥登录.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.一些有用的shell脚本.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.使用OpenSSH远程管理Linux服务器.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump跟踪分组.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen集中管理多个终端.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo输出颜色.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Ubuntu安装和初始化.html">1.34. Ubuntu安装和初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.DRBD详细解说及配置过程记录.html">1.35. DRBD详细解说及配置过程记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux初始化系统安全设置.html">1.36. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.使用tar命令进行本地备份scripts.html">1.37. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.配置Yum软件仓库.html">1.38. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim编辑器学习.html">1.39. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux下软件的安装与管理.html">1.40. Linux下软件的安装与管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.Linux下绑定网卡的操作记录.html">1.41. Linux下绑定网卡的操作记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.Linux性能监控工具PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.恢复文件相关工具.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.44. Centos7-systemd服务封装server.md</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nginx-exporterservice">1.44.1. nginx_exporter封装service服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.44.2. 配置文件的区块</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux服务器架设/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx学习/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix监控企业实战/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux构建高可用架构/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0从入门到精通/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.快速阅读Linux入门-阿铭Linux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Linux_shell</a> &raquo;</li>
+        
+          <li><a href="index.html">1. 常用较多命名查询</a> &raquo;</li>
+        
+      <li>1.44. Centos7-systemd服务封装server.md</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#centos7-systemdserver-md" id="id2">Centos7-systemd服务封装server.md</a><ul>
+<li><a class="reference internal" href="#nginx-exporterservice" id="id3">nginx_exporter封装service服务</a></li>
+<li><a class="reference internal" href="#id1" id="id4">配置文件的区块</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="centos7-systemdserver-md">
+<h1><a class="toc-backref" href="#id2">1.44. Centos7-systemd服务封装server.md</a><a class="headerlink" href="#centos7-systemdserver-md" title="Permalink to this headline">¶</a></h1>
+<p>示例1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /usr/lib/systemd/system/supervisord.service</span>
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">Process</span> <span class="n">Monitoring</span> <span class="ow">and</span> <span class="n">Control</span> <span class="n">Daemon</span>
+<span class="n">After</span><span class="o">=</span><span class="n">rc</span><span class="o">-</span><span class="n">local</span><span class="o">.</span><span class="n">service</span> <span class="n">nss</span><span class="o">-</span><span class="n">user</span><span class="o">-</span><span class="n">lookup</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">forking</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">.</span><span class="n">conf</span>
+<span class="n">ExecReload</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">reload</span>
+<span class="n">ExecStop</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisorctl</span> <span class="n">shutdown</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>设置754权限</p>
+<div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">754</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">supervisord</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<p>示例2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@frontend1</span> <span class="n">system</span><span class="p">]</span><span class="c1"># cat banjo.service</span>
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">banjo</span> <span class="o">-</span> <span class="n">banjo</span> <span class="n">rserver</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span> <span class="n">remote</span><span class="o">-</span><span class="n">fs</span><span class="o">.</span><span class="n">target</span> <span class="n">nss</span><span class="o">-</span><span class="n">lookup</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">forking</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">app</span><span class="o">/</span><span class="n">oscbin</span><span class="o">/</span><span class="n">banjo</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">banjo</span> <span class="o">-</span><span class="n">D</span>
+<span class="n">ExecStop</span><span class="o">=/</span><span class="n">app</span><span class="o">/</span><span class="n">oscbin</span><span class="o">/</span><span class="n">banjo</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">banjo</span> <span class="o">-</span><span class="n">s</span> <span class="n">stop</span>
+<span class="n">ExecReload</span><span class="o">=/</span><span class="n">app</span><span class="o">/</span><span class="n">oscbin</span><span class="o">/</span><span class="n">banjo</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">banjo</span> <span class="o">-</span><span class="n">s</span> <span class="n">restart</span>
+<span class="n">PrivateTmp</span><span class="o">=</span><span class="n">true</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>设置权限</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">644</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">banjo</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+</pre></div>
+</div>
+<div class="section" id="nginx-exporterservice">
+<h2><a class="toc-backref" href="#id3">1.44.1. nginx_exporter封装service服务</a><a class="headerlink" href="#nginx-exporterservice" title="Permalink to this headline">¶</a></h2>
+<p>创建nginx_exporter目录，移动文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx_exporter</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+<span class="n">mv</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">nginx_exporter</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx_exporter</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>封装service</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">nginx_exporter</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>内容如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">nginx</span> <span class="n">monitor</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx_exporter</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">nginx_exporter</span> <span class="o">-</span><span class="n">nginx</span><span class="o">.</span><span class="n">scrape_uri</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:8011/nginx_status&quot;</span>
+<span class="n">ExecStop</span><span class="o">=-/</span><span class="n">sbin</span><span class="o">/</span><span class="n">start</span><span class="o">-</span><span class="n">stop</span><span class="o">-</span><span class="n">daemon</span> <span class="o">--</span><span class="n">quiet</span> <span class="o">--</span><span class="n">stop</span> <span class="o">--</span><span class="n">retry</span> <span class="n">QUIT</span><span class="o">/</span><span class="mi">5</span>
+<span class="n">TimeoutStopSec</span><span class="o">=</span><span class="mi">5</span>
+<span class="n">KillMode</span><span class="o">=</span><span class="n">mixed</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>重新加载service配置文件，设置开机自启动，并启动服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">nginx_exporter</span><span class="o">.</span><span class="n">service</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">nginx_exporter</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<p>查看端口</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@ubuntu</span><span class="p">:</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sites</span><span class="o">-</span><span class="n">enabled</span><span class="c1"># netstat -anpt|grep nginx_exporte</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">33780</span>         <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">8011</span>          <span class="n">ESTABLISHED</span> <span class="mi">19006</span><span class="o">/</span><span class="n">nginx_exporte</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">9113</span>                 <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">19006</span><span class="o">/</span><span class="n">nginx_exporte</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.24</span><span class="p">:</span><span class="mi">9113</span>       <span class="mf">172.17</span><span class="o">.</span><span class="mf">0.2</span><span class="p">:</span><span class="mi">50776</span>        <span class="n">ESTABLISHED</span> <span class="mi">19006</span><span class="o">/</span><span class="n">nginx_exporte</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">1.44.2. 配置文件的区块</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">[Unit]</span></code>区块通常是配置文件的第一个区块，用来定义 Unit
+的元数据，以及配置与其他 Unit 的关系。它的主要字段如下。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Description</span></code>：简短描述</li>
+<li><code class="docutils literal notranslate"><span class="pre">Documentation</span></code>：文档地址</li>
+<li><code class="docutils literal notranslate"><span class="pre">Requires</span></code>：当前 Unit 依赖的其他 Unit，如果它们没有运行，当前
+Unit 会启动失败</li>
+<li><code class="docutils literal notranslate"><span class="pre">Wants</span></code>：与当前 Unit 配合的其他 Unit，如果它们没有运行，当前
+Unit 不会启动失败</li>
+<li><code class="docutils literal notranslate"><span class="pre">BindsTo</span></code>：与<code class="docutils literal notranslate"><span class="pre">Requires</span></code>类似，它指定的 Unit
+如果退出，会导致当前 Unit 停止运行</li>
+<li><code class="docutils literal notranslate"><span class="pre">Before</span></code>：如果该字段指定的 Unit 也要启动，那么必须在当前 Unit
+之后启动</li>
+<li><code class="docutils literal notranslate"><span class="pre">After</span></code>：如果该字段指定的 Unit 也要启动，那么必须在当前 Unit
+之前启动</li>
+<li><code class="docutils literal notranslate"><span class="pre">Conflicts</span></code>：这里指定的 Unit 不能与当前 Unit 同时运行</li>
+<li><code class="docutils literal notranslate"><span class="pre">Condition...</span></code>：当前 Unit 运行必须满足的条件，否则不会运行</li>
+<li><code class="docutils literal notranslate"><span class="pre">Assert...</span></code>：当前 Unit 运行必须满足的条件，否则会报启动失败</li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">[Install]</span></code>通常是配置文件的最后一个区块，用来定义如何启动，以及是否开机启动。它的主要字段如下。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">WantedBy</span></code>：它的值是一个或多个 Target，当前 Unit
+激活时（enable）符号链接会放入<code class="docutils literal notranslate"><span class="pre">/etc/systemd/system</span></code>目录下面以
+Target 名 + <code class="docutils literal notranslate"><span class="pre">.wants</span></code>后缀构成的子目录中</li>
+<li><code class="docutils literal notranslate"><span class="pre">RequiredBy</span></code>：它的值是一个或多个 Target，当前 Unit
+激活时，符号链接会放入<code class="docutils literal notranslate"><span class="pre">/etc/systemd/system</span></code>目录下面以
+Target 名 + <code class="docutils literal notranslate"><span class="pre">.required</span></code>后缀构成的子目录中</li>
+<li><code class="docutils literal notranslate"><span class="pre">Alias</span></code>：当前 Unit 可用于启动的别名</li>
+<li><code class="docutils literal notranslate"><span class="pre">Also</span></code>：当前 Unit 激活（enable）时，会被同时激活的其他 Unit</li>
+</ul>
+</div></blockquote>
+<p><code class="docutils literal notranslate"><span class="pre">[Service]</span></code>区块用来 Service 的配置，只有 Service 类型的 Unit
+才有这个区块。它的主要字段如下。</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">Type</span></code>：定义启动时的进程行为。它有以下几种值。</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=simple</span></code>：默认值，执行<code class="docutils literal notranslate"><span class="pre">ExecStart</span></code>指定的命令，启动主进程</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=forking</span></code>：以 fork
+方式从父进程创建子进程，创建后父进程会立即退出</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=oneshot</span></code>：一次性进程，Systemd
+会等当前服务退出，再继续往下执行</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=dbus</span></code>：当前服务通过D-Bus启动</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=notify</span></code>：当前服务启动完毕，会通知<code class="docutils literal notranslate"><span class="pre">Systemd</span></code>，再继续往下执行</li>
+<li><code class="docutils literal notranslate"><span class="pre">Type=idle</span></code>：若有其他任务执行完毕，当前服务才会运行</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecStart</span></code>：启动当前服务的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecStartPre</span></code>：启动当前服务之前执行的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecStartPost</span></code>：启动当前服务之后执行的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecReload</span></code>：重启当前服务时执行的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecStop</span></code>：停止当前服务时执行的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">ExecStopPost</span></code>：停止当其服务之后执行的命令</li>
+<li><code class="docutils literal notranslate"><span class="pre">RestartSec</span></code>：自动重启当前服务间隔的秒数</li>
+<li><code class="docutils literal notranslate"><span class="pre">Restart</span></code>：定义何种情况 Systemd
+会自动重启当前服务，可能的值包括<code class="docutils literal notranslate"><span class="pre">always</span></code>（总是重启）、<code class="docutils literal notranslate"><span class="pre">on-success</span></code>、<code class="docutils literal notranslate"><span class="pre">on-failure</span></code>、<code class="docutils literal notranslate"><span class="pre">on-abnormal</span></code>、<code class="docutils literal notranslate"><span class="pre">on-abort</span></code>、<code class="docutils literal notranslate"><span class="pre">on-watchdog</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">TimeoutSec</span></code>：定义 Systemd 停止当前服务之前等待的秒数</li>
+<li><code class="docutils literal notranslate"><span class="pre">Environment</span></code>：指定环境变量</li>
+</ul>
+</div></blockquote>
+<p>Unit
+配置文件的完整字段清单，请参考<a class="reference external" href="https://www.freedesktop.org/software/systemd/man/systemd.unit.html">官方文档</a>。</p>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://blog.csdn.net/yuesichiu/article/details/51485147">https://blog.csdn.net/yuesichiu/article/details/51485147</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/occl/p/12942171.html">https://www.cnblogs.com/occl/p/12942171.html</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../02.Linux服务器架设/index.html" class="btn btn-neutral float-right" title="2. Linux服务器架设" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="47.恢复文件相关工具.html" class="btn btn-neutral float-left" title="1.43. 恢复文件相关工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2019, huxiaojian
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -23,5 +23,6 @@ Nginx学习
     14.案例-Nginx作为Web缓存服务器应用
     15.案例-Nginx作为负载均衡服务器应用
     16.nginx正向代理配置
+    17.Nginx部署HTTPS
     20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.rst
     21.Nginx文件下载服务器搭建

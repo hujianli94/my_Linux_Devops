@@ -147,7 +147,7 @@
 <li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
 <li class="toctree-l3"><a class="reference internal" href="35.Extundelete数据恢复.html">2.33. Extundelete 数据恢复</a></li>
 <li class="toctree-l3"><a class="reference internal" href="36.Openvpn部署.html">2.34. Openvpn部署</a></li>
-<li class="toctree-l3"><a class="reference internal" href="37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -254,6 +254,9 @@ nmtui安装命令：
 yum install NetworkManager-tui
 </pre></div>
 </div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nmtui</span>
+</pre></div>
+</div>
 <div class="figure">
 <img alt="" src="../../_images/nmtui.PNG" />
 </div>
@@ -308,9 +311,20 @@ yum install NetworkManager-tui
 </li>
 </ul>
 <p>还需要将绑定后的设备命名为bond0并把IP地址等信息填写进去，
-这样当用户访问相应服务的时候，实际上就是由这两块网卡设备在共同提供服务。
-<code class="docutils literal notranslate"><span class="pre">[root&#64;linuxprobe</span> <span class="pre">~]#</span> <span class="pre">vim</span> <span class="pre">/etc/sysconfig/network-scripts/ifcfg-bond0</span>&#160;&#160; <span class="pre">TYPE=Ethernet</span>&#160;&#160; <span class="pre">BOOTPROTO=none</span>&#160;&#160; <span class="pre">ONBOOT=yes</span>&#160;&#160; <span class="pre">USERCTL=no</span>&#160;&#160; <span class="pre">DEVICE=bond0</span>&#160;&#160; <span class="pre">IPADDR=192.168.10.10</span>&#160;&#160; <span class="pre">PREFIX=24</span>&#160;&#160; <span class="pre">DNS=192.168.10.1</span>&#160;&#160; <span class="pre">NM_CONTROLLED=no</span></code>
-让Linux内核支持网卡绑定驱动。
+这样当用户访问相应服务的时候，实际上就是由这两块网卡设备在共同提供服务。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@linuxprobe</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vim /etc/sysconfig/network-scripts/ifcfg-bond0</span>
+<span class="n">TYPE</span><span class="o">=</span><span class="n">Ethernet</span>
+<span class="n">BOOTPROTO</span><span class="o">=</span><span class="n">none</span>
+<span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+<span class="n">USERCTL</span><span class="o">=</span><span class="n">no</span>
+<span class="n">DEVICE</span><span class="o">=</span><span class="n">bond0</span>
+<span class="n">IPADDR</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.10</span>
+<span class="n">PREFIX</span><span class="o">=</span><span class="mi">24</span>
+<span class="n">DNS</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">10.1</span>
+<span class="n">NM_CONTROLLED</span><span class="o">=</span><span class="n">no</span>
+</pre></div>
+</div>
+<p>让Linux内核支持网卡绑定驱动。
 常见的网卡绑定驱动有三种模式——mode0、mode1和mode6。下面以绑定两块网卡为例，讲解使用的情景</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mode0（平衡负载模式）：平时两块网卡均工作，且自动备援，但需要在与服务器本地网卡相连的交换机设备上进行端口聚合来支持绑定技术。
 mode1（自动备援模式）：平时只有一块网卡工作，在它故障后自动替换为另外的网卡。

@@ -226,6 +226,7 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/06.wget和curl.html#id3">1.6.3. 示例：</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/06.wget和curl.html#curl">1.6.4. curl</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/06.wget和curl.html#shell">1.6.5. shell爬取网站图片的用例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/06.wget和curl.html#wgetcurl">1.6.6. 这篇文章最全的介绍了wget和curl</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/07.curl.html">1.7. curl</a><ul>
@@ -350,7 +351,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html">1.35. DRBD详细解说及配置过程记录</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html#centos-7-mysql-hadrbd">1.35.1. CentOS 7 MySQL HA之DRBD</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html#centos7drbd9">1.35.1. CentOS7安装配置DRBD9</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html#centos-7-mysql-hadrbd">1.35.2. CentOS 7 MySQL HA之DRBD</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/40.Linux初始化系统安全设置.html">1.36. Linux初始化系统安全设置</a><ul>
@@ -376,6 +378,7 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id5">1.38.7. 几个不错的yum源</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id6">1.38.8. 官方源、镜像源汇总</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#yum-centos6-centos7-epel">1.38.9. 搭建企业内部yum仓库(centos6+centos7+epel源)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#linux-linuxiso-redhat-centos-oracle-ubuntu-opensuse">1.38.10. Linux下载_Linux系统各种版本ISO镜像下载（redhat,centos,oracle,ubuntu,openSUSE）</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/43.Vim编辑器学习.html">1.39. Vim编辑器学习</a></li>
@@ -392,12 +395,15 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/46.Linux性能监控工具PyDash.html#glances">1.42.2. 交互式监控工具glances</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/47.system用法.html">1.43. system用法</a></li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/48.恢复文件相关工具.html">1.44. 恢复文件相关工具</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/48.恢复文件相关工具.html#id2">1.44.1. 常见工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/47.恢复文件相关工具.html">1.43. 恢复文件相关工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/47.恢复文件相关工具.html#id2">1.43.1. 常见工具</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/49.Centos7服务封装为server.html">1.45. Centos7服务封装为server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/48.Centos7-systemd服务封装server.html">1.44. Centos7-systemd服务封装server.md</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/48.Centos7-systemd服务封装server.html#nginx-exporterservice">1.44.1. nginx_exporter封装service服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/48.Centos7-systemd服务封装server.html#id1">1.44.2. 配置文件的区块</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02.Linux服务器架设/index.html">2. Linux服务器架设</a><ul>
@@ -501,8 +507,9 @@
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id12">2.17.7. 负载均衡示例1</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id13">2.17.8. 负载均衡示例2</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#mysql">2.17.9. 负载均衡MySQL服务的配置示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id14">2.17.10. 启动</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id15">2.17.11. 查看状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#redismysql">2.17.10. 反向代理redis和mysql示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id14">2.17.11. 启动</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id15">2.17.12. 查看状态</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a><ul>
@@ -574,7 +581,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/36.Openvpn部署.html">2.34. Openvpn部署</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse.md</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/38.CentOS8开启BBR升级内核.html">2.36. CentOS8开启BBR/升级内核</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a><ul>
@@ -616,264 +624,254 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html">3.4. 4 流程控制</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#if">3.4.1. 1 if语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#for">3.4.2. 2 for循环</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#while">3.4.3. 3 while语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#until">3.4.4. 4 until语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#break-continue">3.4.5. 5 break 和 continue 语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#case">3.4.6. 6 case语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#select">3.4.7. 7 select语句</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#dev-null">3.5. “2&gt;/dev/null”会隐藏错误的信息</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#for">3.5.1. 2 for循环</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#while">3.5.2. 3 while语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html">3.5. 5 函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id2">3.5.1. 1 概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id3">3.5.2. 2 格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id5">3.5.3. 3 函数参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id8">3.5.4. 4 函数的嵌套</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id9">3.5.5. 5 函数的返回值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id10">3.5.6. 6 全局变量和局部变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id11">3.5.7. 7 函数库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#etc-init-d-functions">3.5.8. 8 函数库/etc/init.d/functions简介</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#bin-sh">3.6. !/bin/sh</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#author-anchen">3.7. &#64;Author: anchen</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#date-2018-11-12-22-55-50">3.8. &#64;Date: 2018-11-12 22:55:50</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#last-modified-by-hujianli">3.9. &#64;Last Modified by: hujianli</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#last-modified-time-2018-11-13-13-00-05">3.10. &#64;Last Modified time: 2018-11-13 13:00:05</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#until">3.10.1. 4 until语句</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#break-continue">3.10.2. 5 break 和 continue 语句</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#case">3.10.3. 6 case语句</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/04.流程控制.html#select">3.10.4. 7 select语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/06.正则表达式.html">3.6. 6 正则表达式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/06.正则表达式.html#id2">3.6.1. 基本正则表达式</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html">3.11. 5 函数</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id2">3.11.1. 1 概念</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id3">3.11.2. 2 格式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id5">3.11.3. 3 函数参数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id8">3.11.4. 4 函数的嵌套</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id9">3.11.5. 5 函数的返回值</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id10">3.11.6. 6 全局变量和局部变量</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#id11">3.11.7. 7 函数库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/05.函数.html#etc-init-d-functions">3.11.8. 8 函数库/etc/init.d/functions简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html">3.7. 7 三剑客之grep</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id1">3.7.1. 7.1 概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id2">3.7.2. 7.2 语法格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id5">3.7.3. 7.3 使用举例</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/06.正则表达式.html">3.12. 6 正则表达式</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/06.正则表达式.html#id2">3.12.1. 基本正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html">3.8. 8 三剑客之sed</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id1">3.8.1. 概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id2">3.8.2. 适用场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id3">3.8.3. 语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id4">3.8.4. 使用举例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#keepalive">3.8.5. 修改keepalive配置剔除后端服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id5">3.8.6. sed练习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id6">3.8.7. 使用sed修改文件流的方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id14">3.8.8. 查找和替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id16">3.8.9. 字符转换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id17">3.8.10. 插入文本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id25">3.8.11. 读入文本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id26">3.8.12. 打印</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id29">3.8.13. 写文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id30">3.8.14. sed 脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id33">3.8.15. 高级替换</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html">3.13. 7 三剑客之grep</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id1">3.13.1. 7.1 概念</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id2">3.13.2. 7.2 语法格式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/07.三剑客之grep.html#id5">3.13.3. 7.3 使用举例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html">3.9. 9 三剑客之awk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id1">3.9.1. 概念</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id2">3.9.2. awk输出</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id3">3.9.3. awk变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id4">3.9.4. 操作符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#pattern">3.9.5. Pattern</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#action">3.9.6. 常用action</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#array">3.9.7. array</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id6">3.9.8. 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id7">3.9.9. awk判断</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id8">3.9.10. awk循环</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id9">3.9.11. awk练习题</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html">3.14. 8 三剑客之sed</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id1">3.14.1. 概念</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id2">3.14.2. 适用场景</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id3">3.14.3. 语法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id4">3.14.4. 使用举例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#keepalive">3.14.5. 修改keepalive配置剔除后端服务器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id5">3.14.6. sed练习</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id6">3.14.7. 使用sed修改文件流的方式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id14">3.14.8. 查找和替换</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id16">3.14.9. 字符转换</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id17">3.14.10. 插入文本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id25">3.14.11. 读入文本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id26">3.14.12. 打印</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id29">3.14.13. 写文件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id30">3.14.14. sed 脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/08.三剑客之sed.html#id33">3.14.15. 高级替换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html">3.10. shell技巧与杂项</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#cron">3.10.1. cron</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id1">3.10.2. 标准输入输出重定向</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id2">3.10.3. 常见小技巧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id6">3.10.4. Shell脚本的调试技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id9">3.10.5. 信号的名称和值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#getopts">3.10.6. getopts处理多命令行选项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id11">3.10.7. 子shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id16">3.10.8. 自动化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id18">3.10.9. Shell脚本实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id19">3.10.10. 服务脚本的基本语法</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html">3.15. 9 三剑客之awk</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id1">3.15.1. 概念</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id2">3.15.2. awk输出</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id3">3.15.3. awk变量</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id4">3.15.4. 操作符</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#pattern">3.15.5. Pattern</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#action">3.15.6. 常用action</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#array">3.15.7. array</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id6">3.15.8. 函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id7">3.15.9. awk判断</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id8">3.15.10. awk循环</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/09.三剑客-awk.html#id9">3.15.11. awk练习题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html">3.11. xagrs使用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html#xargs">3.11.1. xargs功能：从标准输入执行命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html#id1">3.11.2. 常用选项：</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html">3.16. shell技巧与杂项</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#cron">3.16.1. cron</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id1">3.16.2. 标准输入输出重定向</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id2">3.16.3. 常见小技巧</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id6">3.16.4. Shell脚本的调试技术</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id9">3.16.5. 信号的名称和值</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#getopts">3.16.6. getopts处理多命令行选项</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id11">3.16.7. 子shell</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id16">3.16.8. 自动化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id18">3.16.9. Shell脚本实战</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/10.shell技巧与杂项.html#id19">3.16.10. 服务脚本的基本语法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html">3.12. 收集的一些shell脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#mysql">3.12.1. 使用脚本操作MySQL数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#system-opt">3.12.2. system_opt系统优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos61">3.12.3. Centos6最小化安装后优化1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos62">3.12.4. Centos6最小化安装后优化2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos7">3.12.5. Centos7安装后优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id1">3.12.6. 备份数据库脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#s3">3.12.7. 备份数据库上传到S3存储库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#run-py">3.12.8. 控制进程数执行run.py脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id2">3.12.9. 转换数据库表存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id3">3.12.10. 监控网站状态脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#httpd">3.12.11. 监控httpd服务状态脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#nginx-stop-keepalived">3.12.12. 监控Nginx进程，如果尝试启动失败就stop Keepalived</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id4">3.12.13. 进程控制示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#lnmp">3.12.14. lnmp一键安装示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id5">3.12.15. 服务器初始化脚本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id6">3.12.16. 服务启动脚本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id7">3.12.17. 监控mysql数据库示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#tar-var-log">3.12.18. 每周五使用tar命令备份/var/log下的所有日志文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id8">3.12.19. 一些常用的函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id9">3.12.20. 检查监控内存、硬盘</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id10">3.12.21. 猜随机数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#ip">3.12.22. 检查网段内存活的主机IP信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id11">3.12.23. 进度条</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#nginx">3.12.24. nginx启动脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#test">3.12.25. 3种test的写法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#case-color">3.12.26. case+color用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#io">3.12.27. 监控磁盘IO脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#color-print">3.12.28. color_print例子</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html">3.17. xagrs使用</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html#xargs">3.17.1. xargs功能：从标准输入执行命令</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/11.xagrs使用.html#id1">3.17.2. 常用选项：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html">3.13. 自动化安装zabbix</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html#install-zabbix-sh">3.13.1. install_zabbix.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html">3.18. 收集的一些shell脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#mysql">3.18.1. 使用脚本操作MySQL数据库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#system-opt">3.18.2. system_opt系统优化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos61">3.18.3. Centos6最小化安装后优化1</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos62">3.18.4. Centos6最小化安装后优化2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#centos7">3.18.5. Centos7安装后优化</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id1">3.18.6. 备份数据库脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#s3">3.18.7. 备份数据库上传到S3存储库</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#run-py">3.18.8. 控制进程数执行run.py脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id2">3.18.9. 转换数据库表存储引擎</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id3">3.18.10. 监控网站状态脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#httpd">3.18.11. 监控httpd服务状态脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#nginx-stop-keepalived">3.18.12. 监控Nginx进程，如果尝试启动失败就stop Keepalived</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id4">3.18.13. 进程控制示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#lnmp">3.18.14. lnmp一键安装示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id5">3.18.15. 服务器初始化脚本示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id6">3.18.16. 服务启动脚本示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id7">3.18.17. 监控mysql数据库示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#tar-var-log">3.18.18. 每周五使用tar命令备份/var/log下的所有日志文件</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id8">3.18.19. 一些常用的函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id9">3.18.20. 检查监控内存、硬盘</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id10">3.18.21. 猜随机数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#ip">3.18.22. 检查网段内存活的主机IP信息</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#id11">3.18.23. 进度条</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#nginx">3.18.24. nginx启动脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#test">3.18.25. 3种test的写法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#case-color">3.18.26. case+color用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#io">3.18.27. 监控磁盘IO脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/12.收集的一些shell脚本.html#color-print">3.18.28. color_print例子</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/14.自动化安装cacti脚本.html">3.14. 自动化安装cacti服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/14.自动化安装cacti脚本.html#install-cacti-sh">3.14.1. install_cacti.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html">3.19. 自动化安装zabbix</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/13.自动安装zabbix服务器脚本.html#install-zabbix-sh">3.19.1. install_zabbix.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/15.自动安装MongoDB脚本.html">3.15. 自动化安装MongoDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/15.自动安装MongoDB脚本.html#install-mongodb-sh">3.15.1. install_mongodb.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/14.自动化安装cacti脚本.html">3.20. 自动化安装cacti服务器</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/14.自动化安装cacti脚本.html#install-cacti-sh">3.20.1. install_cacti.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/16.备份MongoDB脚本.html">3.16. 备份MongoDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/16.备份MongoDB脚本.html#backup-mongodb-sh">3.16.1. backup_mongodb.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/15.自动安装MongoDB脚本.html">3.21. 自动化安装MongoDB</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/15.自动安装MongoDB脚本.html#install-mongodb-sh">3.21.1. install_mongodb.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/17.自动安装memcached脚本.html">3.17. 自动安装memcached</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/17.自动安装memcached脚本.html#install-memcached-sh">3.17.1. install_memcached.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/16.备份MongoDB脚本.html">3.22. 备份MongoDB</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/16.备份MongoDB脚本.html#backup-mongodb-sh">3.22.1. backup_mongodb.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/18.system检测脚本.html">3.18. 系统各项内容检测check_os</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/18.system检测脚本.html#check-system-sh">3.18.1. check_system.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/17.自动安装memcached脚本.html">3.23. 自动安装memcached</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/17.自动安装memcached脚本.html#install-memcached-sh">3.23.1. install_memcached.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/19.安装tomcat脚本.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/20.install_zookeeper脚本.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/21.install_elasticserch脚本.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/22.自动Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html">3.23. install_vsftpd_or_nfs脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#auto-config-vsftpd-sh">3.23.4. auto_config_vsftpd.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/18.system检测脚本.html">3.24. 系统各项内容检测check_os</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/18.system检测脚本.html#check-system-sh">3.24.1. check_system.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html">3.25. Linux下以秒为单位执行脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id1">3.25.1. 方法一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id2">3.25.2. 方法二</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id3">3.25.3. 方法三</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/19.安装tomcat脚本.html">3.25. 安装tomcat脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/20.install_zookeeper脚本.html">3.26. install_zookeeper脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/21.install_elasticserch脚本.html">3.27. install_elasticserch脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/22.自动Autoinstall_ELK_V1.3.html">3.28. 自动Autoinstall_ELK_V1.3脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html">3.29. install_vsftpd_or_nfs脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#install-vsftpd-sh">3.29.1. install_vsftpd.sh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#install-nsf-sh">3.29.2. install_nsf.sh</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#vsftp">3.29.3. vsftp主动和被动模式脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/23.install_vsftpd脚本.html#auto-config-vsftpd-sh">3.29.4. auto_config_vsftpd.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/26.备份文件shell脚本.html">3.26. 备份文件shell脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/26.备份文件shell脚本.html#auto-backup-linux-system-files-sh">3.26.1. Auto_Backup_Linux_System_Files.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/24.install_mysql5.7.html">3.30. install_mysql5.7</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html">3.31. Linux下以秒为单位执行脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id1">3.31.1. 方法一</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id2">3.31.2. 方法二</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/25.Linux下以秒为单位执行脚本.html#id3">3.31.3. 方法三</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/27.monitor_Linux系统性能.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/28.修改IP_主机名_网卡信息脚本.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/29.检查恶意IP登录，拒绝SSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/30.备份数据库，删除7天前的数据.html">3.30. 备份数据库，删除7天前的数据</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/31.Centos6开机性能优化.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html">3.32. 百宝箱脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#shell">3.32.1. Shell 实践、常用脚本进阶</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#shell-2">3.32.2. Shell 脚本进阶2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id2">3.32.3. Shell 实践、常用脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#docker">3.32.4. 备份所有docker镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id3">3.32.5. 批量加载镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id4">3.32.6. 批量杀死僵尸进程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#nginx">3.32.7. nginx启动脚本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#python">3.32.8. Python颜色打印</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/26.备份文件shell脚本.html">3.32. 备份文件shell脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/26.备份文件shell脚本.html#auto-backup-linux-system-files-sh">3.32.1. Auto_Backup_Linux_System_Files.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html#id1">3.33.1. 安装包和脚本的目录结构如下</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html#id2">3.33.2. 安装完成之后的目录结构如下：</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/27.monitor_Linux系统性能.html">3.33. monitor_Linux系统性能</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/28.修改IP_主机名_网卡信息脚本.html">3.34. 修改IP_主机名_网卡信息脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/29.检查恶意IP登录，拒绝SSH.html">3.35. 检查恶意IP登录，拒绝SSH</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/30.备份数据库，删除7天前的数据.html">3.36. 备份数据库，删除7天前的数据</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/31.Centos6开机性能优化.html">3.37. Centos6x开机性能优化</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html">3.38. 百宝箱脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#shell">3.38.1. Shell 实践、常用脚本进阶</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#shell-2">3.38.2. Shell 脚本进阶2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id2">3.38.3. Shell 实践、常用脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#docker">3.38.4. 备份所有docker镜像</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id3">3.38.5. 批量加载镜像</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#id4">3.38.6. 批量杀死僵尸进程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#nginx">3.38.7. nginx启动脚本示例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/32.百宝箱脚本.html#python">3.38.8. Python颜色打印</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html">3.34. python实现端口扫描</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html#socket">3.34.1. 使用socket工厂函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html#telnetlib">3.34.2. 使用telnetlib标准库模块</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html">3.39. 使用python脚本安装MongoDB</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html#id1">3.39.1. 安装包和脚本的目录结构如下</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/33.deploy_mongo.html#id2">3.39.2. 安装完成之后的目录结构如下：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/35.python检测ip存活状态.html">3.35. python检测ip存活状态</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/35.python检测ip存活状态.html#id1">3.35.1. 代码示例1</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html">3.40. python实现端口扫描</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html#socket">3.40.1. 使用socket工厂函数</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/34.python实现端口扫描.html#telnetlib">3.40.2. 使用telnetlib标准库模块</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html#master">3.36.1. Master节点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html#node">3.36.2. node节点</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/35.python检测ip存活状态.html">3.41. python检测ip存活状态</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/35.python检测ip存活状态.html#id1">3.41.1. 代码示例1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html">3.37. example(字符串处理)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id1">3.37.1. 变量替换的六种形式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id2">3.37.2. 字符串处理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id3">3.37.3. 抽取子串</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#example-sh">3.37.4. 字符串处理完整脚本 example.sh</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html">3.42. k8s_deploy脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html#master">3.42.1. Master节点</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/36.k8s_deploy脚本.html#node">3.42.2. node节点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/42.判断文件类型.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/43.用if语句编写选择菜单.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/44.使用while语句编写选择菜单.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/45.使用until编写选择菜单.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html">3.46. 目录定时备份</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html#id2">3.46.1. 对指定目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html#id3">3.46.2. 连续对多个目录逐个备份</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html">3.43. example(字符串处理)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id1">3.43.1. 变量替换的六种形式</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id2">3.43.2. 字符串处理</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#id3">3.43.3. 抽取子串</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/37.example(字符串处理).html#example-sh">3.43.4. 字符串处理完整脚本 example.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html">3.47. 远程操作ftp进行上传和下载</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html#id1">3.47.1. 自动下载指定文档</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html#id2">3.47.2. 自动上传指定文档</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.44. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html">3.45. Nginx日志切割脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/40.一键安装Docker脚本.html">3.46. 一键安装docker脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/41.shell实现多并发控制脚本.html">3.47. shell实现多并发控制</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/42.判断文件类型.html">3.48. 判断文件类型</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/43.用if语句编写选择菜单.html">3.49. 用if语句编写选择菜单</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/44.使用while语句编写选择菜单.html">3.50. 使用while语句编写选择菜单</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/45.使用until编写选择菜单.html">3.51. 使用until编写选择菜单</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html">3.52. 目录定时备份</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html#id2">3.52.1. 对指定目录定时备份</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/46.目录定时备份.html#id3">3.52.2. 连续对多个目录逐个备份</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/48.批量创建用户脚本.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html">3.49. Centos升级内核版本(附带升级脚本)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html#id1">3.49.1. 参考文献</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html">3.53. 远程操作ftp进行上传和下载</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html#id1">3.53.1. 自动下载指定文档</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/47.远程操作ftp进行上传和下载.html#id2">3.53.2. 自动上传指定文档</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/50.CPU监控脚本.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/51.检测函数执行是否超时.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html">3.52. 老男孩Shell中的一些脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id1">3.52.1. 初始化操作系统脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id2">3.52.2. 开发检测脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#shellrsync">3.52.3. 利用Shell函数开发rsync服务启动脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id3">3.52.4. 一个颜色打印示例脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#case">3.52.5. 结合case给输出的语句加颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#while">3.52.6. while循环</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id4">3.52.7. 数组用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id5">3.52.8. while循环按行读文件的方式总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id6">3.52.9. 批量检查多个网站地址是否正常。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#mysql">3.52.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id7">3.52.11. Shell脚本调试技巧</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#expect">3.52.12. Expect用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id11">3.52.13. 企业生产场景下的Expect案例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ssh-ansible">3.52.14. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#exec">3.52.15. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#fork">3.52.16. fork子进程的示例.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping1">3.52.17. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping2">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping">3.52.19. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#sshd-ssh">3.52.20. 修改SSHD配置文件,提升SSH安全性</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/48.批量创建用户脚本.html">3.54. 48.批量创建用户脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html">3.55. Centos升级内核版本(附带升级脚本)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/49.Centos升级内核版本(附带升级脚本).html#id1">3.55.1. 参考文献</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/50.CPU监控脚本.html">3.56. CPU监控脚本</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/51.检测函数执行是否超时.html">3.57. 检测函数执行是否超时</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html">3.58. 老男孩Shell中的一些脚本</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id1">3.58.1. 初始化操作系统脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id2">3.58.2. 开发检测脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#shellrsync">3.58.3. 利用Shell函数开发rsync服务启动脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id3">3.58.4. 一个颜色打印示例脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#case">3.58.5. 结合case给输出的语句加颜色</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#while">3.58.6. while循环</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id4">3.58.7. 数组用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id5">3.58.8. while循环按行读文件的方式总结</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id6">3.58.9. 批量检查多个网站地址是否正常。</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#mysql">3.58.10. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id7">3.58.11. Shell脚本调试技巧</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#expect">3.58.12. Expect用法</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#id11">3.58.13. 企业生产场景下的Expect案例</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ssh-ansible">3.58.14. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#exec">3.58.15. 使用exec调用其他外部命令或脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#fork">3.58.16. fork子进程的示例.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping1">3.58.17. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping2">3.58.18. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#ping">3.58.19. 控制进程数量的ping测试脚本</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/52.老男孩Shell中的一些脚本.html#sshd-ssh">3.58.20. 修改SSHD配置文件,提升SSH安全性</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/53.快捷安装不同版本Python.html">3.59. 快捷安装不同版本Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/54.常用shell脚本大全.html">3.60. 常用shell脚本大全</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/53.快捷安装不同版本Python.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/54.常用shell脚本大全.html">3.54. 常用shell脚本大全</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/index.html">4. 玩转数据库(mysql、Redis)</a><ul>
@@ -889,6 +887,8 @@
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/01.Redis数据库.html#id13">4.1.9. Redis常用配置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/01.Redis数据库.html#id14">4.1.10. Redis数据库集群主从复制的基本原理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/01.Redis数据库.html#id15">4.1.11. Redis主从同步、哨兵、集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/01.Redis数据库.html#id16">4.1.12. Redis集群和相关工具使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/01.Redis数据库.html#id17">4.1.13. redis实战文献</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html">4.2. mysql入门到精通</a><ul>
@@ -1010,13 +1010,17 @@
 <li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/16.nginx正向代理配置.html#id2">5.16.2. 参考资料</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.17. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.17.1. Nginx PHP服务器环境搭建</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.17.2. 启动多个php-fpm进程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.17.3. Nginx基于FastCGI实现负载均衡</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/17.Nginx部署HTTPS.html">5.17. <strong>Nginx 部署HTTPS</strong></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/17.Nginx部署HTTPS.html#id1">5.17.1. 参考文献</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.18. Nginx文件下载服务器搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.18.1. Nginx PHP服务器环境搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.18.2. 启动多个php-fpm进程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.18.3. Nginx基于FastCGI实现负载均衡</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.19. Nginx文件下载服务器搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a><ul>
@@ -1053,6 +1057,15 @@
 <li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/05.一键快速lnmp.html#id3">6.5.4. 运维自动化脚本网站</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/05.一键快速lnmp.html#id4">6.5.5. LNMP一键安装包</a></li>
 <li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/05.一键快速lnmp.html#ezhttp">6.5.6. ezhttp一键安装包</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html">6.6. 宝塔安装CRM系列软件</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#id1">6.6.1. 1.安装宝塔面板</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#lamp">6.6.2. 2.安装LAMP环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#suitecrm">6.6.3. 3.上传SuiteCRM安装包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#id2">6.6.4. 4.安装相关依赖和插件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#id3">6.6.5. 5. 添加站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.LAMP、LNMP学习/06.宝塔安装CRM系列软件.html#expocrm">6.6.6. 6. 安装expocrm</a></li>
 </ul>
 </li>
 </ul>

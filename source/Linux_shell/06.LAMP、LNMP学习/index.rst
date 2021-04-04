@@ -12,3 +12,4 @@ LNMP、LAMP学习
     03.LAMP+Redis企业实战
     04.LAMP企业架构读写分离
     05.一键快速lnmp
+    06.宝塔安装CRM系列软件

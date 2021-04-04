@@ -356,11 +356,10 @@
 * -r:支持扩展正则表达式
 </pre></div>
 </div>
-<ul class="simple">
-<li>地址定界</li>
-<li></li>
-</ul>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* startline，endline
+<ul>
+<li><p class="first">地址定界</p>
+</li>
+<li><div class="first highlight-default notranslate"><div class="highlight"><pre><span></span>* startline，endline
 * /regexp/
 * /pattern1/,/pattern2/:第一次被pattern1匹配到的行开始，直到被pattern2匹配到的行结束
 * linenuber：制定行号
@@ -368,8 +367,9 @@
 * startline~step:步长，每隔step步
 </pre></div>
 </div>
-<ul class="simple">
-<li>命令操作</li>
+</li>
+<li><p class="first">命令操作</p>
+</li>
 </ul>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* d: 删除符合条件的行；
 * p: 显示符合条件的行；
@@ -424,24 +424,24 @@ seq 10 |sed -n &#39;1~2p&#39;
 8、打印最后一行
 sed &#39;$p&#39; /etc/services
 9.删除文件info_num.txt的第1～4行中匹配模式/etc\./（即含有字符串“etc.”）的行：
-sed &#39;1,4{/etc\./d}&#39; info_num.txt
+sed &#39;1,4{/etc\./d}&#39; info_num.txt
 10.将文件techClass.txt的第1行的内容写入文件output.txt
-sed -n &#39;1w output.txt&#39; techClass.txt
+sed -n &#39;1w output.txt&#39; techClass.txt
 11.将文件techClass.txt的第1行和最后一行的内容写入文件output.txt
-sed -n -e &#39;1w output.txt&#39; -e &#39;$w output.txt&#39; techClass.txt
+sed -n -e &#39;1w output.txt&#39; -e &#39;$w output.txt&#39; techClass.txt
 
 sed 10q                                       # 显示文件中的前10行 (模拟&quot;head -10&quot;)
 sed -n &#39;$=&#39;                                   # 计算行数(模拟 &quot;wc -l&quot;)
-sed -n &#39;5,/^no/p&#39;                             # 打印从第5行到以no开头行之间的所有行sed  &#39;/^$/d&#39; mail.txt                            #删除空行
+sed -n &#39;5,/^no/p&#39;                             # 打印从第5行到以no开头行之间的所有行sed  &#39;/^$/d&#39; mail.txt    #删除空行
 sed -i &quot;/^$f/d&quot; a     　　                  　 # 删除匹配行
 sed -i &quot;s/=/:/&quot; c                             # 直接对文本替换
 sed -i &quot;/^pearls/s/$/j/&quot;                      # 找到pearls开头在行尾加j
 sed &#39;/1/,/3/p&#39; file                           # 打印1和3之间的行
 sed -n &#39;1p&#39; 文件                              # 取出指定行
 sed &#39;5i\aaa&#39; file                             # 在第5行之前插入行
-sed &#39;/Databases/a\ &gt; Solaris - Sysadmin, Recovery etc.&#39; info.txt        #在匹配模式“Databases”的行之后加入一行“Solaris-Sysadmin, Recovery etc.”
-sed &#39;$a\ &gt; Solaris - Sysadmin, Recovery etc.\ &gt; Windows - Sysadmin etc.&#39; info.txt     #在文件info.txt的最后一行之后添加两行内容
-sed &#39;3i\ &gt; Solaris - Sysadmin, Recovery etc.&#39; info.txt      #在文件info.txt的第3行之前插入一行“Solaris - Sysadmin, Recovery etc.”
+sed &#39;/Databases/a\ &gt; Solaris - Sysadmin, Recovery etc.&#39; info.txt        #在匹配模式“Databases”的行之后加入一行“Solaris-Sysadmin, Recovery etc.”
+sed &#39;$a\ &gt; Solaris - Sysadmin, Recovery etc.\ &gt; Windows - Sysadmin etc.&#39; info.txt     #在文件info.txt的最后一行之后添加两行内容
+sed &#39;3i\ &gt; Solaris - Sysadmin, Recovery etc.&#39; info.txt      #在文件info.txt的第3行之前插入一行“Solaris - Sysadmin, Recovery etc.”
 
 sed &#39;5a\aaa&#39; file                             # 在第5行之后抽入行
 echo a|sed -e &#39;/a/i\b&#39;                        # 在匹配行前插入一行
