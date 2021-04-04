@@ -332,7 +332,9 @@
 <span class="n">curl</span> <span class="o">-</span><span class="n">I</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">baidu</span><span class="o">.</span><span class="n">com</span>
 
 <span class="c1">#获取状态码</span>
-<span class="n">curl</span> <span class="o">--</span><span class="n">connect</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">3</span> <span class="o">-</span><span class="n">sL</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;%</span><span class="si">{http_code}</span><span class="se">\\</span><span class="s2">n&quot;</span> <span class="n">www</span><span class="o">.</span><span class="n">baidu</span><span class="o">.</span><span class="n">com</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<span class="n">curl</span> <span class="o">-</span><span class="n">I</span> <span class="o">-</span><span class="n">s</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;%</span><span class="si">{http_code}</span><span class="se">\\</span><span class="s2">n&quot;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">1050.</span><span class="n">git</span><span class="o">-</span><span class="n">ent</span><span class="o">.</span><span class="n">com</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
+<span class="ow">or</span>
+<span class="n">curl</span> <span class="o">--</span><span class="n">connect</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">3</span> <span class="o">-</span><span class="n">sL</span> <span class="o">-</span><span class="n">w</span> <span class="s2">&quot;%</span><span class="si">{http_code}</span><span class="se">\\</span><span class="s2">n&quot;</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">1035.</span><span class="n">git</span><span class="o">-</span><span class="n">ent</span><span class="o">.</span><span class="n">com</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span>
 </pre></div>
 </div>
 </div>
@@ -344,6 +346,7 @@
 
 get:
     curl -v 192.168.33.1:8080/girls/age/18
+
 
 post:
     curl -v 192.168.33.1:8080/girls -d &#39;age=14&amp;cupSize=C&#39;
@@ -358,6 +361,7 @@ post:
 
 put:
     curl -v -X PUT -d &quot;age=19&amp;cupSize=C&quot; 192.168.33.1:8080/girls/3
+
 
 delete:
     curl -v -X DELETE 192.168.33.1:8080/girls/3

@@ -138,8 +138,9 @@
 <li class="toctree-l3"><a class="reference internal" href="14.案例-Nginx作为Web缓存服务器应用.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="16.nginx正向代理配置.html">5.16. Nginx 正向代理配置</a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.17. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
-<li class="toctree-l3"><a class="reference internal" href="21.Nginx文件下载服务器搭建.html">5.18. Nginx文件下载服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Nginx部署HTTPS.html">5.17. <strong>Nginx 部署HTTPS</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Nginx文件下载服务器搭建.html">5.19. Nginx文件下载服务器搭建</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -445,7 +446,9 @@ www      10953  0.0  0.0  46380  1896 ?        S    23:28   0:00 nginx: worker p
 root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=auto nginx
 </pre></div>
 </div>
-<p><img alt="image0" src="../../_images/nginx01.png" /></p>
+<div class="figure">
+<img alt="" src="../../_images/nginx01.png" />
+</div>
 </div>
 </div>
 <div class="section" id="id7">
@@ -458,22 +461,21 @@ root     10961  0.0  0.0 112708   980 pts/0    S+   23:28   0:00 grep --color=au
 <code class="docutils literal notranslate"><span class="pre">/lib/systemd/system/nginx.service</span></code>，内容如下：</p>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>cat &gt;/usr/lib/systemd/system/nginx.service &lt;&lt;EOF
 [Unit]
-Description=The Nginx HTTP and reverse proxy server
-After=network.target remote-fs.target nss-lookup.target
+Description=The NGINX HTTP and reverse proxy server
+After=syslog.target network.target remote-fs.target nss-lookup.target
 
 [Service]
 Type=forking
-PIDFile=/run/nginx.pid
-ExecStartPre=/usr/bin/rm -f /run/nginx.pid
-ExecStartPre=/usr/local/nginx/sbin/nginx -t -q
-ExecStart=/usr/local/nginx/sbin/nginx -g &quot;pid /run/nginx.pid;&quot;
-ExecReload=/usr/local/nginx/sbin/nginx -t -q
-ExecReload=/usr/local/nginx/sbin/nginx -s reload -g &quot;pid/run/nginx.pid;&quot;
-ExecStop=/bin/kill -s HUP $MAINPID
+PIDFile=/usr/local/nginx/logs/nginx.pid
+ExecStartPre=/usr/bin/rm -f /usr/local/nginx/logs/nginx.pid
+ExecStart=/usr/local/nginx/sbin/nginx
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
 KillSignal=SIGQUIT
 TimeoutStopSec=5
 KillMode=process
 PrivateTmp=true
+
 
 [Install]
 WantedBy=multi-user.target
@@ -677,81 +679,15 @@ VOLUME [&quot;/data1&quot;,&quot;/data2&quot;]
 10) WORKDIR 设置 CMD 参数指定命令的运行目录，使用方法如下。
 WORKDIR ~/
 
-11) CMD 命令是设定于 Container 启动后执行的命令，可被外部
-docker run
-命令参数覆盖，使用方法如下。
+11) CMD 命令是设定于 Container 启动后执行的命令，可被外部docker run命令参数覆盖，使用方法如下。
 CMD &quot;Hello Nginx&quot;
 
-12) ENTRYPOINT 命令是设定于 Container 启动后执行的命令，不可被外部
-docker run
-命令参数覆盖。
-
+12) ENTRYPOINT 命令是设定于 Container 启动后执行的命令，不可被外部docker run命令参数覆盖。
 ENTRYPOINT /usr/local/nginx/sbin/init_nginx.sh
 
-现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用 CentOS
+现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用 CentOS 7，Nginx 选用 Nginx 的扩展版本 OpenResty 1.15.8.2。
 </pre></div>
 </div>
-<ol class="arabic simple">
-<li>FROM 用于指定构建当前镜像的基础镜像名，使用方法如下。</li>
-</ol>
-<p>FROM centos</p>
-<ol class="arabic simple" start="2">
-<li>MAINTAINER 用于填写作者声明的描述信息，使用方法如下。</li>
-</ol>
-<p>MAINTAINER Nginx Dockerfile Write by John.Wang</p>
-<ol class="arabic simple" start="3">
-<li>ADD 命令会向 Image 中添加文件，支持文件、目录、URL
-的源，使用方法如下。</li>
-</ol>
-<p>ADD /tmp/init_nginx.sh /usr/local/nginx/sbin/</p>
-<ol class="arabic simple" start="4">
-<li>COPY 用于向镜像内复制文件夹，使用方法如下。</li>
-</ol>
-<p>COPY . /tmp</p>
-<ol class="arabic simple" start="5">
-<li>ENV 设置 Container 启动后的环境变量，使用方法如下。</li>
-</ol>
-<p>ENV PATH $PATH:/usr/local/nginx/sbin</p>
-<ol class="arabic simple" start="6">
-<li>EXPOSE 设置 Container
-启动后对外开放的端口，它只相当于一个防火墙开放端口的概念，与实际运行的服务无关，使用方法如下。</li>
-</ol>
-<p>EXPOSE 8080</p>
-<ol class="arabic simple" start="7">
-<li>RUN 用于在制作 Image 时执行指定的脚本或 shell 命令，使用方法如下。</li>
-</ol>
-<p>RUM yum -y install net-tools</p>
-<ol class="arabic simple" start="8">
-<li>USER 设置运行 Image 或 Container 的系统用户，使用方法如下。</li>
-</ol>
-<p>USER nginx:nginx</p>
-<ol class="arabic simple" start="9">
-<li>VOLUME 定义 Image 挂载点，该挂载点可被其他 Container
-使用，且目录中的内容是共享的，将会同步更新，使用方法如下。</li>
-</ol>
-<p>VOLUME [“/data1”,“/data2”]</p>
-<ol class="arabic simple" start="10">
-<li>WORKDIR 设置 CMD 参数指定命令的运行目录，使用方法如下。</li>
-</ol>
-<p>WORKDIR ~/</p>
-<ol class="arabic simple" start="11">
-<li>CMD 命令是设定于 Container 启动后执行的命令，可被外部</li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>
-</pre></div>
-</div>
-<p>命令参数覆盖，使用方法如下。</p>
-<p>CMD “Hello Nginx”</p>
-<ol class="arabic simple" start="12">
-<li>ENTRYPOINT 命令是设定于 Container 启动后执行的命令，不可被外部</li>
-</ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">run</span>
-</pre></div>
-</div>
-<p>命令参数覆盖。</p>
-<p>ENTRYPOINT /usr/local/nginx/sbin/init_nginx.sh</p>
-<p>现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用
-CentOS 7，Nginx 选用 Nginx 的扩展版本 OpenResty 1.15.8.2。</p>
 <p>Nginx 镜像 Dockerfile 脚本如下：</p>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span>FROM centos:centos7
 MAINTAINER Nginx Dockerfile Write by John.Wang
@@ -852,7 +788,9 @@ Docker-Compose 工具进行容器编排，Docker-Compose 是使用基于 YAML
         <span class="o">-</span> <span class="s1">&#39;/opt/data/apps/nginx/conf:/usr/local/nginx/conf&#39;</span>
 </pre></div>
 </div>
-<p>参考文献 <a class="reference external" href="http://www.weixueyuan.net/a/608.html">http://www.weixueyuan.net/a/608.html</a></p>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://support.huaweicloud.com/prtg-kunpengweb/nginx_01_0001.html">https://support.huaweicloud.com/prtg-kunpengweb/nginx_01_0001.html</a></p>
+<p><a class="reference external" href="http://www.weixueyuan.net/a/608.html">http://www.weixueyuan.net/a/608.html</a></p>
 <p>参考文献</p>
 <p><a class="reference external" href="http://www.weixueyuan.net/nginx/">http://www.weixueyuan.net/nginx/</a></p>
 <p><a class="reference external" href="https://blog.51cto.com/3241766/2094315">https://blog.51cto.com/3241766/2094315</a></p>

@@ -18,6 +18,10 @@ nmtui图形配置网络服务
     nmtui安装命令：
     yum install NetworkManager-tui
 
+::
+
+    nmtui
+
 .. figure:: ../../_static/nmtui.PNG
    :alt: 
 
@@ -76,7 +80,20 @@ nmtui图形配置网络服务
 
 还需要将绑定后的设备命名为bond0并把IP地址等信息填写进去，
 这样当用户访问相应服务的时候，实际上就是由这两块网卡设备在共同提供服务。
-``[root@linuxprobe ~]# vim /etc/sysconfig/network-scripts/ifcfg-bond0   TYPE=Ethernet   BOOTPROTO=none   ONBOOT=yes   USERCTL=no   DEVICE=bond0   IPADDR=192.168.10.10   PREFIX=24   DNS=192.168.10.1   NM_CONTROLLED=no``
+
+::
+
+    [root@linuxprobe ~]# vim /etc/sysconfig/network-scripts/ifcfg-bond0 
+    TYPE=Ethernet 
+    BOOTPROTO=none 
+    ONBOOT=yes 
+    USERCTL=no 
+    DEVICE=bond0 
+    IPADDR=192.168.10.10 
+    PREFIX=24 
+    DNS=192.168.10.1 
+    NM_CONTROLLED=no
+
 让Linux内核支持网卡绑定驱动。
 常见的网卡绑定驱动有三种模式——mode0、mode1和mode6。下面以绑定两块网卡为例，讲解使用的情景
 

@@ -53,7 +53,7 @@ Centos7-systemd服务封装server.md
 
 ::
 
-    chmod 754 /usr/lib/systemd/system/banjo.service
+    chmod 644 /usr/lib/systemd/system/banjo.service
     systemctl daemon-reload
 
 nginx\_exporter封装service服务
