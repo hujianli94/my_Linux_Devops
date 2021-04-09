@@ -139,7 +139,7 @@
 <li class="toctree-l3"><a class="reference internal" href="30.源码包制作成rpm包.html">2.28. 源码包制作成rpm包</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.29. Yum自动下载RPM包及其所有依赖的包</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#id1">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">2.29.2. yum离线安装rpm包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.29.2. yum离线安装rpm包</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="32.基于Galera_Cluster多主结构的Mysql高可用集群.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
@@ -147,7 +147,8 @@
 <li class="toctree-l3"><a class="reference internal" href="34.Rsync数据复制软件应用实践.html">2.32. Rsync数据复制软件应用实践</a></li>
 <li class="toctree-l3"><a class="reference internal" href="35.Extundelete数据恢复.html">2.33. Extundelete 数据恢复</a></li>
 <li class="toctree-l3"><a class="reference internal" href="36.Openvpn部署.html">2.34. Openvpn部署</a></li>
-<li class="toctree-l3"><a class="reference internal" href="37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.CentOS8开启BBR升级内核.html">2.36. CentOS8开启BBR/升级内核</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -235,25 +236,26 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#yumrpm" id="id6">Yum自动下载RPM包及其所有依赖的包</a><ul>
-<li><a class="reference internal" href="#id1" id="id7">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
-<li><a class="reference internal" href="#id2" id="id8">工具1</a></li>
-<li><a class="reference internal" href="#id3" id="id9">工具2</a></li>
-<li><a class="reference internal" href="#id4" id="id10">其他</a></li>
+<li><a class="reference internal" href="#yumrpm" id="id7">Yum自动下载RPM包及其所有依赖的包</a><ul>
+<li><a class="reference internal" href="#id1" id="id8">两个Yum自动下载RPM包及其所有依赖的包的工具</a><ul>
+<li><a class="reference internal" href="#id2" id="id9">工具1</a></li>
+<li><a class="reference internal" href="#id3" id="id10">工具2</a></li>
+<li><a class="reference internal" href="#id4" id="id11">其他</a></li>
+<li><a class="reference internal" href="#id5" id="id12">工具3</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#id5" id="id11">yum离线安装rpm包</a></li>
+<li><a class="reference internal" href="#id6" id="id13">yum离线安装rpm包</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="yumrpm">
-<h1><a class="toc-backref" href="#id6">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id7">2.29. Yum自动下载RPM包及其所有依赖的包</a><a class="headerlink" href="#yumrpm" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id7">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">2.29.1. 两个Yum自动下载RPM包及其所有依赖的包的工具</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id8">工具1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>方法1利用“Downloadonly”插件下载 RPM 软件包及其所有依赖包</p>
+<h3><a class="toc-backref" href="#id9">工具1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>方法1利用”Downloadonly”插件下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>yum install yum-plugin-downloadonly
 yum install --downloadonly --downloaddir=&lt;directory&gt; &lt;package-name&gt;
 例子：
@@ -265,7 +267,7 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 </div>
 </div>
 <div class="section" id="id3">
-<h3><a class="toc-backref" href="#id9">工具2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">工具2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p>使用 “Yumdownloader”工具来下载 RPM 软件包及其所有依赖包</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">yum</span><span class="o">-</span><span class="n">utils</span>
 
@@ -276,21 +278,22 @@ yum install --downloadonly --downloaddir=/root/mypackages/ httpd vsftpd
 </div>
 </div>
 <div class="section" id="id4">
-<h3><a class="toc-backref" href="#id10">其他</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">其他</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <div class="code shell highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">repoquery</span> <span class="o">--</span><span class="n">requires</span> <span class="o">--</span><span class="n">resolve</span> <span class="o">&lt;</span><span class="n">package</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;</span>
-<span class="c1"># rpmrepater會向用戶顯示已安裝包的列表，你可以使用上/下箭頭來滾動屏幕</span>
-<span class="c1"># 可以在指定包上使用&quot;r&quot;鍵來顯示其依賴關係，循環在指定包上按下&quot;r&quot;鍵可以展示出餘下的信息。</span>
-<span class="c1"># &quot;L&quot;標誌的意思是說這個包是一片“孤葉”，意思說說沒有任何包依賴它。</span>
-<span class="c1"># &quot;o&quot;標誌是說這個包是整個依賴鏈的中間部分。</span>
-<span class="c1"># 按下&quot;b&quot;鍵會顯示其他依賴於該包的其他包。</span>
+
 <span class="n">yum</span> <span class="n">install</span> <span class="n">rpmreaper</span>
 <span class="n">rpmreaper</span>
 </pre></div>
 </div>
 </div>
-</div>
 <div class="section" id="id5">
-<h2><a class="toc-backref" href="#id11">2.29.2. yum离线安装rpm包</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h3><a class="toc-backref" href="#id12">工具3</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>一键下载软件及依赖的离线包
+<a class="reference external" href="https://lework.github.io/2020/03/10/download-packages/">https://lework.github.io/2020/03/10/download-packages/</a></p>
+</div>
+</div>
+<div class="section" id="id6">
+<h2><a class="toc-backref" href="#id13">2.29.2. yum离线安装rpm包</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="https://www.cnblogs.com/pangguoming/p/9951410.html">https://www.cnblogs.com/pangguoming/p/9951410.html</a></p>
 <p>参考文献 <a class="reference external" href="https://www.cnblogs.com/guigujun/p/7868748.html">https://www.cnblogs.com/guigujun/p/7868748.html</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/michael-xiang/p/10474319.html">https://www.cnblogs.com/michael-xiang/p/10474319.html</a></p>
