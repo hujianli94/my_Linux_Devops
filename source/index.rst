@@ -25,12 +25,13 @@ Devops学院【Linux架构|shell】专栏二
     DevOps_Study/index
     Jenkins_CICD/index
     KVM_Practice/index
-    KVM_Study/index
     Linux_Cluster_combat/index
     Linux_shell/index
     Mysql/index
+    Openstack/index
     other/index
     Network_route_switch/index
+
 
 
 

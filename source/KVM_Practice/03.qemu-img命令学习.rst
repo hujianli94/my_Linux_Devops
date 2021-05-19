@@ -33,6 +33,10 @@ qemu-img工具的命令行基本用法如下：
 
     [root@kvm-host ~]# qemu-img convert -O qcow2 rhel7.img rhel7-a.qcow2
 
+参考文献：
+
+https://blog.csdn.net/weixin\_34185560/article/details/93117304
+
 2.QEMU支持的镜像文件格式
 ------------------------
 

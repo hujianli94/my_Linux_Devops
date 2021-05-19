@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>KVM_Practice &mdash; 运维开发修炼之路</title>
+  <title>KVM实践 &mdash; 运维开发修炼之路</title>
   
 
   
@@ -103,18 +103,25 @@
 <li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps_Study/index.html">DevOps与自动化运维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins_CICD/index.html">Jenkins持续化集成</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">KVM_Practice</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">KVM实践</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="01构建KVM环境.html">1. 构建KVM环境</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02KVM管理工具.html">2. KVM管理工具</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.qemu-img命令学习.html">3. qemu-img命令学习</a></li>
 <li class="toctree-l2"><a class="reference internal" href="04.KVM设备高级管理.html">4. KVM设备高级管理</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.Vagrant虚拟机快速创建开发环境.html">5. Vagrant虚拟机快速创建开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html">6. 参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html">7. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM带web管理界面.html">8. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.CentOS7-ks.cfg系统安装与配置技巧.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.KVM虚拟化学习笔记系列文章列表(转).html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html">12. KVM部署实操</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../KVM_Study/index.html">KVM_Study</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -163,7 +170,7 @@
     
       <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
         
-      <li>KVM_Practice</li>
+      <li>KVM实践</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -182,8 +189,8 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="kvm-practice">
-<h1>KVM_Practice<a class="headerlink" href="#kvm-practice" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="kvm">
+<h1>KVM实践<a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="01构建KVM环境.html">1. 构建KVM环境</a><ul>
@@ -279,6 +286,86 @@
 <li class="toctree-l2"><a class="reference internal" href="05.Vagrant虚拟机快速创建开发环境.html#vm">5.6. 6. vm进行封装</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.Vagrant虚拟机快速创建开发环境.html#id3">5.7. 7. 使用vm封装后的虚拟机</a></li>
 <li class="toctree-l2"><a class="reference internal" href="05.Vagrant虚拟机快速创建开发环境.html#id4">5.8. 8.使用vagrant创建多台虚拟机</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.KVM相关参考文献.html">6. 参考文献</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#kvm">6.1. KVM入门到精通系列</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#esxi-kvm-v2v">6.2. ESXI 迁移至KVM (V2V迁移)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#id2">6.3. 管理配置KVM，热添加、热迁移</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#id3">6.4. KVM动态迁移与性能优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#p2v">6.5. P2V迁移工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM相关参考文献.html#vsphereesxi6-0-vclient">6.6. vSphere虚拟化ESXI6.0+vclient安装部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.虚拟机镜像转换V2V.html">7. 镜像转换V2V</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#p2v">7.1. P2V工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#vmware-kvm">7.2. VMware 转 KVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#vmdk-qcow2">7.3. VMDK–&gt;qcow2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#id1">7.3.1. 总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#id2">7.3.2. 转换格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#windows">7.3.3. windows迁移流程</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#kvmvmware">7.4. KVM转vmware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#qcow2raw">7.5. qcow2转raw</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#rawqcow2">7.6. raw转qcow2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#ovaovf">7.7. ova转ovf</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#virtualboxkvm">7.8. VirtualBox迁移到KVM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#id6">7.9. KVM虚机迁移到VMware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#kvmvmware-esxi">7.10. KVM镜像转vmware esxi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#vmware-esxi">7.11. Vmware esxi虚拟机冷迁移至各虚拟化平台方案</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#vmware-exsi-vmzstack">7.12. vmware exsi vm迁移到Zstack实战</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#id7">7.12.1. 方法1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.虚拟机镜像转换V2V.html#id8">7.12.2. 方法2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.KVM带web管理界面.html">8. KVM带web管理界面</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM带web管理界面.html#kvmlinuxkvmweb">8.1. 搭建KVM环境——Linux上安装KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM带web管理界面.html#centos7-2-kvmwebvirtmgr">8.2. centos7.2 kvm虚拟化管理平台WebVirtMgr部署</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#id1">9.1. 安装后相关补丁脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#id2">9.2. proxmox VE 国内镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#uproxmox-ve">9.3. U盘启动proxmox ve</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#id3">9.4. Proxmox VE 部署维护</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#proxmox-veceph">9.5. Proxmox-VE搭配Ceph存储组建高可用虚拟化平台</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#id4">9.6. Proxmox-VE系列文章</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html#id5">9.7. 推荐说明</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.CentOS7-ks.cfg系统安装与配置技巧.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l1"><a class="reference internal" href="11.KVM虚拟化学习笔记系列文章列表(转).html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html">12. KVM部署实操</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#centos7">12.1. 1.安装centos7操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#centos7xrdp">12.2. 2.CentOS7安装xrdp</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id1">12.3. 3.安装kvm</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id2">12.4. 4.设置KVM网络</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id3">12.5. 5.虚拟机关机、开机、开机自启等操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id4">12.5.1. 5.1 配置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id5">12.5.2. 5.2 关机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id6">12.5.3. 5.3 开机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#virsh">12.5.4. 5.4 virsh 创建桥接网卡</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id7">12.5.5. 5.5 挂起/恢复（暂停）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id8">12.5.6. 5.6 修改虚拟机名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#vnc">12.5.7. 5.7 查询虚拟机vnc端口</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id9">12.5.8. 5.8 开机自启动设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id10">12.5.9. 5.9 删除虚拟机配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id11">12.5.10. 5.10 备份与恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id12">12.5.11. 5.11 管理KVM虚拟机文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id13">12.5.12. 5.12 虚拟机克隆</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id14">12.5.13. 5.13 虚拟机快照</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id15">12.5.14. 5.14 创建虚拟机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id18">12.5.15. 5.15 存储池和存储卷的管理命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id19">12.5.16. 5.9 格式转换</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id20">12.6. 6. 虚拟机系统管理器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#ovirt">12.7. 7. oVirt虚拟化管理平台</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id21">12.8. 8.参考博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM部署实操-安装和常用操作.html#id22">12.9. KVM虚拟化学习目录</a></li>
 </ul>
 </li>
 </ul>
