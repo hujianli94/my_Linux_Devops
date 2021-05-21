@@ -137,6 +137,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#redismysql">2.17.10. 反向代理redis和mysql示例</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id14">2.17.11. 启动</a></li>
 <li class="toctree-l4"><a class="reference internal" href="#id15">2.17.12. 查看状态</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#openstackhaproxy">2.17.13. openstack高可用haproxy配置</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a></li>
@@ -273,6 +274,7 @@
 </li>
 <li><a class="reference internal" href="#id14" id="id36">启动</a></li>
 <li><a class="reference internal" href="#id15" id="id37">查看状态</a></li>
+<li><a class="reference internal" href="#openstackhaproxy" id="id38">openstack高可用haproxy配置</a></li>
 </ul>
 </li>
 </ul>
@@ -1227,7 +1229,205 @@ backend giteeproxy
 <span class="n">s</span><span class="c1">#tats 即haproxy配置文件中的监听名称</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="openstackhaproxy">
+<h2><a class="toc-backref" href="#id38">2.17.13. openstack高可用haproxy配置</a><a class="headerlink" href="#openstackhaproxy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#openstack高可用haproxy配置</span>
+
+<span class="c1">###########全局配置#########</span>
+    <span class="k">global</span>
+    <span class="n">log</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">local0</span>
+    <span class="n">log</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">local1</span> <span class="n">notice</span>
+    <span class="n">daemon</span>
+    <span class="c1">#nbproc 1     #进程数量</span>
+    <span class="n">maxconn</span> <span class="mi">4096</span>  <span class="c1">#最大连接数</span>
+    <span class="n">user</span> <span class="n">haproxy</span>  <span class="c1">#运行用户</span>
+    <span class="n">group</span> <span class="n">haproxy</span> <span class="c1">#运行组</span>
+    <span class="n">chroot</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">haproxy</span>
+    <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">pid</span>
+<span class="c1">########默认配置############</span>
+    <span class="n">defaults</span>
+    <span class="n">log</span> <span class="k">global</span>
+    <span class="n">mode</span> <span class="n">http</span>            <span class="c1">#默认模式{ tcp|http|health }</span>
+    <span class="n">option</span> <span class="n">httplog</span>       <span class="c1">#日志类别,采用httplog</span>
+    <span class="n">option</span> <span class="n">dontlognull</span>   <span class="c1">#不记录健康检查日志信息</span>
+    <span class="n">retries</span> <span class="mi">2</span>            <span class="c1">#2次连接失败不可用</span>
+    <span class="n">option</span> <span class="n">forwardfor</span>    <span class="c1">#后端服务获得真实ip</span>
+    <span class="n">option</span> <span class="n">httpclose</span>     <span class="c1">#请求完毕后主动关闭http通道</span>
+    <span class="n">option</span> <span class="n">abortonclose</span>  <span class="c1">#服务器负载很高，自动结束比较久的链接</span>
+    <span class="n">maxconn</span> <span class="mi">4096</span>         <span class="c1">#最大连接数</span>
+    <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">5</span><span class="n">m</span>   <span class="c1">#连接超时</span>
+    <span class="n">timeout</span> <span class="n">client</span> <span class="mi">1</span><span class="n">m</span>    <span class="c1">#客户端超时</span>
+    <span class="n">timeout</span> <span class="n">server</span> <span class="mi">31</span><span class="n">m</span>   <span class="c1">#服务器超时</span>
+    <span class="n">timeout</span> <span class="n">check</span> <span class="mi">10</span><span class="n">s</span>    <span class="c1">#心跳检测超时</span>
+    <span class="n">balance</span> <span class="n">roundrobin</span>   <span class="c1">#负载均衡方式，轮询</span>
+<span class="c1">########统计页面配置########</span>
+    <span class="n">listen</span> <span class="n">stats</span>
+    <span class="n">bind</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">1080</span>
+    <span class="n">mode</span> <span class="n">http</span>
+    <span class="n">option</span> <span class="n">httplog</span>
+    <span class="n">log</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">local0</span> <span class="n">err</span>
+    <span class="n">stats</span> <span class="n">refresh</span> <span class="mi">30</span><span class="n">s</span>
+    <span class="n">maxconn</span> <span class="mi">10</span>               <span class="c1">#最大连接数</span>
+    <span class="n">stats</span> <span class="n">uri</span> <span class="o">/</span><span class="n">admin</span>         <span class="c1">#状态页面 http//ip:1080/admin访问</span>
+    <span class="n">stats</span> <span class="n">realm</span> <span class="n">Haproxy</span>\ <span class="n">Statistics</span>
+    <span class="n">stats</span> <span class="n">auth</span> <span class="n">admin</span><span class="p">:</span><span class="n">admin</span>   <span class="c1">#用户和密码:admin</span>
+    <span class="n">stats</span> <span class="n">hide</span><span class="o">-</span><span class="n">version</span>       <span class="c1">#隐藏版本信息</span>
+    <span class="n">stats</span> <span class="n">admin</span> <span class="k">if</span> <span class="n">TRUE</span>      <span class="c1">#设置手工启动/禁用</span>
+
+<span class="c1">########以下为openstack高可用配置############</span>
+
+<span class="c1">#dashboard_cluster</span>
+<span class="n">listen</span> <span class="n">dashboard_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">80</span>
+    <span class="n">balance</span>  <span class="n">roundrobin</span>
+    <span class="c1">#balance  source</span>
+    <span class="n">option</span>  <span class="n">tcpka</span>
+    <span class="n">option</span>  <span class="n">httpchk</span>
+    <span class="n">option</span>  <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">8080</span> <span class="n">check</span> <span class="n">port</span> <span class="mi">8080</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">8080</span> <span class="n">check</span> <span class="n">port</span> <span class="mi">8080</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">8080</span> <span class="n">check</span> <span class="n">port</span> <span class="mi">8080</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+<span class="c1">#mariadb_cluster</span>
+<span class="n">listen</span> <span class="n">mariadb_cluster</span>
+    <span class="n">mode</span> <span class="n">tcp</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">3306</span>
+    <span class="n">balance</span> <span class="n">leastconn</span>
+    <span class="n">option</span> <span class="n">mysql</span><span class="o">-</span><span class="n">check</span> <span class="n">user</span> <span class="n">haproxy</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">3306</span> <span class="n">weight</span> <span class="mi">1</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">3306</span> <span class="n">weight</span> <span class="mi">1</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">3306</span> <span class="n">weight</span> <span class="mi">1</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+<span class="c1">#RabbitMQ_cluster</span>
+<span class="n">listen</span> <span class="n">RabbitMQ</span><span class="o">-</span><span class="n">Server</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">5673</span>
+    <span class="n">mode</span> <span class="n">tcp</span>
+    <span class="n">balance</span> <span class="n">roundrobin</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">timeout</span> <span class="n">client</span>  <span class="mi">30</span><span class="n">m</span>
+    <span class="n">timeout</span> <span class="n">server</span>  <span class="mi">30</span><span class="n">m</span>
+    <span class="n">option</span>  <span class="n">clitcpka</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">5672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">5672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">5672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+
+<span class="c1">#RabbitMQ</span>
+<span class="n">listen</span> <span class="n">RabbitMQ</span><span class="o">-</span><span class="n">Web</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">15673</span>
+    <span class="n">balance</span> <span class="n">roundrobin</span>
+    <span class="n">mode</span> <span class="n">tcp</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">15672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">15672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">15672</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">5</span><span class="n">s</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">3</span>
+<span class="c1">#</span>
+
+<span class="c1">#keystone</span>
+<span class="n">listen</span> <span class="n">keystone_admin_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">35357</span>
+    <span class="c1">#balance  source</span>
+    <span class="n">option</span>  <span class="n">tcpka</span>
+    <span class="n">option</span>  <span class="n">httpchk</span>
+    <span class="n">option</span>  <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">35356</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">35356</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">35356</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+<span class="n">listen</span> <span class="n">keystone_public_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">5000</span>
+    <span class="c1">#balance  source</span>
+    <span class="n">option</span>  <span class="n">tcpka</span>
+    <span class="n">option</span>  <span class="n">httpchk</span>
+    <span class="n">option</span>  <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">4999</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">4999</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">4999</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+<span class="c1">#glance_api_cluster</span>
+<span class="n">listen</span> <span class="n">glance_api_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">9292</span>
+    <span class="c1">#balance  source</span>
+    <span class="n">option</span>  <span class="n">tcpka</span>
+    <span class="n">option</span>  <span class="n">httpchk</span>
+    <span class="n">option</span>  <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">9292</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">9292</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">9292</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#</span>
+<span class="n">listen</span> <span class="n">glance_registry_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">9191</span>
+    <span class="n">balance</span>  <span class="n">source</span>
+    <span class="n">option</span>  <span class="n">tcpka</span>
+    <span class="n">option</span>  <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">9191</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">9191</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">9191</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+
+<span class="c1">##nova_compute</span>
+<span class="n">listen</span> <span class="n">nova_compute_api_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">8774</span>
+    <span class="c1">#balance source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">httpchk</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">8774</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">8774</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">8774</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#Nova-api-metadata</span>
+<span class="n">listen</span> <span class="n">Nova</span><span class="o">-</span><span class="n">api</span><span class="o">-</span><span class="n">metadata_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">8775</span>
+    <span class="n">balance</span> <span class="n">source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">httpchk</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">8775</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">8775</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">8775</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#nova_placement</span>
+<span class="n">listen</span> <span class="n">nova_placement_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">8778</span>
+    <span class="c1">#balance source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">9778</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">9778</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">9778</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#nova_vncproxy</span>
+<span class="n">listen</span> <span class="n">nova_vncproxy_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">6080</span>
+    <span class="c1">#balance source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">6080</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">6080</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">6080</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+
+<span class="c1">#Neutron_API</span>
+<span class="n">listen</span> <span class="n">Neutron_API_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">9696</span>
+    <span class="c1">#balance source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">9696</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">9696</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">9696</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#Cinder_API_cluster</span>
+<span class="n">listen</span> <span class="n">Cinder_API_cluster</span>
+    <span class="n">bind</span> <span class="n">controller</span><span class="p">:</span><span class="mi">8776</span>
+    <span class="c1">#balance source</span>
+    <span class="n">option</span> <span class="n">tcpka</span>
+    <span class="n">option</span> <span class="n">httpchk</span>
+    <span class="n">option</span> <span class="n">tcplog</span>
+    <span class="n">server</span> <span class="n">controller1</span> <span class="n">controller1</span><span class="p">:</span><span class="mi">8776</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller2</span> <span class="n">controller2</span><span class="p">:</span><span class="mi">8776</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+    <span class="n">server</span> <span class="n">controller3</span> <span class="n">controller3</span><span class="p">:</span><span class="mi">8776</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+<span class="c1">#</span>
+</pre></div>
+</div>
 <p>文章来源文献： <a class="reference external" href="https://www.cnblogs.com/MacoLee/p/5853413.html">https://www.cnblogs.com/MacoLee/p/5853413.html</a></p>
+<p>haproxy1.7编译安装配置 <a class="reference external" href="https://www.cnblogs.com/elvi/p/7717582.html">https://www.cnblogs.com/elvi/p/7717582.html</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/saneri/p/12195837.html">https://www.cnblogs.com/saneri/p/12195837.html</a></p>
 <p>参考文献：</p>
 <p><a class="reference external" href="https://www.bookstack.cn/books/HAProxy-zh">HAProxy用法详解

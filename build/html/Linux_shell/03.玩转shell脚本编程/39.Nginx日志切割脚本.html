@@ -147,7 +147,11 @@
 <li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy脚本.html">3.36. k8s_deploy脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="37.example(字符串处理).html">3.37. example(字符串处理)</a></li>
 <li class="toctree-l3"><a class="reference internal" href="38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.39. Nginx日志切割脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.39.1. 示例1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.39.2. 示例2</a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
 <li class="toctree-l3"><a class="reference internal" href="41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.判断文件类型.html">3.42. 判断文件类型</a></li>
@@ -250,11 +254,17 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nginx" id="id1">Nginx日志切割脚本</a></li>
+<li><a class="reference internal" href="#nginx" id="id3">Nginx日志切割脚本</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">示例1</a></li>
+<li><a class="reference internal" href="#id2" id="id5">示例2</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="nginx">
-<h1><a class="toc-backref" href="#id1">3.39. Nginx日志切割脚本</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id3">3.39. Nginx日志切割脚本</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">3.39.1. 示例1</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
 #usage:xxx
 #scripts_name:xxx.sh
@@ -275,6 +285,32 @@ echo &quot;---------------------------------------------&quot;
 echo &quot;The Nginx log Cutting Successfully! &quot;
 echo &quot;You can access backup nginx log ${D_LOG}/access.log files.&quot;
 </pre></div>
+</div>
+</div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">3.39.2. 示例2</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh
+#nginx日志切割
+
+#设置
+Log_path=/www/server/nginx/logs
+Yesterday=$(date -d &quot;yesterday&quot; +%Y-%m-%d_%S)
+Nginxbin=/www/server/nginx/sbin/nginx
+
+#日志改名
+/bin/mv $Log_path/access.log $Log_path/access.$Yesterday.log
+/bin/mv $Log_path/error.log  $Log_path/error.$Yesterday.log
+
+#重新生成日志
+$Nginxbin -s reopen
+
+# #定时任务
+# #nginx日志切割
+# 00 00 * * *  /root/sh/cut_log.sh
+# #
+</pre></div>
+</div>
+<p>canker文献 <a class="reference external" href="https://www.cnblogs.com/elvi/p/7717986.html">https://www.cnblogs.com/elvi/p/7717986.html</a></p>
 </div>
 </div>
 
