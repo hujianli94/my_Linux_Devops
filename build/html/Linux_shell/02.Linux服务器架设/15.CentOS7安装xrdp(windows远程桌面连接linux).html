@@ -124,8 +124,10 @@
 <li class="toctree-l3"><a class="reference internal" href="13.使用Squid部署代理缓存服务.html">2.14. 使用Squid部署代理缓存服务</a></li>
 <li class="toctree-l3"><a class="reference internal" href="14.Jenkins持续集成企业实战.html">2.15. Jenkins持续集成企业实战</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id1">2.16.1. 前提:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#xrdp">2.16.2. 安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#centos7-xrdp">2.16.1. Centos7 上安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.16.2. 前提:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#xrdp">2.16.3. 安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu18-04-xrdp">2.16.4. Ubuntu18.04 上安装 Xrdp 远程桌面服务</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a></li>
@@ -149,6 +151,7 @@
 <li class="toctree-l3"><a class="reference internal" href="37.CentOS8安装Docker和Docker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
 <li class="toctree-l3"><a class="reference internal" href="38.CentOS8开启BBR升级内核.html">2.36. CentOS8开启BBR/升级内核</a></li>
 <li class="toctree-l3"><a class="reference internal" href="39.Centos7通过python+js实现webssh.html">2.37. Centos7通过python+js实现webssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Centos7部署NTP时间服务器同步环境.html">2.38. Centos7部署NTP时间服务器同步环境</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.玩转shell脚本编程/index.html">3. 玩转shell脚本编程</a></li>
@@ -238,26 +241,31 @@
 <p class="topic-title first">Contents</p>
 <ul class="simple">
 <li><a class="reference internal" href="#centos7xrdp-windowslinux" id="id3">CentOS7安装xrdp(windows远程桌面连接linux)</a><ul>
-<li><a class="reference internal" href="#id1" id="id4">前提:</a></li>
-<li><a class="reference internal" href="#xrdp" id="id5">安装xrdp</a><ul>
-<li><a class="reference internal" href="#id2" id="id6">自动安装脚本</a></li>
+<li><a class="reference internal" href="#centos7-xrdp" id="id4">Centos7 上安装xrdp</a></li>
+<li><a class="reference internal" href="#id1" id="id5">前提:</a></li>
+<li><a class="reference internal" href="#xrdp" id="id6">安装xrdp</a><ul>
+<li><a class="reference internal" href="#id2" id="id7">自动安装脚本</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#ubuntu18-04-xrdp" id="id8">Ubuntu18.04 上安装 Xrdp 远程桌面服务</a></li>
 </ul>
 </li>
 </ul>
 </div>
 <div class="section" id="centos7xrdp-windowslinux">
 <h1><a class="toc-backref" href="#id3">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a><a class="headerlink" href="#centos7xrdp-windowslinux" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="centos7-xrdp">
+<h2><a class="toc-backref" href="#id4">2.16.1. Centos7 上安装xrdp</a><a class="headerlink" href="#centos7-xrdp" title="Permalink to this headline">¶</a></h2>
+</div>
 <div class="section" id="id1">
-<h2><a class="toc-backref" href="#id4">2.16.1. 前提:</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id5">2.16.2. 前提:</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CentOS安装桌面，如果无桌面，请执行：
 yum -y groups install &quot;GNOME Desktop&quot;  startx
 </pre></div>
 </div>
 </div>
 <div class="section" id="xrdp">
-<h2><a class="toc-backref" href="#id5">2.16.2. 安装xrdp</a><a class="headerlink" href="#xrdp" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">2.16.3. 安装xrdp</a><a class="headerlink" href="#xrdp" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cp</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span><span class="p">{,</span><span class="o">.</span><span class="n">bak</span><span class="p">}</span>
 <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">Base</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">Centos</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>   <span class="c1">#更换阿里源国内源</span>
 <span class="n">wget</span> <span class="o">-</span><span class="n">O</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">repos</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">epel</span><span class="o">.</span><span class="n">repo</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">aliyun</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">repo</span><span class="o">/</span><span class="n">epel</span><span class="o">-</span><span class="mf">7.</span><span class="n">repo</span>           <span class="c1">#改为aliyun的epel源,先备份epel本身的源</span>
@@ -285,7 +293,7 @@ yum -y groups install &quot;GNOME Desktop&quot;  startx
 </pre></div>
 </div>
 <div class="section" id="id2">
-<h3><a class="toc-backref" href="#id6">自动安装脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id7">自动安装脚本</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">install_xrdp.sh</span></code></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
 <span class="n">yum</span> <span class="n">grouplist</span>
@@ -303,9 +311,13 @@ yum -y groups install &quot;GNOME Desktop&quot;  startx
 <span class="n">reboot</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="section" id="ubuntu18-04-xrdp">
+<h2><a class="toc-backref" href="#id8">2.16.4. Ubuntu18.04 上安装 Xrdp 远程桌面服务</a><a class="headerlink" href="#ubuntu18-04-xrdp" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.linuxidc.com/Linux/2019-08/159848.htm">https://www.linuxidc.com/Linux/2019-08/159848.htm</a></p>
 <p>参考相关文献：</p>
 <p><a class="reference external" href="https://www.cnblogs.com/zgq123456/p/14456471.html">CentOS安装noVNC，以Web方式交付VNC远程连接</a></p>
-</div>
 </div>
 </div>
 

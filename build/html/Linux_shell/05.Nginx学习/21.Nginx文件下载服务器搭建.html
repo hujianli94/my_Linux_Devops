@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>5.19. Nginx文件下载服务器搭建 &mdash; 运维开发修炼之路</title>
+  <title>5.21. Nginx文件下载服务器搭建 &mdash; 运维开发修炼之路</title>
   
 
   
@@ -47,7 +47,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="6. LNMP、LAMP学习" href="../06.LAMP、LNMP学习/index.html" />
-    <link rel="prev" title="5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" /> 
+    <link rel="prev" title="5.20. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -128,8 +128,14 @@
 <li class="toctree-l3"><a class="reference internal" href="15.案例-Nginx作为负载均衡服务器应用.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
 <li class="toctree-l3"><a class="reference internal" href="16.nginx正向代理配置.html">5.16. Nginx 正向代理配置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="17.Nginx部署HTTPS.html">5.17. <strong>Nginx 部署HTTPS</strong></a></li>
-<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
-<li class="toctree-l3 current"><a class="current reference internal" href="#">5.19. Nginx文件下载服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.Nginx中文手册.html">5.18. Nginx中文手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.Nginx配置生成器.html">5.19. Nginx配置生成器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.20. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.21. Nginx文件下载服务器搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">5.21.1. 1. Nginx作为文件服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">5.21.2. 2. Nginx 目录浏览基础与进阶</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a></li>
@@ -193,7 +199,7 @@
         
           <li><a href="index.html">5. Nginx学习</a> &raquo;</li>
         
-      <li>5.19. Nginx文件下载服务器搭建</li>
+      <li>5.21. Nginx文件下载服务器搭建</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -215,11 +221,17 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#nginx" id="id1">Nginx文件下载服务器搭建</a></li>
+<li><a class="reference internal" href="#nginx" id="id3">Nginx文件下载服务器搭建</a><ul>
+<li><a class="reference internal" href="#id1" id="id4">1. Nginx作为文件服务器</a></li>
+<li><a class="reference internal" href="#id2" id="id5">2. Nginx 目录浏览基础与进阶</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="section" id="nginx">
-<h1><a class="toc-backref" href="#id1">5.19. Nginx文件下载服务器搭建</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id3">5.21. Nginx文件下载服务器搭建</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2><a class="toc-backref" href="#id4">5.21.1. 1. Nginx作为文件服务器</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p><code class="docutils literal notranslate"><span class="pre">nginx.conf</span></code>文件配置如下</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#user  nobody;</span>
 <span class="n">worker_processes</span>  <span class="mi">1</span><span class="p">;</span>
@@ -328,6 +340,11 @@ server {
 </pre></div>
 </div>
 </div>
+<div class="section" id="id2">
+<h2><a class="toc-backref" href="#id5">5.21.2. 2. Nginx 目录浏览基础与进阶</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/ssgeek/p/14224879.html#34-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%A2%98">https://www.cnblogs.com/ssgeek/p/14224879.html#34-%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%BB%E9%A2%98</a></p>
+</div>
+</div>
 
 
            </div>
@@ -340,7 +357,7 @@ server {
         <a href="../06.LAMP、LNMP学习/index.html" class="btn btn-neutral float-right" title="6. LNMP、LAMP学习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" class="btn btn-neutral float-left" title="5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html" class="btn btn-neutral float-left" title="5.20. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

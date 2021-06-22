@@ -8,7 +8,7 @@
 + DevOps与自动化运维
 + jenkins2x CICD
 + KVM实践
-+ 高性能Linux服务构建实战
++ Linux服务构建实战
 + Linux_shell
 + Mysql王者之路
 + Other
@@ -32,3 +32,4 @@ start make.bat html
 # 重新生成静态网页删除build目录下的所有文件
 start make.bat html
 ```
+

@@ -1,7 +1,7 @@
 .. three title documentation master file
 
 
-高性能Linux服务构建实战
+Linux服务构建实战
 ==========================================
 
 .. toctree::

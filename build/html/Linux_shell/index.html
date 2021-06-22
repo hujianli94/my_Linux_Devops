@@ -348,6 +348,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/33.Ubuntu安装和初始化.html">1.34. Ubuntu安装和初始化</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/33.Ubuntu安装和初始化.html#id1">1.34.1. ubuntu部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/33.Ubuntu安装和初始化.html#ubuntu-18-04">1.34.2. Ubuntu 18.04 安装、配置和美化</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html">1.35. DRBD详细解说及配置过程记录</a><ul>
@@ -376,9 +377,10 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id3">1.38.5. YUM源软件包扩展</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id4">1.38.6. 同步外网yum源</a></li>
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id5">1.38.7. 几个不错的yum源</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id6">1.38.8. 官方源、镜像源汇总</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#yum-centos6-centos7-epel">1.38.9. 搭建企业内部yum仓库(centos6+centos7+epel源)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#linux-linuxiso-redhat-centos-oracle-ubuntu-opensuse">1.38.10. Linux下载_Linux系统各种版本ISO镜像下载（redhat,centos,oracle,ubuntu,openSUSE）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#centos7openstack-yum">1.38.8. Centos7自建Openstack Yum源</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#id6">1.38.9. 官方源、镜像源汇总</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#yum-centos6-centos7-epel">1.38.10. 搭建企业内部yum仓库(centos6+centos7+epel源)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/42.配置Yum软件仓库.html#linux-linuxiso-redhat-centos-oracle-ubuntu-opensuse">1.38.11. Linux下载_Linux系统各种版本ISO镜像下载（redhat,centos,oracle,ubuntu,openSUSE）</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/43.Vim编辑器学习.html">1.39. Vim编辑器学习</a></li>
@@ -404,6 +406,13 @@
 <li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/48.Centos7-systemd服务封装server.html#id1">1.44.2. 配置文件的区块</a></li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html">1.45. DELL R730服务器安装centos7.3</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html#id1">1.45.1. DELL R730服务器安装centos7.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html#dell-r730">1.45.2. Dell r730服务器系统安装后，无法进入系统</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/50.ssh登录缓慢解决办法.html">1.46. ssh登录缓慢解决办法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.常用较多命名查询/51.Centos7.x使用yum安装mysql-server.html">1.47. Centos7.x使用yum安装mysql-server</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="02.Linux服务器架设/index.html">2. Linux服务器架设</a><ul>
@@ -493,8 +502,10 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#id1">2.16.1. 前提:</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#xrdp">2.16.2. 安装xrdp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#centos7-xrdp">2.16.1. Centos7 上安装xrdp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#id1">2.16.2. 前提:</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#xrdp">2.16.3. 安装xrdp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#ubuntu18-04-xrdp">2.16.4. Ubuntu18.04 上安装 Xrdp 远程桌面服务</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a><ul>
@@ -510,6 +521,7 @@
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#redismysql">2.17.10. 反向代理redis和mysql示例</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id14">2.17.11. 启动</a></li>
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#id15">2.17.12. 查看状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html#openstackhaproxy">2.17.13. openstack高可用haproxy配置</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/20.国内常使用的yum源信息.html">2.18. 国内常使用的yum源信息</a><ul>
@@ -585,6 +597,11 @@
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/38.CentOS8开启BBR升级内核.html">2.36. CentOS8开启BBR/升级内核</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/39.Centos7通过python+js实现webssh.html">2.37. Centos7通过python+js实现webssh</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/39.Centos7通过python+js实现webssh.html#python3pip3">2.37.1. 安装python3、pip3</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html">2.38. Centos7部署NTP时间服务器同步环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html#id1">2.38.1. 服务端部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html#id2">2.38.2. 客户端配置</a></li>
 </ul>
 </li>
 </ul>
@@ -833,7 +850,11 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/38.用Python实现定时备份Mongodb数据，并上传到FTP服务器.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
-<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html">3.39. Nginx日志切割脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html#id1">3.39.1. 示例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.玩转shell脚本编程/39.Nginx日志切割脚本.html#id2">3.39.2. 示例2</a></li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/40.一键安装Docker脚本.html">3.40. 一键安装docker脚本</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/41.shell实现多并发控制脚本.html">3.41. shell实现多并发控制</a></li>
 <li class="toctree-l2"><a class="reference internal" href="03.玩转shell脚本编程/42.判断文件类型.html">3.42. 判断文件类型</a></li>
@@ -910,6 +931,7 @@
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id3">4.2.5. 数据库基础操作</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id6">4.2.6. 数据库操作命令</a></li>
 <li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id13">4.2.7. 数据库表的基本操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id21">4.2.8. Mysql数据库表锁解决方法</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="04.玩转数据库（mysql、Redis）/03.Linux运维之Mysql必会知识.html">4.3. Linux运维之mysql必会知识</a><ul>
@@ -1025,13 +1047,25 @@
 <li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/17.Nginx部署HTTPS.html#id1">5.17.1. 参考文献</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.18.1. Nginx PHP服务器环境搭建</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.18.2. 启动多个php-fpm进程</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.18.3. Nginx基于FastCGI实现负载均衡</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/18.Nginx中文手册.html">5.18. Nginx中文手册</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/18.Nginx中文手册.html#id1">5.18.1. nginx中文手册</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.19. Nginx文件下载服务器搭建</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/19.Nginx配置生成器.html">5.19. Nginx配置生成器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/19.Nginx配置生成器.html#id1">5.19.1. Nginx配置生成器</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.20. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.20.1. Nginx PHP服务器环境搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.20.2. 启动多个php-fpm进程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.20.3. Nginx基于FastCGI实现负载均衡</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.21. Nginx文件下载服务器搭建</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html#id1">5.21.1. 1. Nginx作为文件服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx学习/21.Nginx文件下载服务器搭建.html#id2">5.21.2. 2. Nginx 目录浏览基础与进阶</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a><ul>

@@ -103,7 +103,7 @@
 <li class="toctree-l1"><a class="reference internal" href="DevOps_Study/index.html">DevOps与自动化运维</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Jenkins_CICD/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="KVM_Practice/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Linux_shell/index.html">Linux_shell</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Mysql/index.html">Mysql王者之路</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Openstack/index.html">Openstack实践</a></li>
@@ -618,24 +618,25 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html">7. 镜像转换V2V</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#p2v">7.1. P2V工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-kvm">7.2. VMware 转 KVM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmdk-qcow2">7.3. VMDK–&gt;qcow2</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id1">7.3.1. 总结</a></li>
-<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id2">7.3.2. 转换格式</a></li>
-<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#windows">7.3.3. windows迁移流程</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#qemu-img">7.2. 通过qemu-img工具转换镜像格式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-kvm">7.3. VMware 转 KVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmdk-qcow2">7.4. VMDK–&gt;qcow2</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id1">7.4.1. 总结</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id2">7.4.2. 转换格式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#windows">7.4.3. windows迁移流程</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#kvmvmware">7.4. KVM转vmware</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#qcow2raw">7.5. qcow2转raw</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#rawqcow2">7.6. raw转qcow2</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#ovaovf">7.7. ova转ovf</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#virtualboxkvm">7.8. VirtualBox迁移到KVM</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id6">7.9. KVM虚机迁移到VMware</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#kvmvmware-esxi">7.10. KVM镜像转vmware esxi</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-esxi">7.11. Vmware esxi虚拟机冷迁移至各虚拟化平台方案</a></li>
-<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-exsi-vmzstack">7.12. vmware exsi vm迁移到Zstack实战</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id7">7.12.1. 方法1</a></li>
-<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id8">7.12.2. 方法2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#kvmvmware">7.5. KVM转vmware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#qcow2raw">7.6. qcow2转raw</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#rawqcow2">7.7. raw转qcow2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#ovaovf">7.8. ova转ovf</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#virtualboxkvm">7.9. VirtualBox迁移到KVM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id6">7.10. KVM虚机迁移到VMware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#kvmvmware-esxi">7.11. KVM镜像转vmware esxi</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-esxi">7.12. Vmware esxi虚拟机冷迁移至各虚拟化平台方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#vmware-exsi-vmzstack">7.13. vmware exsi vm迁移到Zstack实战</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id7">7.13.1. 方法1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="KVM_Practice/07.虚拟机镜像转换V2V.html#id8">7.13.2. 方法2</a></li>
 </ul>
 </li>
 </ul>
@@ -695,7 +696,7 @@
 <li class="toctree-l2"><a class="reference internal" href="KVM_Practice/13.Zstack入门初体验.html">13. Zstack入门初体验</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">高性能Linux服务构建实战</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="Linux_Cluster_combat/index.html">Linux服务构建实战</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/index.html">Web应用篇</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html">01.轻量级HTTP服务器Nginx</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_Cluster_combat/01.Web应用篇/01.轻量级HTTP服务器Nginx.html#nginxapache">Nginx与Apache的异同</a></li>
@@ -947,6 +948,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/33.Ubuntu安装和初始化.html">1.34. Ubuntu安装和初始化</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/33.Ubuntu安装和初始化.html#id1">1.34.1. ubuntu部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/33.Ubuntu安装和初始化.html#ubuntu-18-04">1.34.2. Ubuntu 18.04 安装、配置和美化</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/34.DRBD详细解说及配置过程记录.html">1.35. DRBD详细解说及配置过程记录</a><ul>
@@ -1004,6 +1006,13 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/48.Centos7-systemd服务封装server.html#id1">1.44.2. 配置文件的区块</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html">1.45. DELL R730服务器安装centos7.3</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html#id1">1.45.1. DELL R730服务器安装centos7.3</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/49.DELLR730服务器安装centos7.3教程.html#dell-r730">1.45.2. Dell r730服务器系统安装后，无法进入系统</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/50.ssh登录缓慢解决办法.html">1.46. ssh登录缓慢解决办法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/01.常用较多命名查询/51.Centos7.x使用yum安装mysql-server.html">1.47. Centos7.x使用yum安装mysql-server</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/index.html">2. Linux服务器架设</a><ul>
@@ -1093,8 +1102,10 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#id1">2.16.1. 前提:</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#xrdp">2.16.2. 安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#centos7-xrdp">2.16.1. Centos7 上安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#id1">2.16.2. 前提:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#xrdp">2.16.3. 安装xrdp</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/15.CentOS7安装xrdp(windows远程桌面连接linux).html#ubuntu18-04-xrdp">2.16.4. Ubuntu18.04 上安装 Xrdp 远程桌面服务</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/16.Haproxy负载均衡安装配置详解.html">2.17. Haproxy负载均衡安装配置详解</a><ul>
@@ -1186,6 +1197,11 @@
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/38.CentOS8开启BBR升级内核.html">2.36. CentOS8开启BBR/升级内核</a></li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/39.Centos7通过python+js实现webssh.html">2.37. Centos7通过python+js实现webssh</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/39.Centos7通过python+js实现webssh.html#python3pip3">2.37.1. 安装python3、pip3</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html">2.38. Centos7部署NTP时间服务器同步环境</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html#id1">2.38.1. 服务端部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/02.Linux服务器架设/40.Centos7部署NTP时间服务器同步环境.html#id2">2.38.2. 客户端配置</a></li>
 </ul>
 </li>
 </ul>
@@ -1515,6 +1531,7 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id3">4.2.5. 数据库基础操作</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id6">4.2.6. 数据库操作命令</a></li>
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id13">4.2.7. 数据库表的基本操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.html#id21">4.2.8. Mysql数据库表锁解决方法</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="Linux_shell/04.玩转数据库（mysql、Redis）/03.Linux运维之Mysql必会知识.html">4.3. Linux运维之mysql必会知识</a><ul>
@@ -1630,13 +1647,25 @@
 <li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/17.Nginx部署HTTPS.html#id1">5.17.1. 参考文献</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.18. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.18.1. Nginx PHP服务器环境搭建</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.18.2. 启动多个php-fpm进程</a></li>
-<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.18.3. Nginx基于FastCGI实现负载均衡</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/18.Nginx中文手册.html">5.18. Nginx中文手册</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/18.Nginx中文手册.html#id1">5.18.1. nginx中文手册</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.19. Nginx文件下载服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/19.Nginx配置生成器.html">5.19. Nginx配置生成器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/19.Nginx配置生成器.html#id1">5.19.1. Nginx配置生成器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html">5.20. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginx-php">5.20.1. Nginx PHP服务器环境搭建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#php-fpm">5.20.2. 启动多个php-fpm进程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.html#nginxfastcgi">5.20.3. Nginx基于FastCGI实现负载均衡</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html">5.21. Nginx文件下载服务器搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html#id1">5.21.1. 1. Nginx作为文件服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="Linux_shell/05.Nginx学习/21.Nginx文件下载服务器搭建.html#id2">5.21.2. 2. Nginx 目录浏览基础与进阶</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="Linux_shell/06.LAMP、LNMP学习/index.html">6. LNMP、LAMP学习</a><ul>
@@ -2081,16 +2110,19 @@
 <li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/2.Git仓库的使用.html#id4">1.2.4. 使用 git 添加与提交变更</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/2.Git仓库的使用.html#id5">1.2.5. 使用 git 创建与合并分支</a></li>
 <li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/2.Git仓库的使用.html#id6">1.2.6. 实战演练</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/2.Git仓库的使用.html#git1">1.2.7. Git常用操作查询图1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/2.Git仓库的使用.html#git2">1.2.8. Git常用操作查询图2</a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/3.Github高级搜索方式.html">1.3. Github高级搜索方式</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/3.Github高级搜索方式.html#id1">1.3.1. 快速搜索方式</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/4.svn迁移至git操作手册.html">1.4. svn迁移至git操作手册</a></li>
-<li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html">1.5. GitHelp</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html#git">1.5.1. Git 常用命令</a></li>
-<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html#githubfork">1.5.2. 在github上fork项目如何同步并解决冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/4.Svn迁移至git操作手册.html">1.4. Svn迁移至git操作手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/5.Git_LFS_操作指南.html">1.5. Git_LFS_操作指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html">1.6. GitHelp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html#git">1.6.1. Git 常用命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="other/01.Git入门到熟练/15.GitHelp.html#githubfork">1.6.2. 在github上fork项目如何同步并解决冲突</a></li>
 </ul>
 </li>
 </ul>
@@ -2103,6 +2135,7 @@
 <li class="toctree-l4"><a class="reference internal" href="other/02.构建自己的写书博客/1.Python利用sphinx构建个人博客.html#githubread-the-docs">2.1.4. 四 关联github和read the docs</a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="other/02.构建自己的写书博客/2.觅道文档-私有云文档部署手册.html">2.2. 觅道文档-私有云文档部署手册</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="other/03.Vim教程/index.html">3. Vim教程</a><ul>

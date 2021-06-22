@@ -51,3 +51,6 @@
     46.Linux性能监控工具PyDash
     47.恢复文件相关工具
     48.Centos7-systemd服务封装server
+    49.DELLR730服务器安装centos7.3教程
+    50.ssh登录缓慢解决办法
+    51.Centos7.x使用yum安装mysql-server

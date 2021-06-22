@@ -1,0 +1,22 @@
+.. contents::
+   :depth: 3
+..
+
+Centos7.x使用yum安装mysql-server
+================================
+
+::
+
+    ## 1.源码下载mysql-server的rpm的包
+    wget http://repo.mysql.com/mysql-community-release-el7-5.noarch.rpm
+
+
+    ## 2.rpm安装
+    rpm -ivh mysql-community-release-el7-5.noarch.rpm
+
+
+    ## 3.使用yum命令进行安装
+    yum install mysql-server
+
+
+    CentOS 7 版本将MySQL数据库软件从默认的程序列表中移除，用mariadb代替了。
