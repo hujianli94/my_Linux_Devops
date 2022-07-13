@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8.10. LVS+keeplaived高可用集群 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8.11. Redis实战篇之搭建集群" href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html" />
+    <link rel="prev" title="8.9. Haproxy+keepalived主从-主主高可用架构" href="09.Haproxy%2Bkeepalived%E4%B8%BB%E4%BB%8E-%E4%B8%BB%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">8. 构建Linux高可用架构</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.LVS%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AD%A6%E4%B9%A0.html">8.1. LVS基于四层的负载均衡学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html">8.2. 企业级Nginx+keepalived 集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Nginx%2Bkeepalived%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html">8.3. Nginx+keepalived双主架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html">8.4. Redis+keepalived高可用集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.NFS%2Bkeepalived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%E5%85%B1%E4%BA%AB.html">8.5. nfs+ keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E4%B8%BB%E4%BB%8E%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.6. MySQL 主从高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.MySQL%E4%B8%BB%E4%B8%BB%E5%90%8C%E6%AD%A5%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.7. MySQL主主同步高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.8. Mysql双主+keepalived集群架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.Haproxy%2Bkeepalived%E4%B8%BB%E4%BB%8E-%E4%B8%BB%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.9. Haproxy+keepalived主从-主主高可用架构</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.10. LVS+keeplaived高可用集群</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#lvs-keepalived">8.10.1. LVS+keepalived 主从高可用模式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">8.10.2. 參考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html">8.11. Redis实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">8.12. MySQL主从复制、读写分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E4%BD%BF%E7%94%A8Haproxy%2Bkeepalived%E6%90%AD%E5%BB%BAWeb%E7%BE%A4%E9%9B%86.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.16. keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html">8.17. Pacemaker实现双机热备</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">8. </span>构建Linux高可用架构</a> &raquo;</li>
+      <li><span class="section-number">8.10. </span>LVS+keeplaived高可用集群</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/08.Linux构建高可用架构/10.LVS+Keepalived高可用集群.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#lvs-keeplaived" id="id2">LVS+keeplaived高可用集群</a></p>
+<ul>
+<li><p><a class="reference internal" href="#lvs-keepalived" id="id3">LVS+keepalived 主从高可用模式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#lvs" id="id4">验证LVS的使用是否正常</a></p></li>
+<li><p><a class="reference internal" href="#keepalived" id="id5">安装keepalived</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id6">參考文献</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="lvs-keeplaived">
+<h1><a class="toc-backref" href="#id2"><span class="section-number">8.10. </span>LVS+keeplaived高可用集群</a><a class="headerlink" href="#lvs-keeplaived" title="Permalink to this headline">¶</a></h1>
+<p>LVS工作原理：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>LVS简单工作原理为用户请求LVS VIP，LVS根据转发方式和算法，将请求转发到后端服务器，后端服务器接到请求
+返回给用户，对于用户来说看不到Web后端具体的应用
+</pre></div>
+</div>
+<p>LVS特点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  可伸缩网络服务的几种结构，它们都需要一个前端的负载调度器（或者多个进行主从备
+份）。我们先分析实现虚拟网络服务的主要技术，指出 IP 负载均衡技术是在负载调度器的
+实现技术中效率最高的。在已有的 IP 负载均衡技术中，主要有通过网络地址转换（Network
+Address Translation）将一组服务器构成一个高性能的、高可用的虚拟服务器，我们称之
+为 VS/NAT 技术（Virtual Server via Network Address Translation）。
+</pre></div>
+</div>
+<p>LVS三种负载均衡技术：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>LVS 转发方式有三种，分别是 NAT、DR、TUN 模式。
+
+常用算法：RR(round-robin)、LC(least_connection)、W(weight)RR、WLC 模式等（RR 为轮询模式，LC 为最少连接
+模式）
+</pre></div>
+</div>
+<p>LVS NAT 原理：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>用户请求 LVS 到达 director,director 将请求的报文的目标 IP 地址改
+成后端的 realserver IP 地址，同时将报文的目标端口也改成后端选定的 realserver 相应
+端口，最后将报文发送到 realserver，realserver 将数据返给 director，director 再把数
+据发送给用户。（两次请求都经过 director，所以访问大的话，director 会成为瓶颈）
+</pre></div>
+</div>
+<p><img alt="image1" src="../../_images/lvs_nat01.png" /> <img alt="image2" src="../../_images/lvs_nat02.png" /></p>
+<p>LVS DR 原理：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>用户请求 LVS 到达 director,director 将请求的报文的目标 MAC 地址
+改成后端的 realserver MAC 地址，目标 IP 为 VIP（不变），源 IP 为用户 IP 地址（保持
+不变），然后 Director 将报文发送到 realserver，realserver 检测到目标为自己本地 VIP，
+如果在同一个网段，然后将请求直接返给用户。如果用户跟 realserver 不在一个网段，则
+通过网关返回用户。（此种转发效率最高）
+</pre></div>
+</div>
+<p><img alt="image3" src="../../_images/lvs_DR02.png" /> <img alt="image4" src="../../_images/lvs_DR03.png" /></p>
+<p>LVS TUN 原理：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>跟 LVS DR 类似，也是改变封装 MAC 地址，多了一层隧道加密。实
+施环境复杂，比 LVS DR 模式效率略低。（图一为 LVS 负载均衡图）
+</pre></div>
+</div>
+<img alt="../../_images/lvs_tun04.png" src="../../_images/lvs_tun04.png" />
+<p>那为什么要用lvs呢？</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.简单一句话，当并发超过了Nginx上限，就可以使用LVS了。
+
+2.日1000-2000W PV或并发请求1万以下都可以考虑用Nginx。
+
+3.大型门户网站，电商网站需要用到LVS。
+</pre></div>
+</div>
+<p>相关参考文献：</p>
+<p><a class="reference external" href="http://www.linuxvirtualserver.org/zh/lvs3.html">http://www.linuxvirtualserver.org/zh/lvs3.html</a></p>
+<section id="lvs-keepalived">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">8.10.1. </span>LVS+keepalived 主从高可用模式</a><a class="headerlink" href="#lvs-keepalived" title="Permalink to this headline">¶</a></h2>
+<p>环境</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">主机名</span>         <span class="n">IP地址</span>            <span class="n">软件</span>                  <span class="n">系统版本</span>
+<span class="n">lvs01</span>         <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">lvs02</span>         <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.35</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">web03</span>         <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span>     <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">web04</span>         <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span>    <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>主机</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZ2ze90qu1d4wtd3ngygfoZ ~]# cat /etc/redhat-release
+CentOS Linux release 7.6.1810 (Core)
+
+[root@iZ2ze90qu1d4wtd3ngygfoZ ~]# uname -a
+Linux iZ2ze90qu1d4wtd3ngygfoZ 3.10.0-957.5.1.el7.x86_64 #1 SMP Fri Feb 1 14:54:57 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+
+[root@iZ2ze90qu1d4wtd3ngygfoZ ~]# getenforce
+Disabled
+
+[root@iZ2ze90qu1d4wtd3ngygfoZ ~]# systemctl status firewalld.service
+â— firewalld.service - firewalld - dynamic firewall daemon
+   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)
+   Active: inactive (dead)
+     Docs: man:firewalld(1)
+</pre></div>
+</div>
+<p>安装2台tomcat web服务器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>java环境
+
+先查看是否有java环境： rpm -qa | grep java
+如果没有java环境的话，接着就去查找java-1.8.0的可以使用的安装包：yum list | grep java-1.8.0-openjdk
+
+安装java-1.8.0-openjdk所有的文件
+[root@yoyo ~]# yum -y install java-1.8.0-openjdk*
+
+查看版本号：java -version
+
+[root@yoyo ~]# java -version
+openjdk version &quot;1.8.0_191&quot;
+
+
+tomcat安装
+tomcat安装可以先下载安装包，再解压。也可以直接用yum在线安装，这里我们直接用yum在线安装更方便
+
+yum install tomcat
+//或者
+yum -y install tomcat
+
+tomcat默认端口是8080，接下来浏览输入地址：http://服务器公网ip:8080/。这个页面暂时是无法访问
+由于tomcat的web页面是需要安装插件的，这里继续用 tomcat-webapps 和 tomcat-admin-webapps 两个插件包
+
+yum -y install tomcat-webapps tomcat-admin-webapps
+
+启动tomcat服务、查看tomcat服务状态
+[root@yoyo tomcat]#  systemctl start tomcat
+[root@yoyo tomcat]# systemctl status tomcat
+</pre></div>
+</div>
+<p>LVS基于Linux内核的模块ipvs与iptables一样是直接工作在内核中。</p>
+<p>主流的linux已经默认集成了ipvs模块。
+只需要安装管理工具ipvsadm，可以yum直接安装或者下载后编译安装。</p>
+<p>安装ipvsadm管理工具</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">ipvsadm</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ipvsadm</span>
+<span class="n">IP</span> <span class="n">Virtual</span> <span class="n">Server</span> <span class="n">version</span> <span class="mf">1.2</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="n">Prot</span> <span class="n">LocalAddress</span><span class="p">:</span><span class="n">Port</span> <span class="n">Scheduler</span> <span class="n">Flags</span>
+  <span class="o">-&gt;</span> <span class="n">RemoteAddress</span><span class="p">:</span><span class="n">Port</span>           <span class="n">Forward</span> <span class="n">Weight</span> <span class="n">ActiveConn</span> <span class="n">InActConn</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lsmod | grep ip_vs</span>
+<span class="n">ip_vs</span>                 <span class="mi">145497</span>  <span class="mi">0</span>
+<span class="n">nf_conntrack</span>          <span class="mi">133095</span>  <span class="mi">1</span> <span class="n">ip_vs</span>
+<span class="n">libcrc32c</span>              <span class="mi">12644</span>  <span class="mi">3</span> <span class="n">xfs</span><span class="p">,</span><span class="n">ip_vs</span><span class="p">,</span><span class="n">nf_conntrack</span>
+</pre></div>
+</div>
+<p>LVS集群搭建</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>配置LVS负载均衡服务（在lb03操作）
+
+步骤1：在eth0网卡绑定VIP地址（ip）
+
+步骤2：清除当前所有LVS规则（-C）
+
+步骤3：设置tcp、tcpfin、udp链接超时时间（--set）
+
+步骤4：添加虚拟服务（-A），-t指定虚拟服务的IP端口，-s 指定调度算法 调度算法见man ipvsadm， rr wrr 权重轮询 -p 指定超时时间
+
+步骤5：将虚拟服务关联到真实服务上（-a） -r指定真实服务的IP端口 -g LVS的模式 DR模式 -w 指定权重
+
+步骤6：查看配置结果（-ln）
+</pre></div>
+</div>
+<p>lvs_server.sh</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:xxx.sh
+SNS_VIP=$2
+SNS_RIP1=$3
+SNS_RIP2=$4
+
+if [ &quot;$1&quot; == &quot;stop&quot; -a -z &quot;$2&quot; ]; then
+    echo &quot;------------------------------------&quot;
+    echo -e &quot;\033[32mPlease Enter $0 stop LVS_VIP\n\nEXample:$0 stop 192.168.1.111\033[0m&quot;
+    echo
+    exit
+else
+    if [  -z &quot;$2&quot; -a -z &quot;$3&quot; -a -z &quot;$4&quot; ]; then
+        echo &quot;------------------------------------&quot;
+        echo -e &quot;\033[32mPlease Enter Input $0 start VIP REALSERVER1 REALSERVER2\n\nEXample:$0  start/stop  192.168.1.111  192.168.1.2 192.168.1.3\033[0m&quot;
+        echo
+        exit 0
+
+    fi
+fi
+. /etc/rc.d/init.d/functions
+logger $0 called with $1
+
+function IPVSADM(){
+/sbin/ipvsadm --set 30 5 60
+/sbin/ifconfig eth0:0 $SNS_VIP broadcast $SNS_VIP netmask 255.255.255.255 broadcast $SNS_VIP up
+/sbin/route add -host $SNS_VIP dev eth0:0
+/sbin/ipvsadm -A -t $SNS_VIP:8080 -s wlc -p 120
+/sbin/ipvsadm -a -t $SNS_VIP:8080 -r $SNS_RIP1:8080 -g -w 1
+/sbin/ipvsadm -a -t $SNS_VIP:8080 -r $SNS_RIP2:8080 -g -w 1
+}
+
+case &quot;$1&quot; in
+
+start)
+    IPVSADM
+    echo &quot;------------------------------------&quot;
+    /sbin/ipvsadm -Ln
+    touch /var/lock/subsys/ipvsadm &gt; /dev/null 2&gt;&amp;1
+    ;;
+stop)
+    /sbin/ipvsadm -C
+    /sbin/ipvsadm -Z
+    ifconfig eth0:0 down &gt;&gt;/dev/null 2&gt;&amp;1
+    route del $SNS_VIP &gt;&gt;/dev/null 2&gt;&amp;1
+    rm -rf /var/lock/subsys/ipvsadm &gt; /dev/null 2&gt;&amp;1
+    echo &quot;ipvsadm stopped!&quot;
+    ;;
+status)
+    if [ ! -e /var/lock/subsys/ipvsadm ]
+    then
+    echo &quot;ipvsadm stopped!&quot;
+    exit 1
+    else
+    echo &quot;ipvsadm started!&quot;
+    fi
+    ;;
+
+*)
+    echo &quot;Usage:$0(start|stop|status)&quot;
+    exit
+    esac
+    exit 0
+</pre></div>
+</div>
+<p>LVS 单独执行绑定的 VIP：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>VIP=192.168.111.200
+ifconfig eth0:0 $VIP netmask 255.255.255.255 broadcast
+$VIP
+/sbin/route add -host $VIP dev eth0:
+</pre></div>
+</div>
+<p>执行结果</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZ2ze9tpl7iobi4d89ira2Z ~]# ./lvs_service.sh stop 172.17.252.38 39.106.40.172 39.107.137.111
+ipvsadm stopped!
+
+
+[root@lvs01 etc]# chmod 755 lvs_service.sh
+[root@lvs01 etc]# ./lvs_service.sh start 172.17.252.38 39.106.40.172 39.107.137.111
+SIOCADDRT: File exists
+No such device or address
+------------------------------------
+IP Virtual Server version 1.2.1 (size=4096)
+Prot LocalAddress:Port Scheduler Flags
+  -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn
+TCP  172.17.252.38:8080 wlc persistent 120
+  -&gt; 39.106.40.172:8080           Route   1      0          0
+  -&gt; 39.107.137.111:8080          Route   1      0          0
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip a</span>
+<span class="mi">1</span><span class="p">:</span> <span class="n">lo</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">LOOPBACK</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">65536</span> <span class="n">qdisc</span> <span class="n">noqueue</span> <span class="n">state</span> <span class="n">UNKNOWN</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">loopback</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">brd</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+    <span class="n">inet</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="mi">315359320</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359320</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+</pre></div>
+</div>
+<p>客户端配置</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">addr</span> <span class="n">add</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.13</span><span class="o">/</span><span class="mi">32</span> <span class="n">dev</span> <span class="n">lo</span>
+
+<span class="n">cat</span> <span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysctl</span><span class="o">.</span><span class="n">conf</span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
+<span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">arp_announce</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">lo</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">lo</span><span class="o">.</span><span class="n">arp_announce</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">EOF</span>
+</pre></div>
+</div>
+<p>lvs_client.sh</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+#usage:xxx
+#scripts_name:xxx.sh
+VIP=172.17.252.38
+case $1 in
+start)
+    ifconfig lo:0 $VIP netmask 255.255.255.255 broadcast $VIP
+    /sbin/route add -host $VIP dev lo:0
+    echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
+    echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
+    echo &quot;1&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
+    echo &quot;2&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce
+    sysctl -p &gt;/dev/null 2&gt;&amp;1
+    echo &quot;RealServer Start OK&quot;
+    exit 0
+   ;;
+
+stop)
+    ifconfig lo:0 down
+    route del $VIP &gt;/dev/null 2&gt;&amp;1
+    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_ignore
+    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/lo/arp_announce
+    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_ignore
+    echo &quot;0&quot; &gt;/proc/sys/net/ipv4/conf/all/arp_announce
+    echo &quot;RealServer Stoped OK&quot;
+    exit 1
+   ;;
+
+*)
+    echo &quot;Usage:$0 {start|stop}&quot;
+   ;;
+esac
+</pre></div>
+</div>
+<section id="lvs">
+<h3><a class="toc-backref" href="#id4">验证LVS的使用是否正常</a><a class="headerlink" href="#lvs" title="Permalink to this headline">¶</a></h3>
+<p>在其他机器上访问VIP地址和端口</p>
+<p>测试机1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@web01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 172.17.252.38:8080 | grep web</span>
+  <span class="o">%</span> <span class="n">Total</span>    <span class="o">%</span> <span class="n">Received</span> <span class="o">%</span> <span class="n">Xferd</span>  <span class="n">Average</span> <span class="n">Speed</span>   <span class="n">Time</span>    <span class="n">Time</span>     <span class="n">Time</span>  <span class="n">Current</span>
+                                 <span class="n">Dload</span>  <span class="n">Upload</span>   <span class="n">Total</span>   <span class="n">Spent</span>    <span class="n">Left</span>  <span class="n">Speed</span>
+<span class="mi">100</span> <span class="mi">11215</span>    <span class="mi">0</span> <span class="mi">11215</span>    <span class="mi">0</span>     <span class="mi">0</span>  <span class="mi">4706</span><span class="n">k</span>      <span class="mi">0</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="mi">5476</span><span class="n">k</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span> <span class="n">web01</span>  <span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="n">security</span><span class="p">,</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/manager/html&quot;</span><span class="o">&gt;</span><span class="n">manager</span> <span class="n">webapp</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">restricted</span><span class="o">.</span>
+
+<span class="o">........</span>
+</pre></div>
+</div>
+<p>测试机2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@web02</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 172.17.252.38:8080| grep web</span>
+  <span class="o">%</span> <span class="n">Total</span>    <span class="o">%</span> <span class="n">Received</span> <span class="o">%</span> <span class="n">Xferd</span>  <span class="n">Average</span> <span class="n">Speed</span>   <span class="n">Time</span>    <span class="n">Time</span>     <span class="n">Time</span>  <span class="n">Current</span>
+                                 <span class="n">Dload</span>  <span class="n">Upload</span>   <span class="n">Total</span>   <span class="n">Spent</span>    <span class="n">Left</span>  <span class="n">Speed</span>
+<span class="mi">100</span> <span class="mi">11215</span>    <span class="mi">0</span> <span class="mi">11215</span>    <span class="mi">0</span>     <span class="mi">0</span>  <span class="mi">7953</span><span class="n">k</span>      <span class="mi">0</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="mf">10.6</span><span class="n">M</span>
+<span class="o">&lt;</span><span class="n">h1</span><span class="o">&gt;</span>  <span class="n">web02</span> <span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+                        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="n">security</span><span class="p">,</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/manager/html&quot;</span><span class="o">&gt;</span><span class="n">manager</span> <span class="n">webapp</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">restricted</span><span class="o">.</span>
+</pre></div>
+</div>
+</section>
+<section id="keepalived">
+<h3><a class="toc-backref" href="#id5">安装keepalived</a><a class="headerlink" href="#keepalived" title="Permalink to this headline">¶</a></h3>
+<p>两台lvs服务器安装keepalived</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">keepalived</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa keepalived</span>
+<span class="n">keepalived</span><span class="o">-</span><span class="mf">1.3</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="mf">8.</span><span class="n">el7_6</span><span class="o">.</span><span class="n">x86_64</span>
+</pre></div>
+</div>
+<p>lvs01</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="n">home</span><span class="p">]</span><span class="c1"># cat /etc/keepalived/keepalived.conf</span>
+<span class="n">global_defs</span> <span class="p">{</span>
+   <span class="n">router_id</span> <span class="n">LVS_01</span>
+<span class="p">}</span>
+
+<span class="n">vrrp_instance</span> <span class="n">VI_1</span> <span class="p">{</span>
+    <span class="n">state</span> <span class="n">MASTER</span>
+    <span class="n">interface</span> <span class="n">eth0</span>
+    <span class="n">virtual_router_id</span> <span class="mi">51</span>
+    <span class="n">priority</span> <span class="mi">150</span>
+    <span class="n">advert_int</span> <span class="mi">1</span>
+    <span class="n">authentication</span> <span class="p">{</span>
+        <span class="n">auth_type</span> <span class="n">PASS</span>
+        <span class="n">auth_pass</span> <span class="mi">1111</span>
+    <span class="p">}</span>
+    <span class="n">virtual_ipaddress</span> <span class="p">{</span>
+     <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="n">virtual_server</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">delay_loop</span> <span class="mi">6</span>
+    <span class="n">lb_algo</span> <span class="n">wrr</span>
+    <span class="n">lb_kind</span> <span class="n">DR</span>
+    <span class="n">nat_mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">240.0</span>
+    <span class="n">persistence_timeout</span> <span class="mi">50</span>
+    <span class="n">protocol</span> <span class="n">TCP</span>
+
+    <span class="n">real_server</span> <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span> <span class="mi">8080</span> <span class="p">{</span>
+        <span class="n">weight</span> <span class="mi">1</span>
+        <span class="n">TCP_CHECK</span> <span class="p">{</span>
+        <span class="n">connect_timeout</span> <span class="mi">8</span>
+        <span class="n">nb_get_retry</span> <span class="mi">3</span>
+        <span class="n">delay_before_retry</span> <span class="mi">3</span>
+        <span class="n">connect_port</span> <span class="mi">80</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">real_server</span> <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span> <span class="mi">8080</span> <span class="p">{</span>
+        <span class="n">weight</span> <span class="mi">1</span>
+        <span class="n">TCP_CHECK</span> <span class="p">{</span>
+        <span class="n">connect_timeout</span> <span class="mi">8</span>
+        <span class="n">nb_get_retry</span> <span class="mi">3</span>
+        <span class="n">delay_before_retry</span> <span class="mi">3</span>
+        <span class="n">connect_port</span> <span class="mi">80</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>lvs02</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs02</span> <span class="n">home</span><span class="p">]</span><span class="c1"># cat /etc/keepalived/keepalived.conf</span>
+<span class="n">global_defs</span> <span class="p">{</span>
+   <span class="n">router_id</span> <span class="n">LVS_02</span>
+<span class="p">}</span>
+
+<span class="n">vrrp_instance</span> <span class="n">VI_1</span> <span class="p">{</span>
+    <span class="n">state</span> <span class="n">BACKUP</span>
+    <span class="n">interface</span> <span class="n">eth0</span>
+    <span class="n">virtual_router_id</span> <span class="mi">51</span>
+    <span class="n">priority</span> <span class="mi">100</span>
+    <span class="n">advert_int</span> <span class="mi">1</span>
+    <span class="n">authentication</span> <span class="p">{</span>
+        <span class="n">auth_type</span> <span class="n">PASS</span>
+        <span class="n">auth_pass</span> <span class="mi">1111</span>
+    <span class="p">}</span>
+    <span class="n">virtual_ipaddress</span> <span class="p">{</span>
+     <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+<span class="n">virtual_server</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">delay_loop</span> <span class="mi">6</span>
+    <span class="n">lb_algo</span> <span class="n">wrr</span>
+    <span class="n">lb_kind</span> <span class="n">DR</span>
+    <span class="n">nat_mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">240.0</span>
+    <span class="n">persistence_timeout</span> <span class="mi">50</span>
+    <span class="n">protocol</span> <span class="n">TCP</span>
+
+    <span class="n">real_server</span> <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span> <span class="mi">8080</span> <span class="p">{</span>
+        <span class="n">weight</span> <span class="mi">1</span>
+        <span class="n">TCP_CHECK</span> <span class="p">{</span>
+        <span class="n">connect_timeout</span> <span class="mi">8</span>
+        <span class="n">nb_get_retry</span> <span class="mi">3</span>
+        <span class="n">delay_before_retry</span> <span class="mi">3</span>
+        <span class="n">connect_port</span> <span class="mi">80</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="n">real_server</span> <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span> <span class="mi">8080</span> <span class="p">{</span>
+        <span class="n">weight</span> <span class="mi">1</span>
+        <span class="n">TCP_CHECK</span> <span class="p">{</span>
+        <span class="n">connect_timeout</span> <span class="mi">8</span>
+        <span class="n">nb_get_retry</span> <span class="mi">3</span>
+        <span class="n">delay_before_retry</span> <span class="mi">3</span>
+        <span class="n">connect_port</span> <span class="mi">80</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>关闭lvs01，访问查看网页状态</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="n">home</span><span class="p">]</span><span class="c1"># reboot</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@web02</span> <span class="o">~</span><span class="p">]</span><span class="c1"># curl 172.17.252.38:8080 | grep web</span>
+  <span class="o">%</span> <span class="n">Total</span>    <span class="o">%</span> <span class="n">Received</span> <span class="o">%</span> <span class="n">Xferd</span>  <span class="n">Average</span> <span class="n">Speed</span>   <span class="n">Time</span>    <span class="n">Time</span>     <span class="n">Time</span>  <span class="n">Current</span>
+                                 <span class="n">Dload</span>  <span class="n">Upload</span>   <span class="n">Total</span>   <span class="n">Spent</span>    <span class="n">Left</span>  <span class="n">Speed</span>
+<span class="mi">100</span> <span class="mi">11215</span>    <span class="mi">0</span> <span class="mi">11215</span>    <span class="mi">0</span>     <span class="mi">0</span>  <span class="mi">4220</span><span class="n">k</span>      <span class="mi">0</span> <span class="o">--</span><span class="p">:</span><span class="o">-&lt;</span><span class="n">h1</span><span class="o">&gt;</span>  <span class="n">web02</span> <span class="o">&lt;/</span><span class="n">h1</span><span class="o">&gt;</span>
+<span class="o">-</span><span class="p">:</span><span class="o">--</span> <span class="o">-</span>                        <span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="n">For</span> <span class="n">security</span><span class="p">,</span> <span class="n">access</span> <span class="n">to</span> <span class="n">the</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;/manager/html&quot;</span><span class="o">&gt;</span><span class="n">manager</span> <span class="n">webapp</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="ow">is</span> <span class="n">restricted</span><span class="o">.</span>
+<span class="o">-</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="o">--</span><span class="p">:</span><span class="o">--</span><span class="p">:</span><span class="o">--</span> <span class="mi">5476</span><span class="n">k</span>
+</pre></div>
+</div>
+<p>VIP 切换测试</p>
+<p>手动停掉keepalived服务，VIP会自动切换到lvs02上</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip ad li eth0</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="mi">315359683</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359683</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pkill keepalived</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip ad li eth0</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="mi">315359449</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359449</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+</pre></div>
+</div>
+<p>启动服务后，VIP正常</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># !sys</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">keepalived</span><span class="o">.</span><span class="n">service</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip a</span>
+<span class="mi">1</span><span class="p">:</span> <span class="n">lo</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">LOOPBACK</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">65536</span> <span class="n">qdisc</span> <span class="n">noqueue</span> <span class="n">state</span> <span class="n">UNKNOWN</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">loopback</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">brd</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+    <span class="n">inet</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+<span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
+    <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="mi">315359367</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359367</span><span class="n">sec</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
+       <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">8.10.2. </span>參考文献</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>参考资料 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8432963.html">Keepalived + LVS/DR
+安装配置</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="09.Haproxy%2Bkeepalived%E4%B8%BB%E4%BB%8E-%E4%B8%BB%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html" class="btn btn-neutral float-left" title="8.9. Haproxy+keepalived主从-主主高可用架构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html" class="btn btn-neutral float-right" title="8.11. Redis实战篇之搭建集群" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.6. 06.索引 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.7. 07.事务" href="07.%E4%BA%8B%E5%8A%A1.html" />
+    <link rel="prev" title="1.5. 05.表" href="05.%E8%A1%A8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 01.倔强的青铜篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html">1.2. 02.Mysql数据库的安装启动和关闭</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E8%A1%A8.html">1.5. 05.表</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.6. 06.索引</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#b-tree">1.6.1. B-tree结构</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.6.2. 哈希索引</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.6.3. 索引的总结</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html">1.8. 08.锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>01.倔强的青铜篇</a> &raquo;</li>
+      <li><span class="section-number">1.6. </span>06.索引</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/06.索引.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id9">06.索引</a></p>
+<ul>
+<li><p><a class="reference internal" href="#b-tree" id="id10">B-tree结构</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id11">聚集索引和普通索引</a></p></li>
+<li><p><a class="reference internal" href="#icpmrrbka" id="id12">ICP、MRR和BKA</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">主键索引和唯一索引</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id14">覆盖索引</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">前缀索引</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">联合索引</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id7" id="id17">哈希索引</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id18">索引的总结</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">1.6. </span>06.索引</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>索引是对数据库表中一列或多值值进行排序的一种结构。</p>
+<p>MySQL数据库两个主要的索引是：B+tree索引和哈希索引</p>
+<p>演化</p>
+<p>二叉树 -&gt; 平衡二叉树 -&gt; B-tree -&gt;B+tree</p>
+<section id="b-tree">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">1.6.1. </span>B-tree结构</a><a class="headerlink" href="#b-tree" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>二叉树：左子树&lt;根&lt;右子树
+平衡二叉树：左右两子树高度差绝对值不超过1
+B-tree：又称Btree,一个结点可以拥有多个子结点，所有叶子结点位于同一层，叶子结点不包含任何关键字信息
+B+tree：所有关键字信息都出现在叶子结点，并含有关键字记录的指针，所有数据都保存在叶子结点中
+B+tree索引是双向链表结构
+</pre></div>
+</div>
+<p><img alt="image0" src="../../_images/B_Tree0001.png" /></p>
+<section id="id2">
+<h3><a class="toc-backref" href="#id11">聚集索引和普通索引</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>对聚集索引，索引键值的逻辑决定了表数据行的物理存储顺序，叶子结点存放表中行数据，数据即索引、索引即数据
+创建表时，要显式为表创建一个主键(聚集索引)，若不主动创建主键，InnoDB会选择第一个不包含null值的唯一索引作为主键索引，若没有唯一索引，则使用rowid作为主键对普通索引，叶子结点仅有自己本身的键值和主键的值，通过普通索引叶子结点上的主键来获取要查找的行数据记录
+</pre></div>
+</div>
+<p><img alt="image1" src="../../_images/mysql_suoying0001.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">普通索引创建语法</span>
+<span class="n">alter</span> <span class="n">table</span> <span class="n">table_name</span> <span class="n">add</span> <span class="n">index</span> <span class="n">index_name</span> <span class="p">(</span><span class="n">索引字段</span><span class="p">);</span>
+<span class="n">create</span> <span class="n">index</span> <span class="n">index_name</span> <span class="n">on</span> <span class="n">table_name</span> <span class="p">(</span><span class="n">索引字段</span><span class="p">);</span>
+<span class="n">查看表中的索引</span>
+<span class="n">show</span> <span class="n">index</span> <span class="kn">from</span> <span class="nn">table_name</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE t (id int(11) NOT NULL AUTO_INCREMENT ,
+name varchar(20) NOT NULL ,
+address varchar(20) NOT NULL ,
+PRIMARY KEY (id));
+
+desc t;
+
+select count(*) from t;
+
+explain select * from t where name=&#39;cc&#39;;
+
+#查看执行计划
+type列出现ALL，代表全表扫描
+key列，看是否使用了索引，null代表没有使用索引
+row列，扫描的行数
+extra列，若出现using filesort或者using temporary关键字，说明很影响性能
+filtered列，返回结果行占需要读到行的百分比，估算值
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>优化思路</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）表的数据类型是否合理，要遵守选取数据类型越简单越小的原则
+
+2）表中碎片是否整理
+
+3）表的统计信息是否收集，只有统计信息准确，执行计划才能帮助优化SQL
+
+
+4）查看执行计划，检查索引使用情况，没有用到索引，考虑创建
+
+5）创建索引前，查看索引的选择性distinct，判断该字段是否适创建索引
+索引选择性指不重复的索引值和数据记录总数的比值，越接近1越好；主键索引和唯一索引选择性是1
+
+6）创建索引后，再查看执行计划，对比两次结果，查看效率是否提高
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>合理创建索引的三个经常</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）经常被查询的列(一般放在where条件后面)
+2）经常用于表连接的列
+3）经常排序分组的列(order by/group by后面的字段)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>为name字段创建索引</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">查看name字段的索引选择性</span>
+<span class="n">select</span> <span class="n">count</span><span class="p">(</span><span class="n">distinct</span> <span class="n">name</span><span class="p">)</span><span class="o">/</span><span class="n">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">t</span><span class="p">;</span>
+<span class="n">创建索引</span>
+<span class="n">create</span> <span class="n">index</span> <span class="n">idx_name</span> <span class="n">on</span> <span class="n">t</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+<span class="n">show</span> <span class="n">index</span> <span class="kn">from</span> <span class="nn">t</span>\<span class="n">G</span>
+<span class="n">explain</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span> <span class="n">where</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;cc&#39;</span>\<span class="n">G</span>
+</pre></div>
+</div>
+</section>
+<section id="icpmrrbka">
+<h3><a class="toc-backref" href="#id12">ICP、MRR和BKA</a><a class="headerlink" href="#icpmrrbka" title="Permalink to this headline">¶</a></h3>
+<p>ICP，index condition
+pushdown是使用索引从表中检索行数据的一种优化方式，5.6开始支持，
+如果where后的条件可以使用索引，则将过滤放到存储层执行，而不是原来的由server层处理，
+可以减少基表访问次数和server层访问存储引擎次数，默认开启</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>show variables like &quot;%optimizer_switch%&quot;\G
+index_merge=on,
+index_merge_union=on,
+index_merge_sort_union=on,
+index_merge_intersection=on,
+engine_condition_pushdown=on,
+index_condition_pushdown=on,
+mrr=on,
+mrr_cost_based=on,
+block_nested_loop=on,
+batched_key_access=off,
+materialization=on,
+semijoin=on,
+loosescan=on,
+firstmatch=on,
+duplicateweedout=on,
+subquery_materialization_cost_based=on,
+use_index_extensions=on,
+condition_fanout_filter=on,
+derived_merge=on
+开关命令
+set optimizer_switch=&quot;index_condition_pushdown=on|off&quot;;
+当使用ICP优化时，执行计划extra列会显示Using index condition关键字
+</pre></div>
+</div>
+<p>MRR，multi-range read
+optimization，5.6之后新增，通过optimizer_switch中的mrr和mrr_cost_based控制，默认均为开启状态
+mrr_cost_based选项表示是否通过基于成本的算法来确定开启mrr特性，on为自动判断，off为强制开启mrr</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#set global optimizer_switch=&quot;mrr=on|off,mrr_cost_based=on|off&quot;;
+set optimizer_switch=&quot;mrr=on|off,mrr_cost_based=on|off&quot;;
+当mrr=on，mrr_cost_based=off时，表示总是开启MRR优化
+当使用MRR优化时，执行计划的extra列会显示Using MRR关键字
+
+普通情况下，普通索引获取数据方式为，通过索引叶子结点找到对应的主键，再通过主键找到相对应的行数据记录。若普通索引有重复值，那么该字段做where条件时，每次取到的主键不是顺序的，会发生随机IO
+MRR原理：将找到的主键值存储到read_rnd_buffer中，并对buffer进行排序，最后利用排序过的主键值，访问表中的数据，将原来的随机IO变成顺序IO，降低IO开销
+生产环境中，read_rnd_buffer_size 可设置4~8MB之间
+</pre></div>
+</div>
+<p><img alt="image2" src="../../_images/mysql_MRR0001.png" /></p>
+<p>BKA，batched key
+access，提高表join性能的算法，作用是在读取join表的记录时使用顺序IO
+原理：对于多表join语句，当使用索引访问第二个join表时，使用一个join
+buffer收集第一个操作对象生成的相关列值。BKA构建好key后，批量传给引擎层做索引查找，key是通过MRR接口提交给引擎的，这样使得查询更加高效</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>BKA默认是关闭的
+要想开启该功能，要保证是在强制使用MRR的基础上才可以
+set global optimizer_switch=&quot;mrr=on,mrr_cost_based=off&quot;;
+set global optimizer_switch=&quot;batched_key_access=on&quot;;
+当BKA被使用时，执行计划的extra列会显示Using join buffer(Batched Key Access)关键字
+</pre></div>
+</div>
+<p><img alt="image3" src="../../_images/mysql_BAK.png" /></p>
+<p><strong>MRR与BKA之间的关系</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">https://mariadb.com/kb/en/library/multi-range-read-optimization/</span></code></p>
+<p>存储引擎上端是MRR，范围扫描range
+access中将扫描到的数据存入read_rnd_buffer_size，对其按照主键rowid进行排序，然后使用排序后的数据顺序回表，转换随机读取为顺序读取
+BKA中，被连接表使用ref、eq_ref索引方式扫描时，
+第一个表中扫描的键值放到join_buffer_size中，
+然后调用MRR接口进行排序并顺序访问且通过join条件得到数据，
+这样连接条件成为顺序比对。</p>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id13">主键索引和唯一索引</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><strong>主键索引</strong>
+就是聚集索引，每张表有且仅有一个主键，可以由表中一个或多个字段组成
+主键的条件：值唯一、没有null值、保证该值自增
+使用自增列做主键，可以保证写入数据的顺序也是自增的，增高存取效率</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">创建主键</span>
+<span class="n">alter</span> <span class="n">table</span> <span class="n">table_name</span> <span class="n">add</span> <span class="n">primary</span> <span class="n">key</span><span class="p">(</span><span class="n">colunm_name</span><span class="p">);</span>
+</pre></div>
+</div>
+<p><strong>唯一索引</strong> 是约束条件的一种，不允许有重复的值，但可以有null值。
+一个表可以有多个唯一索引</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">创建唯一索引</span>
+<span class="n">alter</span> <span class="n">table</span> <span class="n">table_name</span> <span class="n">add</span> <span class="n">unique</span><span class="p">(</span><span class="n">colunm_name</span><span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id14">覆盖索引</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL只需要通过索引就可以返回查询数据，而不必在查到索引后再回表查询数据，这样减少大量IO。在执行计划extra列中会出现Using index关键字
+explain select id from t where name=&quot;cc&quot;\G
+普通索引相尖于（name,id)索引
+#如果查询的是address字段，那么就不是覆盖索引了，因为拿到主键后，还需要回表
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id15">前缀索引</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>对blob、text或长的varchar类型的列，将其前几个字符(具体长度在建立索引时指定)建立索引，这样的索引叫做前缀索引
+前缀索引较小，查询更快
+前缀索引不能在order by 或 group by中使用，也不能用作覆盖索引创建前缀索引
+alter table table_name add key(column_name(prefix_length));
+#prefix_length是长度，根据实际需要设置
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id16">联合索引</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>联合索引，复合索引，对两个或以上的列创建索引，利用索引中的附加列，缩小检索的段池范围，更快地搜索到数据
+创建语法和普通索引一样
+create index idx_c1_c2 on table_name(c1,c2);
+联合索引必须满足最左前缀原则，一般把选择性高的列放前面
+一条查询语句可以只使用索引中的一部分，但必须从最左侧开始#可以使用到索引
+select * from t where c1=某值;
+select * from t where c2=某值 and c1=某值;
+select * from t where c1=某值 and c2 in (某值,某值);
+select * from t order by c1,c2;
+select * from t where c1=某值 order by c2;#不能使用索引
+select * from t where c2=某值;
+select * from t where c2=某值 order by c1;
+select * from t where c1=某值 or c2=某值;尽量在生产环境中，让程序多做一些判断，不要让数据库做各种运算
+尽量避免在SQL语句中出现or，多列可以考虑使用union
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">1.6.2. </span>哈希索引</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>哈希索引使用哈希算法，把键值换算成新的哈希值，只能进行等值查询，不能进行排序、模糊查找、范围查询等
+检索时一次哈希算法立刻定位，速度非常快 <img alt="image4" src="../../_images/mysql_hash_chaxun.png" /></p>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">1.6.3. </span>索引的总结</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>索引优点</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）提高数据检索效率
+2）提高聚合函数效率
+3）提高排序效率
+4）使用覆盖索引可以避免回表
+</pre></div>
+</div>
+<p>索引创建四不要</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）选择性低的字段不要创建索引，如性别、状态字段
+2）很少查询的列不要创建索引
+3）大数据类型字段不要创建索引
+4）尽量避免使用NULL，应指定列为NOT NULL
+#含有空值的值很难进行查询优化，会使得索引、索引的统计及比较运算更加复杂。可以使用空字符串代替空值
+</pre></div>
+</div>
+<p>使用不到索引的情况</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）通过索引扫描的行记录数超过全表30%，优化器不会走索引，变成全表扫描
+2）联合索引中，第一个查询条件不是最左索引列
+3）联合索引中，第一个索引列使用范围查询，只能使用到部分索引，有ICP出现
+#范围指：&lt; ,= ,&lt;=, between and等
+4）联合索引中，第一个查询条件不是最左前缀列
+5）模糊查询中，最左以通配符%开始
+6）两个单列索引，一个用于检索，一个用于排序，这种情况下只能使用一个索引
+#查询语句中最多只能使用一个索引，考虑建立联合索引
+7）查询字段上有索引，但使用了函数运算
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="05.%E8%A1%A8.html" class="btn btn-neutral float-left" title="1.5. 05.表" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="07.%E4%BA%8B%E5%8A%A1.html" class="btn btn-neutral float-right" title="1.7. 07.事务" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7.1. 01.MySQL面试宝典 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Openstack实践" href="../../Openstack/index.html" />
+    <link rel="prev" title="7. 07.最强的王者篇" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 07.最强的王者篇</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.1. 01.MySQL面试宝典</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">7.1.1. 自我介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.1.2. 技术问答</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">7. </span>07.最强的王者篇</a> &raquo;</li>
+      <li><span class="section-number">7.1. </span>01.MySQL面试宝典</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/07.最强的王者篇/01.MySQL面试宝典.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mysql" id="id18">01.MySQL面试宝典</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id19">自我介绍</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id20">技术问答</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysql-mysql" id="id21">问题1 <code class="docutils literal notranslate"><span class="pre">你目前接触的MySQL</span> <span class="pre">版本是什么？</span> <span class="pre">除了官方版本，</span> <span class="pre">还接触过其他的MySQL</span> <span class="pre">分支版本吗？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#mysqlmyisaminnodb" id="id22">问题2 <code class="docutils literal notranslate"><span class="pre">MySQL主要的存储引擎MyISAM和InnoDB的不同之处？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id23">问题3 <code class="docutils literal notranslate"><span class="pre">数据表类型有哪些</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id24">问题4 <code class="docutils literal notranslate"><span class="pre">如何设计一个高并发的系统</span></code></a></p></li>
+<li><p><a class="reference internal" href="#myql" id="id25">问题5 <code class="docutils literal notranslate"><span class="pre">Myql中的事务回滚机制概述</span></code></a></p></li>
+<li><p><a class="reference internal" href="#sql" id="id26">问题6 <code class="docutils literal notranslate"><span class="pre">SQL语言包括哪几部分？每部分都有哪些操作关键字？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#innodb" id="id27">问题7 <code class="docutils literal notranslate"><span class="pre">介绍一下InnoDB的体系结构</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id28">问题8 <code class="docutils literal notranslate"><span class="pre">MySQL有哪些索引类型？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#mysql-binlog" id="id29">问题9 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">binlog有几种格式？</span> <span class="pre">生产中你用哪种？各自有什么特点？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id30">问题10 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">主从复制的具体原理是什么？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id31">问题11 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">主从延迟的原理是什么？</span> <span class="pre">如何监控主从延迟，如何解决主从延迟问题？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id32">问题12 <code class="docutils literal notranslate"><span class="pre">数据库中的双一是什么？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#ddl" id="id33">问题13 <code class="docutils literal notranslate"><span class="pre">如果实施大表DDL语句才能把性能影响降到最低？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id34">问题14 <code class="docutils literal notranslate"><span class="pre">为什么要为InnoDB表设置自增列做主键？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id35">问题15 <code class="docutils literal notranslate"><span class="pre">如何优化一条慢SQL语句？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id36">问题16 <code class="docutils literal notranslate"><span class="pre">服务器负载过高或者网页打开缓慢，简单说说你的优化思路？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id37">问题17 <code class="docutils literal notranslate"><span class="pre">你接触过哪些MySQL的主流架构？架构应用中有哪些问题需要考虑？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id38">问题17 <code class="docutils literal notranslate"><span class="pre">什么是死锁？锁等待？通过数据库哪些表可以监控？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id39">问题18 <code class="docutils literal notranslate"><span class="pre">你之前处理过MySQL的哪些案例？</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id40">问题19 <code class="docutils literal notranslate"><span class="pre">对MySQL的锁了解吗?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id41">问题20 <code class="docutils literal notranslate"><span class="pre">MySQL都有哪些锁呢?像上面的例子进行锁定岂不是有点阻碍并发效率了?</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id42">问题21 <code class="docutils literal notranslate"><span class="pre">一条sql执行过长的时间，你如何优化，从哪些方面？</span></code></a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mysql">
+<h1><a class="toc-backref" href="#id18"><span class="section-number">7.1. </span>01.MySQL面试宝典</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">7.1.1. </span>自我介绍</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>自我介绍的三个要素。</p>
+<p>第一点：
+自我认知的能力，要对自己有个全方位的人生，营造一种轻松的聊天氛围，建立真诚互信的关系。</p>
+<p>第二点：
+对岗位的认知能力，捋清晰问题的解决思路，推销自己解决问题相应的操作，在对资源的利用方面的办法。资源包括：工具资源、人脉资源….</p>
+<p>第三点：分清主次，捡重要的说，面试过程中要学会听清对方所提问的问题，不要在不了解问题的基础上畅所欲言。
+而且在回答问题时，要学会摸清对方心理，捡重点来阐述，面试官看重的是你是否是一个有大局观、测分清主次的人。
+今后当你向领导汇报问题时，可以协助领导以最快的速度了解目前的现状，早下决策。</p>
+<p>不要有频繁跳槽的经历，DBA从事的是维护公司核心数据库安全与业务稳定性的任务，如果出现经常跳槽的现象，
+是没有公司敢要你的，技术更新换代很迅速，而且学习的过程是需要积累与沉淀的。</p>
+<p>跳槽太多不利于你静下心来深入研究技术知识，你可能永远停留在最初的阶段，那么很多优秀的岗位、有货的薪资都将与你擦肩而过。
+所以希望在数据库领域从事的年轻人，不要太浮躁，踏实做事，认真做人，稳步前进。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">7.1.2. </span>技术问答</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="mysql-mysql">
+<h3><a class="toc-backref" href="#id21">问题1 <code class="docutils literal notranslate"><span class="pre">你目前接触的MySQL</span> <span class="pre">版本是什么？</span> <span class="pre">除了官方版本，</span> <span class="pre">还接触过其他的MySQL</span> <span class="pre">分支版本吗？</span></code></a><a class="headerlink" href="#mysql-mysql" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>解答思路：
+
+首先可以谈谈产生分支的原因。许多开发人员认为有必要将其拆分成其他项目，并且每个分支项目都有自己的专长。
+该需求和OracIe 对核心产品增长缓慢的担忧， 导致出现了许多开发人员感兴趣的子项目和分支。
+
+介绍一下三个流行的MySQL分支：Drizzle 、ManaDB 和Percona Server(包括XtraDB引更细节化展开说明各个分支的特点。ManaDB 不仅是MySQL 的替代品， 主要是创新和提
+高了MySQL 自有技术。新功能介绍如下：
+
+multi-source replication 多源复制、表的并行复制
+(MySQL5.7版本中也加入该特性)、galera cluster 集群、spider水平分片和TokuDB 存储引擎。
+XtraDB 是lnnoDB 存储引擎的增强版， 可用来更好地发挥最新的计算机硬件系统性能,还包含在高性能模式下的新特性。
+它可以向下兼容， 因为它是在InnoDB 基础上构建的,所以有更多的指标和扩展功能。而且它在CPU 多核的条件下，
+可以更好地使用内存， 将数据库性能提到更高。
+Drizzle 与MySQL 的差别就比较大了,并且不能兼容,如果想运行此环境,就需要重写一些代码了。
+</pre></div>
+</div>
+</section>
+<section id="mysqlmyisaminnodb">
+<h3><a class="toc-backref" href="#id22">问题2 <code class="docutils literal notranslate"><span class="pre">MySQL主要的存储引擎MyISAM和InnoDB的不同之处？</span></code></a><a class="headerlink" href="#mysqlmyisaminnodb" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>解答思路：
+可以从五个方向去介绍。
+
+·事务的支持不同(InnoDB 支持事务、MyISAM 不支持事务)
+
+·锁粒度(lnnoDB 行锁应用、MylSAM 表锁)
+
+·存储空间(InnoDB 既缓存索引文件,又缓存数据文件,My1SAM 只能缓存索引文件)
+
+·存储结构(MylSAM:数据文件的扩展名为.MYDmyData,索引文件的扩展名是.MYI myIndex; InnoDB:所有的表都保存在同一个数据文件里面，即.Ibd)
+
+·统计记录行数(MyISAM:保存有表的总行数,select count(*) from table 会直接取出该值
+               InnoDB:没有保存表的总行数， select count(*) from table 会遍历整个表,消耗相当大)
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id23">问题3 <code class="docutils literal notranslate"><span class="pre">数据表类型有哪些</span></code></a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>解答思路：
+MyISAM、InnoDB、HEAP、BOB,ARCHIVE,CSV等。
+
+       MyISAM：成熟、稳定、易于管理，快速读取。一些功能不支持（事务等），表级锁。
+       InnoDB：支持事务、外键等特性、数据行锁定。空间占用大，不支持全文索引等。
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id24">问题4 <code class="docutils literal notranslate"><span class="pre">如何设计一个高并发的系统</span></code></a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>① 数据库的优化，包括合理的事务隔离级别、SQL语句优化、索引的优化
+
+② 使用缓存，尽量减少数据库IO
+
+③ 分布式数据库、分布式缓存
+
+④ 服务器的负载均衡
+</pre></div>
+</div>
+</section>
+<section id="myql">
+<h3><a class="toc-backref" href="#id25">问题5 <code class="docutils literal notranslate"><span class="pre">Myql中的事务回滚机制概述</span></code></a><a class="headerlink" href="#myql" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>事务是用户定义的一个数据库操作序列，这些操作要么全做要么全不做，是一个不可分割的工作单位，事务回滚是指将该事务已经完成的对数据库的更新操作撤销。
+
+要同时修改数据库中两个不同表时，如果它们不是一个事务的话，
+当第一个表修改完，可能第二个表修改过程中出现了异常而没能修改，此时就只有第二个表依旧是未修改之前的状态，
+而第一个表已经被修改完毕。而当你把它们设定为一个事务的时候，当第一个表修改完，第二表修改出现异常而没能修改，
+第一个表和第二个表都要回到未修改的状态，这就是所谓的事务回滚
+</pre></div>
+</div>
+</section>
+<section id="sql">
+<h3><a class="toc-backref" href="#id26">问题6 <code class="docutils literal notranslate"><span class="pre">SQL语言包括哪几部分？每部分都有哪些操作关键字？</span></code></a><a class="headerlink" href="#sql" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>数据定义：Create Table,Alter Table,Drop Table, Craete/Drop Index等
+
+数据操纵：Select ,insert,update,delete,
+
+数据控制：grant,revoke
+
+数据查询：select
+</pre></div>
+</div>
+</section>
+<section id="innodb">
+<h3><a class="toc-backref" href="#id27">问题7 <code class="docutils literal notranslate"><span class="pre">介绍一下InnoDB的体系结构</span></code></a><a class="headerlink" href="#innodb" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>谈及InnoDB的体系结构，首先要考虑MySQL的体系结构，分为MySQL的server层和存储引擎层两部分。
+先要跟面试官聊清楚MySQL的整体方向，然后再去涉及InnoDB系统结构，建议从三方面介绍InnoDB体系结构：
+<code class="docutils literal notranslate"><span class="pre">内存</span></code>、<code class="docutils literal notranslate"><span class="pre">线程</span></code>、<code class="docutils literal notranslate"><span class="pre">磁盘</span></code>。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>内存中包含 insert_buffer、data_buffer、index_buffer、redo_log_buffer、double_write。
+内存刷新到磁盘的机制： redo log buffer 、脏页、binlig cache 的刷新条件
+各种线程的作用： master_thread、purge_thread、redo log thread、read thread、write thread、page cleaner thread。
+磁盘中存放的数据文件: redo log、 undo log、binlog。
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id28">问题8 <code class="docutils literal notranslate"><span class="pre">MySQL有哪些索引类型？</span></code></a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：
+可以从三个角度去谈，从数据结构角度上可以分为<code class="docutils literal notranslate"><span class="pre">B+tree索引</span></code>、<code class="docutils literal notranslate"><span class="pre">hash索引</span></code>、<code class="docutils literal notranslate"><span class="pre">fulltext索引</span></code>(InnoDB、
+MyISAM都支持)</p>
+<p>其次从存储角度上可以分为<code class="docutils literal notranslate"><span class="pre">聚集索引</span></code>和<code class="docutils literal notranslate"><span class="pre">非聚集索引</span></code>。</p>
+<p>从逻辑角度上可以分为<code class="docutils literal notranslate"><span class="pre">primary</span> <span class="pre">key</span></code>、<code class="docutils literal notranslate"><span class="pre">normal</span> <span class="pre">key</span></code>、<code class="docutils literal notranslate"><span class="pre">单列</span></code>、<code class="docutils literal notranslate"><span class="pre">复合和覆盖索引</span></code>。</p>
+</section>
+<section id="mysql-binlog">
+<h3><a class="toc-backref" href="#id29">问题9 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">binlog有几种格式？</span> <span class="pre">生产中你用哪种？各自有什么特点？</span></code></a><a class="headerlink" href="#mysql-binlog" title="Permalink to this headline">¶</a></h3>
+<p>第一种，statement格式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>优点：不需要记录每一行的变化，减少了binlog日志量，节约了I/O，提高了性能。
+缺点：当使用一些特殊函数，或者夸库操作时容易丢失数据。
+
+注：在生产中不建议使用。
+</pre></div>
+</div>
+<p>第二种，row格式。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>优点：清晰记录每行的数据信息，不会出现跨库丢数据的情况，安全性非常高。
+缺点：当内容记录到日志中时，都将以每行的修改来记录，会产生大量的binlog，网络开销也比较大。
+
+注：生产中推荐使用。
+</pre></div>
+</div>
+<p>第三种,mixed格式。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL5.1的一个过渡版本，DDL语句会记录成statement，DML会记录成row。
+
+注：生产中不建议使用。
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id30">问题10 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">主从复制的具体原理是什么？</span></code></a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>主服务器把数据更新记录到二进制日志中，从服务器通过<code class="docutils literal notranslate"><span class="pre">I/O</span> <span class="pre">thread</span></code>向主库发起binlog请求，
+主服务器通过<code class="docutils literal notranslate"><span class="pre">I/0</span> <span class="pre">dump</span> <span class="pre">thread</span></code>把二进制日志传递给从库，从库通过<code class="docutils literal notranslate"><span class="pre">I/O</span> <span class="pre">thread</span></code>记录到自己的中继日志中，
+然后通过SQL thread 应用中继日志中SQL的内容。</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id31">问题11 <code class="docutils literal notranslate"><span class="pre">MySQL</span> <span class="pre">主从延迟的原理是什么？</span> <span class="pre">如何监控主从延迟，如何解决主从延迟问题？</span></code></a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>核心延迟问题：
+主库可以并发写入，但从库只能通过单<code class="docutils literal notranslate"><span class="pre">SQL</span> <span class="pre">thread</span></code>完成任务，（MySQL
+5.7之前），这是出现主从延迟的最核心原因。</p>
+<p>其他方面:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）MySQL主从之间的同步本来不是实时同步的，是异步的同步，也就是说，主库提交事务之后，从库再执行一遍。
+（2）在主库上对没有索引大表的列进行delete或者update的操作。
+ (3) 从库的硬件配置没有主库的好，经常忽略从库的重要性。
+ (4) 网络抖动导致I/O线程复制延迟。
+</pre></div>
+</div>
+<p>针对如何监控MySQL replication复制延迟的问题，</p>
+<p>我们可以通过第三方工具（业界中的瑞士军刀，perconna-toolkit）中的pt-heartbeat命令进行主从延迟监控。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用脚本进行监控：
+ 传统方法，通过比较主从服务器之间的position号的差异值。
+ 还可以通过查看seconds_behind_master估算一下主从延迟时间。
+</pre></div>
+</div>
+<p>解决延迟的方法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1)使用MySQL5.7的并行复制功能。在5.6版本中就有了并行的概念， 但其中的并行复制是基于库级别的,
+即slave-parallel-type=database 。
+
+但这种模式下,只是基于多库少表的情况，并不适用于真实的生产环境下。在MySQL5.7版本中,真正实现了基于组提交的并行复制,
+简单说就是主库并行执行SQL语句,从库也可以通过多个workers 线程并发执行relay log 中主库
+提交的事务。想要开启MySQL5.7的并行复制,可以在从库设置参数slave-parallel-workers&gt;0,
+并把5.7版本中新添加的slave-parallel_type 参数设置为LOGICAL_CLOCK。
+
+该参数有DATABASE 和LOGICAL_CLOCK 两个值。MySQL5.6默认是DATABASE0
+
+
+(2) 可以采用Percona公司的peercona-xtradb-cluster (简称PXC 架构)，这种架构下可以实现多节点写入，达到实时同步。
+
+(3) 业务初期规划时，就要选择合适的分库、分表策略，避免单表或者单库过大,带来额外的复制压力，从而带来主从延迟的问题。
+
+(4) 避免一些无用的I/0消耗，可以增加高转速的磁盘、SSD或者PCIE-SSD设备。
+
+(5) 阵列级别要选择RAID10, raid cache策略要采用WB，坚决不要采用WT。
+
+(6) I/O 调度要选择deadline模式。
+
+(7) 适当调整buffer pool的大小。
+
+(8) 避免让数据库进行各种大量运算，要记住数据库只是用来存储数据的，让应用端多分担些压力，或者可以通过缓存来完成。
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id32">问题12 <code class="docutils literal notranslate"><span class="pre">数据库中的双一是什么？</span></code></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>两个参数着手分析。一个是 <code class="docutils literal notranslate"><span class="pre">sysn_binlog=1</span></code>,另一个就是
+<code class="docutils literal notranslate"><span class="pre">innodb_flush_log_at_trx_commit=1</span></code>。</p>
+<p><code class="docutils literal notranslate"><span class="pre">innodb_flush_log_at_trx_commit=1</span></code>和<code class="docutils literal notranslate"><span class="pre">sync_binlog</span></code>两个参数是控制MySQL磁盘写入策略以及数据安全性的关键参数。</p>
+<p><code class="docutils literal notranslate"><span class="pre">innodb_flush_log_at_trx_commit</span></code>设置为1，每次事务提交时，MySQL都会把log
+buffer的数据写入<code class="docutils literal notranslate"><span class="pre">log</span> <span class="pre">file</span></code>，并且刷到磁盘中。</p>
+<p><code class="docutils literal notranslate"><span class="pre">sync_binlog=N(N&gt;0),MySQL在每写N次二进制日志binary</span> <span class="pre">log时，会使用fdatasync()函数将它的写二进制日志binary</span> <span class="pre">log同步到磁盘中。</span></code></p>
+</section>
+<section id="ddl">
+<h3><a class="toc-backref" href="#id33">问题13 <code class="docutils literal notranslate"><span class="pre">如果实施大表DDL语句才能把性能影响降到最低？</span></code></a><a class="headerlink" href="#ddl" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>我们可以先通过传统方法导入/导出数据，新建一张与原表一样的表结构，把需要执行的DDL语句在无数据的新表中执行，然后把老表中的数据
+导入导入到新表中，最后把新表改成老表的名字。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>也可以通过第三方工具（percona-toolkit）中的pt-online-schema-change命令进行在线操作，对于MySQL5.7版本可以直接在线“online ddl”。
+
+还可以介绍一下MySQL 对大表进行drop table 操作时,可以对数据文件建立硬连接,
+这样可以缩短执行时间。依赖的原理： OS HARD LINK。
+
+当多个文件名同时指向同一个INODE时， 这个INODE 的引用数&gt; 1 ,
+删除其中任何一个文件名只是删除了一个指针,不会删除数据文件。当INODE的引用数N=1时,
+删除文件时需要把这个文件相关的所有数据块清除，所以会比较耗时。
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id34">问题14 <code class="docutils literal notranslate"><span class="pre">为什么要为InnoDB表设置自增列做主键？</span></code></a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用自增列作为主键，写入顺序是自增的，和B+数叶子节点分裂顺序一致，InnoDB表的数据写入顺序能和B+树索引的叶子节点顺序一致时，存取效率是最高的。
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id35">问题15 <code class="docutils literal notranslate"><span class="pre">如何优化一条慢SQL语句？</span></code></a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>针对SQL语句的优化，我们不要一上来就回答添加索引，这样显得太不专业。我们可以从如下几个角度去分析：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 回归到表的设计层面，数据类型选择是否合理
+(2) 大表碎片的整理是否完善
+(3) 表的统计信息是不是准确的
+(4) 审查表的执行计划，判断字段上面有没有合适的索引。
+(5) 针对索引的选择性，建立合适的索引(就又设计大表DDL的操作问题)
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id36">问题16 <code class="docutils literal notranslate"><span class="pre">服务器负载过高或者网页打开缓慢，简单说说你的优化思路？</span></code></a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>我们可以从优化思路中的四维度模型去阐述。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>首先要发现问题的过程，通过操作系统、数据库、程序设计、硬件角度是个维度找到问题所在。
+先找到瓶颈点的位置，制定好优化方案，形成处理问题的体系模型。体系定制好之后，在测试环境进行优化方案的测试。
+测试环境下如果优化效果很好，再实施到生产环境上。最后做好处理问题的记录，好记性不如烂笔头，多做总结，访客大步前进。
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id37">问题17 <code class="docutils literal notranslate"><span class="pre">你接触过哪些MySQL的主流架构？架构应用中有哪些问题需要考虑？</span></code></a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>先整体介绍一下你所指的的集群架构：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) M-S。
+(2) MHA
+(3) MM+Keepalived
+(4) PXC
+(5) 利用中间件ProxySQL配合PXC架构
+</pre></div>
+</div>
+<section id="mha">
+<h4>MHA优缺点：<a class="headerlink" href="#mha" title="Permalink to this headline">¶</a></h4>
+<p>优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 故障切换时，可以自行判断哪个从库与主库的数据最接近，就切换到上面，可以减少数据丢失的风险，保证数据的一致性。
+(2) 支持binlog server，可提高binlog传送效率，进一步减少数据丢失风险。
+(3) 结合MySQL5.7的增强半同步功能，来确保故障切换时的数据不丢失。
+</pre></div>
+</div>
+<p>缺点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 自动切换的脚本太简单了，而且比较老化，建议后期逐渐完善。
+(2) 搭建MHA架构，需要开启Linux系统互信协议，所以对于系统安全性来说是个不小的考验。
+</pre></div>
+</div>
+</section>
+<section id="mm-keepalived">
+<h4>MM+Keepalived集群的建议：<a class="headerlink" href="#mm-keepalived" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 一定要完善好切换脚本，Keepalived的切换机制要合理，避免发生切换不成功的现象。
+(2) 从库的配置尽量要与主库的一致，绝对不能太差；避免主库宕机时发生切换，新的主库（原来的从库）影响线上业务进行。
+(3) 对于延迟的问题，在这套架构中也不能避免。可以改变架构模式，使用PXC完成实时同步功能，基本上可以达到没有延迟。
+(4) Keepalived无法解决脑裂的问题，因此在进行服务异常判断时，可以修改判断脚本，通过对第三方节点补充检测来决定是否进行切换，可降低脑裂问题产生的风险。
+(5) 采用Keepalived架构，在设置两节点状态时，都要设置成backup状态，而且还都是不抢占模式，通过优先级来决定谁是主库。避免发生脑裂、冲突现象。
+(6) 安装好MySQL需要的一些依赖包：建议配置好Yum源，用Yum安装Keepalived即可。
+</pre></div>
+</div>
+</section>
+<section id="pxc">
+<h4>PXC架构的优缺点<a class="headerlink" href="#pxc" title="Permalink to this headline">¶</a></h4>
+<p>优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 实现MySQL数据库集群架构的高可用性和数据的强一致性
+(2) 完成了真正的多借点读写的集群方案
+(3) 改善了传统意义上的主从复制延迟的问题，基本上达到了实时同步。
+(4) 对于新加入的节点可以自动部署，无需手动备份，维护起来很方便。
+(5) 由于多节点写入，所以发送数据库故障时切换很容易。
+</pre></div>
+</div>
+<p>缺点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1) 新加入的节点开销大，需要复制完整的数据，采用SST传输开销太大。
+(2) 任何更新事务都需要全局验证通过，才会在每个节点库上执行。集群性能受限于性能最差的节点，也就是经常说的短板效应。
+(3) 因为需要保证数据的一致性，所以在多节点并发写时，锁冲突问题比较严重。
+(4) 存在写扩大问题，所有的节点上都会发生写操作。
+(5) 只支持InnoDB存储引擎表。
+(6) 没有表基本的锁定，执行DDL语句操作会把整个集群锁住，而且也“kill”不了(注：建议使用OSC操作)
+(7) 所有的表必须含有主键，否则操作数据时会报错。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id38">问题17 <code class="docutils literal notranslate"><span class="pre">什么是死锁？锁等待？通过数据库哪些表可以监控？</span></code></a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>解答思路：</p>
+<p>死锁是指两个或多个事务在同一资源上互相占用，并请求加锁时，而导致的恶性循环现象。当多个事务以不同顺序试图加锁同一资源时，
+就会产生死锁。</p>
+<p>锁等待: MySQL数据库中，不同session在更新同行数据时，会出现锁等待的现象。
+重要的三张锁的监控表:
+<code class="docutils literal notranslate"><span class="pre">innodb_trx、innodb_locks</span> <span class="pre">和</span> <span class="pre">innodb_lock_waits</span></code>。</p>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id39">问题18 <code class="docutils literal notranslate"><span class="pre">你之前处理过MySQL的哪些案例？</span></code></a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>逃离不了MySQL的五大知识模块：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>体系结构
+数据备份与恢复、复制、高可用集群架构和优化，从五个方面着手考虑：
+
+(1) MySQL版本的升级
+(2) 处理集群架构中的各种“坑”和问题
+(3) 根据公司业务类型，合理设计MySQL库、表和后期架构。
+(4) 定期进行灾备恢复演练。
+(5) 恢复误删除的数据信息
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id40">问题19 <code class="docutils literal notranslate"><span class="pre">对MySQL的锁了解吗?</span></code></a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>答：当数据库有并发事务的时候，可能会产生数据的不一致，这时候需要一些机制来保证访问的次序，锁机制就是这样的一个机制。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>就像酒店的房间，如果大家随意进出，就会出现多人抢夺同一个房间的情况，而在房间上装上锁，申请到钥匙的人才可以入住并且将房间锁起来，其他人只有等他使用完毕才可以再次使用。
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id41">问题20 <code class="docutils literal notranslate"><span class="pre">MySQL都有哪些锁呢?像上面的例子进行锁定岂不是有点阻碍并发效率了?</span></code></a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>答：从锁的类别上来讲，有共享锁和排他锁。</p>
+<p><strong>共享锁</strong> :
+又叫做读锁，当用户要进行数据的读取时，对数据加上共享锁，共享锁可以同时加上多个。</p>
+<p><strong>排他锁</strong> :
+又叫做写锁，当用户要进行数据的写入时，对数据加上排他锁，排他锁只可以加一个，他和其他的排他锁，共享锁都相斥。</p>
+<p>用上面的例子来说就是用户的行为有两种，一种是来看房，多个用户一起看房是可以接受的。一种是真正的入住一晚，在这期间，无论是想入住的还是想看房的都不可以。</p>
+<p>锁的粒度取决于具体的存储引擎，InnoDB实现了行级锁，页级锁，表级锁。他们的加锁开销从大到小，并发能力也是从大到小。</p>
+</section>
+<section id="id17">
+<h3><a class="toc-backref" href="#id42">问题21 <code class="docutils literal notranslate"><span class="pre">一条sql执行过长的时间，你如何优化，从哪些方面？</span></code></a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、查看sql是否涉及多表的联表或者子查询，如果有，看是否能进行业务拆分，相关字段冗余或者合并成临时表（业务和算法的优化）。
+2、涉及链表的查询，是否能进行分表查询，单表查询之后的结果进行字段整合。
+3、如果以上两种都不能操作，非要链表查询，那么考虑对相对应的查询条件做索引。加快查询速度。
+4、针对数量大的表进行历史表分离（如交易流水表）。
+5、数据库主从分离，读写分离，降低读写针对同一表同时的压力，至于主从同步，mysql有自带的binlog实现 主从同步。
+6、explain分析sql语句，查看执行计划，分析索引是否用上，分析扫描行数等等。
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="7. 07.最强的王者篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../../Openstack/index.html" class="btn btn-neutral float-right" title="Openstack实践" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

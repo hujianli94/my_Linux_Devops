@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8.9. Haproxy+keepalived主从-主主高可用架构 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8.10. LVS+keeplaived高可用集群" href="10.LVS%2BKeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html" />
+    <link rel="prev" title="8.8. Mysql双主+keepalived集群架构" href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">8. 构建Linux高可用架构</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.LVS%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AD%A6%E4%B9%A0.html">8.1. LVS基于四层的负载均衡学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html">8.2. 企业级Nginx+keepalived 集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Nginx%2Bkeepalived%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html">8.3. Nginx+keepalived双主架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html">8.4. Redis+keepalived高可用集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.NFS%2Bkeepalived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%E5%85%B1%E4%BA%AB.html">8.5. nfs+ keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E4%B8%BB%E4%BB%8E%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.6. MySQL 主从高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.MySQL%E4%B8%BB%E4%B8%BB%E5%90%8C%E6%AD%A5%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.7. MySQL主主同步高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.8. Mysql双主+keepalived集群架构</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.9. Haproxy+keepalived主从-主主高可用架构</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#haproxy">8.9.1. Haproxy介绍</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#haproxylvs">8.9.2. Haproxy与LVS的异同</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">8.9.3. 快速安装HAProxy集群软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">8.9.4. Haproxy 主备机器配置文件详细如下</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">8.9.5. 配置haproxy记录日志</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">8.9.6. Haproxy+keepalived主从</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">8.9.7. Haproxy+keepalived主主</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="10.LVS%2BKeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.10. LVS+keeplaived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html">8.11. Redis实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">8.12. MySQL主从复制、读写分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E4%BD%BF%E7%94%A8Haproxy%2Bkeepalived%E6%90%AD%E5%BB%BAWeb%E7%BE%A4%E9%9B%86.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.16. keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html">8.17. Pacemaker实现双机热备</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">8. </span>构建Linux高可用架构</a> &raquo;</li>
+      <li><span class="section-number">8.9. </span>Haproxy+keepalived主从-主主高可用架构</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/08.Linux构建高可用架构/09.Haproxy+keepalived主从-主主高可用架构.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#haproxy-keepalived" id="id11">Haproxy+keepalived主从-主主高可用架构</a></p>
+<ul>
+<li><p><a class="reference internal" href="#haproxy" id="id12">Haproxy介绍</a></p></li>
+<li><p><a class="reference internal" href="#haproxylvs" id="id13">Haproxy与LVS的异同</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id14">快速安装HAProxy集群软件</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id15">Haproxy 主备机器配置文件详细如下</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id16">配置haproxy记录日志</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id17">Haproxy+keepalived主从</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id18">环境介绍</a></p></li>
+<li><p><a class="reference internal" href="#haproxykeepalived" id="id19">haproxy主机keepalived配置</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id20">haproxy备机keepalived配置</a></p></li>
+<li><p><a class="reference internal" href="#check-haproxy" id="id21">主备机 check_haproxy检测脚本</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id7" id="id22">Haproxy+keepalived主主</a></p>
+<ul>
+<li><p><a class="reference internal" href="#haproxykeepalived-1" id="id23">haproxy主机keepalived配置</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id24">haproxy备机keepalived配置</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="haproxy-keepalived">
+<h1><a class="toc-backref" href="#id11"><span class="section-number">8.9. </span>Haproxy+keepalived主从-主主高可用架构</a><a class="headerlink" href="#haproxy-keepalived" title="Permalink to this headline">¶</a></h1>
+<section id="haproxy">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">8.9.1. </span>Haproxy介绍</a><a class="headerlink" href="#haproxy" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）HAProxy提供高可用性、负载均衡以及基于TCP和HTTP应用的代理，支持虚拟主机，它是免费、快速并且可靠的一种解决方案。
+2）HAProxy特别适用于那些负载特大的web站点，这些站点通常又需要会话保持或七层处理。
+3）HAProxy运行在当前的硬件上，完全可以支持数以万计的并发连接。并且它的运行模式使得它可以很简单安全的整合进您当前的架构中， 同时可以保护你的web服务器不被暴露到网络上。
+4）HAProxy实现了一种事件驱动, 单一进程模型，此模型支持非常大的并发连接数。多进程或多线程模型受内存限制 、系统调度器限制以及无处不在的锁限制，很少能处理数千并发连接。事件驱动模型因为在有更好的资源和时间管理的用户空间(User-Space) 实现所有这些任务，所以没有这些问题。此模型的弊端是，在多核系统上，这些程序通常扩展性较差。这就是为什么他们必须进行优化以 使每个CPU时间片(Cycle)做更多的工作。
+</pre></div>
+</div>
+</section>
+<section id="haproxylvs">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">8.9.2. </span>Haproxy与LVS的异同</a><a class="headerlink" href="#haproxylvs" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.两者都是软件负载均衡产品，但是LVS是基于Linux操作系统实现的一种软负载均衡，
+而Haproxy是基于第三应用实现的软负载均衡
+
+2.LVS是基于四层的IP负载均衡技术，而HAProxy是基于四层和七层技术，
+可以提供TCP和HTTP应用的负载均衡综合解决方案
+
+3.LVS工作在ISO模型的第四层，其状态监控功能单一，而HAProxy在状态检测方面
+功能强大，可支持端口、URL、脚本等多种状态检测方式
+
+4.虽然HAProxy功能强大，整体的性能低于四层负载均衡模式的LVS，而LVS拥有
+接近硬件设备的网络吞吐和连接负载均衡能力
+</pre></div>
+</div>
+<p>HAProxy和LVS各有优缺点，没有好坏之分，选择哪个作为负载均衡器，要以实际的应用环境来决定</p>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">8.9.3. </span>快速安装HAProxy集群软件</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#安装haproxy</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">haproxy</span> <span class="o">-</span><span class="n">y</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@haproxy02</span> <span class="n">etc</span><span class="p">]</span><span class="c1"># which haproxy</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">haproxy</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@haproxy02</span> <span class="n">etc</span><span class="p">]</span><span class="c1"># whereis haproxy</span>
+<span class="n">haproxy</span><span class="p">:</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">haproxy</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">haproxy</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">man</span><span class="o">/</span><span class="n">man1</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="mf">1.</span><span class="n">gz</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@haproxy02</span> <span class="n">etc</span><span class="p">]</span><span class="c1"># haproxy -v</span>
+<span class="n">HA</span><span class="o">-</span><span class="n">Proxy</span> <span class="n">version</span> <span class="mf">1.5</span><span class="o">.</span><span class="mi">18</span> <span class="mi">2016</span><span class="o">/</span><span class="mi">05</span><span class="o">/</span><span class="mi">10</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">8.9.4. </span>Haproxy 主备机器配置文件详细如下</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@haproxy01</span> <span class="n">haproxy</span><span class="p">]</span><span class="c1"># cat haproxy.cfg</span>
+
+<span class="k">global</span>
+   <span class="n">log</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span> <span class="n">local3</span> <span class="n">info</span>         <span class="c1">#在本机记录日志</span>
+   <span class="n">maxconn</span> <span class="mi">65535</span>                     <span class="c1">#每个进程可用的最大连接数</span>
+   <span class="n">chroot</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">haproxy</span>           <span class="c1">#haproxy 安装目录</span>
+   <span class="n">uid</span> <span class="mi">99</span>                            <span class="c1">#运行haproxy的用户uid（cat /etc/passwd 查看，这里是nobody的uid）</span>
+   <span class="n">gid</span> <span class="mi">99</span>                            <span class="c1">#运行haproxy的用户组id（cat /etc/passwd 查看，这里是nobody组id）</span>
+   <span class="n">daemon</span>                            <span class="c1">#以后台守护进程运行</span>
+  <span class="c1"># nbproc 2                 #进程数</span>
+   <span class="n">pidfile</span>     <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">pid</span>
+
+<span class="n">defaults</span>
+   <span class="n">log</span> <span class="k">global</span>
+   <span class="n">mode</span> <span class="n">http</span>                         <span class="c1">#运行模式 tcp、 http、 health</span>
+   <span class="n">retries</span> <span class="mi">3</span>                         <span class="c1">#三次连接失败，则判断服务不可用</span>
+   <span class="n">option</span> <span class="n">redispatch</span>                 <span class="c1">#如果后端有服务器宕机，强制切换到正常服务器</span>
+   <span class="n">stats</span> <span class="n">uri</span> <span class="o">/</span><span class="n">haproxy</span>                <span class="c1">#统计页面 URL 路径</span>
+   <span class="n">stats</span> <span class="n">refresh</span> <span class="mi">30</span><span class="n">s</span>                 <span class="c1">#统计页面自动刷新时间</span>
+   <span class="n">stats</span> <span class="n">realm</span> <span class="n">haproxy</span><span class="o">-</span><span class="n">status</span>        <span class="c1">#统计页面输入密码框提示信息</span>
+   <span class="n">stats</span> <span class="n">auth</span> <span class="n">admin</span><span class="p">:</span><span class="n">dxInCtFianKtL</span><span class="p">]</span><span class="mi">36</span>   <span class="c1">#统计页面用户名和密码</span>
+   <span class="n">stats</span> <span class="n">hide</span><span class="o">-</span><span class="n">version</span>                 <span class="c1">#隐藏统计页面上 HAProxy 版本信息</span>
+   <span class="n">maxconn</span> <span class="mi">65535</span>                     <span class="c1">#每个进程可用的最大连接数</span>
+   <span class="n">timeout</span> <span class="n">connect</span> <span class="mi">5000</span>              <span class="c1">#连接超时</span>
+   <span class="n">timeout</span> <span class="n">client</span> <span class="mi">50000</span>              <span class="c1">#客户端超时</span>
+   <span class="n">timeout</span> <span class="n">server</span> <span class="mi">50000</span>              <span class="c1">#服务器端超时</span>
+
+<span class="n">listen</span> <span class="n">admin_stats</span>
+    <span class="n">bind</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">8099</span> <span class="c1">#监听端口</span>
+    <span class="n">mode</span> <span class="n">http</span>         <span class="c1">#http的7层模式</span>
+    <span class="n">option</span> <span class="n">httplog</span>    <span class="c1">#采用http日志格式</span>
+    <span class="c1">#log 127.0.0.1 local0 err</span>
+    <span class="n">maxconn</span> <span class="mi">10</span>
+    <span class="n">stats</span> <span class="n">refresh</span> <span class="mi">30</span><span class="n">s</span> <span class="c1">#统计页面自动刷新时间</span>
+    <span class="n">stats</span> <span class="n">uri</span> <span class="o">/</span><span class="n">stats</span> <span class="c1">#统计页面url</span>
+    <span class="n">stats</span> <span class="n">realm</span> <span class="n">XingCloud</span>\ <span class="n">Haproxy</span> <span class="c1">#统计页面密码框上提示文本</span>
+    <span class="n">stats</span> <span class="n">auth</span> <span class="n">admin</span><span class="p">:</span><span class="n">admin</span> <span class="c1">#统计页面用户名和密码设置</span>
+    <span class="n">stats</span> <span class="n">auth</span> <span class="n">admin1</span><span class="p">:</span><span class="n">admin1</span> <span class="c1">#统计页面用户名和密码设置</span>
+    <span class="n">stats</span> <span class="n">hide</span><span class="o">-</span><span class="n">version</span> <span class="c1">#隐藏统计页面上HAProxy的版本信息</span>
+    <span class="n">stats</span> <span class="n">admin</span> <span class="k">if</span> <span class="n">TRUE</span>
+
+<span class="n">frontend</span> <span class="n">http</span><span class="o">-</span><span class="ow">in</span>                        <span class="c1">#接收请求的前端虚拟节点</span>
+       <span class="n">bind</span> <span class="o">*</span><span class="p">:</span><span class="mi">80</span>
+       <span class="n">mode</span>    <span class="n">http</span>
+       <span class="n">option</span>  <span class="n">httplog</span>
+       <span class="n">log</span>     <span class="k">global</span>
+       <span class="n">default_backend</span> <span class="n">web</span><span class="o">-</span><span class="n">server</span>        <span class="c1">#静态服务器池</span>
+
+
+<span class="n">backend</span> <span class="n">web</span><span class="o">-</span><span class="n">server</span>
+   <span class="n">mode</span> <span class="n">http</span>
+   <span class="n">balance</span> <span class="n">roundrobin</span>                <span class="c1">#设置负载均衡模式，source 保存 session 值，roundrobin 轮询模式</span>
+   <span class="n">cookie</span> <span class="n">SERVERID</span> <span class="n">insert</span> <span class="n">indirect</span> <span class="n">nocache</span>
+   <span class="n">option</span> <span class="n">httpclose</span>
+   <span class="n">option</span> <span class="n">forwardfor</span>
+   <span class="n">server</span> <span class="n">web01</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.106</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span> <span class="mi">1</span> <span class="n">cookie</span> <span class="mi">3</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+   <span class="n">server</span> <span class="n">web02</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.107</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span> <span class="mi">1</span> <span class="n">cookie</span> <span class="mi">4</span> <span class="n">check</span> <span class="n">inter</span> <span class="mi">2000</span> <span class="n">rise</span> <span class="mi">2</span> <span class="n">fall</span> <span class="mi">5</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">8.9.5. </span>配置haproxy记录日志</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@Haproxy_Keepalived_Master ~]# vim /etc/rsyslog.conf
+.......
+$ModLoad imudp                       #取消注释 ，这一行不注释，日志就不会写
+$UDPServerRun 514                    #取消注释 ，这一行不注释，日志就不会写
+.......
+local0.*                                                /var/log/haproxy.log      #这一行可以没有，可以不用写
+local3.*                                                /var/log/haproxy.log      #这一行必须要写
+
+[root@Haproxy_Keepalived_Master ~]# vim /etc/sysconfig/rsyslog
+SYSLOGD_OPTIONS=&quot;-r -m 0&quot;           #接收远程服务器日志
+
+[root@Haproxy_Keepalived_Master ~]# service rsyslog restart
+</pre></div>
+</div>
+<p>统计页面信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>http://192.168.1.111:8099/stats
+用户名：admin 密码:admin
+</pre></div>
+</div>
+<p><img alt="image0" src="../../_images/ha1.png" /></p>
+<p>haproxy 启动命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 检查配置文件语法</span>
+<span class="n">haproxy</span> <span class="o">-</span><span class="n">c</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">cfg</span>
+
+<span class="c1"># 以daemon模式启动，以systemd管理的daemon模式启动</span>
+<span class="n">haproxy</span> <span class="o">-</span><span class="n">D</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">cfg</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">pid</span><span class="p">]</span>
+<span class="n">haproxy</span> <span class="o">-</span><span class="n">Ds</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">cfg</span> <span class="p">[</span><span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">pid</span><span class="p">]</span>
+
+<span class="c1"># 启动调试功能，将显示所有连接和处理信息在屏幕</span>
+<span class="n">haproxy</span> <span class="o">-</span><span class="n">d</span> <span class="o">-</span><span class="n">f</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">haproxy</span><span class="o">/</span><span class="n">haproxy</span><span class="o">.</span><span class="n">cfg</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">8.9.6. </span>Haproxy+keepalived主从</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<section id="id5">
+<h3><a class="toc-backref" href="#id18">环境介绍</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p><img alt="image1" src="../../_images/ha-master-backup.png" /></p>
+</section>
+<section id="haproxykeepalived">
+<h3><a class="toc-backref" href="#id19">haproxy主机keepalived配置</a><a class="headerlink" href="#haproxykeepalived" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@haproxy01 sh]# cat /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+vrrp_script check_haproxy
+{
+    script &quot;/data/sh/check_haproxy.sh&quot;
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 151
+    priority 100
+    nopreempt
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+
+    track_script {
+        check_haproxy
+    }
+    virtual_ipaddress {
+        192.168.1.200/24
+    }
+
+}
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id20">haproxy备机keepalived配置</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@haproxy02 sh]# cat /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+vrrp_script check_haproxy
+{
+    script &quot;/data/sh/check_haproxy.sh&quot;
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+    state BACKUP
+    interface eth0
+    virtual_router_id 151
+    priority 90
+    nopreempt
+    advert_int 1
+    authentication {
+        auth_type PASS
+        auth_pass 1111
+    }
+
+    track_script {
+        check_haproxy
+    }
+    virtual_ipaddress {
+        192.168.1.200/24
+    }
+
+}
+</pre></div>
+</div>
+</section>
+<section id="check-haproxy">
+<h3><a class="toc-backref" href="#id21">主备机 check_haproxy检测脚本</a><a class="headerlink" href="#check-haproxy" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@haproxy02 sh]# cat /data/sh/check_haproxy.sh
+#!/bin/bash
+A=`ps -C haproxy --no-header | wc -l`
+if [ $A -eq 0 ];then
+    /usr/sbin/haproxy -f /etc/haproxy/haproxy.cfg
+    sleep 3
+    if [ `ps -C haproxy --no-header | wc -l ` -eq 0 ];then
+        /etc/init.d/keepalived stop
+    fi
+fi
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">8.9.7. </span>Haproxy+keepalived主主</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image2" src="../../_images/ha2-master.png" /></p>
+<section id="haproxykeepalived-1">
+<span id="id8"></span><h3><a class="toc-backref" href="#id23">haproxy主机keepalived配置</a><a class="headerlink" href="#haproxykeepalived-1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> [root@haproxy01 sh]# cat /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+vrrp_script check_haproxy
+{
+    script &quot;/data/sh/check_haproxy.sh&quot;
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+        interface eth0
+        state MASTER
+        nopreempt
+        priority 100
+        virtual_router_id 240
+        lvs_sync_daemon_interface eth0
+        advert_int 5             #健康检测频率
+        garp_master_delay 1
+
+        authentication {
+            auth_type PASS
+            auth_pass abcdefghijklmn
+        }
+
+        track_interface {
+           eth0
+        }
+
+        virtual_ipaddress {
+            192.168.1.200/24
+        }
+
+        track_script {
+           check_haproxy
+        }
+    }
+
+#VIP2
+vrrp_instance VI_2 {
+    state BACKUP
+    interface eth0
+    lvs_sync_daemon_interface eth0
+    virtual_router_id 152
+    priority 90
+    advert_int 5
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass 2222
+    }
+    virtual_ipaddress {
+        192.168.1.201/24
+    }
+    track_script {
+        check_haproxy
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<span id="id10"></span><h3><a class="toc-backref" href="#id24">haproxy备机keepalived配置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> [root@haproxy02 sh]# cat /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+vrrp_script check_haproxy
+{
+    script &quot;/data/sh/check_haproxy.sh&quot;
+    interval 2
+    weight 2
+}
+
+vrrp_instance VI_1 {
+        interface eth0
+        state BACKUP
+        nopreempt
+        priority 90
+        virtual_router_id 240
+        lvs_sync_daemon_interface eth0
+        advert_int 5             #健康检测频率
+        garp_master_delay 1
+
+        authentication {
+            auth_type PASS
+            auth_pass abcdefghijklmn
+        }
+
+        track_interface {
+           eth0
+        }
+
+        virtual_ipaddress {
+            192.168.1.200/24
+        }
+
+        track_script {
+           check_haproxy
+        }
+    }
+
+#VIP2
+vrrp_instance VI_2 {
+    state MASTER
+    interface eth0
+    lvs_sync_daemon_interface eth0
+    virtual_router_id 152
+    priority 100
+    advert_int 5
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass 2222
+    }
+    virtual_ipaddress {
+        192.168.1.201/24
+    }
+    track_script {
+        check_haproxy
+    }
+}
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html" class="btn btn-neutral float-left" title="8.8. Mysql双主+keepalived集群架构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="10.LVS%2BKeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html" class="btn btn-neutral float-right" title="8.10. LVS+keeplaived高可用集群" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

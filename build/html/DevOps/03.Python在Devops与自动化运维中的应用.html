@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. Python在Devops与自动化运维中的应用 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. 生产环境下的Shell脚本" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html" />
+    <link rel="prev" title="2. Shell脚本在Devops下的应用" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. Python在Devops与自动化运维中的应用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python">3.1. 3.1 Python基础知识进阶</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.1.1. 3.1.1 正则表达式应用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pythonjson">3.1.2. 3.1.2 使用Python解析JSON</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">3.1.3. 3.1.3 Python多进程</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.2. 3.2 Python常用的三方库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#flaskrestful-api">3.3. 3.3 利用Flask设计后端Restful API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html">5. 工作中的Python脚本分享</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html">7. GitLab在DevOps工作中的实际应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">DevOps和自动化运维实践</a> &raquo;</li>
+      <li><span class="section-number">3. </span>Python在Devops与自动化运维中的应用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/DevOps/03.Python在Devops与自动化运维中的应用.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pythondevops" id="id4">Python在Devops与自动化运维中的应用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#python" id="id5">3.1 Python基础知识进阶</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id6">3.1.1 正则表达式应用</a></p></li>
+<li><p><a class="reference internal" href="#pythonjson" id="id7">3.1.2 使用Python解析JSON</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id8">3.1.3 Python多进程</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id9">3.2 Python常用的三方库</a></p></li>
+<li><p><a class="reference internal" href="#flaskrestful-api" id="id10">3.3 利用Flask设计后端Restful API</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="pythondevops">
+<h1><a class="toc-backref" href="#id4"><span class="section-number">3. </span>Python在Devops与自动化运维中的应用</a><a class="headerlink" href="#pythondevops" title="Permalink to this headline">¶</a></h1>
+<section id="python">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">3.1. </span>3.1 Python基础知识进阶</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3><a class="toc-backref" href="#id6"><span class="section-number">3.1.1. </span>3.1.1 正则表达式应用</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>正则表达式中有许多特殊的字符（也称元字符），这些特殊字符是构成正则表达式的要素。</p>
+<p>Python元字符及其作用说明 <img alt="image0" src="../_images/devops_re_python.png" /></p>
+<p>(1)原子
+原子是正则表达式中最基本的组成单位，每个正则表达式中至少要包含一个原子，常见的原子是由普通字符或通用字符和原子表构成的。</p>
+<p>原子表示由一组地位平等的原子组成，匹配的时候会获取该原子表中的任意一个原子来进行匹配。
+在Python中，原子表由“[]”表示，“[xyz]”就是一个原子表，这个原子表中定义了3个原子，这3个原子的地位是平等的。</p>
+<p>如果我们要对正则表达式进行嵌套，就需要使用分组“()”，即我们可以使用“
+()”将一些原子组合成一个大原子使用，
+小括号括起来的那部分会被当做一个整体来使用。</p>
+<ol class="arabic simple" start="2">
+<li><p>贪婪模式与懒惰模式</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf8 -*-</span>
+<span class="c1"># auther; 18793</span>
+<span class="c1"># Date：2019/5/21 17:31</span>
+<span class="c1"># filename: 贪婪匹配和懒惰匹配.py</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="c1"># 使用贪婪匹配</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d{5,8}&#39;</span><span class="p">,</span> <span class="s1">&#39;87654321&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>            <span class="c1">#&lt;_sre.SRE_Match object; span=(0, 8), match=&#39;87654321&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>    <span class="c1">#87654321</span>
+
+<span class="c1"># 使用惰性匹配</span>
+<span class="n">m</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d{5,8}?&#39;</span><span class="p">,</span> <span class="s1">&#39;87654321&#39;</span><span class="p">)</span>      <span class="c1">#&lt;_sre.SRE_Match object; span=(0, 5), match=&#39;87654&#39;&gt;</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>                            <span class="c1">#87654</span>
+</pre></div>
+</div>
+<p>对3位数字重复3次，可以使用下面的正则表达式。命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>\<span class="n">d</span>\<span class="n">d</span>\<span class="n">d</span><span class="p">}{</span><span class="mi">2</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="n">d</span>\<span class="n">d</span>\<span class="n">d</span><span class="p">{</span><span class="mi">2</span><span class="p">}</span><span class="n">这个表达式相当于</span><span class="s2">&quot;\d\d\d\d&quot;</span><span class="p">,</span><span class="n">匹配的结果为</span><span class="s2">&quot;1234&quot;</span><span class="n">和</span><span class="s2">&quot;5678&quot;</span>
+</pre></div>
+</div>
+<p><strong>使用re模块处理正则表达式</strong> <img alt="image1" src="../_images/re_math0001.png" /></p>
+<p>re模块中的很多函数中都有一个flags标志位，该参数用于设置匹配的附加选项。例如，是否忽略大小写、是否支持多行匹配。</p>
+<figure class="align-default">
+<img alt="" src="../_images/re_devops_flags0001.png" />
+</figure>
+</section>
+<section id="pythonjson">
+<h3><a class="toc-backref" href="#id7"><span class="section-number">3.1.2. </span>3.1.2 使用Python解析JSON</a><a class="headerlink" href="#pythonjson" title="Permalink to this headline">¶</a></h3>
+<figure class="align-default">
+<img alt="" src="../_images/re_devops_encode001.png" />
+</figure>
+<p>使用<code class="docutils literal notranslate"><span class="pre">dumps()</span></code>编码举例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf8 -*-</span>
+<span class="c1"># auther; 18793</span>
+<span class="c1"># Date：2020/1/19 10:26</span>
+<span class="c1"># filename: json_sample0.py</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="p">[{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">}]</span>
+<span class="n">j</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">j</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">[</span>
+<span class="sd">    {</span>
+<span class="sd">        &quot;d&quot;: 4,</span>
+<span class="sd">        &quot;a&quot;: 1,</span>
+<span class="sd">        &quot;b&quot;: 2,</span>
+<span class="sd">        &quot;c&quot;: 3,</span>
+<span class="sd">        &quot;e&quot;: 5</span>
+<span class="sd">    }</span>
+<span class="sd">]</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<p>使用<code class="docutils literal notranslate"><span class="pre">loads()</span></code>解码举例：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf8 -*-</span>
+<span class="c1"># auther; 18793</span>
+<span class="c1"># Date：2020/1/19 10:30</span>
+<span class="c1"># filename: json_sample1.py</span>
+
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="s1">&#39;{&quot;a&quot;:1,&quot;b&quot;:2,&quot;c&quot;:3,&quot;d&quot;:4,&quot;e&quot;:5}&#39;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">{&#39;e&#39;: 5, &#39;b&#39;: 2, &#39;d&#39;: 4, &#39;c&#39;: 3, &#39;a&#39;: 1}</span>
+<span class="sd">&#39;&#39;&#39;</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../_images/re_devops_decode0001.png" />
+</figure>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id8"><span class="section-number">3.1.3. </span>3.1.3 Python多进程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf8 -*-</span>
+<span class="c1"># auther; 18793</span>
+<span class="c1"># Date：2020/1/20 15:12</span>
+<span class="c1"># filename: 多个子进程.py</span>
+
+<span class="kn">import</span> <span class="nn">multiprocessing</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">multiprocessing</span><span class="o">.</span><span class="n">current_process</span><span class="p">()</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;-&quot;</span> <span class="o">+</span> <span class="n">msg</span><span class="p">)</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">pool</span> <span class="o">=</span> <span class="n">multiprocessing</span><span class="o">.</span><span class="n">Pool</span><span class="p">(</span><span class="n">processes</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;hello </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">pool</span><span class="o">.</span><span class="n">apply_async</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="p">(</span><span class="n">msg</span><span class="p">,))</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>        <span class="c1"># 关闭进程池表示不能再往进程池中添加进程</span>
+    <span class="n">pool</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>         <span class="c1"># 等待进程池中所有的进程执行完毕，必须在close()之后调用</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sub-process(es) done.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">3.2. </span>3.2 Python常用的三方库</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 24%" />
+<col style="width: 76%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>三方库名</p></th>
+<th class="head"><p>简介</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>django</p></td>
+<td><p>Python最留下的Web框架</p></td>
+</tr>
+<tr class="row-odd"><td><p>tornado</p></td>
+<td><p>一个web框架和异步网络库</p></td>
+</tr>
+<tr class="row-even"><td><p>flask</p></td>
+<td><p>一个Python的微型框架</p></td>
+</tr>
+<tr class="row-odd"><td><p>cherryPy</p></td>
+<td><p>一个极简单的Python web框架，具有WSGI线程池</p></td>
+</tr>
+<tr class="row-even"><td><p>requests</p></td>
+<td><p>基于urllib，网络请求库</p></td>
+</tr>
+<tr class="row-odd"><td><p>yagmail</p></td>
+<td><p>封装了smtplib，几行代码技能发送邮件</p></td>
+</tr>
+<tr class="row-even"><td><p>pstuil</p></td>
+<td><p>用于系统监控和分析。</p></td>
+</tr>
+<tr class="row-odd"><td><p>sh</p></td>
+<td><p>方便调用Linux Shell，比subprocess标准库更方便</p></td>
+</tr>
+<tr class="row-even"><td><p>Boto3</p></td>
+<td><p>可以使用Boto3来使用AWS.快速调用AWS的各种服务</p></td>
+</tr>
+<tr class="row-odd"><td><p>Srapy</p></td>
+<td><p>Python中鼎鼎有名的爬虫框架</p></td>
+</tr>
+<tr class="row-even"><td><p>BeautifulSoup</p></td>
+<td><p>解析HTML利器，显示最新版本为BS4。</p></td>
+</tr>
+<tr class="row-odd"><td><p>Selenium</p></td>
+<td><p>模拟浏览器进行自动化测试</p></td>
+</tr>
+<tr class="row-even"><td><p>Jinja2</p></td>
+<td><p>Jinja2是基于Python的模板引擎</p></td>
+</tr>
+<tr class="row-odd"><td><p>rq</p></td>
+<td><p>简单的轻量级Python的任务队列</p></td>
+</tr>
+<tr class="row-even"><td><p>Celery</p></td>
+<td><p>一个分布式异步任务队列/作业队列，基于分布式消息传递</p></td>
+</tr>
+<tr class="row-odd"><td><p>Supervisor</p></td>
+<td><p>进程管理工具</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="flaskrestful-api">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">3.3. </span>3.3 利用Flask设计后端Restful API</a><a class="headerlink" href="#flaskrestful-api" title="Permalink to this headline">¶</a></h2>
+<p>Flask是轻量级、易于采用、文档化和流行的开发RESTful
+API的非常好的选择，也是笔者在工作中最常用的Flask
+Web框架之一。从根本上说，Flask是建立在可扩展性和简单性的基础之上的。Flask应用程序以轻量级而闻名，主要是与Django对比。Flask开发者称之为微框架，其中“微”（如这里所述）意味着目标是保持核心简单但可扩展。Flask不会为我们做出许多决定，比如要使用什么数据库或什么模板引擎来选择。最后，Flask还有广泛的文档来为开发人员提供支持。</p>
+<p>在DevOps中使用RESTful API的原因如下：</p>
+<p>❑
+返回的不是HTML，而是机器能直接解析的数据。随着Ajax的流行，API返回数据，而不是HTML页面，数据交互量减少，用户体验会更好。前后台分离，后台更多地进行数据处理，前台对数据进行渲染。</p>
+<p>❑
+直接使用API可以进行CRUD，增删改查，结构清晰。一个标准的API有4个接口：GET、PUT、POST、DELETE，对应我们的请求类型，就是Web获取页面、上传表单（或文件）、更新资源或删除资源。</p>
+<p>❑
+使用Token来进行用户权限认证，比Cookie更安全。相对而言，Tocken认证比Cookie认证更为安全，毕竟Cookie认证是我们爬网站时使用最多的伪造渠道。</p>
+<p>❑ 越来越多的开放平台，开始使用API接口。</p>
+<p>HTTP方法与CURD数据处理的对应关系</p>
+<figure class="align-default">
+<img alt="" src="../_images/Restful_api001.png" />
+</figure>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html" class="btn btn-neutral float-left" title="2. Shell脚本在Devops下的应用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html" class="btn btn-neutral float-right" title="4. 生产环境下的Shell脚本" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

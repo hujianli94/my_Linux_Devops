@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>实际操作学习Git &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="详细解说GitHub的功能" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html" />
+    <link rel="prev" title="Git的导入" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Github入门到实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">实际操作学习Git</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">基本操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">分支的操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id3">●特性分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">●主干分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">合并分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">更改提交的操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">消除冲突</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">提交解决后的结果冲突解决后</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">修改提交信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">压缩历史</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">推送至远程仓库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#master">推送至master分支</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">推送至master以外的分支</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">从远程仓库获取</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git-clone">git clone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html">模拟体验GitHub Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">GitHub上面找开源项目</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Github入门到实践</a> &raquo;</li>
+      <li>实际操作学习Git</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Github/03.实际操作学习Git.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#git" id="id17">实际操作学习Git</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id18">基本操作</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id19">分支的操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id20">●特性分支</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id21">●主干分支</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id22">合并分支</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id23">更改提交的操作</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id24">消除冲突</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id25">提交解决后的结果冲突解决后</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id26">修改提交信息</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id27">压缩历史</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id11" id="id28">推送至远程仓库</a></p>
+<ul>
+<li><p><a class="reference internal" href="#master" id="id29">推送至master分支</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id30">推送至master以外的分支</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id13" id="id31">从远程仓库获取</a></p>
+<ul>
+<li><p><a class="reference internal" href="#git-clone" id="id32">git clone</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="git">
+<h1><a class="toc-backref" href="#id17">实际操作学习Git</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id18">基本操作</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkdir test_github
+$ cd test_github/
+$ git init
+$ git status
+
+
+$ touch README.md
+$ git status
+On branch master
+
+No commits yet
+
+Untracked files:
+  (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+
+        README.md
+$ git add .
+$ git commit -m &quot;first commit...&quot;
+$ git status
+$ git log
+commit 3460fd1fa5245830b7ded8add0e1c4cbb6e65f62 (HEAD -&gt; master)
+Author: hujianli &lt;hujiainli@126.com&gt;
+Date:   Thu Nov 19 21:21:51 2020 +0800
+
+    first commit...
+
+# 只显示提交的第一行
+$ git log --pretty=short
+
+# 只显示指定目录、文件的日志
+$ git log README.md
+
+# 显示文件的改动
+$ git log -p
+
+# 查看更改前后的差别
+$ git diff
+warning: LF will be replaced by CRLF in README.md.
+The file will have its original line endings in your working directory.
+diff --git a/README.md b/README.md
+index e69de29..8a4cfaa 100644
+--- a/README.md
++++ b/README.md
+@@ -0,0 +1,2 @@
++##hello
++## my friend
+
+# 查看工作树和暂存区的差别
+$ git diff
+
+# 查看工作树和最新提交的差别
+$ git diff HEAD
+
+
+$ git add README.md
+$ git commit -m &quot;Add index&quot;
+
+//成功查到了两次提交。
+$ git log
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id19">分支的操作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>//git branch——显示分支一览表
+$ git branch
+
+//创建、切换分支
+$ git branch hujianli/dev
+<span class="c1"># 或者</span>
+$ git checkout -b hujianli/dev
+
+//删除分支
+$ git branch -d hujianli/dev
+
+//切换分支
+$ git checkout hujianli
+Already on <span class="s1">&#39;hujianli&#39;</span>
+// 等同于
+$ git branch hujiianli
+
+
+$ git branch
+* hujianli
+  master
+
+$ cat README.md
+<span class="c1">##hello</span>
+<span class="c1">## my friend</span>
+- branch A
+
+$ git checkout master
+Switched to branch <span class="s1">&#39;master&#39;</span>
+
+<span class="m">18793</span>@DESKTOP-PMJTNGI MINGW64 /d/Github_01/test_github <span class="o">(</span>master<span class="o">)</span>
+$ cat README.md
+<span class="c1">##hello</span>
+<span class="c1">## my friend</span>
+
+//然后查看README.md文件，会发现README.md文件仍然保持原先的状态，并没有被添加文字。
+
+//切换回上一个分支
+$ git checkout -
+Switched to branch <span class="s1">&#39;hujianli&#39;</span>
+
+$ git branch
+* hujianli
+</pre></div>
+</div>
+<section id="id3">
+<h3><a class="toc-backref" href="#id20">●特性分支</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>特性分支顾名思义，是集中实现单一特性（主题），除此之外不进行任何作业的分支。在日常开发中，往往会创建数个特性分支，同时在此之外再保留一个随时可以发布软件的稳定分支。</p>
+<p>基于特定主题的作业在特性分支中进行，主题完成后再与master分支合并。只要保持这样一个开发流程，就能保证master分支可以随时供人查看。这样一来，其他开发者也可以放心大胆地从master分支创建新的特性分支。</p>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id21">●主干分支</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>主干分支是刚才我们讲解的特性分支的原点，同时也是合并的终点。通常人们会用master分支作为主干分支。主干分支中并没有开发到一半的代码，可以随时供他人查看。</p>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id22">合并分支</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout master
+
+$ git branch
+  hujianli
+  hujiianli
+* master
+
+$ git merge --no-ff hujianli
+//随后编辑器会启动，用于录入合并提交的信息。
+
+$ cat README.md
+##hello
+## my friend
+- branch A
+
+//git log --graph——以图表形式查看分支
+$ git log --graph
+*   commit b9a21baa72ac01ca64c64a3d842c2fd1f80d09fc (HEAD -&gt; master)
+|\  Merge: f023abe faba748
+| | Author: hujianli &lt;hujiainli@126.com&gt;
+| | Date:   Thu Nov 19 21:56:15 2020 +0800
+| |
+| |     Merge branch &#39;hujianli&#39;
+| |
+| |     hujianli hello
+| |
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id23">更改提交的操作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git log
+
+$ git reset --hard 3b5beb47375901f7c81b08b526c5788caff93659
+HEAD is now at 3b5beb4 Add index
+
+18793@DESKTOP-PMJTNGI MINGW64 /d/Github_01/test_github (fix_branch)
+$ cat README.md
+##hello
+## my friend
+</pre></div>
+</div>
+<p>执行git reflog命令，查看当前仓库执行过的操作的日志</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git reflog
+e7a7c34 (HEAD -&gt; fix_branch) HEAD@{0}: commit: fix B
+3b5beb4 (master, hujiianli) HEAD@{1}: checkout: moving from master to fix_branch
+3b5beb4 (master, hujiianli) HEAD@{2}: reset: moving to 3b5beb47375901f7c81b08b526c5788caff                                           93659
+b9a21ba HEAD@{3}: checkout: moving from fix_branch to master
+3b5beb4 (master, hujiianli) HEAD@{4}: reset: moving to 3b5beb47375901f7c81b08b526c5788caff                                           93659
+faba748 (hujianli) HEAD@{5}: reset: moving to faba748cf8e7f192dd257d690c008b1fe37fe8a8
+b9a21ba HEAD@{6}: checkout: moving from master to fix_branch
+b9a21ba HEAD@{7}: merge hujianli: Merge made by the &#39;recursive&#39; strategy.
+f023abe HEAD@{8}: checkout: moving from hujianli to master
+faba748 (hujianli) HEAD@{9}: commit: second commit....
+f023abe HEAD@{10}: checkout: moving from master to hujianli
+f023abe HEAD@{11}: merge hujianli: Fast-forward
+3b5beb4 (master, hujiianli) HEAD@{12}: checkout: moving from master to master
+3b5beb4 (master, hujiianli) HEAD@{13}: checkout: moving from master to master
+3b5beb4 (master, hujiianli) HEAD@{14}: checkout: moving from hujianli to master
+f023abe HEAD@{15}: checkout: moving from master to hujianli
+3b5beb4 (master, hujiianli) HEAD@{16}: checkout: moving from hujianli to master
+f023abe HEAD@{17}: commit: Add feature-A
+3b5beb4 (master, hujiianli) HEAD@{18}: checkout: moving from hujianli to hujianli
+3b5beb4 (master, hujiianli) HEAD@{19}: checkout: moving from master to hujianli
+3b5beb4 (master, hujiianli) HEAD@{20}: commit: Add index
+3460fd1 HEAD@{21}: commit (initial): first commit...
+</pre></div>
+</div>
+<p>在日志中，我们可以看到commit、checkout、reset、merge等Git命令的执行记录。只要不进行Git的GC（Garbage
+Collection，垃圾回收），就可以通过日志随意调取近期的历史状态，就像给时间机器指定一个时间点，在过去未来中自由穿梭一般。即便开发者错误执行了Git操作，基本也都可以利用git
+reflog命令恢复到原先的状态。</p>
+<p>我们将HEAD、暂存区、工作树进行时光倒流，恢复到<code class="docutils literal notranslate"><span class="pre">f023abe</span></code>这个时间点的状态。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git checkout master
+Switched to branch <span class="s1">&#39;master&#39;</span>
+
+$ git reset --hard f023abe
+HEAD is now at f023abe Add feature-A
+
+<span class="m">18793</span>@DESKTOP-PMJTNGI MINGW64 /d/Github_01/test_github <span class="o">(</span>master<span class="o">)</span>
+$ cat README.md
+<span class="c1">##hello</span>
+<span class="c1">## my friend</span>
+- branch A
+
+// 再次进行时光倒流
+$ git reset --hard e7a7c34
+HEAD is now at e7a7c34 fix B
+
+$ cat README.md
+<span class="c1">##hello</span>
+<span class="c1">## my friend</span>
+fix -B
+fix -B
+fix -B
+fix -B
+fix -B
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id24">消除冲突</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git merge --no-ff fix_branch
+
+$ cat README.md
+##hello
+## my friend
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+fix -B
+fix -B
+fix -B
+fix -B
+fix -B
+=======
+- branch A
+- branch A
+- branch A
+- branch A
+- branch A
+- branch A
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; hujianli
+
+// 这里发生了冲突
+$ git merge --no-ff hujianli
+Auto-merging README.md
+CONFLICT (content): Merge conflict in README.md
+Automatic merge failed; fix conflicts and then commit the result.
+</pre></div>
+</div>
+<p>=======以上的部分是当前HEAD的内容，以下的部分是要合并的fix-B分支中的内容。我们在编辑器中将其改成想要的样子。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ cat README.md
+<span class="c1">##hello</span>
+<span class="c1">## my friend</span>
+fix -B
+fix -B
+fix -B
+fix -B
+fix -B
+- branch A
+- branch A
+- branch A
+- branch A
+- branch A
+- branch A
+</pre></div>
+</div>
+<p>本次修正让feature-A与fix-B的内容并存于文件之中。但是在实际的软件开发中，往往需要删除其中之一，所以各位在处理冲突时，务必要仔细分析冲突部分的内容后再行修改。</p>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id25">提交解决后的结果冲突解决后</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>执行git add命令与git commit命令。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit -m <span class="s2">&quot;Fix conflict&quot;</span>
+<span class="o">[</span>master 1524c36<span class="o">]</span> Fix conflict
+</pre></div>
+</div>
+<p>由于本次更改解决了冲突，所以提交信息记为“Fix conflict”。</p>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id26">修改提交信息</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>要修改上一条提交信息，可以使用git commit
+–amend命令。我们将上一条提交信息记为了“Fix
+conflict”，但它其实是fix-B分支的合并，解决合并时发生的冲突只是过程之一，这样标记实在不妥。于是，我们要修改这条提交信息。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit --amend
+<span class="o">[</span>master 29f2cf2<span class="o">]</span> merge branch <span class="s2">&quot;fix_branch&quot;</span>
+ Date: Thu Nov <span class="m">19</span> <span class="m">22</span>:25:25 <span class="m">2020</span> +0800
+</pre></div>
+</div>
+<p>随后会显示上面这条结果。现在执行git log
+–graph命令，可以看到提交日志中的相应内容也已经被修改。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git log --graph
+*   commit 29f2cf23a061e71e7e8380a6a7e1df857d68a378 <span class="o">(</span>HEAD -&gt; master<span class="o">)</span>
+<span class="p">|</span><span class="se">\ </span> Merge: e7a7c34 faba748
+<span class="p">|</span> <span class="p">|</span> Author: hujianli &lt;hujiainli@126.com&gt;
+<span class="p">|</span> <span class="p">|</span> Date:   Thu Nov <span class="m">19</span> <span class="m">22</span>:25:25 <span class="m">2020</span> +0800
+<span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> <span class="p">|</span>     merge branch <span class="s2">&quot;fix_branch&quot;</span>
+<span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> * commit faba748cf8e7f192dd257d690c008b1fe37fe8a8 <span class="o">(</span>hujianli<span class="o">)</span>
+<span class="p">|</span> <span class="p">|</span> Author: hujianli &lt;hujiainli@126.com&gt;
+<span class="p">|</span> <span class="p">|</span> Date:   Thu Nov <span class="m">19</span> <span class="m">21</span>:55:28 <span class="m">2020</span> +0800
+<span class="p">|</span> <span class="p">|</span>
+<span class="p">|</span> <span class="p">|</span>     second commit....
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id27">压缩历史</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git checkout -b feature-C
+Switched to a new branch &#39;feature-C&#39;
+
+$ git branch
+* feature-C
+  fix_branch
+  hujianli
+  hujiianli
+  master
+
+$ cat README.md
+##hello
+## my friend
+
+- feature-A
+- feature-B
+- faeture-B
+</pre></div>
+</div>
+<p>作为feature-C的功能实现，我们在README.md文件中添加一行文字，并且故意留下拼写错误，以便之后修正。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>// 修正拼写错误
+$ vim README.md
+
+$ git diff
+diff --git a/README.md b/README.md
+index 4e49ea0..aec690f 100644
+--- a/README.md
++++ b/README.md
+@@ -3,4 +3,4 @@
+
+ - feature-A
+ - feature-B
+-- faeture-B
++- feature-B
+</pre></div>
+</div>
+<p>然后进行提交</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit -am <span class="s2">&quot;Fix typo&quot;</span>
+<span class="o">[</span>feature-C 45b53fa<span class="o">]</span> Fix typo
+ <span class="m">1</span> file changed, <span class="m">1</span> insertion<span class="o">(</span>+<span class="o">)</span>, <span class="m">1</span> deletion<span class="o">(</span>-<span class="o">)</span>
+</pre></div>
+</div>
+<p>更改历史</p>
+<p>我们来更改历史。将“Fix
+typo”修正的内容与之前一次的提交合并，在历史记录中合并为一次完美的提交。为此，我们要用到git
+rebase命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git rebase -i HEAD~2
+</pre></div>
+</div>
+<p>我们将6fba227的Fix typo的历史记录压缩到7a34294的Add feature-C里.</p>
+<p>保存编辑器里的内容，关闭编辑器。</p>
+<p>现在再查看提交日志时会发现Add
+feature-C的哈希值已经不是7a34294了，这证明提交已经被更改。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git log --graph
+* commit e5495398de2f120815c593499926232250ef7a17 <span class="o">(</span>HEAD -&gt; feature-C<span class="o">)</span>
+<span class="p">|</span> Author: hujianli &lt;hujiainli@126.com&gt;
+<span class="p">|</span> Date:   Thu Nov <span class="m">19</span> <span class="m">22</span>:38:24 <span class="m">2020</span> +0800
+<span class="p">|</span>
+<span class="p">|</span>     ADD feature-C
+<span class="p">|</span>
+</pre></div>
+</div>
+<p>这样一来，Fix typo就从历史中被抹去，也就相当于Add
+feature-C中从来没有出现过拼写错误。这算是一种良性的历史改写。</p>
+<p>合并至master分支feature-C分支的使命告一段落，我们将它与master分支合并。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git branch
+* feature-C
+  fix_branch
+  hujianli
+  hujiianli
+  master
+
+
+$ git checkout master
+Switched to branch &#39;master&#39;
+
+$ git merge --no-ff feature-C
+</pre></div>
+</div>
+<p>master分支整合了feature-C分支。开发进展顺利。</p>
+</section>
+</section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id28">推送至远程仓库</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>在github上创建项目，然后本地进行推送</p>
+<section id="master">
+<h3><a class="toc-backref" href="#id29">推送至master分支</a><a class="headerlink" href="#master" title="Permalink to this headline">¶</a></h3>
+<p>目前github已经将master分支改为为main分支。主分支为main。</p>
+<p><strong>create a new repository on the command line</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s2">&quot;# test_github&quot;</span> <span class="o">&gt;&gt;</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+<span class="n">git</span> <span class="n">init</span>
+<span class="n">git</span> <span class="n">add</span> <span class="n">README</span><span class="o">.</span><span class="n">md</span>
+<span class="n">git</span> <span class="n">commit</span> <span class="o">-</span><span class="n">m</span> <span class="s2">&quot;first commit&quot;</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">M</span> <span class="n">main</span>
+<span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">hujianli94</span><span class="o">/</span><span class="n">test_github</span><span class="o">.</span><span class="n">git</span>
+<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">main</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>如果出现：git push error: failed to push some refs
+to报错！说明github仓库中的README文件不在本地代码目录中，</p>
+<p>也就是说我们需要先将远程代码库中的任何文件先pull到本地代码库中，才能push新的代码到github代码库中。</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用如下命令：git pull --rebase origin master
+
+然后再进行上传: git push -u origin master
+</pre></div>
+</div>
+<p>问题解决。</p>
+<p><strong>push an existing repository from the command line</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">remote</span> <span class="n">add</span> <span class="n">origin</span> <span class="n">git</span><span class="nd">@github</span><span class="o">.</span><span class="n">com</span><span class="p">:</span><span class="n">hujianli94</span><span class="o">/</span><span class="n">test_github</span><span class="o">.</span><span class="n">git</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="o">-</span><span class="n">M</span> <span class="n">main</span>
+<span class="n">git</span> <span class="n">push</span> <span class="o">-</span><span class="n">u</span> <span class="n">origin</span> <span class="n">main</span>
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id30">推送至master以外的分支</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git checkout feature-C
+Switched to branch <span class="s1">&#39;feature-C&#39;</span>
+
+$ git push -u origin feature-C
+Total <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta <span class="m">0</span><span class="o">)</span>
+remote:
+remote: Create a pull request <span class="k">for</span> <span class="s1">&#39;feature-C&#39;</span> on GitHub by visiting:
+remote:      https://github.com/hujianli94/test_github/pull/new/feature-C
+remote:
+To github.com:hujianli94/test_github.git
+ * <span class="o">[</span>new branch<span class="o">]</span>      feature-C -&gt; feature-C
+Branch <span class="s1">&#39;feature-C&#39;</span> <span class="nb">set</span> up to track remote branch <span class="s1">&#39;feature-C&#39;</span> from <span class="s1">&#39;origin&#39;</span>.
+</pre></div>
+</div>
+<p><strong>现在，在远程仓库的GitHub页面就可以查看到feature-C分支了</strong></p>
+</section>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id31">从远程仓库获取</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<section id="git-clone">
+<h3><a class="toc-backref" href="#id32">git clone</a><a class="headerlink" href="#git-clone" title="Permalink to this headline">¶</a></h3>
+<section id="id14">
+<h4>获取远程仓库<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:hujianli94/test_github.git
+Cloning into &#39;test_github&#39;...
+remote: Enumerating objects: 22, done.
+remote: Counting objects: 100% (22/22), done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 22 (delta 3), reused 22 (delta 3), pack-reused 0
+Receiving objects: 100% (22/22), done.
+Resolving deltas: 100% (3/3), done.
+</pre></div>
+</div>
+<p>执行git
+clone命令后我们会默认处于master分支下，同时系统会自动将origin设置成该远程仓库的标识符。也就是说，当前本地仓库的master分支与GitHub端远程仓库（origin）的master分支在内容上是完全相同的。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git branch -a
+* main
+  remotes/origin/HEAD -&gt; origin/main
+  remotes/origin/feature-C
+  remotes/origin/main
+</pre></div>
+</div>
+<p>我们用<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">branch</span> <span class="pre">-a</span></code>命令查看当前分支的相关信息。添加
+-a参数可以同时显示本地仓库和远程仓库的分支信息。</p>
+</section>
+<section id="feature-c">
+<h4>获取远程的feature-C分支<a class="headerlink" href="#feature-c" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@github.com:hujianli94/test_github.git
+
+$ cd test_github
+
+$ git checkout -b feature-C origin/feature-C
+Switched to a new branch &#39;feature-C&#39;
+Branch &#39;feature-C&#39; set up to track remote branch &#39;feature-C&#39; from &#39;origin&#39;.
+
+$ git branch
+* feature-C
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h4>向本地的feature-C分支提交更改<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<p>在README. md文件中添加一行文字，查看更改。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vim README.md
+
+$ git diff
+diff --git a/README.md b/README.md
+index 4e49ea0..769c956 100644
+--- a/README.md
++++ b/README.md
+@@ -4,3 +4,6 @@
+ - feature-A
+ - feature-B
+ - faeture-B
++- faeture-B
++- faeture-D
++- faeture-E
+
+
+$ git commit -am &quot;ADD FEATURE-C&quot;
+[feature-C 5bef5e4] ADD FEATURE-C
+ 1 file changed, 3 insertions(+)
+
+$ git push
+</pre></div>
+</div>
+<p>从远程仓库获取feature-C分支，在本地仓库中提交更改，再将feature-C分支推送回远程仓库，通过这一系列操作，就可以与其他开发者相互合作，共同培育feature-C分支，实现某些功能。</p>
+</section>
+<section id="id16">
+<h4>获取最新远程仓库分支<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>将本地的feature-C分支更新到最新状态</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git pull origin feature-C
+From github.com:hujianli94/test_github
+ * branch            feature-C  -&gt; FETCH_HEAD
+Already up to date.
+</pre></div>
+</div>
+<blockquote>
+<div><p>如果两人同时修改同一部分的源代码，push时就很容易发生冲突，所以多名开发者在同一个分支中进行作业时，为减少冲突情况的发送，建议频繁的进行push和pull操作。</p>
+</div></blockquote>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html" class="btn btn-neutral float-left" title="Git的导入" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html" class="btn btn-neutral float-right" title="详细解说GitHub的功能" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

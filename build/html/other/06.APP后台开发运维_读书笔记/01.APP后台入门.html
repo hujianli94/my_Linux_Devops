@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.1. APP后台入门 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.2. APP后台基础技术" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html" />
+    <link rel="prev" title="6. APP后台开发运维_读书笔记" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. APP后台开发运维_读书笔记</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.1. APP后台入门</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#appapp">6.1.1. App和App后台的通信</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#appweb">6.1.2. App后台和Web后端的区别</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.1.3. 选择服务器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">6.1.4. 选择编程语言</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">6.1.5. 快速入门新技术</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">6.1.6. App是怎样炼成的</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">6.1.7. 3.正式推出阶段</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html">6.4. Linux-APP后台应用最广泛的系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html">6.5. Nginx—App后台HTTP服务的利器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.8. MongoDB—App后台新兴的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html">6.9. 架构选型的要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>APP后台开发运维_读书笔记</a> &raquo;</li>
+      <li><span class="section-number">6.1. </span>APP后台入门</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/01.APP后台入门.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#app" id="id21">APP后台入门</a></p>
+<ul>
+<li><p><a class="reference internal" href="#appapp" id="id22">App和App后台的通信</a></p>
+<ul>
+<li><p><a class="reference internal" href="#http" id="id23">1．用HTTP协议还是私有协议？</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id24">2．App和App后台通信使用长连接还是短连接？</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id25">3．App和后端是怎么通信的？</a></p></li>
+<li><p><a class="reference internal" href="#api" id="id26">4．后端是返回给API的数据格式</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#appweb" id="id27">App后台和Web后端的区别</a></p>
+<ul>
+<li><p><a class="reference internal" href="#app-api" id="id28">1．App后台要慎重考虑网络传输的流量，主要在API设计、图片处理上</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id29">2．移动手机弱网络环境</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id30">3．手机电量有限</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id31">选择服务器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#idc" id="id32">1．是选择传统的IDC还是云服务器</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id33">建议</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id9" id="id34">选择编程语言</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id35">1．每种编程语言都有自己擅长的业务场景和性能特性</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id36">2．选择开发效率最高的编程语言</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id37">3.一个大忌是用两套不同的编程语言维护一个相同的业务逻辑</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id38">4．一个系统中，不同的业务逻辑可以用不同的编程语言实现</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id14" id="id39">快速入门新技术</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id15" id="id40">4种快速入门新技术的方法</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id16" id="id41">App是怎样炼成的</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id17" id="id42">1.项目启动阶段</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id43">2.研发阶段</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id44">3.测试阶段</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id20" id="id45">3.正式推出阶段</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="app">
+<h1><a class="toc-backref" href="#id21"><span class="section-number">6.1. </span>APP后台入门</a><a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h1>
+<section id="appapp">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">6.1.1. </span>App和App后台的通信</a><a class="headerlink" href="#appapp" title="Permalink to this headline">¶</a></h2>
+<section id="http">
+<h3><a class="toc-backref" href="#id23">1．用HTTP协议还是私有协议？</a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用私有协议就相当于使用暗语通信，其类似于开发一套新的语言。
+私有协议对协议的封装和拆解工作量大，App程序员和后台程序员都要增加额外的工作量，
+而且私有协议对程序员的设计能力要求高，从Web网站转向移动开发的开发者上手有一定的困难。
+除非开发者对App的安全性和性能要求高，不然选择HTTP协议就足够。
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h3><a class="toc-backref" href="#id24">2．App和App后台通信使用长连接还是短连接？</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>假设读者通过手机拨打另外一个人的手机，手机通话费用非常便宜（甚至可以忽略），但这个打电话过程有两个特点。
+
+（1）一部手机同一时间只能接听一个电话。
+（2）一部手机接听电话前非常麻烦，要拨号，要等接接听，这些过程需要耗费一段时间。
+
+App和服务器通信使用长连接还是短连接这个问题，
+可以使用上述的手机拨打电话的模型理解：是一直保持着通话，还是有需要时才拨号通话？
+
+
+当App和服务器通信使用长连接，就相当于一直保持着通话，服务器能保持的通信数量有限，
+如果达到通信数量的限制，必须增加服务器才能让其他App继续和后台通信。
+这种通信方式，多数是使用Socket或WebSocket连接长时间连接，对程序员的素质要求高，开发困难，除了手游和聊天推送服务外，不建议使用。
+
+
+当App和服务器通信使用短连接，就相当于需要时才拨号通话。
+这种通信方式主要是HTTP协议，是现在主流的通信方式，开发效率高，有大量的第三方软件可供开发人员使用，
+而且大多数开发人员对HTTP协议有一定的了解，能大大减少开发人员的认知成本，推荐使用这种方式。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id25">3．App和后端是怎么通信的？</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>相信读者都用过银行的柜员机（ATM）的查询余额、转账、取款等功能。
+
+当用户在ATM取款时只需要输入取款的金额，隔一会儿钱就出来，如果因为有什么问题不能取款（例如超过取款金额的限制），屏幕上也会显示出错误的信息。
+
+在整个过程中，用户只要输入金额就能获得结果（取出钱或屏幕提示不成功），至于柜员机内部是怎么处理，用户不需要知道。
+ATM这种把内部的处理遮蔽的做法极大方便了用户的使用。
+</pre></div>
+</div>
+<p>同样在App后台也只提供了一系列的功能给App使用，这系列的功能以API的形式提供。</p>
+<p>API的定义：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>API（Application Programming Interface，应用程序编程接口）是一些预先定义的函数，
+目的是提供应用程序与开发人员基于某软件或硬件得以访问一组例程的能力，而又无须访问源码，
+或理解内部工作机制的细节。
+</pre></div>
+</div>
+<p>用户使用ATM的流程</p>
+<p><img alt="image0" src="../../_images/ATM0001.png" /></p>
+<p>当App调用后端提供API的时候，只需要明确下面3点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）这个API的用途：在ATM的例子中，是取款，还是查询余额，还是转账？
+
+（2）输入什么：在ATM的例子中，使用取款功能要输入金额。
+
+（3）结果是什么：在ATM的例子中，取款是成功还是失败？
+
+至于API内部是怎么处理，App无须知道。
+</pre></div>
+</div>
+</section>
+<section id="api">
+<h3><a class="toc-backref" href="#id26">4．后端是返回给API的数据格式</a><a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h3>
+<p>API一般是以HTTP的形式调用的，通过HTTP传入参数返回数据。那么，App后台以什么样的格式返回数据呢？</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>JSON（JavaScript Object Notation）是一种轻量级的数据交换格式。
+JSON采用完全独立于语言的文本格式，但是也使用了类似于C语言家族的习惯（包括C、C++、C#、Java、JavaScript、Perl、Python等），这些特性使JSON成为理想的数据交换语言。同时JSON易于阅读和编写，也易于机器解析和生成
+</pre></div>
+</div>
+<p>App和App后台的通信过程 <img alt="image1" src="../../_images/APP_json0001.png" /></p>
+</section>
+</section>
+<section id="appweb">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">6.1.2. </span>App后台和Web后端的区别</a><a class="headerlink" href="#appweb" title="Permalink to this headline">¶</a></h2>
+<section id="app-api">
+<h3><a class="toc-backref" href="#id28">1．App后台要慎重考虑网络传输的流量，主要在API设计、图片处理上</a><a class="headerlink" href="#app-api" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>API的返回结果一般是JSON格式，使用JSON格式的一个重要原因是，同样的内容，用JSON格式更省流量。
+
+App下载的图片也一样，一个节省流量的处理方法是让App下载经过压缩的图片（一般是几十KB以下），
+当用户需要查看原图时才下载原图。
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id29">2．移动手机弱网络环境</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>因此App后台发给App的信息是无法保证一定到达App的，极有可能的情况是：当App后台发送信息的时候App是连接网络的，但发送的过程中网络断开了，这样App就无法收到消息。</p>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id30">3．手机电量有限</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>普通的手机电池被充满后能用一天左右，如果在App端做大量的网络请求和运算，手机的电量将消耗得很快。
+但如果把所有的运算都集中在App后台，也会增加App后台的负担，严重的话会造成服务器宕机。
+</pre></div>
+</div>
+<p>这两者之间的平衡，需要研发人员在项目中仔细斟酌。</p>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id31"><span class="section-number">6.1.3. </span>选择服务器</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="idc">
+<h3><a class="toc-backref" href="#id32">1．是选择传统的IDC还是云服务器</a><a class="headerlink" href="#idc" title="Permalink to this headline">¶</a></h3>
+<section id="id6">
+<h4>传统的IDC<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>App产品经常会出现在毫无征兆的App访问量爆发的情况。如果出现了App访问量爆发的情况，解决访问的压力最快、最有效的方法是升级服务器的硬件，如升级CPU，升级内存容量或者升级带宽。
+
+传统的IDC要升级CPU或升级内存容量的流程如下。
+
+· 和客户经理商谈所需硬件的价格或在线选择具体的配置。
+· 在线支付或银行转账。
+· 确认钱到账后，等待IDC安排工作人员升级硬件。
+在这个流程中由于需要人工的介入，很难做到几分钟内完成升级硬件。
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4>云服务<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用云服务器升级硬件就很简单，流程如下。
+
+· 在用户后台选择升级后的硬件配置。
+· 通过网络支付。
+· 重启服务器，升级就完成了。如果只是升级带宽，甚至不用重启服务器。
+整个过程算起来不用5分钟，简单、快捷、方便。
+
+而且现在的云服务提供商除了提供服务器外，还提供下面这些服务。
+
+· 负载均衡。
+· 云数据库。
+· 云内存存储。
+</pre></div>
+</div>
+<p>App上线初期，一般开发者都在一台服务器上搭建所有的服务，但随着App的发展，
+这些服务需要部署在不同的服务器上。</p>
+<p>云服务器的优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>云服务的优点，由云服务器的提供商来负责运维，高可用、高并发、监控报警等方面都能靠云服务器提供商保障，
+企业使用云服务就能大大减轻运维方面的压力和研发的成本。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id33">建议</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>不过笔者建议项目初期的硬件配置可以稍为逊色点，随时监控主机资源的状态，
+当预估当前的配置不能应付业务上的需求时就考虑升级硬件，毕竟现在升级或者购买云服务器都非常方便。</p>
+</section>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id34"><span class="section-number">6.1.4. </span>选择编程语言</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<section id="id10">
+<h3><a class="toc-backref" href="#id35">1．每种编程语言都有自己擅长的业务场景和性能特性</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>例如开发聊天服务器，选择了PHP开发那真的太不合适，PHP这种语言怎么能适合聊天服务？
+
+假如选择开发Web网站的编程语言，PHP比Golang合适多了。
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id36">2．选择开发效率最高的编程语言</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>笔者的答案是，选择开发效率最高的编程语言。开发效率高意味着能快速推进产品的研发，有利于产品的迭代，大大减少资金和时间成本，在项目初期，确保产品能活下去是开发人员考虑的第一要点。
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id37">3.一个大忌是用两套不同的编程语言维护一个相同的业务逻辑</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>不要用多种编程语言重复造轮子。业务逻辑一样就使用一种编程语言
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id38">4．一个系统中，不同的业务逻辑可以用不同的编程语言实现</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>例如，Web网站部分可以使用PHP，推送服务器部分可以使用Golang或者Erlang实现等。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id39"><span class="section-number">6.1.5. </span>快速入门新技术</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p>在认识一个新的事物时，一个特点就是“从整体到局部”。如果只是“只见树木不见森林”，就容易迷失在无数的细节当中。</p>
+<p>对于软件技术来说，核心问题就2个。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· 软件的适用场景。
+· 软件的运行原理。
+</pre></div>
+</div>
+<section id="id15">
+<h3><a class="toc-backref" href="#id40">4种快速入门新技术的方法</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>1．阅读软件安装的README文件和INSTALL文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>很多软件的安装包中都有个“README”文件，顾名思义，其名字已经提示让开发者去阅读，
+这个文件是非常重要的。这个文件中有关于这款软件的详细的功能说明。
+
+INSTALL文件是关于这款软件最简单的安装方法，里面描述了这款软件是怎么运行起来的。
+</pre></div>
+</div>
+<p>2．阅读官网的文档</p>
+<p>3．阅读源码里的example文件夹</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>某些开源软件的开发者会在源码中附上代码例子，放在example文件夹、test文件夹，或其他文件夹里。开发人员仔细阅读这些代码也能快速入门新的技术。
+</pre></div>
+</div>
+<p>4．在搜索引擎网站中搜索</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>例如需要搜索Redis的入门教程，那就使用关键字“Redis入门教程”或“Redis教程”
+在搜索引擎网站中搜索相关的教程。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id16">
+<h2><a class="toc-backref" href="#id41"><span class="section-number">6.1.6. </span>App是怎样炼成的</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<section id="id17">
+<h3><a class="toc-backref" href="#id42">1.项目启动阶段</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>产品经理根据以上的这些想法画出原型图。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>原型图一般是用Axure这款软件制作的。
+产品经理用Axure制作完原型图后把原型图导出为一堆HTML文件，
+在浏览器中打开index.html文件就能看到原型图。
+</pre></div>
+</div>
+<p>原型图只是简单描述了App的基本界面，界面极其简陋。
+开发人员依靠这份原型图是很难开发App的（如果完成了原型图就着手开发也行，只是研发人员在估算开发界面所需的工作时间上会非常不准确）。</p>
+<p>原型图出来后，产品经理就把原型图交给UI设计师出设计稿。</p>
+<p>UI设计师开始根据自己的美术功底美化原型图：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>给里面的每个元素都配上合适的颜色；调整整个界面的布局，
+按钮的大小、位置、颜色等，务必使整个界面看起来更美观；标示里面的文字的坐标、使用的字体等。
+
+甚至有的UI设计师还要负责设计交互，例如，A界面是怎么跳到B界面，是从上往下跳转，还是从下往上跳转。
+</pre></div>
+</div>
+<p>当UI设计师出了设计稿后，产品经理和整个项目相关的人员开产品会议。
+产品会议里，产品经理亲自介绍原型图，把整个产品的业务逻辑用原型图向相关的人员演示，
+还有回复大家对产品的疑问。</p>
+<p><code class="docutils literal notranslate"><span class="pre">此会议非常重要！保证整个团队对这个产品的理解一致，从而确保接下来开发工作顺利进行。</span></code></p>
+<p>产品会议后，相关的人员领取属于自身的任务（或者由上级分派），相关的人员同时估算研发时间，
+研发总监或技术总监根据各估算时间制定安排工作计划。</p>
+</section>
+<section id="id18">
+<h3><a class="toc-backref" href="#id43">2.研发阶段</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>后台开发人员根据产品和业务的需求设计后台的架构。</p>
+<p>当后端的架构设计完成后，后端开发人员通过下面3点先初步设定API接口。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· API是有什么用的？
+· API的输入参数是什么？
+· API返回什么数据？
+</pre></div>
+</div>
+<p>后台研发人员对Android研发人员和iOS研发人员说明其设定的API接口，让其了解相关内容。</p>
+<p>这些API接口初期先不用实现其功能，只需要返回一些测试的数据以便前端人员开发，后台研发人员在研发的过程中慢慢把这些接口的功能实现。这样前端和后端的开发进度都不会耽误。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>当然，这些API接口以后不排除有改动的可能，为了保证信息的通畅，
+任何对API接口的改动请及时通知相关人员。
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h3><a class="toc-backref" href="#id44">3.测试阶段</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>当制订开发计划时就应该规划功能测试周期，一般是一个月测试一次为宜。</p>
+<p>如果开发了两三个月才测试一次，那么积累的问题会非常多，如果对某个业务理解错误，那么过长的研发周期也会使建立在错误业务上的其他业务难以修复。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>创业团队中大多数情况下没有配备专门的测试人员，更多的情况是“人人都是测试员”。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id20">
+<h2><a class="toc-backref" href="#id45"><span class="section-number">6.1.7. </span>3.正式推出阶段</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<p>App测试完毕后就开始准备上架。</p>
+<p>如果是iOS应用，就提交到App store审核，需要7～15个工作日。</p>
+<p>如果是Android应用，就提交到各个应用市场，例如，小米应用市场、豌豆荚、应用宝等。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· 提交到各个应用市场，潜在用户也未必发现这个App？
+· 怎么让更多的用户了解这个App？
+· 用户了解这个App后怎么让用户下载？
+· 怎么保证用户经常使用App，增加用户的黏性？
+</pre></div>
+</div>
+<p>创业团队中的职权很难分清，例如在创业团队中，
+App后台人员都要兼职做运维，甚至是前端，理由很现实：没额外的资金聘请人员负责这些工作，
+但这些工作总要做，最后就只能由App后台人员兼任。</p>
+<p>在创业团队中工作能力成长快，大量的问题都要开发人员处理，同时在创业团队里对人员技能要求比较高，要一专多长，
+可能需要经常加班。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="6. APP后台开发运维_读书笔记" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html" class="btn btn-neutral float-right" title="6.2. APP后台基础技术" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

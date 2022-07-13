@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.6. 综合配置案例 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. 思科设备数通复习" href="../03.%E6%80%9D%E7%A7%91%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E5%A4%8D%E4%B9%A0/index.html" />
+    <link rel="prev" title="1.5. 中小园区组网场景" href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 华为设备数通玩转</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">1.1. HCNA基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA%E5%AE%9E%E9%AA%8C%E4%B8%BE%E4%BE%8B.html">1.2. HCNA网络技术实验指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%8D%8E%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html">1.3. 华为设备常用命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E5%B0%8F%E5%9E%8B%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html">1.4. 小型园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html">1.5. 中小园区组网场景</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.6. 综合配置案例</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.6.1. 交换机与防火墙对接上网示例</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E6%80%9D%E7%A7%91%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E5%A4%8D%E4%B9%A0/index.html">2. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">3. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>华为设备数通玩转</a> &raquo;</li>
+      <li><span class="section-number">1.6. </span>综合配置案例</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/06.综合配置案例.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id5">综合配置案例</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id6">交换机与防火墙对接上网示例</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id7">二层交换机与防火墙对接上网</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id8">三层交换机与防火墙对接上网</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">1.6. </span>综合配置案例</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">1.6.1. </span>交换机与防火墙对接上网示例</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="id3">
+<h3><a class="toc-backref" href="#id7">二层交换机与防火墙对接上网</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id8">三层交换机与防火墙对接上网</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html" class="btn btn-neutral float-left" title="1.5. 中小园区组网场景" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../03.%E6%80%9D%E7%A7%91%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E5%A4%8D%E4%B9%A0/index.html" class="btn btn-neutral float-right" title="2. 思科设备数通复习" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

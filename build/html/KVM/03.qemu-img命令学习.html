@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. qemu-img命令学习 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4. KVM设备高级管理" href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html" />
+    <link rel="prev" title="2. KVM管理工具" href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01%E6%9E%84%E5%BB%BAKVM%E7%8E%AF%E5%A2%83.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">2. KVM管理工具</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. qemu-img命令学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qemu">3.1. 1.QEMU常见操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">3.2. 2.QEMU支持的镜像文件格式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raw">3.2.1. 2.1 raw</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qcow2">3.2.2. 2.2 qcow2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#qcow">3.2.3. 3.3 qcow</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vdi">3.2.4. 3.4 vdi</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vmdk">3.2.5. 3.5 vmdk</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vpc">3.2.6. 3.6 vpc</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vhdx">3.2.7. 3.7 vhdx</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sheepdog">3.2.8. 3.8 sheepdog</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">3.3. 3.客户机存储方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">3.4. 4.图形显示</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sdl">3.4.1. 4.1 SDL的使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vnc">3.4.2. 4.2 VNC的使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.4.3. 4.3 VNC显示中的鼠标偏移</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.4.4. 4.4 非图形模式</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html">4. KVM设备高级管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Vagrant%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">5. Vagrant虚拟机快速创建开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html">6. KVM相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E8%BD%AC%E6%8D%A2V2V.html">7. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM%E5%B8%A6web%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2.html">8. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.CentOS7-ks.cfg%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%93%8D-%E5%AE%89%E8%A3%85%E5%92%8C%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html">12. KVM部署实操-安裝和常用操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">KVM实践</a> &raquo;</li>
+      <li><span class="section-number">3. </span>qemu-img命令学习</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/KVM/03.qemu-img命令学习.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#qemu-img" id="id9">qemu-img命令学习</a></p>
+<ul>
+<li><p><a class="reference internal" href="#qemu" id="id10">1.QEMU常见操作</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id11">2.QEMU支持的镜像文件格式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#raw" id="id12">2.1 raw</a></p></li>
+<li><p><a class="reference internal" href="#qcow2" id="id13">2.2 qcow2</a></p></li>
+<li><p><a class="reference internal" href="#qcow" id="id14">3.3 qcow</a></p></li>
+<li><p><a class="reference internal" href="#vdi" id="id15">3.4 vdi</a></p></li>
+<li><p><a class="reference internal" href="#vmdk" id="id16">3.5 vmdk</a></p></li>
+<li><p><a class="reference internal" href="#vpc" id="id17">3.6 vpc</a></p></li>
+<li><p><a class="reference internal" href="#vhdx" id="id18">3.7 vhdx</a></p></li>
+<li><p><a class="reference internal" href="#sheepdog" id="id19">3.8 sheepdog</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id2" id="id20">3.客户机存储方式</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id21">4.图形显示</a></p>
+<ul>
+<li><p><a class="reference internal" href="#sdl" id="id22">4.1 SDL的使用</a></p></li>
+<li><p><a class="reference internal" href="#vnc" id="id23">4.2 VNC的使用</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id24">4.3 VNC显示中的鼠标偏移</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id25">4.4 非图形模式</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="qemu-img">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">3. </span>qemu-img命令学习</a><a class="headerlink" href="#qemu-img" title="Permalink to this headline">¶</a></h1>
+<section id="qemu">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">3.1. </span>1.QEMU常见操作</a><a class="headerlink" href="#qemu" title="Permalink to this headline">¶</a></h2>
+<p>qemu-img是QEMU的磁盘管理工具，在完成QEMU源码编译后就会默认编译好qemu-img这个二进制文件。qemu-img也是QEMU/KVM使用过程中一个比较重要的工具。</p>
+<p>qemu-img工具的命令行基本用法如下：</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qemu-img <span class="o">[</span>standard options<span class="o">]</span> <span class="nb">command</span> <span class="o">[</span><span class="nb">command</span> options<span class="o">]</span>
+</pre></div>
+</div>
+<p>下面的命令行演示了两个转换：</p>
+<p>将VMware的vmdk格式镜像转换为KVM可以使用的raw格式的镜像，</p>
+<p>将一个raw镜像文件转化为qcow2格式的镜像。</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-img convert -O raw my-VMware.vmdk my-kvm.img</span>
+<span class="c1">#此处并无实际存在vmdk文件，仅演示其命令行操作</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-img convert -O qcow2 rhel7.img rhel7-a.qcow2</span>
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_34185560/article/details/93117304">https://blog.csdn.net/weixin_34185560/article/details/93117304</a></p>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">3.2. </span>2.QEMU支持的镜像文件格式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="raw">
+<h3><a class="toc-backref" href="#id12"><span class="section-number">3.2.1. </span>2.1 raw</a><a class="headerlink" href="#raw" title="Permalink to this headline">¶</a></h3>
+<p>原始的磁盘镜像格式，也是qemu-img命令默认的文件格式。这种格式的文件的优势在于它非常简单，且非常容易移植到其他模拟器（emulator，QEMU也是一个emulator）上去使用。如果客户机文件系统（如Linux的ext2/ext3/ext4、Windows的NTFS）支持“空洞”（hole），那么镜像文件只有在被写有数据的扇区才会真正占用磁盘空间，从而节省磁盘空间，就如前面用“qemu-img
+info”命令查看镜像文件信息中看到的那样。</p>
+<p>raw格式只有一个参数选项：preallocation。它有3个值：off，falloc，full。</p>
+<ol class="arabic simple">
+<li><p>off就是禁止预分配空间，即采用稀疏文件方式，这是默认值。</p></li>
+<li><p>falloc是qemu-img创建镜像时候调用posix_fallocate()函数来预分配磁盘空间给镜像文件（但不往其中写入数据，所以也能瞬时完成）。</p></li>
+<li><p>full是除了实实在在地预分配空间以外，还逐字节地写0，所以很慢。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># time qemu-img create -f raw test.img -o preallocation=off 100G</span>
+<span class="n">Formatting</span> <span class="s1">&#39;test.img&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">raw</span> <span class="n">size</span><span class="o">=</span><span class="mi">107374182400</span> <span class="n">preallocation</span><span class="o">=</span><span class="n">off</span>
+
+<span class="n">real</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">003</span><span class="n">s</span>
+<span class="n">user</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">001</span><span class="n">s</span>
+<span class="n">sys</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">003</span><span class="n">s</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># time qemu-img create -f raw test_falloc.img -o preallocation=falloc 10G</span>
+<span class="n">Formatting</span> <span class="s1">&#39;test_falloc.img&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">raw</span> <span class="n">size</span><span class="o">=</span><span class="mi">10737418240</span> <span class="n">preallocation</span><span class="o">=</span><span class="n">falloc</span>
+
+<span class="n">real</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">041</span><span class="n">s</span>
+<span class="n">user</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">001</span><span class="n">s</span>
+<span class="n">sys</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">002</span><span class="n">s</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># time qemu-img create -f raw test_full.img -o preallocation=full 10G</span>
+<span class="n">Formatting</span> <span class="s1">&#39;test_full.img&#39;</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">raw</span> <span class="n">size</span><span class="o">=</span><span class="mi">10737418240</span> <span class="n">preallocation</span><span class="o">=</span><span class="n">full</span>
+
+<span class="n">real</span>   <span class="mi">1</span><span class="n">m26</span><span class="o">.</span><span class="mi">129</span><span class="n">s</span>
+<span class="n">user</span>   <span class="mi">0</span><span class="n">m0</span><span class="o">.</span><span class="mi">009</span><span class="n">s</span>
+<span class="n">sys</span>      <span class="mi">0</span><span class="n">m7</span><span class="o">.</span><span class="mi">356</span><span class="n">s</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># du -h test*.img</span>
+<span class="mi">10</span><span class="n">G</span>      <span class="n">test_falloc</span><span class="o">.</span><span class="n">img</span>
+<span class="mi">10</span><span class="n">G</span>      <span class="n">test_full</span><span class="o">.</span><span class="n">img</span>
+<span class="mi">0</span>      <span class="n">test</span><span class="o">.</span><span class="n">img</span>
+</pre></div>
+</div>
+<p>在不追求性能的情况下，我们推荐使用默认的off方式。</p>
+</section>
+<section id="qcow2">
+<h3><a class="toc-backref" href="#id13"><span class="section-number">3.2.2. </span>2.2 qcow2</a><a class="headerlink" href="#qcow2" title="Permalink to this headline">¶</a></h3>
+<p>qcow2是QEMU目前推荐的镜像格式，它是使用最广、功能最多的格式。它支持稀疏文件（即支持空洞）以节省存储空间，它支持可选的AES加密以提高镜像文件安全性，支持基于zlib的压缩，支持在一个镜像文件中有多个虚拟机快照。</p>
+<p>在qemu-img命令中，qcow2支持如下几个选项：</p>
+<p>·size，指定镜像文件的大小。等同于qemu-img create-f fmtsize。</p>
+<p>·compat（兼容性水平，compatibility
+level），可以等于0.10或者1.1，表示适用于0.10版本以后的QEMU，或者是1.1版本以后的QEMU。</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-img create -f qcow2 -o compat=0.10,size=10G test.qcow2</span>
+Formatting <span class="s1">&#39;test.qcow2&#39;</span>, <span class="nv">fmt</span><span class="o">=</span>qcow2 <span class="nv">size</span><span class="o">=</span><span class="m">10737418240</span> <span class="nv">compat</span><span class="o">=</span><span class="m">0</span>.10 <span class="nv">encryption</span><span class="o">=</span>off <span class="nv">cluster_size</span><span class="o">=</span><span class="m">65536</span> <span class="nv">lazy_refcounts</span><span class="o">=</span>off <span class="nv">refcount_bits</span><span class="o">=</span><span class="m">16</span>
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-img info test.qcow2</span>
+image: test.qcow2
+file format: qcow2
+virtual size: 10G <span class="o">(</span><span class="m">10737418240</span> bytes<span class="o">)</span>
+disk size: 196K
+cluster_size: <span class="m">65536</span>
+Format specific information:
+    compat: <span class="m">0</span>.10
+    refcount bits: <span class="m">16</span>
+
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-img create -f qcow2 -o compat=1.1,size=10G test.qcow2</span>
+Formatting <span class="s1">&#39;test.qcow2&#39;</span>, <span class="nv">fmt</span><span class="o">=</span>qcow2 <span class="nv">size</span><span class="o">=</span><span class="m">10737418240</span> <span class="nv">compat</span><span class="o">=</span><span class="m">1</span>.1 <span class="nv">encryption</span><span class="o">=</span>off <span class="nv">cluster_size</span><span class="o">=</span><span class="m">65536</span> <span class="nv">lazy_refcounts</span><span class="o">=</span>off <span class="nv">refcount_bits</span><span class="o">=</span><span class="m">16</span>
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-img info test.qcow2</span>
+image: test.qcow2
+file format: qcow2
+virtual size: 10G <span class="o">(</span><span class="m">10737418240</span> bytes<span class="o">)</span>
+disk size: 196K
+cluster_size: <span class="m">65536</span>
+Format specific information:
+    compat: <span class="m">1</span>.1
+    lazy refcounts: <span class="nb">false</span>
+    refcount bits: <span class="m">16</span>
+    corrupt: <span class="nb">false</span>
+</pre></div>
+</div>
+</section>
+<section id="qcow">
+<h3><a class="toc-backref" href="#id14"><span class="section-number">3.2.3. </span>3.3 qcow</a><a class="headerlink" href="#qcow" title="Permalink to this headline">¶</a></h3>
+<p>这是较旧的QEMU镜像格式，现在已经很少使用了，一般用于兼容比较老版本的QEMU。它支持size、backing_file（后端镜像）和encryption（加密）3个选项。</p>
+</section>
+<section id="vdi">
+<h3><a class="toc-backref" href="#id15"><span class="section-number">3.2.4. </span>3.4 vdi</a><a class="headerlink" href="#vdi" title="Permalink to this headline">¶</a></h3>
+<p>兼容Oracle（Sun）VirtualBox1.1的镜像文件格式（Virtual Disk Image）。</p>
+</section>
+<section id="vmdk">
+<h3><a class="toc-backref" href="#id16"><span class="section-number">3.2.5. </span>3.5 vmdk</a><a class="headerlink" href="#vmdk" title="Permalink to this headline">¶</a></h3>
+<p>兼容VMware 4版本以上的镜像文件格式（Virtual Machine Disk Format）。</p>
+</section>
+<section id="vpc">
+<h3><a class="toc-backref" href="#id17"><span class="section-number">3.2.6. </span>3.6 vpc</a><a class="headerlink" href="#vpc" title="Permalink to this headline">¶</a></h3>
+<p>兼容Microsoft的Virtual PC的镜像文件格式（Virtual Hard Disk format）。</p>
+</section>
+<section id="vhdx">
+<h3><a class="toc-backref" href="#id18"><span class="section-number">3.2.7. </span>3.7 vhdx</a><a class="headerlink" href="#vhdx" title="Permalink to this headline">¶</a></h3>
+<p>兼容Microsoft Hyper-V的镜像文件格式。</p>
+</section>
+<section id="sheepdog">
+<h3><a class="toc-backref" href="#id19"><span class="section-number">3.2.8. </span>3.8 sheepdog</a><a class="headerlink" href="#sheepdog" title="Permalink to this headline">¶</a></h3>
+<p>sheepdog项目是由日本NTT实验室发起的、为QEMU/KVM做的一个开源的分布式存储系统，为KVM虚拟化提供块存储。它无单点故障（无类似于元数据服务器的中央节点），方便扩展（已经支持上千个节点数量），配置简单，运维成本较低。总的来说，它具有高可用性、易扩展性、易管理性等优势。sheepdog项目的官方网站为：<a class="reference external" href="http://www.osrg.net/sheepdog/">http://www.osrg.net/sheepdog/</a>
+。</p>
+</section>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">3.3. </span>3.客户机存储方式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>在QEMU/KVM中，客户机镜像文件可以由很多种方式来构建，其中几种如下：</p>
+<p>·本地存储的客户机镜像文件。</p>
+<p>·物理磁盘或磁盘分区。</p>
+<p>·LVM（Logical Volume Management），逻辑分区。</p>
+<p>·NFS（Network File System），网络文件系统。</p>
+<p>·iSCSI（Internet Small Computer System
+Interface），基于Internet的小型计算机系统接口。</p>
+<p>·本地或光纤通道连接的LUN（Logical Unit Number）。</p>
+<p>·GFS2（Global File System 2）。</p>
+<p>使用文件来做镜像的优点如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）存储方便，在一个物理存储设备上可以存放多个镜像文件；
+
+2）易用性，管理多个文件比管理多个磁盘、分区、逻辑分区等都要方便；
+
+3）可移动性，可以非常方便地将镜像文件移动到另外一个本地或远程的物理存储系统中去；
+
+4）可复制性，可以非常方便地复制或修改一个镜像文件，从而供另一个新的客户机使用；
+
+5）稀疏文件可以节省磁盘空间，仅占用实际写入过数据的空间；
+
+6）网络远程访问，镜像文件可以方便地存储在通过网络连接的远程文件系统（如NFS）中。
+</pre></div>
+</div>
+<p>在宿主机中，挂载NFS文件系统，建立qcow2镜像，然后启动客户机演示如下</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># mount my-nfs:/images /images/</span>
+
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-img create -f qcow2 -o backing_file=/images/linux/ia32e_rhel7.img,size=20G rhel7.qcow2</span>
+Formatting <span class="s1">&#39;rhel7.qcow2&#39;</span>, <span class="nv">fmt</span><span class="o">=</span>qcow2 <span class="nv">size</span><span class="o">=</span><span class="m">21474836480</span> <span class="nv">backing_file</span><span class="o">=</span><span class="s1">&#39;/images/linux/ia32e_rhel7.img&#39;</span> <span class="nv">encryption</span><span class="o">=</span>off <span class="nv">cluster_size</span><span class="o">=</span><span class="m">65536</span>
+
+
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-system-x86_64 -smp 2 -m 1024 -net nic -net tap -hda rhel7.qcow2 -vnc :0 -daemonize</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">3.4. </span>4.图形显示</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="sdl">
+<h3><a class="toc-backref" href="#id22"><span class="section-number">3.4.1. </span>4.1 SDL的使用</a><a class="headerlink" href="#sdl" title="Permalink to this headline">¶</a></h3>
+<p>SDL（Simple DirectMedia
+Layer）是一个用C语言编写的、跨平台的、免费和开源的多媒体程序库，它提供了一个简单的接口用于操作硬件平台的图形显示、声音、输入设备等。SDL库被广泛应用于各种操作系统（如Linux、FreeBSD、Windows、MacOS、iOS、Android等）上的游戏开发、多媒体播放器、模拟器（如QEMU）等众多应用程序之中。尽管SDL是用C语言编写的，但是其他很多流行的编程语言（如C++、C#、Java、Objective
+C、Lisp、Erlang、Pascal、Perl、Python、PHP、Ruby等）都提供了对SDL库的绑定，在这些编程语言中可以很方便地调用SDL的功能。</p>
+<p>在QEMU模拟器中的图形显示默认使用的就是SDL。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host root<span class="o">]</span><span class="c1"># qemu-system-x86_64 rhel7.img</span>
+Could not initialize SDL<span class="o">(</span>No available video device<span class="o">)</span> - exiting
+</pre></div>
+</div>
+</section>
+<section id="vnc">
+<h3><a class="toc-backref" href="#id23"><span class="section-number">3.4.2. </span>4.2 VNC的使用</a><a class="headerlink" href="#vnc" title="Permalink to this headline">¶</a></h3>
+<p>VNC（Virtual Network
+Computing）是图形化的桌面分享系统，它使用RFB（Remote
+FrameBuffer）协议来远程控制另外一台计算机系统。它通过网络将控制端的键盘、鼠标的操作传递到远程受控计算机中，而将远程计算机中的图形显示屏幕反向传输回控制端的VNC窗口中。VNC是不依赖于操作系统的，在Windows、Linux上都可以使用VNC，可以从Windows系统连接到远程的Linux
+VNC服务，也可以从Linux系统连接到远程的Windows系统，当然也可以在Windows对Windows系统之间、Linux对Linux系统之间使用VNC连接。</p>
+<p>下面分别讲述在宿主机中直接使用VNC和在通过qemu命令行创建客户机时采用VNC方式的图形显示。</p>
+<p>1.宿主机中的VNC使用</p>
+<p>1）在宿主机中安装VNC的服务器软件包（如tigervnc-server）。可以用如下命令查询vnc
+server的安装情况。</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># rpm -q tigervnc</span>
+tigervnc-1.3.1-9.el7.x86_64
+<span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># rpm -q tigervnc-server</span>
+tigervnc-server-1.3.1-9.el7.x86_64
+</pre></div>
+</div>
+<p>如果没有安装vnc server，则可以使用“yum install
+tigervnc-server”这样的命令来安装。</p>
+<p>2）设置宿主机中的安全策略，使其允许VNC方式的访问，主要需要设置防火墙和SELinux的安全策略。这里为了简单起见，直接关闭了防火墙和SELinux，在实际生产环境中，需要根据特定的安全策略去设置。</p>
+<p>可以使用“setup”命令来设置或关闭防火墙，也可以用“systecmctl stop
+firewalld”命令来实现同样的效果。</p>
+<p>关闭SELinux可以采取如下3种方式：</p>
+<p>·在运行时执行“setenforce”命令来设置，命令行如下（这个效果是一次性的）：</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># setenforce 0</span>
+setenforce: SELinux is disabled
+
+<span class="c1"># 永久关闭setenforce</span>
+sed -i <span class="s2">&quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;</span> /etc/selinux/config
+</pre></div>
+</div>
+<p>3）在宿主机中启动VNC服务端，运行命令“vncserver
+:1”即可启动端口为5901（5900+1）的VNC远程桌面的服务器，</p>
+<p>示例如下。可以启动多个VNC
+Server，使用不同的端口供多个客户端使用。如果是第一次启动vncserver，系统会提示设置连接时需要输入的密码，根据需要进行设置即可。</p>
+<p>5）连接到远程的宿主机服务器，使用的格式为“IP(hostname)：PORT”。在命令行用“vncviewer
+kvm-host：1”这样的命令来连接到某台机器的某个VNC桌面。在连上VNC后，会要求输入密码验证（这个密码就是第一次启动vncserver时输入的密码），验证成功后即可正常连接到远程VNC桌面。</p>
+<p>介绍VNC的一些具体操作方法。</p>
+<p>准备两个系统，一个是KVM的宿主机系统A（IP为192.168.199.176，主机名为kvm-host），另一个是类似环境的备用KVM系统B（IP为192.168.199.146，主机名为kvm-host2），这两个系统之间可以通过网络连通。</p>
+<section id="id4">
+<h4>示例1：<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<p>在启动客户机时，带有一个不需要密码的对任何主机都可以连接的VNC服务。</p>
+<p>在宿主机A系统中，运行如下命令即可启动服务。</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># qemu-system-x86_64 -smp 4 -m 16G -enable-kvm rhel7.img -device e1000,netdev=brnet0 -netdev bridge,id=brnet0,br=virbr0 -display vnc=:0</span>
+<span class="n">WARNING</span><span class="p">:</span> <span class="n">Image</span> <span class="nb">format</span> <span class="n">was</span> <span class="ow">not</span> <span class="n">specified</span> <span class="k">for</span> <span class="s1">&#39;rhel7.img&#39;</span> <span class="ow">and</span> <span class="n">probing</span> <span class="n">guessed</span> <span class="n">raw</span><span class="o">.</span>
+         <span class="n">Automatically</span> <span class="n">detecting</span> <span class="n">the</span> <span class="nb">format</span> <span class="ow">is</span> <span class="n">dangerous</span> <span class="k">for</span> <span class="n">raw</span> <span class="n">images</span><span class="p">,</span> <span class="n">write</span> <span class="n">operations</span> <span class="n">on</span> <span class="n">block</span> <span class="mi">0</span> <span class="n">will</span> <span class="n">be</span> <span class="n">restricted</span><span class="o">.</span>
+         <span class="n">Specify</span> <span class="n">the</span> <span class="s1">&#39;raw&#39;</span> <span class="nb">format</span> <span class="n">explicitly</span> <span class="n">to</span> <span class="n">remove</span> <span class="n">the</span> <span class="n">restrictions</span><span class="o">.</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>在宿主机中，用如下命令连接到客户机中。</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vncviewer :0</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>而在B系统中，用如下命令中即可连接到A主机中对客户机开启的VNC服务。</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span><span class="o">-</span><span class="n">host2</span> <span class="o">~</span><span class="p">]</span><span class="c1"># vncviewer 192.168.199.176:0</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h4>示例2：<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>在启动客户机时，带有一个需要密码的、仅能通过本机连接的VNC服务。</p>
+<p>在宿主机A系统中，运行如下命令即可将其启动。如前面提过的，VNC的密码需要在QEMU
+monitor中设置，所以这里加了“-monitor
+stdio”参数，使monitor指向目前的标准输入输出，这样可以直接输入“change vnc
+password”命令来设置密码（否则，我们就没法连入guest了）。</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-system-x86_64 -smp 4 -m 16G -enable-kvm rhel7.img -device e1000,netdev=brnet0 -netdev bridge,id=brnet0,br=virbr0 -display vnc=localhost:0,password -monitor stdio</span>
+
+    Specify the <span class="s1">&#39;raw&#39;</span> format explicitly to remove the restrictions.
+QEMU <span class="m">2</span>.7.0 monitor - <span class="nb">type</span> <span class="s1">&#39;help&#39;</span> <span class="k">for</span> more information
+<span class="o">(</span>qemu<span class="o">)</span> change vnc password <span class="s2">&quot;123456&quot;</span>
+<span class="o">(</span>qemu<span class="o">)</span> change vnc password
+Password: ******
+<span class="o">(</span>qemu<span class="o">)</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>示例3：<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>启动客户机时并不启动VNC，启动后根据需要使用命令才真正开启VNC。</p>
+<p>在宿主机A系统中，将VNC参数中的display设置为none，然后在重定向到标准输入输出的QEMU
+monitor中使用“change vnc：0”命令来开启VNC。操作命令如下：</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-system-x86_64 -smp 4 -m 16G -enable-kvm rhel7.img -device e1000,netdev=brnet0 -netdev bridge,id=brnet0,br=virbr0 -display vnc=none -monitor stdio</span>
+
+WARNING: Image format was not specified <span class="k">for</span> <span class="s1">&#39;rhel7.img&#39;</span> and probing guessed raw.
+         Automatically detecting the format is dangerous <span class="k">for</span> raw images, write operations on block <span class="m">0</span> will be restricted.
+         Specify the <span class="s1">&#39;raw&#39;</span> format explicitly to remove the restrictions.
+QEMU <span class="m">2</span>.7.0 monitor - <span class="nb">type</span> <span class="s1">&#39;help&#39;</span> <span class="k">for</span> more information
+<span class="o">(</span>qemu<span class="o">)</span> change vnc ?
+no vnc port specified
+<span class="o">(</span>qemu<span class="o">)</span> change vnc :0
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id24"><span class="section-number">3.4.3. </span>4.3 VNC显示中的鼠标偏移</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>用如下的命令启动客户机，可解决VNC中的鼠标偏移问题.</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="n">win7</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">2</span> <span class="o">-</span><span class="n">usb</span> <span class="o">-</span><span class="n">usbdevice</span> <span class="n">tablet</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>或者，</p>
+<hr class="docutils" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">system</span><span class="o">-</span><span class="n">x86_64</span> <span class="n">win7</span><span class="o">.</span><span class="n">img</span> <span class="o">-</span><span class="n">vnc</span> <span class="p">:</span><span class="mi">2</span> <span class="o">-</span><span class="n">device</span> <span class="n">piix3</span><span class="o">-</span><span class="n">usb</span><span class="o">-</span><span class="n">uhci</span> <span class="o">-</span><span class="n">device</span> <span class="n">usb</span><span class="o">-</span><span class="n">tablet</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id25"><span class="section-number">3.4.4. </span>4.4 非图形模式</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>在qemu命令行中，添加“-nographic”参数可以完全关闭QEMU的图形界面输出，从而让QEMU在该模式下成为简单的命令行工具。而在QEMU中模拟产生的串口被重定向到了当前的控制台（console）中，所以在客户机中对其内核进行配置使内核的控制台输出重定向到串口后，依然可以在非图形模式下管理客户机系统或调试客户机的内核。</p>
+<p>用“-nographic”参数关闭图形输出，其启动命令行及客户机启动（并登录进入客户机）的过程如下所示。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># qemu-system-x86_64 -enable-kvm -smp 2 -m 4G -nographic rhel7.img</span>
+
+
+kvm-guest login:
+kvm-guest login: root      <span class="c1">#这里就是客户机的登录界面了</span>
+Password:
+Password:
+Last login: Tue Aug  <span class="m">8</span> <span class="m">19</span>:30:27 on :0
+<span class="o">[</span>root@kvm-guest ~<span class="o">]</span><span class="c1">#</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html" class="btn btn-neutral float-left" title="2. KVM管理工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html" class="btn btn-neutral float-right" title="4. KVM设备高级管理" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

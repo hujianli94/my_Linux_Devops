@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1. 01.倔强的青铜篇 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.1. 01.Mysql简介与主流分支版本" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html" />
+    <link rel="prev" title="Mysql王者之路" href="../index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">1. 01.倔强的青铜篇</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html">1.2. 02.Mysql数据库的安装启动和关闭</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E8%A1%A8.html">1.5. 05.表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html">1.6. 06.索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html">1.8. 08.锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+      <li><span class="section-number">1. </span>01.倔强的青铜篇</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">1. </span>01.倔强的青铜篇<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html#id1">1.1.1. Mysql简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html#id2">1.1.2. Mysql主流的分支版本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html#id3">官方版本的MySQL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html#percona-server">Percona Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html#mariadb">MariaDB</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html">1.2. 02.Mysql数据库的安装启动和关闭</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id1">1.2.1. 下载MySQL二进制软件包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id2">1.2.2. 安装前系统环境检测</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#mysql5-6">1.2.3. MySQL5.6版本的安装过程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id3">创建密码</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#mysql-5-7">1.2.4. MySQL 5.7版本的安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#mysqlroot">1.2.5. MySQL数据库root密码丢失的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id4">1.2.6. MySQL数据库的连接方式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id5">1.2.7. 经常还是要连接MySQL的客户端工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html#id6">1.2.8. 用户权限管理</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id1">1.3.1. MySQL体系结构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#query-cache">1.3.2. Query Cache详解</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id2">1.3.3. 存储引擎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#innodb">1.3.4. InnoDB体系结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id3">数据库和数据库实例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id4">InnoDB存储结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id8">内存结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#buffer">Buffer状态及其链表结构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id9">各大刷新线程及作用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html#id10">内存刷新机制</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#id2">1.4.1. 参数文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#id3">1.4.2. 参数类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#error-log">1.4.3. 错误日志文件error log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#binary-log">1.4.4. 二进制日志文件binary log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#slow-log">1.4.5. 慢查询日志slow log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#general-log">1.4.6. 全量日志general log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#audit-log">1.4.7. 审计日志audit log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#relay-log">1.4.8. 中继日志relay log</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#pid">1.4.9. Pid文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#socket">1.4.10. socket文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#id4">1.4.11. 表结构文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html#innodb">1.4.12. innodb存储引擎文件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.%E8%A1%A8.html">1.5. 05.表</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id2">1.5.1. 整型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id3">1.5.2. 浮点型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id4">1.5.3. 时间类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id5">1.5.4. 字符串类型</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id6">1.5.5. 字符集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id7">1.5.6. 表碎片产生的原因</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id8">1.5.7. 碎片计算方法及整理过程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id9">1.5.8. 表统计信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#id10">1.5.9. 统计信息的收集方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E8%A1%A8.html#mysq">1.5.10. Mysq库表常用命令总结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html">1.6. 06.索引</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#b-tree">1.6.1. B-tree结构</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id2">聚集索引和普通索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#icpmrrbka">ICP、MRR和BKA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id3">主键索引和唯一索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id4">覆盖索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id5">前缀索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id6">联合索引</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id7">1.6.2. 哈希索引</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html#id8">1.6.3. 索引的总结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id2">1.7.1. 事务的特性</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#atomicity">1.原子性atomicity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#consistency">2.一致性(consistency)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#lsolation">3.隔离性(lsolation)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#durability">4.持久性(Durability)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id3">1.7.2. 事务语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#truncatedelete">1.7.3. truncate和delete的区别</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id4">1.7.4. 事务的隔离级别</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id5">1.7.5. 脏读、不可重复读、幻读、可重复读</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id6">脏读</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id7">不可重复读与幻读</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html#id8">可重复读</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.%E9%94%81.html">1.8. 08.锁</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.%E9%94%81.html#innodb">1.8.1. InnoDB的锁类型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#id2">读锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#id3">写锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#dml">DML锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#id4">意向锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E9%94%81.html#id5">1.8.2. InnoDB行锁种类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#id6">记录锁，单个行记录的锁</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#gap-lock">间隙锁Gap lock</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html#next-key-locks">Next-key Locks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E9%94%81.html#id7">1.8.3. 锁等待和死锁</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E9%94%81.html#id8">1.8.4. 锁问题的监控</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../index.html" class="btn btn-neutral float-left" title="Mysql王者之路" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html" class="btn btn-neutral float-right" title="1.1. 01.Mysql简介与主流分支版本" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

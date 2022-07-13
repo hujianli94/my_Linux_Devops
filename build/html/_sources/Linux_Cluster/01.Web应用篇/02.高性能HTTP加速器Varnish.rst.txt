@@ -1,0 +1,469 @@
+.. contents::
+   :depth: 3
+..
+
+02.高性能HTTP加速器Varnish
+==========================
+
+Varnish是一个开源的反向代理软件
+和HTTP加速器，与传统的Squid相比，Varnish具有性能更高、速度更快、管理更方
+便等诸多优点，很多大型的运营网站都开始尝试用Varnish来替换Squid，这些都促
+使Varnish迅速发展起来。
+
+初识Varnish
+-----------
+
+Varnish的结构与特点
+
+Varnish是一个轻量级的Cache和反向代理软件。先进的设计理念和成熟的设计框架
+是Varnish的主要特点。
+现在的Varnish总共代码量不大，虽然功能在不断改进，但是还需要继续丰富和加强。
+下面是Varnish的一些特点。
+
+::
+
+    基于内存进行缓存，重启后数据将消失。
+    利用虚拟内存方式，I/O性能好。
+    支持设置0～60秒的精确缓存时间。
+    VCL配置管理比较灵活。
+    32位机器上缓存文件大小为最大2GB。
+    具有强大的管理功能，例如top、stat、admin、list等。
+    状态机设计巧妙，结构清晰。
+    利用二叉堆管理缓存文件，可达到积极删除目的。
+
+Varnish与Squid的对比
+--------------------
+
+说到Varnish，就不能不提Squid。Squid是一个高性能的代理缓存服务器，它和
+Varnish相比较有诸多的异同点，下面进行分析。
+
+下面是Varnish与Squid之间的相同点。
+
+::
+
+    都是一个反向代理服务器。
+    都是开源软件。
+
+下面是它们的不同点，也是Varnish的优点。
+
+::
+
+    Varnish的稳定性很高。两者在完成相同负荷的工作时，Squid服务器发生故障的几
+    率要高于Varnish，因为Squid需要经常重启。
+
+    Varnish访问速度更快。Varnish采用了“Visual Page Cache”技术，所有缓存
+    数据都直接从内存读取，而Squid是从硬盘读取缓存数据，因此Varnish在访问速度
+    方面会更快。
+
+    Varnish可以支持更多的并发连接。因为Varnish的TCP连接释放要比Squid快，所
+    以在高并发连接情况下可以支持更多的TCP连接。
+
+    Varnish可以通过管理端口，使用正则表达式批量清除部分缓存，而Squid做不到。
+    当然，与传统的Squid相比，Varnish也有缺点。
+
+    Varnish在高并发状态下CPU、I/O和内存等资源开销都高于Squid。
+
+    Varnish进程一旦挂起、崩溃或者重启，缓存数据都会从内存中完全释放，此时所
+    有请求都会被发送到后端服务器，在高并发情况下，这会给后端服务器造成很大压
+    力。
+
+使用Varnish代替Squid做网站缓存加速器的详细解决方案
+--------------------------------------------------
+
+参考文献：
+
+`使用Varnish代替Squid做网站缓存加速器的详细解决方案 <http://zyan.cc/post/313/>`__
+
+开始安装Varnish
+---------------
+
+安装过程比较简单，在此省略
+
+Varnish的官方网址为\ ``http://varnish-cache.org``\ ，这里面有Varnish的最新说明文档及版本升级记录，在此网站中可以找到Varnish在SourceForge中的下载链
+接。
+
+配置一个简单的Varnish实例
+-------------------------
+
+Varnish安装完成后，默认的配置文件
+为\ ``/usr/local/varnish/etc/varnish/default.vcl``\ ，
+此文件内容默认全部被注释掉。
+这里以这个文件为模板，创建一个新的文件vcl.conf，并且将其放到/usr/local/varnish/etc目录下。
+配置完成的vcl.conf文件如下：
+
+::
+
+    #通过backend      定义一个名称为webserver的后端主机，
+    “.host”指定后端主机的IP地址或者域#名，
+    “.port”指定后端主机的服务器端口。
+    其中，“192.168.12.26”就是后端的一个Web服务器
+
+示例
+
+::
+
+    backend webserver{
+    .host="192.168.12.26"；
+    .port="80"；
+    }
+    #开始调用vcl_recv
+    sub vcl_recv{
+    if（req.http.x-forwarded-for）{
+    set req.http.X-Forwarded-For=
+    req.http.X-Forwarded-For"，"client.ip；
+    }else{
+    set req.http.X-Forwarded-For=client.ip；
+    }
+
+    #如果请求的类型不是GET、HEAD、PUT、POST、TRACE、OPTIONS或DELETE时，则进入
+    #pipe模式。注意这里是“＆＆”关系
+    if（req.request！="GET"＆＆
+    req.request！="HEAD"＆＆
+    req.request！="PUT"＆＆
+    req.request！="POST"＆＆
+    req.request！="TRACE"＆＆
+    req.request！="OPTIONS"＆＆
+    req.request！="DELETE"）{
+    return（pipe）；
+    }
+
+    #如果请求的类型不是GET或HEAD，则进入pass模式
+    if（req.request！="GET"＆＆req.request！="HEAD"）{
+    return（pass）；
+    }
+
+    #对ixdba.net或者ixdba.cn两个域名进行缓存加速。这是个泛域名的概念，也就
+    #是将所有以ixdba.net或者ixdba.cn结尾的域名都进行缓存
+    if（req.http.host～"^（.*）.ixdba.net"||req.http.host
+    ～"^（.*）.ixdba.cn"）{
+    set req.backend=webserver；
+    }
+
+    #对以.jsp和.do结尾以及带有?的URL，直接从后端服务器读取内容
+    if（req.url～"\.（jsp|do）（$|\?）"）{
+    return（pass）；
+    }else{
+    return（lookup）；
+    }
+    }
+    sub vcl_pipe{
+    return（pipe）；
+    }
+    sub vcl_pass{
+    return（pass）；
+    }
+    sub vcl_hash{
+    set req.hash+=req.url；
+    if（req.http.host）{
+    set req.hash+=req.http.host；
+    }else{
+    set req.hash+=server.ip；
+    }
+    return（hash）；
+    }
+    sub vcl_hit{
+    if（！obj.cacheable）{
+    return（pass）；
+    }
+    return（deliver）；
+    }
+    sub vcl_miss{
+    return（fetch）；
+    }
+    sub vcl_fetch{
+    if（！beresp.cacheable）{
+    return（pass）；
+    }
+    if（beresp.http.Set-Cookie）{
+    return（pass）；
+    }
+
+    #当url中包含servlet时，不进行缓存
+    if（req.url～"^/servlet/"）{
+    return（pass）；
+    }
+    #当url中包含services时，不进行缓存
+    if（req.url～"^/services/"）{
+    return（pass）；
+    }
+    #如果请求类型是GET，并且请求的URL中包含upload，那么就进行缓存，缓存的时
+    间是
+    #300秒，即5分钟
+    if（req.request=="GET"＆＆req.url～"^/upload（.*）$"）{
+    set beresp.ttl=300s；
+    }
+
+    #当请求类型是GET，并且请求的URL以png、xsl、xml、gif、css、js等结尾时，
+    进行缓存，
+    #缓存时间为600秒
+    if（req.request=="GET"＆＆req.url～"\.
+    （png|xsl|xml|pdf|ppt|doc|docx|chm|rar|
+    zip|bmp|jpeg|swf|ico|mp3|mp4|rmvb|ogg|mov|avi|wmv|swf|txt|png|gif|jpg|css|
+    js|html|htm）$"）{
+    set beresp.ttl=600s；
+    }
+    return（deliver）；
+    }
+    #下面添加一个Header标识，以判断缓存是否命中
+    sub vcl_deliver{
+    if（obj.hits＞0）{
+    set resp.http.X-Cache="HIT from www.ixdba.net"；
+    }else{
+    set resp.http.X-Cache="MISS from www.ixdba.net"；
+    }
+    return（deliver）；
+    }
+
+Varnish对应多台Web服务器的配置实例
+----------------------------------
+
+下面是一个Varnish对应多台Web主机的应用实例，
+具有负载分担和健康检测机制。 配置完成的vcl.conf文件如下：
+
+::
+
+    #下面定义了4台后端Web服务器
+    backend webserver1{
+    .host="192.168.12.12"；
+    .port="80"；
+    }
+    backend webserver2{
+    .host="192.168.12.13"；
+    .port="80"；
+    }
+    backend webserver3{
+    .host="192.168.12.14"；
+    .port="80"；
+    }
+    backend webserver4{
+    .host="192.168.12.15"；
+    .port="80"；
+    }
+
+    #定义一个名为webserver的director，也就是由webserver1和webserver2两台后端服务器随机分担
+    #请求。“.weight”用来指定两台后端服务器的权值。权值高的处理请求的几率就高些
+
+    director webserver random{
+    {.backend=webserver1；.weight=5；}
+    {.backend=webserver2；.weight=8；}
+    }
+    #这里设定清理缓存的规则，Varnish允许localhost、127.0.0.1和192.168.12.***三个来源IP通过
+    #PURGE方法清除缓存
+
+    acl purge{
+    "localhost"；
+    "127.0.0.1"；
+    "192.168.12.0"/26；
+    }
+
+    sub vcl_recv{
+    #这里设定，当发送PURGE请求的客户端不是在acl中设定的地址时，将返回405状态代码，提示
+    #“Not allowed”。当请求的URL是以.php和.cgi结尾时，则交给后端服务器去处理
+
+    if（req.request=="PURGE"）{
+    if（！client.ip～purge）{
+    error405"Not allowed."；
+    }
+    elseif（req.url～"\.（php|cgi）（$|\?）"）{
+    return（pass）；
+    }
+    else{
+    return（lookup）；
+    }
+    }
+
+    #下面设定域名访问策略，其实也是设定对后端主机健康状态检测的一个机制。如果访问www.ixdba.net
+    #或者bbs.ixdba.net，并且请求重启次数为0，则将请求交给webserver来处理。如果请求重启次数
+    #为1，则将请求交给webserver3处理。如果访问img.ixdba.net或者images.ixdba.net，则将请求交给webserver4来处理
+
+    if（（req.http.host～"^（www.|bbs.）?ixdba.net"）＆＆
+    （req.restarts==0））{
+    set req.backend=webserver；
+    }elseif（req.restarts==1）{
+    set req.backend=webserver3；
+    }
+    if（req.http.host～"^（img.|images.）?ixdba.net"）{
+    set req.backend=webserver4；
+    }
+
+    #下面定义缓存的策略。当请求以.cgi和.php结尾及带有?的URL时，不进行缓存，直接从后端服务器
+    #读取内容。其他请求都进入lookup模式，也就是进入cache中通过hash表寻找被请求的数据
+    if（req.request！="GET"＆＆req.request！="HEAD"）
+    {
+    return（pipe）；
+    }
+    elseif（req.url～"\.（cgi|php）（$|\?）"）
+    {
+    return（pass）；
+    }
+    elseif（req.http.Authenticate||req.http.Authorization）{
+    return（pass）；
+    }
+    return（lookup）；
+    }
+
+    #如果请求的类型是PURGE方法，Varnishd会将此请求的缓存周期设置为0，也就是使这个URL的缓存失效，
+    #从而达到刷新Varnish缓存的目的
+    sub vcl_hit
+    {
+    if（req.request=="PURGE"）{
+    set obj.ttl=0s；
+    error200"Purged."；
+    }
+    if（！obj.cacheable）
+    {
+    return（pass）；
+    }
+    if（obj.http.Vary）
+    {
+    unset obj.http.Vary；
+    }
+    }
+    sub vcl_miss
+    {
+    if（req.request=="PURGE"）{
+    error404"Not in cache."；
+    }
+    }
+    #定义hash的值，并且处理压缩内容
+    sub vcl_hash{
+    set req.hash+=req.url；
+    if（req.http.host）{
+    set req.hash+=req.http.host；
+    }else{
+    set req.hash+=server.ip；
+    }
+    if（req.http.Accept-Encoding）{
+    if（req.url～"\.
+    （jpg|jpeg|png|gif|rar|zip|gz|tgz|bz2|tbz|mp3|ogg|swf|exe|flv
+    |avi|rmvb|rm|mpg|mpeg|pdf）$"）{
+    }else{
+    set req.hash+=req.http.Accept-Encoding；
+    }
+    }
+    return（hash）；
+    }
+    sub vcl_fetch
+    {
+    if（！beresp.cacheable）{
+    return（pass）；
+    }
+    if（beresp.http.Set-Cookie）{
+    return（pass）；
+    }
+    #定义在什么状态下进入restart模式
+    if（beresp.status==500||beresp.status==501||beresp.status==502||
+    beresp.status==503||beresp.status==504||beresp.status==404）
+    {
+    return（restart）；
+    }
+    #下面定义不缓存含有哪些HTTP头的请求
+    if（beresp.http.Pragma～"no-cache"||beresp.http.Cache-Control～"no-
+    cache"||beresp.http.Cache-Control～"private"）{
+    return（pass）；
+    }
+    #定义不同内容的缓存时间
+    if（req.request=="GET"＆＆req.url～"\.（css|js|html|htm）$"）{
+    set beresp.ttl=300s；
+    }
+    if（req.request=="GET"＆＆req.url～"\.
+    （gif|jpg|jpeg|bmp|png|tiff|tif|ico|im
+    g|bmp|wmf）$"）{
+    set beresp.ttl=3600s；
+    }
+    if（req.request=="GET"＆＆req.url～"\.
+    （svg|swf|ico|mp3|mp4|m4a|wav|rmvb|avi
+    |wmv）$"）{
+    set beresp.ttl=10d；
+    }
+    return（deliver）；
+    }
+    sub vcl_deliver{
+    if（obj.hits＞0）{
+    set resp.http.X-Cache="HIT from www.ixdba.net"；
+    }else{
+    set resp.http.X-Cache="MISS from www.ixdba.net"；
+    }
+    return（deliver）；
+    }
+
+运行Varnish
+-----------
+
+1.varnishd指令
+
+Varnish启动的命令是/usr/local/varnish/sbin/varnishd。此命令参数较多，
+用法比较复杂 不常用
+
+2.配置Varnish运行脚本
+
+在安装Varnish时，已经将Varnish的管理脚本复制到相应的目录下，这里稍作修改
+即可。首先修改/etc/sysconfig/varnish文件，根据这里的要求，配置好的文件
+如下：
+
+::
+
+    NFILES=131072
+    MEMLOCK=82000
+    DAEMON_OPTS="-a192.168.12.246：80\
+    -T127.0.0.1：3500\
+    -f/usr/local/varnish/etc/vcl.conf\
+    -u varnish-g varnish\
+    -w2，51200，10\
+    -n/data/varnish/cache\
+    -s file，/data/varnish/cache/varnish_cache.data，4G"
+
+这里需要说明的是，在32位操作系统下，最大只能支持2GB的缓存文件
+varnish\_cache.data，如果需要更大的缓存文件，则需要安装64位的Linux操作系
+统。
+
+接下来要修改的文件是/etc/init.d/varnish，找到如下几行，修改相应的路径即
+可。
+
+::
+
+    exec="/usr/local/varnish/sbin/varnishd"
+    prog="varnishd"
+    config="/etc/sysconfig/varnish"
+    lockfile="/var/lock/subsys/varnish"
+
+其中，exec用于指定varnishd的路径，只需修改为Varnish安装路径下对应的varnishd文件即可；config用于指定Varnish守护进程配置文件路径。
+
+两个文件修改完毕，就可以授权、运行/etc/init.d/varnish脚本了。执行过程如下：
+
+::
+
+    [root@varnish-server～]#chmod755/etc/init.d/varnish
+    [root@varnish-server～]#/etc/init.d/varnish
+    Usage：/etc/init.d/varnish
+    {start|stop|status|restart|condrestart|try-restart|reload|force-
+    reload}
+
+3.管理Varnish运行日志
+
+::
+
+    Varnish是通过内存共享的方式提供日志的，它提供了两种日志输出形式，分别是：
+    通过自带的varnishlog指令获得Varnish详细的系统运行日志。
+    例如：
+    [root@varnish-server～]#/usr/local/varnish/bin/varnishlog-n/data/varnish/cache
+
+
+    通过自带的varnishncsa指令得到类似Apache的combined输出格式的日志。
+    例如：
+    [root@varnish-server～]#/usr/local/varnish/bin/varnishncsa-
+    n/data/varnish/cache
+
+
+    也可以将日志输出到一个文件中，通过“-w”参数指定即可。
+    [root@varnish-server～]#/usr/local/varnish/bin/varnishncsa-
+    n/data/varnish/cache\
+    ＞-w/data/varnish/log/varnish.log
+
+
+    第一种在大多数情况下不是必须的，这里重点介绍第二种日志输出形式的配置方式。
+
+其他功能
+--------
+
+其他功能不一一往下扩展了，因为是开源软件，网上能搜到很多实用教程。

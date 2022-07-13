@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. 工作中的Python脚本分享 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. 利用Docker搭建Jenkines-Master-Slave分布式环境" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html" />
+    <link rel="prev" title="4. 生产环境下的Shell脚本" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">3. Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. 工作中的Python脚本分享</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#centos6-8-x86-64">5.1. 1.多线程爬取图片的例子（centos6.8 x86_64下通过）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">5.2. 2.利用Python脚本发送工作邮件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ip">5.3. 3.监测IP地址是否占用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redis">5.4. 4.监测redis是否正常运行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api">5.5. 5.调用有道词典的API翻译英文</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nginx">5.6. 6.监测Nginx活动连接数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html">7. GitLab在DevOps工作中的实际应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">DevOps和自动化运维实践</a> &raquo;</li>
+      <li><span class="section-number">5. </span>工作中的Python脚本分享</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/DevOps/05.工作中的Python脚本分享.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#python" id="id2">工作中的Python脚本分享</a></p>
+<ul>
+<li><p><a class="reference internal" href="#centos6-8-x86-64" id="id3">1.多线程爬取图片的例子（centos6.8 x86_64下通过）</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id4">2.利用Python脚本发送工作邮件</a></p></li>
+<li><p><a class="reference internal" href="#ip" id="id5">3.监测IP地址是否占用</a></p></li>
+<li><p><a class="reference internal" href="#redis" id="id6">4.监测redis是否正常运行</a></p></li>
+<li><p><a class="reference internal" href="#api" id="id7">5.调用有道词典的API翻译英文</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id8">6.监测Nginx活动连接数</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="python">
+<h1><a class="toc-backref" href="#id2"><span class="section-number">5. </span>工作中的Python脚本分享</a><a class="headerlink" href="#python" title="Permalink to this headline">¶</a></h1>
+<section id="centos6-8-x86-64">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">5.1. </span>1.多线程爬取图片的例子（centos6.8 x86_64下通过）</a><a class="headerlink" href="#centos6-8-x86-64" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># !/usr/bin/env python</span>
+<span class="c1"># -*- coding:UTF-8 -*-</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">Queue</span>
+
+
+<span class="k">def</span> <span class="nf">getHtml</span><span class="p">(</span><span class="n">url</span><span class="p">):</span>
+    <span class="n">html_page</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">html_page</span>
+
+
+<span class="c1"># 提取网页中图片的URL</span>
+<span class="k">def</span> <span class="nf">getUrl</span><span class="p">(</span><span class="n">html</span><span class="p">):</span>
+    <span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">&#39;src=&quot;(.+?\.jpg)&quot; pic_ext&#39;</span>  <span class="c1"># 正则表达式匹配图片</span>
+    <span class="n">imgre</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+    <span class="n">imglist</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">imgre</span><span class="p">,</span> <span class="n">html</span><span class="p">)</span>
+    <span class="c1"># re.findall(pattern,string)在string中寻找所有匹配成功的字符串，以列表形式返回值</span>
+    <span class="k">return</span> <span class="n">imglist</span>
+
+
+<span class="k">class</span> <span class="nc">getImg</span><span class="p">(</span><span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">queue</span><span class="p">):</span>
+        <span class="c1"># 进程间通过队列通信，所以每个进程需要用到同一个队列初始化</span>
+        <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">queue</span> <span class="o">=</span> <span class="n">queue</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>  <span class="c1"># 启动线程</span>
+
+    <span class="c1"># 使用队列实现进程间通信</span>
+    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">count</span>
+        <span class="k">while</span> <span class="p">(</span><span class="kc">True</span><span class="p">):</span>
+            <span class="n">imgurl</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+            <span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">getName</span><span class="p">()</span>
+            <span class="c1"># urllib.urlretrieve(url,filname) 将url的内容提取出来，并存入filename中</span>
+            <span class="n">urllib</span><span class="o">.</span><span class="n">urlretrieve</span><span class="p">(</span><span class="n">imgurl</span><span class="p">,</span> <span class="s1">&#39;/root/python/images/</span><span class="si">%s</span><span class="s1">.jpg&#39;</span> <span class="o">%</span> <span class="n">count</span><span class="p">)</span>
+            <span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.jpg done&quot;</span> <span class="o">%</span> <span class="n">count</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+                <span class="k">break</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+            <span class="c1"># 当使用者线程调用 task_done() 以表示检索了该项目、并完成了所有的工作时，那么未完成的任务的总数就会减少。</span>
+
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">count</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://tieba.baidu.com/p/2460150866&quot;</span>  <span class="c1"># 爬虫程序要抓取内容的网页地址</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">getHtml</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">imglist</span> <span class="o">=</span> <span class="n">getUrl</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+    <span class="n">threads</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">queue</span> <span class="o">=</span> <span class="n">Queue</span><span class="o">.</span><span class="n">Queue</span><span class="p">()</span>
+
+    <span class="c1"># 将所有任务加入队列</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">imglist</span><span class="p">)):</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">imglist</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+    <span class="c1"># 多线程爬取图片</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">thread</span> <span class="o">=</span> <span class="n">getImg</span><span class="p">(</span><span class="n">queue</span><span class="p">)</span>
+        <span class="n">threads</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">thread</span><span class="p">)</span>
+
+    <span class="c1"># 合并进程，当子进程结束时，主进程才可以执行</span>
+    <span class="k">for</span> <span class="n">thread</span> <span class="ow">in</span> <span class="n">threads</span><span class="p">:</span>
+        <span class="n">thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="s2">&quot;/root/python/images&quot;</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="s2">&quot;/root/python/images&quot;</span><span class="p">)</span>
+    <span class="n">main</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="s2">&quot;多线程爬取图片任务已完成！&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">5.2. </span>2.利用Python脚本发送工作邮件</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding:utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">smtplib</span>
+<span class="kn">from</span> <span class="nn">email.mime.text</span> <span class="kn">import</span> <span class="n">MIMEText</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="n">mail_host</span> <span class="o">=</span> <span class="s2">&quot;mail.example.com.cn&quot;</span>
+<span class="n">mail_subject</span> <span class="o">=</span> <span class="s2">&quot;hostname名字不规则的机器列表&quot;</span>
+<span class="c1"># mail_reciver = [&quot;yuhc@example.com.cn&quot;]</span>
+<span class="n">mail_reciver</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;devops@example.com.cn&quot;</span><span class="p">,</span> <span class="s2">&quot;admin@example.com.cn&quot;</span><span class="p">,</span> <span class="s2">&quot;sa@example.com.cn&quot;</span><span class="p">]</span>
+<span class="c1"># mail_cc=[&quot;wangmiao@example.com.cn&quot;,&quot;nocdev@example.com&quot;]</span>
+<span class="c1"># mail_reliver以列表的形式存在，如果是单个收件地址，建议也以方式，即mail_reciver = [&quot;yuhc@example.com.cn&quot;]</span>
+<span class="n">mail_from</span> <span class="o">=</span> <span class="s2">&quot;yhc@example.com.cn&quot;</span>
+<span class="n">text</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/data/report/hostname_report.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="c1"># body = string.join((text.read().strip()), &quot;\r\n&quot;)</span>
+<span class="n">body</span> <span class="o">=</span> <span class="s2">&quot;ALL:</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;        你好，下面是我们全网内hostname名字不规范的列表，已经依次列出，麻烦将其改正并修正至 CMDB 系统，谢谢，列表如下所示：</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">text</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;-------&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\r\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;运维开发 | 余洪春&quot;</span>
+<span class="n">text</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c1"># body = str(body)</span>
+<span class="n">msg</span> <span class="o">=</span> <span class="n">MIMEText</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="nb">format</span><span class="p">,</span> <span class="s1">&#39;utf-8&#39;</span><span class="p">)</span>
+<span class="n">msg</span><span class="p">[</span><span class="s1">&#39;Subject&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mail_subject</span>
+<span class="n">msg</span><span class="p">[</span><span class="s1">&#39;From&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">mail_from</span>
+<span class="n">msg</span><span class="p">[</span><span class="s1">&#39;To&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">mail_reciver</span><span class="p">)</span>
+<span class="c1"># msg[&#39;Cc&#39;] = &quot;,&quot;.join(mail_cc)</span>
+<span class="c1"># 以下两行代码加上前面的MIMEText中的&#39;utf-8&#39;都是为了解决邮件正文乱码问题.</span>
+<span class="n">msg</span><span class="p">[</span><span class="s2">&quot;Accept-Language&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;zh-CN&quot;</span>
+<span class="n">msg</span><span class="p">[</span><span class="s2">&quot;Accept-Charset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;ISO-8859-1,utf-8&quot;</span>
+
+<span class="c1"># 发送邮件至相关人员</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">mail_host</span><span class="p">,</span> <span class="s1">&#39;25&#39;</span><span class="p">)</span>
+    <span class="c1"># 注意这里用到了starttls</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">starttls</span><span class="p">()</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">login</span><span class="p">(</span><span class="s2">&quot;yhc@example.com.cn&quot;</span><span class="p">,</span> <span class="s2">&quot;yhc123456&quot;</span><span class="p">)</span>
+    <span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">mail_from</span><span class="p">,</span> <span class="n">mail_reciver</span><span class="p">,</span> <span class="n">msg</span><span class="o">.</span><span class="n">as_string</span><span class="p">())</span>
+
+    <span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+<span class="k">except</span> <span class="ne">Exception</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span> <span class="s2">&quot;发送邮件失败&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="ip">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">5.3. </span>3.监测IP地址是否占用</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">Queue</span> <span class="kn">import</span> <span class="n">Queue</span>
+
+<span class="n">num_threads</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="nb">list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">host</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">254</span><span class="p">):</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="s2">&quot;192.168.185.&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">host</span><span class="p">)</span>
+    <span class="nb">list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+
+<span class="n">q</span><span class="o">=</span><span class="n">Queue</span><span class="p">()</span>
+<span class="k">def</span> <span class="nf">pingme</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">queue</span><span class="p">):</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">ip</span><span class="o">=</span><span class="n">queue</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+        <span class="nb">print</span> <span class="s1">&#39;Thread </span><span class="si">%s</span><span class="s1"> pinging </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">ip</span><span class="p">)</span>
+        <span class="n">ret</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;ping -c 1 </span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">ip</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stdout</span><span class="o">=</span><span class="nb">open</span><span class="p">(</span><span class="s1">&#39;/dev/null&#39;</span><span class="p">,</span><span class="s1">&#39;w&#39;</span><span class="p">),</span><span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ret</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is alive!&#39;</span> <span class="o">%</span><span class="n">ip</span>
+        <span class="k">elif</span> <span class="n">ret</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1"> is down...&#39;</span><span class="o">%</span><span class="n">ip</span>
+        <span class="n">queue</span><span class="o">.</span><span class="n">task_done</span><span class="p">()</span>
+
+<span class="c1">#start num_threads threads</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_threads</span><span class="p">):</span>
+    <span class="n">t</span><span class="o">=</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">pingme</span><span class="p">,</span><span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">q</span><span class="p">))</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">setDaemon</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">t</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">ip</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">:</span>
+    <span class="n">q</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">ip</span><span class="p">)</span>
+<span class="nb">print</span> <span class="s1">&#39;main thread waiting...&#39;</span>
+<span class="n">q</span><span class="o">.</span><span class="n">join</span><span class="p">();</span>
+<span class="nb">print</span> <span class="s1">&#39;Done&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="redis">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">5.4. </span>4.监测redis是否正常运行</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="kn">import</span> <span class="nn">redis</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="n">STATUS_OK</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">STATUS_WARNING</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">STATUS_CRITICAL</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">HOST</span> <span class="o">=</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">PORT</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">WARNING</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">CRITICAL</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
+
+<span class="k">def</span> <span class="nf">connect_redis</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">):</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">redis</span><span class="o">.</span><span class="n">Redis</span><span class="p">(</span><span class="n">host</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">socket_timeout</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">socket_connect_timeout</span> <span class="o">=</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">r</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">r</span> <span class="o">=</span> <span class="n">connect_redis</span><span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">r</span><span class="o">.</span><span class="n">ping</span><span class="p">()</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">HOST</span><span class="p">,</span><span class="n">PORT</span><span class="p">,</span><span class="s1">&#39;down&#39;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">STATUS_CRITICAL</span><span class="p">)</span>
+
+    <span class="n">redis_info</span> <span class="o">=</span> <span class="n">r</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+    <span class="n">used_mem</span> <span class="o">=</span> <span class="n">redis_info</span><span class="p">[</span><span class="s1">&#39;used_memory&#39;</span><span class="p">]</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mi">1024</span><span class="o">/</span><span class="mf">1024.0</span>
+    <span class="n">used_mem_human</span> <span class="o">=</span> <span class="n">redis_info</span><span class="p">[</span><span class="s1">&#39;used_memory_human&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">WARNING</span> <span class="o">&lt;=</span> <span class="n">used_mem</span> <span class="o">&lt;</span> <span class="n">CRITICAL</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">HOST</span><span class="p">,</span><span class="n">PORT</span><span class="p">,</span><span class="s1">&#39;use memory warning&#39;</span><span class="p">,</span><span class="n">used_mem_human</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">STATUS_WARNING</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">used_mem</span> <span class="o">&gt;=</span> <span class="n">CRITICAL</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">HOST</span><span class="p">,</span><span class="n">PORT</span><span class="p">,</span><span class="s1">&#39;use memory critical&#39;</span><span class="p">,</span><span class="n">used_mem_human</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">STATUS_CRITICAL</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span> <span class="n">HOST</span><span class="p">,</span><span class="n">PORT</span><span class="p">,</span><span class="s1">&#39;use memory ok&#39;</span><span class="p">,</span><span class="n">used_mem_human</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">STATUS_OK</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="api">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">5.5. </span>5.调用有道词典的API翻译英文</a><a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1">#-*- encoding=utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">urllib</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="n">url</span><span class="o">=</span><span class="s1">&#39;http://fanyi.youdao.com/translate?smartresult=dict&amp;smartresult=rule&amp;smartresult=ugc&amp;sessionFrom=dict2.index&#39;</span>
+
+<span class="c1">#建立一个字典</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;i&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;余洪春是帅哥&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;from&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AUTO&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;to&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;AUTO&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;smartresult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;dict&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;client&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fanyideskwe&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;salt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;1506219252440&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;sign&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;0b8cd8f9b8b14&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;doctype&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;json&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;2.1&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;keyfrom&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;fanyi.web&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;action&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;FY_BY_CLICK&#39;</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;typoResult&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;true&#39;</span>
+
+<span class="c1">#在这里还不能直接将data作为参数，需要进行一下数据的解析才可以</span>
+<span class="c1">#encode是将Unicode的编码转换成utf-8编码</span>
+<span class="c1">#data=urllib.urlencode(data).encode(&#39;utf-8&#39;)</span>
+<span class="c1">#另一种写法，urlencode将字典转换成url参数</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">urllib</span><span class="o">.</span><span class="n">urlencode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">response</span><span class="o">=</span><span class="n">urllib</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">,</span><span class="n">data</span><span class="p">)</span>
+
+<span class="c1">#decode作用是将其他形式的编码转换成python使用的Unicode编码</span>
+<span class="c1">#html=response.read().decode(&#39;utf-8&#39;)</span>
+<span class="c1">#另一种写法</span>
+<span class="n">html</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<span class="n">target</span><span class="o">=</span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">target</span><span class="p">[</span><span class="s1">&#39;translateResult&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;tgt&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</section>
+<section id="nginx">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">5.6. </span>6.监测Nginx活动连接数</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">urllib2</span><span class="o">,</span> <span class="nn">base64</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">getopt</span>
+<span class="kn">import</span> <span class="nn">re</span>
+
+<span class="k">def</span> <span class="nf">Usage</span><span class="p">():</span>
+        <span class="nb">print</span> <span class="s2">&quot;Usage: getWowzaInfo.py -a [active|accepted|handled|request|reading|writting|waiting]&quot;</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">Usage</span><span class="p">()</span>
+    <span class="k">try</span><span class="p">:</span>
+            <span class="n">opts</span><span class="p">,</span> <span class="n">args</span> <span class="o">=</span> <span class="n">getopt</span><span class="o">.</span><span class="n">getopt</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="s2">&quot;a:&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">getopt</span><span class="o">.</span><span class="n">GetoptError</span><span class="p">:</span>
+                <span class="n">Usage</span><span class="p">()</span>
+
+    <span class="c1"># Assign parameters as variables</span>
+    <span class="k">for</span> <span class="n">opt</span><span class="p">,</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">opts</span> <span class="p">:</span>
+            <span class="k">if</span> <span class="n">opt</span> <span class="o">==</span> <span class="s2">&quot;-a&quot;</span> <span class="p">:</span>
+                    <span class="n">getInfo</span> <span class="o">=</span> <span class="n">arg</span>
+
+    <span class="n">url</span><span class="o">=</span><span class="s2">&quot;http://127.0.0.1:80/ngserver_status&quot;</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+    <span class="n">buffer</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\d+&#39;</span><span class="p">,</span> <span class="n">result</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;active&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;accepted&quot;</span><span class="p">):</span>
+        <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;handled&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;requests&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;reading&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;writting&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span> <span class="n">getInfo</span> <span class="o">==</span> <span class="s2">&quot;waiting&quot;</span><span class="p">):</span>
+            <span class="nb">print</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">6</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span> <span class="s2">&quot;unknown&quot;</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html" class="btn btn-neutral float-left" title="4. 生产环境下的Shell脚本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html" class="btn btn-neutral float-right" title="6. 利用Docker搭建Jenkines-Master-Slave分布式环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

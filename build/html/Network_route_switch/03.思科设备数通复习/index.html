@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2. 思科设备数通复习 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.1. Cisco交换机路由器常用命令" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html" />
+    <link rel="prev" title="1.6. 综合配置案例" href="../01.%E5%8D%8E%E4%B8%BA%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/06.%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%8D%8E%E4%B8%BA%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. 思科设备数通复习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html">2.1. Cisco交换机路由器常用命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">3. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+      <li><span class="section-number">2. </span>思科设备数通复习</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Network_route_switch/03.思科设备数通复习/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1><span class="section-number">2. </span>思科设备数通复习<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html">2.1. Cisco交换机路由器常用命令</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id1">2.1.1. 交换机</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id2">交换机口令设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#vlan">交换机VLAN设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#ip">交换机设置IP地址：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id3">交换机显示命令：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id4">2.1.2. 路由器</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id5">静态路由：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id6">基本配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#id7">特权模式下查看</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html#hsrp">HSRP思科私有热备网关协议</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../01.%E5%8D%8E%E4%B8%BA%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/06.%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B.html" class="btn btn-neutral float-left" title="1.6. 综合配置案例" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.%E5%B8%B8%E7%94%A8%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4.html" class="btn btn-neutral float-right" title="2.1. Cisco交换机路由器常用命令" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

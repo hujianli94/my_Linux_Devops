@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DevOps和自动化运维实践 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="1. Devops与自动化运维的意义" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html" />
+    <link rel="prev" title="1. 阿里云的迁云工具" href="../Cloud_migration/01.%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84%E8%BF%81%E4%BA%91%E5%B7%A5%E5%85%B7.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">DevOps和自动化运维实践</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">3. Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html">5. 工作中的Python脚本分享</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html">7. GitLab在DevOps工作中的实际应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>DevOps和自动化运维实践</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/DevOps/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="devops">
+<h1>DevOps和自动化运维实践<a class="headerlink" href="#devops" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id1">1.1. 1 为什么企业需要自动化运维</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id2">1.2. 2 为什么要前后端分离</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#web">1.3. 3 Web编程相关体系知识点</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id3">1.3.1. 3.1 为什么要前后端分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#restful">1.3.2. 3.2 什么是RESTful</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id4">1.3.3. 3.3 同步和异步、阻塞与非阻塞的区别</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id5">1.4. 4 从事Devops应该掌握的语言</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id6">1.5. 5 从事DevOps工作应该掌握的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id7">1.6. 6 了解网站系统架构设计和高并发场景</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id8">1.6.1. 6.1细分五层解说网站架构</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id14">1.7. 7 了解数据库集群主从复制的基本原理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#redis">1.7.1. 7.1 redis主从复制的原理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#mysqlreplication">1.7.2. 7.2 MySQL数据库主从Replication同步</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#linux">1.8. Linux服务器的安全防护</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#ddos">1.8.1. 1.8.1 DDoS攻击和运营商劫持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id15">1.8.2. 1.8.2 运营商劫持</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id16">1.8.3. 1.8.3 Linux服务器基础防护篇</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html#id17">1.8.4. 1.8.4 Linux服务器高级防护篇</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#shell">2.1. 2.1 Shell脚本的基本元素</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id1">2.2. 2.2 Shell基础正则表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id2">2.3. 2.3 Shell特殊字符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id3">2.4. 2.4 变量和运算符</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id4">2.4.1. 写入环境变量</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id5">2.5. 2.5 运行、调试Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#test">2.6. 2.6 test语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id6">2.6.1. 2.6.1 文件测试运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id7">2.6.2. 2.6.2 字符串测试运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id8">2.6.3. 2.6.3 整数值测试运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id9">2.6.4. 2.6.4 逻辑运算符</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id10">2.7. 2.7 Shell中的自定义函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id11">2.8. 2.8 Shell中的字符串截取</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id12">2.9. 2.9 Shell参数替换和扩展</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id13">2.10. 2.10 Shell应用于Devops开发中音掌握的系统知识点</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id14">2.10.1. 2.10.1 Shell多进程并发</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#shellshell">2.10.2. 2.10.2 Shell脚本中执行另一个Shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#flock">2.10.3. 2.8.3 flock文件锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#parallellism">2.11. 2.10 什么是并行（parallellism）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html#id15">2.12. 2.11 什么是管道</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">3. Python在Devops与自动化运维中的应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#python">3.1. 3.1 Python基础知识进阶</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id1">3.1.1. 3.1.1 正则表达式应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#pythonjson">3.1.2. 3.1.2 使用Python解析JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id2">3.1.3. 3.1.3 Python多进程</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id3">3.2. 3.2 Python常用的三方库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#flaskrestful-api">3.3. 3.3 利用Flask设计后端Restful API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id1">4.1. 1.生产环境下的备份类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#svn">4.1.1. <strong>1.1 版本控制软件SVN的代码库的备份脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#mysqls3">4.1.2. <strong>1.2 Mysql数据库备份至S3文件系统</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id2">4.2. 2.生产环境下的统计类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id3">4.2.1. <strong>2.1 统计设备资产明细脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id4">4.2.2. <strong>2.2 统计重要业务程序是否正常运行</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#ip">4.2.3. <strong>2.3 统计机器的IP连接数</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id5">4.3. 3.生产环境下的监控类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#nginxnginx">4.3.1. <strong>3.1 在Nginx负载均衡器上监控Nginx进程的脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id6">4.3.2. <strong>3.2 系统文件数打开监控脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#cpu">4.3.3. <strong>3.3 监控机器CPU利用率脚本</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id7">4.4. 4. 生产环境下运维开发类脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id8">4.4.1. <strong>4.1 系统初始化脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id9">4.4.2. <strong>4.2 控制shell多进程数量的脚本</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#ansible">4.4.3. <strong>4.3 调用Ansible来分发多条线路的配置</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#raid">4.4.4. <strong>4.4 手动建立软Raid级别需求</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html#id10">4.4.5. <strong>4.5 重载或更新机器路由配置</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html">5. 工作中的Python脚本分享</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#centos6-8-x86-64">5.1. 1.多线程爬取图片的例子（centos6.8 x86_64下通过）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#id1">5.2. 2.利用Python脚本发送工作邮件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#ip">5.3. 3.监测IP地址是否占用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#redis">5.4. 4.监测redis是否正常运行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#api">5.5. 5.调用有道词典的API翻译英文</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html#nginx">5.6. 6.监测Nginx活动连接数</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html#docker">6.1. Docker的基础安装</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html#id1">6.1.1. 1.准备工作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html#id2">6.1.2. 2.正式安装环节</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html#dockerfiledocker">6.2. Dockerfile打包Docker镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html#docker-compose">6.3. 利用docker-compose编排多容器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html">7. GitLab在DevOps工作中的实际应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#gitlab">7.1. GitLab的优势所在</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#gitsvn">7.1.1. Git与SVN的区别如下：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#gitlabgithub">7.1.2. GitLab与Github的区别如下：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#id1">7.2. GitLab的工作流程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#id2">7.2.1. 离线场景下，如图：</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#gitlab-repository">7.2.2. 在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#gitlub">7.3. GitLub部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html#id3">7.4. GitLub的操作流程</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html#nginx-gunicorn-flask-supervisor-python">8.1. Nginx+Gunicorn+Flask+Supervisor 部署 Python 服务的详细教程！</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#supervisor">9.1. Supervisor的作用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id1">9.2. Supervisor安装</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id2">9.3. Supervisor的配置文件说明</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#id3">9.4. Supervisor的启动</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#supervisor4redis">9.5. Supervisor管理4个redis实例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#supervisordgo">9.6. 使用Supervisord软件管理go服务进程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#supervisordocker">9.7. Supervisor在Docker中的应用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html#dockersupervisorlamp">9.7.1. 在Docker中使用Supervisor监控lamp进程。</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html#celery">10.1. Celery有以下优点：</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html#demo">10.2. Demo演示</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html#id1">10.2.1. 简单使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html#id2">10.3. Cerely进阶参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../Cloud_migration/01.%E9%98%BF%E9%87%8C%E4%BA%91%E7%9A%84%E8%BF%81%E4%BA%91%E5%B7%A5%E5%85%B7.html" class="btn btn-neutral float-left" title="1. 阿里云的迁云工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html" class="btn btn-neutral float-right" title="1. Devops与自动化运维的意义" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

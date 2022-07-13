@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.4. MySQL主从同步、读写分离解决方案 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.5. 一键快速lnmp" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html" />
+    <link rel="prev" title="6.3. LAMP+Radis企业实战" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. LNMP、LAMP学习</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html">6.1. LAMP+WordPress环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html">6.2. LAMP企业架构实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">6.3. LAMP+Radis企业实战</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.4. MySQL主从同步、读写分离解决方案</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mysql-proxy">6.4.1. MySQL-proxy读写分离架构图</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html">6.5. 一键快速lnmp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html">6.6. 宝塔安装CRM系列软件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>LNMP、LAMP学习</a> &raquo;</li>
+      <li><span class="section-number">6.4. </span>MySQL主从同步、读写分离解决方案</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/06.LAMP、LNMP学习/04.LAMP企业架构读写分离.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mysql" id="id2">MySQL主从同步、读写分离解决方案</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysql-proxy" id="id3">MySQL-proxy读写分离架构图</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id4">Mysql主从同步</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mysql">
+<h1><a class="toc-backref" href="#id2"><span class="section-number">6.4. </span>MySQL主从同步、读写分离解决方案</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<p>LAMP+Discuz+Redis 缓解了MySQL的部分压力,但是如果访问量非常大,Redis
+缓存中第一次没有缓存数据,会导致MySQL 数据库压力增大，
+此时可以基于分库、分表、分布
+式集群或者读写分离来分担MySQL数据库的压力,以读写分离为案例,来实现分担MySQL数据库的压力。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    MySQL读写分离的原理： 让master 数据库处理事务增加、删除、修改、更新操作(create 、insert 、update 、delete) ，
+ 而让slave 数据库处理select 操作， MySQL 读写分离前提是基于MySQL 主从复制， 这样可以保证在master 上修改数据， slave 同步之后， Web 应用可
+以读取到slave 端的数据。
+</pre></div>
+</div>
+<p>实现MySQL读写分离可以基于第三方插件，也可以通过开发修改代码实现，具体实现读写分离的常见方式有以下4种：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* MySQL proxy读写分离
+* Amoeba 读写分离
+* Mycat 读写分离
+* 基于程序读写分离(效率很高，但实施难度大，需要开发改代码)
+
+Amoeba 是以MySQL 为底层数据存储， 并对Web 、App 应用提供MySQL 协议接口的proxy 。它集中地响应Web 应用的请求， 依据用户事先设置的规则， 将SQL 请求发送到特
+定的数据库上执行， 基于此可以实现负载均衡、读写分离、高可用性等需求。
+
+Amoeba 相当于一个SQL请求的路由器， 目的是为负载均衡、读写分离、高可用性提供
+机制， 而不是完全实现它们。用户需要结合使用MySQL的replication 等机制来实现副本
+同步等功能。
+
+MySQL Proxy 是MySQL 官方提供的MySQL 中间件服务， 支持无数客户端连接， 同
+时后端可连接若干台MySQL server 服务器， MySQL proxy 自身基于MySQL 协议， 连接MySQL Proxy 的客户端无须修改任何设置， 跟正常连接MySQL server 没有区别， 无须修
+改程序代码。
+
+MySQL proxy 是App 应用（ 客户端） 与MySQL server 之间的一个连接代理， MySQL
+Proxy 负责将App 应用的SQL 请求根据转发规则， 转发至相应的后端数据库， 基于LUA
+脚本， 可以实现复杂的连接控制和过滤， 从而实现数据读写分离和负载均衡的需求。
+
+MySQL proxy 允许用户指定LUA 脚本对SQL 请求进行拦截， 对请求进行分析与修
+改， 还允许用户指定LUA 脚本对服务器的返回结果进行修改， 加人一些结果集或者去除一
+些结果集， 对SQL 的请求通常为读请求、写请求， 基于LUA 脚本， 可以实现将SQL 读请求
+转发至后端slave 服务器， 将SQL 写请求转发至后端master 服务器。
+</pre></div>
+</div>
+<section id="mysql-proxy">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">6.4.1. </span>MySQL-proxy读写分离架构图</a><a class="headerlink" href="#mysql-proxy" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image0" src="../../_images/mysql-proxy.png" /></p>
+<ul class="simple">
+<li><p>如图两台Web通过MySQL
+proxy连接到后端2台MySQL数据库服务器上，客户端访问MySQL-proxy服务器时，proxy将数据写入主库，主库同步到从库通过MySQL自带的主从同步机制，
+然后读取数据从从库读取。
+构建MySQL读写分离架构首先需要将主库和从库配置为主从复制。</p></li>
+</ul>
+<p>环境：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL-Proxy服务器：192.168.20.106    CentOS Linux release 7.5
+mysql主机： 182.92.194.3         CentOS Linux release 7.5
+mysql备机： 182.92.192.167          CentOS Linux release 7.5
+</pre></div>
+</div>
+<section id="id1">
+<h3><a class="toc-backref" href="#id4">Mysql主从同步</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>部署过程见 《MySQL 主从高可用架构》文章 <img alt="image1" src="../../_images/mysql_proxy01.png" /></p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget http://ftp.ntu.edu.tw/pub/MySQL/Downloads/MySQL-Proxy/mysql-proxy-0.8.4-linux-el6-x86-64bit.tar.gz
+useradd -r mysql-proxy
+tar zxvf mysql-proxy-0.8.4-linux-el6-x86-64bit.tar.gz -C /usr/local/
+mv /usr/local/mysql-proxy-0.8.4-linux-el6-x86-64bit/ /usr/local/mysql-proxy
+export PATH=$PATH:/usr/local/mysql-proxy/bin/ &gt;&gt; /etc/profile
+source /etc/profile
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">rw</span><span class="o">-</span><span class="n">splitting</span><span class="o">.</span><span class="n">lua</span>
+</pre></div>
+</div>
+<p><img alt="image2" src="../../_images/mysql_proxy02.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zegionemu6xgimhvzd8Z</span> <span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="p">]</span><span class="c1"># cat /usr/local/mysql-proxy/conf/mysql-proxy.conf</span>
+<span class="p">[</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="p">]</span>
+<span class="n">user</span><span class="o">=</span><span class="n">root</span>
+<span class="n">proxy</span><span class="o">-</span><span class="n">address</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">3306</span>
+<span class="n">proxy</span><span class="o">-</span><span class="n">backend</span><span class="o">-</span><span class="n">addresses</span><span class="o">=</span><span class="mf">182.92</span><span class="o">.</span><span class="mi">194</span><span class="p">:</span><span class="mi">3306</span>
+<span class="n">proxy</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">only</span><span class="o">-</span><span class="n">backend</span><span class="o">-</span><span class="n">addresses</span><span class="o">=</span><span class="mf">182.92</span><span class="o">.</span><span class="mf">192.167</span><span class="p">:</span><span class="mi">3306</span>
+<span class="n">proxy</span><span class="o">-</span><span class="n">lua</span><span class="o">-</span><span class="n">script</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">rw</span><span class="o">-</span><span class="n">splitting</span><span class="o">.</span><span class="n">lua</span>
+<span class="n">log</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="o">.</span><span class="n">log</span>
+<span class="n">log</span><span class="o">-</span><span class="n">level</span><span class="o">=</span><span class="n">debug</span>
+<span class="n">daemon</span><span class="o">=</span><span class="n">true</span>
+<span class="n">keepalive</span><span class="o">=</span><span class="n">true</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zegionemu6xgimhvzd8Z</span> <span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="p">]</span><span class="c1"># mkdir -p /usr/local/mysql-proxy/logs/</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zegionemu6xgimhvzd8Z</span> <span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="p">]</span><span class="c1"># touch /usr/local/mysql-proxy/logs/mysql-proxy.log</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@iZ2zegionemu6xgimhvzd8Z</span> <span class="n">mysql</span><span class="o">-</span><span class="n">proxy</span><span class="p">]</span><span class="c1"># chmod 550 /usr/local/mysql-proxy/conf/mysql-proxy.conf</span>
+</pre></div>
+</div>
+<p>启动mysql-proxy</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@iZ2zegionemu6xgimhvzd8Z mysql-proxy]# mysql-proxy --defaults-file=/usr/local/mysql-proxy/conf/mysql-proxy.conf
+[root@iZ2zegionemu6xgimhvzd8Z mysql-proxy]# ps aux | grep mysql-proxy
+root      3948  0.0  0.0  37908   716 ?        S    11:19   0:00 /usr/local/mysql-proxy/libexec/mysql-proxy --defaults-file=/usr/local/mysql
+-proxy/conf/mysql-proxy.confroot      3949  0.0  0.0  40032  1480 ?        S    11:19   0:00 /usr/local/mysql-proxy/libexec/mysql-proxy --defaults-file=/usr/local/mysql
+-proxy/conf/mysql-proxy.confroot      3951  0.0  0.0 112708   984 pts/0    S+   11:19   0:00 grep --color=auto mysql-proxy
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#检测是否开始监听：
+[root@iZ2zegionemu6xgimhvzd8Z mysql-proxy]# netstat -ntpl| grep mysql
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      3949/mysql-proxy
+[root@iZ2zegionemu6xgimhvzd8Z mysql-proxy]# lsof -i:3306
+COMMAND    PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+mysql-pro 3949 root   10u  IPv4  27130      0t0  TCP *:mysql (LISTEN)
+
+
+
+
+#测试环境部署
+在 MySQL-Master 上创建测试数据库和用户。
+mysql&gt; create database unixhot;
+mysql&gt; GRANTALL PRIVILEGES ON unixhot.* to proxytest@&#39;%&#39; identified by &#39;unixhot&#39;;
+
+
+#连接测试
+[root@MySQL-Proxy ~]# mysql -h 192.168.20.106 -P 3306 -u proxytest -p
+输入密码即可登录。
+</pre></div>
+</div>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.cnblogs.com/kevingrace/p/6931303.html">https://www.cnblogs.com/kevingrace/p/6931303.html</a>
+<a class="reference external" href="https://blog.csdn.net/Le_Anny/article/details/81661438">https://blog.csdn.net/Le_Anny/article/details/81661438</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html" class="btn btn-neutral float-left" title="6.3. LAMP+Radis企业实战" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html" class="btn btn-neutral float-right" title="6.5. 一键快速lnmp" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

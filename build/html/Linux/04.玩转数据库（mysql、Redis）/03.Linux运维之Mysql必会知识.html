@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.3. Linux运维之mysql必会知识 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.4. Navicat把csv数据导入mysql操作方法" href="04.Navicat%E6%8A%8Acsv%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5mysql%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95.html" />
+    <link rel="prev" title="4.2. mysql入门到精通" href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 玩转数据库(mysql、Redis)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Redis%E6%95%B0%E6%8D%AE%E5%BA%93.html">4.1. Redis的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html">4.2. mysql入门到精通</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.3. Linux运维之mysql必会知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mysql">4.3.1. MySQL概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.3.2. Mysql数据库安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.3.3. 1.基础操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">4.3.4. 2.数据库操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">4.3.5. 数据的操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id23">4.3.6. 1.显示</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id24">4.3.7. 2.创建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">4.3.8. 3.删除</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id27">4.3.9. 4.使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id28">4.3.10. 5.用户管理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id29">4.3.11. 6.用户授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">4.3.12. 7.忘记密码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id31">4.3.13. 8.Mysql数据类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id35">4.3.14. 9.mysql存储引擎</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id41">4.3.15. Mysql 慢查询日志配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id42">4.3.16. 数据的备份与恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#xtrabackup-mysql">4.3.17. XtraBackup - MySQL备份工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id47">4.3.18. Mysql 整理错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id48">4.3.19. Mysql 主从复制搭建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id49">4.3.20. Mysql 主主复制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id50">4.3.21. Mysql 二进制日志备份还原</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04.Navicat%E6%8A%8Acsv%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5mysql%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95.html">4.4. Navicat把csv数据导入mysql操作方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93%28350%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%2C14%E4%B8%AA%E5%88%86%E7%B1%BB%29.html">4.5. 数据库总结(350个数据库,14个分类)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>玩转数据库(mysql、Redis)</a> &raquo;</li>
+      <li><span class="section-number">4.3. </span>Linux运维之mysql必会知识</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/04.玩转数据库（mysql、Redis）/03.Linux运维之Mysql必会知识.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#linuxmysql" id="id52">Linux运维之mysql必会知识</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysql" id="id53">MySQL概述</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id54">MySQL 简介</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id55">MySQL 相关链接</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id56">Mysql数据库安装</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id57">1.基础操作</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id58">2.数据库操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id59">3.mysql忘记密码后，跳过密码进入数据库</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id60">4.mysql的各种权限管理</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id61">5.表的操作</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id62">数据的操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id13" id="id63">1.增</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id64">2.删</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id65">4.查</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id23" id="id66">1.显示</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id67">2.创建</a></p></li>
+<li><p><a class="reference internal" href="#id25" id="id68">3.删除</a></p></li>
+<li><p><a class="reference internal" href="#id27" id="id69">4.使用</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id70">5.用户管理</a></p></li>
+<li><p><a class="reference internal" href="#id29" id="id71">6.用户授权</a></p></li>
+<li><p><a class="reference internal" href="#id30" id="id72">7.忘记密码</a></p></li>
+<li><p><a class="reference internal" href="#id31" id="id73">8.Mysql数据类型</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id32" id="id74">1.数值</a></p></li>
+<li><p><a class="reference internal" href="#id33" id="id75">2.日期和时间类型</a></p></li>
+<li><p><a class="reference internal" href="#id34" id="id76">3.字符串类型</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id35" id="id77">9.mysql存储引擎</a></p>
+<ul>
+<li><p><a class="reference internal" href="#myisam-innodb" id="id78">1.MyISAM 和 InnoDB的适用场景</a></p></li>
+<li><p><a class="reference internal" href="#id36" id="id79">MyISAM 和 InnoDB的区别</a></p></li>
+<li><p><a class="reference internal" href="#id37" id="id80">如何选择存储引擎</a></p></li>
+<li><p><a class="reference internal" href="#id38" id="id81">Mysql事务</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id41" id="id82">Mysql 慢查询日志配置</a></p></li>
+<li><p><a class="reference internal" href="#id42" id="id83">数据的备份与恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id43" id="id84">1.导入外部数据文本</a></p></li>
+<li><p><a class="reference internal" href="#id44" id="id85">2.备份数据库</a></p></li>
+<li><p><a class="reference internal" href="#id45" id="id86">3. 迁移MySQL用户及权限</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#xtrabackup-mysql" id="id87">XtraBackup - MySQL备份工具</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id46" id="id88">软件简介</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id47" id="id89">Mysql 整理错误</a></p></li>
+<li><p><a class="reference internal" href="#id48" id="id90">Mysql 主从复制搭建</a></p></li>
+<li><p><a class="reference internal" href="#id49" id="id91">Mysql 主主复制</a></p></li>
+<li><p><a class="reference internal" href="#id50" id="id92">Mysql 二进制日志备份还原</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id51" id="id93">Mysql数据库的优化</a></p></li>
+<li><p><a class="reference internal" href="#django" id="id94">Django访问数据库</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="linuxmysql">
+<h1><a class="toc-backref" href="#id52"><span class="section-number">4.3. </span>Linux运维之mysql必会知识</a><a class="headerlink" href="#linuxmysql" title="Permalink to this headline">¶</a></h1>
+<section id="mysql">
+<h2><a class="toc-backref" href="#id53"><span class="section-number">4.3.1. </span>MySQL概述</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3><a class="toc-backref" href="#id54">MySQL 简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 是最流行的开放源码 SQL 数据库管理系统，它是由 MySQLAB 公司开发、发布并支持
+的。它的插入式存储引擎可以让使用者根据实际应用使用不同的存储。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id55">MySQL 相关链接</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 官方网站：http://www.mysql.com/
+MySQL 社区版本下载地址：http://www.mysql.com/downloads/mysql/
+
+MySQL 中文文档：http://dev.mysql.com/doc/refman/5.1/zh/index.html
+MySQL 实用文档：http://www.unixhot.com/pdf/mysql.pdf
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id56"><span class="section-number">4.3.2. </span>Mysql数据库安装</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">(1)</span> <span class="pre">YUM方式按MySQL的方法，执行命令详解如下：</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>①yum install mysql-server mysql-devel mysql-libs -y        #Centos6.X YUM安装。
+
+②yum install mariadb-server mariadb mariadb-libs -y        #Centos7X YUM安装。
+systemctl start mariadb.service       # 启动mariadb.db数据库
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">(2)</span> <span class="pre">源码安装方法</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一.环境准备
+环境：centos-7.3 一台
+软件版本：mysql-5.7.21
+说明：使用二进制包进行初始化操作，并不进行make等编译操作。
+</pre></div>
+</div>
+<p>1.安装依赖</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">autoconf</span> <span class="n">libaio</span> <span class="n">bison</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
+</pre></div>
+</div>
+<p>2.创建用户</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">groupadd</span> <span class="n">mysql</span>
+<span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">mysql</span>
+</pre></div>
+</div>
+<p>3.清理centos7 默认自带数据库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">remove</span> <span class="n">mariadb</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+<p>二.部署 1.下载包</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wget https://dev.mysql.com/get/Downloads/MySQL-5.7/mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz
+
+tar -xf mysql-5.7.21-linux-glibc2.12-x86_64.tar.gz
+
+移动过去，后面是存放路径
+mv mysql-5.7.21-linux-glibc2.12-x86_64 /usr/local/mysql
+mkdir /var/log/mysql
+mkdir /usr/local/mysql/data
+
+mysql即使root启动还是mysql用户运行的，所以要给权限
+chown -R mysql:mysql /usr/local/mysql
+chown -R mysql:mysql /var/log/mysql
+</pre></div>
+</div>
+<p>2.进去删除所有行，添加新的</p>
+<p>可参考</p>
+<p><a class="reference external" href="http://imysql.com/my-cnf-wizard.html">my.cnf生成器</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span>
+
+<span class="p">[</span><span class="n">client</span><span class="p">]</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">character_set_server</span><span class="o">=</span><span class="n">utf8</span>
+<span class="n">init_connect</span><span class="o">=</span><span class="s1">&#39;SET NAMES utf8&#39;</span>
+<span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">datadir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
+<span class="n">socket</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">log</span><span class="o">-</span><span class="n">error</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">log</span>
+<span class="n">pid</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysqld</span><span class="o">.</span><span class="n">pid</span>
+</pre></div>
+</div>
+<p>3.初始化</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span>
+
+<span class="c1">#初始化数据库，没有反应则正确</span>
+<span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld</span> <span class="o">--</span><span class="n">initialize</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span> <span class="o">--</span><span class="n">datadir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>4.加入systemctl</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">service</span>
+
+<span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">mysql</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span> <span class="n">remote</span><span class="o">-</span><span class="n">fs</span><span class="o">.</span><span class="n">target</span> <span class="n">nss</span><span class="o">-</span><span class="n">lookup</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">forking</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">start</span>
+<span class="n">ExecReload</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">restart</span>
+<span class="n">ExecStop</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">stop</span>
+<span class="n">PrivateTmp</span><span class="o">=</span><span class="n">true</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+<span class="mf">5.</span><span class="n">设置环境变量</span>
+<span class="n">echo</span> <span class="s1">&#39;PATH=$PATH&#39;</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+</pre></div>
+</div>
+<p>6.启动</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">mysql</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">mysql</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#查看密码
+cat /var/log/mysql/mysqld.log
+最后一行：root@localhost: 这里就是初始密码
+
+cp -rf mysql.server /etc/init.d/mysqld;chmod 755 /etc/init.d/mysqld
+#修改mysql的登录密码
+service mysqld stop
+
+#使用 mysqld_safe 来启动mysql服务
+[root@CentOS ~]# cd /usr/local/mysql/bin/
+[root@CentOS bin]# ./mysqld_safe --user=mysql --skip-grant-tables &amp;
+
+
+########## 忘记Mysql密码后的办法，修改mysql的登录密码 ##########
+service mysqld stop
+
+#使用 mysqld_safe 来启动mysql服务
+[root@CentOS ~]# cd /usr/local/mysql/bin/
+[root@CentOS bin]# ./mysqld_safe --user=mysql --skip-grant-tables &amp;
+
+
+
+mysql -uroot -p
+修改MySQL密码方式：
+use mysql;
+首先执行：
+update user set authentication_string=password(&#39;admin#123!&#39;) where user=&#39;root&#39;;
+
+flush privileges;
+然后执行：ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED WITH mysql_native_password BY &#39;admin#123!&#39;;
+
+#mysql-8.0.11-winx64初次修改密码
+ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
+
+# 重启mysql后生效
+/etc/init.d/mysqld restart
+</pre></div>
+</div>
+<p>Mysql数据库安装</p>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8318965.html">https://www.cnblogs.com/xiangsikai/p/8318965.html</a></p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id57"><span class="section-number">4.3.3. </span>1.基础操作</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看当前时间</span>
+<span class="n">select</span> <span class="n">now</span><span class="p">();</span>
+
+<span class="c1">#查看mysql版本</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">V</span>
+<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
+<span class="n">select</span> <span class="n">version</span><span class="p">();</span>
+
+
+<span class="c1">#查看当前用户</span>
+<span class="n">mysql</span><span class="o">&gt;</span><span class="n">select</span> <span class="n">user</span><span class="p">();</span>
+
+
+
+<span class="c1">#--连接mysql数据库</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">密码</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">h127</span><span class="o">.</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123</span>
+
+<span class="c1">#修改命令提示符信息</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123 --prompt hu_mysql</span>
+<span class="n">hu_mysql</span><span class="o">&gt;</span>
+
+<span class="c1">#修改回原来的mysql&gt;提示符</span>
+<span class="n">hu_mysqlprompt</span> <span class="n">mysql</span><span class="o">&gt;</span>
+<span class="n">PROMPT</span> <span class="nb">set</span> <span class="n">to</span> <span class="s1">&#39;mysql&gt;&#39;</span>
+<span class="n">mysql</span><span class="o">&gt;</span>
+
+
+<span class="c1">#开启mysql操作日志保存</span>
+<span class="n">mysql</span><span class="o">&gt;</span> \<span class="n">T</span> <span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">Logging</span> <span class="n">to</span> <span class="n">file</span> <span class="s1">&#39;D:\mysql.txt&#39;</span>
+
+
+<span class="c1">#查看上一步命令的警告信息</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">warnings</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id58"><span class="section-number">4.3.4. </span>2.数据库操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create database hujianli default charset=utf8;
+
+create database IF NOT EXISTS hujianli2;
+
+
+
+#查看所有的数据库信息
+mysql&gt; show databases;
+或者
+mysql&gt; show schemas;
+
+
+
+#查看数据库的创建语句和编码方式信息
+mysql&gt; show create database hujianli2;
++-----------+--------------------------------------------------------------------+
+| Database  | Create Database                                                    |
++-----------+--------------------------------------------------------------------+
+| hujianli2 | CREATE DATABASE `hujianli2` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++-----------+--------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+#查看数据库字符集
+show variables like &#39;%char%&#39;;
+
+#修改指定数据库的编码方式
+mysql&gt; alter database hujianli2 default character set utf8;
+Query OK, 1 row affected, 1 warning (0.07 sec)
+
+#打开指定的数据库或者切换数据库
+mysql&gt; use hujianli2
+Database changed
+
+#查看当前选择的数据库
+select database(); --查看当前使用的数据库
+
+
+# 选择数据库
+use database_name
+
+# 删除数据库
+drop database hujianli;
+drop database IF EXISTS hujianli_db2;
+
+#清空表内容
+delete from test01;
+</pre></div>
+</div>
+<section id="id6">
+<h3><a class="toc-backref" href="#id59">3.mysql忘记密码后，跳过密码进入数据库</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
+
+<span class="c1">#修改mysql的root密码</span>
+    <span class="c1">#第一种方式:</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="nb">set</span> <span class="n">password</span> <span class="k">for</span> <span class="n">username</span><span class="nd">@host</span> <span class="o">=</span> <span class="n">password</span><span class="p">(</span> <span class="s1">&#39;your_password&#39;</span><span class="p">);</span>
+    <span class="c1">#第二种方法</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="n">update</span> <span class="n">user</span> <span class="nb">set</span> <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">(</span><span class="s1">&#39;your_password&#39;</span><span class="p">)</span> <span class="n">where</span> <span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="n">flush</span> <span class="n">peivileges</span><span class="p">;</span>
+    <span class="c1">#第三种方式:</span>
+    <span class="p">[</span><span class="n">root</span><span class="nd">@yinzhengjie</span> <span class="o">~</span><span class="p">]</span><span class="c1">#mysqladmin -u UserName -h Host password &#39;new_password&#39; -p</span>
+    <span class="p">[</span><span class="n">root</span><span class="nd">@yinzhengjie</span> <span class="o">~</span><span class="p">]</span><span class="c1">#mysqladmin -u UserName -h Host -p flush-privileges</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id60">4.mysql的各种权限管理</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>用户权限管理主要有以下作用：
+1. 可以限制用户访问哪些库、哪些表
+2. 可以限制用户对哪些表执行SELECT、CREATE、DELETE、DELETE、ALTER等操作
+3. 可以限制用户登录的IP或域名
+4. 可以限制用户自己的权限是否可以授权给别的用户
+
+
+一、用户授权
+# 授权本地用户
+#授权本地test用户能远程登录
+grant all on test_db.* to test@localhost identified by &#39;123456&#39;;
+grant all on *.*  to hujianli@&#39;lcoalhost&#39;  identified by &#39;123123&#39;;
+grant all on discuz.* to root@&#39;localhost&#39; identified by &quot;123456&quot;;
+
+
+# 授权远程用户
+#授权所有用户通过test用户名和123456密码都能远程登录数据库
+grant all privileges on *.* to test@&quot;%&quot; identified by &#39;123456&#39;;
+grant all privileges on *.* to &#39;yangxin&#39;@&#39;%&#39; identified by &#39;yangxin123456&#39; with grant option;
+
+#刷新权限
+flush  privileges;
+
+
+## 举例本地和远程用户授权
+
+#创建管理 cldera 的账户 cldera，密码 cldera.com；
+grant all privileges on cldera.* to &#39;cldera&#39;@&#39;localhost&#39; identified by &#39;cldera.com&#39;;
+flush privileges;
+#如需远程连接该账户,则使用
+grant all privileges on cldera.* to &#39;cldera&#39;@&#39;%&#39; identified by &#39;cldera.com&#39;;
+flush privileges;
+
+
+# 授权单台主机
+# 授权192.168.111.118主机通过test用户和123456密码 能访问test_db数据库
+grant all privileges on test_db.* to test@&quot;192.168.111.118&quot; identified by &#39;123456&#39;;
+
+# 授权增删改查权限
+grant select,insert,update,delete on *.* to test@”%”identified by &#39;123456&#39;;
+     •all privileges：
+     --表示将所有权限授予给用户。也可指定具体的权限，如：SELECT、CREATE、DROP等。
+     •on：--表示这些权限对哪些数据库和表生效，格式：数据库名.表名，这里写“*”表示所有数据库，所有表。如果我要指定将权限应用到test库的user表中，可以这么写：test.user
+     •to：--将权限授予哪个用户。格式：”用户名”@”登录IP或域名”。%表示没有限制，在任何主机都可以登录。比如：”yangxin”@”192.168.0.%”，表示yangxin这个用户只能在192.168.0IP段登录
+     •identified by：
+     --指定用户的登录密码
+     •with grant option：
+     --表示允许用户将自己的权限授权给其它用户
+
+
+二、刷新权限
+    flush privileges;
+
+
+三、查看用户权限
+    --赋权
+    grant select,create,drop,update,alter on *.* to &#39;yangxin&#39;@&#39;localhost&#39; identified by &#39;yangxin0917&#39; with grant option;
+    --查看权限
+    show grants for &#39;root&#39;@&#39;localhost&#39;;
+    --删除用户和对应权限
+    drop user test;
+
+
+四、回收权限
+    revoke create on *.* from &#39;yangxin@localhost&#39;;
+
+    # 取消user3用户的查询权限
+    revoke select on *.* FROM &#39;user3&#39;@&#39;localhost&#39;;
+
+    flush privileges;
+
+五、删除用户
+    select host,user from user;
+    drop user &#39;yangxin&#39;@&#39;localhost&#39;;
+
+六、用户重命名
+    rename user &#39;test3&#39;@&#39;%&#39; to &#39;test1&#39;@&#39;%&#39;;
+
+七、修改密码
+--1&gt; 更新mysql.user表
+    mysql&gt; use mysql;
+    --mysql5.7之前
+    mysql&gt; update user set password=password(&#39;123456&#39;) where user=&#39;root&#39;;
+    --mysql5.7之后
+    mysql&gt; update user set authentication_string=password(&#39;123456&#39;) where user=&#39;root&#39;;
+    mysql&gt; flush privileges;
+
+--2&gt; 用set password命令
+    语法：set password for ‘用户名&#39;@&#39;登录地址&#39;=password(‘密码&#39;)
+
+    mysql&gt; set password for &#39;root&#39;@&#39;localhost&#39;=password(&#39;123456&#39;);
+
+--3&gt; mysqladmin
+    语法：mysqladmin -u用户名 -p旧的密码 password 新密码
+
+    mysql&gt; mysqladmin -uroot -p123456 password 1234abcd
+
+八、忘记密码
+
+--1&gt; 添加登录跳过权限检查配置
+    修改my.cnf，在mysqld配置节点添加skip-grant-tables配置
+    [mysqld]
+    skip-grant-tables
+
+--2&gt; 重新启动mysql服务
+    service mysqld restart
+--3&gt; 还原登录权限跳过检查配置
+    将my.cnf中mysqld节点的skip-grant-tables配置删除，然后重新启动服务即可。
+</pre></div>
+</div>
+<p>​</p>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id61">5.表的操作</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：create table 表名(列及类型)
+create table students2(id int auto_increment primary key,name varchar(20) not null,
+age int not null ,gender bit default 1,address varchar(20),isDelete bit default 0);
+
+auto_increment --自增长
+primary key --主键
+not null --表示不为空
+
+
+
+(1) 创建表
+create table table_name(
+    属性名 数据类型，
+    属性名 数据类型，
+    ......
+    属性名 数据类型，
+    );
+
+
+(2) 创建类似旧表的新表
+create table new_tab_name like old_tab_name;
+
+
+(3) 查看选择数据库中的所有表
+show tables;
+
+
+(4) 查看表的定义
+describe table_name;
+或者
+show columns from table_name;
+
+
+(5)查看表的详细定义
+ show create table table_name;
+
+(6)删除表
+drop table table_name;
+
+(7) 修改表的名字
+alter table table_name rename [to] new_table_name;
+
+
+(8)增加字段
+① 在表的最后一个位置增加字段
+alter table table_name add 属性名 属性类型;
+
+
+② 在表的第一个位置增加字段
+alter table table_name add 属性名 属性类型 first ;
+
+
+③ 在表的指定字段之后增加字段
+alter table table_name add 属性名 属性类型 after 属性名;
+
+
+(9) 删除字段
+alter table table_name;
+drop 属性名;
+
+(10) 修改字段
+① 修改字段的数据类型
+alter table table_name modify 属性名 数据类型；
+
+
+② 修改字段的名字
+alter table table_name change 旧属性名 新属性名 旧数据类型;
+
+
+③ 同时修改字段的名字和属性
+alter table table_name change 旧属性名 新属性名 新数据类型
+
+
+④ 修改字段的顺序
+alter table table_name modify 属性名1 数据类型 first|after 属性名2；
+
+
+(11) 设置非空约束
+create table table_name(
+    属性名 数据类型 not null,
+    .........
+    );
+
+
+(12) 设置字段默认值
+create table table_name(
+    属性名 数据类型 default 默认值,
+    .........
+    );
+
+
+(13) 设置唯一约束
+create table table_name(
+    属性名 数据类型 unique,
+    .........
+    );
+或者
+create table table_name(
+    属性名 数据类型 ,
+    .........
+    [constraint 约束名] unique(属性名)
+    );
+
+
+
+(14) 设置单字段主键
+    create table table_name(
+    属性名 数据类型 primary key,
+    .......
+    );
+
+
+(15) 设置多字段主键
+    create table table_name(
+    属性名 数据类型 ,
+    .......
+    [comnstraint 约束名] primary key(属性名，属性名....)
+    )
+
+(16)删除表的主键：
+alter table table_name
+    drop priimary key;
+
+
+(17)增加表的主键：
+alter table table_name
+    add primary key(属性名);
+
+
+(18)设置字段字段增加
+create table table_name(
+    属性名 数据类型 auto_increment,
+    .......
+    );
+
+
+(19) 设置外键约束
+create table table_name(
+    属性名 数据类型
+    ......
+    constraint 外键约束名 foreign key(属性名1)
+    references 表名(属性名2)
+)
+</pre></div>
+</div>
+<p>​</p>
+<section id="id9">
+<h4>5.1 查看建表语句<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">create</span> <span class="n">table</span> <span class="n">student2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h4>5.2 重名名表名<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rename</span> <span class="n">table</span> <span class="n">原表名</span> <span class="n">to</span> <span class="n">新表名</span>
+<span class="n">rename</span> <span class="n">table</span> <span class="n">student2</span> <span class="n">to</span> <span class="n">students2</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h4>5.3修改表名<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>alter table 表名 add|change|drop 列名 类型;
+alter table students2 add isDelete bit default 1;
+
+
+
+添加列：alter table 表名 add 列名 类型
+删除列：alter table 表名 drop column 列名
+修改列：
+        alter table 表名 modify column 列名 类型;  -- 类型
+        alter table 表名 change 原列名 新列名 类型; -- 列名，类型
+
+添加主键：
+        alter table 表名 add primary key(列名);
+删除主键：
+        alter table 表名 drop primary key;
+        alter table 表名  modify  列名 int, drop primary key;
+
+添加外键：alter table 从表 add constraint 外键名称（形如：FK_从表_主表） foreign key 从表(外键字段) references 主表(主键字段);
+删除外键：alter table 表名 drop foreign key 外键名称
+
+修改默认值：ALTER TABLE testalter_tbl ALTER i SET DEFAULT 1000;
+删除默认值：ALTER TABLE testalter_tbl ALTER i DROP DEFAULT;
+
+1.增加
+mysql&gt; alter table student add sex char(32);
+Query OK, 0 rows affected (0.12 sec)
+
+mysql&gt; desc student;
+
+
+2.删除
+mysql&gt; alter table student drop sex;
+
+mysql&gt; desc student;
+
+
+3.修改表名
+mysql&gt; alter table student rename to students;
+
+
+4.修改列名
+mysql&gt; alter table students change regiiter_date register_date DATE;
+
+##change 字段名，类型都可以改，modify只能改类型
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id62"><span class="section-number">4.3.5. </span>数据的操作</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<section id="id13">
+<h3><a class="toc-backref" href="#id63">1.增</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">语法：</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>`INSERT INTO table_name ( field1, field2,...fieldN )
+                       VALUES
+                       ( value1, value2,...valueN );`
+
+
+a.全列插入：
+格式:insert into 表名 values(....)
+说明：主键列是自动增长，但是在全列插入时需要占位，
+通常使用0，插入成功以后以实际数据为准
+示例：insert into students2 values(0,&#39;tom&#39;,19,1,&#39;北京&#39;,0);
+
+
+b.缺省插入：
+    格式：insert into 表名(列1,列2,......) values(值1,值2,....)
+    例子：insert into students2(name,age,address) values(&#39;hujianli&#39;,19,&#39;shanghai&#39;)
+
+
+c.同时插入多条数据:
+    格式：insert into 表名 values(...),(...),...
+    示例： insert into students2 values(0,&#39;hom&#39;,22,1,&#39;北京&#39;,0),(0,&#39;hum&#39;,12,0,&#39;北京&#39;,0);
+
+
+insert into students(name, age, register_date) values (&#39;hujianli&#39;, &#39;24&#39;,&#39;2019-02-07&#39;);
+insert into students(name, age, register_date) VALUES (&#39;hujianli2&#39;,&#39;22&#39;,&#39;2019-02-08&#39;);
+insert into students(name, age, register_date) VALUES (&#39;hujianli3&#39;,&#39;21&#39;,&#39;2019-02-08&#39;);
+insert into students(name, age, register_date) VALUES (&#39;hujianli4&#39;,&#39;20&#39;,&#39;2019-02-08&#39;);
+
+SELECT * FROM student;  --&gt;看表里面的内容
+</pre></div>
+</div>
+<img alt="../../_images/mysql-insert.PNG" src="../../_images/mysql-insert.PNG" />
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id64">2.删</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：delete from 表名;    ---删除表全部的内容,危险慎用！
+      delete from 表名 where 条件;
+示例：delete from students2 where id=6;
+
+Truncate tables_name;         # 清空数据库表内容
+# TRUNCATE TABLE 删除表中的所有行，但表结构及其列、约束、索引等保持不变.
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">### 3.改 格式：update 表名 set 列1=值1,列2=值2,…… where 条件
+示例:update student2 set age=16 where id=5；
+—注意没有条件是全列修改，慎用！</div>
+</div>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id65">4.查</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>格式：select * from students2;    ---查询表中的全部数据
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">语法：</span>&#160;&#160;&#160;&#160; <span class="pre">SELECT</span> <span class="pre">column_name,column_name</span>&#160;&#160;&#160;&#160; <span class="pre">FROM</span> <span class="pre">table_name</span>&#160;&#160;&#160;&#160; <span class="pre">[WHERE</span> <span class="pre">Clause]</span>&#160;&#160;&#160;&#160; <span class="pre">[OFFSET</span> <span class="pre">M</span> <span class="pre">][LIMIT</span> <span class="pre">N]</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查询语句中你可以使用一个或者多个表，表之间使用逗号(,)分割，并使用WHERE语句来设定查询条件。
+SELECT 命令可以读取一条或者多条记录。
+你可以使用星号（*）来代替其他字段，SELECT语句会返回表的所有字段数据
+你可以使用 WHERE 语句来包含任何条件。
+你可以通过OFFSET指定SELECT语句开始查询的数据偏移量。默认情况下偏移量为0。
+你可以使用 LIMIT 属性来设定返回的记录数。
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">limit</span> <span class="mi">2</span> <span class="n">offset</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="c1">#limit： 查几条数据</span>
+    <span class="c1">#offset: 从第几个开始查</span>
+
+<span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="nb">id</span> <span class="o">&gt;</span><span class="mi">1</span><span class="p">;</span>
+    <span class="c1">#条件判断</span>
+
+<span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="nb">id</span> <span class="o">&gt;</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">age</span> <span class="o">&lt;</span> <span class="mi">22</span><span class="p">;</span>
+    <span class="c1">#多个条件</span>
+
+<span class="n">select</span>  <span class="o">*</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="n">name</span> <span class="n">like</span> <span class="s2">&quot;hujianli%&quot;</span><span class="p">;</span>
+    <span class="c1">#like模糊查询</span>
+</pre></div>
+</div>
+<section id="id16">
+<h4>4,1查操作，使用最多<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.基本语法
+    格式：select * from 表名
+        说明：
+            a、from关键字后面是表名，表示数据来源于这张表
+            b、select后面写表中的列名，如果是*表示在结果集中显示所有的列
+            c、在select后面的列名部分可以使用as为列名起别名，这个别名显示在结果集中
+            d、如果要查询多个列，之间使用逗号分隔
+
+        示例：
+            select * from students2;
+            select name,age from students2;
+            select name as a,age from students2;  ---别名name为a进行显示
+
+#查看索引
+第一种：show create table test;
+第二种：SHOW INDEX FROM test \G；
+
+#删除索引
+DROP INDEX index_name ON table；
+ALTER TABLE test DROP PRIMARY KEY;  --&gt;删除主键
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​</div>
+<div class="line">​ 2.消除重复行 ​ 在select后面列前面使用distinct可以消除重复的行 ​
+示例：select distinct gender from students2;</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 3.条件查询 ​ a、语法 ​ select * from 表名 where 条件 ​</div>
+<div class="line">​ b、比较运算符 ​ 等于 = ​ 大于 &gt; ​ 小于 &lt; ​ 大于等于 &gt;= ​ 小于等于 &lt;=
+​ 不等于 !=或&lt;&gt; ​ –查询id大于2的所有数据 ​ select * from students2
+where id&gt;2;</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ c、逻辑运算符 ​ and 并且 ​ or 或者 ​ not 非 ​ –查询id值大于7的女同学
+​ 示例：SELECT * FROM students2 WHERE id&gt;3 and gender=0;</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ d、模糊查询 ​ INSERT INTO students2
+VALUES(0,‘习近平’,65,1,‘北京’,0); ​ INSERT INTO students2
+VALUES(0,‘习大大’,66,1,‘北京’,0); ​ INSERT INTO students2
+VALUES(0,‘习大’,64,1,‘北京’,0); ​ like ​ % 表示任意多个任意字符 ​
+_表示一个任意字符 ​</div>
+<div class="line">​ –需求：查询姓习的同学 ​ SELECT * FROM students2 WHERE name LIKE
+‘习%’; ​ SELECT * FROM students2 WHERE name LIKE ‘习_’;
+–查询name为习X的同学 ​</div>
+<div class="line">​ e、范围查询 ​ in 表示在一个非连续的范围内 ​ between …and…
+表示在一个连续的范围内 ​</div>
+<div class="line">需求：查询编号为 8、10、12的学生 示例：select * from students2 where
+id in(4,5,8);</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>需求：查询编号为6到8的学生
+示例：select * from students2 where id between 4 and 8;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ f、空判断 ​ 注意：null与””是不同 ​ 判断空：is null ​ 判断非空：is
+not null ​</div>
+<div class="line">​ 需求：查询没有地址的同学 ​ 示例：select * from students2 where
+address is null; ​ 需求：查询有地址的同学 ​ 示例：select * from
+students2 where address is not null; ​</div>
+<div class="line">​ g、优先级 ​ 小括号,not 比较运算符,逻辑运算符 ​
+and比or的优先级高,如果同时出现并希望先选or，需要结合()来使用</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 4.聚合 ​ 为了快速等到统计数据，提供5个聚合函数 ​ a、count(*)
+表示计算总行数，括号中可以写*和列名 ​ b、max(列) 表示求此列的最大值
+​ c、min(列) 表示求此列的最小值 ​ d、sum(列) 表示求此列的和 ​
+e、avg(列) 表示求此列的平均值 ​</div>
+<div class="line">​ 需求：查询学生总数 ​ 示例：SELECT COUNT(*) from students2; ​
+示例：SELECT COUNT(id) from students2; ​</div>
+<div class="line">​ 需求：查询女生的编号最大值 ​ 示例：SELECT MAX(id) FROM students2
+WHERE gender=0; ​</div>
+<div class="line">需求：查询女生的编号最小值 示例：SELECT MIN(id) FROM students2 WHERE
+gender=0;</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>需求：查询所有学生的年龄和
+示例：SELECT SUM(age) FROM students2;
+
+需求：查询所有学生的年龄平均值
+示例：SELECT avg(age) FROM students2;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 5、分组 ​
+按照字段分组，表示此字段相同的数据会被放到一个集合中，分组后，只能 ​
+查询出相同的数据列，对于有差异的数据列，无法显示在结果集中， ​
+可以对分组的数据进行统计，做聚合运算 ​</div>
+<div class="line">​ 语法：select 列1,列2,聚合…… from 表名 group by 列1, ​ 列2, 列3,……. ​</div>
+<div class="line">​ 需求：查询男女生统计的总数 ​ 示例：select gender,count(*) from
+students2 group by gender; ​ select name,gender,count(*) from
+students2 group by gender,age;</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 分组后的数据筛选： ​ select 列1,列2,聚合…… from 表名 group by 列1, ​
+列2, 列3,….. having 列1,列2…..,聚合…. ​ 示例：select gender,count(*)
+from students2 group by gender having gender; ​ select gender,count(*)
+from students2 group by gender having gender=0; ​</div>
+<div class="line">​ where 与having的区别 ​
+where是对from后面指定的表进行筛选，属于对原始数据的筛选。 ​
+having是对group by的结果进行筛选 ​</div>
+<div class="line">​ 6.排序 ​ 语法：select * from 表名 order by 列1 asc|desc, 列2
+asc|desc…… ​ 说明： ​ a、 将数据按照列1进行排序，如果某些列1的值相同，
+​ 则按照列2进行排序 ​</div>
+<div class="line">b、默认安装从小到大的顺序排序 c、asc 升序 d、desc 降序
+需求：按照年龄排序 示例:select * from students2 order by age;</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>需求：将没有被删除的数据按年龄排序
+示例：SELECT * from students2 WHERE isDelete=0 ORDER BY age asc;  --升序
+      SELECT * from students2 WHERE isDelete=0 ORDER BY age DESC; --降序
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​</div>
+<div class="line">​ 7.分页 ​ 语法：select * from students2 limit start,count;
+–start索引从0开始 ​ 示例：SELECT * FROM students2 LIMIT 0,3; ​ SELECT
+* FROM students2 LIMIT 3,3; ​ SELECT * from students2 WHERE gender=1
+LIMIT 3; –男生前3名 ​</div>
+<div class="line">​ 8.关联 ​ 建表语句 ​ 1、 CREATE TABLE <code class="docutils literal notranslate"><span class="pre">class</span></code> ( ​ <code class="docutils literal notranslate"><span class="pre">id</span></code> int(11)
+NOT NULL AUTO_INCREMENT, ​ <code class="docutils literal notranslate"><span class="pre">name</span></code> varchar(20) NOT NULL, ​ <code class="docutils literal notranslate"><span class="pre">stuNum</span></code>
+int(11) NOT NULL, ​ PRIMARY KEY (<code class="docutils literal notranslate"><span class="pre">id</span></code>);</div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 2、 ​ CREATE TABLE <code class="docutils literal notranslate"><span class="pre">students3</span></code> ( ​ <code class="docutils literal notranslate"><span class="pre">id</span></code> int(11) NOT NULL
+AUTO_INCREMENT, ​ <code class="docutils literal notranslate"><span class="pre">name</span></code> varchar(20) NOT NULL, ​ <code class="docutils literal notranslate"><span class="pre">gender</span></code> bit(1)
+DEFAULT b’1’, ​ <code class="docutils literal notranslate"><span class="pre">classid</span></code> int(11) NOT NULL, ​ PRIMARY KEY (<code class="docutils literal notranslate"><span class="pre">id</span></code>),
+​ KEY <code class="docutils literal notranslate"><span class="pre">classid</span></code> (<code class="docutils literal notranslate"><span class="pre">classid</span></code>), ​ CONSTRAINT <code class="docutils literal notranslate"><span class="pre">students3_ibfk_1</span></code>
+FOREIGN KEY (<code class="docutils literal notranslate"><span class="pre">classid</span></code>) REFERENCES <code class="docutils literal notranslate"><span class="pre">class</span></code> (<code class="docutils literal notranslate"><span class="pre">id</span></code>); ​</div>
+<div class="line">​ 插入一些数据： ​ INSERT INTO class
+VALUES(0,‘pyth8’,65),(0,‘python9’,99),(0,‘python12’,12); ​ INSERT INTO
+students3 VALUES(0,‘HU’,1,4); ​ INSERT INTO students3
+VALUES(0,‘tom’,1,2); ​</div>
+<div class="line">​ 关联查询： ​ SELECT students3.<code class="docutils literal notranslate"><span class="pre">name</span></code>,class.<code class="docutils literal notranslate"><span class="pre">name</span></code> FROM class
+inner JOIN students3 on class.id=students3.classid; ​</div>
+<div class="line">SELECT students3.<code class="docutils literal notranslate"><span class="pre">name</span></code>,class.<code class="docutils literal notranslate"><span class="pre">name</span></code> FROM class left JOIN
+students3 on class.id=students3.classid;</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT students3.`name`,class.`name` FROM class right JOIN students3 on class.id=students3.classid;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 其他操作</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建授权用户</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">grant</span> <span class="nb">all</span> <span class="n">on</span> <span class="n">test</span><span class="o">.*</span> <span class="n">to</span> <span class="s1">&#39;xsk&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;123456&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>注:
+
+GRANT          #命令
+
+# 赋值权限
+SELECT        #查
+INSERT        #插入
+UPDATE        #修改
+DELETE        #删除
+CREATE        #创建
+DROP          #删除
+ALL           #给所有权限
+
+on            # 赋值给那个数据库
+*.*           # 所有数据库.所有表
+test.*        # 指定单个数据库下所有的表
+
+to            # 权限赋值给哪个用户
+&#39;xsk&#39;         # xsk 用户
+@             # 可以在哪个机器上访问
+&#39;%&#39;           # 所有机器
+localhost     #本地
+
+identified     # 设置用户密码
+by             # 后面根密码
+‘123456’;      # 设置密码
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># mysql下创建无授权用户</span>
+<span class="n">mysql</span><span class="o">&gt;</span><span class="n">grant</span> <span class="nb">all</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="n">用户名</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;密码&#39;</span><span class="p">;</span>
+
+<span class="c1"># 更改密码</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">UPDATE</span> <span class="n">数据库</span><span class="o">.</span><span class="n">用户名</span> <span class="n">SET</span> <span class="n">password</span><span class="o">=</span><span class="n">PASSWORD</span><span class="p">(</span><span class="s2">&quot;新密码&quot;</span><span class="p">)</span> <span class="n">WHETE</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;username&#39;</span><span class="p">;</span>
+
+<span class="c1"># 修改当前用户密码</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">SET</span> <span class="n">PASSWORD</span> <span class="o">=</span> <span class="n">PASSWORD</span><span class="p">(</span><span class="s1">&#39;mypass&#39;</span><span class="p">);</span>
+
+<span class="c1"># 刷新</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+
+<span class="c1"># 进入数据库</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">use</span> <span class="n">数据库名</span><span class="p">;</span>
+
+<span class="c1"># 修复表</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">repair</span> <span class="n">table</span> <span class="n">表名</span><span class="p">;</span>
+
+<span class="c1"># 删除用户权限</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">user</span> <span class="n">用户名</span><span class="o">@</span><span class="s1">&#39;权限&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h4>修改<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">update</span> <span class="n">students</span> <span class="nb">set</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;hu&#39;</span> <span class="n">where</span> <span class="nb">id</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h4>删除<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">delete</span> <span class="kn">from</span> <span class="nn">students</span> <span class="n">where</span> <span class="nb">id</span> <span class="o">&gt;</span><span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h4>排序<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>排序
+    select * from 表 order by 列 asc              - 根据 “列” 从小到大排列
+    select * from 表 order by 列 desc             - 根据 “列” 从大到小排列
+    select * from 表 order by 列1 desc,列2 asc    - 根据 “列1” 从大到小排列，如果相同则按列2从小到大排
+
+    select * from students order by id desc;        # 根据id进行倒叙排列
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h4>分组<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.按名字分组后，并且统计名字出现的次数
+select name,count(*) from students group by name;
+
+2.按名字分组后，把年龄加起来
+select name,sum(age) from students group by name;
+
+select name,sum(age) as rename_sumage from students group by name;
+#加as，可以自定义sum(age)的名字
+</pre></div>
+</div>
+</section>
+<section id="id21">
+<h4>事务<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL 事务主要用于处理操作量大，复杂度高的数据。
+
+特性：
+    1、事务的原子性：一组事务，要么成功；要么撤回。
+    2、稳定性 ： 有非法数据（外键约束之类），事务撤回。
+    3、隔离性：事务独立运行。一个事务处理后的结果，影响了其他事务，那么其他事务会撤回。事务的100%隔离，需要牺牲速度。
+    4、可靠性：软、硬件崩溃后，InnoDB数据表驱动会利用日志文件重构修改。可靠性和高速度不可兼得， innodb_flush_log_at_trx_commit选项 决定什么时候吧事务保存到日志里。
+    复制代码
+
+begin     --&gt;开启
+
+insert into  ......    --&gt;要写入的内容
+
+rollback;             --&gt;回滚到原来状态
+
+commit;             --&gt;确认提交
+</pre></div>
+</div>
+</section>
+<section id="id22">
+<h4>外键<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MySQL支持外键的存储引擎只有InnoDB</span> <span class="p">,</span> <span class="n">在创建外键的时候</span> <span class="p">,</span>
+<span class="n">要求父表必须有对应的索引</span> <span class="p">,</span> <span class="n">子表在创建外键的时候也会自动创建对应的索引</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">数据库操作</div>
+</div>
+</section>
+</section>
+</section>
+<section id="id23">
+<h2><a class="toc-backref" href="#id66"><span class="section-number">4.3.6. </span>1.显示</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql&gt; show databases;
+
+
+  默认数据库：
+
+　　 mysql - 用户权限相关数据
+　　 test - 用于用户测试数据
+　　 information_schema - MySQL本身架构相关数据
+</pre></div>
+</div>
+</section>
+<section id="id24">
+<h2><a class="toc-backref" href="#id67"><span class="section-number">4.3.7. </span>2.创建</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">create</span> <span class="pre">database</span> <span class="pre">数据库名称</span> <span class="pre">default</span> <span class="pre">charset</span> <span class="pre">utf8</span> <span class="pre">collate</span> <span class="pre">utf8_general_ci;</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">derek</span> <span class="n">default</span> <span class="n">charset</span> <span class="n">utf8</span> <span class="n">collate</span> <span class="n">utf8_general_ci</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span><span class="p">,</span> <span class="mi">2</span> <span class="n">warnings</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id25">
+<span id="id26"></span><h2><a class="toc-backref" href="#id68"><span class="section-number">4.3.8. </span>3.删除</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">derek</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="n">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.07</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id27">
+<h2><a class="toc-backref" href="#id69"><span class="section-number">4.3.9. </span>4.使用</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">derek</span><span class="p">;</span>                  <span class="n">进入数据库</span>
+<span class="n">show</span> <span class="n">tables</span><span class="p">;</span>                <span class="n">查看表</span>
+<span class="n">select</span> <span class="n">database</span><span class="p">();</span>          <span class="n">查看当前使用的数据库</span>
+</pre></div>
+</div>
+</section>
+<section id="id28">
+<h2><a class="toc-backref" href="#id70"><span class="section-number">4.3.10. </span>5.用户管理</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql&gt; use mysql;       #进入mysql数据库
+mysql&gt; select host,user from user;      ##查看目前的用户
++-----------+------------------+
+| host      | user             |
++-----------+------------------+
+| localhost | mysql.infoschema |
+| localhost | mysql.session    |
+| localhost | mysql.sys        |
+| localhost | root             |
++-----------+------------------+
+4 rows in set (0.00 sec)
+
+创建用户
+create user &#39;用户名&#39;@&#39;IP地址&#39; identified by &#39;密码&#39;;
+实例：create user &#39;zx&#39;@&#39;%&#39; identified by &#39;111&#39;;
+账户名zx，ip地址任意（可以在任意ip下访问），密码‘’111‘’可以使用该用户
+
+删除用户
+    drop user &#39;用户名&#39;@&#39;IP地址&#39;;
+修改用户
+    rename user &#39;用户名&#39;@&#39;IP地址&#39; to &#39;新用户名&#39;@&#39;IP地址&#39;;
+修改密码
+    set password for &#39;用户名&#39;@&#39;IP地址&#39; = Password(&#39;新密码&#39;)
+</pre></div>
+</div>
+</section>
+<section id="id29">
+<h2><a class="toc-backref" href="#id71"><span class="section-number">4.3.11. </span>6.用户授权</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>查看权限：   show grants for &#39;用户&#39;@&#39;IP地址&#39;
+授权：     grant 权限 on 数据库.表 to &#39;用户&#39;@&#39;IP地址&#39;
+取消权限：   revoke 权限 on 数据库.表 from &#39;用户&#39;@&#39;IP地址&#39;
+flush privileges   将数据读取到内存中，从而立即生效
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">grants</span> <span class="k">for</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="n">grant</span> <span class="n">select</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="n">grant</span> <span class="nb">all</span> <span class="n">privileges</span> <span class="n">on</span> <span class="o">*.*</span> <span class="n">to</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="n">revoke</span> <span class="n">select</span> <span class="n">on</span> <span class="o">*.*</span> <span class="kn">from</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+
+<span class="n">revoke</span> <span class="nb">all</span> <span class="n">privileges</span> <span class="n">on</span> <span class="o">*.*</span> <span class="kn">from</span> <span class="s1">&#39;zx&#39;</span><span class="o">@</span><span class="s1">&#39;%&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">权限说明</span>
+<span class="nb">all</span> <span class="n">privileges</span>  <span class="n">除grant外的所有权限</span>
+<span class="n">select</span>          <span class="n">仅查权限</span>
+<span class="n">select</span><span class="p">,</span><span class="n">insert</span>   <span class="n">查和插入权限</span>
+<span class="n">usage</span>           <span class="n">无访问权限</span>
+<span class="n">alter</span>           <span class="n">使用alter</span> <span class="n">table</span>
+<span class="n">alter</span> <span class="n">routine</span>   <span class="n">使用alter</span> <span class="n">procedure和drop</span> <span class="n">procedure</span>
+<span class="n">create</span>          <span class="n">使用create</span> <span class="n">table</span>
+<span class="n">create</span> <span class="n">routine</span>  <span class="n">使用create</span> <span class="n">procedure</span>
+<span class="n">create</span> <span class="n">temporary</span> <span class="n">tables</span> <span class="n">使用create</span> <span class="n">temporary</span> <span class="n">tables</span>
+<span class="n">create</span> <span class="n">user</span>     <span class="n">使用create</span> <span class="n">user</span><span class="p">,</span><span class="n">drop</span> <span class="n">user</span><span class="p">,</span><span class="n">rename</span> <span class="n">user和revoke</span> <span class="nb">all</span> <span class="n">privileges</span>
+<span class="n">create</span> <span class="n">view</span>     <span class="n">使用create</span> <span class="n">view</span>
+<span class="n">delete</span>          <span class="n">使用delete</span>
+<span class="n">drop</span>            <span class="n">使用drop</span> <span class="n">table</span>
+<span class="n">execute</span>         <span class="n">使用call和存储过程</span>
+<span class="n">file</span>            <span class="n">使用select</span> <span class="n">into</span> <span class="n">outfile</span> <span class="n">和</span> <span class="n">load</span> <span class="n">data</span> <span class="n">infile</span>
+<span class="n">grant</span> <span class="n">option</span>    <span class="n">使用grant</span> <span class="n">和</span> <span class="n">revoke</span>
+<span class="n">index</span>           <span class="n">使用index</span>
+<span class="n">insert</span>          <span class="n">使用insert</span>
+<span class="n">lock</span> <span class="n">tables</span>     <span class="n">使用lock</span> <span class="n">table</span>
+<span class="n">process</span>         <span class="n">使用show</span> <span class="n">full</span> <span class="n">processlist</span>
+<span class="n">select</span>          <span class="n">使用select</span>
+<span class="n">show</span> <span class="n">databases</span>  <span class="n">使用show</span> <span class="n">databases</span>
+<span class="n">show</span> <span class="n">view</span>       <span class="n">使用show</span> <span class="n">view</span>
+<span class="n">update</span>          <span class="n">使用update</span>
+<span class="n">reload</span>          <span class="n">使用flush</span>
+<span class="n">shutdown</span>        <span class="n">使用mysqladmin</span> <span class="n">shutdown</span><span class="p">(</span><span class="n">关闭MySQL</span><span class="p">)</span>
+<span class="nb">super</span>           <span class="n">使用change</span> <span class="n">master</span><span class="p">,</span><span class="n">kill</span><span class="p">,</span><span class="n">logs</span><span class="p">,</span><span class="n">purge</span><span class="p">,</span><span class="n">master和set</span> <span class="k">global</span><span class="p">,</span><span class="n">还允许</span>                    <span class="n">mysqladmin调试登陆</span>
+<span class="n">replication</span> <span class="n">client</span>      <span class="n">服务器位置的访问</span>
+<span class="n">replication</span> <span class="n">slave</span>       <span class="n">由复制从属使用</span>
+<span class="n">flush</span> <span class="n">privileges</span>　　　    　<span class="n">将数据读取到内存中</span><span class="p">,</span><span class="n">从而立即生效</span>
+</pre></div>
+</div>
+</section>
+<section id="id30">
+<h2><a class="toc-backref" href="#id72"><span class="section-number">4.3.12. </span>7.忘记密码</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 启动免授权服务端</span>
+<span class="n">mysqld</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span>
+<span class="c1"># 客户端</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span>
+<span class="c1"># 修改用户名密码</span>
+<span class="n">update</span> <span class="n">mysql</span><span class="o">.</span><span class="n">user</span> <span class="nb">set</span> <span class="n">authentication_string</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;666&#39;</span><span class="p">)</span> <span class="n">where</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id31">
+<h2><a class="toc-backref" href="#id73"><span class="section-number">4.3.13. </span>8.Mysql数据类型</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<p>参考文献</p>
+<p>Mysql 数据类型、约束类型</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8318973.html">https://www.cnblogs.com/xiangsikai/p/8318973.html</a></p>
+<p><strong>MySQL支持多种类型，大致可以分为三类：数值、日期/时间和字符串(字符)类型。</strong></p>
+<section id="id32">
+<h3><a class="toc-backref" href="#id74">1.数值</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/mysql-data.png" src="../../_images/mysql-data.png" />
+</section>
+<section id="id33">
+<h3><a class="toc-backref" href="#id75">2.日期和时间类型</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/mysql-data-time.png" src="../../_images/mysql-data-time.png" />
+</section>
+<section id="id34">
+<h3><a class="toc-backref" href="#id76">3.字符串类型</a><a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<img alt="../../_images/string.png" src="../../_images/string.png" />
+</section>
+</section>
+<section id="id35">
+<h2><a class="toc-backref" href="#id77"><span class="section-number">4.3.14. </span>9.mysql存储引擎</a><a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>创建新表时如果不指定存储引擎 , 那么系统就会使用默认存储引擎 , MySQL 5.5 之前的默认存储引擎是MyISAM , 5.5 之后改为了InnoDB
+
+查看当前数据库支持的存储引擎类型；
+SHOW ENGINES;
+</pre></div>
+</div>
+<img alt="../../_images/mysql-yingqing.png" src="../../_images/mysql-yingqing.png" />
+<section id="myisam-innodb">
+<h3><a class="toc-backref" href="#id78">1.MyISAM 和 InnoDB的适用场景</a><a class="headerlink" href="#myisam-innodb" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MyISAM适合：
+(1)做很多count 的计算；
+(2)插入不频繁，查询非常频繁；
+(3)没有事务。
+
+InnoDB适合：
+(1)可靠性要求比较高，或者要求事务；
+(2)表更新和查询都相当的频繁，并且表锁定的机会比较大的情况。
+</pre></div>
+</div>
+</section>
+<section id="id36">
+<h3><a class="toc-backref" href="#id79">MyISAM 和 InnoDB的区别</a><a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1)MyISAM类型不支持事务处理等高级处理，而InnoDB类型支持
+2)myisam表不支持外键
+3)在执行数据库写入的操作（insert,update,delete）的时候，myisam表会锁表，而innodb表会锁行
+4)当你的数据库有大量的写入、更新操作而查询比较少或者数据完整性要求比较高的时候就选择innodb表。当你的数据库主要以查询为主，相比较而言更新和写 入比较少，并且业务方面数据完整性要求不那么严格，就选择mysiam表。因为mysiam表的查询操作效率和速度都比innodb要快
+</pre></div>
+</div>
+</section>
+<section id="id37">
+<h3><a class="toc-backref" href="#id80">如何选择存储引擎</a><a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>InnoDB存储引擎：用于事务处理应用程序，具有众多特性
+
+MyISAM存储引擎：主要用于管理费事务表，它提供高速存储和检索，以及全文搜索能力
+
+MEMORY存储引擎：提供“内存中”表，MEMORY存储引擎的所有数据都在内存中，数据的处理速度快，但安全性不高（用于相对较小的数据库表）
+</pre></div>
+</div>
+</section>
+<section id="id38">
+<h3><a class="toc-backref" href="#id81">Mysql事务</a><a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<section id="id39">
+<h4>事务说明<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h4>
+<p>　　MySQL 事务主要用于处理操作量大，复杂度高的数据。
+比如说，在人员管理系统中，你删除一个人员，你即需要删除人员的基本资料，也要删除和该人员相关的信息，如信箱，文章等等，
+这样，这些数据库操作语句就构成一个事务！</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql引擎：MyIsam，Innodb默认启用innodb支持事务。
+重构日志：数据可如果在处理多条命令时down机，如果命令，没有全不处理完，当数据库启动时会检测事件并通过重构日志重写取消命令。
+在MySQL中只有使用了Innodb数据库引擎的数据库或表才支持事务
+事务处理可以用来维护数据库的完整性，保证成批的SQL语句要么全部执行，要么全部不执行
+事务用来管理insert,update,delete语句
+</pre></div>
+</div>
+<p>　　一般来说，事务是必须满足4个条件（ACID）：
+Atomicity（原子性）、Consistency（稳定性）、Isolation（隔离性）、Durability（可靠性）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、事务的原子性：一组事务，要么成功；要么撤回。
+2、稳定性 ： 有非法数据（外键约束之类），事务撤回。
+3、隔离性：事务独立运行。一个事务处理后的结果，影响了其他事务，那么其他事务会撤回。事务的100%隔离，需要牺牲速度。
+4、可靠性：软、硬件崩溃后，InnoDB数据表驱动会利用日志文件重构修改。可靠性和高速度不可兼得， innodb_flush_log_at_trx_commit选项 决定什么时候吧事务保存到日志里。
+</pre></div>
+</div>
+</section>
+<section id="id40">
+<h4>事务操作<a class="headerlink" href="#id40" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 开启一个事务</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">begin</span><span class="p">;</span>
+<span class="c1"># 回滚事务，取消事务。</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">rollback</span><span class="p">;</span>
+<span class="c1"># 保存事务</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">commit</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="id41">
+<h2><a class="toc-backref" href="#id82"><span class="section-number">4.3.15. </span>Mysql 慢查询日志配置</a><a class="headerlink" href="#id41" title="Permalink to this headline">¶</a></h2>
+<p>查询日志</p>
+<p>1、主配置文件下对添加参数、重启生效。</p>
+<p><code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">/etc/my.cnf</span></code></p>
+<img alt="../../_images/mysql_slow001.png" src="../../_images/mysql_slow001.png" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>注：主要用于查看开发程序执行时间。
+
+注：log_slow_queries = /tmp/mysql.slow    # 配置慢查询日志路径
+
+注：long_query_time = 1　　　　　　　   # 慢查询日志测试时间
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">查询慢日志开关是否开启</span>
+
+<span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;slow_query_log&#39;</span><span class="p">;</span>
+<span class="n">打开慢查询日志开关</span>
+
+<span class="nb">set</span> <span class="k">global</span> <span class="n">slow_query_log</span><span class="o">=</span><span class="mi">1</span>
+</pre></div>
+</div>
+</section>
+<section id="id42">
+<h2><a class="toc-backref" href="#id83"><span class="section-number">4.3.16. </span>数据的备份与恢复</a><a class="headerlink" href="#id42" title="Permalink to this headline">¶</a></h2>
+<section id="id43">
+<h3><a class="toc-backref" href="#id84">1.导入外部数据文本</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h3>
+<p>1)执行外部的SQL脚本</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>2)在指定数据库上执行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span>  <span class="p">[</span><span class="n">表名</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">input</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>数据传入命令</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">load</span> <span class="n">data</span> <span class="n">local</span> <span class="n">infile</span> <span class="s2">&quot;[文件名]&quot;</span> <span class="n">into</span> <span class="n">table</span> <span class="p">[</span><span class="n">表名</span><span class="p">];</span>
+</pre></div>
+</div>
+</section>
+<section id="id44">
+<h3><a class="toc-backref" href="#id85">2.备份数据库</a><a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>备份数据库：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 将数据库school备份到school.sql文件中。</span>
+<span class="n">mysqldump</span> <span class="o">--</span><span class="n">opt</span> <span class="n">school</span> <span class="o">&gt;</span> <span class="n">school</span><span class="o">.</span><span class="n">sql</span><span class="p">;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>备份：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&gt;</span> <span class="n">filename</span><span class="p">;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>恢复：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span><span class="p">[</span><span class="n">user</span><span class="p">]</span> <span class="o">-</span><span class="n">p</span><span class="p">[</span><span class="n">password</span><span class="p">]</span> <span class="n">databasename</span> <span class="o">&lt;</span> <span class="n">filename</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>备份数据库
+<span class="c1"># 还原没有更改字符集会出现乱码需指定字符集--default-character=gbk。</span>
+mysqldump --default-character<span class="o">=</span>gbk -uroot -p密码 数据库名 &gt; 文件名.sql
+
+
+<span class="c1"># 备份所有数据库 --all-databases</span>
+mysqldump --default-character<span class="o">=</span>gbk -uroot -p密码 --all-databases &gt; 文件名.sql
+
+<span class="c1"># 压缩备份</span>
+mysqldump -uroot -p密码 --databases 库名 <span class="p">|</span> gzip &gt; xxx.sql.gz
+
+还原数据库
+<span class="c1"># 如果两张表有用gbk与UTF-8与隔开备份。</span>
+mysql --default-character<span class="o">=</span>gbk -uroot -p密码 数据库名 &lt; 文件名.sql
+
+<span class="c1"># 解压缩还原</span>
+gunzip -c xxx.sql.gz <span class="p">|</span>mysql -uroot -p密码 库名
+
+<span class="c1"># 还原：use数据库内</span>
+mysql &gt; <span class="nb">source</span> /../../x.sql
+
+备份表
+mysqldump --default-character<span class="o">=</span>gbk -uroot -p密码 数据库名 表名 &gt; 文件名.sql
+
+还原表
+mysql --default-character<span class="o">=</span>gbk -uroot -p密码 数据库名 &lt; 文件名.sql
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8397494.html">https://www.cnblogs.com/xiangsikai/p/8397494.html</a></p>
+</section>
+<section id="id45">
+<h3><a class="toc-backref" href="#id86">3. 迁移MySQL用户及权限</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><p>迁移MySQL用户及权限</p>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_39542111/article/details/113129940">https://blog.csdn.net/weixin_39542111/article/details/113129940</a></p>
+<p>MySQL 之迁移用户及权限</p>
+<p><a class="reference external" href="https://www.cnblogs.com/EikiXu/p/9814705.html">https://www.cnblogs.com/EikiXu/p/9814705.html</a></p>
+</div></blockquote>
+</section>
+</section>
+<section id="xtrabackup-mysql">
+<h2><a class="toc-backref" href="#id87"><span class="section-number">4.3.17. </span>XtraBackup - MySQL备份工具</a><a class="headerlink" href="#xtrabackup-mysql" title="Permalink to this headline">¶</a></h2>
+<section id="id46">
+<h3><a class="toc-backref" href="#id88">软件简介</a><a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h3>
+<p>XtraBackup 是一个用来备份 <a class="reference external" href="http://www.oschina.net/p/mysql">MySQL</a> 的
+<a class="reference external" href="http://www.oschina.net/p/innodb">InnoDB</a> 数据库的开源工具。</p>
+<p>例如执行增量备份的命令是：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># ./xtrabackup --backup --target-dir=/backup/delta --incremental-basedir=/backup/base</span>
+</pre></div>
+</div>
+<p>参考</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">codingdict</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">os</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="mi">86425</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id47">
+<h2><a class="toc-backref" href="#id89"><span class="section-number">4.3.18. </span>Mysql 整理错误</a><a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8337434.html">https://www.cnblogs.com/xiangsikai/p/8337434.html</a></p>
+</section>
+<section id="id48">
+<h2><a class="toc-backref" href="#id90"><span class="section-number">4.3.19. </span>Mysql 主从复制搭建</a><a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8412970.html">https://www.cnblogs.com/xiangsikai/p/8412970.html</a></p>
+</section>
+<section id="id49">
+<h2><a class="toc-backref" href="#id91"><span class="section-number">4.3.20. </span>Mysql 主主复制</a><a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/9051638.html">https://www.cnblogs.com/xiangsikai/p/9051638.html</a></p>
+</section>
+<section id="id50">
+<h2><a class="toc-backref" href="#id92"><span class="section-number">4.3.21. </span>Mysql 二进制日志备份还原</a><a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/11608724.html">https://www.cnblogs.com/xiangsikai/p/11608724.html</a></p>
+<section id="id51">
+<h3><a class="toc-backref" href="#id93">Mysql数据库的优化</a><a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h3>
+<p>使用tuning-primer.sh脚本来调优mysql数据库</p>
+<p>脚本下载链接：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">BMDan</span><span class="o">/</span><span class="n">tuning</span><span class="o">-</span><span class="n">primer</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>该脚本从中获取信息，SHOW STATUS LIKE…并SHOW VARIABLES
+LIKE…为调整服务器变量生成合理的建议。 它与MySQL
+3.23和更高版本（包括5.x）的所有版本兼容。</p>
+<p>当前，它处理以下方面的建议：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>慢查询日志
+最大连接数
+工作线程
+密钥缓冲区[仅适用于MyISAM]
+Key 缓冲
+排序缓冲区
+Joins
+临时表
+表（打开和定义）缓存
+表锁定
+表扫描（read_buffer）[仅适用于MyISAM]
+InnoDB状态
+</pre></div>
+</div>
+</section>
+<section id="django">
+<h3><a class="toc-backref" href="#id94">Django访问数据库</a><a class="headerlink" href="#django" title="Permalink to this headline">¶</a></h3>
+<p>在Django项目文件夹的目录下找到<code class="docutils literal notranslate"><span class="pre">setting.py</span></code>文件并打开，找到DATABASES这一项，更改数据库连接参数，格式如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="s1">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s1">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;NAME&#39;</span><span class="p">:</span> <span class="s1">&#39;mysite&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;HOST&#39;</span><span class="p">:</span> <span class="s1">&#39;192.168.1.1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;USER&#39;</span><span class="p">:</span> <span class="s1">&#39;root&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s1">&#39;pwd&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;PORT&#39;</span><span class="p">:</span> <span class="s1">&#39;3306&#39;</span><span class="p">,</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html" class="btn btn-neutral float-left" title="4.2. mysql入门到精通" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.Navicat%E6%8A%8Acsv%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5mysql%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95.html" class="btn btn-neutral float-right" title="4.4. Navicat把csv数据导入mysql操作方法" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8.16. keepalived高可用集群 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8.17. Pacemaker实现双机热备" href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html" />
+    <link rel="prev" title="8.15. Redis主从+KeepAlived实现高可用" href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">8. 构建Linux高可用架构</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.LVS%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AD%A6%E4%B9%A0.html">8.1. LVS基于四层的负载均衡学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html">8.2. 企业级Nginx+keepalived 集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Nginx%2Bkeepalived%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html">8.3. Nginx+keepalived双主架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html">8.4. Redis+keepalived高可用集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.NFS%2Bkeepalived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%E5%85%B1%E4%BA%AB.html">8.5. nfs+ keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E4%B8%BB%E4%BB%8E%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.6. MySQL 主从高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.MySQL%E4%B8%BB%E4%B8%BB%E5%90%8C%E6%AD%A5%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.7. MySQL主主同步高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.8. Mysql双主+keepalived集群架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.Haproxy%2Bkeepalived%E4%B8%BB%E4%BB%8E-%E4%B8%BB%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.9. Haproxy+keepalived主从-主主高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.LVS%2BKeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.10. LVS+keeplaived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html">8.11. Redis实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">8.12. MySQL主从复制、读写分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E4%BD%BF%E7%94%A8Haproxy%2Bkeepalived%E6%90%AD%E5%BB%BAWeb%E7%BE%A4%E9%9B%86.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.16. keepalived高可用集群</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">8.16.1. 1.1. 高可用集群简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">8.16.2. 1.2. keepalived</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">8.16.3. 实战案例1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">8.16.4. 实战案例2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id33">8.16.5. 相关参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html">8.17. Pacemaker实现双机热备</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">8. </span>构建Linux高可用架构</a> &raquo;</li>
+      <li><span class="section-number">8.16. </span>keepalived高可用集群</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/08.Linux构建高可用架构/16.keepalived高可用集群.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#keepalived" id="id34">keepalived高可用集群</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id35">1.1. 高可用集群简介</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id36">什么是高可用集群</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id37">高可用集群的衡量标准</a></p></li>
+<li><p><a class="reference internal" href="#failover" id="id38">自动切换/故障转移（FailOver）</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id39">自动侦测</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id13" id="id40">1.2. keepalived</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id14" id="id41">keepalived是什么</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id42">keepalived工作原理</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id43">组播</a></p></li>
+<li><p><a class="reference internal" href="#vrrp" id="id44">VRRP协议</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id45">keepalived主要有三个模块</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id18" id="id46">实战案例1</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id19" id="id47">环境:</a></p></li>
+<li><p><a class="reference internal" href="#id20" id="id48">原理示例图</a></p></li>
+<li><p><a class="reference internal" href="#server1" id="id49">server1</a></p></li>
+<li><p><a class="reference internal" href="#server2" id="id50">server2</a></p></li>
+<li><p><a class="reference internal" href="#client" id="id51">client</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id52">编辑监控脚本</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id53">启动监控脚本</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id54">nginx状态测试</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id25" id="id55">实战案例2</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id26" id="id56">环境</a></p></li>
+<li><p><a class="reference internal" href="#id27" id="id57">拓扑</a></p></li>
+<li><p><a class="reference internal" href="#master" id="id58">master</a></p></li>
+<li><p><a class="reference internal" href="#backup" id="id59">backup</a></p></li>
+<li><p><a class="reference internal" href="#masterbackup" id="id60">master和backup上启动服务</a></p></li>
+<li><p><a class="reference internal" href="#web" id="id61">web服务器配置</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id62">配置虚拟地址</a></p></li>
+<li><p><a class="reference internal" href="#id29" id="id63">配置路由</a></p></li>
+<li><p><a class="reference internal" href="#arp" id="id64">配置ARP</a></p></li>
+<li><p><a class="reference internal" href="#id30" id="id65">测试</a></p></li>
+<li><p><a class="reference internal" href="#id32" id="id66">思考题</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id33" id="id67">相关参考文献</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="keepalived">
+<h1><a class="toc-backref" href="#id34"><span class="section-number">8.16. </span>keepalived高可用集群</a><a class="headerlink" href="#keepalived" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id35"><span class="section-number">8.16.1. </span>1.1. 高可用集群简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id36">什么是高可用集群</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>高可用集群（High Availability Cluster，简称HA Cluster），是指以减少服务中断时间为目的的服务器集群技术。它通过保护用户的业务程序对外不间断提供的服务，把因软件、硬件、人为造成的故障对业务的影响降低到最小程度。
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id37">高可用集群的衡量标准</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>要保证集群服务100%时间永远完全可用，几乎可以说是一件不可能完成的任务。比如，淘宝在这几年双十一刚开始的时候，一下子进来买东西的人很多，访问量大，都出现一些问题，如下单后却支付不了。所以说只能保证服务尽可能的可用，当然有些场景相信还是可能做到100%可用的。
+</pre></div>
+</div>
+<p>通常用平均无故障时间(MTTF：mean time to
+failure)来度量系统的可靠性,用平均故障维修时间（MTTR：mean time to
+restoration）来度量系统的可维护性。于是可用性被定义为：HA=MTTF/(MTTF+MTTR)*100%。</p>
+<figure class="align-default">
+<img alt="" src="../../_images/keepalived001.png" />
+</figure>
+</section>
+<section id="failover">
+<h3><a class="toc-backref" href="#id38">自动切换/故障转移（FailOver）</a><a class="headerlink" href="#failover" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>自动切换阶段某一主机如果确认对方故障，则正常主机除继续进行原来的任务，还将依据各种容错备援模式接管预先设定的备援作业程序，并进行后续的程序及服务。
+
+      通俗地说，即当A无法为客户服务时，系统能够自动地切换，使B能够及时地顶上继续为客户提供服务，且客户感觉不到这个为他提供服务的对象已经更换。
+
+      通过上面判断节点故障后，将高可用集群资源（如VIP、httpd等）从该不具备法定票数的集群节点转移到故障转移域（Failover Domain，可以接收故障资源转移的节点）。
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id39">自动侦测</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>自动侦测阶段由主机上的软件通过冗余侦测线，经由复杂的监听程序，逻辑判断，来相互侦测对方运行的情况。
+     常用的方法是：集群各节点间通过心跳信息判断节点是否出现故障。
+</pre></div>
+</div>
+<section id="id5">
+<h4>脑裂<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>脑裂简介
+在高可用（HA）系统中，当联系2个节点的“心跳线”断开时，本来为一整体、动作协调的HA系统，就分裂成为2个独立的个体。由于相互失去了联系，都以为是对方出了故障。两个节点上的HA软件像“裂脑人”一样，争抢“共享资源”、争起“应用服务”，就会发生严重后果——或者共享资源被瓜分、2边“服务”都起不来了；或者2边“服务”都起来了，但同时读写“共享存储”，导致数据损坏（常见如数据库轮询着的联机日志出错）。
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>脑裂产生的原因<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>因心跳线坏了（包括断了，老化）。
+因网卡及相关驱动坏了，ip配置及冲突问题（网卡直连）。
+因心跳线间连接的设备故障（网卡及交换机）。
+因仲裁的机器出问题（采用仲裁的方案）。
+高可用服务器上开启了 iptables防火墙阻挡了心跳消息传输。
+高可用服务器上心跳网卡地址等信息配置不正确，导致发送心跳失败。
+其他服务配置不当等原因，如心跳方式不同，心跳广插冲突、软件Bug等。
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4>常见的解决方案<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<section id="id8">
+<h5>1）添加冗余的心跳线<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h5>
+<p>例如：双线条线（心跳线也HA），尽量减少“裂脑”发生几率；</p>
+</section>
+<section id="id9">
+<h5>2）启用磁盘锁<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h5>
+<p>正在服务一方锁住共享磁盘，“裂脑”发生时，让对方完全“抢不走”共享磁盘资源。但使用锁磁盘也会有一个不小的问题，如果占用共享盘的一方不主动“解锁”，另一方就永远得不到共享磁盘。现实中假如服务节点突然死机或崩溃，就不可能执行解锁命令。后备节点也就接管不了共享资源和应用服务。于是有人在HA中设计了“智能”锁。即：正在服务的一方只在发现心跳线全部断开（察觉不到对端）时才启用磁盘锁。平时就不上锁了。</p>
+</section>
+<section id="id10">
+<h5>3）设置仲裁机制<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h5>
+<p>例如设置参考IP（如网关IP或某一个服务器），当心跳线完全断开时，2个节点都各自ping一下参考IP，不通则表明断点就出在本端。不仅“心跳”、还兼对外“服务”的本端网络链路断了，即使启动（或继续）应用服务也没有用了，那就主动放弃竞争，让能够ping通参考IP的一端去起服务。更保险一些，ping不通参考IP的一方干脆就自我重启，以彻底释放有可能还占用着的那些共享资源。</p>
+</section>
+<section id="id11">
+<h5>4）裂脑的监控报警<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h5>
+<p>如邮件及手机短信等或值班</p>
+<p>在问题发生时人为第一时间介入仲裁，降低损失。</p>
+<p>当检测到裂脑时强行关闭一个心跳节点（这个功能需特殊设备支持，如Stonith、feyce）。相当于备节点接收不到心跳消患，通过单独的线路发送关机命令关闭主节点的电源。</p>
+<p>当然，在实施高可用方案时，要根据业务实际需求确定是否能容忍这样的损失。对于一般的网站常规业务.这个损失是可容忍的。</p>
+</section>
+<section id="id12">
+<h5>其他高可用方案<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>heartbeat、pacemaker、 piranha（web页面）
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id40"><span class="section-number">8.16.2. </span>1.2. keepalived</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<section id="id14">
+<h3><a class="toc-backref" href="#id41">keepalived是什么</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>keepalived是集群管理中保证集群高可用的一个服务软件，用来防止单点故障。</p>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id42">keepalived工作原理</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>keepalived是以VRRP协议为实现基础的，VRRP全称Virtual Router Redundancy
+Protocol，即虚拟路由冗余协议。</p>
+<p>将N台提供相同功能的服务器组成一个服务器组，这个组里面有一个master和多个backup，master上面有一个对外提供服务的vip（该服务器所在局域网内其他机器的默认路由为该vip），master会发组播，当backup收不到vrrp包时就认为master宕掉了，这时就需要根据VRRP的优先级来选举一个backup当master</p>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id43">组播</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>IPV4总共三种通信方式：单播，组播，广播。
+组播是指以224.0.0.0地址作为通信地址的一种方式。</p>
+</section>
+<section id="vrrp">
+<h3><a class="toc-backref" href="#id44">VRRP协议</a><a class="headerlink" href="#vrrp" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id17">
+<h3><a class="toc-backref" href="#id45">keepalived主要有三个模块</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>分别是core、check和vrrp。
+core模块为keepalived的核心，负责主进程的启动、维护以及全局配置文件的加载和解析。
+check负责健康检查，包括常见的各种检查方式。 vrrp模块是来实现VRRP协议的。</p>
+</section>
+</section>
+<section id="id18">
+<h2><a class="toc-backref" href="#id46"><span class="section-number">8.16.3. </span>实战案例1</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h2>
+<section id="id19">
+<h3><a class="toc-backref" href="#id47">环境:</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>初识keepalived，实现web服务器的高可用集群。
+
+Server1:192.168.0.118
+Server2:192.168.0.119
+VIP:192.168.0.10
+</pre></div>
+</div>
+</section>
+<section id="id20">
+<h3><a class="toc-backref" href="#id48">原理示例图</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>相关文档链接：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/cxbhakim/p/9068833.html">https://www.cnblogs.com/cxbhakim/p/9068833.html</a></p>
+<figure class="align-default">
+<img alt="" src="../../_images/keepalived+nginx001.png" />
+</figure>
+</section>
+<section id="server1">
+<h3><a class="toc-backref" href="#id49">server1</a><a class="headerlink" href="#server1" title="Permalink to this headline">¶</a></h3>
+<p><strong>创建etc下的keepalived目录,编辑配置文件</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ yum -y install keepalived
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ vi /etc/keepalived/keepalived.conf
+
+! Configuration File <span class="k">for</span> keepalived
+global_defs <span class="o">{</span>
+ router_id <span class="m">1</span>                            <span class="c1">#设备在组中的标识，设置不一样即可</span>
+ <span class="o">}</span>
+
+<span class="c1">#vrrp_script chk_nginx {                        #健康检查</span>
+<span class="c1"># script &quot;/etc/keepalived/ck_ng.sh&quot;     #检查脚本</span>
+<span class="c1"># interval 2                            #检查频率.秒</span>
+<span class="c1"># weight -5                             #priority减5</span>
+<span class="c1"># fall 3                                        #失败三次</span>
+<span class="c1"># }</span>
+
+vrrp_instance VI_1 <span class="o">{</span>               <span class="c1">#VI_1。实例名两台路由器相同。同学们要注意区分。</span>
+    state MASTER                        <span class="c1">#主或者从状态</span>
+    interface ens32                     <span class="c1">#监控网卡</span>
+    mcast_src_ip <span class="m">192</span>.168.0.118          <span class="c1">#心跳源IP</span>
+    virtual_router_id <span class="m">55</span>                <span class="c1">#虚拟路由编号，主备要一致。同学们注意区分</span>
+    priority <span class="m">100</span>                        <span class="c1">#优先级</span>
+    advert_int <span class="m">1</span>                        <span class="c1">#心跳间隔</span>
+
+    authentication <span class="o">{</span>                    <span class="c1">#秘钥认证(1-8位)</span>
+        auth_type PASS
+        auth_pass <span class="m">123456</span>
+    <span class="o">}</span>
+
+    virtual_ipaddress <span class="o">{</span>                 <span class="c1">#VIP</span>
+    <span class="m">192</span>.168.0.10/24
+        <span class="o">}</span>
+
+<span class="c1">#  track_script {                       #引用脚本</span>
+<span class="c1">#       chk_nginx</span>
+<span class="c1">#    }</span>
+
+<span class="o">}</span>
+
+<span class="c1"># scp -r /etc/keepalived/keepalived.conf  192.168.0.119:/etc/keepalived/</span>
+systemctl <span class="nb">enable</span> keepalived.service
+<span class="c1"># 开机启动keepalived</span>
+</pre></div>
+</div>
+<p><strong>安装Nginx</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+$ yum -y install nginx
+$ systemctl <span class="nb">enable</span> nginx.service
+$ systemctl start nginx.service
+$ vi /usr/share/nginx/html/index.html
+$ curl -i localhost
+$ systemctl start keepalived.service
+</pre></div>
+</div>
+</section>
+<section id="server2">
+<h3><a class="toc-backref" href="#id50">server2</a><a class="headerlink" href="#server2" title="Permalink to this headline">¶</a></h3>
+<p><strong>BACKUP服务器的配置需要几处修改</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ yum -y install keepalived
+$ vi /etc/keepalived/keepalived.conf
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>state MASTER改为  state BACKUP
+mcast_src_ip <span class="m">192</span>.168.0.118改为backup服务器实际的IP mcast_src_ip
+<span class="m">192</span>.168.0.119
+priority 100改为priority <span class="m">99</span>
+</pre></div>
+</div>
+<p>配置文件示例</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>! Configuration File <span class="k">for</span> keepalived
+global_defs <span class="o">{</span>
+ router_id <span class="m">2</span>
+ <span class="o">}</span>
+
+<span class="c1">#vrrp_script chk_nginx {</span>
+<span class="c1"># script &quot;/etc/keepalived/ck_ng.sh&quot;</span>
+<span class="c1"># interval 2</span>
+<span class="c1"># weight -5</span>
+<span class="c1"># fall 3</span>
+<span class="c1"># }</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+    state BACKUP
+    interface ens32
+    mcast_src_ip <span class="m">192</span>.168.0.119
+    virtual_router_id <span class="m">55</span>
+    priority <span class="m">99</span>
+    advert_int <span class="m">1</span>
+
+    authentication <span class="o">{</span>
+        auth_type PASS
+        auth_pass <span class="m">123456</span>
+    <span class="o">}</span>
+
+    virtual_ipaddress <span class="o">{</span>
+    <span class="m">192</span>.168.0.10/24
+        <span class="o">}</span>
+
+<span class="c1">#  track_script {</span>
+<span class="c1">#       chk_nginx</span>
+<span class="c1">#    }</span>
+
+<span class="o">}</span>
+systemctl <span class="nb">enable</span> keepalived.service
+</pre></div>
+</div>
+<p><strong>安装Nginx</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ rpm -ivh http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+$ yum -y install nginx
+$ systemctl <span class="nb">enable</span> nginx.service
+$ systemctl start nginx.service
+$ vi /usr/share/nginx/html/index.html
+$ curl -i localhost
+$ systemctl start keepalived.service
+</pre></div>
+</div>
+</section>
+<section id="client">
+<h3><a class="toc-backref" href="#id51">client</a><a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>访问VIP  http://192.168.0.10
+
+拔掉master的网线。
+访问VIP  http://192.168.0.10，观察网页已经切换
+关于keepalived对nginx状态未知的问题
+恢复之前的实验。启动两台主机的keepalived和nginx。确保页面访问正常。
+关闭master的nginx服务 。systemctl stop nginx
+继续访问VIP，请问页面是否会切换到slave呢？
+请思考，nginx服务的状态和keepalived的关系。
+</pre></div>
+</div>
+<p>原因是keepalived监控的是接口IP状态。无法监控nginx服务状态</p>
+</section>
+<section id="id21">
+<h3><a class="toc-backref" href="#id52">编辑监控脚本</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<section id="id22">
+<h4>server1<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Nginx监控脚本</span>
+
+vi /etc/keepalived/ck_ng.sh
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#检查nginx进程是否存在</span>
+<span class="nv">counter</span><span class="o">=</span><span class="k">$(</span>ps -C nginx --no-heading<span class="p">|</span>wc -l<span class="k">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">counter</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="c1">#尝试启动一次nginx，停止5秒后再次检测</span>
+    service nginx start
+    sleep <span class="m">5</span>
+    <span class="nv">counter</span><span class="o">=</span><span class="k">$(</span>ps -C nginx --no-heading<span class="p">|</span>wc -l<span class="k">)</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">counter</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="c1">#如果启动没成功，就杀掉keepalive触发主备切换</span>
+        service keepalived stop
+    <span class="k">fi</span>
+<span class="k">fi</span>
+chmod +x /etc/keepalived/ck_ng.sh
+</pre></div>
+</div>
+</section>
+<section id="id23">
+<h4>server2<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 添加Nginx监控脚本</span>
+
+vi /etc/keepalived/ck_ng.sh
+<span class="c1">#!/bin/bash</span>
+<span class="c1">#检查nginx进程是否存在</span>
+<span class="nv">counter</span><span class="o">=</span><span class="k">$(</span>ps -C nginx --no-heading<span class="p">|</span>wc -l<span class="k">)</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">counter</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="c1">#尝试启动一次nginx，停止5秒后再次检测</span>
+    service nginx start
+    sleep <span class="m">5</span>
+    <span class="nv">counter</span><span class="o">=</span><span class="k">$(</span>ps -C nginx --no-heading<span class="p">|</span>wc -l<span class="k">)</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">counter</span><span class="si">}</span><span class="s2">&quot;</span> <span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+<span class="c1">#如果启动没成功，就杀掉keepalive触发主备切换</span>
+        service keepalived stop
+    <span class="k">fi</span>
+<span class="k">fi</span>
+chmod +x /etc/keepalived/ck_ng.sh
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id24">
+<h3><a class="toc-backref" href="#id53">启动监控脚本</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>清除掉配置文件中的注释。重启keepalived即可</p>
+</section>
+<section id="nginx">
+<h3><a class="toc-backref" href="#id54">nginx状态测试</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h3>
+<p>因为脚本中有拉起nginx的语句，测试时可以将脚本文件位置进行改变。观察脚本的效果。</p>
+</section>
+</section>
+<section id="id25">
+<h2><a class="toc-backref" href="#id55"><span class="section-number">8.16.4. </span>实战案例2</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h2>
+<section id="id26">
+<h3><a class="toc-backref" href="#id56">环境</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>keepalived+lvs集群</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.116</span>   <span class="n">dr1</span>    <span class="n">负载均衡器</span>   <span class="n">master</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">0.117</span>  <span class="n">dr2</span>    <span class="n">负载均衡器</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">0.118</span>  <span class="n">rs1</span>     <span class="n">web1</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">0.119</span> <span class="n">rs2</span>     <span class="n">web2</span>
+</pre></div>
+</div>
+</section>
+<section id="id27">
+<h3><a class="toc-backref" href="#id57">拓扑</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<figure class="align-default">
+<img alt="" src="../../_images/keepalived+lvs001.png" />
+</figure>
+</section>
+<section id="master">
+<h3><a class="toc-backref" href="#id58">master</a><a class="headerlink" href="#master" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.在master上安装配置Keepalived:
+<span class="c1"># yum install keepalived  ipvsadm -y</span>
+ipvsadm安装并不启动
+
+<span class="m">2</span>.在master上修改配置文件
+<span class="c1"># vim /etc/keepalived/keepalived.conf</span>
+! Configuration File <span class="k">for</span> keepalived
+global_defs <span class="o">{</span>
+    router_id Director1    <span class="c1">#两边不一样。</span>
+    <span class="o">}</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+    state MASTER                <span class="c1">#另外一台机器是BACKUP</span>
+    interface ens32             <span class="c1">#心跳网卡</span>
+    virtual_router_id <span class="m">51</span>            <span class="c1">#虚拟路由编号，主备要一致</span>
+    priority <span class="m">150</span>                <span class="c1">#优先级</span>
+    advert_int <span class="m">1</span>                <span class="c1">#检查间隔，单位秒</span>
+    authentication <span class="o">{</span>
+        auth_type PASS
+        auth_pass <span class="m">1111</span>
+        <span class="o">}</span>
+    virtual_ipaddress <span class="o">{</span>
+        <span class="m">192</span>.168.0.20/24 dev ens32   <span class="c1">#VIP和工作端口</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+virtual_server <span class="m">192</span>.168.0.20 <span class="m">80</span> <span class="o">{</span>        <span class="c1">#LVS 配置，VIP</span>
+    delay_loop <span class="m">3</span>                <span class="c1">#服务论询的时间间隔，#每隔3秒检查一次real_server状态</span>
+    lb_algo rr              <span class="c1">#LVS 调度算法</span>
+    lb_kind DR              <span class="c1">#LVS 集群模式</span>
+    protocol TCP
+    real_server <span class="m">192</span>.168.0.118 <span class="m">80</span> <span class="o">{</span>
+        weight <span class="m">1</span>
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout <span class="m">3</span>       <span class="c1">#健康检查方式,连接超时时间</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+    real_server <span class="m">192</span>.168.0.119 <span class="m">80</span> <span class="o">{</span>
+        weight <span class="m">1</span>
+        TCP_CHECK <span class="o">{</span>
+            connect_timeout <span class="m">3</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="backup">
+<h3><a class="toc-backref" href="#id59">backup</a><a class="headerlink" href="#backup" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 在backup上安装keepalived:</span>
+<span class="c1"># yum install keepalived   ipvsadm -y</span>
+ipvsadm安装并不启动
+
+<span class="c1"># 拷贝master上的keepalived.conf到backup上：</span>
+<span class="c1"># scp  192.168.0.116:/etc/keepalived/keepalived.conf 192.168.0.117:/etc/keepalived/</span>
+
+<span class="c1">#拷贝后,修改配置文件</span>
+router_id Director2
+state    BACKUP
+priority <span class="m">100</span>
+
+配置示例
+! Configuration File <span class="k">for</span> keepalived
+global_defs <span class="o">{</span>
+        router_id Director2
+        <span class="o">}</span>
+
+vrrp_instance VI_1 <span class="o">{</span>
+        state BACKUP                            <span class="c1">#另外一台机器是BACKUP</span>
+        interface ens32                         <span class="c1">#心跳网卡</span>
+        virtual_router_id <span class="m">52</span>
+        priority <span class="m">100</span>                            <span class="c1">#优先级</span>
+        advert_int <span class="m">1</span>                            <span class="c1">#检查间隔，单位秒</span>
+        authentication <span class="o">{</span>
+                auth_type PASS
+                auth_pass <span class="m">1111</span>
+                <span class="o">}</span>
+        virtual_ipaddress <span class="o">{</span>
+                <span class="m">192</span>.168.0.20/24 dev ens32       <span class="c1">#VIP和工作端口</span>
+                <span class="o">}</span>
+        <span class="o">}</span>
+
+virtual_server <span class="m">192</span>.168.0.20 <span class="m">80</span> <span class="o">{</span>                <span class="c1">#LVS 配置，VIP</span>
+        delay_loop <span class="m">3</span>                            <span class="c1">#服务论询的时间间隔</span>
+        lb_algo rr                              <span class="c1">#LVS 调度算法</span>
+        lb_kind DR                              <span class="c1">#LVS 集群模式</span>
+        protocol TCP
+        real_server <span class="m">192</span>.168.0.118 <span class="m">80</span> <span class="o">{</span>
+                weight <span class="m">1</span>
+                TCP_CHECK <span class="o">{</span>
+                        connect_timeout <span class="m">3</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>
+        real_server <span class="m">192</span>.168.0.119 <span class="m">80</span> <span class="o">{</span>
+                weight <span class="m">1</span>
+                TCP_CHECK <span class="o">{</span>
+                        connect_timeout <span class="m">3</span>
+                        <span class="o">}</span>
+                <span class="o">}</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+<section id="masterbackup">
+<h3><a class="toc-backref" href="#id60">master和backup上启动服务</a><a class="headerlink" href="#masterbackup" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#systemctl enable keepalived</span>
+<span class="c1"># systemctl start keepalived</span>
+<span class="c1">#reboot</span>
+</pre></div>
+</div>
+</section>
+<section id="web">
+<h3><a class="toc-backref" href="#id61">web服务器配置</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">web1和web2同配置</span>
+<span class="n">安装web测试站点</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">httpd</span> <span class="o">&amp;&amp;</span> <span class="n">systemctl</span> <span class="n">start</span> <span class="n">httpd</span> <span class="o">&amp;&amp;</span> <span class="n">systemctl</span> <span class="n">enable</span> <span class="n">httpd</span>
+<span class="n">netstat</span> <span class="o">-</span><span class="n">antp</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">httpd</span>
+<span class="c1"># elinks 127.0.0.1</span>
+<span class="c1"># 自定义web主页，以便观察负载均衡结果</span>
+</pre></div>
+</div>
+</section>
+<section id="id28">
+<h3><a class="toc-backref" href="#id62">配置虚拟地址</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cp /etc/sysconfig/network-scripts/{ifcfg-lo,ifcfg-lo:0}</span>
+ \<span class="c1">#vim /etc/sysconfig/network-scripts/ifcfg-lo:0</span>
+ <span class="n">DEVICE</span><span class="o">=</span><span class="n">lo</span><span class="p">:</span><span class="mi">0</span>
+ <span class="n">IPADDR</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">0.20</span>
+ <span class="n">NETMASK</span><span class="o">=</span><span class="mf">255.255</span><span class="o">.</span><span class="mf">255.255</span>
+ <span class="n">ONBOOT</span><span class="o">=</span><span class="n">yes</span>
+ <span class="n">其他行注释掉</span>
+</pre></div>
+</div>
+</section>
+<section id="id29">
+<h3><a class="toc-backref" href="#id63">配置路由</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#vim /etc/rc.local
+/sbin/route add -host 192.168.0.20  dev lo:0
+在两台机器（RS）上，添加一个路由：route add -host 192.168.0.20 dev lo:0
+确保如果请求的目标IP是$VIP，那么让出去的数据包的源地址也显示为$VIP
+</pre></div>
+</div>
+</section>
+<section id="arp">
+<h3><a class="toc-backref" href="#id64">配置ARP</a><a class="headerlink" href="#arp" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="c1"># vim /etc/sysctl.conf</span>
+
+<span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
+ <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">arp_announce</span> <span class="o">=</span> <span class="mi">2</span>
+ <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">default</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
+ <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">default</span><span class="o">.</span><span class="n">arp_announce</span> <span class="o">=</span> <span class="mi">2</span>
+ <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">lo</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
+ <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">lo</span><span class="o">.</span><span class="n">arp_announce</span> <span class="o">=</span> <span class="mi">2</span>
+
+<span class="n">忽略arp请求</span>
+ <span class="n">可以回复</span>
+
+<span class="c1">###### reboot</span>
+</pre></div>
+</div>
+</section>
+<section id="id30">
+<h3><a class="toc-backref" href="#id65">测试</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<section id="lvs">
+<h4>1）观察lvs路由条目<a class="headerlink" href="#lvs" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># master上 查询</span>
+
+$ ipvsadm -L
+IP Virtual Server version <span class="m">1</span>.2.1 <span class="o">(</span><span class="nv">size</span><span class="o">=</span><span class="m">4096</span><span class="o">)</span>
+ Prot LocalAddress:Port Scheduler Flags
+   -&gt; RemoteAddress:Port           Forward Weight ActiveConn InActConn
+ TCP  localhost.localdomain:http rr
+   -&gt; <span class="m">192</span>.168.0.124:http           Route   <span class="m">1</span>      <span class="m">0</span>          <span class="m">0</span>
+</pre></div>
+</div>
+</section>
+<section id="vip">
+<h4>2）观察vip地址在哪台机器上<a class="headerlink" href="#vip" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># master上 查询</span>
+$ ip a
+ens32:
+    inet <span class="m">192</span>.168.0.120/24 brd <span class="m">192</span>.168.0.255 scope global dynamic ens32
+
+    inet <span class="m">192</span>.168.0.20/32 scope global ens32
+</pre></div>
+</div>
+</section>
+<section id="id31">
+<h4>3）客户端浏览器访问vip<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h4>
+<figure class="align-default">
+<img alt="" src="../../_images/keepalived_lvs_0002.png" />
+</figure>
+</section>
+<section id="masterkeepalived-vip">
+<h4>4）关闭master上的keepalived服务，再次访问vip<a class="headerlink" href="#masterkeepalived-vip" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1">#master上 关闭</span>
+$ systemctl stop keepalived.service
+</pre></div>
+</div>
+</section>
+<section id="web1-vip">
+<h4>5）关闭web1站点服务，再次访问VIP<a class="headerlink" href="#web1-vip" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># web1</span>
+$ systemctl stop httpd
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/keepalived_lvs0003.png" />
+</figure>
+</section>
+</section>
+<section id="id32">
+<h3><a class="toc-backref" href="#id66">思考题</a><a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.什么是集群？集群分为哪些类型？列举代表的产品。
+
+2.有些负载均衡集群服务？他们有什么区别？
+
+3.LVS-DR和LVS-NAT的工作原理。
+
+4.keepalived的工作原理。
+
+5.高可用集群有哪些产品。他们的区别。
+
+6.负载均衡集群的策略有哪些？能否举例说明？
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id33">
+<h2><a class="toc-backref" href="#id67"><span class="section-number">8.16.5. </span>相关参考文献</a><a class="headerlink" href="#id33" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="mi">361</span><span class="n">way</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="n">framework</span><span class="o">/</span><span class="mf">5208.</span><span class="n">html</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html" class="btn btn-neutral float-left" title="8.15. Redis主从+KeepAlived实现高可用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html" class="btn btn-neutral float-right" title="8.17. Pacemaker实现双机热备" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

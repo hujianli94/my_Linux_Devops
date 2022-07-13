@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. 利用Docker搭建Jenkines-Master-Slave分布式环境 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. GitLab在DevOps工作中的实际应用" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html" />
+    <link rel="prev" title="5. 工作中的Python脚本分享" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">3. Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html">5. 工作中的Python脚本分享</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#docker">6.1. Docker的基础安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.1.1. 1.准备工作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.1.2. 2.正式安装环节</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#dockerfiledocker">6.2. Dockerfile打包Docker镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#docker-compose">6.3. 利用docker-compose编排多容器</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html">7. GitLab在DevOps工作中的实际应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">DevOps和自动化运维实践</a> &raquo;</li>
+      <li><span class="section-number">6. </span>利用Docker搭建Jenkines-Master-Slave分布式环境</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/DevOps/06.利用Docker搭建Jenkines-Master-Slave分布式环境.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#dockerjenkines-master-slave" id="id3">利用Docker搭建Jenkines-Master-Slave分布式环境</a></p>
+<ul>
+<li><p><a class="reference internal" href="#docker" id="id4">Docker的基础安装</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id5">1.准备工作</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">2.正式安装环节</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#dockerfiledocker" id="id7">Dockerfile打包Docker镜像</a></p></li>
+<li><p><a class="reference internal" href="#docker-compose" id="id8">利用docker-compose编排多容器</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="dockerjenkines-master-slave">
+<h1><a class="toc-backref" href="#id3"><span class="section-number">6. </span>利用Docker搭建Jenkines-Master-Slave分布式环境</a><a class="headerlink" href="#dockerjenkines-master-slave" title="Permalink to this headline">¶</a></h1>
+<section id="docker">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">6.1. </span>Docker的基础安装</a><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<p>Docker容器最早受到RHEL完善的支持是从最近的CentOS
+7.0开始的，官方说明是只能运行于64位架构平台，需要注意的是CentOS
+6.x与7.0的安装过程是不同的，CentOS
+6.x上Docker的安装包叫作docker-io，并且来源于Fedora
+epel库，这个库维护了大量的没有包含在发行版中的软件，所以要先安装epel，而CentOS
+7的Docker直接包含在官方镜像源的Extras仓库。</p>
+<p>下面以CentOS 7.4 x86_64物理机器来举例说明。</p>
+<section id="id1">
+<h3><a class="toc-backref" href="#id5"><span class="section-number">6.1.1. </span>1.准备工作</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>1）禁用SELinux，命令如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="s2">&quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">selinux</span><span class="o">/</span><span class="n">config</span>      <span class="c1"># 永久关闭selinux服务</span>
+<span class="n">setenforce</span> <span class="mi">0</span>                                                            <span class="c1"># 临时关闭setenforc ，命令行设置立即生效</span>
+</pre></div>
+</div>
+<p>2）/etc/yum.repos.d/CentOS-Base.repo下的[extras]节enable=1启用，默认是启用状态，但要注意检查一下，如果此项是0，应调整成1。</p>
+<p>3）检查内核版本等：</p>
+<p>Docker的存储驱动是Device
+Mapper，看一下我们的驱动是否符合，命令如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">grep</span> <span class="n">device</span><span class="o">-</span><span class="n">mapper</span> <span class="o">/</span><span class="n">proc</span><span class="o">/</span><span class="n">devices</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id6"><span class="section-number">6.1.2. </span>2.正式安装环节</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>正式安装步骤</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">docker</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>查看docker版本</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">version</span>
+</pre></div>
+</div>
+<ol class="arabic" start="3">
+<li><p>配置镜像加速器</p>
+<p>针对Docker客户端版本大于 1.10.0 的用户</p>
+<p>您可以通过修改daemon配置文件/etc/docker/daemon.json来使用加速器</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">docker</span>
+<span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">daemon</span><span class="o">.</span><span class="n">json</span> <span class="o">&lt;&lt;-</span><span class="s1">&#39;EOF&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;registry-mirrors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;https://25bxwt20.mirror.aliyuncs.com&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">EOF</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">docker</span>
+</pre></div>
+</div>
+</li>
+<li><p>更改Docker Host默认监听</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.修改配置文件
+执行命令： vim /lib/systemd/system/docker.service
+# 注释掉这行
+#ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+
+
+2.将管理地址写入 /etc/profile
+执行命令：echo &#39;export DOCKER_HOST=tcp://0.0.0.0:2375&#39; &gt;&gt; /etc/profile
+执行命令：source /etc/profile
+
+3.重启服务
+执行命令： systemctl daemon-reload &amp;&amp; systemctl restart docker
+</pre></div>
+</div>
+<p>到目前为止，Docker的安装过程基本上就结束了。有一点需要注意，Docker从1.13版本之后采用时间线的方式作为版本号，分为社区版Docker
+CE和企业版Docker EE。Docker
+CE是免费提供给个人开发者和小型团体使用的，Docker
+EE会提供额外的收费服务，比如经过官方测试认证过的基础设施、容器、插件等。Docker
+CE是免费的Docker产品的新名称，Docker
+CE包含了完整的Docker平台，非常适合开发人员和运维团队构建容器APP。</p>
+</section>
+</section>
+<section id="dockerfiledocker">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">6.2. </span>Dockerfile打包Docker镜像</a><a class="headerlink" href="#dockerfiledocker" title="Permalink to this headline">¶</a></h2>
+<p>Dockerfile 常用命令如下。</p>
+<ol class="arabic simple">
+<li><p>FROM 用于指定构建当前镜像的基础镜像名，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FROM</span> <span class="n">centos</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>MAINTAINER 用于填写作者声明的描述信息，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MAINTAINER</span> <span class="n">Nginx</span> <span class="n">Dockerfile</span> <span class="n">Write</span> <span class="n">by</span> <span class="n">John</span><span class="o">.</span><span class="n">Wang</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>ADD 命令会向 Image 中添加文件，支持文件、目录、URL
+的源，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ADD</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">init_nginx</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>COPY 用于向镜像内复制文件夹，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COPY</span> <span class="o">.</span> <span class="o">/</span><span class="n">tmp</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>ENV 设置 Container 启动后的环境变量，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ENV PATH $PATH:/usr/local/nginx/sbin
+</pre></div>
+</div>
+<ol class="arabic simple" start="6">
+<li><p>EXPOSE 设置 Container
+启动后对外开放的端口，它只相当于一个防火墙开放端口的概念，与实际运行的服务无关，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">EXPOSE</span> <span class="mi">8080</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="7">
+<li><p>RUN 用于在制作 Image 时执行指定的脚本或 shell 命令，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RUM</span> <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">net</span><span class="o">-</span><span class="n">tools</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="8">
+<li><p>USER 设置运行 Image 或 Container 的系统用户，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USER</span> <span class="n">nginx</span><span class="p">:</span><span class="n">nginx</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="9">
+<li><p>VOLUME 定义 Image 挂载点，该挂载点可被其他 Container
+使用，且目录中的内容是共享的，将会同步更新，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VOLUME</span> <span class="p">[</span><span class="s2">&quot;/data1&quot;</span><span class="p">,</span><span class="s2">&quot;/data2&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="10">
+<li><p>WORKDIR 设置 CMD 参数指定命令的运行目录，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">WORKDIR</span> <span class="o">~/</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="11">
+<li><p>CMD 命令是设定于 Container
+启动后执行的命令，可被外部<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>命令参数覆盖，使用方法如下。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CMD</span> <span class="s2">&quot;Hello Nginx&quot;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="12">
+<li><p>ENTRYPOINT 命令是设定于 Container
+启动后执行的命令，不可被外部<code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">run</span></code>命令参数覆盖。</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ENTRYPOINT</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">init_nginx</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>现在，可以按照 Dockerfile 的命令格式编写 Dockerfile 了，基础镜像选用
+CentOS 7，Nginx 选用 Nginx 的扩展版本 OpenResty 1.15.8.2。</p>
+<p>以Nginx为例作为参考模板</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FROM centos:centos7
+MAINTAINER Nginx Dockerfile Write by John.Wang
+RUN yum -y install epel-release &amp;&amp; yum -y install wget gcc make pcre-devel \
+    zlib-devel openssl-devel libxml2-devel libxslt-devel luajit GeoIP-devel \
+    gd-devel libatomic_ops-devel luajit-devel perl-devel perl-ExtUtils-Embed
+
+RUN cd /tmp &amp;&amp; wget https://openresty.org/download/openresty-1.15.8.2.tar.gz  &amp;&amp; \
+    tar zxmf openresty-1.15.8.2.tar.gz &amp;&amp; \
+    cd openresty-1.15.8.2 &amp;&amp; \
+    ./configure \
+        --with-threads \
+        --with-file-aio \
+        --with-http_ssl_module \
+        --with-http_v2_module \
+        --with-http_realip_module \
+        --with-http_addition_module \
+        --with-http_xslt_module=dynamic \
+        --with-http_image_filter_module=dynamic \
+        --with-http_geoip_module=dynamic \
+        --with-http_sub_module \
+        --with-http_dav_module \
+        --with-http_flv_module \
+        --with-http_mp4_module \
+        --with-http_gunzip_module \
+        --with-http_gzip_static_module \
+        --with-http_auth_request_module \
+        --with-http_random_index_module \
+        --with-http_secure_link_module \
+        --with-http_degradation_module \
+        --with-http_slice_module \
+        --with-http_stub_status_module \
+        --with-stream=dynamic \
+        --with-stream_ssl_module \
+        --with-stream_realip_module \
+        --with-stream_geoip_module=dynamic \
+        --with-libatomic \
+        --with-pcre-jit \
+        --with-stream_ssl_preread_module &amp;&amp; \
+    gmake &amp;&amp; gmake install
+ENV PATH $PATH:/usr/local/nginx/sbin
+RUN ln -s /usr/local/openresty/nginx /usr/local/nginx
+RUN ln -sf /dev/stdout /usr/local/nginx/logs/access.log &amp;&amp;\
+    ln -sf /dev/stderr /usr/local/nginx/logs/error.log
+EXPOSE 80
+ENTRYPOINT [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]
+</pre></div>
+</div>
+<p>Jenkins/ssh-slave的Dockerfile文件，内容如下:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>FROM openjdk:8-jdk
+LABEL MAINTAINER=&quot;Nicolas De Loof &lt;nicolas.deloof@gmail.com&gt;&quot;
+ARG user=jenkins
+ARG group=jenkins
+ARG uid=1000
+ARG gid=1000
+ARG JENKINS_AGENT_HOME=/home/${user}
+ENV JENKINS_AGENT_HOME ${JENKINS_AGENT_HOME}
+
+RUN groupadd -g ${gid} ${group} \
+    &amp;&amp; useradd -d &quot;${JENKINS_AGENT_HOME}&quot; -u &quot;${uid}&quot; -g &quot;${gid}&quot; -m -s /bin/bash &quot;${user}&quot;
+# setup SSH server
+RUN apt-get update \
+    &amp;&amp; apt-get install --no-install-recommends -y openssh-server \
+    &amp;&amp; rm -rf /var/lib/apt/lists/*
+RUN sed -i /etc/ssh/sshd_config \
+        -e &#39;s/#PermitRootLogin.*/PermitRootLogin no/&#39; \
+        -e &#39;s/#RSAAuthentication.*/RSAAuthentication yes/&#39;  \
+        -e &#39;s/#PasswordAuthentication.*/PasswordAuthentication no/&#39; \
+        -e &#39;s/#SyslogFacility.*/SyslogFacility AUTH/&#39; \
+        -e &#39;s/#LogLevel.*/LogLevel INFO/&#39; &amp;&amp; \
+    mkdir /var/run/sshd
+
+VOLUME &quot;${JENKINS_AGENT_HOME}&quot; &quot;/tmp&quot; &quot;/run&quot; &quot;/var/run&quot;
+
+WORKDIR &quot;${JENKINS_AGENT_HOME}&quot;
+COPY setup-sshd /usr/local/bin/setup-sshd
+EXPOSE 22
+ENTRYPOINT [&quot;setup-sshd&quot;]
+</pre></div>
+</div>
+</section>
+<section id="docker-compose">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">6.3. </span>利用docker-compose编排多容器</a><a class="headerlink" href="#docker-compose" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">version</span><span class="p">:</span> <span class="s1">&#39;2&#39;</span>
+<span class="n">services</span><span class="p">:</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">master</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">jenkins</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">master</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;8080:8080&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">work</span><span class="o">/</span><span class="n">jenkins_master</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">jmeter</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2226:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">maven</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2222:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+  <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt1</span><span class="p">:</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt</span><span class="p">:</span><span class="mf">1.0</span>
+    <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">sbt1</span>
+    <span class="n">ports</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;2224:22&quot;</span>
+    <span class="n">environment</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">TZ</span><span class="o">=</span><span class="n">Asia</span><span class="o">/</span><span class="n">Shanghai</span>
+    <span class="n">volumes</span><span class="p">:</span>
+    <span class="o">-</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span><span class="p">:</span><span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">docker</span><span class="o">.</span><span class="n">sock</span>
+    <span class="n">extra_hosts</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
+    <span class="n">networks</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">default</span>
+    <span class="n">command</span><span class="p">:</span>
+    <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
+</pre></div>
+</div>
+<p>在master上部署使用<code class="docutils literal notranslate"><span class="pre">jenkins-master</span></code>部分yml内容，若在Slave机器上部署则去掉<code class="docutils literal notranslate"><span class="pre">jenkins-master</span></code>部分内容。</p>
+<p>配置成功后，我们在相关物理机上执行如下命令，来启动这些容器。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="o">-</span><span class="n">compose</span> <span class="n">up</span> <span class="o">-</span><span class="n">d</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html" class="btn btn-neutral float-left" title="5. 工作中的Python脚本分享" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="07.GitLab%E5%9C%A8DevOps%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8.html" class="btn btn-neutral float-right" title="7. GitLab在DevOps工作中的实际应用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

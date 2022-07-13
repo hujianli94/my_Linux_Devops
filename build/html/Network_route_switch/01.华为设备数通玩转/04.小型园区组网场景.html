@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.4. 小型园区组网场景 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.5. 中小园区组网场景" href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html" />
+    <link rel="prev" title="1.3. 华为设备常用命令" href="03.%E5%8D%8E%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 华为设备数通玩转</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.HCNA%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">1.1. HCNA基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA%E5%AE%9E%E9%AA%8C%E4%B8%BE%E4%BE%8B.html">1.2. HCNA网络技术实验指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%8D%8E%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html">1.3. 华为设备常用命令</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.4. 小型园区组网场景</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.4.1. 拓扑图</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html">1.5. 中小园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B.html">1.6. 综合配置案例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E6%80%9D%E7%A7%91%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E5%A4%8D%E4%B9%A0/index.html">2. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">3. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>华为设备数通玩转</a> &raquo;</li>
+      <li><span class="section-number">1.4. </span>小型园区组网场景</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/04.小型园区组网场景.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id3">小型园区组网场景</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id4">拓扑图</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id3"><span class="section-number">1.4. </span>小型园区组网场景</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">1.4.1. </span>拓扑图</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image0" src="../../_images/network_xiaoxing001.png" /></p>
+<p>JR1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">JR1</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<span class="c1">#</span>
+<span class="n">sysname</span> <span class="n">JR1</span>
+<span class="c1">#</span>
+<span class="n">vlan</span> <span class="n">batch</span> <span class="mi">5</span> <span class="mi">10</span>
+<span class="c1">#</span>
+<span class="n">stp</span> <span class="n">bpdu</span><span class="o">-</span><span class="n">protection</span>
+<span class="c1">#</span>
+<span class="n">cluster</span> <span class="n">enable</span>
+<span class="n">ntdp</span> <span class="n">enable</span>
+<span class="n">ndp</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">undo</span> <span class="n">nap</span> <span class="n">slave</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">drop</span> <span class="n">illegal</span><span class="o">-</span><span class="n">mac</span> <span class="n">alarm</span>
+<span class="c1">#</span>
+<span class="n">dhcp</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">dhcp</span> <span class="n">snooping</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">diffserv</span> <span class="n">domain</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">drop</span><span class="o">-</span><span class="n">profile</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">vlan</span> <span class="mi">5</span>
+ <span class="n">management</span><span class="o">-</span><span class="n">vlan</span>
+<span class="n">vlan</span> <span class="mi">10</span>
+ <span class="n">ip</span> <span class="n">source</span> <span class="n">check</span> <span class="n">user</span><span class="o">-</span><span class="n">bind</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">aaa</span>
+ <span class="n">authentication</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">authorization</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">accounting</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default_admin</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">password</span> <span class="n">cipher</span> <span class="p">;</span>\<span class="mi">1</span><span class="s1">&#39;158;,GMI&gt;,Z,88J\:Q!!</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">privilege</span> <span class="n">level</span> <span class="mi">15</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">telnet</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif5</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">1.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>
+ <span class="n">port</span> <span class="n">trunk</span> <span class="n">allow</span><span class="o">-</span><span class="k">pass</span> <span class="n">vlan</span> <span class="mi">10</span>
+ <span class="n">mode</span> <span class="n">lacp</span><span class="o">-</span><span class="n">static</span>
+ <span class="n">dhcp</span> <span class="n">snooping</span> <span class="n">enable</span>
+ <span class="n">dhcp</span> <span class="n">snooping</span> <span class="n">trusted</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">access</span>
+ <span class="n">port</span> <span class="n">default</span> <span class="n">vlan</span> <span class="mi">10</span>
+ <span class="n">stp</span> <span class="n">disable</span>
+ <span class="n">stp</span> <span class="n">edged</span><span class="o">-</span><span class="n">port</span> <span class="n">enable</span>
+ <span class="n">dhcp</span> <span class="n">snooping</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">access</span>
+ <span class="n">port</span> <span class="n">default</span> <span class="n">vlan</span> <span class="mi">10</span>
+ <span class="n">stp</span> <span class="n">disable</span>
+ <span class="n">stp</span> <span class="n">edged</span><span class="o">-</span><span class="n">port</span> <span class="n">enable</span>
+ <span class="n">dhcp</span> <span class="n">snooping</span> <span class="n">enable</span>
+<span class="c1">#</span>
+
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">NULL0</span>
+<span class="c1">#</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">con</span> <span class="mi">0</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">vty</span> <span class="mi">0</span> <span class="mi">4</span>
+ <span class="n">authentication</span><span class="o">-</span><span class="n">mode</span> <span class="n">aaa</span>
+ <span class="n">idle</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">15</span> <span class="mi">0</span>
+
+
+
+<span class="p">[</span><span class="n">JR1</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+<span class="o">*</span><span class="n">down</span><span class="p">:</span> <span class="n">administratively</span> <span class="n">down</span>
+<span class="o">^</span><span class="n">down</span><span class="p">:</span> <span class="n">standby</span>
+<span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="n">loopback</span>
+<span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="n">spoofing</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">UP</span> <span class="ow">in</span> <span class="n">Physical</span> <span class="ow">is</span> <span class="mi">2</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">DOWN</span> <span class="ow">in</span> <span class="n">Physical</span> <span class="ow">is</span> <span class="mi">2</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">UP</span> <span class="ow">in</span> <span class="n">Protocol</span> <span class="ow">is</span> <span class="mi">1</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">DOWN</span> <span class="ow">in</span> <span class="n">Protocol</span> <span class="ow">is</span> <span class="mi">3</span>
+
+<span class="n">Interface</span>                         <span class="n">IP</span> <span class="n">Address</span><span class="o">/</span><span class="n">Mask</span>      <span class="n">Physical</span>   <span class="n">Protocol</span>
+<span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                         <span class="n">unassigned</span>           <span class="n">down</span>       <span class="n">down</span>
+<span class="n">NULL0</span>                             <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">Vlanif1</span>                           <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">down</span>
+<span class="n">Vlanif5</span>                           <span class="mf">10.10</span><span class="o">.</span><span class="mf">1.1</span><span class="o">/</span><span class="mi">24</span>         <span class="n">down</span>       <span class="n">down</span>
+<span class="p">[</span><span class="n">JR1</span><span class="p">]</span> <span class="n">dis</span>
+<span class="p">[</span><span class="n">JR1</span><span class="p">]</span><span class="n">display</span> <span class="nb">int</span>
+<span class="p">[</span><span class="n">JR1</span><span class="p">]</span><span class="n">display</span> <span class="n">interface</span> <span class="n">b</span>
+<span class="p">[</span><span class="n">JR1</span><span class="p">]</span><span class="n">display</span> <span class="n">interface</span> <span class="n">brief</span>
+<span class="n">PHY</span><span class="p">:</span> <span class="n">Physical</span>
+<span class="o">*</span><span class="n">down</span><span class="p">:</span> <span class="n">administratively</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="n">loopback</span>
+<span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="n">spoofing</span>
+<span class="p">(</span><span class="n">b</span><span class="p">):</span> <span class="n">BFD</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">e</span><span class="p">):</span> <span class="n">ETHOAM</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">dl</span><span class="p">):</span> <span class="n">DLDP</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">d</span><span class="p">):</span> <span class="n">Dampening</span> <span class="n">Suppressed</span>
+<span class="n">InUti</span><span class="o">/</span><span class="n">OutUti</span><span class="p">:</span> <span class="nb">input</span> <span class="n">utility</span><span class="o">/</span><span class="n">output</span> <span class="n">utility</span>
+<span class="n">Interface</span>                   <span class="n">PHY</span>   <span class="n">Protocol</span> <span class="n">InUti</span> <span class="n">OutUti</span>   <span class="n">inErrors</span>  <span class="n">outErrors</span>
+<span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span>                  <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>      <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>      <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>               <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>               <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                   <span class="n">down</span>  <span class="n">down</span>        <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">NULL0</span>                       <span class="n">up</span>    <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>       <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif1</span>                     <span class="n">up</span>    <span class="n">down</span>        <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif5</span>                     <span class="n">down</span>  <span class="n">down</span>        <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+</pre></div>
+</div>
+<p>JR2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">JR2</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<span class="c1">#</span>
+<span class="n">sysname</span> <span class="n">JR2</span>
+<span class="c1">#</span>
+<span class="n">vlan</span> <span class="n">batch</span> <span class="mi">5</span> <span class="mi">20</span>
+<span class="c1">#</span>
+<span class="n">stp</span> <span class="n">bpdu</span><span class="o">-</span><span class="n">protection</span>
+<span class="c1">#</span>
+<span class="n">cluster</span> <span class="n">enable</span>
+<span class="n">ntdp</span> <span class="n">enable</span>
+<span class="n">ndp</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">undo</span> <span class="n">nap</span> <span class="n">slave</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">drop</span> <span class="n">illegal</span><span class="o">-</span><span class="n">mac</span> <span class="n">alarm</span>
+<span class="c1">#</span>
+<span class="n">diffserv</span> <span class="n">domain</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">drop</span><span class="o">-</span><span class="n">profile</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">vlan</span> <span class="mi">5</span>
+ <span class="n">management</span><span class="o">-</span><span class="n">vlan</span>
+<span class="c1">#</span>
+<span class="n">aaa</span>
+ <span class="n">authentication</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">authorization</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">accounting</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default_admin</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">password</span> <span class="n">simple</span> <span class="n">admin</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">privilege</span> <span class="n">level</span> <span class="mi">15</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">telnet</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif5</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">1.2</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk2</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>
+ <span class="n">port</span> <span class="n">trunk</span> <span class="n">allow</span><span class="o">-</span><span class="k">pass</span> <span class="n">vlan</span> <span class="mi">20</span>
+ <span class="n">mode</span> <span class="n">lacp</span><span class="o">-</span><span class="n">static</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">access</span>
+ <span class="n">port</span> <span class="n">default</span> <span class="n">vlan</span> <span class="mi">20</span>
+ <span class="n">stp</span> <span class="n">disable</span>
+ <span class="n">stp</span> <span class="n">edged</span><span class="o">-</span><span class="n">port</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">access</span>
+ <span class="n">port</span> <span class="n">default</span> <span class="n">vlan</span> <span class="mi">20</span>
+ <span class="n">stp</span> <span class="n">disable</span>
+ <span class="n">stp</span> <span class="n">edged</span><span class="o">-</span><span class="n">port</span> <span class="n">enable</span>
+<span class="c1">#</span>
+
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">2</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">2</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">NULL0</span>
+<span class="c1">#</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">con</span> <span class="mi">0</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">vty</span> <span class="mi">0</span> <span class="mi">4</span>
+ <span class="n">authentication</span><span class="o">-</span><span class="n">mode</span> <span class="n">aaa</span>
+ <span class="n">idle</span><span class="o">-</span><span class="n">timeout</span> <span class="mi">15</span> <span class="mi">0</span>
+<span class="c1">#</span>
+
+<span class="p">[</span><span class="n">JR2</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+<span class="o">*</span><span class="n">down</span><span class="p">:</span> <span class="n">administratively</span> <span class="n">down</span>
+<span class="o">^</span><span class="n">down</span><span class="p">:</span> <span class="n">standby</span>
+<span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="n">loopback</span>
+<span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="n">spoofing</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">UP</span> <span class="ow">in</span> <span class="n">Physical</span> <span class="ow">is</span> <span class="mi">2</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">DOWN</span> <span class="ow">in</span> <span class="n">Physical</span> <span class="ow">is</span> <span class="mi">2</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">UP</span> <span class="ow">in</span> <span class="n">Protocol</span> <span class="ow">is</span> <span class="mi">1</span>
+<span class="n">The</span> <span class="n">number</span> <span class="n">of</span> <span class="n">interface</span> <span class="n">that</span> <span class="ow">is</span> <span class="n">DOWN</span> <span class="ow">in</span> <span class="n">Protocol</span> <span class="ow">is</span> <span class="mi">3</span>
+
+<span class="n">Interface</span>                         <span class="n">IP</span> <span class="n">Address</span><span class="o">/</span><span class="n">Mask</span>      <span class="n">Physical</span>   <span class="n">Protocol</span>
+<span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                         <span class="n">unassigned</span>           <span class="n">down</span>       <span class="n">down</span>
+<span class="n">NULL0</span>                             <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">Vlanif1</span>                           <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">down</span>
+<span class="n">Vlanif5</span>                           <span class="mf">10.10</span><span class="o">.</span><span class="mf">1.2</span><span class="o">/</span><span class="mi">24</span>         <span class="n">down</span>       <span class="n">down</span>
+
+<span class="p">[</span><span class="n">JR2</span><span class="p">]</span><span class="n">display</span> <span class="n">interface</span> <span class="n">brief</span>
+<span class="n">PHY</span><span class="p">:</span> <span class="n">Physical</span>
+<span class="o">*</span><span class="n">down</span><span class="p">:</span> <span class="n">administratively</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">l</span><span class="p">):</span> <span class="n">loopback</span>
+<span class="p">(</span><span class="n">s</span><span class="p">):</span> <span class="n">spoofing</span>
+<span class="p">(</span><span class="n">b</span><span class="p">):</span> <span class="n">BFD</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">e</span><span class="p">):</span> <span class="n">ETHOAM</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">dl</span><span class="p">):</span> <span class="n">DLDP</span> <span class="n">down</span>
+<span class="p">(</span><span class="n">d</span><span class="p">):</span> <span class="n">Dampening</span> <span class="n">Suppressed</span>
+<span class="n">InUti</span><span class="o">/</span><span class="n">OutUti</span><span class="p">:</span> <span class="nb">input</span> <span class="n">utility</span><span class="o">/</span><span class="n">output</span> <span class="n">utility</span>
+<span class="n">Interface</span>                   <span class="n">PHY</span>   <span class="n">Protocol</span> <span class="n">InUti</span> <span class="n">OutUti</span>   <span class="n">inErrors</span>  <span class="n">outErrors</span>
+<span class="n">Eth</span><span class="o">-</span><span class="n">Trunk2</span>                  <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>      <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>      <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>               <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Ethernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>               <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+
+<span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                   <span class="n">down</span>  <span class="n">down</span>        <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">NULL0</span>                       <span class="n">up</span>    <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>       <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif1</span>                     <span class="n">up</span>    <span class="n">down</span>        <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif5</span>                     <span class="n">down</span>  <span class="n">down</span>        <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+</pre></div>
+</div>
+<p>Core1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">coresw</span><span class="p">]</span><span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+<span class="c1">#</span>
+<span class="n">sysname</span> <span class="n">coresw</span>
+<span class="c1">#</span>
+<span class="n">vlan</span> <span class="n">batch</span> <span class="mi">10</span> <span class="mi">20</span> <span class="mi">100</span>
+<span class="c1">#</span>
+<span class="n">cluster</span> <span class="n">enable</span>
+<span class="n">ntdp</span> <span class="n">enable</span>
+<span class="n">ndp</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">drop</span> <span class="n">illegal</span><span class="o">-</span><span class="n">mac</span> <span class="n">alarm</span>
+<span class="c1">#</span>
+<span class="n">dhcp</span> <span class="n">enable</span>
+<span class="c1">#</span>
+<span class="n">diffserv</span> <span class="n">domain</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">drop</span><span class="o">-</span><span class="n">profile</span> <span class="n">default</span>
+<span class="c1">#</span>
+<span class="n">ip</span> <span class="n">pool</span> <span class="mi">10</span>
+ <span class="n">gateway</span><span class="o">-</span><span class="nb">list</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span>
+ <span class="n">network</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span> <span class="n">mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="c1">#</span>
+<span class="n">ip</span> <span class="n">pool</span> <span class="mi">20</span>
+ <span class="n">gateway</span><span class="o">-</span><span class="nb">list</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.1</span>
+ <span class="n">network</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.0</span> <span class="n">mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="c1">#</span>
+<span class="n">aaa</span>
+ <span class="n">authentication</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">authorization</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">accounting</span><span class="o">-</span><span class="n">scheme</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default</span>
+ <span class="n">domain</span> <span class="n">default_admin</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">password</span> <span class="n">simple</span> <span class="n">admin</span>
+ <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin</span> <span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">http</span>
+
+<span class="n">interface</span> <span class="n">Vlanif10</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+ <span class="n">dhcp</span> <span class="n">select</span> <span class="k">global</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif20</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+ <span class="n">dhcp</span> <span class="n">select</span> <span class="k">global</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Vlanif100</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="c1">#</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>
+ <span class="n">port</span> <span class="n">trunk</span> <span class="n">allow</span><span class="o">-</span><span class="k">pass</span> <span class="n">vlan</span> <span class="mi">10</span>
+ <span class="n">mode</span> <span class="n">lacp</span><span class="o">-</span><span class="n">static</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk2</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">trunk</span>
+ <span class="n">port</span> <span class="n">trunk</span> <span class="n">allow</span><span class="o">-</span><span class="k">pass</span> <span class="n">vlan</span> <span class="mi">20</span>
+ <span class="n">mode</span> <span class="n">lacp</span><span class="o">-</span><span class="n">static</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">port</span> <span class="n">link</span><span class="o">-</span><span class="nb">type</span> <span class="n">access</span>
+ <span class="n">port</span> <span class="n">default</span> <span class="n">vlan</span> <span class="mi">100</span>
+
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">10</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">11</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">12</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">2</span>
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">13</span>
+ <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">2</span>
+
+<span class="c1">#</span>
+<span class="n">interface</span> <span class="n">NULL0</span>
+<span class="c1">#</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.2</span>
+<span class="c1">#</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">con</span> <span class="mi">0</span>
+<span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">vty</span> <span class="mi">0</span> <span class="mi">4</span>
+<span class="c1">#</span>
+
+<span class="p">[</span><span class="n">coresw</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+
+<span class="n">Interface</span>                         <span class="n">IP</span> <span class="n">Address</span><span class="o">/</span><span class="n">Mask</span>      <span class="n">Physical</span>   <span class="n">Protocol</span>
+<span class="n">MEth0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                         <span class="n">unassigned</span>           <span class="n">down</span>       <span class="n">down</span>
+<span class="n">NULL0</span>                             <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+<span class="n">Vlanif1</span>                           <span class="n">unassigned</span>           <span class="n">up</span>         <span class="n">down</span>
+<span class="n">Vlanif10</span>                          <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span><span class="o">/</span><span class="mi">24</span>        <span class="n">up</span>         <span class="n">up</span>
+<span class="n">Vlanif20</span>                          <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.1</span><span class="o">/</span><span class="mi">24</span>        <span class="n">up</span>         <span class="n">up</span>
+<span class="n">Vlanif100</span>                         <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.1</span><span class="o">/</span><span class="mi">24</span>       <span class="n">up</span>         <span class="n">up</span>
+
+<span class="p">[</span><span class="n">coresw</span><span class="p">]</span><span class="n">display</span> <span class="n">interface</span> <span class="n">brief</span>
+
+<span class="p">(</span><span class="n">d</span><span class="p">):</span> <span class="n">Dampening</span> <span class="n">Suppressed</span>
+<span class="n">InUti</span><span class="o">/</span><span class="n">OutUti</span><span class="p">:</span> <span class="nb">input</span> <span class="n">utility</span><span class="o">/</span><span class="n">output</span> <span class="n">utility</span>
+<span class="n">Interface</span>                   <span class="n">PHY</span>   <span class="n">Protocol</span> <span class="n">InUti</span> <span class="n">OutUti</span>   <span class="n">inErrors</span>  <span class="n">outErrors</span>
+<span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span>                  <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">10</span>     <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">11</span>     <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Eth</span><span class="o">-</span><span class="n">Trunk2</span>                  <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">12</span>     <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+  <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">13</span>     <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>        <span class="n">up</span>    <span class="n">up</span>          <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">NULL0</span>                       <span class="n">up</span>    <span class="n">up</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>       <span class="mi">0</span><span class="o">%</span>     <span class="mi">0</span><span class="o">%</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif1</span>                     <span class="n">up</span>    <span class="n">down</span>        <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif10</span>                    <span class="n">up</span>    <span class="n">up</span>          <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif20</span>                    <span class="n">up</span>    <span class="n">up</span>          <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+<span class="n">Vlanif100</span>                   <span class="n">up</span>    <span class="n">up</span>          <span class="o">--</span>     <span class="o">--</span>          <span class="mi">0</span>          <span class="mi">0</span>
+
+<span class="p">[</span><span class="n">coresw</span><span class="p">]</span><span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span>
+<span class="n">Route</span> <span class="n">Flags</span><span class="p">:</span> <span class="n">R</span> <span class="o">-</span> <span class="n">relay</span><span class="p">,</span> <span class="n">D</span> <span class="o">-</span> <span class="n">download</span> <span class="n">to</span> <span class="n">fib</span>
+<span class="o">------------------------------------------------------------------------------</span>
+<span class="n">Routing</span> <span class="n">Tables</span><span class="p">:</span> <span class="n">Public</span>
+         <span class="n">Destinations</span> <span class="p">:</span> <span class="mi">9</span>        <span class="n">Routes</span> <span class="p">:</span> <span class="mi">9</span>
+
+<span class="n">Destination</span><span class="o">/</span><span class="n">Mask</span>    <span class="n">Proto</span>   <span class="n">Pre</span>  <span class="n">Cost</span>      <span class="n">Flags</span> <span class="n">NextHop</span>         <span class="n">Interface</span>
+
+        <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">0</span>   <span class="n">Static</span>  <span class="mi">60</span>   <span class="mi">0</span>          <span class="n">RD</span>   <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.2</span>     <span class="n">Vlanif100</span>
+     <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.0</span><span class="o">/</span><span class="mi">24</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span>      <span class="n">Vlanif10</span>
+     <span class="mf">10.10</span><span class="o">.</span><span class="mf">10.1</span><span class="o">/</span><span class="mi">32</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">Vlanif10</span>
+     <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.0</span><span class="o">/</span><span class="mi">24</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.1</span>      <span class="n">Vlanif20</span>
+     <span class="mf">10.10</span><span class="o">.</span><span class="mf">20.1</span><span class="o">/</span><span class="mi">32</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">Vlanif20</span>
+    <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.0</span><span class="o">/</span><span class="mi">24</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.1</span>     <span class="n">Vlanif100</span>
+    <span class="mf">10.10</span><span class="o">.</span><span class="mf">100.1</span><span class="o">/</span><span class="mi">32</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">Vlanif100</span>
+      <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.0</span><span class="o">/</span><span class="mi">8</span>   <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">InLoopBack0</span>
+      <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">32</span>  <span class="n">Direct</span>  <span class="mi">0</span>    <span class="mi">0</span>           <span class="n">D</span>   <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>       <span class="n">InLoopBack0</span>
+</pre></div>
+</div>
+<p>R1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[R1]display current-configuration
+[V200R003C00]
+#
+ sysname R1
+#
+ snmp-agent local-engineid 800007DB03000000000000
+ snmp-agent
+#
+ clock timezone China-Standard-Time minus 08:00:00
+#
+portal local-server load portalpage.zip
+#
+ drop illegal-mac alarm
+#
+ dns resolve
+ dns server 202.101.111.195
+ dns server 202.101.111.199
+ dns proxy enable
+#
+ set cpu-usage threshold 80 restore 75
+#
+acl number 2000
+ rule 5 permit source 10.10.10.0 0.0.0.255
+ rule 10 permit source 10.10.20.0 0.0.0.255
+ rule 15 permit source 10.10.100.0 0.0.0.255
+#
+aaa
+ authentication-scheme default
+ authorization-scheme default
+ accounting-scheme default
+ domain default
+ domain default_admin
+ local-user admin password cipher %$%$K8m.Nt84DZ}e#&lt;0`8bmE3Uw}%$%$
+ local-user admin service-type http
+#
+firewall zone Local
+ priority 15
+#
+interface GigabitEthernet0/0/0
+ ip address 10.10.100.2 255.255.255.0
+#
+interface GigabitEthernet0/0/1
+ ip address 202.101.111.2 255.255.255.252
+ nat outbound 2000
+#
+interface GigabitEthernet0/0/2
+#
+interface NULL0
+#
+ip route-static 0.0.0.0 0.0.0.0 202.101.111.1
+ip route-static 10.10.10.0 255.255.255.0 10.10.100.1
+ip route-static 10.10.20.0 255.255.255.0 10.10.100.1
+#
+user-interface con 0
+ authentication-mode password
+user-interface vty 0 4
+user-interface vty 16 20
+
+[R1]display ip routing-table
+Route Flags: R - relay, D - download to fib
+------------------------------------------------------------------------------
+Routing Tables: Public
+         Destinations : 13       Routes : 13
+
+Destination/Mask    Proto   Pre  Cost      Flags NextHop         Interface
+
+        0.0.0.0/0   Static  60   0          RD   202.101.111.1   GigabitEthernet0/0/1
+     10.10.10.0/24  Static  60   0          RD   10.10.100.1     GigabitEthernet0/0/0
+     10.10.20.0/24  Static  60   0          RD   10.10.100.1     GigabitEthernet0/0/0
+    10.10.100.0/24  Direct  0    0           D   10.10.100.2     GigabitEthernet0/0/0
+    10.10.100.2/32  Direct  0    0           D   127.0.0.1       GigabitEthernet0/0/0
+  10.10.100.255/32  Direct  0    0           D   127.0.0.1       GigabitEthernet0/0/0
+      127.0.0.0/8   Direct  0    0           D   127.0.0.1       InLoopBack0
+      127.0.0.1/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+127.255.255.255/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+  202.101.111.0/30  Direct  0    0           D   202.101.111.2   GigabitEthernet0/0/1
+  202.101.111.2/32  Direct  0    0           D   127.0.0.1       GigabitEthernet0/0/1
+  202.101.111.3/32  Direct  0    0           D   127.0.0.1       GigabitEthernet0/0/1
+255.255.255.255/32  Direct  0    0           D   127.0.0.1       InLoopBack0
+
+
+[R1]display interface brief
+Interface                   PHY   Protocol InUti OutUti   inErrors  outErrors
+GigabitEthernet0/0/0        up    up          0%     0%          0          0
+GigabitEthernet0/0/1        up    up          0%     0%          0          0
+GigabitEthernet0/0/2        down  down        0%     0%          0          0
+NULL0                       up    up(s)       0%     0%          0          0
+</pre></div>
+</div>
+<p>R2</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+ <span class="n">ip</span> <span class="n">address</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.1</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.252</span>
+</pre></div>
+</div>
+<p>部门A的PC1去ping部门B的PC3,正常ping通
+部门A的PC1去ping公网网关地址，正常ping通</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PC</span><span class="o">&gt;</span><span class="n">ping</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.2</span>
+
+<span class="n">Ping</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.2</span><span class="p">:</span> <span class="mi">32</span> <span class="n">data</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">Press</span> <span class="n">Ctrl_C</span> <span class="n">to</span> <span class="k">break</span>
+<span class="n">From</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.2</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">32</span> <span class="n">seq</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">254</span> <span class="n">time</span><span class="o">=</span><span class="mi">62</span> <span class="n">ms</span>
+
+<span class="n">PC</span><span class="o">&gt;</span><span class="n">ping</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.1</span>
+
+<span class="n">Ping</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.1</span><span class="p">:</span> <span class="mi">32</span> <span class="n">data</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">Press</span> <span class="n">Ctrl_C</span> <span class="n">to</span> <span class="k">break</span>
+<span class="n">From</span> <span class="mf">202.101</span><span class="o">.</span><span class="mf">111.1</span><span class="p">:</span> <span class="nb">bytes</span><span class="o">=</span><span class="mi">32</span> <span class="n">seq</span><span class="o">=</span><span class="mi">1</span> <span class="n">ttl</span><span class="o">=</span><span class="mi">253</span> <span class="n">time</span><span class="o">=</span><span class="mi">47</span> <span class="n">ms</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03.%E5%8D%8E%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html" class="btn btn-neutral float-left" title="1.3. 华为设备常用命令" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html" class="btn btn-neutral float-right" title="1.5. 中小园区组网场景" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

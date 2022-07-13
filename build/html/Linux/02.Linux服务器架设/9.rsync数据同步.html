@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.10. rsync数据同步 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.11. iptables与firewalld 防火墙" href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html" />
+    <link rel="prev" title="2.9. Samba服务器搭建" href="8.Samba%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID%E4%B8%8ELVM%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E6%8A%80%E6%9C%AF.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98mount%E5%91%BD%E4%BB%A4.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E4%BD%BF%E7%94%A8iSCSI%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.10. rsync数据同步</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.10.1. 1. Rsync</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.10.2. 2. 安装环境如下</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">2.10.3. 4. rsync客户端配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">2.10.4. 5.使用 rsync 备份系统快照</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">2.10.5. 6. 补充内容</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E6%9C%8D%E5%8A%A1.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E4%BD%BF%E7%94%A8Squid%E9%83%A8%E7%BD%B2%E4%BB%A3%E7%90%86%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7%E5%AE%89%E8%A3%85xrdp%28windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5linux%29.html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.%E5%9B%BD%E5%86%85%E5%B8%B8%E4%BD%BF%E7%94%A8%E7%9A%84yum%E6%BA%90%E4%BF%A1%E6%81%AF.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7%E5%AE%89%E8%A3%85VNC%EF%BC%8C%E6%89%8B%E5%8A%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E8%A3%85VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows%E4%B8%8A%E6%90%AD%E5%BB%BAyum%E6%BA%90%E7%AB%99%E7%82%B9.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.%E7%94%A8Python%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0HTTP%E5%92%8CFTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7.html">2.23. Openssh更新升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E5%AE%89%E8%A3%85.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7Supervisor%28%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%29.html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E7%9B%AE%E5%89%8D%E6%B5%81%E8%A1%8C%E7%9A%84%E5%BC%80%E6%BA%90%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%88%90rpm%E5%8C%85.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BDRPM%E5%8C%85%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E5%9F%BA%E4%BA%8EGalera_Cluster%E5%A4%9A%E4%B8%BB%E7%BB%93%E6%9E%84%E7%9A%84Mysql%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab%E5%AE%89%E8%A3%85.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D.html">2.33. Extundelete 数据恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.Openvpn%E9%83%A8%E7%BD%B2.html">2.34. Openvpn部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8%E5%AE%89%E8%A3%85Docker%E5%92%8CDocker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.CentOS8%E5%BC%80%E5%90%AFBBR%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8.html">2.36. CentOS8开启BBR/升级内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Centos7%E9%80%9A%E8%BF%87python%2Bjs%E5%AE%9E%E7%8E%B0webssh.html">2.37. Centos7通过python+js实现webssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Centos7%E9%83%A8%E7%BD%B2NTP%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%A2%83.html">2.38. Centos7部署NTP时间服务器同步环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Linux服务器架设</a> &raquo;</li>
+      <li><span class="section-number">2.10. </span>rsync数据同步</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/02.Linux服务器架设/9.rsync数据同步.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#rsync" id="id12">rsync数据同步</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id13">1. Rsync</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id14">1.1 Rsync介绍</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id15">1.2 Rsync基本特点</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id16">2. 安装环境如下</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id17">3.1 安装rsync安装包</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id18">3.2 rsync服务器端配置</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id19">3.3 启动rsync服务并检查</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id8" id="id20">4. rsync客户端配置</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id21">5.使用 rsync 备份系统快照</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id22">6. 补充内容</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id11" id="id23">举例</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="rsync">
+<h1><a class="toc-backref" href="#id12"><span class="section-number">2.10. </span>rsync数据同步</a><a class="headerlink" href="#rsync" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">2.10.1. </span>1. Rsync</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id14">1.1 Rsync介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Rsync是一个远程数据同步工具，可通过LAN/WAN快速同步多台主机间的文件。Rsync本来是用以取代rcp的一个工具，它当前由
+rsync.samba.org维护。</p>
+<p>Rsync支持大多数的类Unix系统，无论是Linux、Solaris还是BSD上都经过了良好的测试。此外，它在windows平台下也有相应的版本，比较知名的有cwRsync和Sync2NAS。</p>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id15">1.2 Rsync基本特点</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p>可以镜像保存整个目录树和文件系统；</p></li>
+<li><p>可以很容易做到保持原来文件的权限、时间、软硬链接等；</p></li>
+<li><p>无须特殊权限即可安装；</p></li>
+<li><p>优化的流程，文件传输效率高；</p></li>
+<li><p>可以使用rcp、ssh等方式来传输文件，当然也可以通过直接的socket连接；</p></li>
+<li><p>支持匿名传输；</p></li>
+</ul>
+<p>Rsync命令</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>-v, --verbose 详细模式输出
+-q, --quiet 精简输出模式
+-c, --checksum 打开校验开关，强制对文件传输进行校验
+-a, --archive 归档模式，表示以递归方式传输文件，并保持所有文件属性，等于-rlptgoD
+-r, --recursive 对子目录以递归模式处理
+-R, --relative 使用相对路径信息
+-b, --backup 创建备份，也就是对于目的已经存在有同样的文件名时，将老的文件重新命名为~filename。可以使用--suffix选项来指定不同的备份文件前缀。
+--backup-dir 将备份文件<span class="o">(</span>如~filename<span class="o">)</span>存放在在目录下。
+-suffix<span class="o">=</span>SUFFIX 定义备份文件前缀
+-u, --update 仅仅进行更新，也就是跳过所有已经存在于DST，并且文件时间晚于要备份的文件。<span class="o">(</span>不覆盖更新的文件<span class="o">)</span>
+-l, --links 保留软链结
+-L, --copy-links 想对待常规文件一样处理软链结
+--copy-unsafe-links 仅仅拷贝指向SRC路径目录树以外的链结
+--safe-links 忽略指向SRC路径目录树以外的链结
+-H, --hard-links 保留硬链结
+-p, --perms 保持文件权限
+-o, --owner 保持文件属主信息
+-g, --group 保持文件属组信息
+-D, --devices 保持设备文件信息
+-t, --times 保持文件时间信息
+-S, --sparse 对稀疏文件进行特殊处理以节省DST的空间
+-n, --dry-run现实哪些文件将被传输
+-W, --whole-file 拷贝文件，不进行增量检测
+-x, --one-file-system 不要跨越文件系统边界
+-B, --block-size<span class="o">=</span>SIZE 检验算法使用的块尺寸，默认是700字节
+-e, --rsh<span class="o">=</span>COMMAND 指定使用rsh、ssh方式进行数据同步
+--rsync-path<span class="o">=</span>PATH 指定远程服务器上的rsync命令所在路径信息
+-C, --cvs-exclude 使用和CVS一样的方法自动忽略文件，用来排除那些不希望传输的文件
+--existing 仅仅更新那些已经存在于DST的文件，而不备份那些新创建的文件
+--delete 删除那些DST中SRC没有的文件
+--delete-excluded 同样删除接收端那些被该选项指定排除的文件
+--delete-after 传输结束以后再删除
+--ignore-errors 及时出现IO错误也进行删除
+--max-delete<span class="o">=</span>NUM 最多删除NUM个文件
+--partial 保留那些因故没有完全传输的文件，以是加快随后的再次传输
+--force 强制删除目录，即使不为空
+--numeric-ids 不将数字的用户和组ID匹配为用户名和组名
+--timeout<span class="o">=</span>TIME IP超时时间，单位为秒
+-I, --ignore-times 不跳过那些有同样的时间和长度的文件
+--size-only 当决定是否要备份文件时，仅仅察看文件大小而不考虑文件时间
+--modify-window<span class="o">=</span>NUM 决定文件是否时间相同时使用的时间戳窗口，默认为0
+-T --temp-dir<span class="o">=</span>DIR 在DIR中创建临时文件
+--compare-dest<span class="o">=</span>DIR 同样比较DIR中的文件来决定是否需要备份
+-P 等同于 --partial
+--progress 显示备份过程
+-z, --compress 对备份的文件在传输时进行压缩处理
+--exclude<span class="o">=</span>PATTERN 指定排除不需要传输的文件模式
+--include<span class="o">=</span>PATTERN 指定不排除而需要传输的文件模式
+--exclude-from<span class="o">=</span>FILE 排除FILE中指定模式的文件
+--include-from<span class="o">=</span>FILE 不排除FILE指定模式匹配的文件
+--version 打印版本信息
+--address 绑定到特定的地址
+--config<span class="o">=</span>FILE 指定其他的配置文件，不使用默认的rsyncd.conf文件
+--port<span class="o">=</span>PORT 指定其他的rsync服务端口
+--blocking-io 对远程shell使用阻塞IO
+-stats 给出某些文件的传输状态
+--progress 在传输时现实传输过程
+--log-format<span class="o">=</span>formAT 指定日志文件格式
+--password-file<span class="o">=</span>FILE 从FILE中得到密码
+--bwlimit<span class="o">=</span>KBPS 限制I/O带宽，KBytes per second
+-h, --help 显示帮助信息
+</pre></div>
+</div>
+<p>接着通过实例详细介绍rsync的使用方法。这里假定有A、B两个Linux系统，A系统运行业务，B系统作为A的一个远程容灾备份机，那么A系统就是rsync的服务器端，B系统就是rsync的客户端。</p>
+<p>需要在A、B两个系统上都安装rsync软件，这样，在A系统上运行rsync守护进程，而B系统可以通过系统守护进程crontab来定时备份A系统上指定的数据，从而实现了数据的远程容灾。</p>
+</section>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">2.10.2. </span>2. 安装环境如下</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>操作系统：CentOS 7</p>
+<p>A服务器IP地址：192.168.1.100 # 服务器端</p>
+<p>B服务器IP地址：192.168.1.107 # 客户端</p>
+<p>在A、B两个服务器上通过rsync实现远程容灾备份的步骤如下。
+1）在A、B两个服务器上安装rsync</p>
+<p>rysnc的主页地址为：<a class="reference external" href="http://rsync.samba.org/">http://rsync.samba.org/</a>，这里下载的版本为rsync-3.0.4。接着通过以下命令进行编译安装。
+## 3. rsync服务端配置</p>
+<section id="id5">
+<h3><a class="toc-backref" href="#id17">3.1 安装rsync安装包</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">download</span><span class="o">.</span><span class="n">samba</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">pub</span><span class="o">/</span><span class="n">rsync</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">rsync</span><span class="o">-</span><span class="mf">3.1</span><span class="o">.</span><span class="mf">3.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="n">zxvf</span> <span class="n">rsync</span><span class="o">-</span><span class="mf">3.1</span><span class="o">.</span><span class="mf">3.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">rsync</span><span class="o">-</span><span class="mf">3.1</span><span class="o">.</span><span class="mi">3</span><span class="o">/</span>
+<span class="o">./</span><span class="n">configure</span>
+<span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id18">3.2 rsync服务器端配置</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> <span class="m">1</span>.编辑配置文件/etc/rsyncd.conf
+ <span class="m">2</span>.启动服务rsync --daemon
+ <span class="m">3</span>.格式：rsync -av test1/ test@192.168.36.130::test/
+
+/usr/local/bin/rsync --daemon
+
+<span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># ps -ef| grep rsync</span>
+root      <span class="m">14018</span>      <span class="m">1</span>  <span class="m">0</span> <span class="m">15</span>:25 ?        <span class="m">00</span>:00:00 /usr/local/bin/rsync --daemon
+root      <span class="m">14181</span>   <span class="m">7765</span>  <span class="m">0</span> <span class="m">15</span>:40 pts/0    <span class="m">00</span>:00:00 grep --color<span class="o">=</span>auto rsync
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">/</span><span class="p">]</span><span class="c1"># cat /etc/rsyncd.conf | grep -v &quot;^#&quot;| grep -v &quot;^$&quot;</span>
+<span class="n">uid</span>  <span class="o">=</span>  <span class="n">nobody</span>
+<span class="n">gid</span>  <span class="o">=</span>  <span class="n">nobody</span>
+<span class="n">use</span>  <span class="n">chroot</span>  <span class="o">=</span>  <span class="n">no</span>
+<span class="nb">max</span>  <span class="n">connections</span>  <span class="o">=</span>  <span class="mi">10</span>
+<span class="n">pid</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">lock</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">rsync</span><span class="o">.</span><span class="n">lock</span>
+<span class="n">log</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">rsyncd</span><span class="o">.</span><span class="n">log</span>
+<span class="p">[</span><span class="n">ixdba</span><span class="p">]</span>
+<span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">webdata</span>
+<span class="n">comment</span>  <span class="o">=</span>  <span class="n">webdata</span>  <span class="n">file</span>
+<span class="n">ignore</span>  <span class="n">errors</span>
+<span class="n">read</span>  <span class="n">only</span>  <span class="o">=</span>  <span class="n">true</span>
+<span class="nb">list</span>  <span class="o">=</span>  <span class="n">false</span>
+<span class="n">uid</span>  <span class="o">=</span>  <span class="n">root</span>
+<span class="n">gid</span>  <span class="o">=</span>  <span class="n">root</span>
+<span class="n">auth</span>  <span class="n">users</span>  <span class="o">=</span>  <span class="n">backup</span>
+<span class="n">secrets</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">server</span><span class="o">.</span><span class="k">pass</span>
+
+<span class="c1">#创建共享目录并授权rsync服务管理</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">/</span><span class="p">]</span><span class="c1"># mkdir /webdata</span>
+
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">/</span><span class="p">]</span><span class="c1"># echo &quot;backup:admin#123&quot; &gt; /etc/server.pass</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">/</span><span class="p">]</span><span class="c1"># cat /etc/server.pass</span>
+<span class="n">backup</span><span class="p">:</span><span class="n">admin</span><span class="c1">#123</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">/</span><span class="p">]</span><span class="c1"># chmod 600 /etc/server.pass</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id19">3.3 启动rsync服务并检查</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># rsync --daemon</span>
+<span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># ps -ef | grep rsync|grep -v grep</span>
+root      <span class="m">14018</span>      <span class="m">1</span>  <span class="m">0</span> <span class="m">15</span>:25 ?        <span class="m">00</span>:00:00 /usr/local/bin/rsync --daemon
+
+<span class="o">[</span>root@localhost /<span class="o">]</span><span class="c1"># lsof -i:873</span>
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+rsync   <span class="m">14018</span> root    4u  IPv4  <span class="m">56223</span>      0t0  TCP *:rsync <span class="o">(</span>LISTEN<span class="o">)</span>
+rsync   <span class="m">14018</span> root    5u  IPv6  <span class="m">56224</span>      0t0  TCP *:rsync <span class="o">(</span>LISTEN<span class="o">)</span>
+
+<span class="c1">#  加入开机自启动</span>
+<span class="nb">echo</span> <span class="s2">&quot;/usr/bin/rsync --daemon&quot;</span> &gt;&gt; /etc/rc.local
+tail -1 /etc/rc.local
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">2.10.3. </span>4. rsync客户端配置</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost webdata<span class="o">]</span><span class="c1"># rpm -qa rsync</span>
+rsync-3.1.2-4.el7.x86_64
+
+<span class="o">[</span>root@localhost webdata<span class="o">]</span><span class="c1"># echo &quot;admin#123&quot; &gt; /etc/server.pass</span>
+<span class="o">[</span>root@localhost webdata<span class="o">]</span><span class="c1"># cat /etc/server.pass</span>
+admin#123
+<span class="o">[</span>root@localhost webdata<span class="o">]</span><span class="c1"># chmod 600 /etc/server.pass</span>
+
+<span class="c1">#手动执行同步</span>
+/usr/local/bin/rsync -vzrtopg --delete --progress backup@192.168.1.100::ixdba /webdata --password-file<span class="o">=</span>/etc/server.pass
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>对这条指令中每个参数的含义介绍如下。
+
+<span class="s2">&quot;&quot;</span>--vzrtopg”选项中，v表示“--verbose”，即详细模式输出；
+
+
+z表示“--compress”，即对备份的文件在传输时进行压缩处理；
+r表示“--recursive”，也就是对子目录以递归模式处理；
+t即“--times”，用来保持文件时间信息；
+o即“--owner”，用来保持文件属主信息；
+p即“--perms”，用来保持文件权限；
+g即“--group”用来保持文件的属组信息。
+
+“--delete”选项指定以rsync服务器端为基准进行数据镜像同步，
+也就是要保持rsync服务器端目录与客户端目录的完全一致性。
+这里也就是以A服务器为基准进行同步。
+
+“--progress”选项用于显示数据镜像同步的过程。
+“backup@192.168.1.100::ixdba”表示对服务器192.168.60.253中的ixdba模块进行备份，也就是指定备份的模块，
+backup表示使用“backup”这个用户对该模块进行备份。
+“/webdata”用于指定备份文件在客户端机器上的存放路径，也就是将备份的文件存放在备份机的/webdata目录下。
+“--password-file<span class="o">=</span>/etc/server.pass”用来指定客户机上存放的密码文件位置，
+这样在客户端执行同步命令时就无须输入交互密码了。
+注意，这个密码文件的名称和位置可以随意指定，但是在客户机上必须存在此文件，文件的内容仅仅为备份用户的密码，这里指的是backup的密码。
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">2.10.4. </span>5.使用 rsync 备份系统快照</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>将源目录复制到目的路径：</p></li>
+</ol>
+<p><code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-av</span> <span class="pre">source_path</span> <span class="pre">destination_path</span></code></p>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ rsync -av /home/slynux/data slynux@192.168.0.6:/home/backups/data
+其中：
+
+-a 表示进行归档操作；
+ -v （verbose）表示在 stdout 上打印出细节信息或进度
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>将数据备份到远程服务器或主机：
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-av</span> <span class="pre">source_dir</span> <span class="pre">username&#64;host:PATH</span></code>
+要想保持两端的数据同步，需要定期运行同样的 rsync
+命令。它只会复制更改过的文件。</p></li>
+<li><p>下面的命令可以将远程主机上的数据恢复到本地：
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-av</span> <span class="pre">username&#64;host:PATH</span> <span class="pre">destination</span></code></p></li>
+<li><p>通过网络进行传输时，压缩数据能够明显改善传输效率。我们可以用 rsync
+的选项 -z 指 定在传输时压缩数据。例如：
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-avz</span> <span class="pre">source</span> <span class="pre">destination</span></code></p></li>
+<li><p>将一个目录中的内容同步到另一个目录：
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-av</span> <span class="pre">/home/test/</span> <span class="pre">/home/backups</span></code></p></li>
+<li><p>将包括目录本身在内的内容复制到另一个目录中：
+<code class="docutils literal notranslate"><span class="pre">$</span> <span class="pre">rsync</span> <span class="pre">-av</span> <span class="pre">/home/test</span> <span class="pre">/home/backups</span></code></p></li>
+</ol>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">2.10.5. </span>6. 补充内容</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>1.在使用 rsync 进行归档时排除部分文件</p>
+</div></blockquote>
+<p>选项 –exclude 和 –exclude-from 可以指定不需要传输的文件：–exclude
+PATTERN</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>可以使用通配符指定需要排除的文件。例如：
+$ rsync -avz /home/code/app /mnt/disk/backup/code --exclude &quot;*.o&quot;
+该命令不备份 .o 文件。
+
+
+或者我们也可以通过一个列表文件指定需要排除的文件。
+这需要使用 --exclude-from FILEPATH 。
+
+2.在更新 rsync 备份时，删除不存在的文件
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>默认情况下， rsync 并不会在目的端删除那些在源端已不存在的文件。如果要删除这类文件，
+可以使用 rsync 的 --delete 选项：
+$ rsync -avz SOURCE DESTINATION --delete
+
+3.定期备份
+</pre></div>
+</div>
+<p>你可以创建一个 cron 任务来定期进行备份。 下面是一个简单的例子：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ crontab -ev
+添加上这么一行：
+<span class="m">0</span> */10 * * * rsync -avz /home/code user@IP_ADDRESS:/home/backups
+上面的 crontab 项将 rsync 调度为每10小时运行一次。
+
+<span class="m">4</span>. rsync备份CENTOS系统
+</pre></div>
+</div>
+<p><strong>将整个/目录备份到usb下</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo rsync -Pa / \
+/media/saisi/usb/backup_`date +%Y-%m-%d`\
+--exclude=/media/* \
+--exclude=/sys/* \
+--exclude=/proc/* \
+--exclude=/mnt/* -\
+-exclude=/tmp/*
+</pre></div>
+</div>
+<p>还原系统命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sudo rsync -Pa /media/saisi/usb/backup_`date +%Y-%m-%d` /
+</pre></div>
+</div>
+<section id="id11">
+<h3><a class="toc-backref" href="#id23">举例</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>rsync -avzP -e <span class="s2">&quot;ssh -p 22&quot;</span> /dir user@<span class="nv">$IP</span>:/dir                         <span class="c1"># 同步目录 # --delete 无差同步 删除目录下其它文件</span>
+
+<span class="c1">#1.在本地机器上对两个目录进行同步</span>
+ rsync -zvr /var/opt/installation/inventory/ /root/temp
+
+<span class="c1">#2 仅同步一个文件</span>
+$ rsync -v /var/lib/rpm/Pubkeys /root/temp/
+
+<span class="c1">#3.从本地同步文件到远程服务器</span>
+$ rsync -avz /root/temp/ thegeekstuff@192.168.200.10:/home/thegeekstuff/temp/
+
+<span class="c1">#4同步远程文件到本地</span>
+$ rsync -avz thegeekstuff@192.168.200.10:/var/lib/rpm /root/temp
+
+sshpass -p <span class="s2">&quot;</span><span class="nv">$passwd</span><span class="s2">&quot;</span>  rsync -avzP -e <span class="s2">&quot;ssh -p 22&quot;</span> /dir  user@<span class="nv">$IP</span>:/dir/ <span class="c1"># 指定密码避免交互同步目录</span>
+
+触发同步指令的方式有很多种，
+例如可以将同步指令放入客户端系统的crontab守护进程中，设定同步时间，然后让Linux去触发同步指令，自动完成数据备份。
+这种数据备份方式可以用于数据安全性要求不是很高的业务系统上。
+细心的你可能发现了，在这种方式下，服务器端和客户端的数据在两次同步的时间间隔内，可能出现不一致现象。
+而对于数据安全性要求极高的业务系统，这种备份方式就不能满足要求，这些业务系统要求服务器端和客户端的数据实时同步。
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>不过，幸运的是，Linux 内核提供了inotify文件系统监控机制，通过inotify与rsync的组合，完全可以实现rsync服务器端和客户端数据的实时同步。
+</pre></div>
+</div>
+<p>参考文献</p>
+<p><a class="reference external" href="https://yugasun.com/post/migrate-server-data-using-rsync.html">https://yugasun.com/post/migrate-server-data-using-rsync.html</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="8.Samba%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-left" title="2.9. Samba服务器搭建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html" class="btn btn-neutral float-right" title="2.11. iptables与firewalld 防火墙" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

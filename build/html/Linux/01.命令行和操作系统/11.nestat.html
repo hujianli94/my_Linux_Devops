@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.12. netstat &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.13. eval" href="12.eval.html" />
+    <link rel="prev" title="1.11. date" href="10.date.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 命令行和操作系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget%E5%92%8Ccurl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.12. netstat</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.12.1. 功能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.12.2. 常用选项:</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.12.3. 示例：</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.%E8%BF%90%E7%AE%97%E7%AC%A6.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc%E5%91%BD%E4%BB%A4.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su%E5%91%BD%E4%BB%A4%E4%B8%8Esudo%E6%9C%8D%E5%8A%A1.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7%E5%BF%98%E8%AE%B0root%E5%AF%86%E7%A0%81%E3%80%81%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware%E5%85%8B%E9%9A%86%E5%90%8E%E6%93%8D%E4%BD%9C.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell%E7%99%BB%E5%BD%95-%E9%87%87%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84shell%E8%84%9A%E6%9C%AC.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E4%BD%BF%E7%94%A8OpenSSH%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86Linux%E6%9C%8D%E5%8A%A1%E5%99%A8.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump%E8%B7%9F%E8%B8%AA%E5%88%86%E7%BB%84.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E7%BB%88%E7%AB%AF.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo%E8%BE%93%E5%87%BA%E9%A2%9C%E8%89%B2.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Ubuntu%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96.html">1.34. Ubuntu安装和初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.DRBD%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95.html">1.35. DRBD详细解说及配置过程记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE.html">1.36. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.%E4%BD%BF%E7%94%A8tar%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BDscripts.html">1.37. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E9%85%8D%E7%BD%AEYum%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93.html">1.38. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0.html">1.39. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux%E4%B8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86.html">1.40. Linux下软件的安装与管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.Linux%E4%B8%8B%E7%BB%91%E5%AE%9A%E7%BD%91%E5%8D%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95.html">1.41. Linux下绑定网卡的操作记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.Linux%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E6%81%A2%E5%A4%8D%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd%E6%9C%8D%E5%8A%A1%E5%B0%81%E8%A3%85server.html">1.44. Centos7-systemd服务封装server.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.DELLR730%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85centos7.3%E6%95%99%E7%A8%8B.html">1.45. DELL R730服务器安装centos7.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.ssh%E7%99%BB%E5%BD%95%E7%BC%93%E6%85%A2%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html">1.46. ssh登录缓慢解决办法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.Centos7.x%E4%BD%BF%E7%94%A8yum%E5%AE%89%E8%A3%85mysql-server.html">1.47. Centos7.x使用yum安装mysql-server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.Linux%E5%AE%89%E8%A3%85zsh%E5%92%8Coh-my-zsh.html">1.48. Linux安装zsh和oh-my-zsh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7.html">1.49. Linux命令大全搜索工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.CentOS7%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0.html">1.50. CentOS7安装笔记</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E4%BE%8B-Linux-windows.html">1.51. 静态路由实例-Linux-windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="56.Centos7%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7.html">1.52. Centos7内核升级</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>命令行和操作系统</a> &raquo;</li>
+      <li><span class="section-number">1.12. </span>netstat</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/01.命令行和操作系统/11.nestat.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#netstat" id="id4">netstat</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id5">功能</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">常用选项:</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id7">示例：</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="netstat">
+<h1><a class="toc-backref" href="#id4"><span class="section-number">1.12. </span>netstat</a><a class="headerlink" href="#netstat" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">1.12.1. </span>功能</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>打印网络连接、路由表、接口统计信息、伪装连接和多播成员
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">1.12.2. </span>常用选项:</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span><span class="n">r</span> <span class="n">显示路由表</span>
+<span class="o">-</span><span class="n">i</span> <span class="n">显示接口表</span>
+<span class="o">-</span><span class="n">n</span> <span class="n">不解析名字</span>
+<span class="o">-</span><span class="n">p</span> <span class="n">显示程序名</span> <span class="n">PID</span><span class="o">/</span><span class="n">Program</span>
+<span class="o">-</span><span class="n">l</span> <span class="n">显示监听的</span> <span class="n">socket</span>
+<span class="o">-</span><span class="n">a</span> <span class="n">显示所有</span> <span class="n">socket</span>
+<span class="o">-</span><span class="n">o</span> <span class="n">显示计时器</span>
+<span class="o">-</span><span class="n">Z</span> <span class="n">显示上下文</span>
+<span class="o">-</span><span class="n">t</span> <span class="n">只显示</span> <span class="n">tcp</span> <span class="n">连接</span>
+<span class="o">-</span><span class="n">u</span> <span class="n">只显示</span> <span class="n">udp</span> <span class="n">连接</span>
+<span class="o">-</span><span class="n">s</span> <span class="n">显示每个协议统计信息</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">1.12.3. </span>示例：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>显示所有监听：
+# netstat -anltu
+显示所有 TCP 连接：
+# netstat -antp
+显示所有 UDP 连接：
+# netstat -anup
+显示路由表：
+# netstat -r
+</pre></div>
+</div>
+<p>2.举例</p>
+<p>1）显示当前系统的路由信息。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -rn</span>
+<span class="n">Kernel</span> <span class="n">IP</span> <span class="n">routing</span> <span class="n">table</span>
+<span class="n">Destination</span>     <span class="n">Gateway</span>         <span class="n">Genmask</span>         <span class="n">Flags</span>   <span class="n">MSS</span> <span class="n">Window</span>  <span class="n">irtt</span> <span class="n">Iface</span>
+<span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>         <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span>     <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>         <span class="n">UG</span>        <span class="mi">0</span> <span class="mi">0</span>          <span class="mi">0</span> <span class="n">eth0</span>
+<span class="mf">169.254</span><span class="o">.</span><span class="mf">0.0</span>     <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>         <span class="mf">255.255</span><span class="o">.</span><span class="mf">0.0</span>     <span class="n">U</span>         <span class="mi">0</span> <span class="mi">0</span>          <span class="mi">0</span> <span class="n">eth0</span>
+</pre></div>
+</div>
+<p>2）显示当前系统中所有有效的TCP连接，使用以下命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -an</span>
+</pre></div>
+</div>
+<p>3）显示目前系统中已经启动的网络连接和对应的端口信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1">#</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -lnptu</span>
+<span class="n">Active</span> <span class="n">Internet</span> <span class="n">connections</span> <span class="p">(</span><span class="n">only</span> <span class="n">servers</span><span class="p">)</span>
+<span class="n">Proto</span> <span class="n">Recv</span><span class="o">-</span><span class="n">Q</span> <span class="n">Send</span><span class="o">-</span><span class="n">Q</span> <span class="n">Local</span> <span class="n">Address</span>           <span class="n">Foreign</span> <span class="n">Address</span>         <span class="n">State</span>       <span class="n">PID</span><span class="o">/</span><span class="n">Program</span> <span class="n">name</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">37703</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3840537</span><span class="o">/</span><span class="n">nwhywj</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">10248</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3938589</span><span class="o">/</span><span class="n">kubelet</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">10249</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1779038</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">proxy</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span><span class="p">:</span><span class="mi">2379</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">2379</span>          <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span><span class="p">:</span><span class="mi">2380</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">2381</span>          <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">42774</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3938589</span><span class="o">/</span><span class="n">kubelet</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">22</span>              <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">279077</span><span class="o">/</span><span class="n">sshd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">25</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">4957</span><span class="o">/</span><span class="n">master</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">45183</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1850507</span><span class="o">/</span><span class="n">nbhqvx</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">2375</span>                 <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">3154366</span><span class="o">/</span><span class="n">dockerd</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">9000</span>                 <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">1775919</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">prox</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">10250</span>                <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">3938589</span><span class="o">/</span><span class="n">kubelet</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">6443</span>                 <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">1805276</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">apiser</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">10256</span>                <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">1779038</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">proxy</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">:::</span><span class="mi">22</span>                   <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">279077</span><span class="o">/</span><span class="n">sshd</span>
+<span class="n">tcp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">::</span><span class="mi">1</span><span class="p">:</span><span class="mi">25</span>                  <span class="p">:::</span><span class="o">*</span>                    <span class="n">LISTEN</span>      <span class="mi">4957</span><span class="o">/</span><span class="n">master</span>
+<span class="n">udp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">8472</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>                           <span class="o">-</span>
+<span class="n">udp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">323</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>                           <span class="mi">3057</span><span class="o">/</span><span class="n">chronyd</span>
+<span class="n">udp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">49808</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>                           <span class="mi">566323</span><span class="o">/</span><span class="n">lvmetad</span>
+<span class="n">udp6</span>       <span class="mi">0</span>      <span class="mi">0</span> <span class="p">::</span><span class="mi">1</span><span class="p">:</span><span class="mi">323</span>                 <span class="p">:::</span><span class="o">*</span>                                <span class="mi">3057</span><span class="o">/</span><span class="n">chronyd</span>
+</pre></div>
+</div>
+<p>4）查看当前系统上处于连接状态的资源信息</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># netstat -atunp</span>
+<span class="n">Active</span> <span class="n">Internet</span> <span class="n">connections</span> <span class="p">(</span><span class="n">servers</span> <span class="ow">and</span> <span class="n">established</span><span class="p">)</span>
+<span class="n">Proto</span> <span class="n">Recv</span><span class="o">-</span><span class="n">Q</span> <span class="n">Send</span><span class="o">-</span><span class="n">Q</span> <span class="n">Local</span> <span class="n">Address</span>           <span class="n">Foreign</span> <span class="n">Address</span>         <span class="n">State</span>       <span class="n">PID</span><span class="o">/</span><span class="n">Program</span> <span class="n">name</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">37703</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3840537</span><span class="o">/</span><span class="n">nwhywj</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">10248</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3938589</span><span class="o">/</span><span class="n">kubelet</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">10249</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1779038</span><span class="o">/</span><span class="n">kube</span><span class="o">-</span><span class="n">proxy</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span><span class="p">:</span><span class="mi">2379</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">2379</span>          <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span><span class="p">:</span><span class="mi">2380</span>       <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">2381</span>          <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1789661</span><span class="o">/</span><span class="n">etcd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">42774</span>         <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">3938589</span><span class="o">/</span><span class="n">kubelet</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">22</span>              <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">279077</span><span class="o">/</span><span class="n">sshd</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="p">:</span><span class="mi">25</span>            <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">4957</span><span class="o">/</span><span class="n">master</span>
+<span class="n">tcp</span>        <span class="mi">0</span>      <span class="mi">0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="mi">45183</span>           <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span><span class="p">:</span><span class="o">*</span>               <span class="n">LISTEN</span>      <span class="mi">1850507</span><span class="o">/</span><span class="n">nbhqvx</span>
+<span class="o">.......</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="10.date.html" class="btn btn-neutral float-left" title="1.11. date" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="12.eval.html" class="btn btn-neutral float-right" title="1.13. eval" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

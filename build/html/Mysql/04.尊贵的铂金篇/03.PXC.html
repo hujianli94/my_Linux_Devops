@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.3. 03.PXC &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.4. 04.ProxySQL" href="04.ProxySQL.html" />
+    <link rel="prev" title="4.2. 02.Keepalived加双主架构" href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 04.尊贵的铂金篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E4%B9%8BMHA.html">4.1. 01.高可用集群之MHA</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html">4.2. 02.Keepalived加双主架构</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.3. 03.PXC</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.3.1. PXC原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.3.2. PXC架构优缺点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.3.3. PXC重要概念和重点参数</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.3.4. PXC架构搭建</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04.ProxySQL.html">4.4. 04.ProxySQL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>04.尊贵的铂金篇</a> &raquo;</li>
+      <li><span class="section-number">4.3. </span>03.PXC</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/04.尊贵的铂金篇/03.PXC.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pxc" id="id5">03.PXC</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id6">PXC原理</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id7">PXC架构优缺点</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">PXC重要概念和重点参数</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id9">PXC架构搭建</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="pxc">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">4.3. </span>03.PXC</a><a class="headerlink" href="#pxc" title="Permalink to this headline">¶</a></h1>
+<p>基于Galera协议的高可用集群架构。Galera
+Cluster是集成了Galera插件的MySQL集群。Galera
+replication是Codership提供的MySQL数据同步方案，具有高可用性，方便扩展，并可实现多节点间数据同步复制与读写，可保障数据库服务高可用及数据强一致性</p>
+<p>基于Galera的高可用方案主要有： MariaDB Galera Cluster和Percona XtraDB
+Cluster，简称PXC。</p>
+<p>PXC在生产环境中用得更多且更成熟</p>
+<p>PXC是近乎完美的MySQL高可用集群解决方案，最突出的特点是解决了复制延迟问题，
+基本可以达到实时同步，节点间是对等关系，本身是多主架构。</p>
+<p>要搭建PXC至少需要三个MySQL实例，三个实例间不是主从模式，各自为主，三者是对等关系，
+不分从属，这就是multi-master架构。客户端写入和读取数据可以选择任意一个节点，
+该架构不共享任何数据，是高冗余架构。</p>
+<p><img alt="image0" src="../../_images/mysql_Galera0001.png" /></p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">4.3.1. </span>PXC原理</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>PXC重要端口：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>3306，对外服务端口号
+4444，请求SST的端口，SST是数据库一个备份全量文件的传输
+4567，组成员间进行沟通的端口
+4568，传输IST，相对于SST来说的一个增量
+</pre></div>
+</div>
+<p><img alt="image1" src="../../_images/PXE_yuanli00001.png" /></p>
+<p>客户端发起一个事务，该事务在本地执行，执行完成后要发起提交操作。
+在提交前，需要将该事务产生的复制写集广播出去，然后获取到一个全局事务ID，并传送到另一节点上。
+其他节点通过验证合并数据后，发现没有冲突数据，执行apply_cb,commit_cb动作，否则就取消discard此次事务操作。
+当前节点通过验证后，执行提交，返回OK，如果验证不通过，则执行回滚。
+集群中如果某个节点没有验证通过，出现数据冲突，那么该节点会被踢出集群，并执行shutdown关机</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">4.3.2. </span>PXC架构优缺点</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）实现集群高可用性和数据强一致性
+2）真正的多节点读写的集群方案
+3）达到实时同步
+4）新加入的节点可以自动部署，无须提供手动备份，维护方便
+5）多节点写入，数据库故障切换很容易
+</pre></div>
+</div>
+<p>缺点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）新加入节点开销大，需复制完整数据，sst传输开销太大
+2）任何更新事务都需要全局验证通过才会在每个节点上执行，集群性能受限于性能最差的节点
+3）多节点并发写时，锁冲突问题比较严重
+4）存在写扩大问题，所有节点都会发生写操作
+5）只支持InnoDB存储引擎表
+6）没有表级别的锁定，执行DDL会把整个集群锁住，且kill不了(建议osc操作)
+7）所有表必须有主键，不然操作时会报错
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">4.3.3. </span>PXC重要概念和重点参数</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>整个集群节点数最少3个，最大8个。最少3个是为防止脑裂，脑裂的标志是输入任何命令，返回结果都是unknown command。节点在集群中，会因为新节点的加入或者故障，同步失效等发生状态切换
+节点状态变化阶段：
+open，节点启动成功，尝试连接到集群
+primary，节点已加入集群，在新节点加入时，选取donor进行数据同步时会产生的状态
+joiner，节点处于等待接收同步文件时的状态
+joined，节点完成数据同步工作，尝试保持和集群进度一致
+synced，节点正常提供服务的状态，表示已同步完成并和集群进度保持一致
+doner，节点处于为新加入的节点提供全量数据时的状态
+注：doner节点是数据的贡献者，一个新节点加入集群，doner负责使用SST为新节点传输数据。若数据量大，不建议使用SST全量传输，可以考虑选建立主从关系，再加入集群
+
+PXC有两种数据传输方式：SST全量传输，IST增量传输。SST传输有xtrabackup、mysqldump、rsync三种方法；增量传输方法只有xtrabackup。生产环境中一般数据量不大时，可以使用SST传输，但通常使用xtrabackup方法
+</pre></div>
+</div>
+<p>搭建PXC集群时，需要在PXC配置文件中设置好如下参数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wsrep_cluster_name</span>  <span class="c1">##标识集群名称</span>
+<span class="n">wsrep_cluster_address</span><span class="o">=</span><span class="n">gcomm</span><span class="p">:</span> <span class="c1">##列出集群成员</span>
+<span class="n">wsrep_node_address</span> <span class="c1">##当前节点IP</span>
+<span class="n">wsrep_provider</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libgalera_smm</span><span class="o">.</span><span class="n">so</span> <span class="c1">##指定Galera库</span>
+<span class="n">wsrep_sst_method</span><span class="o">=</span><span class="n">xtrabackup</span><span class="o">-</span><span class="n">v2</span> <span class="c1">##传输数据的方法</span>
+<span class="n">wsrep_sst_auth</span><span class="o">=</span><span class="n">sst</span><span class="p">:</span><span class="n">zs</span> <span class="c1">##节点的数据库用户帐号和密码</span>
+</pre></div>
+</div>
+<p>GCache，每个节点缓存当前最新的写集，若有新节点加入，可以把新数据的增量传递给新节点，而不再使用SST方式。</p>
+<p>涉及参数：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>gcache.size 缓存写集的大小，默认128MB，通过wsrep_provider_options参数设置，建议2GB~4GB
+gcache.mem_size 代表Gcache中内存缓存的大小，适度调大可以提高整个集群性能
+gcache.page_size 若内存不足，直接将写集定入磁盘文件的大小
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">4.3.4. </span>PXC架构搭建</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>环境：
+192.168.10.110 node1 master1
+192.168.10.120 node2 master2
+192.168.10.130 node3 master3
+三台机器防火墙、selinux关闭、server-id不一样
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://pdf.us/2018/07/18/1568.html">https://pdf.us/2018/07/18/1568.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html" class="btn btn-neutral float-left" title="4.2. 02.Keepalived加双主架构" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.ProxySQL.html" class="btn btn-neutral float-right" title="4.4. 04.ProxySQL" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

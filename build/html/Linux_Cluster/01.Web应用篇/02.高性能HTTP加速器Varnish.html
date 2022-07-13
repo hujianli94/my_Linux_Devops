@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>02.高性能HTTP加速器Varnish &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="03.Memcached应用实战" href="03.Memcached%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98.html" />
+    <link rel="prev" title="01.轻量级HTTP服务器Nginx" href="01.%E8%BD%BB%E9%87%8F%E7%BA%A7HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8Nginx.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux服务构建实战</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Web应用篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.%E8%BD%BB%E9%87%8F%E7%BA%A7HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8Nginx.html">01.轻量级HTTP服务器Nginx</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">02.高性能HTTP加速器Varnish</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#varnish">初识Varnish</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#varnishsquid">Varnish与Squid的对比</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">使用Varnish代替Squid做网站缓存加速器的详细解决方案</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">开始安装Varnish</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">配置一个简单的Varnish实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#varnishweb">Varnish对应多台Web服务器的配置实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">运行Varnish</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">其他功能</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.Memcached%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98.html">03.Memcached应用实战</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%95%B0%E6%8D%AE%E5%A4%87%E4%BB%BD%E6%81%A2%E5%A4%8D%E7%AF%87/index.html">数据备份恢复篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8%E5%BA%94%E7%94%A8%E7%AF%87/index.html">网络存储应用篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E8%BF%90%E7%BB%B4%E7%9B%91%E6%8E%A7%E4%B8%8E%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E7%AF%87/index.html">运维监控与性能优化篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E9%9B%86%E7%BE%A4%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8%E7%AF%87/index.html">集群高级应用篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux服务构建实战</a> &raquo;</li>
+          <li><a href="index.html">Web应用篇</a> &raquo;</li>
+      <li>02.高性能HTTP加速器Varnish</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux_Cluster/01.Web应用篇/02.高性能HTTP加速器Varnish.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#httpvarnish" id="id6">02.高性能HTTP加速器Varnish</a></p>
+<ul>
+<li><p><a class="reference internal" href="#varnish" id="id7">初识Varnish</a></p></li>
+<li><p><a class="reference internal" href="#varnishsquid" id="id8">Varnish与Squid的对比</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id9">使用Varnish代替Squid做网站缓存加速器的详细解决方案</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">开始安装Varnish</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id11">配置一个简单的Varnish实例</a></p></li>
+<li><p><a class="reference internal" href="#varnishweb" id="id12">Varnish对应多台Web服务器的配置实例</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id13">运行Varnish</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id14">其他功能</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="httpvarnish">
+<h1><a class="toc-backref" href="#id6">02.高性能HTTP加速器Varnish</a><a class="headerlink" href="#httpvarnish" title="Permalink to this headline">¶</a></h1>
+<p>Varnish是一个开源的反向代理软件
+和HTTP加速器，与传统的Squid相比，Varnish具有性能更高、速度更快、管理更方
+便等诸多优点，很多大型的运营网站都开始尝试用Varnish来替换Squid，这些都促
+使Varnish迅速发展起来。</p>
+<section id="varnish">
+<h2><a class="toc-backref" href="#id7">初识Varnish</a><a class="headerlink" href="#varnish" title="Permalink to this headline">¶</a></h2>
+<p>Varnish的结构与特点</p>
+<p>Varnish是一个轻量级的Cache和反向代理软件。先进的设计理念和成熟的设计框架
+是Varnish的主要特点。
+现在的Varnish总共代码量不大，虽然功能在不断改进，但是还需要继续丰富和加强。
+下面是Varnish的一些特点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>基于内存进行缓存，重启后数据将消失。
+利用虚拟内存方式，I/O性能好。
+支持设置0～60秒的精确缓存时间。
+VCL配置管理比较灵活。
+32位机器上缓存文件大小为最大2GB。
+具有强大的管理功能，例如top、stat、admin、list等。
+状态机设计巧妙，结构清晰。
+利用二叉堆管理缓存文件，可达到积极删除目的。
+</pre></div>
+</div>
+</section>
+<section id="varnishsquid">
+<h2><a class="toc-backref" href="#id8">Varnish与Squid的对比</a><a class="headerlink" href="#varnishsquid" title="Permalink to this headline">¶</a></h2>
+<p>说到Varnish，就不能不提Squid。Squid是一个高性能的代理缓存服务器，它和
+Varnish相比较有诸多的异同点，下面进行分析。</p>
+<p>下面是Varnish与Squid之间的相同点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>都是一个反向代理服务器。
+都是开源软件。
+</pre></div>
+</div>
+<p>下面是它们的不同点，也是Varnish的优点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Varnish的稳定性很高。两者在完成相同负荷的工作时，Squid服务器发生故障的几
+率要高于Varnish，因为Squid需要经常重启。
+
+Varnish访问速度更快。Varnish采用了“Visual Page Cache”技术，所有缓存
+数据都直接从内存读取，而Squid是从硬盘读取缓存数据，因此Varnish在访问速度
+方面会更快。
+
+Varnish可以支持更多的并发连接。因为Varnish的TCP连接释放要比Squid快，所
+以在高并发连接情况下可以支持更多的TCP连接。
+
+Varnish可以通过管理端口，使用正则表达式批量清除部分缓存，而Squid做不到。
+当然，与传统的Squid相比，Varnish也有缺点。
+
+Varnish在高并发状态下CPU、I/O和内存等资源开销都高于Squid。
+
+Varnish进程一旦挂起、崩溃或者重启，缓存数据都会从内存中完全释放，此时所
+有请求都会被发送到后端服务器，在高并发情况下，这会给后端服务器造成很大压
+力。
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9">使用Varnish代替Squid做网站缓存加速器的详细解决方案</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>参考文献：</p>
+<p><a class="reference external" href="http://zyan.cc/post/313/">使用Varnish代替Squid做网站缓存加速器的详细解决方案</a></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id10">开始安装Varnish</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>安装过程比较简单，在此省略</p>
+<p>Varnish的官方网址为<code class="docutils literal notranslate"><span class="pre">http://varnish-cache.org</span></code>，这里面有Varnish的最新说明文档及版本升级记录，在此网站中可以找到Varnish在SourceForge中的下载链
+接。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id11">配置一个简单的Varnish实例</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Varnish安装完成后，默认的配置文件
+为<code class="docutils literal notranslate"><span class="pre">/usr/local/varnish/etc/varnish/default.vcl</span></code>，
+此文件内容默认全部被注释掉。
+这里以这个文件为模板，创建一个新的文件vcl.conf，并且将其放到/usr/local/varnish/etc目录下。
+配置完成的vcl.conf文件如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#通过backend      定义一个名称为webserver的后端主机，
+“.host”指定后端主机的IP地址或者域#名，
+“.port”指定后端主机的服务器端口。
+其中，“192.168.12.26”就是后端的一个Web服务器
+</pre></div>
+</div>
+<p>示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>backend webserver{
+.host=&quot;192.168.12.26&quot;；
+.port=&quot;80&quot;；
+}
+#开始调用vcl_recv
+sub vcl_recv{
+if（req.http.x-forwarded-for）{
+set req.http.X-Forwarded-For=
+req.http.X-Forwarded-For&quot;，&quot;client.ip；
+}else{
+set req.http.X-Forwarded-For=client.ip；
+}
+
+#如果请求的类型不是GET、HEAD、PUT、POST、TRACE、OPTIONS或DELETE时，则进入
+#pipe模式。注意这里是“＆＆”关系
+if（req.request！=&quot;GET&quot;＆＆
+req.request！=&quot;HEAD&quot;＆＆
+req.request！=&quot;PUT&quot;＆＆
+req.request！=&quot;POST&quot;＆＆
+req.request！=&quot;TRACE&quot;＆＆
+req.request！=&quot;OPTIONS&quot;＆＆
+req.request！=&quot;DELETE&quot;）{
+return（pipe）；
+}
+
+#如果请求的类型不是GET或HEAD，则进入pass模式
+if（req.request！=&quot;GET&quot;＆＆req.request！=&quot;HEAD&quot;）{
+return（pass）；
+}
+
+#对ixdba.net或者ixdba.cn两个域名进行缓存加速。这是个泛域名的概念，也就
+#是将所有以ixdba.net或者ixdba.cn结尾的域名都进行缓存
+if（req.http.host～&quot;^（.*）.ixdba.net&quot;||req.http.host
+～&quot;^（.*）.ixdba.cn&quot;）{
+set req.backend=webserver；
+}
+
+#对以.jsp和.do结尾以及带有?的URL，直接从后端服务器读取内容
+if（req.url～&quot;\.（jsp|do）（$|\?）&quot;）{
+return（pass）；
+}else{
+return（lookup）；
+}
+}
+sub vcl_pipe{
+return（pipe）；
+}
+sub vcl_pass{
+return（pass）；
+}
+sub vcl_hash{
+set req.hash+=req.url；
+if（req.http.host）{
+set req.hash+=req.http.host；
+}else{
+set req.hash+=server.ip；
+}
+return（hash）；
+}
+sub vcl_hit{
+if（！obj.cacheable）{
+return（pass）；
+}
+return（deliver）；
+}
+sub vcl_miss{
+return（fetch）；
+}
+sub vcl_fetch{
+if（！beresp.cacheable）{
+return（pass）；
+}
+if（beresp.http.Set-Cookie）{
+return（pass）；
+}
+
+#当url中包含servlet时，不进行缓存
+if（req.url～&quot;^/servlet/&quot;）{
+return（pass）；
+}
+#当url中包含services时，不进行缓存
+if（req.url～&quot;^/services/&quot;）{
+return（pass）；
+}
+#如果请求类型是GET，并且请求的URL中包含upload，那么就进行缓存，缓存的时
+间是
+#300秒，即5分钟
+if（req.request==&quot;GET&quot;＆＆req.url～&quot;^/upload（.*）$&quot;）{
+set beresp.ttl=300s；
+}
+
+#当请求类型是GET，并且请求的URL以png、xsl、xml、gif、css、js等结尾时，
+进行缓存，
+#缓存时间为600秒
+if（req.request==&quot;GET&quot;＆＆req.url～&quot;\.
+（png|xsl|xml|pdf|ppt|doc|docx|chm|rar|
+zip|bmp|jpeg|swf|ico|mp3|mp4|rmvb|ogg|mov|avi|wmv|swf|txt|png|gif|jpg|css|
+js|html|htm）$&quot;）{
+set beresp.ttl=600s；
+}
+return（deliver）；
+}
+#下面添加一个Header标识，以判断缓存是否命中
+sub vcl_deliver{
+if（obj.hits＞0）{
+set resp.http.X-Cache=&quot;HIT from www.ixdba.net&quot;；
+}else{
+set resp.http.X-Cache=&quot;MISS from www.ixdba.net&quot;；
+}
+return（deliver）；
+}
+</pre></div>
+</div>
+</section>
+<section id="varnishweb">
+<h2><a class="toc-backref" href="#id12">Varnish对应多台Web服务器的配置实例</a><a class="headerlink" href="#varnishweb" title="Permalink to this headline">¶</a></h2>
+<p>下面是一个Varnish对应多台Web主机的应用实例，
+具有负载分担和健康检测机制。 配置完成的vcl.conf文件如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#下面定义了4台后端Web服务器
+backend webserver1{
+.host=&quot;192.168.12.12&quot;；
+.port=&quot;80&quot;；
+}
+backend webserver2{
+.host=&quot;192.168.12.13&quot;；
+.port=&quot;80&quot;；
+}
+backend webserver3{
+.host=&quot;192.168.12.14&quot;；
+.port=&quot;80&quot;；
+}
+backend webserver4{
+.host=&quot;192.168.12.15&quot;；
+.port=&quot;80&quot;；
+}
+
+#定义一个名为webserver的director，也就是由webserver1和webserver2两台后端服务器随机分担
+#请求。“.weight”用来指定两台后端服务器的权值。权值高的处理请求的几率就高些
+
+director webserver random{
+{.backend=webserver1；.weight=5；}
+{.backend=webserver2；.weight=8；}
+}
+#这里设定清理缓存的规则，Varnish允许localhost、127.0.0.1和192.168.12.***三个来源IP通过
+#PURGE方法清除缓存
+
+acl purge{
+&quot;localhost&quot;；
+&quot;127.0.0.1&quot;；
+&quot;192.168.12.0&quot;/26；
+}
+
+sub vcl_recv{
+#这里设定，当发送PURGE请求的客户端不是在acl中设定的地址时，将返回405状态代码，提示
+#“Not allowed”。当请求的URL是以.php和.cgi结尾时，则交给后端服务器去处理
+
+if（req.request==&quot;PURGE&quot;）{
+if（！client.ip～purge）{
+error405&quot;Not allowed.&quot;；
+}
+elseif（req.url～&quot;\.（php|cgi）（$|\?）&quot;）{
+return（pass）；
+}
+else{
+return（lookup）；
+}
+}
+
+#下面设定域名访问策略，其实也是设定对后端主机健康状态检测的一个机制。如果访问www.ixdba.net
+#或者bbs.ixdba.net，并且请求重启次数为0，则将请求交给webserver来处理。如果请求重启次数
+#为1，则将请求交给webserver3处理。如果访问img.ixdba.net或者images.ixdba.net，则将请求交给webserver4来处理
+
+if（（req.http.host～&quot;^（www.|bbs.）?ixdba.net&quot;）＆＆
+（req.restarts==0））{
+set req.backend=webserver；
+}elseif（req.restarts==1）{
+set req.backend=webserver3；
+}
+if（req.http.host～&quot;^（img.|images.）?ixdba.net&quot;）{
+set req.backend=webserver4；
+}
+
+#下面定义缓存的策略。当请求以.cgi和.php结尾及带有?的URL时，不进行缓存，直接从后端服务器
+#读取内容。其他请求都进入lookup模式，也就是进入cache中通过hash表寻找被请求的数据
+if（req.request！=&quot;GET&quot;＆＆req.request！=&quot;HEAD&quot;）
+{
+return（pipe）；
+}
+elseif（req.url～&quot;\.（cgi|php）（$|\?）&quot;）
+{
+return（pass）；
+}
+elseif（req.http.Authenticate||req.http.Authorization）{
+return（pass）；
+}
+return（lookup）；
+}
+
+#如果请求的类型是PURGE方法，Varnishd会将此请求的缓存周期设置为0，也就是使这个URL的缓存失效，
+#从而达到刷新Varnish缓存的目的
+sub vcl_hit
+{
+if（req.request==&quot;PURGE&quot;）{
+set obj.ttl=0s；
+error200&quot;Purged.&quot;；
+}
+if（！obj.cacheable）
+{
+return（pass）；
+}
+if（obj.http.Vary）
+{
+unset obj.http.Vary；
+}
+}
+sub vcl_miss
+{
+if（req.request==&quot;PURGE&quot;）{
+error404&quot;Not in cache.&quot;；
+}
+}
+#定义hash的值，并且处理压缩内容
+sub vcl_hash{
+set req.hash+=req.url；
+if（req.http.host）{
+set req.hash+=req.http.host；
+}else{
+set req.hash+=server.ip；
+}
+if（req.http.Accept-Encoding）{
+if（req.url～&quot;\.
+（jpg|jpeg|png|gif|rar|zip|gz|tgz|bz2|tbz|mp3|ogg|swf|exe|flv
+|avi|rmvb|rm|mpg|mpeg|pdf）$&quot;）{
+}else{
+set req.hash+=req.http.Accept-Encoding；
+}
+}
+return（hash）；
+}
+sub vcl_fetch
+{
+if（！beresp.cacheable）{
+return（pass）；
+}
+if（beresp.http.Set-Cookie）{
+return（pass）；
+}
+#定义在什么状态下进入restart模式
+if（beresp.status==500||beresp.status==501||beresp.status==502||
+beresp.status==503||beresp.status==504||beresp.status==404）
+{
+return（restart）；
+}
+#下面定义不缓存含有哪些HTTP头的请求
+if（beresp.http.Pragma～&quot;no-cache&quot;||beresp.http.Cache-Control～&quot;no-
+cache&quot;||beresp.http.Cache-Control～&quot;private&quot;）{
+return（pass）；
+}
+#定义不同内容的缓存时间
+if（req.request==&quot;GET&quot;＆＆req.url～&quot;\.（css|js|html|htm）$&quot;）{
+set beresp.ttl=300s；
+}
+if（req.request==&quot;GET&quot;＆＆req.url～&quot;\.
+（gif|jpg|jpeg|bmp|png|tiff|tif|ico|im
+g|bmp|wmf）$&quot;）{
+set beresp.ttl=3600s；
+}
+if（req.request==&quot;GET&quot;＆＆req.url～&quot;\.
+（svg|swf|ico|mp3|mp4|m4a|wav|rmvb|avi
+|wmv）$&quot;）{
+set beresp.ttl=10d；
+}
+return（deliver）；
+}
+sub vcl_deliver{
+if（obj.hits＞0）{
+set resp.http.X-Cache=&quot;HIT from www.ixdba.net&quot;；
+}else{
+set resp.http.X-Cache=&quot;MISS from www.ixdba.net&quot;；
+}
+return（deliver）；
+}
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id13">运行Varnish</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>1.varnishd指令</p>
+<p>Varnish启动的命令是/usr/local/varnish/sbin/varnishd。此命令参数较多，
+用法比较复杂 不常用</p>
+<p>2.配置Varnish运行脚本</p>
+<p>在安装Varnish时，已经将Varnish的管理脚本复制到相应的目录下，这里稍作修改
+即可。首先修改/etc/sysconfig/varnish文件，根据这里的要求，配置好的文件
+如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">NFILES</span><span class="o">=</span><span class="mi">131072</span>
+<span class="n">MEMLOCK</span><span class="o">=</span><span class="mi">82000</span>
+<span class="n">DAEMON_OPTS</span><span class="o">=</span><span class="s2">&quot;-a192.168.12.246：80</span><span class="se">\</span>
+<span class="s2">-T127.0.0.1：3500</span><span class="se">\</span>
+<span class="s2">-f/usr/local/varnish/etc/vcl.conf</span><span class="se">\</span>
+<span class="s2">-u varnish-g varnish</span><span class="se">\</span>
+<span class="s2">-w2，51200，10</span><span class="se">\</span>
+<span class="s2">-n/data/varnish/cache</span><span class="se">\</span>
+<span class="s2">-s file，/data/varnish/cache/varnish_cache.data，4G&quot;</span>
+</pre></div>
+</div>
+<p>这里需要说明的是，在32位操作系统下，最大只能支持2GB的缓存文件
+varnish_cache.data，如果需要更大的缓存文件，则需要安装64位的Linux操作系
+统。</p>
+<p>接下来要修改的文件是/etc/init.d/varnish，找到如下几行，修改相应的路径即
+可。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span><span class="o">=</span><span class="s2">&quot;/usr/local/varnish/sbin/varnishd&quot;</span>
+<span class="n">prog</span><span class="o">=</span><span class="s2">&quot;varnishd&quot;</span>
+<span class="n">config</span><span class="o">=</span><span class="s2">&quot;/etc/sysconfig/varnish&quot;</span>
+<span class="n">lockfile</span><span class="o">=</span><span class="s2">&quot;/var/lock/subsys/varnish&quot;</span>
+</pre></div>
+</div>
+<p>其中，exec用于指定varnishd的路径，只需修改为Varnish安装路径下对应的varnishd文件即可；config用于指定Varnish守护进程配置文件路径。</p>
+<p>两个文件修改完毕，就可以授权、运行/etc/init.d/varnish脚本了。执行过程如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@varnish-server～]#chmod755/etc/init.d/varnish
+[root@varnish-server～]#/etc/init.d/varnish
+Usage：/etc/init.d/varnish
+{start|stop|status|restart|condrestart|try-restart|reload|force-
+reload}
+</pre></div>
+</div>
+<p>3.管理Varnish运行日志</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Varnish是通过内存共享的方式提供日志的，它提供了两种日志输出形式，分别是：
+通过自带的varnishlog指令获得Varnish详细的系统运行日志。
+例如：
+[root@varnish-server～]#/usr/local/varnish/bin/varnishlog-n/data/varnish/cache
+
+
+通过自带的varnishncsa指令得到类似Apache的combined输出格式的日志。
+例如：
+[root@varnish-server～]#/usr/local/varnish/bin/varnishncsa-
+n/data/varnish/cache
+
+
+也可以将日志输出到一个文件中，通过“-w”参数指定即可。
+[root@varnish-server～]#/usr/local/varnish/bin/varnishncsa-
+n/data/varnish/cache\
+＞-w/data/varnish/log/varnish.log
+
+
+第一种在大多数情况下不是必须的，这里重点介绍第二种日志输出形式的配置方式。
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id14">其他功能</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>其他功能不一一往下扩展了，因为是开源软件，网上能搜到很多实用教程。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01.%E8%BD%BB%E9%87%8F%E7%BA%A7HTTP%E6%9C%8D%E5%8A%A1%E5%99%A8Nginx.html" class="btn btn-neutral float-left" title="01.轻量级HTTP服务器Nginx" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03.Memcached%E5%BA%94%E7%94%A8%E5%AE%9E%E6%88%98.html" class="btn btn-neutral float-right" title="03.Memcached应用实战" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

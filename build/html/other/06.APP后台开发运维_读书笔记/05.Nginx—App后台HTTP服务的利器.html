@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.5. Nginx—App后台HTTP服务的利器 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.6. MySQL—App后台最常用的数据库" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html" />
+    <link rel="prev" title="6.4. Linux-APP后台应用最广泛的系统" href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. APP后台开发运维_读书笔记</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.APP%E5%90%8E%E5%8F%B0%E5%85%A5%E9%97%A8.html">6.1. APP后台入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html">6.4. Linux-APP后台应用最广泛的系统</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.5. Nginx—App后台HTTP服务的利器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.5.1. 简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.5.2. 基本原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.5.3. 工作模型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">6.5.4. 进程解析</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.5.5. 常用配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">6.5.6. 实现负载均衡的方案</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">6.5.7. 用Nginx处理业务逻辑</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.8. MongoDB—App后台新兴的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html">6.9. 架构选型的要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>APP后台开发运维_读书笔记</a> &raquo;</li>
+      <li><span class="section-number">6.5. </span>Nginx—App后台HTTP服务的利器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/05.Nginx—App后台HTTP服务的利器.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#nginxapphttp" id="id13">Nginx—App后台HTTP服务的利器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id14">简介</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id15">基本原理</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id16">工作模型</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id17">进程解析</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id18">常用配置</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nginx" id="id19">1.Nginx的全局配置</a></p></li>
+<li><p><a class="reference internal" href="#event" id="id20">2.event配置</a></p></li>
+<li><p><a class="reference internal" href="#http" id="id21">3.http配置</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id22">4.负载均衡配置</a></p></li>
+<li><p><a class="reference internal" href="#server" id="id23">5.server虚拟主机配置</a></p></li>
+<li><p><a class="reference internal" href="#location" id="id24">6.location配置</a></p></li>
+<li><p><a class="reference internal" href="#https" id="id25">7.HTTPS的配置</a></p></li>
+<li><p><a class="reference internal" href="#app" id="id26">8.下载App的配置</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id27">9.生产环境中修改配置的良好习惯</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id28">10.性能统计</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id11" id="id29">实现负载均衡的方案</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nginx-keepalived" id="id30">针对创业团队采用方案（Nginx+Keepalived）</a></p></li>
+<li><p><a class="reference internal" href="#slb" id="id31">大公司使用云上负载均衡器（SLB）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id32">用Nginx处理业务逻辑</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="nginxapphttp">
+<h1><a class="toc-backref" href="#id13"><span class="section-number">6.5. </span>Nginx—App后台HTTP服务的利器</a><a class="headerlink" href="#nginxapphttp" title="Permalink to this headline">¶</a></h1>
+<p>Nginx是一个高性能的HTTP和反向代理服务器，在BAT等巨头和众多的移动互联网公司中有广泛的应用。其主要特点是占用内存少，并发能力强。</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">6.5.1. </span>简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Nginx与Apache类似，其是一个高性能的HTTP和反向代理服务器，也是一个imap/pop3/smtp代理服务器。</p>
+<p>Nginx是由Igor
+Sysoev为俄罗斯访问量第二的Rambler.ru站点开发的，其已经在该站点运行超过三年。Igor将Nginx源代码以类似BSD许可证的形式发布。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">6.5.2. </span>基本原理</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>下面讲述Nginx两方面的基本原理。</p>
+<p>·工作模型</p>
+<p>·进程解析</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">6.5.3. </span>工作模型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>Nginx的高性能主要是其使用了<code class="docutils literal notranslate"><span class="pre">epoll</span></code>和<code class="docutils literal notranslate"><span class="pre">kqueue</span></code>网络I/O模型</p>
+<p>Apache则使用的是传统的<code class="docutils literal notranslate"><span class="pre">select</span></code>模型</p>
+<p>目前在Linux下能够承受高并发访问的著名开源软件Squid、Memcached采用的都是是<code class="docutils literal notranslate"><span class="pre">epoll</span></code>网络I/O模型。</p>
+<p>Apache采用的<code class="docutils literal notranslate"><span class="pre">select模型</span></code>和Nginx采用的<code class="docutils literal notranslate"><span class="pre">epoll模型</span></code>之间的区别。</p>
+<p>select模型</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用select模型的服务员是这样接待客人的：当客人一入门，服务员就立刻引导客人入座，
+然后把菜单递给客人，等待客人点菜。客人点菜完毕后，服务员到厨房下单。
+当厨房把菜做好后，服务员送菜到客人的桌上，平时服务员就在桌子旁边招待客人。
+如果客人这时看电影，服务员也要守候在客人桌子旁边。
+最后等客人吃完饭结账后,送客人出门，服务员继续招待下一个客人。
+</pre></div>
+</div>
+<p>epoll模型</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>使用epoll模型的服务员是这样接待客人的：当客人进门，门口有感应器通知服务员，
+服务人就引导客人入座然后招待其他客人。客人看完菜单准备点菜，客人呼唤服务员，
+服务员来到客人的桌上记下客人所点的菜，然后到厨房下单后继续招待其他客人。
+当服务员收到厨房通知菜做好了，服务员把菜送到客人桌后继续干其他工作。
+客人吃完饭了，客人呼唤服务员结账，服务员送客人出门后继续招待其他客人。
+</pre></div>
+</div>
+<p>从上面的过程可看到，当处理大量的请求（相当于接待很多客人），</p>
+<p><code class="docutils literal notranslate"><span class="pre">epoll模型远远高效于select模型。</span></code></p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">6.5.4. </span>进程解析</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>正常工作的Nginx有多个进程，基本的有master process（称为主进程）和worker
+process （称为工作进程）。</p>
+<p>maste process(主进程)：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>充当整个进程组与用户交互的接口，维护并监控worker process。
+不处理具体的业务，只把相应的信息发到worker process。
+其同时负责Nginx的平滑重启、配置文件生效、关闭等。
+</pre></div>
+</div>
+<p>worker process(工作进程)：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>处理具体的任务。
+</pre></div>
+</div>
+<p>Nginx中master和worker的工作流程 <img alt="image0" src="../../_images/nginx_jinchengmanager01.png" /></p>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">6.5.5. </span>常用配置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>Nginx的配置文件nginx.conf是纯文本书件，位于Nginx安装目录的conf目录下，
+整个配置文件是以块的形式组织。
+每个块以“{}”来表示，采用嵌套的方式，一个大块中可以包括小块。</p>
+<p>最大的块是main块，main块里包含event块和http块，http块包含了upstream块和server块，server块包含了多个location块，整个配置文件的结构如图
+<img alt="image1" src="../../_images/nginx_config.png" /></p>
+<p><strong>每个模块的含义如下。</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·main：Nginx的全局属性配置。
+
+·event：Nginx的工作模式及连接数上限。
+
+·http：http服务器相关属性的配置。
+
+·upstream：负载均衡属性的配置。
+
+·server：虚拟主机的配置。
+
+·location：location的配置。
+</pre></div>
+</div>
+<p>根据上面介绍的Nginx配置文件的6大块，详细介绍Nginx每个指令的含义。</p>
+<section id="nginx">
+<h3><a class="toc-backref" href="#id19">1.Nginx的全局配置</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h3>
+<p>Nginx全局配置的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">user</span>  <span class="n">www</span> <span class="n">www</span><span class="p">;</span>
+<span class="n">worker_processes</span> <span class="mi">4</span><span class="p">;</span>
+<span class="n">error_log</span>  <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">wwwlogs</span><span class="o">/</span><span class="n">nginx_error</span><span class="o">.</span><span class="n">log</span>  <span class="n">crit</span><span class="p">;</span>
+<span class="n">pid</span>        <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">pid</span><span class="p">;</span>
+<span class="n">worker_rlimit_nofile</span> <span class="mi">52000</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>这段代码中每个配置的含义如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>user：指定了Nginx工作进程运行的用户及用户组，默认是nobody，这个配置文件是使用了用户www和用户组www。
+worker_processes：指定Nginx开启的工作进程数。每个进程大约占用10～12MB的内存。如果是多核的CPU，这里应设置和CPU核数一样的进程数。
+error_log：全局错误日志的位置与日志输出的级别。日志的输出级别可选择debug、info、notice、warn、error、crit，其中debug级别输出的日志最详细。当运维人员查找问题时，错误日志是非常重要的参考。
+pid：存储Nginx进程id的文件路径。
+worker_rlimit_nofile：指定了一个Nginx进程最多可以打开的文件描述符。注意，这里的配置受限于Linux中最多可以打开的文件描述符配置。
+</pre></div>
+</div>
+</section>
+<section id="event">
+<h3><a class="toc-backref" href="#id20">2.event配置</a><a class="headerlink" href="#event" title="Permalink to this headline">¶</a></h3>
+<p>event配置的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">events</span>
+<span class="p">{</span>
+<span class="n">use</span> <span class="n">epoll</span><span class="p">;</span>
+<span class="n">worker_connections</span> <span class="mi">51200</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>这段代码中每个配置的含义如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·use：指定Nginx的工作模式。Nginx可选的工作模式有：select、poll、kqueue、epoll、rtsig和/dev/poll。前面已经介绍过select和epoll两种工作模式处理方式的不同。在Linux下epoll工作模式是首选，在FreeBSD下kqueue工作模式是首选。
+·worker_connections：定义每个worker process的最大连接数，默认是1024。注意，这里的配置受限于Linux中最多可以打开的文件描述符数限制。当前Nginx可以处理的最大连接数为max_clients = worker_processes×worker_connections。
+</pre></div>
+</div>
+</section>
+<section id="http">
+<h3><a class="toc-backref" href="#id21">3.http配置</a><a class="headerlink" href="#http" title="Permalink to this headline">¶</a></h3>
+<p>http配置的代码如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">{</span>
+    <span class="n">include</span> <span class="n">mime</span><span class="o">.</span><span class="n">types</span><span class="p">;</span>
+    <span class="n">default_type</span> <span class="n">Application</span><span class="o">/</span><span class="n">octet</span><span class="o">-</span><span class="n">stream</span><span class="p">;</span>
+    <span class="n">client_header_buffer_size</span> <span class="mi">32</span><span class="n">k</span><span class="p">;</span>
+    <span class="n">large_client_header_buffers</span> <span class="mi">4</span> <span class="mi">32</span><span class="n">k</span><span class="p">;</span>
+    <span class="n">client_max_body_size</span> <span class="mi">50</span><span class="n">m</span><span class="p">;</span>
+    <span class="n">sendfile</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">tcp_nopush</span> <span class="n">on</span><span class="p">;</span>
+
+    <span class="n">keepalive_timeout</span> <span class="mi">60</span><span class="p">;</span>
+    <span class="n">tcp_nodelay</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">gzip</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">gzip_min_length</span> <span class="mi">1</span><span class="n">k</span><span class="p">;</span>
+    <span class="n">gzip_buffers</span> <span class="mi">4</span> <span class="mi">16</span><span class="n">k</span><span class="p">;</span>
+    <span class="n">gzip_http_version</span> <span class="mf">1.0</span><span class="p">;</span>
+    <span class="n">gzip_comp_level</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="n">gzip_types</span> <span class="n">text</span><span class="o">/</span><span class="n">plain</span> <span class="n">Application</span><span class="o">/</span><span class="n">x</span><span class="o">-</span><span class="n">javascript</span> <span class="n">text</span><span class="o">/</span><span class="n">css</span> <span class="n">Application</span><span class="o">/</span><span class="n">xml</span><span class="p">;</span>
+    <span class="n">gzip_vary</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">include</span> <span class="n">vhost</span><span class="o">/*.</span><span class="n">conf</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>这段代码中每个配置的含义如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·include：包含其他的配置文件，这种机制有利于配置文件的模块化，方便用户管理大量的配置文件。
+
+·default_type：当文件类型未定义时，默认使用二进制流的格式。
+
+·client_header_buffer_size：客户端请求头buffersize的大小。
+
+·large_client_header_buffers：客户端请求中较大的消息头的缓存的数量和大小，这里“4”是数量，“32k”是大小。
+
+·client_max_body_size：客户端请求中http body的大小，一般可以理解为请求的文件大小。
+
+·sendfile：设置为on表示启动高效传输文件的模式。
+    sendfile可以让Nginx在传输文件时直接在磁盘和tcp Socket之间传输数据。如果这个参数不开启，会先在用户空间申请一个buffer，用read函数把数据从磁盘读到cache，再从cache读取到用户空间的buffer，再用write函数把数据从户空间的buffer写入到内核的buffer，最后到TCP Socket。开启这个参数后，可以让数据不用经过用户buffer。
+
+·tcp_nopush：该选项仅在sendfile开启的时候才起作用，主要防止网络堵塞。
+
+·keepalive_timeout：设置客户端保持活动连接的时间。超过这个时间，服务器会关闭连接。
+
+下面是Nginx的httpgzip模块的配置，这个模块支持在线实时压缩输出数据流，需要在编译Nginx时带上参数“--with-http_gzip_static_module”才能使用这个模块。
+·gzip：设置为on，启动gzip模块。
+·gzip_min_length：设置只有当页面的大小大于这个值时，才启用gzip压缩。页面大小值通过读取http头“Content-Length”来获取。建议是1KB，文件太小，压缩后有可能会更大。
+·gzip_buffers：gzip的缓冲区的数量和大小。默认是申请和“Content-Length”中一样大小的缓冲区。
+·gzip_http_version：支持的HTTP协议版本。
+
+·gzip_comp_level：用gzip压缩比。取值是从1～9，1是压缩比最低，但速度快，9是压缩比最高，但速度慢，而且特别消耗CPU资源。
+·gzip_types：所压缩文件的类型。一般来说是压缩传输中的文本资源文件，例如CSS、JS、HTML等。
+·gzip_vary：是否让前端的缓存服务器缓存压缩后的GZIP文件。
+·include vhost/*.conf：包含vhost文件夹中后缀名为“conf”的配置文件。通常在vhost文件夹下存放的是内容为server块的conf文件，根据经验，最好是一个域名对应一个conf文件，以方便管理。
+</pre></div>
+</div>
+<p>设置sendfile为off时传输文件的流程： <img alt="image2" src="../../_images/nginx_config002.png" /></p>
+<p>设置sendfile为on时传输文件的流程: <img alt="image3" src="../../_images/nginx_config003.png" /></p>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id22">4.负载均衡配置</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>负载均衡配置的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">upstream</span> <span class="n">test</span><span class="o">.</span><span class="n">com</span><span class="p">{</span>
+<span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.20</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">2</span><span class="p">;;</span>
+<span class="n">server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.21</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>upstream模块通过简单的调度算法实现客户端到服务器的负载均衡。在上面的例子中，test.com是这个负载均衡的名字，可以在后面的配置中调用。</p>
+<section id="nginx4">
+<h4>Nginx支持以下4种负载均衡算法。<a class="headerlink" href="#nginx4" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.加权轮询（默认的算法）：请求按时间分别分配到不同的服务器上。
+
+2.ip_hash：使用请求的ip算出hash值，根据hash值分配到不同的服务器上，固定的ip的请求，会分配到固定的服务器。这种策略有效地解决了网站服务的session共享问题。
+
+3.fair：按后端服务器的响应时间来分配请求，响应时间短的优先分配。Nginx默认是不支持这种负载均衡算法，需要安装Nginx模块和upstream_fair模块。
+
+4.url_hash：使用请求的URL算出hash值，根据hash值分配到不同的服务器上，固定的URL的请求，会分配到固定的服务器上。这种策略有利于提高后端服务器的缓存命中率。Nginx默认是不支持这种负载均衡算法，需要安装Nginx的hash软件包。
+</pre></div>
+</div>
+<p>upstream模块可以为所配置的服务器指定状态值，常用的状态值如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>down：服务器不参与到负载均衡中，当后台人员进行故障排查时这个状态非常有用。
+weight：制定轮询的权重，权重越大，分配到的几率越多。在上面的例子中，根据权重的不一样，分配到20和21的请求的比例大概是2:1。
+backup：备份机器。当其他的服务器不可用时，才把请求分配到这台服务器。
+max_fails：允许请求失败的次数，默认值是1。
+fail_timeout：经历了max_fails次失败后，暂停服务的时间。
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">注意：</span> <span class="pre">当负载均衡是ip_hash时，服务器的状态值不能是backup和weight。</span></code></p>
+</section>
+</section>
+<section id="server">
+<h3><a class="toc-backref" href="#id23">5.server虚拟主机配置</a><a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h3>
+<p>server虚拟主机配置的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span>
+  <span class="p">{</span>
+    <span class="n">listen</span>      <span class="mi">80</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="n">local</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">cn</span><span class="p">;</span>
+    <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="n">index</span><span class="o">.</span><span class="n">htm</span> <span class="n">index</span><span class="o">.</span><span class="n">php</span> <span class="n">default</span><span class="o">.</span><span class="n">html</span> <span class="n">default</span><span class="o">.</span><span class="n">htm</span> <span class="n">default</span><span class="o">.</span><span class="n">php</span><span class="p">;</span>
+    <span class="n">root</span>      <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">test</span><span class="p">;</span>
+   <span class="p">}</span>
+</pre></div>
+</div>
+<p>这段代码中每个配置的含义如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·listen：指定虚拟主机监听的端口。
+·server_name：指定虚拟主机对应的域名，多个域名之间以空格分割。
+·index：默认的首页文件。
+·root：网站的根目录。
+</pre></div>
+</div>
+</section>
+<section id="location">
+<h3><a class="toc-backref" href="#id24">6.location配置</a><a class="headerlink" href="#location" title="Permalink to this headline">¶</a></h3>
+<p>location配置的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>location ～ .*\.(gif|jpg|jpeg|png)$
+  {
+    expires      30d;
+  }
+</pre></div>
+</div>
+<p>location支持正则表达式和条件判断匹配，用户可以通过location指令对动、静态网页进行过滤处理。</p>
+<p>上面这段代码的含义是经过正则表达式匹配，
+设置文件格式为GIF、JPEG、PNG的文件在HTTP应答中“Expires”和“Cache-Control”的HTTP头，
+以达到在浏览器中缓存图片的作用。这里表示把图片在浏览器中缓存30天。</p>
+</section>
+<section id="https">
+<h3><a class="toc-backref" href="#id25">7.HTTPS的配置</a><a class="headerlink" href="#https" title="Permalink to this headline">¶</a></h3>
+<p>App经常需要通过HTTPS协议来访问某些对安全性很高要求的API（例如登录、注册）。HTTPS核心的是安全证书，生成安全证书有两种途径。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·缴纳一定的费用，到证书服务商申请。
+·用户给自己颁发证书，即手动生成。
+</pre></div>
+</div>
+<p>如果证书只是用在开发阶段，那么给自己颁发证书就行了，没必要到证书服务商那申请，不划算。下面介绍怎么手动生成证书，并在Nginx中配置使用这个生成的证书。</p>
+<p>在CentOS环境下，生成证书前先要确保安装openSSL和openSSL-devel，如果没安装，使用下面的命令安装。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">openssl</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span>
+</pre></div>
+</div>
+<p>生成证书的代码如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span>
+<span class="n">opensslgenrsa</span> <span class="o">-</span><span class="n">des3</span> <span class="o">-</span><span class="n">out</span> <span class="n">local</span><span class="o">.</span><span class="n">key</span> <span class="mi">1024</span>
+<span class="n">opensslreq</span> <span class="o">-</span><span class="n">new</span> <span class="o">-</span><span class="n">key</span> <span class="n">local</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">local</span><span class="o">.</span><span class="n">csr</span>
+<span class="n">opensslrsa</span> <span class="o">-</span><span class="ow">in</span> <span class="n">local</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">local_nopwd</span><span class="o">.</span><span class="n">key</span>
+<span class="n">openssl</span> <span class="n">x509</span> <span class="o">-</span><span class="n">req</span> <span class="o">-</span><span class="n">days</span> <span class="mi">365</span> <span class="o">-</span><span class="ow">in</span> <span class="n">local</span><span class="o">.</span><span class="n">csr</span> <span class="o">-</span><span class="n">signkey</span> <span class="n">local_nopwd</span><span class="o">.</span><span class="n">key</span> <span class="o">-</span><span class="n">out</span> <span class="n">local</span><span class="o">.</span><span class="n">crt</span>
+</pre></div>
+</div>
+<p>在Nginx的虚拟主机中加上下面的配置，并把端口设置为443，就能使用<code class="docutils literal notranslate"><span class="pre">https://api.test.cnm</span></code>的形式访问需要通过HTTPS加密的API，配置如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">server</span> <span class="p">{</span>
+    <span class="n">listen</span> <span class="mi">443</span><span class="p">;</span>
+    <span class="n">ssl</span> <span class="n">on</span><span class="p">;</span>
+    <span class="n">ssl_certificate</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">local</span><span class="o">.</span><span class="n">crt</span><span class="p">;</span>
+    <span class="n">ssl_certificate_key</span>  <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">conf</span><span class="o">/</span><span class="n">local_nopwd</span><span class="o">.</span><span class="n">key</span><span class="p">;</span>
+    <span class="n">server_name</span> <span class="n">api</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">cn</span><span class="p">;</span>
+    <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="n">index</span><span class="o">.</span><span class="n">htm</span> <span class="n">index</span><span class="o">.</span><span class="n">php</span> <span class="n">default</span><span class="o">.</span><span class="n">html</span> <span class="n">default</span><span class="o">.</span><span class="n">htm</span> <span class="n">default</span><span class="o">.</span><span class="n">php</span><span class="p">;</span>
+    <span class="n">root</span>  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">www</span><span class="o">/</span><span class="n">test</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="app">
+<h3><a class="toc-backref" href="#id26">8.下载App的配置</a><a class="headerlink" href="#app" title="Permalink to this headline">¶</a></h3>
+<p>APK和IPA分别是Android应用和iOS应用的扩展名。
+如果浏览器下载Nginx服务器中后缀名为.apk和.ipa的文件时，浏览器会自动重命名为ZIP文件。</p>
+<p>如果需要下载时文件名后缀就是.apk或.ipa，可以修改Nginx
+conf目录下的mime.types文件,在文件中增加下面的两行。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">application</span><span class="o">/</span><span class="n">vnd</span><span class="o">.</span><span class="n">android</span><span class="o">.</span><span class="n">package</span><span class="o">-</span><span class="n">archive</span> <span class="n">apk</span><span class="p">;</span>
+<span class="n">application</span><span class="o">/</span><span class="n">iphone</span> <span class="n">pxl</span> <span class="n">ipa</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>重启Nginx后配置生效。</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id27">9.生产环境中修改配置的良好习惯</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<section id="id8">
+<h4>检查Nginx的配置文件语法<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nginx</span> <span class="o">-</span><span class="n">t</span>
+</pre></div>
+</div>
+<p>如果重启Nginx前没保证配置文件语法正确，当Nginx重启过程中检测到配置文件有问题，Nginx就会停止服务，这样就影响网站的正常运行。</p>
+</section>
+<section id="id9">
+<h4>平滑重启Nginx<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span><span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nginx</span> <span class="o">-</span><span class="n">s</span> <span class="n">reload</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id28">10.性能统计</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>编译Nginx源码的时候带上参数<code class="docutils literal notranslate"><span class="pre">“--with-http_stub_status_module”</span></code>，就安装了Nginx的统计模块，这个模块能够获取Nginx自上次启动以来的工作状态。</p>
+<p>在虚拟主机的配置文件中添加以下的代码，启动统计功能。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">location</span> <span class="o">/</span><span class="n">nginx_status</span> <span class="p">{</span>
+ <span class="n">stub_status</span> <span class="n">on</span><span class="p">;</span>
+ <span class="n">access_log</span>   <span class="n">off</span><span class="p">;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+<p>重启Nginx使配置文件生效，就能在浏览器中输入“<a class="reference external" href="http:/">http:/</a>/域名/nginx_status”了解Nginx的状态，会出现类似下方的信息。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Active</span> <span class="n">connections</span><span class="p">:</span> <span class="mi">1</span>
+<span class="n">server</span> <span class="n">accepts</span> <span class="n">handled</span> <span class="n">requests</span>
+<span class="mi">653</span> <span class="mi">653</span> <span class="mi">685</span>
+<span class="n">Reading</span><span class="p">:</span> <span class="mi">1</span> <span class="n">Writing</span><span class="p">:</span> <span class="mi">1</span> <span class="n">Waiting</span><span class="p">:</span> <span class="mi">0</span>
+</pre></div>
+</div>
+<p>上面每项的含义如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·Active connections：当前Nginx正处理的活动连接数。
+·server accepts handled requests：共处理了653次连接，共处理了653次握手，共处理了685次请求。
+·Reading：Nginx读取到客户端的Header信息数。
+·Writing：Nginx返回给客户端的Header信息数。
+·Waiting：开启keep-alive的情况下，这个值等于Active– (Reading + Writing)，是Nginx已经处理完成，正在等候下一次请求指令的驻留连接。
+</pre></div>
+</div>
+<p>所以当App的请求被快速处理完毕的情况下，Waiting数比较多是正常的。
+如果reading+writing数目较多，则说明App后台并发访问量大，Nginx正在处理过程中。</p>
+</section>
+</section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">6.5.6. </span>实现负载均衡的方案</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<p>应用服务器上处理业务逻辑，由于应用服务器地位上的重要性，为了保证应用服务器高可用，可使用Nginx负载均衡和健康检查特性，一个初级的方案如图</p>
+<p>应用服务器上处理业务逻辑，由于应用服务器地位上的重要性，为了保证应用服务器高可用，
+可使用Nginx负载均衡和健康检查特性，一个初步的方案如下：</p>
+<p>Nginx负载均衡方案 <img alt="image4" src="../../_images/nginx_loadbance01.png" />
+在上面的方案中，负载均衡服务器部署了Nginx，其绑定了两个ip，外网的ip和内网ip。用DNS服务把域名绑定到外网ip，通过内网ip和应用服务集群内的服务器通信。</p>
+<p>在上面的方案中，负载均衡服务器部署了Nginx，其绑定了两个ip，外网的ip和内网ip。用DNS服务把域名绑定到外网ip，通过内网ip和应用服务集群内的服务器通信。</p>
+<p>应用集群内的机器不能直接访问网络，所有数据的进出都要经过负载均衡服务器。</p>
+<p>这个方案有以下两个好处</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·保证了应用服务的高可用，即使有台应用服务器宕机，其他服务器也会继续工作。
+
+·应用服务器不直接连接Internet，减少了被入侵的可能性。
+</pre></div>
+</div>
+<p>这个方案还有个问题：负载均衡服务器只有一台，如果负载均衡服务器宕机，整个服务就不可用。</p>
+<section id="nginx-keepalived">
+<h3><a class="toc-backref" href="#id30">针对创业团队采用方案（Nginx+Keepalived）</a><a class="headerlink" href="#nginx-keepalived" title="Permalink to this headline">¶</a></h3>
+<p>现在业界普遍解决Nginx高可用的方法是<code class="docutils literal notranslate"><span class="pre">Nginx+Keepalived</span></code>，部署两台Nginx服务器，
+通过Keepalived把外网ip绑定到一台Nginx服务器上，如果这台Nginx服务器宕机，
+Keepalived就把这个ip漂移到另外一台Nginx服务器上，使服务不受影响。</p>
+</section>
+<section id="slb">
+<h3><a class="toc-backref" href="#id31">大公司使用云上负载均衡器（SLB）</a><a class="headerlink" href="#slb" title="Permalink to this headline">¶</a></h3>
+<p>使用云服务器上负载均衡SLB的服务有以下两个好处。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·云服务器上有专业的运维团队保证负载均衡SLB的高可用。
+
+·负载均衡SLB的服务，比自己购买服务器搭建负载均衡服务便宜多了（甚至有免费的服务，现在UCloud的负载均衡就是免费的）。
+</pre></div>
+</div>
+<p>花钱购买可靠成熟的服务，不但节省资源，还能提高开发的效率，把自身的精力专注于最核心的业务上。</p>
+<p>创业团队的软件架构原则：</p>
+<p><code class="docutils literal notranslate"><span class="pre">尽量使用成熟可靠的云服务和开源软件，自身只专注于业务逻辑</span></code></p>
+</section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id32"><span class="section-number">6.5.7. </span>用Nginx处理业务逻辑</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<p>在一般的App后台架构中，Nginx是不处理任何业务逻辑的。例如经典的LNMP架构中，客户端请求到达Nginx后，Nginx通过查找location命令，将所有以“.php”为后缀的文件都交给PHP处理。</p>
+<p>为了弥补Nginx不能处理业务的缺陷，Nginx开源社区的开发者给Nginx添加了Lua模块，
+<code class="docutils literal notranslate"><span class="pre">Nginx使用Lua模块后就具备了处理业务的能力</span></code>。</p>
+<p>在业界广泛使用的OpenResty项目把Lua语言嵌入Nginx中，同时其集成了大量实用的模块以方便开发人员使用。
+使用OpenResty的开发人员可以用Lua对Nginx进行脚本编程，
+从而可以在Nginx请求处理阶段执行各种Lua代码来处理业务逻辑。
+OpenResty的开发者章亦春（网名agentzh），其同时也在维护很多Nginx模块，如果读者需要学习开发Nginx模块，他博客上的教程不得不看，地址为：<a class="reference external" href="https://github.com/openresty/Nginx-tutorials/tree/master/zh-cn">https://github.com/openresty/Nginx-tutorials/tree/master/zh-cn</a>。</p>
+<p>下面是Nginx添加了Lua模块后一个例子。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>location /lua {
+       set $test &quot;hello, world.&quot;;
+       content_by_lua &#39;
+           ngx.header.content_type = &quot;text/plain&quot;;
+           ngx.say(ngx.var.test);
+       &#39;;
+   }
+</pre></div>
+</div>
+<p>后，Nginx通过查找location命令，将所有以“.php”为后缀的文件都交给PHP处理。</p>
+<p>为了弥补Nginx不能处理业务的缺陷，Nginx开源社区的开发者给Nginx添加了Lua模块，Nginx使用Lua模块后就具备了处理业务的能力。</p>
+<p>Lua是一种脚本语言，由巴西里约热内卢天主教大学里的一个研究小组于1993年开发。其设计目的是为了嵌入到应用程序中，从而为应用程序提供更灵活的扩容功能。Lua由标准C编写而成，几乎在所有操作系统和平台上都可以编译、运行。某些应用和游戏使用了Lua作为嵌入式脚本语言以增强自身的扩展性，例如《魔兽世界》、《愤怒的小鸟》。同时Lua也是一门轻量级的脚本语言，其官方版本只包括一个精简的核心和最基本的库。</p>
+<p>在业界广泛使用的OpenResty项目把Lua语言嵌入Nginx中，同时其集成了大量实用的模块以方便开发人员使用。使用OpenResty的开发人员可以用Lua对Nginx进行脚本编程，从而可以在Nginx请求处理阶段执行各种Lua代码来处理业务逻辑。OpenResty的开发者章亦春（网名agentzh），其同时也在维护很多Nginx模块，如果读者需要学习开发Nginx模块，他博客上的教程不得不看，地址为：<a class="reference external" href="https://github.com/openresty/Nginx-tutorials/tree/master/zh-cn">https://github.com/openresty/Nginx-tutorials/tree/master/zh-cn</a>。</p>
+<p>下面是Nginx添加了Lua模块后一个例子。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>location /lua {
+    set $test &quot;hello, world.&quot;;
+    content_by_lua &#39;
+        ngx.header.content_type = &quot;text/plain&quot;;
+        ngx.say(ngx.var.test);
+    &#39;;
+}
+</pre></div>
+</div>
+<p>把上面的代码加入到localhost的配置文件中，在浏览器输入网址http://localhost/lua，就能看到浏览器中输出字符串“hello,
+world.”。</p>
+<p>Nginx+Lua模块一般是处理一些逻辑比较简单的业务，复杂的业务处理还是在应用服务器上。</p>
+<p>Nginx+Lua除了能处理简单的业务外，还能有以下的用途。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·统计所有慢请求。
+·过滤不合法的请求。
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html" class="btn btn-neutral float-left" title="6.4. Linux-APP后台应用最广泛的系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="btn btn-neutral float-right" title="6.6. MySQL—App后台最常用的数据库" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

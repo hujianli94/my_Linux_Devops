@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.1. Git基础操作 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.2. Git仓库的使用" href="2.Git%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8.html" />
+    <link rel="prev" title="1. Git入门到熟练" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. Git入门到熟练</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. Git基础操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1.1. Git 仓库安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.1.2. 客户端操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.1.3. 修改和撤销、合并</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#git-pull">1.1.4. Git pull遇到错误</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.1.5. 应用场景1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.1.6. 应用场景2</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">1.1.7. 参考资料</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.Git%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8.html">1.2. Git仓库的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Github%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%96%B9%E5%BC%8F.html">1.3. Github高级搜索方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.Svn%E8%BF%81%E7%A7%BB%E8%87%B3git%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C.html">1.4. Svn迁移至git操作手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Git_LFS_%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97.html">1.5. Git_LFS_操作指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.GitHelp.html">1.6. GitHelp</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Git入门到熟练</a> &raquo;</li>
+      <li><span class="section-number">1.1. </span>Git基础操作</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/01.Git入门到熟练/1.Git基础操作.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#git" id="id10">Git基础操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id11">Git 仓库安装</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id12">客户端操作</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">修改和撤销、合并</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id14"><strong>删除</strong></a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">分支</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">合并</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#git-pull" id="id17">Git pull遇到错误</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id18">应用场景1</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id19">应用场景2</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id20">参考资料</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="git">
+<h1><a class="toc-backref" href="#id10"><span class="section-number">1.1. </span>Git基础操作</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">1.1.1. </span>Git 仓库安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>1、安装Git</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>yum install git
+</pre></div>
+</div>
+<p>2、创建Git用户并设置密码</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>useradd git
+passwd git
+</pre></div>
+</div>
+<p>3、创建仓库</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 切换用户</span>
+su - git
+<span class="c1"># 创建库目录</span>
+mkdir -p repos/app.git
+<span class="c1"># 进入库</span>
+<span class="nb">cd</span> repos/app.git
+<span class="c1"># 初始化仓库</span>
+git --bare init
+</pre></div>
+</div>
+<p>4、客户端操作：配置SSH免密码认证</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建秘钥对</span>
+ssh-keygen
+<span class="c1"># 查看公钥</span>
+cat ~/.ssh/id_rsa.pub
+
+
+<span class="c1"># git服务器操作：复制公钥到git服务器的git用户的秘钥文件内</span>
+
+<span class="c1"># 切换用户</span>
+su - git
+<span class="c1"># 创建目录</span>
+mkdir .ssh
+<span class="c1"># 赋予目录权限</span>
+chmod <span class="m">700</span> .ssh
+<span class="c1"># 创建公钥文件</span>
+touch .ssh/authorized_keys
+<span class="c1"># 赋予文件权限</span>
+chmod <span class="m">600</span> .ssh/authorized_keys
+<span class="c1"># 将公钥复制到该文件下</span>
+vi .ssh/authorized_keys
+.....
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">1.1.2. </span>客户端操作</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p><strong>客户端操作：提交代码</strong></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1、拉取仓库</span>
+git clone git@118.31.225.36:/home/git/repos/app.git
+
+<span class="c1"># 2、创建文件</span>
+<span class="nb">cd</span> app
+touch index.html
+
+<span class="c1"># 3、提交制定本地文件</span>
+git add .
+
+<span class="c1"># 4、查看制定本地提交文件</span>
+git status
+
+<span class="c1"># 5、提交本地版本仓库 “1” 为注释</span>
+git commit -m <span class="s2">&quot;1&quot;</span>
+
+<span class="c1"># 6、如果未添加邮箱需要添加</span>
+git config --global user.name <span class="s2">&quot;huanli&quot;</span>
+git config --global user.email <span class="m">1879324764</span>@qq.com
+
+<span class="c1"># 7、提交到git库主分支</span>
+git push origin master
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">1.1.3. </span>修改和撤销、合并</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>经过实验，发现可以使用三种方法撤销修改（在已经add到暂存空间的情况下）</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.$ git reset HEAD$ 然后 git checkout -- readme.txt
+
+<span class="m">2</span>.$ git reset --hard HEAD
+
+<span class="m">3</span>.$ git checkout HEAD -- readme.txt
+</pre></div>
+</div>
+<p>查了一下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. git log 然后查看并复制上一版本的版本号
+
+<span class="m">2</span>. git reset 此时版本库中该文件已回退上一版本
+</pre></div>
+</div>
+<section id="id4">
+<h3><a class="toc-backref" href="#id14"><strong>删除</strong></a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.如果你用的rm删除文件，那就相当于只删除了工作区的文件，如果想要恢复，直接用git checkout -- 就可以
+
+<span class="m">2</span>.如果你用的是git rm删除文件，那就相当于不仅删除了文件，而且还添加到了暂存区，需要先git reset HEAD ，然后再git checkout --
+
+<span class="m">3</span>.如果你想彻底把版本库的删除掉，先git rm，再git commit 就ok了
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id15">分支</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>查看分支：
+$ git branch
+
+创建分支：
+$ git branch
+
+切换分支：
+<span class="nv">$git</span> checkout
+
+创建+切换分支：
+$ git checkout -b
+
+合并某分支到当前分支：
+$ git merge
+
+删除分支：
+$ git branch -d
+
+
+检出 Pull Requests对 Github 仓库来说，Pull Request 是种特殊分支， 可以通过以下多种方式取到本地：
+取出某个特定的 Pull Request 并临时作为本地的 FETCH_HEAD 中以便进行快速查看更改<span class="o">(</span> diff <span class="o">)</span>以及合并<span class="o">(</span> merge <span class="o">)</span>：
+
+$ git fetch origin refs/pull/<span class="o">[</span>PR-Number<span class="o">]</span>/head
+
+<span class="c1"># Github PR代码到本地分支</span>
+$ git fetch origin pull/1941/head:repack-org-apache
+$ git checkout repack-org-apache
+
+
+通过 refspec 获取所有的 Pull Request 为本地分支：
+$ git fetch origin <span class="s1">&#39;+refs/pull/*/head:refs/remotes/origin/pr/*&#39;</span>
+
+
+或在仓库的 .git/config 中加入下列设置来自动获取远程仓库中的 Pull Request
+
+<span class="o">[</span>remote <span class="s2">&quot;origin&quot;</span><span class="o">]</span>
+    <span class="nv">fetch</span> <span class="o">=</span> +refs/heads/*:refs/remotes/origin/*
+    <span class="nv">url</span> <span class="o">=</span> git@github.com:tiimgreen/github-cheat-sheet.git
+<span class="o">[</span>remote <span class="s2">&quot;origin&quot;</span><span class="o">]</span>
+    <span class="nv">fetch</span> <span class="o">=</span> +refs/heads/*:refs/remotes/origin/*
+    <span class="nv">url</span> <span class="o">=</span> git@github.com:tiimgreen/github-cheat-sheet.git
+    <span class="nv">fetch</span> <span class="o">=</span> +refs/pull/*/head:refs/remotes/origin/pr/*
+
+对基于派生库的 Pull Request，可以通过先 checkout 代表此 Pull Request 的远端分支再由此分支建立一个本地分支：
+
+$ git checkout pr/42 pr-42
+操作多个仓库的时候，可以在 Git 中设置获取 Pull Request 的全局选项。
+
+$ git config --global --add remote.origin.fetch <span class="s2">&quot;+refs/pull/*/head:refs/remotes/origin/pr/*&quot;</span>
+此时可以在任意仓库中使用以下命令：
+
+$ git fetch origin
+$ git checkout pr/42
+</pre></div>
+</div>
+<p><a class="reference external" href="https://help.github.com/articles/checking-out-pull-requests-locally">进一步了解如何本地检出 pull
+request.</a></p>
+<blockquote>
+<div><p>参考文献：</p>
+<p><a class="reference external" href="https://www.bookstack.cn/read/github-cheat-sheet/git.md">https://www.bookstack.cn/read/github-cheat-sheet/git.md</a></p>
+</div></blockquote>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id16">合并</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。
+解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。
+
+用git log --graph命令可以看到分支合并图
+</pre></div>
+</div>
+</section>
+</section>
+<section id="git-pull">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">1.1.4. </span>Git pull遇到错误</a><a class="headerlink" href="#git-pull" title="Permalink to this headline">¶</a></h2>
+<p>当本地代码自己修改后与远程仓库最新分支代码不一致时，可以如下处理方式</p>
+<p>方法1:
+如果你想保留刚才本地修改的代码，并把git服务器上的代码pull到本地（本地刚才修改的代码将会被暂时封存起来）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">stash</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+<span class="n">git</span> <span class="n">stash</span> <span class="n">pop</span>
+</pre></div>
+</div>
+<p>如此一来，服务器上的代码更新到了本地，而且你本地修改的代码也没有被覆盖，之后使用add，commit，push
+命令即可更新本地代码到服务器了。</p>
+<p>方法2:
+如果你想完全地覆盖本地的代码，只保留服务器端代码，则直接回退到上一个版本，再进行pull：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">reset</span> <span class="o">--</span><span class="n">hard</span>
+<span class="n">git</span> <span class="n">pull</span> <span class="n">origin</span> <span class="n">master</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">1.1.5. </span>应用场景1</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>开发过程中经常用到从master分支copy一个开发分支</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>步骤：
+<span class="m">1</span>.切换到被copy的分支（master），并且从远端拉取最新版本
+<span class="nv">$git</span> checkout master
+<span class="nv">$git</span> pull
+
+<span class="m">2</span>.从当前分支拉copy开发分支
+<span class="nv">$git</span> checkout -b 分支名
+
+<span class="m">3</span>.把新建的分支push到远端
+<span class="nv">$git</span> push origin 分支名
+
+<span class="m">4</span>.关联
+<span class="nv">$git</span> branch --set-upstream-to<span class="o">=</span>origin/分支名 分支名
+
+<span class="m">5</span>.再次拉取验证
+<span class="nv">$git</span> pull
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">1.1.6. </span>应用场景2</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>在本地创建自己的分支</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>. 在本地创建自己的分支
+$ git branch dev_lsw
+
+
+<span class="m">2</span>. 同步分支到github上面
+$ git push origin dev_lsw
+
+<span class="m">3</span>. 本地当前应该是master分支，切换到自己的分支上，然后把本地分支和远程分支做关联
+$ git checkout dev_lsw
+$ git branch --set-upstream-to origin/dev_lsw
+
+
+
+
+<span class="m">4</span>. 使用git branch -vv命令可以看到
+* dev_lsw 28d9b82 <span class="o">[</span>origin/dev_lsw<span class="o">]</span> Change Chinese comments into English
+  master  86f52f7 <span class="o">[</span>origin/master<span class="o">]</span> Merge pull request <span class="c1">#2 from shiwei-li/master</span>
+表面分支关联成功
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">1.1.7. </span>参考资料</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">runoob</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">git</span><span class="o">/</span><span class="n">git</span><span class="o">-</span><span class="n">tutorial</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="1. Git入门到熟练" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.Git%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8.html" class="btn btn-neutral float-right" title="1.2. Git仓库的使用" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

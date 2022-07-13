@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>8.3. Nginx+keepalived双主架构 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="8.4. Redis+keepalived高可用集群实战" href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html" />
+    <link rel="prev" title="8.2. 企业级Nginx+keepalived 集群实战" href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">8. 构建Linux高可用架构</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.LVS%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AD%A6%E4%B9%A0.html">8.1. LVS基于四层的负载均衡学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html">8.2. 企业级Nginx+keepalived 集群实战</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">8.3. Nginx+keepalived双主架构</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">8.3.1. 双主模式拓扑图</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">8.3.2. 环境说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginx-keepalived1-master">8.3.3. nginx_keepalived1_master</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginx-keepalived2-backup">8.3.4. nginx_keepalived2_backup</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html">8.4. Redis+keepalived高可用集群实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.NFS%2Bkeepalived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8%E5%85%B1%E4%BA%AB.html">8.5. nfs+ keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E4%B8%BB%E4%BB%8E%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.6. MySQL 主从高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.MySQL%E4%B8%BB%E4%B8%BB%E5%90%8C%E6%AD%A5%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.7. MySQL主主同步高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MySQL%E5%8F%8C%E4%B8%BB%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.8. Mysql双主+keepalived集群架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.Haproxy%2Bkeepalived%E4%B8%BB%E4%BB%8E-%E4%B8%BB%E4%B8%BB%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84.html">8.9. Haproxy+keepalived主从-主主高可用架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.LVS%2BKeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.10. LVS+keeplaived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Redis%E5%AE%9E%E6%88%98%E7%AF%87%E4%B9%8B%E6%90%AD%E5%BB%BA%E9%9B%86%E7%BE%A4.html">8.11. Redis实战篇之搭建集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.MySQL%E4%B8%BB%E4%BB%8E%E5%A4%8D%E5%88%B6%E3%80%81%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">8.12. MySQL主从复制、读写分离</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87%E5%BC%80%E6%BA%90%E8%BD%AF%E4%BB%B6Pacemaker.html">8.13. 双机热备开源软件Pacemaker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E4%BD%BF%E7%94%A8Haproxy%2Bkeepalived%E6%90%AD%E5%BB%BAWeb%E7%BE%A4%E9%9B%86.html">8.14. 使用Haproxy+keepalived搭建Web群集</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.Redis%E4%B8%BB%E4%BB%8E%2BKeepAlived%E5%AE%9E%E7%8E%B0%E9%AB%98%E5%8F%AF%E7%94%A8.html">8.15. Redis主从+KeepAlived实现高可用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.keepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">8.16. keepalived高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.Pacemaker%E5%AE%9E%E7%8E%B0%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87.html">8.17. Pacemaker实现双机热备</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">8. </span>构建Linux高可用架构</a> &raquo;</li>
+      <li><span class="section-number">8.3. </span>Nginx+keepalived双主架构</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/08.Linux构建高可用架构/03.Nginx+keepalived双主架构.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#nginx-keepalived" id="id5">Nginx+keepalived双主架构</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id6">双主模式拓扑图</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id7">环境说明</a></p></li>
+<li><p><a class="reference internal" href="#nginx-keepalived1-master" id="id8">nginx_keepalived1_master</a></p></li>
+<li><p><a class="reference internal" href="#nginx-keepalived2-backup" id="id9">nginx_keepalived2_backup</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id10">测试</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">管理与维护</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="nginx-keepalived">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">8.3. </span>Nginx+keepalived双主架构</a><a class="headerlink" href="#nginx-keepalived" title="Permalink to this headline">¶</a></h1>
+<p>nginx+keepalived主备模式，始终有一台服务器处于空闲状态。
+为了更好地利用服务器，可以把它们设置为双主模式，另一台为这一台的备份，
+同时它又是另外一个VIP的主服务器，两台同时对外提供不同服务，同时接收用户的请求。</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">8.3.1. </span>双主模式拓扑图</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image0" src="../../_images/nginx+keepalived5.png" /></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">8.3.2. </span>环境说明</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>nginx_keepalived1_master:192.168.1.111
+nginx_keepalived2_backup:192.168.1.112
+VIP1:192.168.1.200 主为keep1，从为keep2
+VIP2:192.168.1.201 主为keep2，从为keep1
+</pre></div>
+</div>
+</section>
+<section id="nginx-keepalived1-master">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">8.3.3. </span>nginx_keepalived1_master</a><a class="headerlink" href="#nginx-keepalived1-master" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cat /etc/keepalived/keepalived.conf
+
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+
+vrrp_script check_nginx
+{
+     script &quot;/data/sh/check_nginx.sh&quot;
+     interval 2
+     weight -20
+}
+
+vrrp_instance VI_1 {
+    interface eth0
+    state BACKUP
+    nopreempt
+    priority 100
+    virtual_router_id 240
+    lvs_sync_daemon_interface eth0
+    advert_int 5             #健康检测频率
+    garp_master_delay 1
+
+    authentication {
+        auth_type PASS
+        auth_pass abcdefghijklmn
+    }
+
+    track_interface {
+       eth0
+    }
+
+    virtual_ipaddress {
+        192.168.1.200/24
+    }
+
+    track_script {
+       check_nginx
+    }
+}
+
+#VIP2
+vrrp_instance VI_2 {
+    state BACKUP
+    interface eth0
+    lvs_sync_daemon_interface eth0
+    virtual_router_id 152
+    priority 90
+    advert_int 5
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass 2222
+    }
+    virtual_ipaddress {
+        192.168.1.201/24
+    }
+    track_script {
+        chk_nginx
+    }
+}
+</pre></div>
+</div>
+</section>
+<section id="nginx-keepalived2-backup">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">8.3.4. </span>nginx_keepalived2_backup</a><a class="headerlink" href="#nginx-keepalived2-backup" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cat /etc/keepalived/keepalived.conf
+! Configuration File for keepalived
+
+global_defs {
+    notification_email {
+        root@localhost      #健康检查报告通知邮箱
+    }
+    notification_email_from keepalived@localhost         #发送邮件的地址
+    smtp_server 127.0.0.1       #邮件服务器
+    smtp_connect_timeout 30
+    route_id LVS_DEVEL
+}
+
+vrrp_script check_nginx
+{
+     script &quot;/data/sh/check_nginx.sh&quot;
+     interval 2
+     weight -20
+}
+
+vrrp_instance VI_1 {
+    interface eth0
+    state BACKUP
+    nopreempt
+    priority 90
+    virtual_router_id 240
+    lvs_sync_daemon_interface eth0
+    advert_int 5             #健康检测频率
+    garp_master_delay 1
+
+    authentication {
+        auth_type PASS
+        auth_pass abcdefghijklmn
+    }
+
+    track_interface {
+       eth0
+    }
+
+    virtual_ipaddress {
+        192.168.1.200/24
+    }
+
+    track_script {
+       check_nginx
+    }
+}
+
+#VIP2
+vrrp_instance VI_2 {
+    state MASTER
+    interface eth0
+    lvs_sync_daemon_interface eth0
+    virtual_router_id 152
+    priority 100
+    advert_int 5
+    nopreempt
+    authentication {
+        auth_type PASS
+        auth_pass 2222
+    }
+    virtual_ipaddress {
+        192.168.1.201/24
+    }
+    track_script {
+        chk_nginx
+    }
+}
+</pre></div>
+</div>
+<section id="id3">
+<h3><a class="toc-backref" href="#id10">测试</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>正常情况下，两个虚拟网卡在它自己为主的那个主机上，如下图 vip
+200为master的主，为backup的从 vip201为backup的主，为master的从
+<img alt="nginx+keepalived01" src="../../_images/nginx+keepalived6.png" /> <img alt="nginx+keepalived02" src="../../_images/nginx+keeplaived7.png" /></p>
+<p>当其中一台主服务器DOWN掉，则会发现宕掉的那个VIP的从机开始工作，那么两个VIP此时都会在同一个主机上</p>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id11">管理与维护</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>nginx+keepalived双主架构，日常维护和管理需要从以下几个方面：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>keepalived主配置文件必须设置不同的VRRP名称，同时优先级和VIP也不相同
+该实验中用到了两台服务器，nginx网站访问量为两台服务器访问之和，可以用脚本来统计
+两个nginx都是master，有两个VIP地址，用户从外网访问VIP，需要配置域名映射到两个VIP上，可以通过外网DNS映射不同的VIP
+可以通过zabbix监控等实时监控VIP访问是否正常
+</pre></div>
+</div>
+<p>参考文献</p>
+<p><a class="reference external" href="https://blog.csdn.net/lcl_xiaowugui/article/details/81712925">https://blog.csdn.net/lcl_xiaowugui/article/details/81712925</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/kevingrace/p/6138185.html">https://www.cnblogs.com/kevingrace/p/6138185.html</a></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02.Nginx%2Bkeepalived%E5%8F%8C%E6%9C%BA%E7%83%AD%E5%A4%87_%E4%B8%BB%E4%BB%8E.html" class="btn btn-neutral float-left" title="8.2. 企业级Nginx+keepalived 集群实战" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04.Redis%2Bkeepalived%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4%E5%AE%9E%E6%88%98.html" class="btn btn-neutral float-right" title="8.4. Redis+keepalived高可用集群实战" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

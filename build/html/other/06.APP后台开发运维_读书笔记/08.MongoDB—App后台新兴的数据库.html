@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.8. MongoDB—App后台新兴的数据库 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.9. 架构选型的要点" href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html" />
+    <link rel="prev" title="6.7. Redis—App后台高性能的缓存系统" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. APP后台开发运维_读书笔记</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.APP%E5%90%8E%E5%8F%B0%E5%85%A5%E9%97%A8.html">6.1. APP后台入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html">6.4. Linux-APP后台应用最广泛的系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html">6.5. Nginx—App后台HTTP服务的利器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.8. MongoDB—App后台新兴的数据库</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.8.1. 1.简介</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.8.2. 2.核心机制解析</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.8.3. 3.入门</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">6.8.4. 4.高可用集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lbs">6.8.5. 5.LBS—地理位置查询</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mongodb-3-0">6.8.6. 6.MongoDB 3.0版本的改进</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html">6.9. 架构选型的要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>APP后台开发运维_读书笔记</a> &raquo;</li>
+      <li><span class="section-number">6.8. </span>MongoDB—App后台新兴的数据库</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/08.MongoDB—App后台新兴的数据库.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mongodbapp" id="id18">MongoDB—App后台新兴的数据库</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id19">1.简介</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id20">2.核心机制解析</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mmap" id="id21">MMAP（内存文件映射）</a></p></li>
+<li><p><a class="reference internal" href="#journal" id="id22">Journal日志</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id23">3.入门</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id24">基本操作</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id25">数组操作</a></p></li>
+<li><p><a class="reference internal" href="#mysqlmongodb" id="id26">实例演示MySQL和MongoDB设计数据库的区别</a></p></li>
+<li><p><a class="reference internal" href="#mysql" id="id27">1.使用MySQL的例子</a></p></li>
+<li><p><a class="reference internal" href="#mongodb" id="id28">2.使用MongoDB的例子</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id10" id="id29">4.高可用集群</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id11" id="id30">主从</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id31">副本集</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id32">分片</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#lbs" id="id33">5.LBS—地理位置查询</a></p></li>
+<li><p><a class="reference internal" href="#mongodb-3-0" id="id34">6.MongoDB 3.0版本的改进</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id14" id="id35">灵活的存储架构</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id36">性能提升7～10倍</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id37">存储空间最多减少80%</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id38">运维成本最多降低95%</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mongodbapp">
+<h1><a class="toc-backref" href="#id18"><span class="section-number">6.8. </span>MongoDB—App后台新兴的数据库</a><a class="headerlink" href="#mongodbapp" title="Permalink to this headline">¶</a></h1>
+<p>MongoDB是目前IT行业非常流行的一种非关系型数据库（NoSQL），其灵活的数据存储方式得到了IT从业人员的青睐。但其设计理念和使用方法是有别于传统的SQL数据库的，</p>
+<section id="id1">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">6.8.1. </span>1.简介</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB是一个介于关系型数据库和非关系型数据库之间的产品，是非关系型数据库当中功能最丰富、最像关系型数据库的数据库。其是由10gen公司基于C++语言编写，旨在提供可扩展的高性能数据存储解决方案。知名的IT公司中使用MongoDB来构建自己的核心应用有Foursquare、eBay、Cisco、MetLife、Adobe等，国内也有众多的团队将MongoDB作为首选数据库。</p>
+<p>MongoDB支持的数据结构非常松散，数据采用bson格式，可以存储比较复杂的数据类型。
+bson是由10gen开发的一个数据格式，目前主要用于MongoDB中，是MongoDB的数据存储格式。</p>
+<p>MongoDB的主要特点如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·读写性能高。
+·灵活的文档模型给开发带来的方便。
+·水平扩展机制能轻松应对从百万到十亿级别的数据量处理，这也是MongoDB名字来源于单词humongous（极大的）的原因。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">6.8.2. </span>2.核心机制解析</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB高性能背后的两个机制：<code class="docutils literal notranslate"><span class="pre">MMAP（内存文件映射）</span></code>和<code class="docutils literal notranslate"><span class="pre">Journal日志</span></code>。</p>
+<section id="mmap">
+<h3><a class="toc-backref" href="#id21">MMAP（内存文件映射）</a><a class="headerlink" href="#mmap" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB使用了操作系统提供的MMAP（内存文件映射）机制进行数据文件的读写，MMAP把文件直接映射到进程的内存空间，这样文件就会在内存中有对应的地址，这时对文件的读写是能通过操作内存进行的，而不需要使用传统的如fread、fwrite文件操作方式。</p>
+<p>传统的文件操作流程：某个进程要读取硬盘上的数据，需要先把硬盘上的数据复制到内核缓冲区，再复制到进程的内存空间。</p>
+<p>传统的文件读取流程 <img alt="image0" src="../../_images/mongo_00001.png" /></p>
+<p>通过MMAP，可以把文件直接映射到进程的内存空间中，如图： <img alt="image1" src="../../_images/mongo_mmp001.png" /></p>
+<p>MMAP只是把文件映射到进程空间，并不是全部映射到内存，只有访问到的数据才会被操作系统转移到内存。
+但是因为内存是有限的，MongoDB虽然可以存储比内存更大的数据，但是对于热数据（也就是需要存放在内存中的数据）不建议超过内存的大小。
+当热数据超过内存的大小，操作系统内存管理机制会把使用频率最低的数据换到交换分区（Swap），
+这种来回的数据切换严重影响了MongoDB的性能。</p>
+<p>当MongoDB需要插入新记录时，通过MMAP把数据库文件映射到内存后进行操作。</p>
+<p>MongoDB默认是每分钟把内存中映射的数据刷到磁盘，也可以通过启动参数“–syncdelay”控制这个频率。</p>
+<p>另外，即使MongoDB不把内存映射的数据刷到磁盘，操作系统也会定期把修改过的数据刷到磁盘，
+Linux的dirty_writeback_centisecs参数用于定义脏数据在内存停留的时间（默认为500，即5秒），
+过了这个时间脏数据就会被系统刷到磁盘上。</p>
+<p>MongoDB使用了MMAP的机制把大量的文件操作都交给操作系统完成，大大减轻了MongoDB开发者的负担。</p>
+</section>
+<section id="journal">
+<h3><a class="toc-backref" href="#id22">Journal日志</a><a class="headerlink" href="#journal" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB通过MMAP机制，数据会在内存中停留一段时间，如果在这段时间内系统宕机数据还没来得及刷到硬盘，那么这些修改的数据不就丢失了吗？</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MongoDB内部通过Journal日志解决了这个问题。
+MongoDB的所有数据更新操作会记录并保存到Journal日志，Journal日志保存在dbpath路径中的Journal文件夹中。
+当系统宕机后MongoDB重启时，通过Journal日志上的操作记录，就能把数据恢复。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">6.8.3. </span>3.入门</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB把关系模型转变为文档模型，基本思路是把原来的行变为更灵活的文档模型，文档的键不是固定的，也不会事先定义。
+文档是MongoDB的核心，多个键值组合在一起就是文档。
+文档以bjosn格式存储，bson基于JSON格式，MongoDB选择JSON进行改造的主要原因是JSON的通用性及JSON的无模式的特性。</p>
+<p>MongoDB中集合就是一组文档，如果说MongoDB中的文档类似于关系数据的行，那么集合就类似于表。</p>
+<p>MongoDB中多个文档组成集合，同样多个集合也会组成数据库。一个MongoDB实例中可以有多个数据库，它们是相互独立的，每个数据库有独立的权限设置。每个数据库名最终会变成硬盘上的文件名。</p>
+<p>MongoDB中下面的3个数据库名是保留的：<code class="docutils literal notranslate"><span class="pre">admin</span></code>、<code class="docutils literal notranslate"><span class="pre">local</span></code>、<code class="docutils literal notranslate"><span class="pre">config</span></code>。</p>
+<p>最后总结一下MongoDB的数据结构与MySQL的数据结构的映射对应关系。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 53%" />
+<col style="width: 47%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>MongoDB</p></th>
+<th class="head"><p>MySQL</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>文档</p></td>
+<td><p>数据行</p></td>
+</tr>
+<tr class="row-odd"><td><p>集合</p></td>
+<td><p>数据表</p></td>
+</tr>
+<tr class="row-even"><td><p>数据库</p></td>
+<td><p>数据库</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id4">
+<h3><a class="toc-backref" href="#id24">基本操作</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB有两个基本的组件。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·mongod：MongoDB服务端程序，启动MongoDB的服务。
+·mongo：MongoDB客户端程序，连接mongod服务端进行相关的管理工作。
+</pre></div>
+</div>
+<p>当MongoDB服务端启动后，通过mongo客户端程序连接MongoDB服务端，默认是连接本地MongoDB服务器的默认端口。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@jeff</span> <span class="o">~</span><span class="p">]</span><span class="c1"># /usr/local/mongodb/bin/mongo</span>
+ <span class="n">MongoDB</span> <span class="n">shell</span> <span class="n">version</span><span class="p">:</span> <span class="mf">3.0</span><span class="o">.</span><span class="mi">5</span>
+ <span class="n">connecting</span> <span class="n">to</span><span class="p">:</span> <span class="n">test</span>
+</pre></div>
+</div>
+<p>客户端连接后会选择默认数据库“test”
+，用户切换到别的数据库，可以使用命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">数据库名</span>
+</pre></div>
+</div>
+<section id="id5">
+<h4>1．插入文档<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>下面演示怎么在集合中插入两个文档，要注意文档是一个JSON的扩展（bson）式。</p>
+<p>集合person也是不需要手动创建的，当MongoDB使用到这个集合时发现不存在就会自动创建这个集合。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;jeff&quot;</span><span class="p">,</span><span class="s2">&quot;age&quot;</span><span class="p">:</span><span class="mi">25</span><span class="p">})</span>
+<span class="o">&gt;</span><span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;tom&quot;</span><span class="p">,</span><span class="s2">&quot;age&quot;</span><span class="p">:</span><span class="mi">26</span><span class="p">})</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h4>2．查找文档<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<p>插入数据后为了让读者更早体验MongoDB数据存储的特点，在下面的示例中把刚才插入的两个文档查出来。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span><span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+ <span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;55cd29d229866714a4b512ab&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">25</span> <span class="p">}</span>
+ <span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;55cd2b1729866714a4b512ad&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;tom&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">26</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>注意到MongoDB为每个文档生成了“_id”，这个是GUID（全局唯一标识）值，保证了文档的唯一性。</p>
+<ul class="simple">
+<li><p>MongoDB也根据某个Key的值查找文档，例如，查找“name”为“jeff”的文档可以用如下的命令。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;jeff&quot;</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d17c2cadbcab5d1e998&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">25</span> <span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>MongoDB的查找命令也提供了类似于MySQL的&lt;、&lt;=、&gt;、&gt;=、!=等操作，在MongoDB中分别对应<span class="math">lt、</span>lte、<span class="math">gt、</span>gte、$ne。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">25</span><span class="p">}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d1ec2cadbcab5d1e999&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;tom&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">26</span> <span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>$in操作符等同于SQL中的in，下面的示例等同于SQL中的in (25)。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:{</span><span class="s2">&quot;$in&quot;</span><span class="p">:[</span><span class="mi">25</span><span class="p">]}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d17c2cadbcab5d1e998&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">25</span> <span class="p">}</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>$or操作符等同于MySQL的or，$or的条件放在一个数组中，
+每个数组元素表示or的一个条件， 下面的示例等同于name=“jeff”or age=26。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;$or&quot;</span><span class="p">:[{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;jeff&quot;</span><span class="p">},{</span><span class="s2">&quot;age&quot;</span><span class="p">:</span><span class="mi">26</span><span class="p">}]})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d17c2cadbcab5d1e998&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">25</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d1ec2cadbcab5d1e999&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;tom&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">26</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4>3．更新文档<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<p>更新文档的方法的第一个参数是查找的条件，第二个参数是更新的值。</p>
+<p>例如，把“name”为“jeff”的文档的“age”更新为26，可用如下的命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;jeff&#39;</span><span class="p">},{</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;jeff&#39;</span><span class="p">,</span><span class="s1">&#39;age&#39;</span><span class="p">:</span><span class="mi">26</span><span class="p">})</span>
+<span class="n">WriteResult</span><span class="p">({</span> <span class="s2">&quot;nMatched&quot;</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;nUpserted&quot;</span> <span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;nModified&quot;</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+
+<span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s1">&#39;name&#39;</span><span class="p">:</span><span class="s1">&#39;jeff&#39;</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8d17c2cadbcab5d1e998&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">26</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h4>4．删除文档<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<p>删除文档的方法如果带参数，就是删除符合特定条件的文档，如果不带参数，就是把集合中所有的文档删除，读者使用该命令的时候需要特别谨慎。</p>
+<p>下面的示例演示了带参数的删除方法和不带参数的删除方法：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">remove</span><span class="p">({</span><span class="s2">&quot;age&quot;</span><span class="p">:</span><span class="mi">26</span><span class="p">})</span>
+<span class="n">WriteResult</span><span class="p">({</span> <span class="s2">&quot;nRemoved&quot;</span> <span class="p">:</span> <span class="mi">1</span> <span class="p">})</span>
+<span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">person</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8ef5c2cadbcab5d1e99a&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span> <span class="p">:</span> <span class="mi">25</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id25">数组操作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB也支持数组的操作，在下面的示例中，插入3个数组。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;peach&quot;</span> <span class="p">]</span> <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">]</span> <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">]</span> <span class="p">})</span>
+</pre></div>
+</div>
+<p>下面的示例，演示查找包含“banana”的数组。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;fruit&quot;</span><span class="p">:</span><span class="s2">&quot;banana&quot;</span><span class="p">})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8f7dc2cadbcab5d1e99c&quot;</span><span class="p">),</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;peach&quot;</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8f7dc2cadbcab5d1e99d&quot;</span><span class="p">),</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>检索数组中需要包含多个元素的情况，需要使用$all。在下面的示例中，数组必须同时包含“Apple”和“orange”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">arr</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;fruit&quot;</span><span class="p">:{</span><span class="s2">&quot;$all&quot;</span><span class="p">:[</span><span class="s2">&quot;Apple&quot;</span><span class="p">,</span><span class="s2">&quot;orange&quot;</span><span class="p">]}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8f7dc2cadbcab5d1e99d&quot;</span><span class="p">),</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;banana&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8f7ec2cadbcab5d1e99e&quot;</span><span class="p">),</span> <span class="s2">&quot;fruit&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="s2">&quot;Apple&quot;</span><span class="p">,</span> <span class="s2">&quot;cherry&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>数组中的元素也可以内嵌，例如，一个商品的信息文档中包含商品的名称、价格，还有购买者对这个商品的评分（1～5分），MongoDB的示例如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;shirt&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">200</span><span class="p">,</span><span class="s2">&quot;comments&quot;</span><span class="p">:[{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;to m&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">},{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;jeff&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">5</span><span class="p">}]})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;suit&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">120</span><span class="p">,</span><span class="s2">&quot;comments&quot;</span><span class="p">:[{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;ter ry&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">4</span><span class="p">},{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;jeff &quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">2</span><span class="p">}]})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;coat&quot;</span><span class="p">,</span><span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span><span class="s2">&quot;comments&quot;</span><span class="p">:[{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;jon y&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">3</span><span class="p">},{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;jeff &quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:</span><span class="mi">4</span><span class="p">}]})</span>
+<span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">find</span><span class="p">()</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8ff5c2cadbcab5d1e99f&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;shirt&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;comments&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;to m&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">5</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8ff5c2cadbcab5d1e9a0&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;suit&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">120</span><span class="p">,</span> <span class="s2">&quot;comments&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;ter ry&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">4</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff &quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">2</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8ff6c2cadbcab5d1e9a1&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;coat&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;comments&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;jon y&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff &quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">4</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+<p>当检索集合product时，需要以“comments”中的元素为检索条件，可以使用$elemMatch操作符。在下面的示例中，检索购买者为“jeff”且评分大于4的商品。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&gt;</span> <span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">find</span><span class="p">({</span><span class="s2">&quot;comments&quot;</span><span class="p">:{</span><span class="s2">&quot;$elemMatch&quot;</span><span class="p">:{</span><span class="s2">&quot;author&quot;</span><span class="p">:</span><span class="s2">&quot;jeff&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">:{</span><span class="s2">&quot;$gt&quot;</span><span class="p">:</span><span class="mi">4</span><span class="p">}}}})</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7c8ff5c2cadbcab5d1e99f&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;shirt&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">200</span><span class="p">,</span> <span class="s2">&quot;comments&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;to m&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">3</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;author&quot;</span> <span class="p">:</span> <span class="s2">&quot;jeff&quot;</span><span class="p">,</span> <span class="s2">&quot;score&quot;</span> <span class="p">:</span> <span class="mi">5</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="mysqlmongodb">
+<h3><a class="toc-backref" href="#id26">实例演示MySQL和MongoDB设计数据库的区别</a><a class="headerlink" href="#mysqlmongodb" title="Permalink to this headline">¶</a></h3>
+<p>下面列举了一个数据库设计的例子，对比了MySQL和MongoDB两种数据库结构设计上的不同。</p>
+<p>假设要维护一个商品信息库，里面除了包含商品名称和价格这两个基本属性外，
+对于不同的商品，还要包含其他额外的属性，例如，如果商品是衣服，要包含颜色、尺寸这两个属性，
+如果商品是手机，还要包含后置摄像头像素、机身内存这两个属性。</p>
+</section>
+<section id="mysql">
+<h3><a class="toc-backref" href="#id27">1.使用MySQL的例子</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+<p>手机的基本属性表是“product”，其他属性由于差异比较大，需要采用一个额外参数表“product_params”的形式来设计，数据表的设计如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/* 商品基本属性表 */
+CREATE TABLE IF NOT EXISTS `product` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    `price` FLOAT(10,2) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+
+/* 商品额外属性表 */
+CREATE TABLE IF NOT EXISTS `product_params` (
+    `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `product_id` int(10) unsigned NOT NULL,
+    `name` varchar(100) NOT NULL,
+    `value` varchar(100) NOT NULL,
+    PRIMARY KEY (`id`)
+);
+</pre></div>
+</div>
+<p>下面插入商品信息。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>INSERT INTO `product` (`id`, `name`, `price`) VALUES
+ (1, &#39;大衣&#39;, 110.00),
+ (2, &#39;iPhone 6&#39;,4788.00　),
+ (3, &#39;小米 红米2A&#39;,499.00　),
+ (4, &#39;小米 Note 全网通&#39;,2099.00　),
+ (5, &#39;酷派 大神 F2&#39;,699.00　),
+ (6, &#39;华为 P8青春版&#39;,1588.00　);
+</pre></div>
+</div>
+<p>插入商品的附加信息。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>INSERT INTO `product_params` (`id`, `product_id`, `name`, `value`) VALUES
+(1, 1, &#39;颜色&#39;, &#39;红&#39;),          /* 大衣的颜色 */
+(2, 1, &#39;尺寸&#39;, &#39;S&#39;),           /* 大衣的尺寸 */
+(3, 2, &#39;机型&#39;, &#39;iPhone&#39;),      /* iPhone 6的机型 */
+(4, 2, &#39;机身内存&#39;, &#39;16&#39;),      /* iPhone 6的机身内存 */
+(5, 3, &#39;机型&#39;, &#39;Android&#39;),     /* 小米 红米2A的机型 */
+(6, 3, &#39;机身内存&#39;, &#39;8&#39;),       /* 小米 红米2A的机身内存 */
+(7, 4, &#39;机型&#39;, &#39;Android&#39;),     /* 小米 Note 全网通的机型 */
+(8, 4, &#39;机身内存&#39;, &#39;16&#39;),      /* 小米 Note 全网通的机身内存 */
+(9, 5, &#39;机型&#39;, &#39;Android&#39;),     /* 酷派 大神 F2的机型 */
+(10, 5, &#39;机身内存&#39;, &#39;16&#39;),     /* 酷派 大神 F2的机身内存 */
+(11, 6, &#39;机型&#39;, &#39;Android&#39;),    /* 华为 P8青春版的机型 */
+(12, 6, &#39;机身内存&#39;, &#39;16&#39;);     /* 华为 P8青春版的机身内存 */
+</pre></div>
+</div>
+<p><strong>注意</strong>：
+为了简化这个例子，上面的MySQL表没有严格遵从关系型数据库的范式设计，把字符和数值统一保存为字符串类型，在实际查找过程中，MySQL允许在字符串上进行数值类型的查询，只是会影响性能。</p>
+<p>如果需要查找机型为Android、机身内存为16GB、价格大于1000元的手机，需要按照下面的方式查找。</p>
+<p>首先，在商品额外属性表“product_params”中查找机型为“Android”、机身内存等于16GB的商品的id。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT product_id FROM `product_params` WHERE name = &#39;机型&#39; AND value = &#39;Android&#39;;
+</pre></div>
+</div>
+<p>使用上面两个查询结果的交集可以获得机型为“Android”、机身内存等于16GB的商品的id为[4,5,6]，然后在“商品基本属性表”中查找出价格大于1000元的手机：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>SELECT * FROM `product` WHERE price&gt;1000 and id in(4,5,6)
+</pre></div>
+</div>
+<p>得到的结果如图</p>
+<p>MySQL查询结果图 <img alt="image2" src="../../_images/app_mysql_01.png" /></p>
+</section>
+<section id="mongodb">
+<h3><a class="toc-backref" href="#id28">2.使用MongoDB的例子</a><a class="headerlink" href="#mongodb" title="Permalink to this headline">¶</a></h3>
+<p>用MongoDB处理商品信息的数据，得益于MongoDB无范式的特点，用文档就能很简单地存储衣服和手机这两种不同的商品信息，MongoDB的命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;大衣&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">110.00</span><span class="p">,</span>
+                    <span class="s2">&quot;params&quot;</span><span class="p">:[</span>
+                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;尺寸&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;S&quot;</span><span class="p">},</span>
+                    <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;颜色&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;红&quot;</span><span class="p">},]</span>
+                    <span class="p">})</span>
+
+
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;iPhone 6&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">4788.00</span><span class="p">,</span>
+                   <span class="s2">&quot;params&quot;</span><span class="p">:[</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;iPhone&quot;</span><span class="p">}</span>
+                   <span class="p">]</span>
+                  <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;小米 红米2A&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">499.00</span><span class="p">,</span>
+                   <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                   <span class="p">]</span>
+                  <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;小米 Note 全网通&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">2099.00</span><span class="p">,</span>
+                      <span class="s2">&quot;params&quot;</span><span class="p">:[</span>
+                      <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                      <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                      <span class="p">]</span>
+                     <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;酷派 大神 F2&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">699.00</span><span class="p">,</span>
+                  <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                  <span class="p">]</span>
+                  <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;iPhone 6&quot;</span><span class="p">,</span>
+                   <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">4788.00</span><span class="p">,</span>
+                   <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                   <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;iPhone&quot;</span><span class="p">}</span>
+                   <span class="p">]</span>
+                  <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;小米 红米2A&quot;</span><span class="p">,</span>
+                       <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">499.00</span><span class="p">,</span>
+                       <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                       <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">8</span><span class="p">},</span>
+                       <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                       <span class="p">]</span>
+                      <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;小米 Note 全网通&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">2099.00</span><span class="p">,</span>
+                  <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                  <span class="p">]</span>
+                 <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;酷派 大神 F2&quot;</span><span class="p">,</span>
+                      <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">699.00</span><span class="p">,</span>
+                      <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                      <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                  <span class="p">]</span>
+                 <span class="p">})</span>
+<span class="n">db</span><span class="o">.</span><span class="n">product</span><span class="o">.</span><span class="n">insert</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span><span class="s2">&quot;华为 P8青春版&quot;</span><span class="p">,</span>
+                  <span class="s2">&quot;price&quot;</span><span class="p">:</span><span class="mf">1588.00</span><span class="p">,</span>
+                  <span class="s2">&quot;params&quot;</span><span class="p">:</span> <span class="p">[</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="mi">16</span><span class="p">},</span>
+                  <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="s2">&quot;Android&quot;</span><span class="p">}</span>
+                  <span class="p">]</span>
+                 <span class="p">})</span>
+</pre></div>
+</div>
+<p>如果需要查找机型为“Android”、机身内存为16GB、价格大于1000元的手机，则用前面介绍过的$gt（相当于MySQL的“＞”），$all（相当于MySQL的“and”），$elemMatch这些操作符就能完成查找。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>db.product.find({&quot;params&quot;: {
+                 &quot;$all&quot;:[
+                     {$elemMatch: {&quot;name&quot;: &quot;机型&quot;, &quot;value&quot;: &quot;Android&quot;}},
+                     {$elemMatch: {&quot;name&quot;: &quot;机身内存&quot;, &quot;value&quot;: 16}}
+                 ]
+             },
+             &quot;price&quot;:{&quot;$gt&quot;:1000},
+            })
+</pre></div>
+</div>
+<p>查找的结果如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7cce4a2ad897394e0b21da&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;小米 Note 全网通&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">2099</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="s2">&quot;Android&quot;</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7ccea42ad897394e0b21de&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;小米 Note 全网通&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">2099</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机身内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="s2">&quot;Android&quot;</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+<span class="p">{</span> <span class="s2">&quot;_id&quot;</span> <span class="p">:</span> <span class="n">ObjectId</span><span class="p">(</span><span class="s2">&quot;5e7cceb82ad897394e0b21e0&quot;</span><span class="p">),</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;华为 P8青春版&quot;</span><span class="p">,</span> <span class="s2">&quot;price&quot;</span> <span class="p">:</span> <span class="mi">1588</span><span class="p">,</span> <span class="s2">&quot;params&quot;</span> <span class="p">:</span> <span class="p">[</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机身 内存&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="mi">16</span> <span class="p">},</span> <span class="p">{</span> <span class="s2">&quot;name&quot;</span> <span class="p">:</span> <span class="s2">&quot;机型&quot;</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span> <span class="p">:</span> <span class="s2">&quot;Android&quot;</span> <span class="p">}</span> <span class="p">]</span> <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">6.8.4. </span>4.高可用集群</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB作为NoSQL的代表之一，其自身具备了良好的扩展性，能快速搭建一个高可用、可扩展的分布式集群，下面介绍搭建MongoDB集群的几种方案。</p>
+<section id="id11">
+<h3><a class="toc-backref" href="#id30">主从</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB采用双机主从备份，主节点的数据会自动同步到从节点，当主节点宕机后，能切换到从节点继续提供服务，</p>
+<p>如图：</p>
+<p>MongoDB主从集群 <img alt="image3" src="../../_images/mongo_zhucong01.png" /></p>
+<p>当服务器访问量上升后，可能单靠一台主节点提供服务会造成比较大的性能瓶颈。在大多数的业务中，数据读写的比例会达到8:2，甚至是9:1，访问的压力集中在读取数据方面，当一个节点无法承受读压力，可以把一个节点增加为多个节点来减轻单台服务器的负载。MongoDB提供了一主多从的架构来降低单台节点的负载，由主节点负责写数据，多个从节点负责读数据，数据从主节点复制到多个从节点，</p>
+<p>如图</p>
+<p>MongoDB一主多从集群 <img alt="image4" src="../../_images/mongo_zhucong02.png" /></p>
+<p>但是MongoDB的主从架构有下面3个问题。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·当主节点宕机后，不能支持自动切换连接，目前只能手动切换。
+·主节点写压力过大的问题没法解决。
+·没法支持数据的路由。
+</pre></div>
+</div>
+<p>现在MongoDB官方已经不推荐使用主从的架构，取代方案是接下来介绍的副本集。</p>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id31">副本集</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>副本集使用多台机器做同一份数据的异步同步，从而使多台服务器拥有同一份数据的多个副本。一台服务器作为主节点提供写入服务，多台服务器作为副本节点提供读取服务，实现读写分离和负载均衡。当主节点宕机后，可以在不需要用户干预的情况下把一台副本节点或其他节点提升为主节点，继续提供服务。</p>
+<p>副本集的架构如图</p>
+<p>MongoDB副本集架构图 <img alt="image5" src="../../_images/mongo_fuben01.png" />
+应用服务器连接到整个服务集，并不关心主服务器是否挂掉。
+主节点负责整个副本集的读写，副本节点从主节点中同步数据。副本集内的机器通过心跳机制通信，
+当检测到主节点宕机时，副本集内的服务器从剩余的服务器中选举一台新的服务器作为主节点继续提供服务。
+这一切对于应用服务器来说都是透明的。</p>
+<p>MongoDB的副本集是通过oplog实现的，主节点数据的修改操作会被记录到主节点的oplog日志，
+然后副本节点通过异步方式复制主节点的oplog文件并且将oplog日志应用到副本节点，从而实现了与主节点的数据同步。</p>
+<p>副本集启动时，副本集内的服务器通过选举机制选举一台服务器为主节点，其他服务器为副本节点，选举过程如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.获取每台服务器oplog的最后操作时间。在MongoDB中，修改的数据会先放在内存中一段时间再写入硬盘，为了防止未写入硬盘前因为断电等原因造成数据丢失，所以MongoDB会把相关的数据更新操作写入日志oplog中，以便MongoDB宕机后恢复。
+
+2.如果集群中有超过一半的节点宕机（包含一半），停止选举。为了避免这个问题，MongoDB官方建议副本集中节点的个数最好为奇数。
+
+3.如果集群中服务器的oplog的最后操作时间看起来很旧，就停止选举等待管理员操作。
+
+4.如果集群内都没有上面的问题，集群内的机器根据一致性协议，选举oplog的最后操作时间最新的那台服务器为主节点。
+</pre></div>
+</div>
+<p>选举触发的条件如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·副本集刚刚初始化的时候。
+·由于网络的原因，副本节点和主节点断开通信。
+·主节点宕机。
+</pre></div>
+</div>
+<p>副本集的集群中，有如下4种角色。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* Primary：主节点，负责集群的读写。
+* Secondary：副本节点，从Primary的oplog读取操作日志，以便与Primary保持一致，主要是备份。
+* Arbiter：仲裁节点，其不负责任何读写，只负责主节点宕机的时候的参与选举。
+* Passive Node：除了没有被选举权，其他同Secondary。
+</pre></div>
+</div>
+<p>MongoDB官方推荐的集群节点是奇数，同时集群中又提供了仲裁节点这个角色，因此为了保证副本集的选举能顺利进行，可以在集群中加入一台仲裁服务器，
+如图:</p>
+<p>副本集中加入仲裁节点的架构图 <img alt="image6" src="../../_images/mongo_zhongcai01.png" /></p>
+<p>副本集还有一个问题：如果主节点读写压力过大，为了减轻主节点的压力，可以设置读写分离，由主节点负责读写，副本节点负责读，仲裁节点只参与选举，</p>
+<p>如图 MongoDB读写分离的架构 <img alt="image7" src="../../_images/mongo_duxiefenli01.png" /></p>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id32">分片</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>随着MongoDB数据量和访问量持续增加，单个集群的性能有可能达到瓶颈，针对这种情况，
+架构上一般的处理方法是“分而治之”，把集群中大量的数据读写请求分散到多个集群处理，
+在MySQL中称为数据库分片。</p>
+<p>MySQL要实现分库功能，还要依赖<code class="docutils literal notranslate"><span class="pre">Amoeba</span></code>、<code class="docutils literal notranslate"><span class="pre">Cobar</span></code>或<code class="docutils literal notranslate"><span class="pre">MyCAT</span></code>等分布式关系数据库产品，</p>
+<p>而MongoDB提供了分片这种原生的机制来处理这种“分而治之”的问题。</p>
+<p>当一台服务器的承载能力达到瓶颈，无论怎样提升单机硬件配置（例如加CPU、内存，把硬盘换成SSD）
+都无法解决问题，这时最好的策略就是分片，把集中在一台服务器上的压力分散到多台。
+例如，有性能瓶颈的服务器要处理2TB的数据，而把2TB数据通过合理的分片策略分散到两台服务器上，
+每台服务器就存储1TB的数据和承担一半的访问量了。</p>
+<p>为了保证每个分片服务器能均衡地承担访问量，避免有的服务器承担很大的访问量，有的服务器承担很少的访问量，需要在设置分片规则时就仔细考虑。</p>
+<p>例如，根据文档的id来分片，就能保证分片是比较均衡的。</p>
+<p>MongoDB分片的架构图如图</p>
+<p>MongoDB分片的架构图 <img alt="image8" src="../../_images/mongo_fenpian01.png" /></p>
+<p>MongoDB通过下面的3个组件实现分片。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·mongos：作为数据库集群请求的入口，由于数据已经分布在shard服务器上，所有请求经过mongos转发到shard服务器上，mongos充当路由的角色。mongos是无状态的，因此可以部署多台mongos做负载均衡，防止因为某台mongos宕机导
+致整个集群不可用。在某些MongoDB客户端中，连接MongoDB集群时支持同时传入多个mongos ip地址作为参数，在客户端内部实现负载均衡和故障移除。
+
+·config server：配置服务器，存储了所有数据库元信息（路由、分片）的配置。mongos服务器自身是没有在硬盘上存储shard服务器和路由的元信息的，只是在内存中存储过，当mongos服务器重启或关机后，这些信息会丢失。因此，为了保证shard服务器和路由的元信息不丢失，信息会存储在config server服务器。当mongos第一次启动或重启时，会从config server加载配置信息，同时，当配置信息发生变化时，mongos服务器会接收到最新的变化并更新内存中的数据。由于配置服务器中存储的信息太重要，万一丢失会引起整个集群的崩溃，所以在生产环境中会配置多台config server保证高可用。
+
+·shard server：分片服务器，分片后保存数据的服务器。
+</pre></div>
+</div>
+<p>在分片集群中，某个分片的数据只存储在一个服务器，如果这个服务器宕机了，那这部分数据就无法访问。为了保证分片的高可用，分片服务器也能使用副本集的架构，在生产环境中，每个副本集通常是由一个主节点（Primary）、一个副本节点（Secondary）、一个仲裁节点组成（Arbiter），架构如图</p>
+<p>分片加上副本集的架构 <img alt="image9" src="../../_images/mongo_fenpian002.png" /></p>
+<p>参考资料： <a class="reference external" href="https://docs.MongoDB.org/manual/core/sharding-introduction/">https://docs.MongoDB.org/manual/core/sharding-introduction/</a></p>
+</section>
+</section>
+<section id="lbs">
+<h2><a class="toc-backref" href="#id33"><span class="section-number">6.8.5. </span>5.LBS—地理位置查询</a><a class="headerlink" href="#lbs" title="Permalink to this headline">¶</a></h2>
+<p>基于LBS的App，必不可少的一个功能是根据当前用户的位置查找附近范围内的人或物。这些App的数据中都包含了地理位置信息，而如何处理、分析、存储这些地理位置信息，则是LBS技术的一个关键点。</p>
+<p>因为MongoDB封装了LBS常用的操作，全球流行的LBS应用foursquare，国内的快的打车和滴滴打车（现在这两家公司已合并）都曾经选择了MongoDB处理LBS。</p>
+<p>在此此章节不展开。</p>
+</section>
+<section id="mongodb-3-0">
+<h2><a class="toc-backref" href="#id34"><span class="section-number">6.8.6. </span>6.MongoDB 3.0版本的改进</a><a class="headerlink" href="#mongodb-3-0" title="Permalink to this headline">¶</a></h2>
+<p>MongoDB 3.0版本有4个方面的改进，如图</p>
+<p>MongoDB 3.0的新特性 <img alt="image10" src="../../_images/mongo_3.0.png" /></p>
+<section id="id14">
+<h3><a class="toc-backref" href="#id35">灵活的存储架构</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>在MongoDB 2.6之前的版本中，只支持单一的基于内存映射技术的存储引擎MMAP。</p>
+<p>在MongoDB
+3.0版本中改进了MongoDB的架构，引入插件式存储引擎API，目前支持改进的集合锁级别的MMAP
+V1存储引擎和文档锁级别的WiredTiger存储引擎，MongoDB 3.0版本的架构如图</p>
+<p>MongoDB 3.0架构图 <img alt="image11" src="../../_images/mongo3.0_0001.png" /></p>
+<p>MongoDB
+2.6版本的MMAP存储引擎最大的问题是库锁，这意味着当多个客户端并发访问一个库时，如果某个客户端正在进行写操作，其他客户端都必须排队等待。MongoDB达到了一定的并发量后，库锁对性能影响十分巨大，快的打车App曾经使用MongoDB处理LBS，但因为MongoDB库锁问题，最后转为自研发LBS方案。</p>
+<p>MongoDB 3.0版本中MMAP存储引擎得到了改进，库锁变为集合锁。MongoDB
+3.0版本最核心的变化是增加了（收购而来）高性能、可伸缩的WiredTiger存储引擎，使MongoDB的性能得到前所未有的提升。特别是WiredTiger存储引擎实现了文档级别的锁，这意味着如果多个客户端同时更新一个集合内的多个文档，再也不需要因为库锁而排队等待了。</p>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id36">性能提升7～10倍</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>随着MongoDB 3.0版本的发布，MongoDB在官方博客中发表了一篇性能测试报告（
+<a class="reference external" href="https://www.MongoDB.com/blog/post/performance-testing-MongoDB-30-part-1-throughput-improvements">https://www.MongoDB.com/blog/post/performance-testing-MongoDB-30-part-1-throughput-improvements</a>-
+measured-ycsb），详细对比了MongoDB 2.6和MongoDB 3.0版本的性能差别。</p>
+<p>在YCSB的测试中，MongoDB 3.0版本在多线程、批量插入场景下，比MongoDB
+2.6版本大约有7倍的增长。在95%读、5%写的场景下，MongoDB 3.0比MongoDB
+2.6版本多4倍的并发量。在50%读、50%写的场景下，MongoDB 3.0比MongoDB
+2.6版本多大约6倍的并发量。</p>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id37">存储空间最多减少80%</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB
+3.0版本新增了WiredTiger存储引擎，支持对所有的集合数据进行压缩，支持的压缩选项包括：不压缩、SnAppy压缩和Zlib压缩。</p>
+<p>SnAppy压缩和Zlib压缩的对比如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·SnAppy压缩：支持的压缩比低，但比较节省CPU资源。
+·Zlib压缩：支持的压缩比高，最高可压缩80%的文件大小，但比较消耗CPU资源。
+</pre></div>
+</div>
+<p>其中SnAppy压缩是默认的压缩方式，用户可以根据自己的需求选择合适的压缩选项。</p>
+<p>这对于广大MongoDB使用者来说是个福音，在MMAP存储引擎中，采用预分配机制分配大文件用于存放数据，drop、remove、
+compact等操作都不会释放磁盘空间，但是可以使预分配的空间重用。
+使用了MongoDB 3.0版本的压缩选项后可以节省更多的存储空间。</p>
+</section>
+<section id="id17">
+<h3><a class="toc-backref" href="#id38">运维成本最多降低95%</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>MongoDB
+2.6版本中如果用户使用了副本集、分片等集群方式，监控、备份和管理整个集群需要使用烦琐的命令。</p>
+<p>MongoDB 3.0版本的高级企业版中（MongoDB
+3.0包括社区版和高级企业版），新增了“Ops Ma
+nager”管理工具，通过里面集成的RESTful
+API和管理后台，让用户很方便地监控、备份和管理整个集群。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html" class="btn btn-neutral float-left" title="6.7. Redis—App后台高性能的缓存系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html" class="btn btn-neutral float-right" title="6.9. 架构选型的要点" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

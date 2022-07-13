@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.3. NFS共享服务器搭建 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.4. vsftpd服务安装配置" href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" />
+    <link rel="prev" title="2.2. RAID与LVM磁盘阵列" href="1.RAID%E4%B8%8ELVM%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E6%8A%80%E6%9C%AF.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID%E4%B8%8ELVM%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E6%8A%80%E6%9C%AF.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.3. NFS共享服务器搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nfs-centos7-6">2.3.1. 安装NFS服务（Centos7.6）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.3.2. nfs搭建 方式二</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98mount%E5%91%BD%E4%BB%A4.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E4%BD%BF%E7%94%A8iSCSI%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E6%9C%8D%E5%8A%A1.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E4%BD%BF%E7%94%A8Squid%E9%83%A8%E7%BD%B2%E4%BB%A3%E7%90%86%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7%E5%AE%89%E8%A3%85xrdp%28windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5linux%29.html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.%E5%9B%BD%E5%86%85%E5%B8%B8%E4%BD%BF%E7%94%A8%E7%9A%84yum%E6%BA%90%E4%BF%A1%E6%81%AF.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7%E5%AE%89%E8%A3%85VNC%EF%BC%8C%E6%89%8B%E5%8A%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E8%A3%85VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows%E4%B8%8A%E6%90%AD%E5%BB%BAyum%E6%BA%90%E7%AB%99%E7%82%B9.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.%E7%94%A8Python%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0HTTP%E5%92%8CFTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7.html">2.23. Openssh更新升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E5%AE%89%E8%A3%85.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7Supervisor%28%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%29.html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E7%9B%AE%E5%89%8D%E6%B5%81%E8%A1%8C%E7%9A%84%E5%BC%80%E6%BA%90%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%88%90rpm%E5%8C%85.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BDRPM%E5%8C%85%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E5%9F%BA%E4%BA%8EGalera_Cluster%E5%A4%9A%E4%B8%BB%E7%BB%93%E6%9E%84%E7%9A%84Mysql%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab%E5%AE%89%E8%A3%85.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D.html">2.33. Extundelete 数据恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.Openvpn%E9%83%A8%E7%BD%B2.html">2.34. Openvpn部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8%E5%AE%89%E8%A3%85Docker%E5%92%8CDocker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.CentOS8%E5%BC%80%E5%90%AFBBR%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8.html">2.36. CentOS8开启BBR/升级内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Centos7%E9%80%9A%E8%BF%87python%2Bjs%E5%AE%9E%E7%8E%B0webssh.html">2.37. Centos7通过python+js实现webssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Centos7%E9%83%A8%E7%BD%B2NTP%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%A2%83.html">2.38. Centos7部署NTP时间服务器同步环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Linux服务器架设</a> &raquo;</li>
+      <li><span class="section-number">2.3. </span>NFS共享服务器搭建</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/02.Linux服务器架设/2.NFS共享服务器搭建.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#nfs" id="id2">NFS共享服务器搭建</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nfs-centos7-6" id="id3">安装NFS服务（Centos7.6）</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id4">nfs搭建 方式二</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="nfs">
+<h1><a class="toc-backref" href="#id2"><span class="section-number">2.3. </span>NFS共享服务器搭建</a><a class="headerlink" href="#nfs" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div><p>参考文献</p>
+<p><a class="reference external" href="https://www.cnblogs.com/zhangxinqi/articles/6662953.html">NFS参考文献</a></p>
+<p><a class="reference external" href="https://ansheng.me/centos-linux-deploys-nfs-service/">CentOS
+Linux部署NFS服务</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiangsikai/p/8398433.html">https://www.cnblogs.com/xiangsikai/p/8398433.html</a></p>
+</div></blockquote>
+<section id="nfs-centos7-6">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">2.3.1. </span>安装NFS服务（Centos7.6）</a><a class="headerlink" href="#nfs-centos7-6" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>cp -rf /etc/yum.repos.d/CentOS-Base.repo{,.bak}
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo   #更换阿里源国内源
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo           #改为aliyun的epel源,先备份epel本身的源
+yum clean all
+yum makecache
+yum -y install nfs*
+
+[root@bogon yum.repos.d]# mkdir /data
+
+[root@bogon yum.repos.d]# cat /etc/exports
+/data/ *(rw,no_root_squash,no_all_squash,sync)
+
+
+
+第一列/data/表示需要共享的目录。
+IP 表示允许哪个客户端访问。
+IP 后括号里的设置表示对该共享文件的权限。
+ro 只读访问
+rw 读写访问
+sync 所有数据在请求时写入共享
+all_squash 共享文件的 UID 和 GID 映射匿名用户 anonymous，适合
+公用目录。
+no_all_squash 保留共享文件的 UID 和 GID（默认）
+root_squash root 用户的所有请求映射成如anonymous 用户一样的权限（默认）
+no_root_squash root 用户具有根目录的完全管理访问权限
+
+Linux 客户端，如何想使用这个 NFS 文件系统，需要在客户端挂载，挂载命令为：
+# 挂载前需要安装
+yum install nfs-utils
+mount -t nfs 192.168.1.103:/data/ /mnt
+
+即可。
+
+
+如果有报错根据错误信息排查。常见问题有 rpc 服务没有启动、防火墙没关闭、selinux
+未关闭等问题
+
+
+
+[root@bogon yum.repos.d]# service nfs restart
+Redirecting to /bin/systemctl restart nfs.service
+
+#查看nfs共享的内容
+[root@bogon yum.repos.d]# exportfs
+/data           &lt;world&gt;
+
+#或者
+[root@bogon ~]# showmount --exports
+Export list for bogon:
+/data *
+
+
+
+[root@bogon yum.repos.d]# setenforce 0
+[root@bogon yum.repos.d]# sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/&quot; /etc/selinux/config
+
+#关闭防火墙
+t@bogon yum.repos.d]# systemctl stop firewalld.service
+[root@bogon yum.repos.d]# systemctl disable firewalld
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">2.3.2. </span>nfs搭建 方式二</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>NFS：Network File System
+
+功能也就是能把远程网络的文件挂载到NFS Server上，在Server上看来，客户端的挂载的目录就像自己的子目录一样，可以对它操作。所以，对于嵌入式系统的调试是很方便的。
+
+NFS支持的功能很多，所以对应的端口号是不固定的，是随机分配的，但都是小于1024。那么客户机是怎么连接到NFS Server上去的呢？这里有一个RPC的东西来支持。
+RPC：（Remote Procedure Call Protocol）
+
+远程过程调用协议，它是一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。RPC协议假定某些传输协议的存在，如TCP或UDP，为通信程序之间携带信息数据。在OSI网络通信模型中，RPC跨越了传输层和应用层。RPC使得开发包括网络分布式多程序在内的应用程序更加容易。RPC采用客户机/服务器模式。请求程序就是一个客户机，而服务提供程序就是一个服务器。首先，客户机调用进程发送一个有进程参数的调用信息到服务进程，然后等待应答信息。在服务器端，进程保持睡眠状态直到调用信息的到达为止。当一个调用信息到达，服务器获得进程参数，计算结果，发送答复信息，然后等待下一个调用信息，最后，客户端调用进程接收答复信息，获得进程结果，然后调用执行继续进行。
+
+RPC在NFS搭建过程钟的功能就是在Server上分配端口号，可以让客户端能从远程连接上Server。RPC固定采用111端口监听。
+
+所以整个NFS实现的过程就是：
+
+    Client向服务器的RPC（port 111）发出请求
+    服务器注册好端口，把端口信息传回客户端
+    客户端知道正确的端口后，可以连接NFS daemon
+
+
+NFS 安装：nfs-utils(主要NFS功能) portmap(RPC 端口分配)
+
+可以先rpm -qa | grep xxx 查看下，若不存在则安装！
+
+vim /etc/exports    # 在这里可以对客户端各种权限的设置
+
+/tmp *(rw,no_root_squash)   # 允许任何IP挂载/tmp目录
+
+NFS 启动
+/etc/init.d/portmap start   # portmap启动
+/etc/init.d/nfs start       # nfs启动
+service nfs reload          # 重新加载exports
+
+netstat -tunl | grep &quot;111&quot;      # 查看portmap有没有启动
+chkconfig –list | grep &quot;nfs&quot;    # 查看nfs服务是否启动
+showmount -e localhost          # 查看本地共享文件系统
+
+
+NFS文件挂载
+mount -t nfs 127.0.0.1:/tmp /mnt           # 进入/mnt查看
+mount -t nfs 10.0.0.3:/tmp  /data/img      # 远程网络挂载
+
+
+
+/etc/exports 权限说明
+
+/tmp         192.168.100.0/24(ro)   localhost(rw)   *.ev.ncku.edu.tw(ro,sync)
+[分享目路]   [第一部主機(權限)]     [可用主機名]    [可用萬用字元]
+
+rw    ro
+sync  async
+no_root_squash  root_squash
+all_squash
+anonuid  anongid
+
+
+/tmp          *(rw,no_root_squash)
+/home/public  192.168.100.0/24(rw)    *(ro)
+/home/test    192.168.100.10(rw)
+/home/linux   *.centos.vbird(rw,all_squash,anonuid=45,anongid=45)
+
+
+
+
+# 依赖rpc服务通信 portmap 或 rpcbind
+yum install nfs-utils portmap    # centos5安装
+yum install nfs-utils rpcbind    # centos6安装
+
+vim /etc/exports                 # 配置文件
+/data/images 10.10.10.10(rw,sync,no_root_squash)
+
+service  portmap restart         # 重启centos5的nfs依赖的rpc服务
+service  rpcbind restart         # 重启centos6的nfs依赖的rpc服务
+service  nfs restart             # 重启nfs服务  确保依赖 portmap 或 rpcbind 服务已启动
+/etc/init.d/nfs reload           # 重载NFS服务配置文件
+showmount -e                     # 服务端查看自己共享的服务
+showmount -a                     # 显示已经与客户端连接上的目录信息
+showmount -e 110.10.10.3         # 列出服务端可供使用的NFS共享  客户端测试能否访问nfs服务
+mount -t nfs 10.10.10.3:/data/images/  /data/img   # 挂载nfs
+
+# 服务端的 portmap 或 rpcbind 被停止后，nfs仍然工作正常，但是umout财会提示： not found / mounted or server not reachable  重启服务器的portmap 或 rpcbind 也无济于事。 nfs也要跟着重启，否则nfs工作仍然是不正常的。会造成NFS客户端挂载不正常，df卡住和挂载目录无法访问。需要强制卸载后，重新挂载
+umount -f /data/img/             # 强制卸载挂载目录  如还不可以  umount -l /data/img/
+</pre></div>
+</div>
+<p>NFS客户端的设定</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">nfs</span><span class="o">-</span><span class="n">utils</span>
+<span class="n">systemctl</span> <span class="n">start</span> <span class="n">rpcbind</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">rpcbind</span>
+</pre></div>
+</div>
+<p>为保证客户端能正常连接，如果NFS服务器上开启了防火墙，最好关闭防火墙服务。执行如下操作，关闭防火墙。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">stop</span> <span class="n">firewalld</span>
+<span class="n">systemctl</span> <span class="n">disable</span> <span class="n">firewalld</span>
+</pre></div>
+</div>
+<p>（1）查看NFS 服务器端提供的服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>要查看NFS服务器提供了哪些NFS服务，可以使用showmount命令，使用方法如下。
+showmount  [-ea]
+
+
+各个选项含义如下。
+ -e：此选项后面一般跟NFS服务器的主机地址，显示NFS服务器当前已经导出的目录。
+ -a：在NFS服务器上使用时，这个参数后面无须跟参数。如果在NFS客户端使用，后面须跟上NFS服务器的主机地址，用来显示已经挂载到NFS共享目录的客户端主机信息。
+</pre></div>
+</div>
+<p>（2）挂载共享资源
+客户端要使用NFS服务器提供的共享资源，使用mount命令挂载就可以了。</p>
+<p>挂载格式如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mount -t nfs Hostname(orIP):/directory  /mountpoint
+其中，各个选项的含义如下。
+
+
+Hostname：用来指定NFS服务器的地址，可以是IP地址或主机名。
+/directory：表示NFS服务器共享的目录资源。
+/mountpoint：表示客户端主机指定的挂载点。通常是一个空目录。
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="1.RAID%E4%B8%8ELVM%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E6%8A%80%E6%9C%AF.html" class="btn btn-neutral float-left" title="2.2. RAID与LVM磁盘阵列" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-right" title="2.4. vsftpd服务安装配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

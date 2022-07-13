@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. Python利用sphinx构建个人博客 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.2. 觅道文档-私有云文档部署手册" href="2.%E8%A7%85%E9%81%93%E6%96%87%E6%A1%A3-%E7%A7%81%E6%9C%89%E4%BA%91%E6%96%87%E6%A1%A3%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.html" />
+    <link rel="prev" title="2. 构建写书博客" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 构建写书博客</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. Python利用sphinx构建个人博客</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1.1. 1.基础概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.1.2. 2.流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.1.3. 3.实施部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#githubread-the-docs">2.1.4. 4.关联github和read the docs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.5. 5.参考文献1</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.1.6. 6.参考文献2</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.%E8%A7%85%E9%81%93%E6%96%87%E6%A1%A3-%E7%A7%81%E6%9C%89%E4%BA%91%E6%96%87%E6%A1%A3%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.html">2.2. 觅道文档-私有云文档部署手册</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>构建写书博客</a> &raquo;</li>
+      <li><span class="section-number">2.1. </span>Python利用sphinx构建个人博客</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/02.构建自己的写书博客/1.Python利用sphinx构建个人博客.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#pythonsphinx" id="id6">Python利用sphinx构建个人博客</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id7">1.基础概念</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id8">2.流程</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id9">3.实施部署</a></p></li>
+<li><p><a class="reference internal" href="#githubread-the-docs" id="id10">4.关联github和read the docs</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">5.参考文献1</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id12">6.参考文献2</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="pythonsphinx">
+<h1><a class="toc-backref" href="#id6"><span class="section-number">2.1. </span>Python利用sphinx构建个人博客</a><a class="headerlink" href="#pythonsphinx" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">2.1.1. </span>1.基础概念</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>利用sphinx+pandoc+github+readthedocs构建个人博客</p>
+<ul class="simple">
+<li><p>Sphinx：
+是一个基于ReStructuredText的文档生成工具，可以令人轻松的撰写出清晰且优美的文档,
+由Georg
+Brandl在BSD许可证下开发。新版的Python文档就是由Sphinx生成的，并且它已成为Python项目首选的文档工具，同时它对C/C++项目也有很好的支持；并计划对其它开发语言添加特殊支持。</p></li>
+<li><p>Read the
+Docs是一个在线文档托管服务，可以从各种版本控制系统中导入文档。支持webhooks，当你提交代码时，文档将被自动构建。</p></li>
+<li><p>Pandoc：pandoc是一款开源转换工具，可以实现常见的格式转换。支持全平台操作，以命令行的方式进行转换。</p></li>
+</ul>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">2.1.2. </span>2.流程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>Sphinx + GitHub + ReadtheDocs 作为一个文档写作工具，利用pandoc文本转换，
+用Sphinx生成文档，GitHub托管文档，再导入到
+ReadtheDocs。我们可以使用这个工具写文档、记笔记等。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.1.3. </span>3.实施部署</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>3.1 安装环境</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 此处利用的centos7.4 系统默认python版本2.7</span>
+$ cat /etc/redhat-release
+CentOS Linux release <span class="m">7</span>.3.1611 <span class="o">(</span>Core<span class="o">)</span>
+
+$ python --version
+Python <span class="m">2</span>.7.5
+<span class="c1"># 需要安装git</span>
+</pre></div>
+</div>
+<p>3.2 pip 安装sphinx环境</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ python -m pip install --upgrade pip
+$ pip install sphinx sphinx-autobuild sphinx_rtd_theme
+$ pip install recommonmark
+</pre></div>
+</div>
+<p>​ 3.3 初始化项目</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ mkdir /mywike <span class="o">&amp;&amp;</span> <span class="nb">cd</span> /mywiki
+sphinx-quickstart                 <span class="c1"># 执行初始化，以下为自己输入，其他可按照默认直接回车</span>
+&gt; Separate <span class="nb">source</span> and build directories <span class="o">(</span>y/n<span class="o">)</span> <span class="o">[</span>n<span class="o">]</span>: y    <span class="c1"># 创建source目录</span>
+&gt; Project name: KaliArch SHELL BLOG         <span class="c1"># 项目名称</span>
+&gt; Author name<span class="o">(</span>s<span class="o">)</span>: KaliArch                  <span class="c1"># 作者名称</span>
+&gt; Project release <span class="o">[]</span>: <span class="m">1</span>.0
+</pre></div>
+</div>
+<p>​</p>
+<p>3.4 目录结构</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ tree
+.
+├── build           <span class="c1">#文件夹，当你执行make html的时候，生成的html静态文件都存放在这里</span>
+├── make.bat
+├── Makefile        <span class="c1">#编译文件用 make 命令时，可以使用这些指令来构建文档输出</span>
+└── <span class="nb">source</span>          <span class="c1">#文件夹，文档源文件全部应全部放在source根目录下</span>
+├── conf.py     <span class="c1">#Sphinx 的配置文件</span>
+├── index.rst
+├── _static
+└── _templates
+</pre></div>
+</div>
+<p>3.5 修改配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 开启sys和os模块</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span>
+
+<span class="c1"># 配置主题</span>
+<span class="n">html_theme</span> <span class="o">=</span> <span class="s1">&#39;alabaster&#39;</span>
+
+<span class="c1"># 支持LaTeX</span>
+<span class="c1"># 支持中文检索</span>
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;chinese_search&#39;</span><span class="p">]</span>
+
+<span class="n">source_suffix</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;.rst&#39;</span><span class="p">,</span> <span class="s1">&#39;.md&#39;</span><span class="p">]</span>
+
+<span class="n">由于修改模板较麻烦可以直接git</span> <span class="n">clone我的模板进行简单修改即可</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>config.py文件是关键，此文件可以参考如下:</p>
+<p><a class="reference external" href="https://github.com/redhatxl/kaliarchblog/blob/master/source/conf.py">https://github.com/redhatxl/kaliarchblog/blob/master/source/conf.py</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/qq_26848099/article/details/83583612">https://blog.csdn.net/qq_26848099/article/details/83583612</a></p>
+</div></blockquote>
+<p>3.6 安装第三方模块</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ yum install python-devel
+<span class="c1"># 如果报错可能由于下载超时，重新执行即可。</span>
+$ pip install -r requirements.txt -i https://pypi.douban.com/simple/
+</pre></div>
+</div>
+<p>3.7 利用pandoc安装</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># pandoc下载地址</span>
+$ <span class="nb">cd</span> /usr/local
+$ wget -c https://github.com/jgm/pandoc/releases/download/2.2.3.2/pandoc-2.2.3.2-linux.tar.gz
+$ ln -sv pandoc-2.2.3.2 pandoc
+$ <span class="nb">echo</span> <span class="s2">&quot;export PATH=\$PATH:/usr/local/pandoc/bin&quot;</span> &gt;/etc/profile.d/pandoc.sh
+$ <span class="nb">source</span> /etc/profile.d/pandoc.sh
+</pre></div>
+</div>
+<p>3.8 利用pandoc转换文件
+利用pandoc将之前的markdown格式的博客源文件转换成rst格式</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ pandoc -s -t rst --toc markdown.md -o index.rst
+$ pandoc -s -t rst --toc myshell-note.md -o myshell-note.rst
+
+$ ls
+conf.py  index.rst  myshell-note.md  myshell-note.rst  _static  _templates
+
+编辑index.rst,进行引用文件
+
+.. toctree::
+   :maxdepth: <span class="m">3</span>
+   :caption: Contents:
+
+   myshell-note
+</pre></div>
+</div>
+<p>3.9 编译生成html文件</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> /mywiki
+$ make html    <span class="c1"># 生成网页文件</span>
+
+$ ls build/
+doctrees  html
+</pre></div>
+</div>
+</section>
+<section id="githubread-the-docs">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">2.1.4. </span>4.关联github和read the docs</a><a class="headerlink" href="#githubread-the-docs" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>readthedocs登陆地址</p>
+<p><a class="reference external" href="https://readthedocs.org/">https://readthedocs.org/</a></p>
+</div></blockquote>
+<p>如果没有readthedocs账号可以通过github账号登陆 <img alt="image1" src="../../_images/import_read1.png" /> <img alt="image2" src="../../_images/import_read2.png" /> <img alt="image3" src="../../_images/import_read3.png" /></p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">2.1.5. </span>5.参考文献1</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>如何用Sphinx 、GitHub 、ReadtheDocs、搭建写书环境</p>
+<p><a class="reference external" href="https://wtf.readthedocs.io/en/latest/index.html">https://wtf.readthedocs.io/en/latest/index.html</a></p>
+<p>使用Sphinx + reST编写文档</p>
+<p><a class="reference external" href="https://www.cnblogs.com/zzqcn/p/5096876.html#_label3_0">https://www.cnblogs.com/zzqcn/p/5096876.html#_label3_0</a></p>
+</div></blockquote>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">2.1.6. </span>6.参考文献2</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p><a class="reference external" href="https://www.cnblogs.com/jonnyan/p/14207711.html">https://www.cnblogs.com/jonnyan/p/14207711.html</a></p>
+<p>ReadTheDocs搭建第一本电子书</p>
+<p><a class="reference external" href="https://zhuanlan.zhihu.com/p/388640347">https://zhuanlan.zhihu.com/p/388640347</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/techfield/article/details/83031177">https://blog.csdn.net/techfield/article/details/83031177</a></p>
+<p>参考链接： <a class="reference external" href="https://i4t.com/3587.html">https://i4t.com/3587.html</a>
+<a class="reference external" href="https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html">https://docs.readthedocs.io/en/stable/intro/getting-started-with-sphinx.html</a></p>
+<p><a class="reference external" href="https://sphinxguide.readthedocs.io/en/latest/sphinx_basics/settings.html">https://sphinxguide.readthedocs.io/en/latest/sphinx_basics/settings.html</a></p>
+<p>参考文献</p>
+<p><a class="reference external" href="https://blog.csdn.net/u010386121/article/details/83274964">https://blog.csdn.net/u010386121/article/details/83274964</a></p>
+<p>相关示例</p>
+<p><a class="reference external" href="https://github.com/opendevops-cn/opendevops">https://github.com/opendevops-cn/opendevops</a></p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="2. 构建写书博客" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.%E8%A7%85%E9%81%93%E6%96%87%E6%A1%A3-%E7%A7%81%E6%9C%89%E4%BA%91%E6%96%87%E6%A1%A3%E9%83%A8%E7%BD%B2%E6%89%8B%E5%86%8C.html" class="btn btn-neutral float-right" title="2.2. 觅道文档-私有云文档部署手册" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

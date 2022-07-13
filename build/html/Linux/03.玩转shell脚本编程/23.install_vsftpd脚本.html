@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.23. install_vsftpd_or_nfs脚本 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.24. install_mysql5.7" href="24.install_mysql5.7.html" />
+    <link rel="prev" title="3.22. 自动Autoinstall_ELK_V1.3脚本" href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">3.1. 1 基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html">3.2. 2 字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html">3.3. 3 运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html">3.4. 4 流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html">3.5. 5 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">3.6. 6 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html">3.7. 7 三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html">3.8. 8 三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html">3.9. 9 三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html">3.10. shell技巧与杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85zabbix%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85cacti%E8%84%9A%E6%9C%AC.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85MongoDB%E8%84%9A%E6%9C%AC.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.%E5%A4%87%E4%BB%BDMongoDB%E8%84%9A%E6%9C%AC.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85memcached%E8%84%9A%E6%9C%AC.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system%E6%A3%80%E6%B5%8B%E8%84%9A%E6%9C%AC.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.%E5%AE%89%E8%A3%85tomcat%E8%84%9A%E6%9C%AC.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper%E8%84%9A%E6%9C%AC.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch%E8%84%9A%E6%9C%AC.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.23. install_vsftpd_or_nfs脚本</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#auto-config-vsftpd-sh">3.23.4. auto_config_vsftpd.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6shell%E8%84%9A%E6%9C%AC.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%BF%AE%E6%94%B9IP_%E4%B8%BB%E6%9C%BA%E5%90%8D_%E7%BD%91%E5%8D%A1%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E6%A3%80%E6%9F%A5%E6%81%B6%E6%84%8FIP%E7%99%BB%E5%BD%95%EF%BC%8C%E6%8B%92%E7%BB%9DSSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html">3.30. 数据库备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6%E5%BC%80%E6%9C%BA%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python%E6%A3%80%E6%B5%8Bip%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BDMongodb%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0FTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Docker%E8%84%9A%E6%9C%AC.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.%E7%94%A8if%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.%E4%BD%BF%E7%94%A8while%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.%E4%BD%BF%E7%94%A8until%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E8%84%9A%E6%9C%AC.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html">3.52. 老男孩Shell编程实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#define-var">3.53. define var</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html">3.54. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC%E5%A4%A7%E5%85%A8.html">3.55. 常用shell脚本大全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E7%BC%96%E5%86%99Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html">3.56. 编写Shell脚本的最佳实践</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>玩转shell脚本编程</a> &raquo;</li>
+      <li><span class="section-number">3.23. </span>install_vsftpd_or_nfs脚本</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/03.玩转shell脚本编程/23.install_vsftpd脚本.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#install-vsftpd-or-nfs" id="id1">install_vsftpd_or_nfs脚本</a></p>
+<ul>
+<li><p><a class="reference internal" href="#install-vsftpd-sh" id="id2">install_vsftpd.sh</a></p></li>
+<li><p><a class="reference internal" href="#install-nsf-sh" id="id3">install_nsf.sh</a></p></li>
+<li><p><a class="reference internal" href="#vsftp" id="id4">vsftp主动和被动模式脚本</a></p></li>
+<li><p><a class="reference internal" href="#auto-config-vsftpd-sh" id="id5">auto_config_vsftpd.sh</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="install-vsftpd-or-nfs">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">3.23. </span>install_vsftpd_or_nfs脚本</a><a class="headerlink" href="#install-vsftpd-or-nfs" title="Permalink to this headline">¶</a></h1>
+<section id="install-vsftpd-sh">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">3.23.1. </span>install_vsftpd.sh</a><a class="headerlink" href="#install-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:xxx.sh</span>
+
+<span class="c1">#VAR Set</span>
+<span class="nv">IP_INFO</span><span class="o">=</span><span class="k">$(</span>/usr/sbin/ifconfig<span class="p">|</span> grep inet<span class="p">|</span>sed 1q<span class="p">|</span>awk <span class="s1">&#39;{print $2}&#39;</span><span class="k">)</span>
+<span class="c1">#Server=$(ps -ef| grep vsftpd | grep -v &quot;grep&quot;|wc -l)</span>
+<span class="nv">CONF_FILE</span><span class="o">=</span><span class="sb">`</span>rpm -qc vsftpd<span class="p">|</span>more<span class="p">|</span> grep vsftpd.conf<span class="sb">`</span>
+<span class="nv">Save_text</span><span class="o">=</span><span class="s2">&quot;user.txt&quot;</span>
+<span class="nv">DATE</span><span class="o">=</span><span class="k">$(</span>date +%F_%T<span class="k">)</span>
+
+<span class="k">function</span> Base_init <span class="o">{</span>
+<span class="c1">#close selinux</span>
+<span class="nb">echo</span> <span class="s2">&quot;Close selinux.......&quot;</span>
+setenforce <span class="m">0</span> <span class="p">&amp;</span>&gt;/dev/null
+sed -i <span class="s2">&quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;</span> /etc/selinux/config
+systemctl stop firewalld.service
+systemctl disable firewalld.service
+<span class="o">}</span>
+
+
+<span class="k">function</span> unstall_vsftpd <span class="o">{</span>
+    <span class="c1"># unstall vsftpd</span>
+    rpm -qa<span class="p">|</span>grep vsftpd <span class="p">|</span> xargs rpm -e --nodeps <span class="p">&amp;</span>&gt; /dev/null
+    rm -rf /etc/vsftpd/*
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m begin uninstall vsftpd.....！\033[0m&quot;</span>
+    <span class="k">for</span> <span class="o">((</span> <span class="nv">VAR</span><span class="o">=</span><span class="m">0</span><span class="p">;</span> VAR&lt;<span class="o">=</span><span class="m">20</span><span class="p">;</span> VAR++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span> sleep <span class="m">0</span>.1<span class="p">;</span><span class="nb">echo</span> -n <span class="s2">&quot;#&quot;</span><span class="p">;</span><span class="k">done</span>
+    <span class="nb">echo</span>
+<span class="o">}</span>
+
+
+<span class="k">function</span> install_vsftpd <span class="o">{</span>
+
+<span class="c1">#install vsftpd</span>
+/usr/bin/yum -y install vsftpd*
+
+<span class="c1"># config_file_fix</span>
+<span class="nb">echo</span> <span class="s2">&quot;vsftpd conf file is -----------&gt;  </span><span class="nv">$CONF_FILE</span><span class="s2">&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;backup </span><span class="nv">$CONF_FILE</span><span class="s2">  --------&gt; </span><span class="si">${</span><span class="nv">CONF_FILE</span><span class="si">}</span><span class="s2">.bak&quot;</span>
+cp -rf <span class="nv">$CONF_FILE</span><span class="o">{</span>,.bak<span class="o">}</span>
+
+<span class="k">if</span> systemctl <span class="nb">enable</span> vsftpd.service <span class="p">&amp;</span>&gt;/dev/null<span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;设置开机自动启动vsftpd服务..... OK&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;设置开机自动启动vsftpd服务..... fail...&quot;</span>
+<span class="k">fi</span>
+
+
+
+<span class="k">if</span> systemctl start vsftpd.service <span class="p">&amp;</span>&gt;/dev/null<span class="p">;</span><span class="k">then</span>
+   <span class="nb">echo</span> <span class="s2">&quot;启动vsftpd服务..... OK&quot;</span>
+<span class="k">else</span>
+   <span class="nb">echo</span> <span class="s2">&quot;启动vsftpd服务..... fail ...&quot;</span>
+<span class="k">fi</span>
+
+<span class="o">}</span>
+
+
+<span class="k">function</span> echo_color <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&quot;green&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m</span><span class="nv">$2</span><span class="s2">\033[0m&quot;</span>
+    <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&quot;red&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m</span><span class="nv">$2</span><span class="s2">\033[0m&quot;</span>
+    <span class="k">elif</span> <span class="o">[[</span> <span class="nv">$1</span> <span class="o">==</span> <span class="s2">&quot;yellow&quot;</span> <span class="o">]]</span><span class="p">;</span><span class="k">then</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33m</span><span class="nv">$2</span><span class="s2">\033[0m&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m</span><span class="nv">$1</span><span class="s2">\033[0m&quot;</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="k">function</span> conf_file_fix <span class="o">{</span>
+    <span class="nb">echo</span>
+    <span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;开始配置config文件&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------------------&quot;</span>
+    <span class="nb">echo</span>
+<span class="o">}</span>
+
+
+<span class="k">function</span> Restart_ftp <span class="o">{</span>
+echo_color <span class="s2">&quot;配置完毕，重启vsftpd服务.....&quot;</span>
+systemctl restart vsftpd
+<span class="k">if</span> <span class="nb">test</span> <span class="nv">$?</span> -eq <span class="m">0</span><span class="p">;</span> <span class="k">then</span>
+    echo_color <span class="s2">&quot;vsftpd重启完毕...........&quot;</span>
+    echo_color yellow <span class="s2">&quot;请访问:  ftp://</span><span class="si">${</span><span class="nv">IP_INFO</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+    echo_color red <span class="s2">&quot;vsftpd启动失败.....&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="k">function</span> Anonymous <span class="o">{</span>
+
+<span class="c1"># 先检测是否安装vsftpd，如果安装，卸载掉之后重新安装</span>
+<span class="k">if</span> rpm -qa<span class="p">|</span>grep vsftpd &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m It was detected that vsftpd was installed.！\033[0m&quot;</span>
+    unstall_vsftpd
+<span class="k">fi</span>
+install_vsftpd
+
+
+<span class="nb">local</span> <span class="nv">PUB_dir</span><span class="o">=</span><span class="s2">&quot;/var/ftp/pub&quot;</span>
+
+<span class="k">if</span> <span class="o">[</span> ! -d <span class="nv">$PUB_dir</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    mkdir -p <span class="nv">$PUB_dir</span>
+<span class="k">fi</span>
+
+conf_file_fix
+echo_color green <span class="s2">&quot;vsftp的匿名用户上传下载目录为: </span><span class="nv">$PUB_dir</span><span class="s2">&quot;</span>
+chown -R ftp /var/ftp/pub/
+chmod <span class="m">755</span> /var/ftp/pub/
+
+cat &gt;<span class="si">${</span><span class="nv">CONF_FILE</span><span class="si">}</span> <span class="s">&lt;&lt;EOF</span>
+<span class="s">anonymous_enable=YES</span>
+<span class="s">anon_umask=022</span>
+<span class="s">anon_mkdir_write_enable=YES</span>
+<span class="s">anon_upload_enable=YES</span>
+<span class="s">anon_other_write_enable=YES</span>
+<span class="s">local_enable=YES</span>
+<span class="s">write_enable=YES</span>
+<span class="s">local_umask=022</span>
+<span class="s">dirmessage_enable=YES</span>
+<span class="s">xferlog_enable=YES</span>
+<span class="s">connect_from_port_20=YES</span>
+<span class="s">xferlog_std_format=YES</span>
+<span class="s">anon_upload_enable=YES</span>
+<span class="s">anon_other_write_enable=YES</span>
+<span class="s">listen=NO</span>
+<span class="s">listen_ipv6=YES</span>
+<span class="s">pam_service_name=vsftpd</span>
+<span class="s">userlist_enable=YES</span>
+<span class="s">tcp_wrappers=YES</span>
+<span class="s">EOF</span>
+Restart_ftp
+
+
+<span class="o">}</span>
+
+
+<span class="k">function</span> check_pass <span class="o">{</span>
+echo_color green <span class="s2">&quot;请输入密码：&quot;</span>
+<span class="nb">read</span> -s passwd
+<span class="k">if</span> <span class="o">[</span> -n <span class="s2">&quot;</span><span class="nv">$passwd</span><span class="s2">&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    echo_color green <span class="s2">&quot;密码设置成功，密码为:</span><span class="nv">$passwd</span><span class="s2">&quot;</span>
+<span class="k">else</span>
+    echo_color red <span class="s2">&quot;密码设置错误......&quot;</span>
+    check_pass
+<span class="k">fi</span>
+
+<span class="o">}</span>
+
+
+<span class="k">function</span> add_user <span class="o">{</span>
+<span class="nv">label</span><span class="o">=</span><span class="m">1</span>
+<span class="k">while</span> <span class="o">[[</span> <span class="nv">$label</span> <span class="o">==</span> <span class="m">1</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">read</span> -p <span class="s2">&quot;输入用户名：&quot;</span> name
+    <span class="k">if</span> /usr/sbin/useradd <span class="nv">$name</span> <span class="p">&amp;</span>&gt;/dev/null <span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;创建用户 </span><span class="nv">$name</span><span class="s2"> 成功...&quot;</span>
+        check_pass
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$passwd</span><span class="s2">&quot;</span> <span class="p">|</span> passwd --stdin <span class="nv">$name</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+            <span class="nb">echo</span>  -e <span class="s2">&quot;您创建的用户为 </span><span class="nv">$name</span><span class="s2"> \t 密码为 </span><span class="nv">$passwd</span><span class="s2">&quot;</span>
+            <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="nv">$name</span><span class="s2"> \t </span><span class="nv">$passwd</span><span class="s2">&quot;</span> &gt;&gt; <span class="nv">$Save_text</span>
+        <span class="k">fi</span>
+        <span class="nb">echo</span> <span class="s2">&quot;是否退出,y退出，n继续？【y|n】&quot;</span>
+        <span class="nb">read</span>  -p <span class="s2">&quot;Please input ：&quot;</span> input
+            <span class="k">if</span> <span class="o">[[</span> <span class="nv">$input</span> <span class="o">==</span> <span class="s2">&quot;y&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+                <span class="nb">echo</span> <span class="s2">&quot;用户名和密码保存在 </span><span class="nv">$Save_text</span><span class="s2"> 文件中......&quot;</span>
+                <span class="nv">label</span><span class="o">=</span><span class="m">2</span>
+            <span class="k">fi</span>
+    <span class="k">else</span>
+        echo_color red <span class="s2">&quot;用户已经存在.....&quot;</span>
+    <span class="k">fi</span>
+<span class="k">done</span>
+
+
+<span class="c1"># chomod 777 dir</span>
+cat <span class="nv">$Save_text</span><span class="p">|</span><span class="k">while</span> <span class="nb">read</span> line<span class="p">;</span> <span class="k">do</span>
+    <span class="nv">user_info</span><span class="o">=</span><span class="nv">$line</span><span class="p">|</span>awk <span class="s1">&#39;{print $1}&#39;</span>
+    chmod -R <span class="m">777</span> /home/<span class="nv">$user_info</span>
+<span class="k">done</span>
+
+<span class="o">}</span>
+
+
+<span class="k">function</span>  System_user_config <span class="o">{</span>
+touch /etc/vsftpd/chroot_list
+conf_file_fix
+cat &gt; <span class="nv">$CONF_FILE</span> &lt;&lt;-<span class="s2">&quot;EOF&quot;</span>
+<span class="nv">anonymous_enable</span><span class="o">=</span>NO
+<span class="nv">local_enable</span><span class="o">=</span>YES
+<span class="nv">write_enable</span><span class="o">=</span>YES
+<span class="nv">local_umask</span><span class="o">=</span><span class="m">022</span>
+<span class="nv">dirmessage_enable</span><span class="o">=</span>YES
+<span class="nv">xferlog_enable</span><span class="o">=</span>YES
+<span class="nv">connect_from_port_20</span><span class="o">=</span>YES
+<span class="nv">xferlog_std_format</span><span class="o">=</span>YES
+<span class="nv">ascii_upload_enable</span><span class="o">=</span>YES
+<span class="nv">ascii_download_enable</span><span class="o">=</span>YES
+<span class="nv">chroot_local_user</span><span class="o">=</span>YES
+<span class="nv">chroot_list_enable</span><span class="o">=</span>YES
+<span class="nv">chroot_list_file</span><span class="o">=</span>/etc/vsftpd/chroot_list
+<span class="nv">listen</span><span class="o">=</span>NO
+<span class="nv">listen_ipv6</span><span class="o">=</span>YES
+<span class="nv">pam_service_name</span><span class="o">=</span>vsftpd
+<span class="nv">userlist_enable</span><span class="o">=</span>YES
+<span class="nv">tcp_wrappers</span><span class="o">=</span>YES
+<span class="nv">allow_writeable_chroot</span><span class="o">=</span>YES
+EOF
+
+<span class="k">for</span> <span class="o">((</span> <span class="nv">VAR</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span> VAR &lt;<span class="m">20</span><span class="p">;</span> ++VAR <span class="o">))</span><span class="p">;</span> <span class="k">do</span> sleep <span class="m">0</span>.2<span class="p">;</span> <span class="nb">echo</span> -n <span class="s2">&quot;#&quot;</span><span class="p">;</span><span class="k">done</span>
+echo_color <span class="s2">&quot;开始重启Vsftpd服务......&quot;</span>
+Restart_ftp
+
+cat <span class="nv">$Save_text</span> <span class="p">|</span>awk -F<span class="s2">&quot; &quot;</span> <span class="s1">&#39;{print &quot;用户名：&quot;$1,&quot;密码：&quot;$2}&#39;</span>
+
+<span class="o">}</span>
+
+
+<span class="k">function</span> System_user_memu <span class="o">{</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;请问是新增系统用户还是修改配置文件支持系统用户登录？&quot;</span>
+<span class="nb">echo</span>
+<span class="nb">echo</span> <span class="s2">&quot;1.新增系统用户,使用新增的用户访问&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;2.修改配置文件支持系统用户用户名/密码登录，使用系统自带的用户访问&quot;</span>
+<span class="nb">echo</span>
+<span class="nb">read</span> -p <span class="s2">&quot;输入choice：&quot;</span> choice
+
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$choice</span><span class="s2">&quot;</span> <span class="k">in</span>
+<span class="m">1</span><span class="o">)</span>
+    add_user
+    System_user_config
+   <span class="p">;;</span>
+<span class="m">2</span><span class="o">)</span>
+    System_user_config
+   <span class="p">;;</span>
+*<span class="o">)</span>
+    echo_color red <span class="s2">&quot; Input error, re-enter......&quot;</span>
+   <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="o">}</span>
+
+
+<span class="k">function</span> Virtual_user <span class="o">{</span>
+unstall_vsftpd
+install_vsftpd
+
+<span class="c1">#安装 FTP 虚拟用户需要用到的软件及认证模块</span>
+yum install pam* libdb-utils libdb* --skip-broken -y
+
+cat &gt; /etc/vsftpd/ftpusers.txt&lt;&lt;-<span class="s2">&quot;EOF&quot;</span>
+hujianli1
+admin#123
+hujianli2
+admin#123
+EOF
+
+<span class="c1">#查看虚拟用户信息</span>
+echo_color <span class="s2">&quot;Virtual user information is as follows&quot;</span>
+<span class="nb">local</span> <span class="nv">count</span><span class="o">=</span><span class="m">1</span>
+
+<span class="c1"># 定义数组来装vsftpd的账号</span>
+<span class="nb">declare</span> -a Account
+<span class="k">while</span> <span class="nb">read</span> LINE<span class="p">;</span> <span class="k">do</span>
+    <span class="nv">i</span><span class="o">=</span><span class="k">$((</span><span class="nv">$count</span> <span class="o">%</span><span class="m">2</span><span class="k">))</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="nv">$i</span> -eq <span class="m">1</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        echo_color <span class="s2">&quot;vsftpd登录账号：</span><span class="nv">$LINE</span><span class="s2">&quot;</span>
+        Account<span class="o">[</span><span class="nv">$count</span><span class="o">]=</span><span class="nv">$LINE</span>
+    <span class="k">else</span>
+        echo_color <span class="s2">&quot;vsftpd登录密码：</span><span class="nv">$LINE</span><span class="s2">&quot;</span>
+        <span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+        <span class="nb">echo</span>
+    <span class="k">fi</span>
+    <span class="nv">count</span><span class="o">=</span><span class="k">$((</span>count <span class="o">+</span><span class="m">1</span><span class="k">))</span>
+<span class="k">done</span> &lt;/etc/vsftpd/ftpusers.txt
+
+<span class="nb">local</span> <span class="nv">vsftp_login_DIR</span><span class="o">=</span><span class="s2">&quot;/etc/pam.d/vsftpd&quot;</span>
+sed -i <span class="s1">&#39;5 i auth  sufficient  /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login&#39;</span> <span class="nv">$vsftp_login_DIR</span>
+sed -i <span class="s1">&#39;6 i account  sufficient  /lib64/security/pam_userdb.so db=/etc/vsftpd/vsftpd_login&#39;</span> <span class="nv">$vsftp_login_DIR</span>
+
+useradd -s /sbin/nologin ftpuser
+cat &gt; <span class="nv">$CONF_FILE</span> &lt;&lt;-<span class="s2">&quot;EOF&quot;</span>
+<span class="nv">anonymous_enable</span><span class="o">=</span>NO
+<span class="nv">local_enable</span><span class="o">=</span>YES
+<span class="nv">write_enable</span><span class="o">=</span>YES
+<span class="nv">local_umask</span><span class="o">=</span><span class="m">022</span>
+<span class="nv">dirmessage_enable</span><span class="o">=</span>YES
+<span class="nv">xferlog_enable</span><span class="o">=</span>YES
+<span class="nv">connect_from_port_20</span><span class="o">=</span>YES
+<span class="nv">xferlog_file</span><span class="o">=</span>/var/log/vsftpd.log
+<span class="nv">xferlog_std_format</span><span class="o">=</span>YES
+<span class="nv">ascii_upload_enable</span><span class="o">=</span>YES
+<span class="nv">ascii_download_enable</span><span class="o">=</span>YES
+<span class="nv">listen</span><span class="o">=</span>YES
+<span class="nv">guest_enable</span><span class="o">=</span>YES
+<span class="nv">guest_username</span><span class="o">=</span>ftpuser
+<span class="nv">pam_service_name</span><span class="o">=</span>vsftpd
+<span class="nv">user_config_dir</span><span class="o">=</span>/etc/vsftpd/vsftpd_user_conf
+<span class="nv">virtual_use_local_privs</span><span class="o">=</span>YES
+EOF
+
+
+mkdir -p /etc/vsftpd/vsftpd_user_conf
+<span class="k">for</span> i <span class="k">in</span> <span class="si">${</span><span class="p">!Account[@]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+    mkdir -p /home/ftpuser/<span class="si">${</span><span class="nv">Account</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span>
+    chown -R ftpuser:ftpuser /home/ftpuser/
+
+    cat &gt;/etc/vsftpd/vsftpd_user_conf/<span class="si">${</span><span class="nv">Account</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> <span class="s">&lt;&lt;-EOF</span>
+<span class="s">local_root=/home/ftpuser/${Account[$i]}</span>
+<span class="s">write_enable=YES</span>
+<span class="s">anon_world_readable_only=YES</span>
+<span class="s">anon_upload_enable=YES</span>
+<span class="s">anon_mkdir_write_enable=YES</span>
+<span class="s">anon_other_write_enable=YES</span>
+<span class="s">EOF</span>
+<span class="k">done</span>
+
+Restart_ftp
+<span class="o">}</span>
+
+
+
+
+
+<span class="k">function</span> main <span class="o">{</span>
+Base_init
+
+<span class="nv">Flag</span><span class="o">=</span><span class="s2">&quot;&quot;</span>
+<span class="k">while</span> <span class="o">[[</span> <span class="nv">$Flag</span> <span class="o">==</span>  <span class="s2">&quot;&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">do</span>
+    echo_color  <span class="s2">&quot;---------------------------------------------------------------------------------------&quot;</span>
+    echo_color  <span class="s2">&quot;#################### Wellcom to vsftpd install memu #####################################&quot;</span>
+    echo_color  <span class="s2">&quot;---------------------------------------------------------------------------------------&quot;</span>
+
+
+cat <span class="s">&lt;&lt; EOF</span>
+<span class="s">1.匿名用户登录设置</span>
+<span class="s">2.系统用户登录配置</span>
+<span class="s">3.虚拟用户登录配置</span>
+<span class="s">4.卸载Vsftd</span>
+<span class="s">5.退出exit</span>
+<span class="s">EOF</span>
+
+<span class="nb">read</span> -p <span class="s2">&quot;Please input you choice：&quot;</span> input
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$input</span><span class="s2">&quot;</span> <span class="k">in</span>
+<span class="m">1</span><span class="o">)</span>
+    echo_color <span class="s2">&quot;安装匿名用户的vsftpd....................&quot;</span>
+    Anonymous
+    <span class="nv">Flag</span><span class="o">=</span><span class="m">1</span>
+   <span class="p">;;</span>
+<span class="m">2</span><span class="o">)</span>
+    echo_color <span class="s2">&quot;安装系统用户的vsftpd....................&quot;</span>
+    System_user_memu
+    <span class="nv">Flag</span><span class="o">=</span><span class="m">1</span>
+   <span class="p">;;</span>
+<span class="m">3</span><span class="o">)</span>
+    echo_color <span class="s2">&quot;安装虚拟用户的vsftpd....................&quot;</span>
+    Virtual_user
+    <span class="nv">Flag</span><span class="o">=</span><span class="m">1</span>
+   <span class="p">;;</span>
+<span class="m">4</span><span class="o">)</span>
+    echo_color <span class="s2">&quot;开始卸载vsftpd....................&quot;</span>
+    unstall_vsftpd
+    <span class="nv">Flag</span><span class="o">=</span><span class="m">1</span>
+   <span class="p">;;</span>
+<span class="m">5</span><span class="o">)</span>
+    echo_color <span class="s2">&quot;退出.......&quot;</span>
+    <span class="nv">Flag</span><span class="o">=</span><span class="m">1</span>
+   <span class="p">;;</span>
+*<span class="o">)</span>
+    echo_color red <span class="s2">&quot;-----------------------&quot;</span>
+    echo_color red <span class="s2">&quot;Input error, re-enter......&quot;</span>
+    echo_color red <span class="s2">&quot;-----------------------&quot;</span>
+
+   <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="k">done</span>
+<span class="o">}</span>
+
+main
+</pre></div>
+</div>
+</section>
+<section id="install-nsf-sh">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">3.23.2. </span>install_nsf.sh</a><a class="headerlink" href="#install-nsf-sh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># auto_install_nfs_server</span>
+<span class="c1"># author:hujl</span>
+
+<span class="nv">Share_DIR</span><span class="o">=</span><span class="s2">&quot;/data/&quot;</span>
+<span class="nv">IP_INFO</span><span class="o">=</span><span class="sb">`</span>/sbin/ifconfig <span class="p">|</span> grep <span class="s2">&quot;inet &quot;</span><span class="p">|</span>head -1<span class="p">|</span>awk -F<span class="s2">&quot; &quot;</span> <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+
+update_yum<span class="o">(){</span>
+
+<span class="c1"># 关闭防火墙和SELINUX</span>
+setenforce <span class="m">0</span>
+sed -i <span class="s2">&quot;s/SELINUX=enforcing/SELINUX=disabled/&quot;</span> /etc/selinux/config
+systemctl stop firewalld.service
+systemctl disable firewalld
+
+<span class="c1">#更换阿里源国内源</span>
+cp -rf /etc/yum.repos.d/CentOS-Base.repo<span class="o">{</span>,.bak<span class="o">}</span>
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+<span class="c1">#在国内安装包会很慢，可以改为aliyun的epel源,先备份epel本身的源</span>
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo  <span class="c1">#可选</span>
+<span class="c1">#生成缓存</span>
+yum clean all <span class="o">&amp;&amp;</span> yum makecache
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m network yum base update successful! \033[0m&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m network yum base update Fail!!\033[0m&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+<span class="o">}</span>
+
+install_nfs_server<span class="o">()</span> <span class="o">{</span>
+<span class="c1"># 安装NFS文件服务器</span>
+yum -y install nfs*
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m NFS_Server install successful! \033[0m&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m NFS_Server install Fail!!\033[0m&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="o">[</span> ! -d <span class="nv">$Share_DIR</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> mkdir -p <span class="nv">$Share_DIR</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$Share_DIR</span><span class="s2"> already exist！&quot;</span>
+cat &gt;&gt; /etc/exports <span class="s">&lt;&lt;EOF</span>
+<span class="s">$Share_DIR         *(rw,no_root_squash,no_all_squash,sync)</span>
+<span class="s">EOF</span>
+
+
+
+main<span class="o">(){</span>
+update_yum
+install_nfs_server
+/usr/sbin/service nfs restart
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m NFS start successful! \033[0m&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m NFS start Fail!!\033[0m&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="o">}</span>
+
+
+main
+<span class="nb">echo</span> <span class="s2">&quot;***********************************************&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;************** nfs info **********************&quot;</span>
+exportfs
+<span class="nb">echo</span> <span class="s2">&quot;***********************************************&quot;</span>
+
+<span class="nv">DIR</span><span class="o">=</span><span class="sb">`</span>showmount --exports <span class="p">|</span> awk <span class="s1">&#39;NR==2&#39;</span><span class="p">|</span>cut -d<span class="s2">&quot; &quot;</span> -f1<span class="sb">`</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;Usage method 【 mount -t nfs </span><span class="si">${</span><span class="nv">IP_INFO</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">Share_DIR</span><span class="si">}</span><span class="s2"> Local path 】&quot;</span>
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m For example: \033[0m&quot;</span>
+<span class="nb">echo</span> -e <span class="s2">&quot;Usage method 【 mount -t nfs </span><span class="si">${</span><span class="nv">IP_INFO</span><span class="si">}</span><span class="s2">:</span><span class="si">${</span><span class="nv">Share_DIR</span><span class="si">}</span><span class="s2"> /mount 】&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="vsftp">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">3.23.3. </span>vsftp主动和被动模式脚本</a><a class="headerlink" href="#vsftp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1"># author：hujianli</span>
+<span class="c1"># by:2019-10-06</span>
+<span class="c1"># use : minni install vsftpd</span>
+
+
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$#</span><span class="s2">&quot;</span> -ne <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;*****************************&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m1.vsftpd 主动模式：21端口建立连接，20端口传输数据\033[1m&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;2.vsftpd 主动模式: &gt;1024端口传输数据&quot;</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[33mUsage: bash `basename </span><span class="nv">$0</span><span class="s2">` 1 or 2\033[0m&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;*****************************&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+
+check_Root<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="k">$(</span>id -u<span class="k">)</span><span class="s2">&quot;</span> -ne <span class="m">0</span> <span class="o">]</span> <span class="p">;</span> <span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;You must run this script as root. Sorry!&quot;</span>
+        <span class="nb">exit</span> <span class="m">1</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+simple_jindutiao<span class="o">(){</span>
+    <span class="k">for</span><span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">1</span><span class="p">;</span>i&lt;<span class="o">=</span><span class="m">10</span><span class="p">;</span>i++<span class="o">))</span><span class="p">;</span><span class="k">do</span> <span class="nb">echo</span> -n <span class="s2">&quot;#&quot;</span><span class="p">;</span>sleep <span class="m">0</span>.5<span class="p">;</span><span class="k">done</span>
+    <span class="nb">echo</span>
+
+<span class="o">}</span>
+
+
+VSFTPD_initiative<span class="o">()</span> <span class="o">{</span>
+<span class="c1">#yum 安装vsftpd,如果有安装，先卸载掉</span>
+<span class="k">if</span> rpm -qa<span class="p">|</span> grep vsftpd &gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+    yum -y remove vsftpd*
+<span class="k">fi</span>
+yum -y install vsftpd*
+
+<span class="nb">local</span> <span class="nv">CONF</span><span class="o">=</span><span class="sb">`</span>rpm -qc vsftpd <span class="p">|</span> grep vsftpd.conf<span class="sb">`</span>
+cp -rf <span class="nv">$CONF</span><span class="o">{</span>,.bak<span class="o">}</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;vsftpd的配置文件如下：&quot;</span>
+<span class="c1"># 查看配置文件</span>
+rpm -ql vsftpd <span class="p">|</span> grep /etc*
+
+<span class="c1"># 启动vsftpd服务，查看进程</span>
+systemctl restart vsftpd.service
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m Start vsftp  Successful!...\033[0m&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m Start vsftp  fail!...\033[0m&quot;</span>
+<span class="k">fi</span>
+
+ps -ef<span class="p">|</span> grep vsftpd
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m begin Configure Vsftpd 主动模式.......\033[0m&quot;</span>
+
+cat &gt;<span class="nv">$CONF</span> <span class="s">&lt;&lt;EOF</span>
+<span class="s">anonymous_enable=YES</span>
+<span class="s">local_enable=YES</span>
+<span class="s">write_enable=YES</span>
+<span class="s">local_umask=022</span>
+<span class="s">dirmessage_enable=YES</span>
+<span class="s">xferlog_enable=YES</span>
+<span class="s">connect_from_port_20=YES</span>
+<span class="s">xferlog_std_format=YES</span>
+<span class="s">listen=NO</span>
+<span class="s">listen_ipv6=YES</span>
+<span class="s">pam_service_name=vsftpd</span>
+<span class="s">userlist_enable=YES</span>
+<span class="s">tcp_wrappers=YES</span>
+<span class="s">EOF</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m vsftpd 主动模式配置文件写入信息如下：\033[0m&quot;</span>
+cat <span class="s">&lt;&lt;EOF</span>
+<span class="s">anonymous_enable=YES        #开启匿名用户访问</span>
+<span class="s">local_enable=YES            # 启用本地系统用户访问</span>
+<span class="s">write_enable=YES            # 本地系统用户写入权限</span>
+<span class="s">local_umask=022             # 本地用户创建文件及目录默认权限掩码</span>
+<span class="s">dirmessage_enable=YES       # 打印目录显示信息，通常用于用户第一次访问目录时，信息提示</span>
+<span class="s">xferlog_enable=YES          # 启用上传/下载日志记录</span>
+<span class="s">connect_from_port_20=YES    # FTP使用20端口进行数据传输，主动模式</span>
+<span class="s">xferlog_std_format=YES      # 日志文件将根据xferlog的标准格式写入</span>
+<span class="s">listen=NO                   # vsftpd不以独立的服务启动，通过Xinetd服务管理，建议改成yes</span>
+<span class="s">listen_ipv6=YES             # 启用IPv6监听</span>
+<span class="s">pam_service_name=vsftpd     # 登录FTP服务器，依据/etc/pam.d/vsftpd中内容进行认证</span>
+<span class="s">userlist_enable=YES         # vsftpd.user_list 和ftpusers配置文件里用户禁止访问FTP</span>
+<span class="s">tcp_wrappers=YES            # 设置访问控制，通过该hosts.allow和/etc/hosts.deny中设置来判断是否允许访问</span>
+<span class="s">EOF</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m Restart vsftpd.......\033[0m&quot;</span>
+simple_jindutiao
+systemctl restart vsftpd.service
+<span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;\033[32mSuccessful execution！\033[0m&quot;</span> <span class="o">||</span> <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m fail execution!\033[0m&quot;</span>
+
+<span class="o">}</span>
+
+
+VSFTPD_passive<span class="o">()</span> <span class="o">{</span>
+<span class="c1">#yum 安装vsftpd,如果有安装，先卸载掉</span>
+<span class="k">if</span> rpm -qa<span class="p">|</span> grep vsftpd &gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+    yum -y remove vsftpd*
+<span class="k">fi</span>
+yum -y install vsftpd*
+
+<span class="nb">local</span> <span class="nv">CONF</span><span class="o">=</span><span class="sb">`</span>rpm -qc vsftpd <span class="p">|</span> grep vsftpd.conf<span class="sb">`</span>
+cp -rf <span class="nv">$CONF</span><span class="o">{</span>,.bak<span class="o">}</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;\033[32m vsftpd被动模式的配置文件如下：\033[0m&quot;</span>
+<span class="nb">echo</span>
+<span class="c1"># 查看配置文件</span>
+rpm -ql vsftpd <span class="p">|</span> grep /etc*
+
+<span class="c1"># 启动vsftpd服务，查看进程</span>
+systemctl restart vsftpd.service
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[32m Start vsftp  Successful!...\033[0m&quot;</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m Start vsftp  fail!...\033[0m&quot;</span>
+<span class="k">fi</span>
+
+ps -ef<span class="p">|</span> grep vsftpd
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m begin Configure Vsftpd 被动模式.......\033[0m&quot;</span>
+<span class="nb">echo</span>
+cat &gt;<span class="nv">$CONF</span> <span class="s">&lt;&lt;EOF</span>
+<span class="s">anonymous_enable=YES</span>
+<span class="s">local_enable=YES</span>
+<span class="s">write_enable=YES</span>
+<span class="s">local_umask=022</span>
+<span class="s">dirmessage_enable=YES</span>
+<span class="s">xferlog_enable=YES</span>
+<span class="s">xferlog_std_format=YES</span>
+<span class="s">listen=NO</span>
+<span class="s">listen_ipv6=YES</span>
+<span class="s">pam_service_name=vsftpd</span>
+<span class="s">userlist_enable=YES</span>
+<span class="s">tcp_wrappers=YES</span>
+<span class="s">pasv_enable=YES</span>
+<span class="s">pasv_min_port=60000</span>
+<span class="s">pasv_max_port=60100</span>
+<span class="s">EOF</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m vsftpd被动模式配置文件写入信息如下：\033[0m&quot;</span>
+<span class="nb">echo</span>
+cat <span class="s">&lt;&lt;EOF</span>
+<span class="s">anonymous_enable=YES        #开启匿名用户访问</span>
+<span class="s">local_enable=YES            # 启用本地系统用户访问</span>
+<span class="s">write_enable=YES            # 本地系统用户写入权限</span>
+<span class="s">local_umask=022             # 本地用户创建文件及目录默认权限掩码</span>
+<span class="s">dirmessage_enable=YES       # 打印目录显示信息，通常用于用户第一次访问目录时，信息提示</span>
+<span class="s">xferlog_enable=YES          # 启用上传/下载日志记录</span>
+<span class="s">xferlog_std_format=YES      # 日志文件将根据xferlog的标准格式写入</span>
+<span class="s">listen=NO                   # vsftpd不以独立的服务启动，通过Xinetd服务管理，建议改成yes</span>
+<span class="s">listen_ipv6=YES             # 启用IPv6监听</span>
+<span class="s">pam_service_name=vsftpd     # 登录FTP服务器，依据/etc/pam.d/vsftpd中内容进行认证</span>
+<span class="s">userlist_enable=YES         # vsftpd.user_list 和ftpusers配置文件里用户禁止访问FTP</span>
+<span class="s">tcp_wrappers=YES            # 设置访问控制，通过该hosts.allow和/etc/hosts.deny中设置来判断是否允许访问</span>
+<span class="s">pasv_enable=YES             # 开启被动模式</span>
+<span class="s">pasv_min_port=60000         # 被动连接的端口范围</span>
+<span class="s">pasv_max_port=60100</span>
+<span class="s">EOF</span>
+
+<span class="nb">echo</span> -e <span class="s2">&quot;\033[32m Restart vsftpd.......\033[0m&quot;</span>
+simple_jindutiao
+systemctl restart vsftpd.service
+<span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$?</span><span class="s2">&quot;</span> -eq <span class="m">0</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> -e <span class="s2">&quot;\033[32mSuccessful execution！\033[0m&quot;</span> <span class="o">||</span> <span class="nb">echo</span> -e <span class="s2">&quot;\033[31m fail execution!\033[0m&quot;</span>
+<span class="o">}</span>
+
+
+Usage_choice<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;1&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        VSFTPD_initiative
+    <span class="k">elif</span> <span class="o">[[</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> -eq <span class="s2">&quot;2&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+        VSFTPD_passive
+    <span class="k">else</span>
+        <span class="nb">echo</span> -e <span class="s2">&quot;\033[33mUsage: bash `basename </span><span class="nv">$0</span><span class="s2">` 1 or 2\033[0m&quot;</span>
+
+    <span class="k">fi</span>
+
+<span class="o">}</span>
+
+
+check_Root
+Usage_choice <span class="nv">$1</span>
+</pre></div>
+</div>
+</section>
+<section id="auto-config-vsftpd-sh">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">3.23.4. </span>auto_config_vsftpd.sh</a><a class="headerlink" href="#auto-config-vsftpd-sh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="nv">SUCCESS</span><span class="o">=</span><span class="s2">&quot;echo -en \\033[1;32m&quot;</span>  <span class="c1">#green</span>
+<span class="nv">FAILURE</span><span class="o">=</span><span class="s2">&quot;echo -en \\033[1;31m&quot;</span>  <span class="c1">#红色</span>
+<span class="nv">WARNING</span><span class="o">=</span><span class="s2">&quot;echo -en \\033[1;33m&quot;</span>  <span class="c1">#黄色</span>
+<span class="nv">NORMAL</span><span class="o">=</span><span class="s2">&quot;echo -en \\033[1;39m&quot;</span>  <span class="c1">#黑色</span>
+<span class="nv">config_file</span><span class="o">=</span>/etc/vsftpd/vsftpd.conf
+
+<span class="c1">#function</span>
+
+<span class="k">function</span> menu<span class="o">()</span> <span class="o">{</span>
+    clear
+    <span class="nb">echo</span> <span class="s2">&quot;------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;#         菜单              #&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 1.安装配置vsftpd.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 2.创建FTP账户.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 3.删除FTP账户.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 4.配置匿名账户.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 5.启动关闭vsftpd.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 6.退出脚本.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;-------------------------------------------&quot;</span>
+    <span class="nb">echo</span>
+<span class="o">}</span>
+
+
+<span class="c1"># 定义配置匿名账户的子菜单</span>
+<span class="k">function</span> anon_sub_menu<span class="o">()</span> <span class="o">{</span>
+    clear
+    <span class="nb">echo</span> <span class="s2">&quot;----------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 服务管理子菜单(Menu)&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;----------------------------------------------&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 1.启动vsftpd.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 2.关闭vsftpd.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;# 3.重启vsftpd.&quot;</span>
+    <span class="nb">echo</span> <span class="s2">&quot;----------------------------------------------&quot;</span>
+    <span class="nb">echo</span>
+<span class="o">}</span>
+
+<span class="k">function</span> test_yum<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">num</span><span class="o">=</span><span class="k">$(</span>yum repolist<span class="p">|</span>tail -1<span class="p">|</span>sed <span class="s1">&#39;s/.*: *//;s/,//&#39;</span><span class="k">)</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="si">${</span><span class="nv">num</span><span class="si">}</span> -le <span class="m">0</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        <span class="nv">$FAILURE</span>
+        <span class="nb">echo</span> <span class="s2">&quot;没有可用的Yum源.&quot;</span>
+        <span class="nv">$NORMAL</span>
+        <span class="nb">exit</span>
+    <span class="k">else</span>
+        <span class="k">if</span> ! yum list vsftpd <span class="p">&amp;</span>&gt;/dev/null<span class="p">;</span><span class="k">then</span>
+            <span class="nv">$FAILURE</span>
+            <span class="nb">echo</span> <span class="s2">&quot;Yum源中没有vsftpd软件包.&quot;</span>
+            <span class="nv">$NORMAL</span>
+            <span class="nb">exit</span>
+        <span class="k">fi</span>
+    <span class="k">fi</span>
+
+<span class="o">}</span>
+
+<span class="k">function</span> install_vsftpd<span class="o">()</span> <span class="o">{</span>
+    <span class="k">if</span> <span class="nb">test</span> rpm -q vsftpd <span class="p">&amp;</span>&gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+        <span class="nv">$WARNING</span>
+        <span class="nb">echo</span> <span class="s2">&quot;vsftpd已安装.&quot;</span>
+        <span class="nv">$NORMAL</span>
+        <span class="nb">exit</span>
+    <span class="k">else</span>
+        yum -y install vsftpd
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> init_config<span class="o">()</span> <span class="o">{</span>
+    <span class="o">[</span> ! -e <span class="nv">$config_file</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> cp <span class="nv">$config_file</span> <span class="nv">$config_file</span><span class="o">{</span>,.bak<span class="o">}</span>
+    <span class="o">[</span> ! -d /common/pub <span class="o">]</span> <span class="o">&amp;&amp;</span> mkdir -p /common/pub
+    chmod a+w /common/pub
+    grep -q local_root <span class="nv">$config_file</span><span class="o">||</span> sed -i <span class="s1">&#39;$a local_root=/common&#39;</span> <span class="nv">$config_file</span>
+    sed -i <span class="s1">&#39;s/^#chroot_local_user=YES/chroot_local_user=YES/&#39;</span> <span class="nv">$config_file</span>
+<span class="o">}</span>
+
+<span class="k">function</span> create_ftpuser<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">local</span> <span class="nv">$1</span>
+    <span class="nb">local</span> <span class="nv">$2</span>
+    <span class="k">if</span> id <span class="nv">$1</span> <span class="p">&amp;</span>&gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+        <span class="nv">$FAILURE</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">账户已存在&quot;</span>
+        <span class="nv">$NORMAL</span>
+        <span class="nb">exit</span>
+    <span class="k">else</span>
+        useradd <span class="nv">$1</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span><span class="p">|</span>passwd --stdin <span class="nv">$1</span> <span class="p">&amp;</span>&gt;/dev/null
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> delete_user<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">local</span> <span class="nv">$1</span>
+    <span class="k">if</span> id <span class="nv">$1</span> <span class="p">&amp;</span>&gt; /dev/null<span class="p">;</span> <span class="k">then</span>
+        <span class="nv">$FAILURE</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">1</span><span class="si">}</span><span class="s2">账户不存在&quot;</span>
+        <span class="nv">$NORMAL</span>
+        <span class="nb">exit</span>
+    <span class="k">else</span>
+        userdel <span class="nv">$1</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1">#第一个参数1，匿名账户禁用</span>
+<span class="c1">#第一个参数2，开启匿名账户登录功能</span>
+<span class="c1">#第一个参数3，允许匿名账户上传文件</span>
+<span class="k">function</span> anon_config<span class="o">()</span> <span class="o">{</span>
+   <span class="k">case</span> <span class="nv">$1</span> <span class="k">in</span>
+   <span class="m">1</span><span class="o">)</span>
+      :
+      <span class="c1"># 待实现</span>
+      <span class="p">;;</span>
+   <span class="m">2</span><span class="o">)</span>
+      :
+      <span class="c1"># 待实现</span>
+      :
+      <span class="p">;;</span>
+   <span class="m">3</span><span class="o">)</span>
+      :
+      <span class="c1"># 待实现</span>
+      <span class="p">;;</span>
+   <span class="k">esac</span>
+<span class="o">}</span>
+
+<span class="c1"># 服务管理</span>
+<span class="c1">#第一个参数start，启动vsftpd</span>
+<span class="c1">#第一个参数restart，重启vsftpd</span>
+<span class="c1">#第一个参数stop，关闭vsftpd</span>
+<span class="k">function</span> proc_manager<span class="o">()</span> <span class="o">{</span>
+<span class="k">case</span> <span class="nv">$1</span> <span class="k">in</span>
+    start<span class="o">)</span>
+        :
+       <span class="p">;;</span>
+    restart<span class="o">)</span>
+        :
+       <span class="p">;;</span>
+    stop<span class="o">)</span>
+        :
+       <span class="p">;;</span>
+<span class="k">esac</span>
+
+<span class="o">}</span>
+
+menu
+
+<span class="nb">read</span> -p <span class="s2">&quot;please choice 【1-6】: &quot;</span> input
+
+<span class="k">case</span> <span class="nv">$input</span> <span class="k">in</span>
+<span class="m">1</span><span class="o">)</span>
+   test_yum
+   <span class="p">;;</span>
+<span class="m">2</span><span class="o">)</span>
+   :
+   <span class="p">;;</span>
+<span class="m">3</span><span class="o">)</span>
+   :
+   <span class="p">;;</span>
+<span class="m">4</span><span class="o">)</span>
+   :
+   <span class="p">;;</span>
+<span class="m">6</span><span class="o">)</span>
+   :
+   <span class="p">;;</span>
+*<span class="o">)</span>
+   :
+   <span class="p">;;</span>
+<span class="k">esac</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html" class="btn btn-neutral float-left" title="3.22. 自动Autoinstall_ELK_V1.3脚本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="24.install_mysql5.7.html" class="btn btn-neutral float-right" title="3.24. install_mysql5.7" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

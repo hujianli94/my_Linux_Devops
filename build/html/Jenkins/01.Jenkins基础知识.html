@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jenkins基础知识 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Jenkins2.x实践指南" href="02.Jenkins2.x%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97.html" />
+    <link rel="prev" title="Jenkins持续化集成" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Jenkins持续化集成</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Jenkins基础知识</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#ci-cd">什么是 CI/CD</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">传统的应用部署过程</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#docker">安装 Docker</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">配置阿里云镜像源</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Jenkins安装</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#openjdk">1. 安装 OpenJDK</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#yum-jenkins">2. 使用 Yum 安装 Jenkins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3. 启动 Jenkins</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">4. 给 Jenkins 放行端口</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">5.更换插件源</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">6. 完成安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">7. 测试安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#unix-socket">8. Unix Socket 权限问题</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">使用 Jenkins 构建镜像：将你的应用打包成镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nodejs">1. 安装 Nodejs 环境</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id10">如何使用</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#ssh-git">2. 使用 SSH 协议集成 Git 仓库源</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id11">2.1 生成公钥私钥</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gitee">2.2 在 Gitee 配置公钥</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">2.3 在 Jenkins 配置私钥</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">3. 构建镜像</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">4. 执行任务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">将镜像上传至私有镜像库：让镜像管理更私密</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nexus">部署 Nexus 服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">登录制品库</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#jenkinsphp">Jenkins发布PHP代码</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jenkinsjava">Jenkins部署Java项目</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dockerjenkins">基于docker搭建jenkins</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Jenkins高可用改造</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id18">Jenkins插件下载镜像加速</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Jenkins系列</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id20">1. Jenkins忘记密码的修复方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">2.Jenkins初始化配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkins-1">3.Jenkins插件下载镜像加速</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkinsgit">4.Jenkins添加git密钥对</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#jenkinspublish-over-ssh">5.Jenkins通过Publish over SSH插件实现远程部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id23">6.Jenkins用户权限和角色配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id24">7.Jenkins修改主目录步骤说明</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id25">8.Jenkins升级、迁移和备份</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id26">9.Jenkins插件备份</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id27">10.Jenkins邮件通知</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id28">11.Jenkins构建触发器</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#docker-jenkins-4-etcd-confd">12.Docker+Jenkins持续集成环境(4):使用etcd+confd实现容器服务注册与发现</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id29">持续集成学习目录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jenkins-gitlabwebhook">Jenkins+Gitlab配置Webhook实现提交自动部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#gitlab-jenkins">GitLab+Jenkins持续集成</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jenkins-pipeline">jenkins pipeline持续集成</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#pipeline">pipeline基本使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id30">pipeline语法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#golang-jenkins">golang+jenkins自动化部署方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id31">相关参考文献</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Jenkins2.x%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97.html">Jenkins2.x实践指南</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Jenkins-pipeline%E5%B0%8F%E7%BB%93.html">Jenkins pipeline 小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Jenkins持续化集成</a> &raquo;</li>
+      <li>Jenkins基础知识</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Jenkins/01.Jenkins基础知识.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#jenkins" id="id32">Jenkins基础知识</a></p>
+<ul>
+<li><p><a class="reference internal" href="#ci-cd" id="id33">什么是 CI/CD</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id34">传统的应用部署过程</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#docker" id="id35">安装 Docker</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id36">配置阿里云镜像源</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id37">Jenkins安装</a></p>
+<ul>
+<li><p><a class="reference internal" href="#openjdk" id="id38">1. 安装 OpenJDK</a></p></li>
+<li><p><a class="reference internal" href="#yum-jenkins" id="id39">2. 使用 Yum 安装 Jenkins</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id40">3. 启动 Jenkins</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id41">4. 给 Jenkins 放行端口</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id42">5.更换插件源</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id43">6. 完成安装</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id44">7. 测试安装</a></p></li>
+<li><p><a class="reference internal" href="#unix-socket" id="id45">8. Unix Socket 权限问题</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id9" id="id46">使用 Jenkins 构建镜像：将你的应用打包成镜像</a></p></li>
+<li><p><a class="reference internal" href="#nodejs" id="id47">1. 安装 Nodejs 环境</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id48">如何使用</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ssh-git" id="id49">2. 使用 SSH 协议集成 Git 仓库源</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id11" id="id50">2.1 生成公钥私钥</a></p></li>
+<li><p><a class="reference internal" href="#gitee" id="id51">2.2 在 Gitee 配置公钥</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id52">2.3 在 Jenkins 配置私钥</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id13" id="id53">3. 构建镜像</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id54">4. 执行任务</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id55">将镜像上传至私有镜像库：让镜像管理更私密</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nexus" id="id56">部署 Nexus 服务</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id57">登录制品库</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#jenkinsphp" id="id58">Jenkins发布PHP代码</a></p></li>
+<li><p><a class="reference internal" href="#jenkinsjava" id="id59">Jenkins部署Java项目</a></p></li>
+<li><p><a class="reference internal" href="#dockerjenkins" id="id60">基于docker搭建jenkins</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id61">Jenkins高可用改造</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id18" id="id62">Jenkins插件下载镜像加速</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id19" id="id63">Jenkins系列</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id20" id="id64">1. Jenkins忘记密码的修复方法</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id65">2.Jenkins初始化配置</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-1" id="id66">3.Jenkins插件下载镜像加速</a></p></li>
+<li><p><a class="reference internal" href="#jenkinsgit" id="id67">4.Jenkins添加git密钥对</a></p></li>
+<li><p><a class="reference internal" href="#jenkinspublish-over-ssh" id="id68">5.Jenkins通过Publish over SSH插件实现远程部署</a></p></li>
+<li><p><a class="reference internal" href="#id23" id="id69">6.Jenkins用户权限和角色配置</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id70">7.Jenkins修改主目录步骤说明</a></p></li>
+<li><p><a class="reference internal" href="#id25" id="id71">8.Jenkins升级、迁移和备份</a></p></li>
+<li><p><a class="reference internal" href="#id26" id="id72">9.Jenkins插件备份</a></p></li>
+<li><p><a class="reference internal" href="#id27" id="id73">10.Jenkins邮件通知</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id74">11.Jenkins构建触发器</a></p></li>
+<li><p><a class="reference internal" href="#docker-jenkins-4-etcd-confd" id="id75">12.Docker+Jenkins持续集成环境(4):使用etcd+confd实现容器服务注册与发现</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id29" id="id76">持续集成学习目录</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-gitlabwebhook" id="id77">Jenkins+Gitlab配置Webhook实现提交自动部署</a></p></li>
+<li><p><a class="reference internal" href="#gitlab-jenkins" id="id78">GitLab+Jenkins持续集成</a></p></li>
+<li><p><a class="reference internal" href="#jenkins-pipeline" id="id79">jenkins pipeline持续集成</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pipeline" id="id80">pipeline基本使用</a></p></li>
+<li><p><a class="reference internal" href="#id30" id="id81">pipeline语法</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#golang-jenkins" id="id82">golang+jenkins自动化部署方案</a></p></li>
+<li><p><a class="reference internal" href="#id31" id="id83">相关参考文献</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="jenkins">
+<h1><a class="toc-backref" href="#id32">Jenkins基础知识</a><a class="headerlink" href="#jenkins" title="Permalink to this headline">¶</a></h1>
+<section id="ci-cd">
+<h2><a class="toc-backref" href="#id33">什么是 CI/CD</a><a class="headerlink" href="#ci-cd" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3><a class="toc-backref" href="#id34">传统的应用部署过程</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/cicd0000001.png" src="../_images/cicd0000001.png" />
+<p>显而易见，这种流程不仅繁琐，且容易出错，是非常影响开发效率的。开发人员要花一些时间浪费在这上面。那么有没有高效率，简单便捷一些的方式呢？</p>
+<p>这就要提到 <code class="docutils literal notranslate"><span class="pre">CI/CD</span></code> 了。<code class="docutils literal notranslate"><span class="pre">CI</span></code> 的意思是 <code class="docutils literal notranslate"><span class="pre">持续构建</span></code>
+。负责拉取代码库中的代码后，执行用户预置定义好的操作脚本，通过一系列编译操作构建出一个
+<code class="docutils literal notranslate"><span class="pre">制品</span></code> ，并将制品推送至到制品库里面。常用工具有 Gitlab CI，Github
+CI，Jenkins
+等。这个环节不参与部署，只负责构建代码，然后保存构建物。构建物被称为
+制品，保存制品的地方被称为 “制品库”</p>
+<p>CD 则有2层含义： <code class="docutils literal notranslate"><span class="pre">持续部署（Continuous</span> <span class="pre">Deployment）</span></code> 和
+<code class="docutils literal notranslate"><span class="pre">持续交付（Continuous</span> <span class="pre">Delivery）</span></code> 。 <code class="docutils literal notranslate"><span class="pre">持续交付</span></code>
+的概念是：将制品库的制品拿出后，部署在测试环境 / 交付给客户提前测试。
+<code class="docutils literal notranslate"><span class="pre">持续部署</span></code> 则是将制品部署在生产环境。可以进行持续部署的工具也有很多：
+<code class="docutils literal notranslate"><span class="pre">Ansible</span></code> 批量部署， <code class="docutils literal notranslate"><span class="pre">Docker</span></code>
+直接推拉镜像等等。当然也包括我们后面要写到的 <code class="docutils literal notranslate"><span class="pre">Kubernetes</span></code> 集群部署。</p>
+</section>
+</section>
+<section id="docker">
+<h2><a class="toc-backref" href="#id35">安装 Docker</a><a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h2>
+<p>在了解了 <code class="docutils literal notranslate"><span class="pre">Docker</span></code> 的作用后，我们来开始安装
+<code class="docutils literal notranslate"><span class="pre">Docker</span></code>。在开始安装之前，需要安装 <code class="docutils literal notranslate"><span class="pre">device-mapper-persistent-data</span></code>
+和 <code class="docutils literal notranslate"><span class="pre">lvm2</span></code> 两个依赖。</p>
+<p><code class="docutils literal notranslate"><span class="pre">device-mapper-persistent-data</span></code> 是 <code class="docutils literal notranslate"><span class="pre">Linux</span></code> 下的一个存储驱动，
+<code class="docutils literal notranslate"><span class="pre">Linux</span></code> 上的高级存储技术。 <code class="docutils literal notranslate"><span class="pre">Lvm</span></code>
+的作用则是创建逻辑磁盘分区。这里我们使用 <code class="docutils literal notranslate"><span class="pre">CentOS</span></code> 的 <code class="docutils literal notranslate"><span class="pre">Yum</span></code>
+包管理器安装两个依赖：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>yum install -y yum-utils device-mapper-persistent-data lvm2
+</pre></div>
+</div>
+<p>依赖安装完毕后，我们将阿里云的 <code class="docutils literal notranslate"><span class="pre">Docker</span></code> 镜像源添加进去。可以加速
+<code class="docutils literal notranslate"><span class="pre">Docker</span></code> 的安装。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+yum install docker-ce -y
+</pre></div>
+</div>
+<p>安装完毕，我们就可以使用 <code class="docutils literal notranslate"><span class="pre">systemctl</span></code> 启动来启动 <code class="docutils literal notranslate"><span class="pre">Docker</span></code>
+了。<code class="docutils literal notranslate"><span class="pre">systemctl</span></code> 是 <code class="docutils literal notranslate"><span class="pre">Linux</span></code> 的进程管理服务命令，他可以帮助我们启动
+<code class="docutils literal notranslate"><span class="pre">docker</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>systemctl start docker
+systemctl <span class="nb">enable</span> docker
+</pre></div>
+</div>
+<p>接着执行一下 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">-v</span></code> ，这条命令可以用来查看 <code class="docutils literal notranslate"><span class="pre">Docker</span></code>
+安装的版本信息。当然也可以帮助我们查看 <code class="docutils literal notranslate"><span class="pre">docker</span></code>
+安装状态。如果正常展示版本信息，代表 <code class="docutils literal notranslate"><span class="pre">Docker</span></code> 已经安装成功。</p>
+<section id="id2">
+<h3><a class="toc-backref" href="#id36">配置阿里云镜像源</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>在 <code class="docutils literal notranslate"><span class="pre">Docker</span></code> 安装完毕后，之后我们去拉取 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 镜像时，一般默认会去
+<code class="docutils literal notranslate"><span class="pre">docker</span></code>
+官方源拉取镜像。但是国内出海网速实在是太慢，所以选择我们更换为
+<code class="docutils literal notranslate"><span class="pre">阿里云镜像仓库</span></code> 源进行镜像下载加速。</p>
+<p>登录阿里云官网，打开
+<a class="reference external" href="https://cr.console.aliyun.com/">阿里云容器镜像服务</a>。点击左侧菜单最下面的
+<code class="docutils literal notranslate"><span class="pre">镜像加速器</span></code> ，选择 <code class="docutils literal notranslate"><span class="pre">CentOS</span></code>
+（如下图）。按照官网的提示执行命令，即可更换 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 镜像源地址。</p>
+<img alt="../_images/cicd0000002.png" src="../_images/cicd0000002.png" />
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">docker</span>
+<span class="n">sudo</span> <span class="n">tee</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">daemon</span><span class="o">.</span><span class="n">json</span> <span class="o">&lt;&lt;-</span><span class="s1">&#39;EOF&#39;</span>
+<span class="p">{</span>
+  <span class="s2">&quot;registry-mirrors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;https://25bxwt20.mirror.aliyuncs.com&quot;</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="n">EOF</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">daemon</span><span class="o">-</span><span class="n">reload</span>
+<span class="n">sudo</span> <span class="n">systemctl</span> <span class="n">restart</span> <span class="n">docker</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id37">Jenkins安装</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="openjdk">
+<h3><a class="toc-backref" href="#id38">1. 安装 OpenJDK</a><a class="headerlink" href="#openjdk" title="Permalink to this headline">¶</a></h3>
+<p>安装Jenkins需要安装JDK，JDK版本必须高于或等于1.8，可以使用源码包安装JDK，也可以使用yum命令安装openjdk，此处使用yum命令安装openjdk，命令如下:</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>yum install -y java
+</pre></div>
+</div>
+</section>
+<section id="yum-jenkins">
+<h3><a class="toc-backref" href="#id39">2. 使用 Yum 安装 Jenkins</a><a class="headerlink" href="#yum-jenkins" title="Permalink to this headline">¶</a></h3>
+<p>安装Jenkins工具的yum源，设置好yum源后使用rpm命令安装Jenkins的key，因为在Jenkins的yum源配置文件中gpgcheck=1，所以需要验证Jenkins的key，命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+yum install jenkins
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id40">3. 启动 Jenkins</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>使用yum命令安装jenkins，安装后启动Jenkins服务，命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>service jenkins start
+<span class="c1"># service jenkins restart restart 重启 Jenkins</span>
+<span class="c1"># service jenkins restart stop 停止 Jenkins</span>
+
+<span class="o">[</span>root@bogon ~<span class="o">]</span><span class="c1"># ps aux | grep jenkins</span>
+<span class="o">[</span>root@bogon ~<span class="o">]</span><span class="c1"># netstat -lntp|grep 8080</span>
+tcp6       <span class="m">0</span>      <span class="m">0</span> :::8080                 :::*                    LISTEN      <span class="m">15126</span>/java
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id41">4. 给 Jenkins 放行端口</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>在启动 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 后，此时 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 会开启它的默认端口 <code class="docutils literal notranslate"><span class="pre">8080</span></code>
+。但由于防火墙限制，我们需要手动让防火墙放行 <code class="docutils literal notranslate"><span class="pre">8080</span></code>
+端口才能对外访问到界面。</p>
+<p>这里我们在 <code class="docutils literal notranslate"><span class="pre">CentOS</span></code> 下的 <code class="docutils literal notranslate"><span class="pre">firewall-cmd</span></code>
+防火墙添加端口放行规则，添加完后重启防火墙。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">public</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="o">/</span><span class="n">tcp</span> <span class="o">--</span><span class="n">permanent</span>
+<span class="n">firewall</span><span class="o">-</span><span class="n">cmd</span> <span class="o">--</span><span class="n">zone</span><span class="o">=</span><span class="n">public</span> <span class="o">--</span><span class="n">add</span><span class="o">-</span><span class="n">port</span><span class="o">=</span><span class="mi">50000</span><span class="o">/</span><span class="n">tcp</span> <span class="o">--</span><span class="n">permanent</span>
+
+<span class="n">systemctl</span> <span class="n">reload</span> <span class="n">firewalld</span>
+</pre></div>
+</div>
+<p>服务启动后，访问 <code class="docutils literal notranslate"><span class="pre">IP:8080</span></code> 。如果能够看到以下界面，代表正在启动。
+<code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 第一次的启动时间一般比较长（视服务器性能而看）</p>
+<img alt="../_images/cicd0000003.png" src="../_images/cicd0000003.png" />
+<p>打开浏览器，在地址栏中输入IP和Port进行Jenkins的安装。</p>
+<img alt="../_images/jenkins_0001.png" src="../_images/jenkins_0001.png" />
+<p><code class="docutils literal notranslate"><span class="pre">Jenkins</span></code>
+启动后，会生成一个<strong>初始密码</strong>。该密码在服务器的文件内存放，我们可以进入服务器查看密码内容，将密码填写在
+<code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 的管理员密码输入框内：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>cat /var/lib/jenkins/secrets/initialAdminPassword
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id42">5.更换插件源</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>因为 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code>
+插件服务器在国外，所以速度不太理想。我们需要更换为清华大学的 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code>
+插件源后，再安装插件，<strong>所以先不要点安装插件。</strong></p>
+<p>更换方法很简单。进入服务器，将 <code class="docutils literal notranslate"><span class="pre">/var/lib/jenkins/updates/default.json</span></code>
+内的插件源地址替换成清华大学的源地址，将 google 替换为 baidu 即可。</p>
+<p>Jenkins插件下载镜像加速</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls /root/.jenkins/updates/default.json
+
+<span class="c1">#进入updates目录下,执行 命令</span>
+$ sed -i <span class="s1">&#39;s/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g&#39;</span> default.json <span class="o">&amp;&amp;</span> sed -i <span class="s1">&#39;s/http:\/\/www.google.com/https:\/\/www.baidu.com/g&#39;</span> default.json
+</pre></div>
+</div>
+<p>接着点击 <code class="docutils literal notranslate"><span class="pre">安装推荐的插件</span></code> 即可。稍等一会插件安装完毕。</p>
+<p>插件安装完成后要求设置管理员账号和密码， 与搭建开源Web
+网站一样。安装完成后会看到如图所示的Jenkins 后台管理界面。</p>
+<img alt="../_images/jenkins_00002.png" src="../_images/jenkins_00002.png" />
+<p>在/etc/sysconfig目录下有一个jenkins文件，该文件是Jenkins的配置文件，</p>
+<p>命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls /etc/sysconfig/jenkins
+/etc/sysconfig/jenkins
+</pre></div>
+</div>
+<p>Jenkins 程序主目录在/var/lib/jenkins/目录下， jobs
+目录下存放的是在Jenkins 浏 览器界面中创建的任务。例如， 在Jenkins
+后台web 界面中创建一个“ k8s-docker-CI-CD” 的任务， 在_iobs
+目录下就会生成一个“k8s-docker-CI-CD”的目录，命令如下。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls /var/lib/jenkins/jobs/
+k8s-docker-CI-CD
+
+$ ls /var/lib/jenkins/jobs/k8s-docker-CI-CD/
+builds  config.xml
+</pre></div>
+</div>
+<p>logs目录时Jenkins日志相关的目录；nodes是多节点时用到的目录，plugins是Jenkins插件所在的目录，该目录下有很多插件，如新建一个插件，插件会自动保存在该目录下，命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls /var/lib/jenkins/logs/
+tasks
+$ ls /var/lib/jenkins/nodes
+$ ls /var/lib/jenkins/plugins/
+</pre></div>
+</div>
+<p>secrets是Jenkins密码、密钥存放的目录，users是与用户相关的目录，命令如下：</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ ls /var/lib/jenkins/users/
+admin_6215967324725742951  users.xml
+</pre></div>
+</div>
+<p>如果需要备份Jenkins，直接把/var/lib/jenkins目录下的文件或目录打包到新服务器上即可，Jenkins无需借助数据库存储数据，它的配置全部存放在XML格式文件中。</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id43">6. 完成安装</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>插件安装完毕后，接着是注册管理员账号。按照提示一路配置后，直到看到以下界面代表安装成功</p>
+<img alt="../_images/jenkins_00003.png" src="../_images/jenkins_00003.png" />
+<p><strong>更改Jenkins升级站点</strong></p>
+<p><code class="docutils literal notranslate"><span class="pre">插件管理--高级--升级站点</span></code></p>
+<p>更新地址：<a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json">https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</a></p>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id44">7. 测试安装</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>到这里，我们的 Jenkins 算是启动成功了。但是，我们还需要对 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code>
+做一点点简单的配置，才可以让它可以构建 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 镜像。</p>
+<p>我们点击 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 首页 -&gt; 左侧导航 -&gt; 新建任务 -&gt; <strong>Freestyle
+project</strong></p>
+<img alt="../_images/cicd0000004.png" src="../_images/cicd0000004.png" />
+<p>新建完毕后，找到 <code class="docutils literal notranslate"><span class="pre">构建</span></code> 一项，选择 <code class="docutils literal notranslate"><span class="pre">增加构建步骤</span></code>，选择
+<code class="docutils literal notranslate"><span class="pre">执行shell</span></code> ，输入以下命令：</p>
+<p>因为我docker安装的jenkins，所以jenkins中使用docker客户端连接宿主机的2375端口。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ docker -v
+$ docker -H tcp://localhost:2375 pull node:latest
+</pre></div>
+</div>
+<p>查看docker版本信息。</p>
+<img alt="../_images/cicd0000005.png" src="../_images/cicd0000005.png" />
+</section>
+<section id="unix-socket">
+<h3><a class="toc-backref" href="#id45">8. Unix Socket 权限问题</a><a class="headerlink" href="#unix-socket" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">docker</span></code> 的架构是 <code class="docutils literal notranslate"><span class="pre">C/S</span></code> 架构。在我们使用 <code class="docutils literal notranslate"><span class="pre">docker</span></code>
+命令时，其实是命令使用 <code class="docutils literal notranslate"><span class="pre">socket</span></code> 与 <code class="docutils literal notranslate"><span class="pre">docker</span></code>
+的守护进程进行通信，才能正常执行 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 命令。</p>
+<p>而在 <code class="docutils literal notranslate"><span class="pre">Linux</span></code> 中， <code class="docutils literal notranslate"><span class="pre">Unix</span> <span class="pre">socket</span></code> 属于 <code class="docutils literal notranslate"><span class="pre">root</span></code> 用户，因此需要
+<code class="docutils literal notranslate"><span class="pre">root</span></code> 权限才能访问。官方是这么解释的：</p>
+<blockquote>
+<div><p>Manage Docker as a non-root user The docker daemon binds to a Unix
+socket instead of a TCP port. By default that Unix socket is owned by
+the user root and other users can only access it using sudo. The
+docker daemon always runs as the root user. If you don’t want to use
+sudo when you use the docker command, create a Unix group called
+docker and add users to it. When the docker daemon starts, it makes
+the ownership of the Unix socket read/writable by the docker group.</p>
+</div></blockquote>
+<p>但是在 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 中， <code class="docutils literal notranslate"><span class="pre">docker</span></code> 提供了一个 <code class="docutils literal notranslate"><span class="pre">用户组</span></code>
+的概念。我们可以将执行 <code class="docutils literal notranslate"><span class="pre">Shell</span></code> 的用户添加到名称为 <code class="docutils literal notranslate"><span class="pre">docker</span></code>
+的用户组，则可以正常执行 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 命令。</p>
+<p>而在 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 中执行的终端用户做 <code class="docutils literal notranslate"><span class="pre">jenkins</span></code> ，所以我们只需要将
+<code class="docutils literal notranslate"><span class="pre">jenkins</span></code> 加入到 <code class="docutils literal notranslate"><span class="pre">docker</span></code> 用户组即可：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo groupadd docker          <span class="c1">#新增docker用户组</span>
+sudo gpasswd -a jenkins docker  <span class="c1">#将当前用户添加至docker用户组</span>
+newgrp docker                 <span class="c1">#更新docker用户组</span>
+</pre></div>
+</div>
+<p>加入后，重启 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> ：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>sudo service jenkins restart
+</pre></div>
+</div>
+<p>重启 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 后，再次执行脚本。此时执行成功。</p>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/13032339.html">Centos7安装jenkins</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11903724.html">CentOS7搭建jenkins</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11323795.html">ubuntu
+安装Jenkins</a></p>
+</section>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id46">使用 Jenkins 构建镜像：将你的应用打包成镜像</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="nodejs">
+<h2><a class="toc-backref" href="#id47">1. 安装 Nodejs 环境</a><a class="headerlink" href="#nodejs" title="Permalink to this headline">¶</a></h2>
+<p>在上一章，我们其实并没有在服务端安装 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 环境。如果想要安装
+<code class="docutils literal notranslate"><span class="pre">Node</span></code> 环境，有以下两个办法：</p>
+<ul class="simple">
+<li><p>源码编译：这种方式是将 <code class="docutils literal notranslate"><span class="pre">Node</span></code>
+源码拉下来后，在服务器端编译完成后才可以使用。时间比较长，流程也略复杂</p></li>
+<li><p>使用 <code class="docutils literal notranslate"><span class="pre">Jenkins</span> <span class="pre">Plugin</span></code> 中 <code class="docutils literal notranslate"><span class="pre">NodeJS</span></code> 插件自动配置安装</p></li>
+</ul>
+<p>在这里，我们可以选择第二种方式来安装，既方便又省力。</p>
+<p>我们打开 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 首页，找到左侧的<strong>系统配置 =&gt; 插件管理 =&gt;
+可选插件</strong>，搜索 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 。选中 <code class="docutils literal notranslate"><span class="pre">NodeJS</span></code> 后，点击左下角的
+<code class="docutils literal notranslate"><span class="pre">直接安装</span></code> 开始安装插件</p>
+<img alt="../_images/cicd0000006.png" src="../_images/cicd0000006.png" />
+<p>等待安装完毕后，返回 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 首页。找到 <strong>Global Tool Configuration
+=&gt; NodeJS =&gt; 新增NodeJS</strong></p>
+<p>接着回到 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 首页，找到左侧的 <code class="docutils literal notranslate"><span class="pre">系统配置</span></code> ，选择
+<code class="docutils literal notranslate"><span class="pre">全局工具配置</span></code></p>
+<p>找到下面的 <code class="docutils literal notranslate"><span class="pre">NodeJS</span></code> ，点击 <code class="docutils literal notranslate"><span class="pre">NodeJS</span></code>
+安装，选择相应的版本填写信息保存即可。</p>
+<img alt="../_images/cicd0000007.png" src="../_images/cicd0000007.png" />
+<section id="id10">
+<h3><a class="toc-backref" href="#id48">如何使用</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>那我们在任务中如何使用呢？我们只需要在任务的<strong>配置</strong>中，找到<strong>构建环境</strong>，选中
+<code class="docutils literal notranslate"><span class="pre">Provide</span> <span class="pre">Node</span> <span class="pre">&amp;</span> <span class="pre">npm</span> <span class="pre">bin/</span> <span class="pre">folder</span> <span class="pre">to</span> <span class="pre">PATH</span></code> ，选择刚才配置好的 <code class="docutils literal notranslate"><span class="pre">NodeJS</span></code>
+即可。</p>
+<img alt="../_images/cicd0000008.png" src="../_images/cicd0000008.png" />
+<p>第一次执行会下载对应的 <code class="docutils literal notranslate"><span class="pre">Node</span></code> 版本，后续不会下载。</p>
+</section>
+</section>
+<section id="ssh-git">
+<h2><a class="toc-backref" href="#id49">2. 使用 SSH 协议集成 Git 仓库源</a><a class="headerlink" href="#ssh-git" title="Permalink to this headline">¶</a></h2>
+<section id="id11">
+<h3><a class="toc-backref" href="#id50">2.1 生成公钥私钥</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>首先，我们先来配置公钥和私钥。这是 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 访问 <code class="docutils literal notranslate"><span class="pre">Git</span></code>
+私有库的常用认证方式。我们可以使用 <code class="docutils literal notranslate"><span class="pre">ssh-keygen</span></code>
+命令即可生成公钥私钥。在本地机器执行生成即可。这里的邮箱可以换成你自己的邮箱：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ssh-keygen -t rsa -C <span class="s2">&quot;1@1.com&quot;</span>
+</pre></div>
+</div>
+<p>结束后，你会得到两个文件。分别是 xxx 和 xxx.pub。</p>
+<p>其中，xxx 是私钥文件，xxx.pub 是对应的公钥文件。<strong>我们需要在 ``Git``
+端配置公钥，在 ``Jenkins`` 端使用私钥与 ``Git`` 进行身份校验。</strong></p>
+</section>
+<section id="gitee">
+<h3><a class="toc-backref" href="#id51">2.2 在 Gitee 配置公钥</a><a class="headerlink" href="#gitee" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat ~/.ssh/gitee_id_rsa.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDCnMTLoNTyeHjkuL04hbQe4nDvnf6dvDOYMJ/zPTp6XdSU+y7zB5vAlDjzz7rpUs+PkvdLWHCk8W8WHU34bZh6RfT9TCQLCUeGNRNvWUlknsQcE5UhMu62fndFlGuY64e0tTCcba5XKmFZanEepbJ7wKon4ky2r6hzO1a8ctpiGps4dSDcZErLYBjb5tHmRNirhertkusxnFeH2Jbqt9uyzbaLOUNTQzbuv5a8V12lQhg4iLsJkrdk75CD5FA7SwE2BLUJwzBEjPa9K8kUBvb+oSj2bZPzBHO2ej701DVOU8fdGSQrmVZYDZn7WArcj4qy8TMhXeKdD4avZQEmQEYP xxxxx@company.com
+</pre></div>
+</div>
+<p>其中的标题为公钥标题，这里可以自定义标题；公钥则为刚才生成的 xxx.pub
+文件。使用 <code class="docutils literal notranslate"><span class="pre">cat</span></code> 命令查看下文件内容，将内容填入输入框并保存。接着去
+<code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 端配置<strong>私钥</strong></p>
+<img alt="../_images/cicd0000009.png" src="../_images/cicd0000009.png" />
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id52">2.3 在 Jenkins 配置私钥</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   我们可以在配置任务时，来添加一个自己的凭证。点击项目的 配置，依次找到 **源码管理 =&gt; Git =&gt; Repositories **
+
+这里的 `Repository URL` 则是我们的仓库地址， `SSH` 地址格式为 `git@gitee.com:xxx/xxx.git` 。可以从仓库首页中的 克隆/下载 =&gt; SSH 中看到：
+</pre></div>
+</div>
+<img alt="../_images/cicd00000012.png" src="../_images/cicd00000012.png" />
+<p>重点是 <strong>Credentials</strong>
+这一项，这里则是我们选择认证凭证的地方。我们可以点击右侧
+<code class="docutils literal notranslate"><span class="pre">添加</span> <span class="pre">=&gt;</span> <span class="pre">Jenkins</span></code> 按钮添加一条新的凭证认证信息。</p>
+<p>点击后会打开一个弹窗，这是 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 添加凭证的弹窗。选择类型中的
+<code class="docutils literal notranslate"><span class="pre">SSH</span> <span class="pre">Username</span> <span class="pre">with</span> <span class="pre">private</span> <span class="pre">key</span></code> 这一项。接着填写信息即可：</p>
+<ul class="simple">
+<li><p>ID：这条认证凭证在 <code class="docutils literal notranslate"><span class="pre">Jenkins</span></code> 中的名称是什么</p></li>
+<li><p>描述：描述信息</p></li>
+<li><p>Username：用户名（邮箱）</p></li>
+<li><p>Private Key：这里则是我们填写私钥的地方。点击 <strong>Add</strong> 按钮，<strong>将
+xxx 私钥文件内所有文件内容全部复制过去（包含开头的 BEGIN OPENSSH
+PRIVATE KEY 和结尾的 END OPENSSH PRIVATE KEY）</strong></p></li>
+</ul>
+<p>接着点击添加按钮，保存凭证。</p>
+<img alt="../_images/cicd00000011.png" src="../_images/cicd00000011.png" />
+</section>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id53">3. 构建镜像</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh -l
+
+npm install --registry=https://registry.npm.taobao.org
+npm run build
+cd $WORKSPACE &amp;&amp; docker -H tcp://localhost:2375 build -t jenkins-test .
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id54">4. 执行任务</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<img alt="../_images/cicd00000013.png" src="../_images/cicd00000013.png" />
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id55">将镜像上传至私有镜像库：让镜像管理更私密</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>字面意思，镜像库就是集中存放镜像的一个文件服务。镜像库在 <code class="docutils literal notranslate"><span class="pre">CI/CD</span></code>
+中，又称 <code class="docutils literal notranslate"><span class="pre">制品库</span></code>
+。构建后的产物称为<strong>制品</strong>，制品则要放到<strong>制品库</strong>做<strong>中转和版本管理</strong>。常用平台有<strong>Nexus，Jfrog，Harbor</strong>或其他对象存储平台。</p>
+<p>在这里，我们选用 <code class="docutils literal notranslate"><span class="pre">Nexus3</span></code>
+作为自己的镜像库。因为其稳定，性能好，免费，部署方便，且支持类型多，是许多制品库的首选选型。</p>
+<section id="nexus">
+<h3><a class="toc-backref" href="#id56">部署 Nexus 服务</a><a class="headerlink" href="#nexus" title="Permalink to this headline">¶</a></h3>
+<p>这里使用docker部署，部署方式参考:</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/12108560.html">https://www.cnblogs.com/xiao987334176/p/12108560.html</a></p>
+<img alt="../_images/cicd00000014.png" src="../_images/cicd00000014.png" />
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id57">登录制品库</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>私服建设完成后，如果私服对外访问地址为HTTP的话，还需要在服务器配置一下才可以使用（HTTPS不需要配置）。</p>
+<p>找到 <code class="docutils literal notranslate"><span class="pre">daemon.json</span></code> 文件，该文件描述了当前 <code class="docutils literal notranslate"><span class="pre">docker</span></code>
+配置的镜像加速地址，和配置过的私服地址。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>vi /etc/docker/daemon.json
+</pre></div>
+</div>
+<p>找到 <code class="docutils literal notranslate"><span class="pre">insecure-registries</span></code>
+字段，如果不存在就自己添加一个。值是数组类型，将你的制品库地址填写上去。例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;insecure-registries&quot;</span> <span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;172.16.81.7:8082&quot;</span>
+  <span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>注意，nexus 显示的镜像库端口为 nexus
+服务端口，要替换为自己配置的端口才有效。</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;registry-mirrors&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;https://25bxwt20.mirror.aliyuncs.com&quot;</span><span class="p">],</span>         <span class="c1">#镜像加速地址</span>
+  <span class="s2">&quot;insecure-registries&quot;</span><span class="p">:[</span><span class="s2">&quot;192.168.1.31:8082&quot;</span><span class="p">,</span> <span class="s2">&quot;192.168.1.40:8090&quot;</span><span class="p">]</span>      <span class="c1">#仓库地址</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>保存并退出，重启 Docker</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>systemctl restart docker
+</pre></div>
+</div>
+<p>接着使用 <code class="docutils literal notranslate"><span class="pre">docker</span> <span class="pre">login</span></code> 命令尝试登录：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>docker login 服务IP:端口
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/moues/p/11779065.html">docker
+搭建nexus3私服</a></p>
+<p>但这样，我们需要在命令里面写死用户名和密码，无论是安全和友好性上，都是不太合适的。这里我们可以借助
+Jenkins 的凭据功能，添加一条用户名密码凭据，然后利用 Shell
+变量写入在终端内。</p>
+<p>找到任务的设置界面 =&gt; 构建环境 =&gt; 勾选 Use secret text(s) or file(s) =&gt;
+找到左下角的新增按钮，选择 <code class="docutils literal notranslate"><span class="pre">Username</span> <span class="pre">and</span> <span class="pre">password</span> <span class="pre">(separated)</span></code></p>
+<img alt="../_images/cicd_docker001.png" src="../_images/cicd_docker001.png" />
+<p>使用<code class="docutils literal notranslate"><span class="pre">${DOCKER_USER}</span></code>和 <code class="docutils literal notranslate"><span class="pre">${DOCKER_PASSWD}</span></code>进行引用变量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/bin/sh -l
+
+#npm install --registry=https://registry.npm.taobao.org
+#npm run build
+cd $WORKSPACE &amp;&amp; docker -H tcp://localhost:2375 build -t 192.168.1.31:8082/jenkins-test  .
+docker -H tcp://localhost:2375 login -u ${DOCKER_USER} -p ${DOCKER_PASSWD} 192.168.1.31:8082
+docker -H tcp://localhost:2375 push 192.168.1.31:8082/jenkins-test
+</pre></div>
+</div>
+</section>
+</section>
+<section id="jenkinsphp">
+<h2><a class="toc-backref" href="#id58">Jenkins发布PHP代码</a><a class="headerlink" href="#jenkinsphp" title="Permalink to this headline">¶</a></h2>
+<p>打开Jenkins后台Web界面，选择“系统管理”-&gt;“管理插件”-&gt;“已安装”，检查
+检查是否有<code class="docutils literal notranslate"><span class="pre">Git</span> <span class="pre">plugin</span></code>
+和<code class="docutils literal notranslate"><span class="pre">Publish</span> <span class="pre">Over</span> <span class="pre">SSH</span></code>两个插件。如果没有， 则需要单击“ 可选插件”
+按钮进行安装。安装后重启Jenkins 服务， 命令如下。重启Jenkins
+后需要重新在Web 界面中进行登录。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ systemctl restart jenkins.service
+</pre></div>
+</div>
+<img alt="../_images/jenkins_plush0001.png" src="../_images/jenkins_plush0001.png" />
+<p>生成一对密钥用来远程登录服务器，然后将公钥追加到远程服务器的/root/.ssh/authorized_keys文件中，命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>ssh-keygen -t rsa
+
+rm -rf ~/.ssh/config
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub root@192.168.1.13
+</pre></div>
+</div>
+<p>安装好两个插件后，选择“系统管理”-&gt;“系统设置”，在界面底部选择Publish Over
+SSH 插件进行相关设置，如图：</p>
+<p><img alt="image1" src="../_images/jenkins_ssh0001.png" /> <strong>注意</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在Passphrase 文本框中输入密码，
+
+Pathto key留空,在key文本框中粘贴/root/.ssh/jenkins文件中的内容。
+
+单击左下角的“增加”按钮增加SSH Server,name可自定义,
+在Hostname文本框中输入线上Web服务器IP,在Username 文本框中输入root,在Remote Directory 文本框中输入“/”（根） 。
+
+如果是多台Web Server,继续单击&quot;添加&quot;按钮重复上述操作即可。操作完毕后单击Apply按钮或“保存&quot;按钮。
+</pre></div>
+</div>
+<p>设置完插件后创建新任务，任务名可自定义，如Publish PHP
+code，选择构建一个自由风格的软件项目，最后单击“确定”按钮进入下一页，在“描述”文本框中输入“发布PHP代码（自定义即可）”，在“源码管理“页面可根据个人或公司情况选择Git或SVN，此处选择Git作为演示。如图：</p>
+<img alt="../_images/jenkins_project001.png" src="../_images/jenkins_project001.png" />
+<p>“构建触发器”和“构建环境”处留空，不做任何选择，增加构建步骤Send files or
+execute commands over SSH，设置如图： <img alt="image2" src="../_images/jenkins_CI-CD01.png" /></p>
+<p><strong>注意</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在Transfer Set Source files 文本框中输入“ **／**”,表示全部文件。
+
+在Removeprefix 文本框中可以指定截掉的前缀目录，这里留空即可。
+
+Remote directory 用于指定远程服务器上代码的存放路径，例如/data/www/thinkphp.com 。
+
+Exec command为文件传输完成后要执行的命令,例如可以是更改文件权限的命令。
+
+设置完成后单击&quot;Add Transfer Set ”按钮；
+
+如果是多台服务器，可以单击“ Add Server ” 按钮重复以上操作。
+</pre></div>
+</div>
+<p>单击Publish PHP code进行项目构建，如图：</p>
+<img alt="../_images/jenkins_CI-CD02.png" src="../_images/jenkins_CI-CD02.png" />
+<p>构建后到远程服务器中查看设置的目录，如/data/www目录下回生成复制的源码文件。命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@desktop-pmjtngi www<span class="o">]</span><span class="c1"># ll /data/www/</span>
+total <span class="m">44</span>
+drwxr-xr-x. <span class="m">2</span> root root    <span class="m">23</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 admin
+drwxr-xr-x. <span class="m">6</span> root root    <span class="m">91</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 Application
+-rw-r--r--. <span class="m">1</span> root root   <span class="m">404</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 composer.json
+-rw-r--r--. <span class="m">1</span> root root  <span class="m">5558</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 favicon.ico
+-rw-r--r--. <span class="m">1</span> root root  <span class="m">2282</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 gulpfile.js
+-rw-r--r--. <span class="m">1</span> root root  <span class="m">1595</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 index.php
+-rw-r--r--. <span class="m">1</span> root root <span class="m">10254</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 LICENSE
+-rw-r--r--. <span class="m">1</span> root root   <span class="m">854</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 package.json
+drwxr-xr-x. <span class="m">5</span> root root    <span class="m">83</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 Public
+-rw-r--r--. <span class="m">1</span> root root  <span class="m">2751</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 README.md
+-rw-r--r--. <span class="m">1</span> root root    <span class="m">66</span> Jun  <span class="m">1</span> <span class="m">11</span>:23 robots.txt
+drwxr-xr-x. <span class="m">4</span> root root    <span class="m">58</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 Template
+drwxr-xr-x. <span class="m">8</span> root root   <span class="m">154</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 ThinkPHP
+drwxr-xr-x. <span class="m">3</span> root root    <span class="m">37</span> Jun  <span class="m">1</span> <span class="m">10</span>:54 Upload
+
+
+root@desktop-pmjtngi www<span class="o">]</span><span class="c1"># cat README.md</span>
+<span class="o">[</span>创建 QQ 群及捐赠渠道<span class="o">](</span>https://baijunyao.com/article/124<span class="o">)</span>
+
+
+
+<span class="c1">## 链接</span>
+- 博客：http://baijunyao.com
+- github：https://github.com/baijunyao/thinkphp-bjyblog
+- gitee：https://gitee.com/baijunyao/thinkbjy
+......
+</pre></div>
+</div>
+<p>在本地修改完代码，提交到Github上，然后在Jenkins中重新构建此项目，那么代码就自动在服务器上更新了。</p>
+<p>Jeknins自动化部署PHP代码</p>
+<p><a class="reference external" href="https://www.cnblogs.com/you-men/p/13126873.html">https://www.cnblogs.com/you-men/p/13126873.html</a></p>
+</section>
+<section id="jenkinsjava">
+<h2><a class="toc-backref" href="#id59">Jenkins部署Java项目</a><a class="headerlink" href="#jenkinsjava" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/you-men/p/13143694.html">https://www.cnblogs.com/you-men/p/13143694.html</a></p>
+</section>
+<section id="dockerjenkins">
+<h2><a class="toc-backref" href="#id60">基于docker搭建jenkins</a><a class="headerlink" href="#dockerjenkins" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/13373198.html">基于docker搭建jenkins</a></p>
+</section>
+<section id="id17">
+<h2><a class="toc-backref" href="#id61">Jenkins高可用改造</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.yuque.com/sukikeita/kb/zc28me">https://www.yuque.com/sukikeita/kb/zc28me</a></p>
+<section id="id18">
+<h3><a class="toc-backref" href="#id62">Jenkins插件下载镜像加速</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/cfsxgogogo/archive/2004/01/13/12613211.html">https://www.cnblogs.com/cfsxgogogo/archive/2004/01/13/12613211.html</a></p>
+<p><a class="reference external" href="https://blog.51cto.com/liujingyu/2529565">https://blog.51cto.com/liujingyu/2529565</a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>更换地址
+点击 jenkins 的系统管理 --&gt; 插件管理，打开插件管理页面，如图：
+Jenkins 欢迎页面点击系统管理，进入系统管理页面，并点击插件管理进入到插件管理页面，如下图：
+在插件管理页面点击高级（Advanced），如下图：
+在高级选项卡找到更新网站（Update Site）菜单项，将默认网站更新为 https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json
+
+重启Jenkins
+</pre></div>
+</div>
+<p>修改Jenkins的插件下载地址</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#文件路径</span>
+<span class="n">ls</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">updates</span><span class="o">/</span><span class="n">default</span><span class="o">.</span><span class="n">json</span>
+
+<span class="n">进入updates目录下</span><span class="p">,</span><span class="n">执行</span> <span class="n">命令</span>
+<span class="c1"># sed -i &#39;s/http:\/\/updates.jenkins-ci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g&#39; default.json &amp;&amp; sed -i &#39;s/http:\/\/www.google.com/https:\/\/www.baidu.com/g&#39; default.json</span>
+</pre></div>
+</div>
+<p>推荐清华大学镜像：<a class="reference external" href="https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json">https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json</a></p>
+<p>修改文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vi</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">jenkins</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">hudson</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">UpdateCenter</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>完整内容如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;?xml version=&#39;1.1&#39; encoding=&#39;UTF-8&#39;?&gt;
+&lt;sites&gt;
+  &lt;site&gt;
+    &lt;id&gt;default&lt;/id&gt;
+    &lt;url&gt;https://mirrors.tuna.tsinghua.edu.cn/jenkins/updates/update-center.json&lt;/url&gt;
+  &lt;/site&gt;
+&lt;/sites&gt;
+</pre></div>
+</div>
+<p>重启jenkins</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span> <span class="n">restart</span> <span class="n">jenkins</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id19">
+<h2><a class="toc-backref" href="#id63">Jenkins系列</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>参考：<a class="reference external" href="https://www.cnblogs.com/zhuochong/category/1357873.html">https://www.cnblogs.com/zhuochong/category/1357873.html</a></p>
+</div></blockquote>
+<section id="id20">
+<h3><a class="toc-backref" href="#id64">1. Jenkins忘记密码的修复方法</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082271.html">https://www.cnblogs.com/zhuochong/p/10082271.html</a></p>
+</section>
+<section id="id21">
+<h3><a class="toc-backref" href="#id65">2.Jenkins初始化配置</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082372.html">https://www.cnblogs.com/zhuochong/p/10082372.html</a></p>
+</section>
+<section id="jenkins-1">
+<span id="id22"></span><h3><a class="toc-backref" href="#id66">3.Jenkins插件下载镜像加速</a><a class="headerlink" href="#jenkins-1" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082498.html">https://www.cnblogs.com/zhuochong/p/10082498.html</a></p>
+</section>
+<section id="jenkinsgit">
+<h3><a class="toc-backref" href="#id67">4.Jenkins添加git密钥对</a><a class="headerlink" href="#jenkinsgit" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082566.html">https://www.cnblogs.com/zhuochong/p/10082566.html</a></p>
+</section>
+<section id="jenkinspublish-over-ssh">
+<h3><a class="toc-backref" href="#id68">5.Jenkins通过Publish over SSH插件实现远程部署</a><a class="headerlink" href="#jenkinspublish-over-ssh" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082610.html">https://www.cnblogs.com/zhuochong/p/10082610.html</a></p>
+</section>
+<section id="id23">
+<h3><a class="toc-backref" href="#id69">6.Jenkins用户权限和角色配置</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10082939.html">https://www.cnblogs.com/zhuochong/p/10082939.html</a></p>
+</section>
+<section id="id24">
+<h3><a class="toc-backref" href="#id70">7.Jenkins修改主目录步骤说明</a><a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10083281.html">https://www.cnblogs.com/zhuochong/p/10083281.html</a></p>
+</section>
+<section id="id25">
+<h3><a class="toc-backref" href="#id71">8.Jenkins升级、迁移和备份</a><a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10083498.html">https://www.cnblogs.com/zhuochong/p/10083498.html</a></p>
+</section>
+<section id="id26">
+<h3><a class="toc-backref" href="#id72">9.Jenkins插件备份</a><a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10083537.html">https://www.cnblogs.com/zhuochong/p/10083537.html</a></p>
+</section>
+<section id="id27">
+<h3><a class="toc-backref" href="#id73">10.Jenkins邮件通知</a><a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10083568.html">https://www.cnblogs.com/zhuochong/p/10083568.html</a></p>
+</section>
+<section id="id28">
+<h3><a class="toc-backref" href="#id74">11.Jenkins构建触发器</a><a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/zhuochong/p/10083882.html">https://www.cnblogs.com/zhuochong/p/10083882.html</a>)</p>
+</section>
+<section id="docker-jenkins-4-etcd-confd">
+<h3><a class="toc-backref" href="#id75">12.Docker+Jenkins持续集成环境(4):使用etcd+confd实现容器服务注册与发现</a><a class="headerlink" href="#docker-jenkins-4-etcd-confd" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.cnblogs.com/xiaoqi/p/Jenkins-etcd-confd.html">https://www.cnblogs.com/xiaoqi/p/Jenkins-etcd-confd.html</a>)</p>
+</section>
+</section>
+<section id="id29">
+<h2><a class="toc-backref" href="#id76">持续集成学习目录</a><a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/yxiaodao/p/10554766.html">https://www.cnblogs.com/yxiaodao/p/10554766.html</a></p>
+</section>
+<section id="jenkins-gitlabwebhook">
+<h2><a class="toc-backref" href="#id77">Jenkins+Gitlab配置Webhook实现提交自动部署</a><a class="headerlink" href="#jenkins-gitlabwebhook" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11443002.html">https://www.cnblogs.com/xiao987334176/p/11443002.html</a></p>
+</section>
+<section id="gitlab-jenkins">
+<h2><a class="toc-backref" href="#id78">GitLab+Jenkins持续集成</a><a class="headerlink" href="#gitlab-jenkins" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11425560.html">https://www.cnblogs.com/xiao987334176/p/11425560.html</a></p>
+</section>
+<section id="jenkins-pipeline">
+<h2><a class="toc-backref" href="#id79">jenkins pipeline持续集成</a><a class="headerlink" href="#jenkins-pipeline" title="Permalink to this headline">¶</a></h2>
+<section id="pipeline">
+<h3><a class="toc-backref" href="#id80">pipeline基本使用</a><a class="headerlink" href="#pipeline" title="Permalink to this headline">¶</a></h3>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/12427209.html">https://www.cnblogs.com/xiao987334176/p/12427209.html</a></p>
+</section>
+<section id="id30">
+<h3><a class="toc-backref" href="#id81">pipeline语法</a><a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.jenkins.io/doc/book/pipeline/syntax/">https://www.jenkins.io/doc/book/pipeline/syntax/</a></p>
+<p><a class="reference external" href="https://www.bookstack.cn/read/jenkins/a80f4d0e840c74f2.md">https://www.bookstack.cn/read/jenkins/a80f4d0e840c74f2.md</a></p>
+<p><a class="reference external" href="https://www.ssgeek.com/post/jenkinspipeline-yu-fa-gai-yao/">https://www.ssgeek.com/post/jenkinspipeline-yu-fa-gai-yao/</a></p>
+</section>
+</section>
+<section id="golang-jenkins">
+<h2><a class="toc-backref" href="#id82">golang+jenkins自动化部署方案</a><a class="headerlink" href="#golang-jenkins" title="Permalink to this headline">¶</a></h2>
+<p>参考文献</p>
+<p><a class="reference external" href="https://www.jianshu.com/p/e81084d3756d">https://www.jianshu.com/p/e81084d3756d</a></p>
+</section>
+<section id="id31">
+<h2><a class="toc-backref" href="#id83">相关参考文献</a><a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/opesn/p/11794465.html">https://www.cnblogs.com/opesn/p/11794465.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Jenkins持续化集成" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.Jenkins2.x%E5%AE%9E%E8%B7%B5%E6%8C%87%E5%8D%97.html" class="btn btn-neutral float-right" title="Jenkins2.x实践指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

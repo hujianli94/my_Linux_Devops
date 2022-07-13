@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7.1. 常用工具合集 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7.2. 日常工具" href="02.%E6%97%A5%E5%B8%B8%E5%B7%A5%E5%85%B7.html" />
+    <link rel="prev" title="7. 一些常用的工具" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">7. 一些常用的工具</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">7.1. 常用工具合集</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.1.1. 吐血整理程序员工具集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">7.1.2. 常用的开源镜像站（不定期更新）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">7.1.3. 10款搜索引擎，看到第一款就会毅然放弃百度！</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nextcloud">7.1.4. 搭建你自己的私有云盘——Nextcloud配置教程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">7.1.5. 网站运维</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">7.1.6. 开发工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id20">7.1.7. 文档处理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id22">7.1.8. 5款优秀的开源克隆软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linux">7.1.9. 8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E6%97%A5%E5%B8%B8%E5%B7%A5%E5%85%B7.html">7.2. 日常工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%8D%9A%E5%AE%A2%E5%86%99%E4%B9%A6%E8%BD%AF%E4%BB%B6.html">7.3. 博客写书软件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BF%85%E5%A4%87%E7%9A%84%E7%BD%91%E7%AB%99%E6%8E%A8%E8%8D%90.html">7.4. 程序员必备的网站推荐</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Typora%E8%BD%AF%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8.html">7.5. Typora软件的使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">7. </span>一些常用的工具</a> &raquo;</li>
+      <li><span class="section-number">7.1. </span>常用工具合集</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/07.一些常用的工具/01.常用工具合集.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id23">常用工具合集</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id24">吐血整理程序员工具集</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id25">常用的开源镜像站（不定期更新）</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id26">10款搜索引擎，看到第一款就会毅然放弃百度！</a></p></li>
+<li><p><a class="reference internal" href="#nextcloud" id="id27">搭建你自己的私有云盘——Nextcloud配置教程</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id28">网站运维</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id29">网速测试工具</a></p></li>
+<li><p><a class="reference internal" href="#nginx1" id="id30">Nginx配置生成器1</a></p></li>
+<li><p><a class="reference internal" href="#nginx" id="id31">Nginx配置生成器</a></p></li>
+<li><p><a class="reference internal" href="#mysql" id="id32">MYSQL配置文件生成器</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id33">备案查询</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id34">仿站工具</a></p></li>
+<li><p><a class="reference internal" href="#wordpress-by-mengkun" id="id35">Wordpress 主题嗅探 by mengkun</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id36">网络拓扑图制作</a></p></li>
+<li><p><a class="reference internal" href="#logo" id="id37">LOGO在线制作</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id38">端口检测</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id39">状态码日志分析</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id40">网站日志分析</a></p></li>
+<li><p><a class="reference internal" href="#by-jsdifflib" id="id41">文本差异比较 by jsdifflib</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id42">在线并发测试工具</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id14" id="id43">开发工具</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id15" id="id44">数据库结构设计</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id45">MySQL可视化工具大全</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id46">在线正则测试和生成</a></p></li>
+<li><p><a class="reference internal" href="#xpath" id="id47">Xpath在线测试工具</a></p></li>
+<li><p><a class="reference internal" href="#json" id="id48">JSON格式化</a></p></li>
+<li><p><a class="reference internal" href="#xmljson" id="id49">XML和JSON互转</a></p></li>
+<li><p><a class="reference internal" href="#jsonpostman" id="id50">JSON互转postman参数</a></p></li>
+<li><p><a class="reference internal" href="#markdown-by-editor-md" id="id51">MarkDown 编辑器 by editor.md</a></p></li>
+<li><p><a class="reference internal" href="#github" id="id52">Github 文件夹下载</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id53">图标制作工具</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id54">推荐工具：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id20" id="id55">文档处理</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pdfword" id="id56">PDF转WORD</a></p></li>
+<li><p><a class="reference internal" href="#pdf" id="id57">PDF添加水印工具</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id58">PDF设置密码</a></p></li>
+<li><p><a class="reference internal" href="#ppt" id="id59">PPT密码设置工具</a></p></li>
+<li><p><a class="reference internal" href="#excelpdf" id="id60">Excel转PDF</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id22" id="id61">5款优秀的开源克隆软件</a></p></li>
+<li><p><a class="reference internal" href="#linux" id="id62">8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id23"><span class="section-number">7.1. </span>常用工具合集</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="id2">
+<h2><span class="section-number">7.1.1. </span><a class="reference external" href="https://www.cnblogs.com/aobing/p/11930859.html">吐血整理程序员工具集</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">7.1.2. </span>常用的开源镜像站（不定期更新）</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/Dy1an/p/12938199.html">https://www.cnblogs.com/Dy1an/p/12938199.html</a></p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">7.1.3. </span>10款搜索引擎，看到第一款就会毅然放弃百度！</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://mp.weixin.qq.com/s/TKGAAvqsymi55zXlnRkfdA">https://mp.weixin.qq.com/s/TKGAAvqsymi55zXlnRkfdA</a></p>
+</section>
+<section id="nextcloud">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">7.1.4. </span>搭建你自己的私有云盘——Nextcloud配置教程</a><a class="headerlink" href="#nextcloud" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.jianshu.com/p/f9eaa220d59e">https://www.jianshu.com/p/f9eaa220d59e</a></p>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">7.1.5. </span>网站运维</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="id6">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/speedtest.html">网速测试工具</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>为您提供在线免费网速测试，Ping测试，拥有海内外，网通、联通、电信、移动等全面速度测试！</p>
+</section>
+<section id="nginx1">
+<h3><a class="reference external" href="http://www.toolnb.com/tools/nginxcreate.html">Nginx配置生成器1</a><a class="headerlink" href="#nginx1" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="nginx">
+<h3><a class="toc-backref" href="#id31">Nginx配置生成器</a><a class="headerlink" href="#nginx" title="Permalink to this headline">¶</a></h3>
+<p>Nginx配置生成器1</p>
+<p><a class="reference external" href="https://it.baiked.com/tools/nginxconfig.html">https://it.baiked.com/tools/nginxconfig.html</a></p>
+<p>Nginx配置生成器2</p>
+<p><a class="reference external" href="https://www.toolnb.com/gj/nginx_create/?0.redirect=false">https://www.toolnb.com/gj/nginx_create/?0.redirect=false</a></p>
+<p>Nginx配置生成器3</p>
+<p><a class="reference external" href="https://www.digitalocean.com/community/tools/nginx?global.app.lang=zhCN">https://www.digitalocean.com/community/tools/nginx?global.app.lang=zhCN</a></p>
+</section>
+<section id="mysql">
+<h3><a class="reference external" href="https://imysql.cn/my_cnf_generator">MYSQL配置文件生成器</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id7">
+<h3><a class="reference external" href="https://www.toolnb.com/beian/baidu.com.html">备案查询</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>网址备案查询</p>
+</section>
+<section id="id8">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/fangzhan.html">仿站工具</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>输入要仿站的页面地址，自动下载所有JS、CSS、Images等等静态文件并自动打包进行下载。</p>
+</section>
+<section id="wordpress-by-mengkun">
+<h3><a class="reference external" href="http://tool.mkblog.cn/wptheme">Wordpress 主题嗅探 by mengkun</a><a class="headerlink" href="#wordpress-by-mengkun" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>在线分析出 Wordpress 博客的主题信息及下载地址</p>
+</section>
+<section id="id9">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/topology.html">网络拓扑图制作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>网络拓扑图是指用传输媒体互连各种设备的物理布局，即用什么方式把网络中的计算机等设备连接起来。拓扑图画出网络服务器、工作站的网络配置和相互间的连接。</p>
+</section>
+<section id="logo">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/logo.html">LOGO在线制作</a><a class="headerlink" href="#logo" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>一个好看的LOGO会让人耳目一新记忆尤深，有没有一个好的在线LOGO设计和生成的工具呢？当然是有的你需要LOGO在线制作大全来帮助你解决问！</p>
+</section>
+<section id="id10">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/getPort.html">端口检测</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>端口检测、检测常用端口是否打开</p>
+</section>
+<section id="id11">
+<h3><a class="reference external" href="https://www.toolnb.com/tools-spiderlogs-httpcodelogs.html">状态码日志分析</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>2018-6-5 新增nginx日志分析和 301 302状态码</p>
+<p>选择分析网站日志筛选404/500/502等等相关状态码导出和分析日志.</p>
+</section>
+<section id="id12">
+<h3><a class="reference external" href="https://www.toolnb.com/tools-logs-index.html">网站日志分析</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>上传网站日志分析支持iis和nginx格式，统计搜索引擎蜘蛛数量，请求最多的页面以及耗时等等进行统计报表输出！使用nginx和Apache日志时候，请求时长实际上是页面大小！</p>
+</section>
+<section id="by-jsdifflib">
+<h3><a class="reference external" href="http://tool.mkblog.cn/contrast">文本差异比较 by jsdifflib</a><a class="headerlink" href="#by-jsdifflib" title="Permalink to this headline">¶</a></h3>
+<p>本工具能快速比对两端代码或者是文本之间的差异，并直观地展现在您面前</p>
+</section>
+<section id="id13">
+<h3><a class="reference external" href="https://www.toolnb.com/tools-ConcurrentWebTest-Index.html">在线并发测试工具</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id43"><span class="section-number">7.1.6. </span>开发工具</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<section id="id15">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/graphqldesigner.html">数据库结构设计</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>一个简洁的数据库结构设计工具，支持MongoDB、PostgreSQL、MySQL数据库，支持导出SQL以及新增修改操作！</p>
+</section>
+<section id="id16">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/mysqlkshh.html">MySQL可视化工具大全</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id17">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/regex.html">在线正则测试和生成</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>正则表达式是对字符串操作的一种逻辑公式，就是用事先定义好的一些特定字符、及这些特定字符的组合，组成一个“规则字符串”，这个“规则字符串”用来表达对字符串的一种过滤逻辑。</p>
+</section>
+<section id="xpath">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/xpath.html">Xpath在线测试工具</a><a class="headerlink" href="#xpath" title="Permalink to this headline">¶</a></h3>
+<p>获取网页源码，或手动输入源码。输入xpath执行获取结果！
+XPath即为XML路径语言，它是一种用来确定XML（标准通用标记语言的子集）文档中某部分位置的语言。
+XPath基于XML的树状结构，有不同类型的节点，包括元素节点，属性节点和文本节点，提供在数据结构树中找寻节点的能力。</p>
+</section>
+<section id="json">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/json.html">JSON格式化</a><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>工具包含JSON的常规格式化显示，以及API接口测试自动格式化，支持get/post/postjson提交，自动生成接口文档开发必备！</p>
+</section>
+<section id="xmljson">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/xmlToJson.html">XML和JSON互转</a><a class="headerlink" href="#xmljson" title="Permalink to this headline">¶</a></h3>
+<p>XML和JSON互转</p>
+</section>
+<section id="jsonpostman">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/jsontopostman.html">JSON互转postman参数</a><a class="headerlink" href="#jsonpostman" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>将输入的json数据转换成postman的输入数据，减轻在postman上的重复操作！或将postman转换成json数据！</p>
+</section>
+<section id="markdown-by-editor-md">
+<h3><a class="reference external" href="http://tool.mkblog.cn/markdown">MarkDown 编辑器 by editor.md</a><a class="headerlink" href="#markdown-by-editor-md" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>在线编辑 MarkDown 文档，并可一键转换为 HTML 文件保存</p>
+</section>
+<section id="github">
+<h3><a class="reference external" href="http://tool.mkblog.cn/downgit">Github 文件夹下载</a><a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h3>
+<p>本工具可以单独下载某个 GitHub
+仓库中的文件夹，而无需将整个仓库下载下来。使用方法：打开 Github
+仓库，点击进入要下载的文件夹，然后复制浏览器地址栏的地址，粘贴到上面的输入框中，点击“下载”即可</p>
+</section>
+<section id="id18">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/tubiaozhizuo.html">图标制作工具</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>图标制作工具，适合安卓开发等需要图标的情况下，能快速生成可用的图标。</p>
+</section>
+<section id="id19">
+<h3><a class="toc-backref" href="#id54">推荐工具：</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://www.toolnb.com/tools/imagesToIcon.html">favicon图标在线制作</a></p>
+</section>
+</section>
+<section id="id20">
+<h2><a class="toc-backref" href="#id55"><span class="section-number">7.1.7. </span>文档处理</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<section id="pdfword">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/pdftoword.html">PDF转WORD</a><a class="headerlink" href="#pdfword" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>此工具可以方便的将pdf转成word，只需要简单上传等待处理即可完成！</p>
+<p>pdf转word , pdf转doc</p>
+</section>
+<section id="pdf">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/pdfwatermark.html">PDF添加水印工具</a><a class="headerlink" href="#pdf" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>pdf水印在线小工具添加文字和图片水印，可以批量为PDF文件添加文本或图片水印，如文件名、公司名、签名、产品图片，从而保护PDF文件。</p>
+<p>处理PDF页数一页以上否则处理不了</p>
+<p>水印图片大小：1656*2339分辨率</p>
+</section>
+<section id="id21">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/pdfsetpwd.html">PDF设置密码</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>PDF设置密码工具，可以将你的PDF设置上一个密码，只有密码的人才能查看这个PDF喔！</p>
+</section>
+<section id="ppt">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/pptsetpwd.html">PPT密码设置工具</a><a class="headerlink" href="#ppt" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>PPT密码设置工具，我们常常会对各种机密文件进行加密处理，以防信息泄露。对于我们来说，使用PPT设置密码和加权限等些基本操作。</p>
+</section>
+<section id="excelpdf">
+<h3><a class="reference external" href="https://www.toolnb.com/tools/exceltopdf.html">Excel转PDF</a><a class="headerlink" href="#excelpdf" title="Permalink to this headline">¶</a></h3>
+<p>工具说明：</p>
+<p>这是一个在线免费转换工具，可以将excel格式文件转换成pdf文件！</p>
+</section>
+</section>
+<section id="id22">
+<h2><span class="section-number">7.1.8. </span><a class="reference external" href="https://www.cnblogs.com/engineerLF/p/5393140.html">5款优秀的开源克隆软件</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<p>克隆是指将一台服务器上硬盘中的内容拷贝至一个存储媒介(另外的硬盘)或者是一个镜像文件中。复制磁盘在现代数据中心中很有价值，它的应用如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">全系统备份</span>
+<span class="mf">2.</span><span class="n">系统还原</span>
+<span class="mf">3.</span><span class="n">重启和恢复系统</span>
+<span class="mf">4.</span><span class="n">硬盘驱动升级</span>
+<span class="mf">5.</span><span class="n">将物理服务器转变为虚拟机或者其他</span>
+</pre></div>
+</div>
+<p>本文中，我将列举出一些用于制作磁盘镜像和拷贝的免费开源软件。这些软件都适用于GNU/Linux,*BSD
+和Mac OS X这些操作系统。</p>
+</section>
+<section id="linux">
+<h2><a class="toc-backref" href="#id62"><span class="section-number">7.1.9. </span>8个最佳开源“磁盘克隆/备份”软件为Linux服务器</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.howtoing.com/linux-disk-cloning-tools/">https://www.howtoing.com/linux-disk-cloning-tools/</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="7. 一些常用的工具" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.%E6%97%A5%E5%B8%B8%E5%B7%A5%E5%85%B7.html" class="btn btn-neutral float-right" title="7.2. 日常工具" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

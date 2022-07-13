@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.6. GitHelp &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. 构建写书博客" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html" />
+    <link rel="prev" title="1.5. Git_LFS_操作指南" href="5.Git_LFS_%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. Git入门到熟练</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="1.Git%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C.html">1.1. Git基础操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.Git%E4%BB%93%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8.html">1.2. Git仓库的使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Github%E9%AB%98%E7%BA%A7%E6%90%9C%E7%B4%A2%E6%96%B9%E5%BC%8F.html">1.3. Github高级搜索方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.Svn%E8%BF%81%E7%A7%BB%E8%87%B3git%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C.html">1.4. Svn迁移至git操作手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Git_LFS_%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97.html">1.5. Git_LFS_操作指南</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.6. GitHelp</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git">1.6.1. Git 常用命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#githubfork">1.6.2. 在github上fork项目如何同步并解决冲突</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>Git入门到熟练</a> &raquo;</li>
+      <li><span class="section-number">1.6. </span>GitHelp</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/01.Git入门到熟练/15.GitHelp.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#githelp" id="id10">GitHelp</a></p>
+<ul>
+<li><p><a class="reference internal" href="#git" id="id11">Git 常用命令</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id12">仓库</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id13">配置</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id14">增加/删除文件</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id15">代码提交</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id16">分支</a></p></li>
+<li><p><a class="reference internal" href="#pr" id="id17">PR分支拉取切换</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id18">标签</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id19">查看信息</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id20">远程同步</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id21">撤销</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#githubfork" id="id22">在github上fork项目如何同步并解决冲突</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="githelp">
+<h1><a class="toc-backref" href="#id10"><span class="section-number">1.6. </span>GitHelp</a><a class="headerlink" href="#githelp" title="Permalink to this headline">¶</a></h1>
+<section id="git">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">1.6.1. </span>Git 常用命令</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h2>
+<section id="id1">
+<h3><a class="toc-backref" href="#id12">仓库</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 在当前目录新建一个Git代码库
+$ git init
+
+# 新建一个目录，将其初始化为Git代码库
+$ git init [project-name]
+
+# 下载一个项目和它的整个代码历史
+$ git clone [url]
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id13">配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 显示当前的Git配置
+$ git config --list
+
+# 编辑Git配置文件
+$ git config -e [--global]
+
+# 设置提交代码时的用户信息
+$ git config [--global] user.name &quot;[name]&quot;
+$ git config [--global] user.email &quot;[email address]&quot;
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id14">增加/删除文件</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 添加指定文件到暂存区
+$ git add [file1] [file2] ...
+
+# 添加指定目录到暂存区，包括子目录
+$ git add [dir]
+
+# 添加当前目录的所有文件到暂存区
+$ git add .
+
+# 添加每个变化前，都会要求确认
+# 对于同一个文件的多处变化，可以实现分次提交
+$ git add -p
+
+# 删除工作区文件，并且将这次删除放入暂存区
+$ git rm [file1] [file2] ...
+
+# 停止追踪指定文件，但该文件会保留在工作区
+$ git rm --cached [file]
+
+# 改名文件，并且将这个改名放入暂存区
+$ git mv [file-original] [file-renamed]
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id15">代码提交</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 提交暂存区到仓库区
+$ git commit -m [message]
+
+# 提交暂存区的指定文件到仓库区
+$ git commit [file1] [file2] ... -m [message]
+
+# 提交工作区自上次commit之后的变化，直接到仓库区
+$ git commit -a
+
+# 提交时显示所有diff信息
+$ git commit -v
+
+# 使用一次新的commit，替代上一次提交
+# 如果代码没有任何新变化，则用来改写上一次commit的提交信息
+$ git commit --amend -m [message]
+
+# 重做上一次commit，并包括指定文件的新变化
+$ git commit --amend [file1] [file2] ...
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id16">分支</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 列出所有本地分支</span>
+$ git branch
+
+<span class="c1"># 列出所有远程分支</span>
+$ git branch -r
+
+<span class="c1"># 列出所有本地分支和远程分支</span>
+$ git branch -a
+
+<span class="c1"># 新建一个分支，但依然停留在当前分支</span>
+$ git branch <span class="o">[</span>branch-name<span class="o">]</span>
+
+<span class="c1"># 新建一个分支，并切换到该分支</span>
+$ git checkout -b <span class="o">[</span>branch<span class="o">]</span>
+
+<span class="c1"># 新建一个分支，指向指定commit</span>
+$ git branch <span class="o">[</span>branch<span class="o">]</span> <span class="o">[</span>commit<span class="o">]</span>
+
+<span class="c1"># 新建一个分支，与指定的远程分支建立追踪关系</span>
+$ git branch --track <span class="o">[</span>branch<span class="o">]</span> <span class="o">[</span>remote-branch<span class="o">]</span>
+
+
+<span class="c1"># 切换到指定分支，并更新工作区</span>
+$ git checkout <span class="o">[</span>branch-name<span class="o">]</span>
+
+<span class="c1"># 切换到上一个分支</span>
+$ git checkout -
+
+<span class="c1"># 建立追踪关系，在现有分支与指定的远程分支之间</span>
+$ git branch --set-upstream <span class="o">[</span>branch<span class="o">]</span> <span class="o">[</span>remote-branch<span class="o">]</span>
+
+<span class="c1"># 合并指定分支到当前分支</span>
+$ git merge <span class="o">[</span>branch<span class="o">]</span>
+
+<span class="c1"># 选择一个commit，合并进当前分支</span>
+$ git cherry-pick <span class="o">[</span>commit<span class="o">]</span>
+</pre></div>
+</div>
+<p>​</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 删除分支</span>
+$ git branch -d <span class="o">[</span>branch-name<span class="o">]</span>
+</pre></div>
+</div>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># 删除远程分支</span>
+$ git push origin --delete <span class="o">[</span>branch-name<span class="o">]</span>
+$ git branch -dr <span class="o">[</span>remote/branch<span class="o">]</span>
+</pre></div>
+</div>
+</section>
+<section id="pr">
+<h3><a class="toc-backref" href="#id17">PR分支拉取切换</a><a class="headerlink" href="#pr" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git fetch origin pull/14/head:oyjt/fix-docker-entrypoint
+$ git checkout oyjt/fix-docker-entrypoint
+
+$ git fetch origin pull/PRId/head:LocalBranchName
+其中，PRId 为该 Pull Request 的序号，LocalBranchName为拉取到本地后的分支名称。
+</pre></div>
+</div>
+<p>参考文献 <a class="reference external" href="https://blog.csdn.net/April_Lie/article/details/106554769">https://blog.csdn.net/April_Lie/article/details/106554769</a></p>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id18">标签</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 列出所有tag
+$ git tag
+
+# 新建一个tag在当前commit
+$ git tag [tag]
+
+# 新建一个tag在指定commit
+$ git tag [tag] [commit]
+
+# 删除本地tag
+$ git tag -d [tag]
+
+# 删除远程tag
+$ git push origin :refs/tags/[tagName]
+
+# 查看tag信息
+$ git show [tag]
+
+# 提交指定tag
+$ git push [remote] [tag]
+
+# 提交所有tag
+$ git push [remote] --tags
+
+# 新建一个分支，指向某个tag
+$ git checkout -b [branch] [tag]
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id19">查看信息</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 显示有变更的文件
+$ git status
+
+# 显示当前分支的版本历史
+$ git log
+
+# 显示commit历史，以及每次commit发生变更的文件
+$ git log --stat
+
+# 搜索提交历史，根据关键词
+$ git log -S [keyword]
+
+# 显示某个commit之后的所有变动，每个commit占据一行
+$ git log [tag] HEAD --pretty=format:%s
+
+# 显示某个commit之后的所有变动，其&quot;提交说明&quot;必须符合搜索条件
+$ git log [tag] HEAD --grep feature
+
+# 显示某个文件的版本历史，包括文件改名
+$ git log --follow [file]
+$ git whatchanged [file]
+
+# 显示指定文件相关的每一次diff
+$ git log -p [file]
+
+# 显示过去5次提交
+$ git log -5 --pretty --oneline
+
+# 显示所有提交过的用户，按提交次数排序
+$ git shortlog -sn
+
+# 显示指定文件是什么人在什么时间修改过
+$ git blame [file]
+
+# 显示暂存区和工作区的差异
+$ git diff
+
+# 显示暂存区和上一个commit的差异
+$ git diff --cached [file]
+
+# 显示工作区与当前分支最新commit之间的差异
+$ git diff HEAD
+
+# 显示两次提交之间的差异
+$ git diff [first-branch]...[second-branch]
+
+# 显示今天你写了多少行代码
+$ git diff --shortstat &quot;@{0 day ago}&quot;
+
+# 显示某次提交的元数据和内容变化
+$ git show [commit]
+
+# 显示某次提交发生变化的文件
+$ git show --name-only [commit]
+
+# 显示某次提交时，某个文件的内容
+$ git show [commit]:[filename]
+
+# 显示当前分支的最近几次提交
+$ git reflog
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id20">远程同步</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 下载远程仓库的所有变动
+$ git fetch [remote]
+
+# 显示所有远程仓库
+$ git remote -v
+
+# 显示某个远程仓库的信息
+$ git remote show [remote]
+
+# 增加一个新的远程仓库，并命名
+$ git remote add [shortname] [url]
+
+# 取回远程仓库的变化，并与本地分支合并
+$ git pull [remote] [branch]
+
+# 上传本地指定分支到远程仓库
+$ git push [remote] [branch]
+
+# 强行推送当前分支到远程仓库，即使有冲突
+$ git push [remote] --force
+
+# 推送所有分支到远程仓库
+$ git push [remote] --all
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id21">撤销</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 恢复暂存区的指定文件到工作区
+$ git checkout [file]
+
+# 恢复某个commit的指定文件到暂存区和工作区
+$ git checkout [commit] [file]
+
+# 恢复暂存区的所有文件到工作区
+$ git checkout .
+
+# 重置暂存区的指定文件，与上一次commit保持一致，但工作区不变
+$ git reset [file]
+
+# 重置暂存区与工作区，与上一次commit保持一致
+$ git reset --hard
+
+# 重置当前分支的指针为指定commit，同时重置暂存区，但工作区不变
+$ git reset [commit]
+
+# 重置当前分支的HEAD为指定commit，同时重置暂存区和工作区，与指定commit一致
+$ git reset --hard [commit]
+
+# 重置当前HEAD为指定commit，但保持暂存区和工作区不变
+$ git reset --keep [commit]
+
+# 新建一个commit，用来撤销指定commit
+# 后者的所有变化都将被前者抵消，并且应用到当前分支
+$ git revert [commit]
+
+暂时将未提交的变化移除，稍后再移入
+$ git stash
+$ git stash pop
+</pre></div>
+</div>
+</section>
+</section>
+<section id="githubfork">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">1.6.2. </span>在github上fork项目如何同步并解决冲突</a><a class="headerlink" href="#githubfork" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/yehaia1/archive/2019/04/16/10715741.html">https://www.cnblogs.com/yehaia1/archive/2019/04/16/10715741.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="5.Git_LFS_%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97.html" class="btn btn-neutral float-left" title="1.5. Git_LFS_操作指南" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html" class="btn btn-neutral float-right" title="2. 构建写书博客" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

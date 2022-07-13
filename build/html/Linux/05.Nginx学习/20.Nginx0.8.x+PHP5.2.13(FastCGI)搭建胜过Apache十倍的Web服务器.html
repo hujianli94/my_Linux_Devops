@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5.19. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5.20. Nginx文件下载服务器搭建" href="21.Nginx%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" />
+    <link rel="prev" title="5.18. Nginx配置生成器" href="19.Nginx%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E5%99%A8.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">5. Nginx学习</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.nginx%E5%85%A5%E9%97%A8%E7%AE%80%E4%BB%8B.html">5.1. nginx入门简介</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.nginx%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E7%AE%A1%E7%90%86.html">5.2. nginx常用命令管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.nginx%E7%89%88%E6%9C%AC%E5%8D%87%E7%BA%A7.html">5.3. nginx版本升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%8C%96%E4%B8%80.html">5.4. nginx配置文件优化一</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.nginx%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%BC%98%E5%8C%96%E4%BA%8C.html">5.5. nginx配置文件优化二</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.nginx%E5%A4%9A%E7%AB%99%E7%82%B9%E9%85%8D%E7%BD%AE.html">5.6. nginx多站点配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.nginx%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E9%85%8D%E7%BD%AE%2B%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5.html">5.7. nginx负载均衡配置+健康检查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%81%9A%E4%B8%8B%E8%BD%BD%E6%96%87%E4%BB%B6.html">5.8. nginx反向代理做下载文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.Nginx-location%E6%B7%B1%E5%85%A5%E8%A7%A3%E6%9E%90.html">5.9. Nginx location 深入解析</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.Nginx%E5%AE%9E%E6%88%98-%E5%8A%A8%E9%9D%99%E5%88%86%E7%A6%BB%E9%85%8D%E7%BD%AE.html">5.10. Nginx实战-动静分离配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Nginx%E6%97%A5%E5%BF%97%E6%A0%BC%E5%BC%8F%E3%80%81%E6%97%A5%E5%BF%97%E5%88%86%E6%9E%90%E4%B8%8E%E5%88%87%E5%89%B2.html">5.11. Nginx日志格式、日志分析与切割</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.Nginx%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6.html">5.12. Nginx访问控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.Nginx%E9%83%A8%E7%BD%B2HTTPS.html">5.13. 12.Nginx 部署HTTPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E6%A1%88%E4%BE%8B-Nginx%E4%BD%9C%E4%B8%BAWeb%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BA%94%E7%94%A8.html">5.14. 案例-Nginx作为Web缓存服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.%E6%A1%88%E4%BE%8B-Nginx%E4%BD%9C%E4%B8%BA%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BA%94%E7%94%A8.html">5.15. 案例-Nginx作为负载均衡服务器应用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html">5.16. Nginx 正向代理配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.Nginx%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C.html">5.17. Nginx中文手册</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.Nginx%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E5%99%A8.html">5.18. Nginx配置生成器</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">5.19. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#nginx-php">5.19.1. Nginx PHP服务器环境搭建</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#php-fpm">5.19.2. 启动多个php-fpm进程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nginxfastcgi">5.19.3. Nginx基于FastCGI实现负载均衡</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="21.Nginx%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">5.20. Nginx文件下载服务器搭建</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">5. </span>Nginx学习</a> &raquo;</li>
+      <li><span class="section-number">5.19. </span>Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/05.Nginx学习/20.Nginx0.8.x+PHP5.2.13(FastCGI)搭建胜过Apache十倍的Web服务器.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#nginx-0-8-x-php-5-2-13-fastcgi-apacheweb" id="id1">Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#nginx-php" id="id2">Nginx PHP服务器环境搭建</a></p></li>
+<li><p><a class="reference internal" href="#php-fpm" id="id3">启动多个php-fpm进程</a></p></li>
+<li><p><a class="reference internal" href="#nginxfastcgi" id="id4">Nginx基于FastCGI实现负载均衡</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="nginx-0-8-x-php-5-2-13-fastcgi-apacheweb">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">5.19. </span>Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a><a class="headerlink" href="#nginx-0-8-x-php-5-2-13-fastcgi-apacheweb" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="http://blog.zyan.cc/nginx_php_v6">http://blog.zyan.cc/nginx_php_v6</a></p>
+<section id="nginx-php">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">5.19.1. </span>Nginx PHP服务器环境搭建</a><a class="headerlink" href="#nginx-php" title="Permalink to this headline">¶</a></h2>
+<p>CentOS 7 默认的 PHP 版本是 5.3，可以使用 Remi 扩展源安装 PHP 5.6 和
+PHP-FPM。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>yum install -y epel-release               <span class="c1"># 安装EPEL扩展源</span>
+
+yum provides php   <span class="c1">#自带的只有5.4版本</span>
+rpm -Uvh https://mirror.webtatic.com/yum/el7/epel-release.rpm         <span class="c1">#更新源</span>
+rpm -Uvh https://mirror.webtatic.com/yum/el7/webtatic-release.rpm
+yum remove php-common -y     <span class="c1">#移除系统自带的php-common</span>
+yum install -y php56w php56w-opcache php56w-xml php56w-mcrypt php56w-gd php56w-devel php56w-mysql php56w-intl php56w-mbstring         <span class="c1">#安装依赖包</span>
+php -v                    <span class="c1">#版本变为5.6</span>
+yum provides php-fpm      <span class="c1">#因为我是准备搭建lnmp，所以安装php-fpm，这里会提示多个安装源，选择5.6版本的安装就可以了</span>
+yum install php56w-fpm-5.6.31-1.w7.x86_64 -y
+
+systemctl <span class="nb">enable</span> php-fpm
+systemctl start php-fpm           <span class="c1"># 启动PHP-FPM服务</span>
+</pre></div>
+</div>
+<p>在 Nginx 的 conf 文件夹中创建文件 fscgi.conf，用于编辑 FastCGI
+的全局配置，配置内容如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 缓冲区配置</span>
+<span class="n">fastcgi_buffering</span> <span class="n">on</span><span class="p">;</span>             <span class="c1"># 默认启用缓冲区</span>
+<span class="n">fastcgi_buffers</span> <span class="mi">8</span> <span class="mi">64</span><span class="n">k</span><span class="p">;</span>            <span class="c1"># 若响应数据大小小于512KB，则会分配8个64KB缓冲区为其缓</span>
+                                  <span class="c1"># 冲；若大于512KB，则超出的部分会存储到临时文件中</span>
+<span class="n">fastcgi_buffer_size</span> <span class="mi">64</span><span class="n">k</span><span class="p">;</span>          <span class="c1"># 读取FastCGI服务器响应数据第一部分的缓冲区大小为64KB，</span>
+                                  <span class="c1"># 通常包含响应头信息</span>
+<span class="n">fastcgi_busy_buffers_size</span> <span class="mi">128</span><span class="n">K</span><span class="p">;</span>   <span class="c1"># 繁忙时向客户端发送响应的缓冲区大小为128KB</span>
+<span class="n">fastcgi_limit_rate</span> <span class="mi">0</span><span class="p">;</span>             <span class="c1"># 默认不做限制</span>
+<span class="n">fastcgi_max_temp_file_size</span> <span class="mi">1024</span><span class="n">M</span><span class="p">;</span> <span class="c1"># 临时文件中大小为1024MB</span>
+<span class="n">fastcgi_temp_file_write_size</span> <span class="mi">64</span><span class="n">k</span><span class="p">;</span> <span class="c1"># 每次写入临时文件的数据大小为64KB</span>
+<span class="c1"># fastcgi_temp_path使用默认配置</span>
+
+<span class="c1"># 请求处理</span>
+<span class="n">fastcgi_request_buffering</span> <span class="n">on</span><span class="p">;</span>     <span class="c1"># 默认启用读取整个请求体到缓冲区后再向FastCGI服务器发送请求</span>
+<span class="n">fastcgi_pass_request_body</span> <span class="n">on</span><span class="p">;</span>     <span class="c1"># 默认将客户端请求体传递给FastCGI服务器</span>
+<span class="n">fastcgi_pass_request_headers</span> <span class="n">on</span><span class="p">;</span>  <span class="c1"># 默认将客户端请求头传递给FastCGI服务器</span>
+
+<span class="c1"># FastCGI连接配置</span>
+<span class="n">fastcgi_connect_timeout</span> <span class="mi">60</span><span class="n">s</span><span class="p">;</span>      <span class="c1"># 默认Nginx与FastCGI服务器建立连接的超时时间为60s</span>
+<span class="n">fastcgi_keep_conn</span> <span class="n">on</span><span class="p">;</span>             <span class="c1"># 启用保持连接</span>
+<span class="n">fastcgi_ignore_client_abort</span> <span class="n">on</span><span class="p">;</span>   <span class="c1"># 当客户端关闭连接时，同时关闭与FastCGI服务器的连接</span>
+<span class="n">fastcgi_read_timeout</span> <span class="mi">60</span><span class="n">s</span><span class="p">;</span>         <span class="c1"># 默认连续两个从FastCGI服务器接收数据的读操作之间的间隔</span>
+                                  <span class="c1"># 时间为60s</span>
+<span class="n">fastcgi_send_timeout</span> <span class="mi">60</span><span class="n">s</span><span class="p">;</span>         <span class="c1"># 默认连续两个发送到FastCGI服务器的写操作之间的间隔时间</span>
+                                  <span class="c1"># 为60s</span>
+<span class="n">fastcgi_socket_keepalive</span> <span class="n">on</span><span class="p">;</span>      <span class="c1"># FastCGI的连接启用so-keepalive socket选项</span>
+
+<span class="c1"># 响应处理</span>
+<span class="n">fastcgi_force_ranges</span> <span class="n">on</span> <span class="p">;</span>         <span class="c1"># 强制启用byte-range请求支持</span>
+<span class="n">fastcgi_hide_header</span> <span class="n">X</span><span class="o">-</span><span class="n">Powered</span><span class="o">-</span><span class="n">By</span><span class="p">;</span> <span class="c1"># 隐藏PHP版本字段</span>
+<span class="c1"># fastcgi_pass_header无必须传递的特殊头字段属性</span>
+
+<span class="n">fastcgi_ignore_headers</span> <span class="n">X</span><span class="o">-</span><span class="n">Accel</span><span class="o">-</span><span class="n">Redirect</span> <span class="n">X</span><span class="o">-</span><span class="n">Accel</span><span class="o">-</span><span class="n">Expires</span> \
+                       <span class="n">X</span><span class="o">-</span><span class="n">Accel</span><span class="o">-</span><span class="n">Limit</span><span class="o">-</span><span class="n">Rate</span> <span class="n">X</span><span class="o">-</span><span class="n">Accel</span><span class="o">-</span><span class="n">Buffering</span> \
+                       <span class="n">X</span><span class="o">-</span><span class="n">Accel</span><span class="o">-</span><span class="n">Charset</span> <span class="n">Expires</span> \
+                       <span class="n">Cache</span><span class="o">-</span><span class="n">Control</span> <span class="n">Set</span><span class="o">-</span><span class="n">Cookie</span> <span class="n">Vary</span><span class="p">;</span>
+                                  <span class="c1"># 禁止Nginx处理从FastCGI获取响应的头属性字段</span>
+
+<span class="c1"># 异常处理</span>
+<span class="n">fastcgi_intercept_errors</span> <span class="n">on</span><span class="p">;</span>      <span class="c1"># 在FastCGI响应数据中响应码大于等于300时重定向给Nginx</span>
+<span class="n">fastcgi_next_upstream</span>   <span class="n">error</span> <span class="n">timeout</span> <span class="n">invalid_header</span> \
+                        <span class="n">http_500</span> <span class="n">http_503</span> <span class="n">http_403</span> \
+                        <span class="n">http_404</span> <span class="n">http_429</span><span class="p">;</span>  <span class="c1"># 当出现指定的条件时，将用户请求传递给upstream</span>
+                                            <span class="c1"># 中的下一个服务器</span>
+<span class="n">fastcgi_next_upstream_timeout</span> <span class="mi">0</span><span class="p">;</span>            <span class="c1"># 不限制将用户请求传递给upstream中的下一个</span>
+                                            <span class="c1"># 服务器的超时时间</span>
+<span class="n">fastcgi_next_upstream_tries</span> <span class="mi">0</span><span class="p">;</span>              <span class="c1"># 不限制将用户请求传递给upstream中的下一个</span>
+                                            <span class="c1"># 服务器的尝试次数</span>
+</pre></div>
+</div>
+</section>
+<section id="php-fpm">
+<h2><a class="toc-backref" href="#id3"><span class="section-number">5.19.2. </span>启动多个php-fpm进程</a><a class="headerlink" href="#php-fpm" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">php-fpm.conf</span></code>文件.默认只配置了一个 php-fpm pool
+就是<code class="docutils literal notranslate"><span class="pre">/etc/php-fpm.d/www.conf</span></code>：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># cat /etc/php-fpm.conf |grep -v &quot;;&quot;|grep -v &quot;^$&quot;</span>
+<span class="nv">include</span><span class="o">=</span>/etc/php-fpm.d/*.conf
+<span class="o">[</span>global<span class="o">]</span>
+<span class="nv">pid</span> <span class="o">=</span> /var/run/php-fpm/php-fpm.pid
+<span class="nv">error_log</span> <span class="o">=</span> /var/log/php-fpm/error.log
+<span class="nv">daemonize</span> <span class="o">=</span> yes
+</pre></div>
+</div>
+<p>在此我新增加了2个 php-fpm pool。总共3个php-fpm
+pool对应9000、9001、9002三个端口。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost php-fpm.d]# tree
+.
+├── www1.conf
+├── www2.conf
+└── www.conf
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">www.conf</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># cat www.conf |grep -v &quot;^;&quot;|grep -v &quot;^$&quot;</span>
+<span class="o">[</span>www<span class="o">]</span>
+<span class="nv">listen</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:9000
+
+listen.allowed_clients <span class="o">=</span> <span class="m">127</span>.0.0.1
+<span class="nv">user</span> <span class="o">=</span> apache
+<span class="nv">group</span> <span class="o">=</span> apache
+<span class="nv">pm</span> <span class="o">=</span> dynamic
+pm.max_children <span class="o">=</span> <span class="m">50</span>
+pm.start_servers <span class="o">=</span> <span class="m">5</span>
+pm.min_spare_servers <span class="o">=</span> <span class="m">5</span>
+pm.max_spare_servers <span class="o">=</span> <span class="m">35</span>
+<span class="nv">slowlog</span> <span class="o">=</span> /var/log/php-fpm/www-slow.log
+php_admin_value<span class="o">[</span>error_log<span class="o">]</span> <span class="o">=</span> /var/log/php-fpm/www-error.log
+php_admin_flag<span class="o">[</span>log_errors<span class="o">]</span> <span class="o">=</span> on
+php_value<span class="o">[</span>session.save_handler<span class="o">]</span> <span class="o">=</span> files
+php_value<span class="o">[</span>session.save_path<span class="o">]</span>    <span class="o">=</span> /var/lib/php/session
+php_value<span class="o">[</span>soap.wsdl_cache_dir<span class="o">]</span>  <span class="o">=</span> /var/lib/php/wsdlcache
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">www1.conf</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># cat www1.conf |grep -v &quot;^;&quot;|grep -v &quot;^$&quot;</span>
+<span class="o">[</span>www1<span class="o">]</span>
+<span class="nv">listen</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:9001
+
+listen.allowed_clients <span class="o">=</span> <span class="m">127</span>.0.0.1
+<span class="nv">user</span> <span class="o">=</span> apache
+<span class="nv">group</span> <span class="o">=</span> apache
+<span class="nv">pm</span> <span class="o">=</span> dynamic
+pm.max_children <span class="o">=</span> <span class="m">50</span>
+pm.start_servers <span class="o">=</span> <span class="m">5</span>
+pm.min_spare_servers <span class="o">=</span> <span class="m">5</span>
+pm.max_spare_servers <span class="o">=</span> <span class="m">35</span>
+<span class="nv">slowlog</span> <span class="o">=</span> /var/log/php-fpm/www-slow.log
+
+php_admin_value<span class="o">[</span>error_log<span class="o">]</span> <span class="o">=</span> /var/log/php-fpm/www-error.log
+php_admin_flag<span class="o">[</span>log_errors<span class="o">]</span> <span class="o">=</span> on
+php_value<span class="o">[</span>session.save_handler<span class="o">]</span> <span class="o">=</span> files
+php_value<span class="o">[</span>session.save_path<span class="o">]</span>    <span class="o">=</span> /var/lib/php/session
+php_value<span class="o">[</span>soap.wsdl_cache_dir<span class="o">]</span>  <span class="o">=</span> /var/lib/php/wsdlcache
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">www2.conf</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># cat www2.conf |grep -v &quot;^;&quot;|grep -v &quot;^$&quot;</span>
+<span class="o">[</span>www2<span class="o">]</span>
+<span class="nv">listen</span> <span class="o">=</span> <span class="m">127</span>.0.0.1:9002
+
+listen.allowed_clients <span class="o">=</span> <span class="m">127</span>.0.0.1
+<span class="nv">user</span> <span class="o">=</span> apache
+<span class="nv">group</span> <span class="o">=</span> apache
+<span class="nv">pm</span> <span class="o">=</span> dynamic
+pm.max_children <span class="o">=</span> <span class="m">50</span>
+pm.start_servers <span class="o">=</span> <span class="m">5</span>
+pm.min_spare_servers <span class="o">=</span> <span class="m">5</span>
+pm.max_spare_servers <span class="o">=</span> <span class="m">35</span>
+<span class="nv">slowlog</span> <span class="o">=</span> /var/log/php-fpm/www-slow.log
+
+php_admin_value<span class="o">[</span>error_log<span class="o">]</span> <span class="o">=</span> /var/log/php-fpm/www-error.log
+php_admin_flag<span class="o">[</span>log_errors<span class="o">]</span> <span class="o">=</span> on
+php_value<span class="o">[</span>session.save_handler<span class="o">]</span> <span class="o">=</span> files
+php_value<span class="o">[</span>session.save_path<span class="o">]</span>    <span class="o">=</span> /var/lib/php/session
+php_value<span class="o">[</span>soap.wsdl_cache_dir<span class="o">]</span>  <span class="o">=</span> /var/lib/php/wsdlcache
+</pre></div>
+</div>
+<p>这里可以参考下面文章：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/pzk7788/p/10341113.html">https://www.cnblogs.com/pzk7788/p/10341113.html</a></p>
+<p><a class="reference external" href="https://blog.51cto.com/8844414/2161558">https://blog.51cto.com/8844414/2161558</a></p>
+<p>查看php-fpm进程信息</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># ps aux|grep php-fpm</span>
+root      <span class="m">84991</span>  <span class="m">0</span>.0  <span class="m">2</span>.5 <span class="m">577232</span> <span class="m">25404</span> ?        Ss   <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: master process <span class="o">(</span>/etc/php-fpm.conf<span class="o">)</span>
+apache    <span class="m">84993</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www
+apache    <span class="m">84994</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www
+apache    <span class="m">84995</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www
+apache    <span class="m">84996</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www
+apache    <span class="m">84997</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www
+apache    <span class="m">84998</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www1
+apache    <span class="m">84999</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www1
+apache    <span class="m">85000</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www1
+apache    <span class="m">85001</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www1
+apache    <span class="m">85002</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www1
+apache    <span class="m">85003</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www2
+apache    <span class="m">85004</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www2
+apache    <span class="m">85005</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www2
+apache    <span class="m">85006</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6348</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www2
+apache    <span class="m">85007</span>  <span class="m">0</span>.0  <span class="m">0</span>.6 <span class="m">577112</span>  <span class="m">6352</span> ?        S    <span class="m">15</span>:37   <span class="m">0</span>:00 php-fpm: pool www2
+root      <span class="m">85685</span>  <span class="m">0</span>.0  <span class="m">0</span>.0 <span class="m">112824</span>   <span class="m">976</span> pts/0    R+   <span class="m">15</span>:49   <span class="m">0</span>:00 grep --color<span class="o">=</span>auto php-fpm
+</pre></div>
+</div>
+<p>查看端口使用情况</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost php-fpm.d<span class="o">]</span><span class="c1"># netstat -tunpl</span>
+Active Internet connections <span class="o">(</span>only servers<span class="o">)</span>
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">127</span>.0.0.1:9000          <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">84991</span>/php-fpm: mast
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">127</span>.0.0.1:9001          <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">84991</span>/php-fpm: mast
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">127</span>.0.0.1:9002          <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">84991</span>/php-fpm: mast
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>.0.0.0:111             <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">1</span>/systemd
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>.0.0.0:8080            <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">84561</span>/nginx: master
+tcp        <span class="m">0</span>      <span class="m">0</span> <span class="m">0</span>.0.0.0:80              <span class="m">0</span>.0.0.0:*               LISTEN      <span class="m">84561</span>/nginx: master
+</pre></div>
+</div>
+</section>
+<section id="nginxfastcgi">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">5.19.3. </span>Nginx基于FastCGI实现负载均衡</a><a class="headerlink" href="#nginxfastcgi" title="Permalink to this headline">¶</a></h2>
+<p>Nginx 支持后端多个 FastCGI
+服务器的负载均衡，负载均衡有两种方式：一种是通过域名解析多个 FastCGI
+服务器，该方式通过所有域名地址轮询（round-robin）的方式实现负载；另一种是通过配置
+Nginx 的 upstream 模块实现负载。</p>
+<p>本节通过后一种方式实现负载均衡场景的搭建。Nginx 的 FastCGI
+模块支持对后端 PHP
+解析数据的缓存，对于动态数据的缓存可以在实际应用场景中提升动态网站的访问速度。</p>
+<p>安装 PHP-FPM 后，如果把 PHP 代码部署在与 Nginx 不同的服务器上，需要修改
+PHP-FPM 服务器中的 <code class="docutils literal notranslate"><span class="pre">/etc/php-fpm.d/www.conf</span></code>配置。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># PHP-FPM绑定本机所有IP</span>
+sed -i <span class="s2">&quot;s/^listen =.*/listen = 0.0.0.0:9000/g&quot;</span> /etc/php-fpm.d/www.conf
+
+<span class="c1"># 允许任何主机访问PHP-FPM服务</span>
+sed -i <span class="s2">&quot;s/^listen.allowed_clients/;listen.allowed_clients/g&quot;</span> /etc/php-fpm.d/www.conf
+</pre></div>
+</div>
+<p>Nginx 配置样例如下：</p>
+<p><code class="docutils literal notranslate"><span class="pre">fastcgi_3worker.conf</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost conf.d<span class="o">]</span><span class="c1"># cat fastcgi_3worker.conf</span>
+upstream fscgi_server <span class="o">{</span>
+    ip_hash<span class="p">;</span>                               <span class="c1"># session会话保持</span>
+    server <span class="m">127</span>.0.0.1:9000<span class="p">;</span>                 <span class="c1"># PHP-FPM服务器IP</span>
+    server <span class="m">127</span>.0.0.1:9001<span class="p">;</span>                 <span class="c1"># PHP-FPM服务器IP</span>
+    server <span class="m">127</span>.0.0.1:9002<span class="p">;</span>                 <span class="c1"># PHP-FPM服务器IP</span>
+
+<span class="o">}</span>
+
+
+fastcgi_cache_path /usr/local/nginx/nginx-cache1
+                            <span class="nv">levels</span><span class="o">=</span><span class="m">1</span>:2
+                            <span class="nv">keys_zone</span><span class="o">=</span>fscgi_hdd1:100m
+                            <span class="nv">max_size</span><span class="o">=</span>10g
+                            <span class="nv">use_temp_path</span><span class="o">=</span>off
+                            <span class="nv">inactive</span><span class="o">=</span>60m<span class="p">;</span>    <span class="c1"># 设置缓存存储路径1，缓存的共享内存名称和大小</span>
+                                             <span class="c1"># 100MB，无效缓存的判断时间为1小时</span>
+
+fastcgi_cache_path /usr/local/nginx/nginx-cache2
+                            <span class="nv">levels</span><span class="o">=</span><span class="m">1</span>:2
+                            <span class="nv">keys_zone</span><span class="o">=</span>fscgi_hdd2:100m
+                            <span class="nv">max_size</span><span class="o">=</span>10g
+                            <span class="nv">use_temp_path</span><span class="o">=</span>off
+                            <span class="nv">inactive</span><span class="o">=</span>60m<span class="p">;</span>   <span class="c1"># 设置缓存存储路径2，缓存的共享内存名称和大小</span>
+                                            <span class="c1"># 100MB，无效缓存的判断时间为1小时</span>
+
+split_clients <span class="nv">$request_uri</span> <span class="nv">$fscgi_cache</span> <span class="o">{</span>
+              <span class="m">50</span>%           <span class="s2">&quot;fscgi_hdd1&quot;</span><span class="p">;</span>  <span class="c1"># 50%请求的缓存存储在第一个磁盘上</span>
+              <span class="m">50</span>%           <span class="s2">&quot;fscgi_hdd2&quot;</span><span class="p">;</span>  <span class="c1"># 50%请求的缓存存储在第二个磁盘上</span>
+<span class="o">}</span>
+
+server <span class="o">{</span>
+    listen <span class="m">8080</span><span class="p">;</span>
+    root /opt/nginx-web/phpweb<span class="p">;</span>
+    index index.php<span class="p">;</span>
+    include        /usr/local/nginx/conf/fastcgi.conf<span class="p">;</span>             <span class="c1"># 引入默认配置文件</span>
+
+    location ~ <span class="se">\.</span><span class="o">(</span>gif<span class="p">|</span>jpg<span class="p">|</span>png<span class="p">|</span>htm<span class="p">|</span>html<span class="p">|</span>css<span class="p">|</span>js<span class="p">|</span>flv<span class="p">|</span>ico<span class="p">|</span>swf<span class="o">)(</span>.*<span class="o">)</span> <span class="o">{</span>  <span class="c1"># 静态资源文件过期时间</span>
+                                                                  <span class="c1"># 为12小时</span>
+        expires      12h<span class="p">;</span>
+    <span class="o">}</span>
+
+    <span class="nb">set</span> <span class="nv">$no_cache</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">if</span> <span class="o">(</span><span class="nv">$query_string</span> !<span class="o">=</span> <span class="s2">&quot;&quot;</span><span class="o">)</span> <span class="o">{</span>              <span class="c1"># URI无参数的数据不进行缓存</span>
+        <span class="nb">set</span> <span class="nv">$no_cache</span> <span class="m">1</span><span class="p">;</span>
+    <span class="o">}</span>
+
+    location ~ <span class="se">\.</span>php<span class="o">(</span>.*<span class="o">)</span>$ <span class="o">{</span>
+        root /opt/nginx-web/phpweb<span class="p">;</span>
+
+        fastcgi_cache <span class="nv">$fscgi_cache</span><span class="p">;</span>        <span class="c1"># 启用fastcgi_cache_path设置的$fscgi_cache</span>
+                                           <span class="c1"># 的共享内存区域做缓存</span>
+        fastcgi_cache_key <span class="si">${</span><span class="nv">request_method</span><span class="si">}</span>://<span class="nv">$host$request_uri</span><span class="p">;</span> <span class="c1"># 设置缓存的关键字</span>
+        fastcgi_cache_lock on<span class="p">;</span>             <span class="c1"># 启用缓存锁</span>
+        fastcgi_cache_lock_age 5s<span class="p">;</span>         <span class="c1"># 启用缓存锁时，添加缓存请求的处理时间为5s</span>
+        fastcgi_cache_lock_timeout 5s<span class="p">;</span>     <span class="c1"># 等待缓存锁超时时间为5s</span>
+        fastcgi_cache_methods GET HEAD<span class="p">;</span>    <span class="c1"># 默认对GET及HEAD方法的请求进行缓存</span>
+        fastcgi_cache_min_uses <span class="m">1</span><span class="p">;</span>          <span class="c1"># 响应数据被请求一次就将被缓存</span>
+
+        fastcgi_no_cache <span class="nv">$no_cache</span><span class="p">;</span>        <span class="c1"># $no_cache时对当前请求不进行缓存</span>
+        fastcgi_cache_bypass <span class="nv">$no_cache</span><span class="p">;</span>    <span class="c1"># $no_cache时对当前请求不进行缓存</span>
+
+        fastcgi_cache_use_stale error timeout invalid_header
+                                updating http_500 http_503
+                                http_403 http_404 http_429<span class="p">;</span>        <span class="c1"># 当出现指定的条件时，使用</span>
+                                                                   <span class="c1"># 已经过期的缓存响应数据</span>
+        fastcgi_cache_background_update on<span class="p">;</span> <span class="c1"># 允许使用过期的响应数据时，启用后台子请求用于</span>
+                                            <span class="c1"># 更新过期缓存，并将过期的缓存响应数据返回给客户端</span>
+
+        fastcgi_cache_revalidate on<span class="p">;</span>       <span class="c1"># 当缓存过期时，向后端服务器发起包含If-</span>
+                                           <span class="c1"># Modified-Since和If-None-Match HTTP消息</span>
+                                           <span class="c1"># 头字段的服务端校验</span>
+        fastcgi_cache_valid <span class="m">200</span> <span class="m">301</span> <span class="m">302</span> 10h<span class="p">;</span> <span class="c1"># 200 301 302状态码的响应缓存10小时</span>
+        fastcgi_cache_valid any 1m<span class="p">;</span>        <span class="c1"># 其他状态码的响应缓存1分钟</span>
+
+        add_header X-Cache-Status <span class="nv">$upstream_cache_status</span><span class="p">;</span>   <span class="c1"># 查看缓存命中状态</span>
+
+        fastcgi_pass   fscgi_server<span class="p">;</span>
+        fastcgi_index  index.php<span class="p">;</span>
+        fastcgi_split_path_info       ^<span class="o">(</span>.+<span class="se">\.</span>php<span class="o">)(</span>.*<span class="o">)</span>$<span class="p">;</span>      <span class="c1"># 获取$fastcgi_path_info变量值</span>
+        fastcgi_param PATH_INFO       <span class="nv">$fastcgi_path_info</span><span class="p">;</span>   <span class="c1"># 赋值给参数PATH_INFO</span>
+        include         /usr/local/nginx/conf/fastcgi.conf<span class="p">;</span>                        <span class="c1"># 引入默认参数文件</span>
+    <span class="o">}</span>
+
+    error_page <span class="m">404</span> /404.html<span class="p">;</span>
+    error_page <span class="m">500</span> <span class="m">502</span> <span class="m">503</span> <span class="m">504</span> /50x.html<span class="p">;</span>
+<span class="o">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="19.Nginx%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E5%99%A8.html" class="btn btn-neutral float-left" title="5.18. Nginx配置生成器" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="21.Nginx%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-right" title="5.20. Nginx文件下载服务器搭建" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

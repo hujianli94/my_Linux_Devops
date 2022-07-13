@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.2. RAID与LVM磁盘阵列 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.3. NFS共享服务器搭建" href="2.NFS%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" />
+    <link rel="prev" title="2.1. RPM软件包管理" href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.2. RAID与LVM磁盘阵列</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#raid">2.2.1. RAID 技术</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.2.2. 创建管理RAID实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raid-raid0raid5">2.2.3. 创建Raid(创建Raid0和Raid5)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.2.4. Raid性能测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.2.5. Raid故障模拟</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raid-10">2.2.6. 制作一个RAID 10磁盘阵列</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raid-5">2.2.7. 磁盘阵列+备份盘 (RAID 5)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lvm">2.2.8. LVM逻辑卷概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.2.9. 创建LVM分区实例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">2.2.10. 修改LVM分区容量</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">2.2.11. 删除LVM分区</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98mount%E5%91%BD%E4%BB%A4.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E4%BD%BF%E7%94%A8iSCSI%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="8.Samba%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%9A%84%E6%90%AD%E5%BB%BA.html">2.9. Samba服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E6%9C%8D%E5%8A%A1.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E4%BD%BF%E7%94%A8Squid%E9%83%A8%E7%BD%B2%E4%BB%A3%E7%90%86%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7%E5%AE%89%E8%A3%85xrdp%28windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5linux%29.html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.%E5%9B%BD%E5%86%85%E5%B8%B8%E4%BD%BF%E7%94%A8%E7%9A%84yum%E6%BA%90%E4%BF%A1%E6%81%AF.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7%E5%AE%89%E8%A3%85VNC%EF%BC%8C%E6%89%8B%E5%8A%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E8%A3%85VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows%E4%B8%8A%E6%90%AD%E5%BB%BAyum%E6%BA%90%E7%AB%99%E7%82%B9.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.%E7%94%A8Python%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0HTTP%E5%92%8CFTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7.html">2.23. Openssh更新升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E5%AE%89%E8%A3%85.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7Supervisor%28%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%29.html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E7%9B%AE%E5%89%8D%E6%B5%81%E8%A1%8C%E7%9A%84%E5%BC%80%E6%BA%90%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%88%90rpm%E5%8C%85.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BDRPM%E5%8C%85%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E5%9F%BA%E4%BA%8EGalera_Cluster%E5%A4%9A%E4%B8%BB%E7%BB%93%E6%9E%84%E7%9A%84Mysql%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab%E5%AE%89%E8%A3%85.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D.html">2.33. Extundelete 数据恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.Openvpn%E9%83%A8%E7%BD%B2.html">2.34. Openvpn部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8%E5%AE%89%E8%A3%85Docker%E5%92%8CDocker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.CentOS8%E5%BC%80%E5%90%AFBBR%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8.html">2.36. CentOS8开启BBR/升级内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Centos7%E9%80%9A%E8%BF%87python%2Bjs%E5%AE%9E%E7%8E%B0webssh.html">2.37. Centos7通过python+js实现webssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Centos7%E9%83%A8%E7%BD%B2NTP%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%A2%83.html">2.38. Centos7部署NTP时间服务器同步环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Linux服务器架设</a> &raquo;</li>
+      <li><span class="section-number">2.2. </span>RAID与LVM磁盘阵列</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/02.Linux服务器架设/1.RAID与LVM磁盘阵列技术.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#raidlvm" id="id8">RAID与LVM磁盘阵列</a></p>
+<ul>
+<li><p><a class="reference internal" href="#raid" id="id9">RAID 技术</a></p>
+<ul>
+<li><p><a class="reference internal" href="#raid0" id="id10">RAID0</a></p></li>
+<li><p><a class="reference internal" href="#raid1" id="id11">RAID1</a></p></li>
+<li><p><a class="reference internal" href="#raid5" id="id12">RAID5</a></p></li>
+<li><p><a class="reference internal" href="#raid10" id="id13">RAID10</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id14">创建管理RAID实例</a></p></li>
+<li><p><a class="reference internal" href="#raid-raid0raid5" id="id15">创建Raid(创建Raid0和Raid5)</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id16">Raid性能测试</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id17">Raid故障模拟</a></p></li>
+<li><p><a class="reference internal" href="#raid-10" id="id18">制作一个RAID 10磁盘阵列</a></p></li>
+<li><p><a class="reference internal" href="#raid-5" id="id19">磁盘阵列+备份盘 (RAID 5)</a></p></li>
+<li><p><a class="reference internal" href="#lvm" id="id20">LVM逻辑卷概述</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id21">创建LVM分区实例</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id22">修改LVM分区容量</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id23">删除LVM分区</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="raidlvm">
+<h1><a class="toc-backref" href="#id8"><span class="section-number">2.2. </span>RAID与LVM磁盘阵列</a><a class="headerlink" href="#raidlvm" title="Permalink to this headline">¶</a></h1>
+<section id="raid">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.2.1. </span>RAID 技术</a><a class="headerlink" href="#raid" title="Permalink to this headline">¶</a></h2>
+<section id="raid0">
+<h3><a class="toc-backref" href="#id10">RAID0</a><a class="headerlink" href="#raid0" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RAID0至少2块硬盘</span><span class="o">.</span><span class="n">吞吐量大</span><span class="p">,</span><span class="n">性能好</span><span class="p">,</span><span class="n">同时读写</span><span class="p">,</span><span class="n">但损坏一个就完蛋</span>
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/Linux-Raid0.png" />
+</figure>
+</section>
+<section id="raid1">
+<h3><a class="toc-backref" href="#id11">RAID1</a><a class="headerlink" href="#raid1" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>RAID1至少2块硬盘.相当镜像,一个存储,一个备份.安全性比较高.但是性能比0弱.
+读取同时从2块硬盘读，速冻提升，写入效率低下。存储空间利用不如RAID0.如果2块存储空间为120G，做完Raid1之后
+存储空间还是120G。双副本 这么理解
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/Linux-Raid1.png" />
+</figure>
+</section>
+<section id="raid5">
+<h3><a class="toc-backref" href="#id12">RAID5</a><a class="headerlink" href="#raid5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>RAID5至少3块硬盘.分别存储校验信息和数据，坏了一个根据校验信息能恢复
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/Linux-Raid5.png" />
+</figure>
+</section>
+<section id="raid10">
+<h3><a class="toc-backref" href="#id13">RAID10</a><a class="headerlink" href="#raid10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>RAID 10技术是RAID 1+RAID 0技术的一个“组合体”。RAID 10技术需要至少4块硬盘来组建，
+其中先分别两两制作成RAID 1磁盘阵列，以保证数据的安全性；然后再对两个RAID 1磁盘阵列实施RAID 0技术，进一步提高硬盘设备的读写速度
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/Linux-Raid10.png" />
+</figure>
+</section>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">2.2.2. </span>创建管理RAID实例</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>先挂载3个数据盘</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@k8s-master ~]# lsblk
+NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+vda    253:0    0   8G  0 disk
+└─vda1 253:1    0   8G  0 part /
+vdb    253:16   0  40G  0 disk
+vdc    253:32   0  40G  0 disk
+vdd    253:48   0  40G  0 disk
+</pre></div>
+</div>
+<p>将每块硬盘分成两个区</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># fdisk /dev/vdb</span>
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">n</span>
+<span class="n">Partition</span> <span class="nb">type</span><span class="p">:</span>
+   <span class="n">p</span>   <span class="n">primary</span> <span class="p">(</span><span class="mi">0</span> <span class="n">primary</span><span class="p">,</span> <span class="mi">0</span> <span class="n">extended</span><span class="p">,</span> <span class="mi">4</span> <span class="n">free</span><span class="p">)</span>
+   <span class="n">e</span>   <span class="n">extended</span>
+<span class="n">Select</span> <span class="p">(</span><span class="n">default</span> <span class="n">p</span><span class="p">):</span> <span class="n">p</span>
+<span class="n">Partition</span> <span class="n">number</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="n">default</span> <span class="mi">1</span><span class="p">):</span> <span class="mi">1</span>
+<span class="n">First</span> <span class="n">sector</span> <span class="p">(</span><span class="mi">2048</span><span class="o">-</span><span class="mi">83886079</span><span class="p">,</span> <span class="n">default</span> <span class="mi">2048</span><span class="p">):</span>
+<span class="n">Using</span> <span class="n">default</span> <span class="n">value</span> <span class="mi">2048</span>
+<span class="n">Last</span> <span class="n">sector</span><span class="p">,</span> <span class="o">+</span><span class="n">sectors</span> <span class="ow">or</span> <span class="o">+</span><span class="n">size</span><span class="p">{</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">G</span><span class="p">}</span> <span class="p">(</span><span class="mi">2048</span><span class="o">-</span><span class="mi">83886079</span><span class="p">,</span> <span class="n">default</span> <span class="mi">83886079</span><span class="p">):</span> <span class="o">+</span><span class="mi">1</span><span class="n">G</span>
+<span class="n">Partition</span> <span class="mi">1</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">Linux</span> <span class="ow">and</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">1</span> <span class="n">GiB</span> <span class="ow">is</span> <span class="nb">set</span>
+
+
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">n</span>
+<span class="n">Partition</span> <span class="nb">type</span><span class="p">:</span>
+   <span class="n">p</span>   <span class="n">primary</span> <span class="p">(</span><span class="mi">1</span> <span class="n">primary</span><span class="p">,</span> <span class="mi">0</span> <span class="n">extended</span><span class="p">,</span> <span class="mi">3</span> <span class="n">free</span><span class="p">)</span>
+   <span class="n">e</span>   <span class="n">extended</span>
+<span class="n">Select</span> <span class="p">(</span><span class="n">default</span> <span class="n">p</span><span class="p">):</span> <span class="n">p</span>
+<span class="n">Partition</span> <span class="n">number</span> <span class="p">(</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="n">default</span> <span class="mi">2</span><span class="p">):</span>
+<span class="n">First</span> <span class="n">sector</span> <span class="p">(</span><span class="mi">2099200</span><span class="o">-</span><span class="mi">83886079</span><span class="p">,</span> <span class="n">default</span> <span class="mi">2099200</span><span class="p">):</span>
+<span class="n">Using</span> <span class="n">default</span> <span class="n">value</span> <span class="mi">2099200</span>
+<span class="n">Last</span> <span class="n">sector</span><span class="p">,</span> <span class="o">+</span><span class="n">sectors</span> <span class="ow">or</span> <span class="o">+</span><span class="n">size</span><span class="p">{</span><span class="n">K</span><span class="p">,</span><span class="n">M</span><span class="p">,</span><span class="n">G</span><span class="p">}</span> <span class="p">(</span><span class="mi">2099200</span><span class="o">-</span><span class="mi">83886079</span><span class="p">,</span> <span class="n">default</span> <span class="mi">83886079</span><span class="p">):</span>
+<span class="n">Using</span> <span class="n">default</span> <span class="n">value</span> <span class="mi">83886079</span>
+<span class="n">Partition</span> <span class="mi">2</span> <span class="n">of</span> <span class="nb">type</span> <span class="n">Linux</span> <span class="ow">and</span> <span class="n">of</span> <span class="n">size</span> <span class="mi">39</span> <span class="n">GiB</span> <span class="ow">is</span> <span class="nb">set</span>
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">t</span>
+<span class="n">Partition</span> <span class="n">number</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">default</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">1</span>
+<span class="n">Hex</span> <span class="n">code</span> <span class="p">(</span><span class="nb">type</span> <span class="n">L</span> <span class="n">to</span> <span class="nb">list</span> <span class="nb">all</span> <span class="n">codes</span><span class="p">):</span> <span class="n">fd</span>              <span class="c1">#打上格式fd为RAID的标签</span>
+<span class="n">Changed</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">partition</span> <span class="s1">&#39;Linux&#39;</span> <span class="n">to</span> <span class="s1">&#39;Linux raid autodetect&#39;</span>
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">t</span>
+<span class="n">Partition</span> <span class="n">number</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">default</span> <span class="mi">2</span><span class="p">):</span> <span class="mi">2</span>
+<span class="n">Hex</span> <span class="n">code</span> <span class="p">(</span><span class="nb">type</span> <span class="n">L</span> <span class="n">to</span> <span class="nb">list</span> <span class="nb">all</span> <span class="n">codes</span><span class="p">):</span> <span class="n">fd</span>              <span class="c1">#打上格式fd为RAID的标签</span>
+<span class="n">Changed</span> <span class="nb">type</span> <span class="n">of</span> <span class="n">partition</span> <span class="s1">&#39;Linux&#39;</span> <span class="n">to</span> <span class="s1">&#39;Linux raid autodetect&#39;</span>
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">P</span>
+
+<span class="n">Disk</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb</span><span class="p">:</span> <span class="mf">42.9</span> <span class="n">GB</span><span class="p">,</span> <span class="mi">42949672960</span> <span class="nb">bytes</span><span class="p">,</span> <span class="mi">83886080</span> <span class="n">sectors</span>
+<span class="n">Units</span> <span class="o">=</span> <span class="n">sectors</span> <span class="n">of</span> <span class="mi">1</span> <span class="o">*</span> <span class="mi">512</span> <span class="o">=</span> <span class="mi">512</span> <span class="nb">bytes</span>
+<span class="n">Sector</span> <span class="n">size</span> <span class="p">(</span><span class="n">logical</span><span class="o">/</span><span class="n">physical</span><span class="p">):</span> <span class="mi">512</span> <span class="nb">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="nb">bytes</span>
+<span class="n">I</span><span class="o">/</span><span class="n">O</span> <span class="n">size</span> <span class="p">(</span><span class="n">minimum</span><span class="o">/</span><span class="n">optimal</span><span class="p">):</span> <span class="mi">512</span> <span class="nb">bytes</span> <span class="o">/</span> <span class="mi">512</span> <span class="nb">bytes</span>
+<span class="n">Disk</span> <span class="n">label</span> <span class="nb">type</span><span class="p">:</span> <span class="n">dos</span>
+<span class="n">Disk</span> <span class="n">identifier</span><span class="p">:</span> <span class="mh">0x66df08bc</span>
+
+   <span class="n">Device</span> <span class="n">Boot</span>      <span class="n">Start</span>         <span class="n">End</span>      <span class="n">Blocks</span>   <span class="n">Id</span>  <span class="n">System</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb1</span>            <span class="mi">2048</span>     <span class="mi">2099199</span>     <span class="mi">1048576</span>   <span class="n">fd</span>  <span class="n">Linux</span> <span class="n">raid</span> <span class="n">autodetect</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb2</span>         <span class="mi">2099200</span>    <span class="mi">83886079</span>    <span class="mi">40893440</span>   <span class="n">fd</span>  <span class="n">Linux</span> <span class="n">raid</span> <span class="n">autodetect</span>
+
+<span class="n">Command</span> <span class="p">(</span><span class="n">m</span> <span class="k">for</span> <span class="n">help</span><span class="p">):</span> <span class="n">w</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>**********************************************************
+****** 其他2块盘依次进行分区。分2个区 然后打上格式fd为RAID的标签 ***
+**********************************************************
+</pre></div>
+</div>
+</section>
+<section id="raid-raid0raid5">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">2.2.3. </span>创建Raid(创建Raid0和Raid5)</a><a class="headerlink" href="#raid-raid0raid5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mdadm [模式] 选项 &lt;raid设备&gt;
+
+选项：
+-a          检测设备名称
+-n          指定设备数量
+-l          指定RAID级别
+-C          创建
+-v          显示过程
+-f          模拟设备损坏
+-r          移除设备
+-Q          查看摘要信息
+-D          查看详细信息
+-S          停止RAID磁盘阵列
+
+使用mdadm命令创建RAID0，名称为“/dev/md0”
+使用mdadm命令创建RAID5，名称为“/dev/md1”
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建RAID0</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm -C /dev/md0 -l 0 -n 3 /dev/vdb1 /dev/vdc1 /dev/vdd1</span>
+
+<span class="c1"># 创建RAID5</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm -C /dev/md1 -l 5 -n 3  /dev/vdb2 /dev/vdc2 /dev/vdd2</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm --detail /dev/md0</span>
+<span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">md0</span><span class="p">:</span>
+           <span class="n">Version</span> <span class="p">:</span> <span class="mf">1.2</span>
+     <span class="n">Creation</span> <span class="n">Time</span> <span class="p">:</span> <span class="n">Thu</span> <span class="n">Jun</span> <span class="mi">27</span> <span class="mi">08</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mi">37</span> <span class="mi">2019</span>
+        <span class="n">Raid</span> <span class="n">Level</span> <span class="p">:</span> <span class="n">raid0</span>                          <span class="c1"># raid级别</span>
+        <span class="n">Array</span> <span class="n">Size</span> <span class="p">:</span> <span class="mi">3139584</span> <span class="p">(</span><span class="mf">2.99</span> <span class="n">GiB</span> <span class="mf">3.21</span> <span class="n">GB</span><span class="p">)</span>     <span class="c1"># 磁盘空间</span>
+      <span class="n">Raid</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">3</span>                              <span class="c1"># 磁盘个数</span>
+     <span class="n">Total</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">3</span>
+       <span class="n">Persistence</span> <span class="p">:</span> <span class="n">Superblock</span> <span class="ow">is</span> <span class="n">persistent</span>
+
+       <span class="n">Update</span> <span class="n">Time</span> <span class="p">:</span> <span class="n">Thu</span> <span class="n">Jun</span> <span class="mi">27</span> <span class="mi">08</span><span class="p">:</span><span class="mi">32</span><span class="p">:</span><span class="mi">37</span> <span class="mi">2019</span>
+             <span class="n">State</span> <span class="p">:</span> <span class="n">clean</span>
+    <span class="n">Active</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">3</span>          <span class="c1"># 激活磁盘个数</span>
+   <span class="n">Working</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">3</span>          <span class="c1"># 工作磁盘个数</span>
+    <span class="n">Failed</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">0</span>
+     <span class="n">Spare</span> <span class="n">Devices</span> <span class="p">:</span> <span class="mi">0</span>          <span class="c1"># 备用磁盘个数</span>
+
+        <span class="n">Chunk</span> <span class="n">Size</span> <span class="p">:</span> <span class="mi">512</span><span class="n">K</span>
+
+<span class="n">Consistency</span> <span class="n">Policy</span> <span class="p">:</span> <span class="n">none</span>
+
+              <span class="n">Name</span> <span class="p">:</span> <span class="n">k8s</span><span class="o">-</span><span class="n">master</span><span class="p">:</span><span class="mi">0</span>  <span class="p">(</span><span class="n">local</span> <span class="n">to</span> <span class="n">host</span> <span class="n">k8s</span><span class="o">-</span><span class="n">master</span><span class="p">)</span>
+              <span class="n">UUID</span> <span class="p">:</span> <span class="mi">672753</span><span class="n">ed</span><span class="p">:</span><span class="n">d7174f92</span><span class="p">:</span><span class="mi">2937</span><span class="n">af89</span><span class="p">:</span><span class="mi">7231</span><span class="n">c156</span>
+            <span class="n">Events</span> <span class="p">:</span> <span class="mi">0</span>
+
+    <span class="n">Number</span>   <span class="n">Major</span>   <span class="n">Minor</span>   <span class="n">RaidDevice</span> <span class="n">State</span>
+       <span class="mi">0</span>     <span class="mi">253</span>       <span class="mi">17</span>        <span class="mi">0</span>      <span class="n">active</span> <span class="n">sync</span>   <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdb1</span>
+       <span class="mi">1</span>     <span class="mi">253</span>       <span class="mi">33</span>        <span class="mi">1</span>      <span class="n">active</span> <span class="n">sync</span>   <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdc1</span>
+       <span class="mi">2</span>     <span class="mi">253</span>       <span class="mi">49</span>        <span class="mi">2</span>      <span class="n">active</span> <span class="n">sync</span>   <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">vdd1</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mdadm --detail /dev/md1</span>
+</pre></div>
+</div>
+<p>停止raid</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">/</span><span class="p">]</span><span class="c1"># mdadm -S /dev/md1</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">/</span><span class="p">]</span><span class="c1"># mdadm -S /dev/md0</span>
+</pre></div>
+</div>
+<p>格式化与挂载</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.xfs /dev/md0</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkdir /raid0</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mount /dev/md0 /raid0</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.xfs /dev/md1</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkdir /raid5</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mount /dev/md1 /raid5</span>
+</pre></div>
+</div>
+<p>将磁盘设备设置为开机自动挂载项，Centos系统开机会读磁盘阵列的配置文件/etc/mdadm.conf以启动RAID设备。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># echo &quot;DEVICE /dev/vdb1 /dev/vdb2  /dev/vdc1 /dev/vdc2 /dev/vdd1 /dev/vdd2&quot; &gt; /etc/mdadm.conf</span>
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mdadm -Evs &gt;&gt;/dev/mdadm.conf</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># cat /dev/mdadm.conf</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># cat &gt;&gt;/etc/fstab &lt;&lt;EOF</span>
+&gt; /dev/md0   /raid0   xfs  defaults  <span class="m">0</span>  <span class="m">0</span>
+&gt; /dev/md0   /raid5   xfs  defaults  <span class="m">0</span>  <span class="m">0</span>
+&gt; EOF
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">2.2.4. </span>Raid性能测试</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>***************************************
+******  普通磁盘写入模拟 **************
+***************************************
+
+<span class="o">[</span>root@k8s-node01 ~<span class="o">]</span><span class="c1"># time dd if=/dev/zero of=txt bs=1M count=1000</span>
+<span class="m">1000</span>+0 records <span class="k">in</span>
+<span class="m">1000</span>+0 records out
+<span class="m">1048576000</span> bytes <span class="o">(</span><span class="m">1</span>.0 GB<span class="o">)</span> copied, <span class="m">4</span>.24897 s, <span class="m">247</span> MB/s
+
+real    0m4.252s
+user    0m0.007s
+sys 0m1.091s
+
+
+普通磁盘写入1GB的数据所需要总时间为4.252s
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>***************************************
+******  RAID5磁盘写入模拟 **************
+***************************************
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># time dd if=/dev/zero of=txt bs=1M count=1000</span>
+<span class="m">1000</span>+0 records <span class="k">in</span>
+<span class="m">1000</span>+0 records out
+<span class="m">1048576000</span> bytes <span class="o">(</span><span class="m">1</span>.0 GB<span class="o">)</span> copied, <span class="m">3</span>.69961 s, <span class="m">283</span> MB/s
+
+real    0m3.703s
+user    0m0.003s
+sys 0m1.000s
+
+普通磁盘写入1GB的数据所需要总时间为3.7s
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">2.2.5. </span>Raid故障模拟</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mdadm /dev/md1 -f /dev/vdb2</span>
+mdadm: <span class="nb">set</span> /dev/vdb2 faulty <span class="k">in</span> /dev/md1
+
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mdadm --detail /dev/md1</span>
+/dev/md1:
+           Version : <span class="m">1</span>.2
+     Creation Time : Thu Jun <span class="m">27</span> <span class="m">08</span>:33:57 <span class="m">2019</span>
+        Raid Level : raid5
+        Array Size : <span class="m">81719296</span> <span class="o">(</span><span class="m">77</span>.93 GiB <span class="m">83</span>.68 GB<span class="o">)</span>
+     Used Dev Size : <span class="m">40859648</span> <span class="o">(</span><span class="m">38</span>.97 GiB <span class="m">41</span>.84 GB<span class="o">)</span>
+      Raid Devices : <span class="m">3</span>
+     Total Devices : <span class="m">3</span>
+       Persistence : Superblock is persistent
+
+       Update Time : Thu Jun <span class="m">27</span> <span class="m">08</span>:51:19 <span class="m">2019</span>
+             State : clean, FAILED
+    Active Devices : <span class="m">1</span>
+   Working Devices : <span class="m">2</span>
+    Failed Devices : <span class="m">1</span>
+     Spare Devices : <span class="m">1</span>
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : k8s-master:1  <span class="o">(</span><span class="nb">local</span> to host k8s-master<span class="o">)</span>
+              UUID : e892bf01:afcffeef:fd5ccf62:43b61418
+            Events : <span class="m">44</span>
+
+    Number   Major   Minor   RaidDevice State
+       -       <span class="m">0</span>        <span class="m">0</span>        <span class="m">0</span>      removed
+       <span class="m">1</span>     <span class="m">253</span>       <span class="m">34</span>        <span class="m">1</span>      active sync   /dev/vdc2
+       -       <span class="m">0</span>        <span class="m">0</span>        <span class="m">2</span>      removed
+
+       <span class="m">0</span>     <span class="m">253</span>       <span class="m">18</span>        -      faulty   /dev/vdb2
+       <span class="m">3</span>     <span class="m">253</span>       <span class="m">50</span>        -      spare   /dev/vdd2
+</pre></div>
+</div>
+<p>当有/dev/vde2空闲盘时，此时的空闲备份盘会building 重建磁盘信息替代vdb2。</p>
+</section>
+<section id="raid-10">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">2.2.6. </span>制作一个RAID 10磁盘阵列</a><a class="headerlink" href="#raid-10" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（虚拟机添加4块硬盘）
+</pre></div>
+</div>
+<figure class="align-default" id="id7">
+<img alt="虚拟机添加硬盘" src="../../_images/raid10-1.PNG" />
+<figcaption>
+<p><span class="caption-text">虚拟机添加硬盘</span><a class="headerlink" href="#id7" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mdadm命令用于管理Linux系统中的软件RAID硬盘阵列，格式为“mdadm [模式] &lt;RAID设备名称&gt; [选项] [成员设备名称]”。
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">::</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>使用mdadm命令创建RAID 10，名称为“/dev/md0”</p>
+</div></blockquote>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda               8:0    0   40G  0 disk
+├─sda1            8:1    0  600M  0 part /boot
+└─sda2            8:2    0 39.4G  0 part
+  ├─centos-root 253:0    0 37.4G  0 lvm  /
+  └─centos-swap 253:1    0    2G  0 lvm  [SWAP]
+sdb               8:16   0   20G  0 disk
+sdc               8:32   0   20G  0 disk
+sdd               8:48   0   20G  0 disk
+sde               8:64   0   20G  0 disk
+sr0              11:0    1 1024M  0 rom
+
+
+用mdadm中的参数了。
+其中，-C参数代表创建一个RAID阵列卡；
+-v参数显示创建的过程，同时在后面追加一个设备名称/dev/md0，
+这样/dev/md0就是创建后的RAID磁盘阵列的名称；
+-a yes参数代表自动创建设备文件；
+-n 4参数代表使用4块硬盘来部署这个RAID磁盘阵列；
+而-l 10参数则代表RAID 10方案；
+最后再加上4块硬盘设备的名称就搞定了。
+
+[root@localhost ~]# mdadm -Cv /dev/md0 -a yes -n 4 -l 10 /dev/sdb /dev/sdc /dev/sdd /dev/sde
+mdadm: layout defaults to n2
+mdadm: layout defaults to n2
+mdadm: chunk size defaults to 512K
+mdadm: partition table exists on /dev/sdb
+mdadm: partition table exists on /dev/sdb but will be lost or
+       meaningless after creating array
+mdadm: size set to 20954112K
+Continue creating array?
+Continue creating array? (y/n) y
+mdadm: Defaulting to version 1.2 metadata
+mdadm: array /dev/md0 started.
+
+把制作好的RAID磁盘阵列格式化为ext4格式。
+[root@localhost ~]# mkfs.ext4 /dev/md0
+mke2fs 1.42.9 (28-Dec-2013)
+文件系统标签=
+OS type: Linux
+块大小=4096 (log=2)
+分块大小=4096 (log=2)
+Stride=128 blocks, Stripe width=256 blocks
+2621440 inodes, 10477056 blocks
+523852 blocks (5.00%) reserved for the super user
+第一个数据块=0
+Maximum filesystem blocks=2157969408
+320 block groups
+32768 blocks per group, 32768 fragments per group
+8192 inodes per group
+Superblock backups stored on blocks:
+    32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+    4096000, 7962624
+
+Allocating group tables: 完成
+正在写入inode表: 完成
+Creating journal (32768 blocks): 完成
+Writing superblocks and filesystem accounting information: 完成
+
+创建挂载点然后把硬盘设备进行挂载操作。挂载成功后可看到可用空间为40GB。
+[root@localhost ~]# mount /dev/md0 /mnt/
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE   MOUNTPOINT
+sda               8:0    0   40G  0 disk
+├─sda1            8:1    0  600M  0 part   /boot
+└─sda2            8:2    0 39.4G  0 part
+  ├─centos-root 253:0    0 37.4G  0 lvm    /
+  └─centos-swap 253:1    0    2G  0 lvm    [SWAP]
+sdb               8:16   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid10 /mnt
+sdc               8:32   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid10 /mnt
+sdd               8:48   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid10 /mnt
+sde               8:64   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid10 /mnt
+sr0              11:0    1 1024M  0 rom
+
+查看/dev/md0磁盘阵列的详细信息，并把挂载信息写入到配置文件中，使其永久生效。
+
+[root@localhost ~]# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sun Feb  3 20:01:35 2019
+        Raid Level : raid10
+        Array Size : 41908224 (39.97 GiB 42.91 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 4
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sun Feb  3 20:03:56 2019
+             State : clean
+    Active Devices : 4
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 0
+
+            Layout : near=2
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : 0258c0d3:a97f1527:8e70e0f9:5153622a
+            Events : 19
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync set-A   /dev/sdb
+       1       8       32        1      active sync set-B   /dev/sdc
+       2       8       48        2      active sync set-A   /dev/sdd
+       3       8       64        3      active sync set-B   /dev/sde
+
+查看/dev/md0磁盘阵列的详细信息，并把挂载信息写入到配置文件中，使其永久生效
+[root@localhost ~]# echo &quot;/dev/md0 /RAID ext4 defaults 0 0&quot; &gt;&gt; /etc/fstab
+[root@localhost ~]# cat /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Wed Jan 30 21:29:08 2019
+#
+# Accessible filesystems, by reference, are maintained under &#39;/dev/disk&#39;
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=9d17d78f-ff3c-48ea-a33e-2a177655588a /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+/dev/sdb2                   swap    defaults   swap   0 0
+/dev/md0 /RAID ext4 defaults 0 0
+
+
+删除md0：
+umount /dev/md0     #卸载md0设备
+1.  mdadm -S /dev/md0   #停止raid5进程
+2.  mdadm --misc --zero-superblock /dev/sdd
+     mdadm --misc --zero-superblock /dev/sdd
+     mdadm --misc --zero-superblock /dev/sdd
+3.  删除/etc/mdadm/mdadm.conf文件中添加的DEVICE行和ARRAY行。
+</pre></div>
+</div>
+</section>
+<section id="raid-5">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">2.2.7. </span>磁盘阵列+备份盘 (RAID 5)</a><a class="headerlink" href="#raid-5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">至少需要3块硬盘</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mdadm -Cv /dev/md0 -n 3 -l 5 -x 1 /dev/sdb /dev/sdc /dev/sdd /dev/sde
+mdadm: layout defaults to left-symmetric
+mdadm: layout defaults to left-symmetric
+mdadm: super1.x cannot open /dev/sdb: Device or resource busy
+mdadm: ddf: Cannot use /dev/sdb: Device or resource busy
+mdadm: Cannot use /dev/sdb: It is busy
+mdadm: cannot open /dev/sdb: Device or resource busy
+[root@localhost ~]# lsblk
+NAME            MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+sda               8:0    0   40G  0 disk
+├─sda1            8:1    0  600M  0 part  /boot
+└─sda2            8:2    0 39.4G  0 part
+  ├─centos-root 253:0    0 37.4G  0 lvm   /
+  └─centos-swap 253:1    0    2G  0 lvm   [SWAP]
+sdb               8:16   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sdc               8:32   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sdd               8:48   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sde               8:64   0   20G  0 disk
+└─md0             9:0    0   40G  0 raid5
+sr0              11:0    1 1024M  0 rom
+[root@localhost ~]# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sun Feb  3 20:11:39 2019
+        Raid Level : raid5
+        Array Size : 41908224 (39.97 GiB 42.91 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sun Feb  3 20:12:28 2019
+             State : clean
+    Active Devices : 3
+   Working Devices : 4
+    Failed Devices : 0
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : afeb536b:a181f5af:f574ed65:600f8092
+            Events : 18
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       3       8       64        -      spare   /dev/sde
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mkfs.ext4 /dev/md0</span>
+<span class="n">mke2fs</span> <span class="mf">1.42</span><span class="o">.</span><span class="mi">9</span> <span class="p">(</span><span class="mi">28</span><span class="o">-</span><span class="n">Dec</span><span class="o">-</span><span class="mi">2013</span><span class="p">)</span>
+<span class="n">文件系统标签</span><span class="o">=</span>
+<span class="n">OS</span> <span class="nb">type</span><span class="p">:</span> <span class="n">Linux</span>
+<span class="n">块大小</span><span class="o">=</span><span class="mi">4096</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">分块大小</span><span class="o">=</span><span class="mi">4096</span> <span class="p">(</span><span class="n">log</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Stride</span><span class="o">=</span><span class="mi">128</span> <span class="n">blocks</span><span class="p">,</span> <span class="n">Stripe</span> <span class="n">width</span><span class="o">=</span><span class="mi">256</span> <span class="n">blocks</span>
+<span class="mi">2621440</span> <span class="n">inodes</span><span class="p">,</span> <span class="mi">10477056</span> <span class="n">blocks</span>
+<span class="mi">523852</span> <span class="n">blocks</span> <span class="p">(</span><span class="mf">5.00</span><span class="o">%</span><span class="p">)</span> <span class="n">reserved</span> <span class="k">for</span> <span class="n">the</span> <span class="nb">super</span> <span class="n">user</span>
+<span class="n">第一个数据块</span><span class="o">=</span><span class="mi">0</span>
+<span class="n">Maximum</span> <span class="n">filesystem</span> <span class="n">blocks</span><span class="o">=</span><span class="mi">2157969408</span>
+<span class="mi">320</span> <span class="n">block</span> <span class="n">groups</span>
+<span class="mi">32768</span> <span class="n">blocks</span> <span class="n">per</span> <span class="n">group</span><span class="p">,</span> <span class="mi">32768</span> <span class="n">fragments</span> <span class="n">per</span> <span class="n">group</span>
+<span class="mi">8192</span> <span class="n">inodes</span> <span class="n">per</span> <span class="n">group</span>
+<span class="n">Superblock</span> <span class="n">backups</span> <span class="n">stored</span> <span class="n">on</span> <span class="n">blocks</span><span class="p">:</span>
+    <span class="mi">32768</span><span class="p">,</span> <span class="mi">98304</span><span class="p">,</span> <span class="mi">163840</span><span class="p">,</span> <span class="mi">229376</span><span class="p">,</span> <span class="mi">294912</span><span class="p">,</span> <span class="mi">819200</span><span class="p">,</span> <span class="mi">884736</span><span class="p">,</span> <span class="mi">1605632</span><span class="p">,</span> <span class="mi">2654208</span><span class="p">,</span>
+    <span class="mi">4096000</span><span class="p">,</span> <span class="mi">7962624</span>
+
+<span class="n">Allocating</span> <span class="n">group</span> <span class="n">tables</span><span class="p">:</span> <span class="n">完成</span>
+<span class="n">正在写入inode表</span><span class="p">:</span> <span class="n">完成</span>
+<span class="n">Creating</span> <span class="n">journal</span> <span class="p">(</span><span class="mi">32768</span> <span class="n">blocks</span><span class="p">):</span> <span class="n">完成</span>
+<span class="n">Writing</span> <span class="n">superblocks</span> <span class="ow">and</span> <span class="n">filesystem</span> <span class="n">accounting</span> <span class="n">information</span><span class="p">:</span> <span class="n">完成</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>我们再次把硬盘设备/dev/sdb移出磁盘阵列，然后迅速查看/dev/md0磁盘阵列的状态，
+就会发现备份盘已经被自动顶替上去并开始了数据同步。
+RAID中的这种备份盘技术非常实用，可以在保证RAID磁盘阵列数据安全性的基础上进一步提高数据可靠性，
+所以，如果公司不差钱的话还是再买上一块备份盘以防万一。
+
+[root@localhost ~]# echo &quot;/dev/md0 /RAID ext4 defaults 0 0&quot; &gt;&gt; /etc/fstab
+[root@localhost ~]# mkdir /RAID
+[root@localhost ~]# mount -a
+[root@localhost ~]# mdadm /dev/md0 -f /dev/sdb
+mdadm: set /dev/sdb faulty in /dev/md0
+[root@localhost ~]# mdadm -D /dev/md0
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sun Feb  3 20:11:39 2019
+        Raid Level : raid5
+        Array Size : 41908224 (39.97 GiB 42.91 GB)
+     Used Dev Size : 20954112 (19.98 GiB 21.46 GB)
+      Raid Devices : 3
+     Total Devices : 4
+       Persistence : Superblock is persistent
+
+       Update Time : Sun Feb  3 20:14:32 2019
+             State : active, degraded, recovering
+    Active Devices : 2
+   Working Devices : 3
+    Failed Devices : 1
+     Spare Devices : 1
+
+            Layout : left-symmetric
+        Chunk Size : 512K
+
+Consistency Policy : resync
+
+    Rebuild Status : 0% complete
+
+              Name : localhost.localdomain:0  (local to host localhost.localdomain)
+              UUID : afeb536b:a181f5af:f574ed65:600f8092
+            Events : 22
+
+    Number   Major   Minor   RaidDevice State
+       3       8       64        0      spare rebuilding   /dev/sde
+       1       8       32        1      active sync   /dev/sdc
+       4       8       48        2      active sync   /dev/sdd
+
+       0       8       16        -      faulty   /dev/sdb
+</pre></div>
+</div>
+</section>
+<section id="lvm">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">2.2.8. </span>LVM逻辑卷概述</a><a class="headerlink" href="#lvm" title="Permalink to this headline">¶</a></h2>
+<p>LVM（Logical Volume Manager）</p>
+<ul class="simple">
+<li><p>基于内核的一种逻辑卷管理器，LVM适合于管理大存储设备，并允许动态的调整文件系统的大小。此外LVM的快照功能可以帮助我们快速
+备份数据。LVM为我们提供了逻辑概念上的磁盘，使得文件系统不再关心底层物磁盘的概念。</p></li>
+</ul>
+<p>使用LVM逻辑卷之前，我们要了解以下几个概念：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PV（物理卷）：物理卷和从分区是逻辑对应关系，LVM提供命令工具可以将分区转换为物理卷，通过组合物理卷生成卷组
+
+VG（卷组）：卷组是LVM逻辑概念上的磁盘设备，通过单个或多个物理卷组合生成卷组，卷组的大小取决于物理卷的容量以及个数，在CentOS 7 系统中
+对容量与个数没有限制。
+
+PE（物理长度）：物理长度是，物理卷组合成为卷组之后，所花费的最小存储单位，即逻辑意义上磁盘的最小存储单元。LVM默认PE大小为4MB
+
+LV（逻辑卷）：逻辑卷就是LVM逻辑意义上的分区，我们可以指定从卷组中提取多少容量来创建逻辑卷，最后对逻辑卷格式化并挂载使用。
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/LVM-gailian001.png" />
+</figure>
+<p>将普通分区转换为物理卷的命令是：pvcreate</p>
+<p>将物理卷组合成卷组的命令是：vgcreate</p>
+<p>从卷组中提取容量创建逻辑卷的命令是：lvcreate</p>
+<p>查看创建后的结果：</p>
+<p>pvdispaly、vgdisplay、lvdisplay</p>
+<ol class="arabic">
+<li><p>pvcreate</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>用法：pvcreate [选项] 物理卷[物理卷]
+pvcreate /dev/sdc4 /dev/sde
+pvcreate /dev/sdb{1,2,3}
+</pre></div>
+</div>
+</li>
+</ol>
+<p>2.vgcreate</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 创建卷组</span>
+<span class="n">vgcreate</span> <span class="p">[</span><span class="n">选项</span><span class="p">]</span> <span class="n">卷组名称</span> <span class="n">物理设备路径</span> <span class="p">[</span><span class="n">物理设备路径</span><span class="p">]</span>
+<span class="n">vgcreate</span> <span class="n">test_vg1</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb5</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb6</span>
+<span class="n">vgcreate</span> <span class="n">test_vg2</span> <span class="o">-</span><span class="n">s</span> <span class="mi">16</span><span class="n">M</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdb5</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sdc6</span>
+                <span class="c1">#  -s 参数用来指定PE大小为16MB</span>
+</pre></div>
+</div>
+<p>3.lvcreate</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>描述:从卷组中提取存储空间， 创建逻辑卷。
+用法:lvcreate [选项] 卷组名称或路径 [物理卷路径]
+选项:
+-l 指定使用多少个卷组中的PE创建逻辑卷， PE的容量在创建卷组时己经指定。
+-L 直接指定逻辑卷的容量大小,单位可以是b(B) 、s(S) 、k (K) 、m(M) 、g (G) 、t (T) 、p(P) 或e(E)。
+-n 指定逻辑卷名称。
+
+
+例子：
+
+# 从test_vg1卷组中提取2GB容量，创建名称为test_lvl的逻辑卷
+# lvcreate - 2G -n test_1v1 test_vg1
+
+# 使用200个PE 创建逻辑卷， 前面案例中定义了PE大小为16MB
+# lvcreate -1 200 -n test 1v2 test vg2
+
+# 指定使用test_vgl 卷组中的/dev/sdb6 这个物理卷的存储空间， 创建名称为test_lvl 的逻辑卷
+# lvcreate -2G -n test 1v1 test_vg1 /dev/sdb6
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">2.2.9. </span>创建LVM分区实例</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>将sdb 500GB
+创建四个100GB的分区。使用这四个分区创建一个名称为test_vg的卷组，最后从该卷组创建出两个大小为120GB的逻辑卷，
+名称分别为test_web、test_data。</p>
+<p>查看到一块500GB的vdc数据盘</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lsblk</span>
+<span class="n">NAME</span>   <span class="n">MAJ</span><span class="p">:</span><span class="n">MIN</span> <span class="n">RM</span>  <span class="n">SIZE</span> <span class="n">RO</span> <span class="n">TYPE</span> <span class="n">MOUNTPOINT</span>
+<span class="n">vdc</span>    <span class="mi">253</span><span class="p">:</span><span class="mi">32</span>   <span class="mi">0</span>  <span class="mi">500</span><span class="n">G</span>  <span class="mi">0</span> <span class="n">disk</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@k8s-master ~]# fdisk /dev/vdc
+Welcome to fdisk (util-linux 2.23.2).
+
+Changes will remain in memory only, until you decide to write them.
+Be careful before using the write command.
+
+Device does not contain a recognized partition table
+Building a new DOS disklabel with disk identifier 0xdd05bcc6.
+
+Command (m for help): n
+Partition type:
+   p   primary (0 primary, 0 extended, 4 free)
+   e   extended
+Select (default p): p
+Partition number (1-4, default 1): 1
+First sector (2048-1048575999, default 2048):
+Using default value 2048
+Last sector, +sectors or +size{K,M,G} (2048-1048575999, default 1048575999): +100G
+Partition 1 of type Linux and of size 100 GiB is set
+
+Command (m for help): n
+Partition type:
+   p   primary (1 primary, 0 extended, 3 free)
+   e   extended
+Select (default p): p
+Partition number (2-4, default 2): 2
+First sector (209717248-1048575999, default 209717248):
+Using default value 209717248
+Last sector, +sectors or +size{K,M,G} (209717248-1048575999, default 1048575999): +100G
+Partition 2 of type Linux and of size 100 GiB is set
+
+Command (m for help): n
+Partition type:
+   p   primary (2 primary, 0 extended, 2 free)
+   e   extended
+Select (default p): p
+Partition number (3,4, default 3): 3
+First sector (419432448-1048575999, default 419432448):
+Using default value 419432448
+Last sector, +sectors or +size{K,M,G} (419432448-1048575999, default 1048575999): +100G
+Partition 3 of type Linux and of size 100 GiB is set
+
+Command (m for help): n
+Partition type:
+   p   primary (3 primary, 0 extended, 1 free)
+   e   extended
+Select (default e): e
+Selected partition 4
+First sector (629147648-1048575999, default 629147648):
+Using default value 629147648
+Last sector, +sectors or +size{K,M,G} (629147648-1048575999, default 1048575999):
+Using default value 1048575999
+Partition 4 of type Extended and of size 200 GiB is set
+
+Command (m for help): n
+All primary partitions are in use
+Adding logical partition 5
+First sector (629149696-1048575999, default 629149696):
+Using default value 629149696
+Last sector, +sectors or +size{K,M,G} (629149696-1048575999, default 1048575999): +100G
+Partition 5 of type Linux and of size 100 GiB is set
+
+########  创建3块主分区，一块扩展分区。然后+1块逻辑分区###################
+
+
+
+Command (m for help): t
+Partition number (1-5, default 5): 1            #指定分区编号
+Hex code (type L to list all codes): 8e         # 指定分区标签为LVM
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+Command (m for help): t
+Partition number (1-5, default 5): 2
+Hex code (type L to list all codes): 8e
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+Command (m for help): t
+Partition number (1-5, default 5): 3
+Hex code (type L to list all codes): 8e
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+Command (m for help): t
+Partition number (1-5, default 5): 5
+Hex code (type L to list all codes): 8e
+Changed type of partition &#39;Linux&#39; to &#39;Linux LVM&#39;
+
+
+
+######## 查看分区信息#######################
+Command (m for help): P
+
+Disk /dev/vdc: 536.9 GB, 536870912000 bytes, 1048576000 sectors
+Units = sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk label type: dos
+Disk identifier: 0xdd05bcc6
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/vdc1            2048   209717247   104857600   8e  Linux LVM
+/dev/vdc2       209717248   419432447   104857600   8e  Linux LVM
+/dev/vdc3       419432448   629147647   104857600   8e  Linux LVM
+/dev/vdc4       629147648  1048575999   209714176    5  Extended
+/dev/vdc5       629149696   838864895   104857600   8e  Linux LVM
+
+Command (m for help): w                                 #将分区信息写入硬盘
+The partition table has been altered!
+
+Calling ioctl() to re-read partition table.
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@k8s-master ~]# lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+vda    253:0    0    8G  0 disk
+└─vda1 253:1    0    8G  0 part /
+vdb    253:16   0   20G  0 disk
+vdc    253:32   0  500G  0 disk
+├─vdc1 253:33   0  100G  0 part
+├─vdc2 253:34   0  100G  0 part
+├─vdc3 253:35   0  100G  0 part
+├─vdc4 253:36   0    1K  0 part
+└─vdc5 253:37   0  100G  0 part
+</pre></div>
+</div>
+<p>使用pvcreate创建物理卷并使用pvdisaply查看结果</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pvcreate /dev/vdc{1,2,3,5}</span>
+  <span class="n">Physical</span> <span class="n">volume</span> <span class="s2">&quot;/dev/vdc1&quot;</span> <span class="n">successfully</span> <span class="n">created</span><span class="o">.</span>
+  <span class="n">Physical</span> <span class="n">volume</span> <span class="s2">&quot;/dev/vdc2&quot;</span> <span class="n">successfully</span> <span class="n">created</span><span class="o">.</span>
+  <span class="n">Physical</span> <span class="n">volume</span> <span class="s2">&quot;/dev/vdc3&quot;</span> <span class="n">successfully</span> <span class="n">created</span><span class="o">.</span>
+  <span class="n">Physical</span> <span class="n">volume</span> <span class="s2">&quot;/dev/vdc5&quot;</span> <span class="n">successfully</span> <span class="n">created</span><span class="o">.</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># pvdisplay</span>
+</pre></div>
+</div>
+<p>使用vgcreate创建卷组并使用vgdisplay查看结果</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># vgcreate test_vg /dev/vdc{1,2,3,5}</span>
+  Volume group <span class="s2">&quot;test_vg&quot;</span> successfully created
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># vgdisplay</span>
+</pre></div>
+</div>
+<p>新增PV加入到现有的VG中</p>
+<p>VG名称<code class="docutils literal notranslate"><span class="pre">vg00</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@cnsz02vl07124 /<span class="o">]</span><span class="c1"># pvcreate /dev/vdb1</span>
+
+<span class="o">[</span>root@cnsz02vl07124 /<span class="o">]</span><span class="c1"># vgdisplay</span>
+  --- Volume group ---
+  VG Name               vg00
+  System ID
+  Format                lvm2
+  Metadata Areas        <span class="m">1</span>
+  Metadata Sequence No  <span class="m">6</span>
+  VG Access             read/write
+  VG Status             resizable
+  MAX LV                <span class="m">0</span>
+  Cur LV                <span class="m">5</span>
+  Open LV               <span class="m">5</span>
+  Max PV                <span class="m">0</span>
+  Cur PV                <span class="m">1</span>
+  Act PV                <span class="m">1</span>
+  VG Size               &lt;<span class="m">59</span>.08 GiB
+  PE Size               <span class="m">4</span>.00 MiB
+  Total PE              <span class="m">15124</span>
+  Alloc PE / Size       <span class="m">14875</span> / &lt;<span class="m">58</span>.11 GiB
+  Free  PE / Size       <span class="m">249</span> / <span class="m">996</span>.00 MiB
+  VG UUID               kn6dRr-B7k5-TsIL-2C27-VZ7d-e0wy-XHG9OJ
+
+<span class="o">[</span>root@cnsz02vl07124 /<span class="o">]</span><span class="c1"># vgextend vg00 /dev/vdb1</span>
+  Volume group <span class="s2">&quot;vg00&quot;</span> successfully extended
+</pre></div>
+</div>
+<p>使用lvcreate创建逻辑卷并使用lvdisplay查看结果</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvcreate -n test_web -L 120G test_vg</span>
+  Logical volume <span class="s2">&quot;test_web&quot;</span> created.
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvcreate -n test_data -l 30720 test_vg</span>
+  Logical volume <span class="s2">&quot;test_data&quot;</span> created.
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvdisplay</span>
+  --- Logical volume ---
+  LV Path                /dev/test_vg/test_web
+  LV Name                test_web
+  VG Name                test_vg
+  LV UUID                KQmHUN-1qkY-IEvZ-p0vv-yILW-Okc6-WJMYQr
+  LV Write Access        read/write
+  LV Creation host, <span class="nb">time</span> k8s-master, <span class="m">2019</span>-06-27 <span class="m">07</span>:23:22 +0000
+  LV Status              available
+  <span class="c1"># open                 0</span>
+  LV Size                <span class="m">120</span>.00 GiB
+  Current LE             <span class="m">30720</span>
+  Segments               <span class="m">2</span>
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently <span class="nb">set</span> to     <span class="m">256</span>
+  Block device           <span class="m">252</span>:0
+
+  --- Logical volume ---
+  LV Path                /dev/test_vg/test_data
+  LV Name                test_data
+  VG Name                test_vg
+  LV UUID                Ro8VAt-HH4W-4Gek-wY0Q-L0iL-q2UH-h1kcfo
+  LV Write Access        read/write
+  LV Creation host, <span class="nb">time</span> k8s-master, <span class="m">2019</span>-06-27 <span class="m">07</span>:23:51 +0000
+  LV Status              available
+  <span class="c1"># open                 0</span>
+  LV Size                <span class="m">120</span>.00 GiB
+  Current LE             <span class="m">30720</span>
+  Segments               <span class="m">2</span>
+  Allocation             inherit
+  Read ahead sectors     auto
+  - currently <span class="nb">set</span> to     <span class="m">256</span>
+  Block device           <span class="m">252</span>:1
+</pre></div>
+</div>
+<p>格式化并挂载</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mkfs.xfs /dev/test_vg/test_web</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mkfs.xfs /dev/test_vg/test_data</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mkdir -p /test/{web,data}</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># cat &gt;&gt; /etc/fstab &lt;&lt;EOF</span>
+/dev/test_vg/test_data   /test/data     xfs    defaults  <span class="m">0</span>  <span class="m">0</span>
+/dev/test_vg/test_web    /test/web     xfs    defaults  <span class="m">0</span>  <span class="m">0</span>
+EOF
+
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># mount -a           # 加载开机自动挂载</span>
+
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># df -h              # 查看文件系统挂载情况</span>
+/dev/mapper/test_vg-test_data  120G   33M  120G   <span class="m">1</span>% /test/data
+/dev/mapper/test_vg-test_web   120G   33M  120G   <span class="m">1</span>% /test/web
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">2.2.10. </span>修改LVM分区容量</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>当逻辑卷test_data现有的存储空间以及不能满足企业大业务量的需要，我们需要将存储容量增大至240GB时。
+LVM随时可以帮助我们动态调整文件系统的大小。 实现方法如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>lvextend -L +120G /dev/test_vg/test_data        <span class="c1">#扩容逻辑卷</span>
+
+lvs                                             <span class="c1">#查看逻辑卷以及扩容完成</span>
+
+df -h                                           <span class="c1">#文件系统没有变化</span>
+
+xfs_growfs /dev/test_vg/test_data               <span class="c1">#调整文件系统大小</span>
+
+df -h                                           <span class="c1">#调整后查看文件系统大小，有变化</span>
+</pre></div>
+</div>
+<p>示例</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>root@k8s-master ~<span class="o">]</span><span class="c1"># fdisk /dev/vdc</span>
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: n
+All primary partitions are <span class="k">in</span> use
+Adding logical partition <span class="m">6</span>
+First sector <span class="o">(</span><span class="m">838866944</span>-1048575999, default <span class="m">838866944</span><span class="o">)</span>:
+Using default value <span class="m">838866944</span>
+Last sector, +sectors or +size<span class="o">{</span>K,M,G<span class="o">}</span> <span class="o">(</span><span class="m">838866944</span>-1048575999, default <span class="m">1048575999</span><span class="o">)</span>:
+Using default value <span class="m">1048575999</span>
+Partition <span class="m">6</span> of <span class="nb">type</span> Linux and of size <span class="m">100</span> GiB is <span class="nb">set</span>
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: t
+Partition number <span class="o">(</span><span class="m">1</span>-6, default <span class="m">6</span><span class="o">)</span>: e
+Partition number <span class="o">(</span><span class="m">1</span>-6, default <span class="m">6</span><span class="o">)</span>: <span class="m">6</span>
+Hex code <span class="o">(</span><span class="nb">type</span> L to list all codes<span class="o">)</span>: 8e
+Changed <span class="nb">type</span> of partition <span class="s1">&#39;Linux&#39;</span> to <span class="s1">&#39;Linux LVM&#39;</span>
+
+Command <span class="o">(</span>m <span class="k">for</span> <span class="nb">help</span><span class="o">)</span>: w
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># pvcreate /dev/vdc6</span>
+  Physical volume <span class="s2">&quot;/dev/vdc6&quot;</span> successfully created.
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># vgextend test_vg /dev/vdc6</span>
+  Volume group <span class="s2">&quot;test_vg&quot;</span> successfully extended
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># vgdisplay test_vg</span>
+
+  VG Size               <span class="m">499</span>.98 GiB          <span class="c1"># VG总大小</span>
+  PE Size               <span class="m">4</span>.00 MiB
+  Total PE              <span class="m">127995</span>
+  Alloc PE / Size       <span class="m">61440</span> / <span class="m">240</span>.00 GiB          <span class="c1"># PE已使用240G</span>
+  Free  PE / Size       <span class="m">66555</span> / <span class="m">259</span>.98 GiB          <span class="c1"># 剩余259.98G</span>
+  VG UUID               5PNXxs-QU9C-Goe1-Dyvi-dt40-rlQp-Nvegcc
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvextend -L 360G /dev/test_vg/test_data   #将逻辑卷扩展至360GB</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># xfs_growfs /dev/test_vg/test_data          #开始调整</span>
+
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># df -h</span>
+Filesystem                     Size  Used Avail Use% Mounted on
+/dev/mapper/test_vg-test_web   120G   33M  120G   <span class="m">1</span>% /test/web
+/dev/mapper/test_vg-test_data  360G   33M  360G   <span class="m">1</span>% /test/data
+</pre></div>
+</div>
+<p><em>企业生产环境中，为文件系统调整大小前一定要做好数据的备份工作。</em></p>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">2.2.11. </span>删除LVM分区</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>当我们不需要逻辑分区时，可以使用LVM命令轻松的删除之前创建的物理卷、卷组、逻辑卷。
+删除的顺序与创建的顺序相反：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.先卸载文件系统
+<span class="m">2</span>.删除逻辑卷
+<span class="m">3</span>.删除卷组
+<span class="m">4</span>.删除物理卷
+
+卸载文件系统时需要注意，有必要更新一下/etc/fstab文件。
+</pre></div>
+</div>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.先卸载文件系统
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># umount /dev/test_vg/test_data</span>
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># umount /dev/test_vg/test_web</span>
+
+<span class="m">2</span>.删除逻辑卷
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvremove /dev/test_vg/test_data</span>
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># lvremove /dev/test_vg/test_web</span>
+
+<span class="m">3</span>.删除卷组
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># vgremove test_vg</span>
+
+<span class="m">4</span>.删除物理卷
+<span class="o">[</span>root@k8s-master ~<span class="o">]</span><span class="c1"># pvremove /dev/vdc{1,2,3,5,6}</span>
+  Labels on physical volume <span class="s2">&quot;/dev/vdc1&quot;</span> successfully wiped.
+  Labels on physical volume <span class="s2">&quot;/dev/vdc2&quot;</span> successfully wiped.
+  Labels on physical volume <span class="s2">&quot;/dev/vdc3&quot;</span> successfully wiped.
+  Labels on physical volume <span class="s2">&quot;/dev/vdc5&quot;</span> successfully wiped.
+  Labels on physical volume <span class="s2">&quot;/dev/vdc6&quot;</span> successfully wiped.
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html" class="btn btn-neutral float-left" title="2.1. RPM软件包管理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="2.NFS%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-right" title="2.3. NFS共享服务器搭建" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

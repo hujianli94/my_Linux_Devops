@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.2. mysql入门到精通 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.3. Linux运维之mysql必会知识" href="03.Linux%E8%BF%90%E7%BB%B4%E4%B9%8BMysql%E5%BF%85%E4%BC%9A%E7%9F%A5%E8%AF%86.html" />
+    <link rel="prev" title="4.1. Redis的使用" href="01.Redis%E6%95%B0%E6%8D%AE%E5%BA%93.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 玩转数据库(mysql、Redis)</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Redis%E6%95%B0%E6%8D%AE%E5%BA%93.html">4.1. Redis的使用</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.2. mysql入门到精通</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.2.1. MySQL版本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.2.2. Mysql的优势</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sql4">4.2.3. SQL包含以下4个部分</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysql-5-6">4.2.4. Mysql-5.6二进制部署</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.2.5. 数据库基础操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">4.2.6. 数据库操作命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">4.2.7. 数据库表的基本操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id21">4.2.8. Mysql数据库表锁解决方法</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux%E8%BF%90%E7%BB%B4%E4%B9%8BMysql%E5%BF%85%E4%BC%9A%E7%9F%A5%E8%AF%86.html">4.3. Linux运维之mysql必会知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Navicat%E6%8A%8Acsv%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5mysql%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95.html">4.4. Navicat把csv数据导入mysql操作方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93%28350%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%2C14%E4%B8%AA%E5%88%86%E7%B1%BB%29.html">4.5. 数据库总结(350个数据库,14个分类)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>玩转数据库(mysql、Redis)</a> &raquo;</li>
+      <li><span class="section-number">4.2. </span>mysql入门到精通</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/04.玩转数据库（mysql、Redis）/02.Mysql入门到精通.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mysql" id="id22">mysql入门到精通</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id23">MySQL版本</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id24">Mysql的优势</a></p></li>
+<li><p><a class="reference internal" href="#sql4" id="id25">SQL包含以下4个部分</a></p></li>
+<li><p><a class="reference internal" href="#mysql-5-6" id="id26">Mysql-5.6二进制部署</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id27">数据库基础操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#windows" id="id28">windows 上启动关闭命令</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id29">mysql常用的图形管理工具</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id30">基础操作</a></p></li>
+<li><p><a class="reference internal" href="#linuxmysqlroot" id="id31">Linux下修改mysql的root密码</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id32">数据库操作命令</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id33">1.创建数据库</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id34">2.删除数据库</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id35">3.mysql忘记密码后，跳过密码进入数据库</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id36">MySQL查看和修改表的存储引擎</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id13" id="id37">数据库表的基本操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id14" id="id38">创建数据库表</a></p></li>
+<li><p><a class="reference internal" href="#id20" id="id39">查看数据库表结构</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id21" id="id40">Mysql数据库表锁解决方法</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mysql">
+<h1><a class="toc-backref" href="#id22"><span class="section-number">4.2. </span>mysql入门到精通</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">4.2.1. </span>MySQL版本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>针对不同的用户，MySQL分为两个不同的版本</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1. MySQL Community Server(社区版):完全免费，官方不提供技术支持
+2. Mysql Enterprise Server（企业服务器）：能很高性价比为企业提供数据仓库应用，支持ACID事务处理，提供完整的提交、回滚、崩溃恢复和行级锁定功能，但是该版本需要付费，官方提供电话技术支持。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id24"><span class="section-number">4.2.2. </span>Mysql的优势</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL的主要优势如下：
+(1) 速度： 运行速度快。
+(2) 价格： MySQL 对多数个人来说是免费的。
+(3) 容易使用： 与其他大型数据库的设置和管理相比， 其复杂程度较低， 易于学习。
+(4) 可移植性： 能够工作在众多不同的系统平台上， 例如： Windows 、Linux 、Unix 、Mac OS 等。
+(5) 丰富的接口： 提供了用于C 、C++ 、Eiffel 、Java 、PerI 、PHP 、Python 、Ruby 和Tcl等语言的API 。
+(6) 支持查询语言： MySQL 可以利用标准SQL 语法和支持ODBC （ 开放式数据库连接）的应用程序。
+(7) 安全性和连接性： 十分灵活和安全的权限和密码系统， 允许基于主机的验证。连接到服务器时，所有的密码传输均采用加密形式，从而保证了密码安全
+并且由于MySQL是网络化的，因此可以在因特网上的任何地方访问，提高书记共享的效率
+</pre></div>
+</div>
+<p>​</p>
+</section>
+<section id="sql4">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">4.2.3. </span>SQL包含以下4个部分</a><a class="headerlink" href="#sql4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1)数据定义语言(DDL):DROP、CREATE、ALTER等语句
+(2)数据操作语言(DML):INSERT(插入)、UPDATE(修改)、DELETE(删除)语句
+(3)数据查询语言(DQL):SELECT语句
+(4)数据控制语言(DCL):GRANT、REVOKE、COMMIT、ROLLBACK等语句
+</pre></div>
+</div>
+</section>
+<section id="mysql-5-6">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">4.2.4. </span>Mysql-5.6二进制部署</a><a class="headerlink" href="#mysql-5-6" title="Permalink to this headline">¶</a></h2>
+<p>一.准备环境</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>环境：centos-7.3 一台
+软件版本：mysql-5.6.39
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">安装依赖</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">autoconf</span> <span class="n">libaio</span> <span class="n">bison</span> <span class="n">ncurses</span><span class="o">-</span><span class="n">devel</span>
+
+<span class="mf">2.</span><span class="n">创建用户</span>
+<span class="n">groupadd</span> <span class="n">mysql</span>
+<span class="n">useradd</span> <span class="o">-</span><span class="n">g</span> <span class="n">mysql</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">sbin</span><span class="o">/</span><span class="n">nologin</span> <span class="n">mysql</span>
+
+<span class="mf">3.</span><span class="n">清理centos7</span> <span class="n">默认自带数据库</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">remove</span> <span class="n">mariadb</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">server</span>
+</pre></div>
+</div>
+<p>二.部署</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">下载MySQL</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">get</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.6</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+
+<span class="mf">2.</span><span class="n">安装</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xf</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+
+<span class="n">mv</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">/</span><span class="n">usrlocal</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">mkdir</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>mysql即使root启动还是mysql用户运行的，所以要给权限</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">mysql</span><span class="p">:</span><span class="n">mysql</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span>
+<span class="n">chown</span> <span class="o">-</span><span class="n">R</span> <span class="n">mysql</span><span class="p">:</span><span class="n">mysql</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>3.修改配置，具体再根据性能和需求修改 <code class="docutils literal notranslate"><span class="pre">vim</span> <span class="pre">/etc/my.cnf</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">mysql</span><span class="p">]</span>
+<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">=</span><span class="n">utf8</span>
+<span class="n">socket</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">skip</span><span class="o">-</span><span class="n">name</span><span class="o">-</span><span class="n">resolve</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">socket</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">datadir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
+<span class="n">max_connection</span><span class="o">=</span><span class="mi">200</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">utf8</span>
+<span class="n">default</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">engine</span><span class="o">=</span><span class="n">INNODB</span>
+<span class="n">lower_case_table_name</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">max_allowed_packet</span><span class="o">=</span><span class="mi">16</span><span class="n">M</span>
+<span class="n">log</span><span class="o">-</span><span class="n">error</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">log</span>
+<span class="n">pid</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">pid</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">address</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+</pre></div>
+</div>
+<p>4.启动服务</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
+
+<span class="n">进行初始化操作</span>
+
+<span class="o">./</span><span class="n">scripts</span><span class="o">/</span><span class="n">mysql_install_db</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span> <span class="o">--</span><span class="n">datadir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span><span class="o">/</span>
+
+<span class="n">让mysql可以读</span>
+<span class="n">chown</span> <span class="n">mysql</span><span class="p">:</span><span class="n">mysql</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span>
+</pre></div>
+</div>
+<p>5.加入systemctl</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">systemd</span><span class="o">/</span><span class="n">system</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">service</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Unit</span><span class="p">]</span>
+<span class="n">Description</span><span class="o">=</span><span class="n">mysql</span>
+<span class="n">After</span><span class="o">=</span><span class="n">network</span><span class="o">.</span><span class="n">target</span> <span class="n">remote</span><span class="o">-</span><span class="n">fs</span><span class="o">.</span><span class="n">target</span> <span class="n">nss</span><span class="o">-</span><span class="n">lookup</span><span class="o">.</span><span class="n">target</span>
+
+<span class="p">[</span><span class="n">Service</span><span class="p">]</span>
+<span class="n">Type</span><span class="o">=</span><span class="n">forking</span>
+<span class="n">ExecStart</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">start</span>
+<span class="n">ExecReload</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">restart</span>
+<span class="n">ExecStop</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">support</span><span class="o">-</span><span class="n">files</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">server</span> <span class="n">stop</span>
+<span class="n">PrivateTmp</span><span class="o">=</span><span class="n">true</span>
+
+<span class="p">[</span><span class="n">Install</span><span class="p">]</span>
+<span class="n">WantedBy</span><span class="o">=</span><span class="n">multi</span><span class="o">-</span><span class="n">user</span><span class="o">.</span><span class="n">target</span>
+</pre></div>
+</div>
+<p>6.设置环境变量</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">echo</span> <span class="s1">&#39;PATH=$PATH&#39;</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+</pre></div>
+</div>
+<p>7.登陆</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">systemctl</span> <span class="n">start</span> <span class="n">mysql</span>
+<span class="n">systemctl</span> <span class="n">enable</span> <span class="n">mysql</span>
+</pre></div>
+</div>
+<p>8.设置mysql的密码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>mysql -uroot -p
+修改MySQL密码方式：
+
+set password for root@&#39;localhost&#39;=password(&#39;admin#123!&#39;);
+然后执行：
+flush privileges;
+
+
+#mysql-8.0.11-winx64初次修改密码
+ALTER USER root@localhost IDENTIFIED  BY &#39;123456&#39;;
+
+# 重启mysql后生效
+systemctl restart mysql
+</pre></div>
+</div>
+<p>相关的参考文档：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/suoning/p/5742885.html">https://www.cnblogs.com/suoning/p/5742885.html</a></p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">4.2.5. </span>数据库基础操作</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="windows">
+<h3><a class="toc-backref" href="#id28">windows 上启动关闭命令</a><a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">--</span><span class="n">启动mysql命令</span>
+<span class="n">net</span> <span class="n">start</span> <span class="n">MYSQL</span>
+
+<span class="o">--</span><span class="n">关闭mysql命令</span>
+<span class="n">net</span> <span class="n">stop</span> <span class="n">MYSQL</span>
+
+<span class="o">--</span><span class="n">需要将mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span>\<span class="nb">bin</span>\<span class="n">目录加入到环境变量中</span>
+
+<span class="c1">#my.cnf 配置文件</span>
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="c1"># 设置3306端口</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">3306</span>
+<span class="c1"># 设置mysql的安装目录</span>
+<span class="n">basedir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>
+<span class="c1"># 设置mysql数据库的数据的存放目录</span>
+<span class="n">datadir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>\<span class="n">Data</span>
+<span class="c1"># 允许最大连接数</span>
+<span class="n">max_connections</span><span class="o">=</span><span class="mi">200</span>
+<span class="c1"># 允许连接失败的次数。</span>
+<span class="n">max_connect_errors</span><span class="o">=</span><span class="mi">10</span>
+<span class="c1"># 服务端使用的字符集默认为UTF8</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span><span class="o">=</span><span class="n">utf8</span>
+<span class="c1"># 创建新表时将使用的默认存储引擎</span>
+<span class="n">default</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">engine</span><span class="o">=</span><span class="n">INNODB</span>
+<span class="c1"># 默认使用“mysql_native_password”插件认证</span>
+<span class="c1">#mysql_native_password</span>
+<span class="n">default_authentication_plugin</span><span class="o">=</span><span class="n">mysql_native_password</span>
+<span class="p">[</span><span class="n">mysql</span><span class="p">]</span>
+<span class="c1"># 设置mysql客户端默认字符集</span>
+<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">=</span><span class="n">utf8</span>
+<span class="p">[</span><span class="n">client</span><span class="p">]</span>
+<span class="c1"># 设置mysql客户端连接服务端时默认使用的端口</span>
+<span class="n">port</span><span class="o">=</span><span class="mi">3306</span>
+<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">=</span><span class="n">utf8</span>
+
+<span class="p">[</span><span class="n">WindowsMySQLServer</span><span class="p">]</span>
+
+<span class="n">Server</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>\<span class="nb">bin</span>\<span class="n">mysqld</span><span class="o">.</span><span class="n">exe</span>
+
+
+
+<span class="c1">#查看mysql的编码格式</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">status</span>
+<span class="o">--------------</span>
+<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
+
+<span class="n">Connection</span> <span class="nb">id</span><span class="p">:</span>          <span class="mi">8</span>
+<span class="n">Current</span> <span class="n">database</span><span class="p">:</span>
+<span class="n">Current</span> <span class="n">user</span><span class="p">:</span>           <span class="n">root</span><span class="nd">@localhost</span>
+<span class="n">SSL</span><span class="p">:</span>                    <span class="n">Cipher</span> <span class="ow">in</span> <span class="n">use</span> <span class="ow">is</span> <span class="n">DHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span>
+<span class="n">Using</span> <span class="n">delimiter</span><span class="p">:</span>        <span class="p">;</span>
+<span class="n">Server</span> <span class="n">version</span><span class="p">:</span>         <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span>
+<span class="n">Protocol</span> <span class="n">version</span><span class="p">:</span>       <span class="mi">10</span>
+<span class="n">Connection</span><span class="p">:</span>             <span class="n">localhost</span> <span class="n">via</span> <span class="n">TCP</span><span class="o">/</span><span class="n">IP</span>
+<span class="n">Server</span> <span class="n">characterset</span><span class="p">:</span>    <span class="n">utf8</span>
+<span class="n">Db</span>     <span class="n">characterset</span><span class="p">:</span>    <span class="n">utf8</span>
+<span class="n">Client</span> <span class="n">characterset</span><span class="p">:</span>    <span class="n">utf8</span>
+<span class="n">Conn</span><span class="o">.</span>  <span class="n">characterset</span><span class="p">:</span>    <span class="n">utf8</span>
+<span class="n">TCP</span> <span class="n">port</span><span class="p">:</span>               <span class="mi">3306</span>
+<span class="n">Uptime</span><span class="p">:</span>                 <span class="mi">3</span> <span class="nb">min</span> <span class="mi">14</span> <span class="n">sec</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id29">mysql常用的图形管理工具</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>----
+1.MYSQL Workbench
+2.phpMyAdmin
+3.NAvicat   --Natvicat下载地址：链接：https://pan.baidu.com/s/1qXNggPY 密码：kq76
+4.MySQLDumper
+5.SQLyog
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id30">基础操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#查看当前时间</span>
+<span class="n">select</span> <span class="n">now</span><span class="p">();</span>
+
+<span class="c1">#查看mysql版本</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">V</span>
+<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
+<span class="n">select</span> <span class="n">version</span><span class="p">();</span>
+
+
+<span class="c1">#查看当前用户</span>
+<span class="n">mysql</span><span class="o">&gt;</span><span class="n">select</span> <span class="n">user</span><span class="p">();</span>
+<span class="o">+----------------+</span>
+<span class="o">|</span> <span class="n">user</span><span class="p">()</span>         <span class="o">|</span>
+<span class="o">+----------------+</span>
+<span class="o">|</span> <span class="n">root</span><span class="nd">@localhost</span> <span class="o">|</span>
+<span class="o">+----------------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+
+<span class="c1">#--连接mysql数据库</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">密码</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">h127</span><span class="o">.</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123</span>
+
+<span class="c1">#修改命令提示符信息</span>
+<span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123 --prompt hu_mysql</span>
+<span class="n">hu_mysql</span><span class="o">&gt;</span>
+
+<span class="c1">#修改回原来的mysql&gt;提示符</span>
+<span class="n">hu_mysqlprompt</span> <span class="n">mysql</span><span class="o">&gt;</span>
+<span class="n">PROMPT</span> <span class="nb">set</span> <span class="n">to</span> <span class="s1">&#39;mysql&gt;&#39;</span>
+<span class="n">mysql</span><span class="o">&gt;</span>
+
+
+<span class="c1">#开启mysql操作日志保存</span>
+<span class="n">mysql</span><span class="o">&gt;</span> \<span class="n">T</span> <span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span><span class="o">.</span><span class="n">txt</span>
+<span class="n">Logging</span> <span class="n">to</span> <span class="n">file</span> <span class="s1">&#39;D:\mysql.txt&#39;</span>
+
+
+<span class="c1">#查看上一步命令的警告信息</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">warnings</span><span class="p">;</span>
+<span class="n">Empty</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="c1">#查看帮助手册</span>
+<span class="n">help</span> <span class="n">CREATE</span> <span class="n">DATABASE</span>
+<span class="n">或者</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> \<span class="n">h</span> <span class="n">CREATE</span> <span class="n">DATABASE</span>
+<span class="n">Name</span><span class="p">:</span> <span class="s1">&#39;CREATE DATABASE&#39;</span>
+<span class="n">Description</span><span class="p">:</span>
+<span class="n">Syntax</span><span class="p">:</span>
+<span class="n">CREATE</span> <span class="p">{</span><span class="n">DATABASE</span> <span class="o">|</span> <span class="n">SCHEMA</span><span class="p">}</span> <span class="p">[</span><span class="n">IF</span> <span class="n">NOT</span> <span class="n">EXISTS</span><span class="p">]</span> <span class="n">db_name</span>
+    <span class="p">[</span><span class="n">create_specification</span><span class="p">]</span> <span class="o">...</span>
+
+<span class="n">create_specification</span><span class="p">:</span>
+    <span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span> <span class="n">CHARACTER</span> <span class="n">SET</span> <span class="p">[</span><span class="o">=</span><span class="p">]</span> <span class="n">charset_name</span>
+  <span class="o">|</span> <span class="p">[</span><span class="n">DEFAULT</span><span class="p">]</span> <span class="n">COLLATE</span> <span class="p">[</span><span class="o">=</span><span class="p">]</span> <span class="n">collation_name</span>
+
+<span class="n">CREATE</span> <span class="n">DATABASE</span> <span class="n">creates</span> <span class="n">a</span> <span class="n">database</span> <span class="k">with</span> <span class="n">the</span> <span class="n">given</span> <span class="n">name</span><span class="o">.</span> <span class="n">To</span> <span class="n">use</span> <span class="n">this</span>
+<span class="n">statement</span><span class="p">,</span> <span class="n">you</span> <span class="n">need</span> <span class="n">the</span> <span class="n">CREATE</span> <span class="n">privilege</span> <span class="k">for</span> <span class="n">the</span> <span class="n">database</span><span class="o">.</span> <span class="n">CREATE</span>
+<span class="n">SCHEMA</span> <span class="ow">is</span> <span class="n">a</span> <span class="n">synonym</span> <span class="k">for</span> <span class="n">CREATE</span> <span class="n">DATABASE</span><span class="o">.</span>
+
+<span class="n">URL</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">refman</span><span class="o">/</span><span class="mf">8.0</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">create</span><span class="o">-</span><span class="n">database</span><span class="o">.</span><span class="n">html</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> \<span class="n">h</span> <span class="n">TINYINT</span>
+<span class="n">Name</span><span class="p">:</span> <span class="s1">&#39;TINYINT&#39;</span>
+<span class="n">Description</span><span class="p">:</span>
+<span class="n">TINYINT</span><span class="p">[(</span><span class="n">M</span><span class="p">)]</span> <span class="p">[</span><span class="n">UNSIGNED</span><span class="p">]</span> <span class="p">[</span><span class="n">ZEROFILL</span><span class="p">]</span>
+
+<span class="n">A</span> <span class="n">very</span> <span class="n">small</span> <span class="n">integer</span><span class="o">.</span> <span class="n">The</span> <span class="n">signed</span> <span class="nb">range</span> <span class="ow">is</span> <span class="o">-</span><span class="mi">128</span> <span class="n">to</span> <span class="mf">127.</span> <span class="n">The</span> <span class="n">unsigned</span>
+<span class="nb">range</span> <span class="ow">is</span> <span class="mi">0</span> <span class="n">to</span> <span class="mf">255.</span>
+
+<span class="n">URL</span><span class="p">:</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">doc</span><span class="o">/</span><span class="n">refman</span><span class="o">/</span><span class="mf">8.0</span><span class="o">/</span><span class="n">en</span><span class="o">/</span><span class="n">numeric</span><span class="o">-</span><span class="nb">type</span><span class="o">-</span><span class="n">overview</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+</section>
+<section id="linuxmysqlroot">
+<h3><a class="toc-backref" href="#id31">Linux下修改mysql的root密码</a><a class="headerlink" href="#linuxmysqlroot" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqladmin</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="s1">&#39;123456&#39;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id32"><span class="section-number">4.2.6. </span>数据库操作命令</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h3><a class="toc-backref" href="#id33">1.创建数据库</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create database hujianli default charset=utf8;
+
+mysql&gt; create database IF NOT EXISTS hujianli2;
+Query OK, 1 row affected (0.07 sec)
+
+
+#查看所有的数据库信息
+mysql&gt; show databases;
+或者
+mysql&gt; show schemas;
+
+
+
+#查看数据库的创建语句和编码方式信息
+mysql&gt; show create database hujianli2;
++-----------+--------------------------------------------------------------------+
+| Database  | Create Database                                                    |
++-----------+--------------------------------------------------------------------+
+| hujianli2 | CREATE DATABASE `hujianli2` /*!40100 DEFAULT CHARACTER SET utf8 */ |
++-----------+--------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+#查看数据库字符集
+show variables like &#39;%char%&#39;;
+
+#修改指定数据库的编码方式
+mysql&gt; alter database hujianli2 default character set utf8;
+Query OK, 1 row affected, 1 warning (0.07 sec)
+
+#打开指定的数据库或者切换数据库
+mysql&gt; use hujianli2
+Database changed
+
+#查看当前选择的数据库
+select database(); --查看当前使用的数据库
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id34">2.删除数据库</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">drop</span> <span class="n">database</span> <span class="n">hujianli</span><span class="p">;</span>
+<span class="n">drop</span> <span class="n">database</span> <span class="n">IF</span> <span class="n">EXISTS</span> <span class="n">hujianli_db2</span><span class="p">;</span>
+
+
+<span class="c1">#清空表内容</span>
+<span class="n">delete</span> <span class="kn">from</span> <span class="nn">test01</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id35">3.mysql忘记密码后，跳过密码进入数据库</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
+
+<span class="c1">#修改mysql的root密码</span>
+    <span class="c1">#第一种方式:</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="nb">set</span> <span class="n">password</span> <span class="k">for</span> <span class="n">username</span><span class="nd">@host</span> <span class="o">=</span> <span class="n">password</span><span class="p">(</span> <span class="s1">&#39;your_password&#39;</span><span class="p">);</span>
+    <span class="c1">#第二种方法</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="n">update</span> <span class="n">user</span> <span class="nb">set</span> <span class="n">password</span> <span class="o">=</span> <span class="n">password</span><span class="p">(</span><span class="s1">&#39;your_password&#39;</span><span class="p">)</span> <span class="n">where</span> <span class="n">user</span> <span class="o">=</span> <span class="s1">&#39;root&#39;</span><span class="p">;</span>
+    　　<span class="n">mysql</span> <span class="o">&gt;</span> <span class="n">flush</span> <span class="n">peivileges</span><span class="p">;</span>
+    <span class="c1">#第三种方式:</span>
+    <span class="p">[</span><span class="n">root</span><span class="nd">@yinzhengjie</span> <span class="o">~</span><span class="p">]</span><span class="c1">#mysqladmin -u UserName -h Host password &#39;new_password&#39; -p</span>
+    <span class="p">[</span><span class="n">root</span><span class="nd">@yinzhengjie</span> <span class="o">~</span><span class="p">]</span><span class="c1">#mysqladmin -u UserName -h Host -p flush-privileges</span>
+</pre></div>
+</div>
+<section id="id10">
+<h4>举例：创建一张表，然后在表中插入一条数据<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE students (
+student_id INT UNSIGNED,
+name VARCHAR(30),
+sex CHAR(1),
+birth DATE,
+PRIMARY KEY (student_id)
+);
+
+INSERT INTO `students` (`student_id`, `name`, `sex`, `birth`) VALUES (123, &#39;hujianli&#39;, &#39;1&#39;, &#39;1994-7-22&#39;);
+
+#查询语句
+mysql&gt; SELECT name FROM students WHERE student_id=123;
++----------+
+| name     |
++----------+
+| hujianli |
++----------+
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h4>举例：创建一个数据库然后删除数据库<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">create</span> <span class="n">database</span> <span class="n">zoo</span><span class="p">;</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">databases</span><span class="p">;</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">use</span> <span class="n">zoo</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">create</span> <span class="n">database</span> <span class="n">zoo</span>\<span class="n">G</span><span class="p">;</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">drop</span> <span class="n">database</span> <span class="n">zoo</span><span class="p">;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​</div>
+</div>
+</section>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id36">MySQL查看和修改表的存储引擎</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>1 查看系统支持的存储引擎</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">show</span> <span class="n">ENGINES</span><span class="p">;</span>
+<span class="n">或者</span>
+<span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%s</span><span class="s1">torage_engine%&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>2 查看表使用的存储引擎</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>两种方法：
+a、show table status from db_name where name=&#39;table_name&#39;;
+b、show create table table_name;
+如果显示的格式不好看，可以用\g代替行尾分号
+有人说用第二种方法不准确，我试了下，关闭掉原先默认的Innodb引擎后根本无法执行show create table table_name指令，因为之前建的是Innodb表，关掉后默认用MyISAM引擎，导致Innodb表数据无法被正确读取。
+</pre></div>
+</div>
+<p>3 修改表引擎方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">alter</span> <span class="n">table</span> <span class="n">table_name</span> <span class="n">engine</span><span class="o">=</span><span class="n">innodb</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>4 关闭Innodb引擎方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>关闭mysql服务： net stop mysql
+找到mysql安装目录下的my.ini文件：
+找到default-storage-engine=INNODB 改为default-storage-engine=MYISAM
+找到#skip-innodb 改为skip-innodb
+启动mysql服务：net start mysql
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id37"><span class="section-number">4.2.7. </span>数据库表的基本操作</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<section id="id14">
+<h3><a class="toc-backref" href="#id38">创建数据库表</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<section id="id15">
+<h4>创建表的语法形式：<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>create TABLE &lt;表名&gt;
+(字段名1，数据类型 [列级别的约束条件] [默认值]
+ 字段名2， 数据类型 [列级别的约束条件] [默认值]
+ ......
+ [表级别的约束条件]
+)
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">​ 创建tb_empl表，SQL语句为： ​ CREATE TABLE tb_empl( ​ id INT(11), ​
+name VARCHAR(25), ​ deptId INT(11), ​ salary FLOAT ​ ); ​</div>
+<div class="line">#查看表 mysql&gt; show tables;</div>
+</div>
+</section>
+<section id="id16">
+<h4>使用主键约束<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<section id="id17">
+<h5>1.单字段主键<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h5>
+<p>定义表tb_emp3，其主键为id，SQL语句如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">tb_emp3</span><span class="p">(</span>
+<span class="nb">id</span> <span class="n">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
+<span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">25</span><span class="p">),</span>
+<span class="n">deptId</span> <span class="n">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span>
+<span class="n">salary</span> <span class="n">FLOAT</span><span class="p">,</span>
+<span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">(</span><span class="nb">id</span><span class="p">)</span>
+    <span class="p">);</span>
+</pre></div>
+</div>
+</section>
+<section id="id18">
+<h5>多字段联合主键<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h5>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>PRIMARY KEY(字段1、字段2、........字段n)
+例如：把id和员工编号同时作为主键，就能唯一确定一个员工
+
+CREATE TABLE tb_emp4(
+id INT(11),
+name VARCHAR(25),
+deptId INT(11),
+salary FLOAT,
+PRIMARY KEY(id,deptid)
+    );
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用外键约束 外键用来在两个表的数据之间建立链接，
+它可以是一列或者多列。一个表可以有一个或多个外键。</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>外键对应的是参照完整性， 一个表的外键可以为空值， 若不为空值， 则每一个外键值必须等于另一个表中主键的某个值。
+
+外键： 首先它是表中的一个字段， 它可以不是本表的主键， 但对应另外一个表的主键。
+外键主要作用是保证数据引用的完整性， 定义外键后， 不允许删除在另一个表中具有关联关系的行。外键的作用是保持数据的一致性、完整性。例如， 部门表tb_dept 的主键是id ， 在员工表tb emp5 中有一个键deptld 与这个id 关联。
+</pre></div>
+</div>
+<p>【举例】创建一个部门表tb_dept1，表结构如表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">CREATE</span> <span class="n">TABLE</span> <span class="n">tb_dept1</span>
+<span class="p">(</span>
+<span class="nb">id</span> <span class="n">INT</span><span class="p">(</span><span class="mi">11</span><span class="p">)</span> <span class="n">PRIMARY</span> <span class="n">KEY</span><span class="p">,</span>
+<span class="n">name</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">22</span><span class="p">)</span> <span class="n">NOT</span> <span class="n">NULL</span><span class="p">,</span>
+<span class="n">location</span> <span class="n">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+<p>【举例】定义数据库tb_emp5，让它的键deptId作为外键关联到tb_dept1的主键id，SQL语句为：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> CREATE TABLE `tb_emp5` (
+  `id` int(11) NOT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `deptId` int(11) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_emp_dept1` (`deptId`),
+  CONSTRAINT `fk_emp_dept1` FOREIGN KEY (`deptId`) REFERENCES `tb_dept1` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+以上语句执行成功之后，在表tb_emp5上添加了名称为fk_emp_dept1的外键约束，外键名称为deptId。其依赖于表tb_dept1的主键id
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用非空约束 非空约束的语法规则如下：</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">字段名</span> <span class="n">数据类型</span> <span class="ow">not</span> <span class="n">null</span>
+</pre></div>
+</div>
+<p>【举例】 定义数据表tb_emp6 ，指定员工的名称不能为空，SQL语句如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_emp6` (
+  `id` int(11) NOT NULL,
+  `name` varchar(25) NOT NULL,
+  `deptId` int(11) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 使用唯一性约束</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>唯一性约束要求该列唯一，允许为空，但只能出现一个空值，唯一约束可以确保一列或者几列不出现重复值。
+</pre></div>
+</div>
+<p>定义唯一约束，语法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">字段名</span> <span class="n">数据类型</span>  <span class="n">UNIQUE</span>
+<span class="p">[</span><span class="n">CONSTRAINT</span> <span class="o">&lt;</span><span class="n">约束名</span><span class="o">&gt;</span><span class="p">]</span> <span class="n">UNIQUE</span><span class="p">(</span><span class="o">&lt;</span><span class="n">字段名</span><span class="o">&gt;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">* UNIQUE和PRIMARY KEY的区别：</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一个表中可以有多个字段声明为UNIQUE ， 但只能有一个PRIMARY KEY 声明；
+声明为PRIMAY KEY的列不允许有空值但是声明为UNIQUE的字段允许空值(NULL)的存在。
+</pre></div>
+</div>
+<p>【举例】定义数据库tb_dept3，指定部门的名称唯一，SQL语句如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_dept3` (
+  `id` int(11) NOT NULL,
+  `name` varchar(22) DEFAULT NULL,
+  `location` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id19">
+<h4>使用默认约束<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<p>默认约束的语法规则如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">字段名</span> <span class="n">数据类型</span> <span class="n">DEFAULT</span> <span class="n">默认值</span>
+</pre></div>
+</div>
+<p>【举例】定义数据表tb_emp5，指定员工部门编号默认值为1111</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_emp5` (
+  `id` int(11) NOT NULL,
+  `name` varchar(25) DEFAULT NULL,
+  `deptId` int(11) DEFAULT &#39;1111&#39;,
+  `salary` float DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_emp_dept1` (`deptId`),
+  CONSTRAINT `fk_emp_dept1` FOREIGN KEY (`deptId`) REFERENCES `tb_dept1` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">​</div>
+<div class="line">#### 设置表的属性值自动增加
+在MYSQL中AUTO_INCREMENT的初始值是1，每新增一条记录，字段值自动加1，
+一个表只能有一个自动使用AUTO_INCREMENT约束，且该字段必须为主键的一部分，AUTO_INCREMENT约束的自动可以是任何整数类型
+（TINYINT、SMALLIN、INT、BIGINT等）</div>
+</div>
+<p>【举例】定义数据表tb_emp6，指定员工的标号自动递增，SQL语句如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE `tb_emp6` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(25) NOT NULL,
+  `deptId` int(11) DEFAULT NULL,
+  `salary` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+INSERT INTO `tb_emp6`(name,salary)VALUES (&quot;hujianli&quot;,100),(&quot;wuguangke&quot;,90),(&quot;xiaoian&quot;,90);
+</pre></div>
+</div>
+<figure class="align-default">
+<img alt="" src="../../_images/mysql_auto_diz.png" />
+</figure>
+</section>
+</section>
+<section id="id20">
+<h3><a class="toc-backref" href="#id39">查看数据库表结构</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<section id="describe">
+<h4>查看表基本结构语句 DESCRIBE<a class="headerlink" href="#describe" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">desc</span> <span class="n">表名</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>参考文档：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/suoning/p/5769141.html">https://www.cnblogs.com/suoning/p/5769141.html</a></p>
+</section>
+</section>
+</section>
+<section id="id21">
+<h2><a class="toc-backref" href="#id40"><span class="section-number">4.2.8. </span>Mysql数据库表锁解决方法</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<p>mysql查看被锁住的表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查询是否锁表</span>
+<span class="n">show</span> <span class="n">OPEN</span> <span class="n">TABLES</span> <span class="n">where</span> <span class="n">In_use</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>查看所有进程</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># MySQL:</span>
+<span class="n">show</span> <span class="n">processlist</span><span class="p">;</span>
+
+<span class="c1"># mariadb:</span>
+<span class="n">show</span> <span class="n">full</span> <span class="n">processlist</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>查询到相对应的进程===然后 kill id</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 杀掉指定mysql连接的进程号</span>
+<span class="c1"># kill $pid</span>
+
+
+<span class="c1"># 查看正在锁的事务</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="o">.</span><span class="n">INNODB_LOCKS</span><span class="p">;</span>
+<span class="c1"># 查看等待锁的事务</span>
+<span class="n">SELECT</span> <span class="o">*</span> <span class="n">FROM</span> <span class="n">INFORMATION_SCHEMA</span><span class="o">.</span><span class="n">INNODB_LOCK_WAITS</span><span class="p">;</span>
+
+
+<span class="c1"># 查看innodb引擎的运行时信息</span>
+<span class="c1"># show engine innodb status\G;</span>
+<span class="c1"># show engine innodb status;</span>
+</pre></div>
+</div>
+<p>查看造成死锁的sql语句，分析索引情况，然后优化sql语句；</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看服务器状态</span>
+<span class="n">show</span> <span class="n">status</span> <span class="n">like</span> <span class="s1">&#39;</span><span class="si">%lo</span><span class="s1">ck%&#39;</span><span class="p">;</span>
+
+<span class="c1"># 查看超时时间：</span>
+<span class="n">show</span> <span class="n">variables</span> <span class="n">like</span> <span class="s1">&#39;%timeout%&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>参考文献：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/wenxiaobin/p/8574296.html">https://www.cnblogs.com/wenxiaobin/p/8574296.html</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/wanghuaijun/p/5949934.html">https://www.cnblogs.com/wanghuaijun/p/5949934.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01.Redis%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="btn btn-neutral float-left" title="4.1. Redis的使用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03.Linux%E8%BF%90%E7%BB%B4%E4%B9%8BMysql%E5%BF%85%E4%BC%9A%E7%9F%A5%E8%AF%86.html" class="btn btn-neutral float-right" title="4.3. Linux运维之mysql必会知识" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

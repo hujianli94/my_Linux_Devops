@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7. GitLab在DevOps工作中的实际应用 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8. 用Gunicorn部署高性能Python-WSGI服务器" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html" />
+    <link rel="prev" title="6. 利用Docker搭建Jenkines-Master-Slave分布式环境" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.Python%E5%9C%A8Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">3. Python在Devops与自动化运维中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E4%B8%8B%E7%9A%84Shell%E8%84%9A%E6%9C%AC.html">4. 生产环境下的Shell脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B7%A5%E4%BD%9C%E4%B8%AD%E7%9A%84Python%E8%84%9A%E6%9C%AC%E5%88%86%E4%BA%AB.html">5. 工作中的Python脚本分享</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html">6. 利用Docker搭建Jenkines-Master-Slave分布式环境</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">7. GitLab在DevOps工作中的实际应用</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#gitlab">7.1. GitLab的优势所在</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#gitsvn">7.1.1. Git与SVN的区别如下：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gitlabgithub">7.1.2. GitLab与Github的区别如下：</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">7.2. GitLab的工作流程</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">7.2.1. 离线场景下，如图：</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gitlab-repository">7.2.2. 在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#gitlub">7.3. GitLub部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">7.4. GitLub的操作流程</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html">8. 用Gunicorn部署高性能Python-WSGI服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Supervisor%E5%9C%A8DevOps%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8.html">9. Supervisor在DevOps中的应用</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html">10. 分布式队列管理Cerely</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">DevOps和自动化运维实践</a> &raquo;</li>
+      <li><span class="section-number">7. </span>GitLab在DevOps工作中的实际应用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/DevOps/07.GitLab在DevOps工作中的实际应用.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#gitlabdevops" id="id4">GitLab在DevOps工作中的实际应用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gitlab" id="id5">GitLab的优势所在</a></p>
+<ul>
+<li><p><a class="reference internal" href="#gitsvn" id="id6">Git与SVN的区别如下：</a></p></li>
+<li><p><a class="reference internal" href="#gitlabgithub" id="id7">GitLab与Github的区别如下：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id1" id="id8">GitLab的工作流程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id9">离线场景下，如图：</a></p></li>
+<li><p><a class="reference internal" href="#gitlab-repository" id="id10">在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#gitlub" id="id11">GitLub部署</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id12">GitLub的操作流程</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="gitlabdevops">
+<h1><a class="toc-backref" href="#id4"><span class="section-number">7. </span>GitLab在DevOps工作中的实际应用</a><a class="headerlink" href="#gitlabdevops" title="Permalink to this headline">¶</a></h1>
+<section id="gitlab">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">7.1. </span>GitLab的优势所在</a><a class="headerlink" href="#gitlab" title="Permalink to this headline">¶</a></h2>
+<p>与传统的SVN版本管理软件相比，GIT又存在哪些优势呢？</p>
+<section id="gitsvn">
+<h3><a class="toc-backref" href="#id6"><span class="section-number">7.1.1. </span>Git与SVN的区别如下：</a><a class="headerlink" href="#gitsvn" title="Permalink to this headline">¶</a></h3>
+<p>1）Git的速度是明显快鱼SVN的。</p>
+<p>2）Git天生就是分布式的，它包含本地版本库的概念，是可以离线提交代码的</p>
+<p>3）强大的分支管理功能，非常方便多人协同开发</p>
+<p>4）GIT的内容存储使用的是SHA-1哈希算法，确保代码内容的完整性，确保在遇到磁盘故障和网络问题时降低对版本库的破坏。</p>
+</section>
+<section id="gitlabgithub">
+<h3><a class="toc-backref" href="#id7"><span class="section-number">7.1.2. </span>GitLab与Github的区别如下：</a><a class="headerlink" href="#gitlabgithub" title="Permalink to this headline">¶</a></h3>
+<p>1）GitHub如果包含了私人的项目，则需要收费的。而GitLab是免费的，只需要控制下访问权限就行，iptables防火墙很容易就能实现访问权限的设置。</p>
+<p>2）GithHub的机器位于国外，如果DevOps工作中需要经常git pull或git
+push，则会因为网络连接缓慢的问题而影响工作效率；我们部署的GitLab可以放在内网中，也可以放在自己的BGP机房内，在网络上是占绝对优势的。</p>
+<p>3）GitLab有中文汉化版本，其对中文的支持是优于GitHub的。</p>
+</section>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">7.2. </span>GitLab的工作流程</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id9"><span class="section-number">7.2.1. </span>离线场景下，如图：</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/gitlab_nei01.png" src="../_images/gitlab_nei01.png" />
+</section>
+<section id="gitlab-repository">
+<h3><a class="toc-backref" href="#id10"><span class="section-number">7.2.2. </span>在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a><a class="headerlink" href="#gitlab-repository" title="Permalink to this headline">¶</a></h3>
+<img alt="../_images/GitLab-wai01.png" src="../_images/GitLab-wai01.png" />
+<p>如果工作机器上包含几套公私钥的话，最好需要指定一下“~/.ssh/config”文件，代码如下所示。不然通过SSH协议连接到GitLab时会报错。config配置文件内容如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">www</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">com</span>
+    <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">github</span>
+<span class="n">Host</span> <span class="n">devops</span><span class="o">.</span><span class="n">gl</span><span class="o">.</span><span class="n">cachecn</span><span class="o">.</span><span class="n">net</span>
+    <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">gitlab</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="gitlub">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">7.3. </span>GitLub部署</a><a class="headerlink" href="#gitlub" title="Permalink to this headline">¶</a></h2>
+<p>GitLab如果是源码安装则非常麻烦，建议使用Dockers化的方式进行部署。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">7.4. </span>GitLub的操作流程</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>1）进入自己的工作目录生成公私钥，命令如下：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ ssh-keygen -t rsa
+Generating public/private rsa key pair.
+Enter file <span class="k">in</span> which to save the key <span class="o">(</span>/c/Users/18793/.ssh/id_rsa<span class="o">)</span>:
+/c/Users/18793/.ssh/id_rsa already exists.
+Overwrite <span class="o">(</span>y/n<span class="o">)</span>?
+</pre></div>
+</div>
+<p>2)将生成的id_rsa.pub文件的内容复制和粘贴到我们内部的GitLab（公网的GitLab）机器上去，选择菜单“Add
+SSH key”如图所示：</p>
+<img alt="../_images/gitlab_ssh.png" src="../_images/gitlab_ssh.png" />
+<img alt="../_images/gitlab_ssh02.png" src="../_images/gitlab_ssh02.png" />
+<ol class="arabic simple" start="3">
+<li><p>成功以后还需要配置GitLab相关的连接配置，可以在自己的根目录下的“.ssh”目录下建立config文件，路径位置如下：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="mf">60.1</span><span class="o">.</span><span class="mf">2.3</span>
+    <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>开始clone一个项目</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone git@git.lug.ustc.edu.cn:moonton/pypi_shell_remote.git
+
+Cloning into &#39;pypi_shell_remote&#39;...
+The authenticity of host &#39;git.lug.ustc.edu.cn (202.38.93.150)&#39; can&#39;t be established.
+ECDSA key fingerprint is SHA256:ZXIwe0NoyPYM7ArjQl17svUcXUQCVuA3KrxwSFKt6vc.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &#39;git.lug.ustc.edu.cn,202.38.93.150&#39; (ECDSA) to the list of known hosts.
+remote: Enumerating objects: 9, done.
+remote: Counting objects: 100% (9/9), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 9 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (9/9), done.
+</pre></div>
+</div>
+<p>Git global setup(<strong>Git全局设置</strong>)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git config --global user.name <span class="s2">&quot;jianlihu&quot;</span>
+git config --global user.email <span class="s2">&quot;1879324764@qq.com&quot;</span>
+</pre></div>
+</div>
+<p>Create a new repository(<strong>创建仓库</strong>)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>git clone git@git.lug.ustc.edu.cn:hjl722/test.git
+<span class="nb">cd</span> <span class="nb">test</span>
+touch README.md
+git add README.md
+git commit -m <span class="s2">&quot;add README&quot;</span>
+git push -u origin master
+</pre></div>
+</div>
+<p>Push an existing folder(<strong>推送现有文件夹</strong>)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> existing_folder
+git init
+git remote add origin git@git.lug.ustc.edu.cn:hjl722/test_py.git
+git add .
+git commit -m <span class="s2">&quot;Initial commit&quot;</span>
+git push -u origin master
+</pre></div>
+</div>
+<p>Push an existing Git repository(<strong>推动现有的Git存储库，更新仓库信息</strong>)</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> existing_repo
+git remote rename origin old-origin
+git remote add origin git@git.lug.ustc.edu.cn:hjl722/test.git
+git push -u origin --all
+git push -u origin --tags
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="06.%E5%88%A9%E7%94%A8Docker%E6%90%AD%E5%BB%BAJenkines-Master-Slave%E5%88%86%E5%B8%83%E5%BC%8F%E7%8E%AF%E5%A2%83.html" class="btn btn-neutral float-left" title="6. 利用Docker搭建Jenkines-Master-Slave分布式环境" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="08.%E7%94%A8Gunicorn%E9%83%A8%E7%BD%B2%E9%AB%98%E6%80%A7%E8%83%BDPython-WSGI%E6%9C%8D%E5%8A%A1%E5%99%A8.html" class="btn btn-neutral float-right" title="8. 用Gunicorn部署高性能Python-WSGI服务器" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

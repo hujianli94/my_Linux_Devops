@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.2. 02.MySQL版本升级 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7. 07.最强的王者篇" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html" />
+    <link rel="prev" title="6.1. 01.Lepus之MySQL监控" href="01.Lepus%E4%B9%8BMySQL%E7%9B%91%E6%8E%A7.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. 06.至尊的星耀篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Lepus%E4%B9%8BMySQL%E7%9B%91%E6%8E%A7.html">6.1. 01.Lepus之MySQL监控</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.2. 02.MySQL版本升级</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">6.2.1. 升级方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.2.2. 流程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.2.3. 参考</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>06.至尊的星耀篇</a> &raquo;</li>
+      <li><span class="section-number">6.2. </span>02.MySQL版本升级</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/06.至尊的星耀篇/02.MySQL版本升级.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mysql" id="id4">02.MySQL版本升级</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id5">升级方式</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">流程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#in-place-upgrade" id="id7">In-Place Upgrade方式</a></p></li>
+<li><p><a class="reference internal" href="#logical-upgrade" id="id8">Logical Upgrade方式</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id9">参考</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysqlredis" id="id10">阿里云MySQL及Redis灵异断连现象：安全组静默丢包解决方法</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mysql">
+<h1><a class="toc-backref" href="#id4"><span class="section-number">6.2. </span>02.MySQL版本升级</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id5"><span class="section-number">6.2.1. </span>升级方式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>·<code class="docutils literal notranslate"><span class="pre">In-Place</span> <span class="pre">Upgrade</span></code>,直接替换安装目录和my.cnf文件，利用mysql_upgrade脚本完成系统表升级，一般适用于跨小版本的升级</p>
+<p>·<code class="docutils literal notranslate"><span class="pre">Logical</span> <span class="pre">Upgrade</span></code>,利用mysqldump直接导出SQL文件，然后导入到新库中，相对安全，并能整理表中碎片，时间上消耗很大，效率较低</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">6.2.2. </span>流程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="in-place-upgrade">
+<h3><a class="toc-backref" href="#id7">In-Place Upgrade方式</a><a class="headerlink" href="#in-place-upgrade" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>第一步，将innodb_fast_shutdown参数设置为0
+set global innodb_fast_shutdown=0;
+show variables like &#39;%fast%&#39;;
+innodb_fast_shutdown有0，1，2三个值
+为0时，MySQL关闭时，InnoDB需要完成所有full purge和merge insert buffer操作，这个过程要一定时间，有时甚至会花上几个小时
+为1时，默认，MySQL关闭时，不完成full purge和merge insert buffer操作，但是缓冲池中的脏页还是会写到磁盘中
+为2时，什么也不做，仅将日志写入日志文件中
+
+第二步，关闭MySQL服务
+mysqladmin -uroot -proot123 shutdown
+
+第三步，替换MySQL安装文件
+执行unlink mysql命令
+解压新版本软件包，重新做连接并赋予mysql权限
+
+第四步，替换配置文件my.cnf，并启动MySQL实例
+在启动过程中加上--skip-grant-tables和--skip-networking参数，保证没有任何应用连接，让升级更安全
+/usr/local/mysql/bin/mysqld_safe --defaults-file=/etc/my.cnf --skip-grant-tables --skip-networking &amp;
+
+第五步，升级系统表数据字典信息
+/usr/local/mysql/bin/mysql_upgrade
+
+第六步，正常启动MySQL服务
+</pre></div>
+</div>
+</section>
+<section id="logical-upgrade">
+<h3><a class="toc-backref" href="#id8">Logical Upgrade方式</a><a class="headerlink" href="#logical-upgrade" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>第一步，mysqldump导出数据
+/usr/local/mysql/bin/mysqldump -uroot -proot123 --single-transaction --master-data=2 -A &gt;all.sql
+
+第二步，将旧版本MySQL数据库关闭且备份原来的数据目录
+建立新版本的数据目录并授权
+/usr/local/mysql/bin/mysqladmin -uroot -proot123 shutdown
+mv /data/mysql /data/mysql_bak
+mkdir -p /data/mysql
+chown mysql:mysql -R /data
+
+第三步，替换MySQL安装文件
+执行unlink mysql命令
+解压新版本软件包，重新做连接并赋予mysql权限
+
+第四步，替换my.cnf，并初始化数据库
+/usr/local/mysql/bin/mysqld --default-file=/etc/my.cnf --basedir=/usr/local/mysql --datadir=/data/mysql --initialize
+
+第五步，启动新版本MySQL
+启动过程中添加--skip-grant-tables 和 --skip-networking参数，保证没有任何应用连接，让升级更安全
+/usr/local/mysql/bin/mysqld_safe --defaults-file=/etc/my.cnf --skip-grant-tables --skip-networking &amp;
+
+第六步，导入之前导出的文件到数据库
+/usr/local/mysql/bin/mysql &lt; all.sql
+
+第七步，需要升级数据字典信息
+/usr/local/mysql/bin/mysql_upgrade
+
+第八步，正常启动MySQL数据库
+关闭数据库，重新正常启动数据库
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">6.2.3. </span>参考</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<section id="mysqlredis">
+<h3><a class="toc-backref" href="#id10">阿里云MySQL及Redis灵异断连现象：安全组静默丢包解决方法</a><a class="headerlink" href="#mysqlredis" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>wait_timeout、interactive_timeout两个超时参数只对闲置的数据库连接生效
+对于正在执行sql的连接，最大执行时间受max_execution_time限制
+
+为防止在超过一定时间后连接被回收，在内核层面可这样设置
+net.ipv4.tcp_keepalive_intvl = 30
+net.ipv4.tcp_keepalive_probes = 3
+net.ipv3.tcp_keepalive_time = 1800
+解释：tcp连接闲置1800s后，每隔30s给对方发一个ack包，最多发3次
+若在此期间对方回复，则计时器重置，再等待1800s。
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01.Lepus%E4%B9%8BMySQL%E7%9B%91%E6%8E%A7.html" class="btn btn-neutral float-left" title="6.1. 01.Lepus之MySQL监控" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html" class="btn btn-neutral float-right" title="7. 07.最强的王者篇" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.1. Redis的使用 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.2. mysql入门到精通" href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html" />
+    <link rel="prev" title="4. 玩转数据库(mysql、Redis)" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 玩转数据库(mysql、Redis)</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.1. Redis的使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.1.1. 概念</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.1.2. Redis有以下的特点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.1.3. 使用场景</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reidsmemcached">4.1.4. reids和memcached的比较</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.1.5. 安装与启动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">4.1.6. redis的操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">4.1.7. 集合操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">4.1.8. 设置redis的连接密码</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">4.1.9. Redis常用配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">4.1.10. Redis数据库集群主从复制的基本原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">4.1.11. Redis主从同步、哨兵、集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">4.1.12. Redis集群和相关工具使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">4.1.13. redis实战文献</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html">4.2. mysql入门到精通</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.Linux%E8%BF%90%E7%BB%B4%E4%B9%8BMysql%E5%BF%85%E4%BC%9A%E7%9F%A5%E8%AF%86.html">4.3. Linux运维之mysql必会知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Navicat%E6%8A%8Acsv%E6%95%B0%E6%8D%AE%E5%AF%BC%E5%85%A5mysql%E6%93%8D%E4%BD%9C%E6%96%B9%E6%B3%95.html">4.4. Navicat把csv数据导入mysql操作方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%80%BB%E7%BB%93%28350%E4%B8%AA%E6%95%B0%E6%8D%AE%E5%BA%93%2C14%E4%B8%AA%E5%88%86%E7%B1%BB%29.html">4.5. 数据库总结(350个数据库,14个分类)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>玩转数据库(mysql、Redis)</a> &raquo;</li>
+      <li><span class="section-number">4.1. </span>Redis的使用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/04.玩转数据库（mysql、Redis）/01.Redis数据库.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#redis" id="id18">Redis的使用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id19">概念</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id20">Redis有以下的特点</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id21">使用场景</a></p></li>
+<li><p><a class="reference internal" href="#reidsmemcached" id="id22">reids和memcached的比较</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id23">安装与启动</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id24">redis的操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id25">字符串操作</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id26">列表操作</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id8" id="id27">集合操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id9" id="id28">哈希操作</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id29">事务操作</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id30">发布和订阅</a></p></li>
+<li><p><a class="reference internal" href="#rdbaof" id="id31">RDB和AOF的两种数据持久化机制</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id12" id="id32">设置redis的连接密码</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id33">Redis常用配置</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pythonredis" id="id34">python操作redis</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id14" id="id35">Redis数据库集群主从复制的基本原理</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id36">Redis主从同步、哨兵、集群</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id37">Redis集群和相关工具使用</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id38">redis实战文献</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="redis">
+<h1><a class="toc-backref" href="#id18"><span class="section-number">4.1. </span>Redis的使用</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">4.1.1. </span>概念</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>redis是一个key-value存储系统。和Memcached类似，它支持存储的value类型相对更多，包括string(字符串)、list(链表)、set(集合)、zset(sorted set --有序集合)和hash（哈希类型）。
+这些数据类型都支持push/pop、add/remove及取交集并集和差集及更丰富的操作，而且这些操作都是原子性的。
+在此基础上，redis支持各种不同方式的排序。与memcached一样，为了保证效率，数据都是缓存在内存中。
+区别的是redis会周期性的把更新的数据写入磁盘或者把修改操作写入追加的记录文件，并且在此基础上实现了master-slave(主从)同步。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">4.1.2. </span>Redis有以下的特点</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>* 全部的数据操作在内存，保证了高速的读写速度。
+* 提供丰富多样的数据类型：string、hash、list、set、sorted set、bitmap和hyperloglog。
+* 提供了AOF和RDB两种数据的持久化方式，保证了Redis重启后数据不丢失。
+* Redis的所有操作都是原子性，同时Redis还支持对几个操作合并后的原子性操作，也即支持事务
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">4.1.3. </span>使用场景</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>登录会话存储，存储在redis中，与memcached相比，数据不会丢失</p></li>
+<li><p>排行版、计数器：比如一些秀场类的项目，经常会有一些前多少名的主播排名。还有一些文章阅读量的技术，或者新浪微博的点赞数。</p></li>
+<li><p>作为消息队列：比如celery就是redis作为中间人</p></li>
+<li><p>当前在线人数：显示有多少在线人数</p></li>
+<li><p>一些常用的数据缓存：比如BBS论坛，模块不会经常变化，但是每次访问首页都要从mysql中获取，可以在redis中缓存起来，不用每次请求数据库。</p></li>
+<li><p>把前200篇文章或者评论缓存：一般用户浏览网站，只会浏览前面一部分文章或者评论，那么可以把前面200篇文章和对应评论缓存起来。用户访问超过的，就访问数据库，并且以后文章超过200篇，则把之前的文章删除。</p></li>
+<li><p>好友关系：微博的好友关系使用redis实现</p></li>
+<li><p>发布和订阅功能：可以用来做聊天软件</p></li>
+</ul>
+<img alt="../../_images/db_comp.png" src="../../_images/db_comp.png" />
+</section>
+<section id="reidsmemcached">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">4.1.4. </span>reids和memcached的比较</a><a class="headerlink" href="#reidsmemcached" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/redis-memcached.png" src="../../_images/redis-memcached.png" />
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">4.1.5. </span>安装与启动</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">redis</span>
+
+<span class="n">ps</span> <span class="o">-</span><span class="n">ef</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">redis</span>
+
+<span class="n">service</span> <span class="n">redis</span> <span class="n">start</span>
+
+<span class="n">redis</span><span class="o">-</span><span class="n">cli</span> <span class="o">-</span><span class="n">p</span> <span class="mi">6379</span> <span class="o">-</span><span class="n">h</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+
+<span class="n">quit</span>
+
+<span class="n">service</span> <span class="n">redis</span> <span class="n">stop</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id24"><span class="section-number">4.1.6. </span>redis的操作</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="id6">
+<h3><a class="toc-backref" href="#id25">字符串操作</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）添加
+
+将字符串值value关联到key。如果key已经存在值，set命令会覆盖之前的值。默认的过期时间是永久。
+
+set username derek
+（2）删除
+
+del username
+（3）设置过期时间
+
+#两种方式都可以
+set username derek EX 10     #10s
+
+#或者
+setex username 10 derek
+*（4）查看过期时间
+
+ttl username
+（5）查看当前redis中的所有key
+
+keys *
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id26">列表操作</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）在列表左边添加元素
+
+lpush username derek
+ 将值value插入到列表key的表头。如果key不存在，一个空列表会被创建并执行lpush操作。当key存在但不是列表类型时，将返回一个错误。
+
+（2）在列表右边添加元素
+
+rpush username Tom
+将值value插入到列表key的表尾，如果key不存在，一个空列表会被创建并执行lpush操作。当key存在但不是列表时，将返回一个错误。
+
+ （3）查看列表中的元素
+
+lrange username 0 -1       #起始到末尾，索引
+返回列表key中指定区间内的元素，区间以偏移量start和stop指定。
+
+ （4）移除列表中的元素
+
+#移除并返回列表key的头元素
+lpop username
+
+#移除并返回列表key的尾元素
+rpop username
+（5）指定返回第几个元素
+
+将返回key这个列表中，索引为index的这个元素
+
+#lindex key index
+
+lindex username 1
+ （6）获取列表中的元素个数
+
+llen username
+（7）删除指定的元素
+
+lrem users 2 derek    # 2,代表删除的数量
+
+lrem users 0 derek     # 删除所有数量
+根据参数count的值，移除列表中与参数value相等的元素。count的值可以试一下几种：
+
+count &gt; 0：从表头开始向表尾搜索，移除与value相等的元素，数量为count
+count &lt; 0：从表尾开始向表头搜索，移除与value相等的元素，数量为count的绝对值
+count = 0：移除表中所有与value相等的值。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">4.1.7. </span>集合操作</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）添加元素
+sadd users derek jack
+
+（2）查看元素
+smembers users
+
+（3）移除元素
+srem users derek
+
+（4）查看集合中的元素个数
+scard users
+
+（5）多个集合之间的交集、并集和差集
+sinter set1 set2      #交集
+sunion set1 set2      #并集
+sdiff set1 set2      #差集
+</pre></div>
+</div>
+<section id="id9">
+<h3><a class="toc-backref" href="#id28">哈希操作</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）添加一个新值
+hset key field value
+
+hset person name derek
+将哈希表key中的域field的值设为value。如果key不存在，一个新的哈希表被创建并进行HSET操作。如果域field已经存在哈希表中，旧值将被覆盖。
+
+（2）获取哈希中的field对应的值
+hget person name
+
+（3）删除field中的某个field
+hdel person name
+
+（4）获取某个哈希中所有的field和value
+hgetall person
+
+（5）获取某个哈希中所有的field
+hkeys person
+
+（5）获取某个哈希中所有的值
+hvals person
+
+（6）判断哈希中是否存在某个field
+hexists person name
+
+（7）一次设多个
+hmset person name derek age 18 hight 175
+
+（8）长度
+hlen person
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id29">事务操作</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>redis事务可以一次执行多个命令，事务具有以下特征：
+
+隔离操作：事务中的所有命令都会序列化，按顺序执行，不会被其它命令打扰。
+原子操作：事务中的命令要么全部被执行，要么全部不执行。
+（1）开启一个事务
+
+multi
+以后执行的所有命令，都将在这个事务中执行。
+
+（2）执行事务
+
+exec
+会将在multi和exec中的操作一并提交
+
+（3）取消事务
+
+discard
+会将multi后的所有命令取消
+
+（4）监视一个或者多个key
+
+watch key .......
+监视一个或多个key，如果在事务执行之前这个key被其它命令所改动，那么事务将被打断。
+
+（5）取消所有key的监视
+
+unwatch
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id30">发布和订阅</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）给某个频道发布消息
+publish channel message
+
+（2）订阅某个频道的消息
+subscribe channel
+</pre></div>
+</div>
+</section>
+<section id="rdbaof">
+<h3><a class="toc-backref" href="#id31">RDB和AOF的两种数据持久化机制</a><a class="headerlink" href="#rdbaof" title="Permalink to this headline">¶</a></h3>
+<p><strong>RDB同步机制</strong></p>
+<ul class="simple">
+<li><p>开启和关闭：默认情况下是开启了，如果想关闭，那么注释掉“redis.conf”文件中的所有“save”选项就可以了</p></li>
+<li><p>同步机制：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>如果在900s以内发生了一次数据跟新操作，那么就会做一次同步操作；
+save 900 1
+</pre></div>
+</div>
+<p>还有两种机制：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">save</span> <span class="mi">300</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">save</span> <span class="mi">60</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>存储内容：存储的是具体的值，并且是经过压缩后存储进去的。</p></li>
+<li><p>存储路径：根据“redis.conf”下的dir以及‘rdbfilename’来制定的，默认是
+/var/lib/redis/dump.rdb</p></li>
+</ul>
+<p>优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.存储数据到文件中会进行压缩，文件体积比AOF小；
+2.因为存储的是redis具体的值，并且经过压缩，因此在回复的时候速度比AOF快；
+3.非常实用于备份。
+</pre></div>
+</div>
+<p>缺点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.RDB在多少时间内发生了多少写操作的时候就会触发同步机制，因为采用压缩机制，RDB在同步的时候都重新保存整个redis中的数据，因此一般会设置在最少5分钟才保存一次数据。在这种情况下，一单服务器故障，会造成5分钟的数据丢失。
+</pre></div>
+</div>
+<p><strong>AOF同步机制</strong></p>
+<ul class="simple">
+<li><p>开启和关闭：默认是关闭的。如果想开启，那么修改redis.conf中的‘appendonly
+yes’ 就可以了</p></li>
+<li><p>同步机制：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.appendfsync always：       #每次有数据更新操作，都会同步到文件中；
+2.appendfsync everysec：     #每秒进行一次更新；
+3.appendfsync no：           #30s更新一次（采用默认的）
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>存储内容：存储的是具体的命令，不会进行压缩。</p></li>
+<li><p>存储路径：根据redis.conf下的dir以及appendfilename来指定的。默认是
+/var/lib/redis/appendonly.aof</p></li>
+</ul>
+<p>优点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.AOF的策略是每秒钟或者每次发生写操作的时候都会同步，因此即使服务器故障，最对只会丢失1秒的数据；
+2.AOF存储的是redis的命令，并且是直接追加到aof文件后面，因此每次备份的时候只要添加新的数据进去就可以了。
+3.如果AOF文件比较大了，那么redis会进行重写，只保留最小的命令集合。
+</pre></div>
+</div>
+<p>缺点：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1.AOF文件因为没有压缩，因此体积比AOF大；
+2.AOF是在每秒或者每次写操作都进行备份，因此如果并发量比较大，效率可能有点慢；
+3.AOF文件因为存储的是命令，因此在灾难恢复的时候redis会重新运行AOF中的命令，速度不及RDB。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id32"><span class="section-number">4.1.8. </span>设置redis的连接密码</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）设置密码
+  vim /etc/redis.conf
+打开配置文件，然后按“/”搜索“requirepass”，再按‘n’找到‘requirepass xxxxx’，取消注释，在后面加上要设置的密码 requirepass 123456.
+
+（2）本地连接
+
+redis-cli -p 6379 -h 127.0.0.1 -a 123456
+可以在连接的时候，通过‘-a’参数指定密码进行连接，也可以先登录上去，然后再使用‘auth password’命令进行授权。
+
+ （3）其它机器连接redis
+
+ 如果想让其它机器连接本机的redis服务器，那么应该在‘redis.conf’配置文件中，指定“bind 本机的ip地址”，这样别的机器就能连接成功了。
+
+vim /etc/redis.conf
+按‘/’搜索‘bind’，后面指定自己机器的ip
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id33"><span class="section-number">4.1.9. </span>Redis常用配置</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>Redis缓存服务器命令常用命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CONFIG GET|SET CONFIG_SETTING_NAME
+
+//详解如下：
+CONFIG GET * :获取Redis服务器所有配置信息。
+CONFIG SET loglevel &quot;notice&quot;: 设置Redis服务器日志级别
+CONFIG SET requirepasss &quot;jfedu&quot;: 配置Redis访问密码。
+AUTH jfedu: 登录Redis，执行AUTH jfedu。
+redis-cli -h host -p pott -a password: 远程连接Redis数据库。
+CLIENT CETNAME: 获取连接的名称。
+CLIENT SETNAME:设置当前连接的名称。
+CLUSTER SLOTS: 获取集群节点的映射数组
+COMMAND: 获取Redis命令详情数组
+COMMAND COUNTL： 获取Redis命令总数
+COMMAND GETKEYS: 获取给定命令的所有键
+TIME:       返回当前服务器时间
+CONFIG GET parameter ： 获取指定配置参数的值。
+CONFIG SET parameter value ： 修改Redis 配置参数， 无须重启。
+CONFIG RESETSTAT ： 重置INFO 命令中的某些统计数据。
+DBSIZE ： 返回当前数据库的key 的数量。
+DEBUG OBJ ECT key ： 获取key 的调试信息。
+DEBUG SEGFAULT ： 让Redis 服务崩溃。
+FLUSHALL ： 删除所有数据库的所有keyo
+FLUSHDB ： 删除当前数据库的所有keyo
+ROLE ： 返回主从实例所属的角色。
+
+SAVE ：异步保存数据到硬盘。
+SHUTDOWN ：异步保存数据到硬盘，并关闭服务器。
+SLOWLOG ：管理Redis的慢日志。
+SET keys values ：设置key和value 。
+DEL jfedu ：删除key及值。
+INFO CPU ：查看服务器CPU占用信息。
+KEYS jfedu ：查看是存在jfedu的key。
+KEYS *： 查看Redis所有的key 。
+CONFIG REWRITE ：启动Redis时所指定的redis.conf 配置文件进行改写。
+INFO [section] ：获取Redis服务器的各种信息和统计数值。
+SYNC ： 用于复制功能（ replication ） 的内部命令。
+SLAVEOF host port ： 指定服务器的从服务器（slave server) 。
+MONITOR ：实时打印出Redis 服务器接收到的命令， 调试用。
+LASTSAVE ： 返回最近一次Redis 成功将数据保存到磁盘上的时间。
+CLIENT PAUSEtimeout: 指定时间内终止运行来自客户端的命令。
+BGREWRITEAOF： 异步执行一个AOF(append only file ） 文件重写操作。
+BGSAVE ：后台异步保存当前数据库的数据到磁盘。
+</pre></div>
+</div>
+<section id="pythonredis">
+<h3><a class="toc-backref" href="#id34">python操作redis</a><a class="headerlink" href="#pythonredis" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>（1）安装
+pip install redis
+
+（2）连接
+from redis import Redis
+cache = Redis(host=&quot;139.199.131.146&quot;,port=6379,password=123456)
+
+
+（3）字符串操作
+cache.set(&#39;uers&#39;,&#39;derek&#39;)
+cache.get(&#39;users&#39;)
+cache.delete(&#39;users&#39;)
+
+
+（4）列表操作
+cache.lpush(&#39;users&#39;,&#39;tom&#39;)
+print(cache.lrange(&#39;users&#39;,0,-1))
+
+（5）集合的操作
+cache.sadd(&#39;group&#39;,&#39;CEO&#39;)
+print(cache.smembers(&#39;group&#39;))
+
+
+（6）哈希的操作
+cache.hset(&#39;person&#39;,&#39;name&#39;,&#39;derek&#39;)
+print(&#39;cache.hgetall(&#39;person&#39;)&#39;)
+
+（7）事务的操作
+pip = cache.pipeline()
+pip.set(&#39;username&#39;,&#39;derek&#39;)
+pip.set(&#39;password&#39;,&#39;123456&#39;)
+pip.execute()
+</pre></div>
+</div>
+<p>参考文献： <a class="reference external" href="http://redisdoc.com/index.html">http://redisdoc.com/index.html</a></p>
+</section>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id35"><span class="section-number">4.1.10. </span>Redis数据库集群主从复制的基本原理</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p>redis主从复制的原理 <img alt="image1" src="../../_images/redis_master_salve001.png" /></p>
+<p>redis主从复制的具体流程如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）若启动一个Slave机器进程，则它会向Master机器发送一个&quot;sync command&quot;命令，请求同步连接。
+
+2）无论是第一次连接还是重新连接，Master机器都会启动一个后台进程，将数据快照保存到数据文件中(执行rdb操作)，同时Master还会记录修改数据的所有命令并缓存在数据文件中。
+
+3）后台进程完成缓存操作之后，Master机器就会向Slave机器发送数据文件，Slave端机器将数据文件保存到硬盘上，然后将其加载到内存中，接着Master机器就会将修改数据的所有操作一并发送给
+Slave端机器。若Slave出现故障导致宕机，则恢复正常后会自动重新连接。
+
+4）Master机器收到Slave端机器的连接后，将其完整的数据文件发送给Slave端机器，
+如果Master同时收到多个Slave发来的同步请求，则Master会在后台启动一个进程以保存数据文件，然后将其发送给所有的Salve端机器，确保所有的Slave端机器都正常。
+
+
+支持断点续传吗？
+从redis 2.8开始，如果在主从复制过程中遭遇连接断开,则重新连接之后可以从中断处继续进行复制,而不必重新同步。
+
+断点续传的工作原理具体如下。
+
+  主服务器端为复制流维护一个内存缓冲区(in-memory backlog)。主从服务器都维护一个复制偏移量(replication offset)和master run id 当连接断开时,从服务器会重新连接上
+主服务器,然后请求继续复制,假如主从服务器的两个master run id相同,并且指定的偏移量在内存缓冲区中还有效,则复制就会从上次中断的点开始继续。如果其中一个条件不满足,就会进行完全重新同步(在2.8版本之前就是直接进行完全重新同步)。
+因为主运行id不保存在磁盘中,因此如果从服务器重启了的话就只能进行完全同步了。
+
+对于部分重新同步这个新特性,redis2.8版本内部使用PSYNC命令,
+旧版本的实现中使用的是SYNC命令。redis2.8版本可以检测出它所连接的服务器是否支持PSYNC命令，若不支持则使用SYNC命令。
+
+redis主从复制的效果是很不错的,在很多跨机房的业务中其稳定性也很不错。另外，
+
+如果业务需要采用redis集群的话,则生产环境下不建议使用redis-cluster,建议采用codis、zookeeper来保证各节点之间的数据一致性。
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id36"><span class="section-number">4.1.11. </span>Redis主从同步、哨兵、集群</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/liuweida/p/11817081.html">https://www.cnblogs.com/liuweida/p/11817081.html</a></p>
+</section>
+<section id="id16">
+<h2><a class="toc-backref" href="#id37"><span class="section-number">4.1.12. </span>Redis集群和相关工具使用</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/aquester/p/10916284.html">https://www.cnblogs.com/aquester/p/10916284.html</a></p>
+</section>
+<section id="id17">
+<h2><a class="toc-backref" href="#id38"><span class="section-number">4.1.13. </span>redis实战文献</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/yxiaodao/p/10630968.html">https://www.cnblogs.com/yxiaodao/p/10630968.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="4. 玩转数据库(mysql、Redis)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.Mysql%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A.html" class="btn btn-neutral float-right" title="4.2. mysql入门到精通" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

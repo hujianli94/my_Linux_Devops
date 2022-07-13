@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>模拟体验GitHub Flow &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="便于理解的标准流程" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html" />
+    <link rel="prev" title="接收Pull Request" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Github入门到实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html">实际操作学习Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">模拟体验GitHub Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. 创建新的分支</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#clone">1.1 如果尚未clone仓库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.2 如果之前clone过仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">2. 创建特性分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">3. 实现新功能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pull-request">4. 创建Pull Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">5. 接收反馈</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">6. 修正被指出的问题</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">7. 添加测试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">8. 培育Pull Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">9. Pull Request被合并</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">团队实践GitHub Flow时的几点建议</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id11">●减小Pull Request的体积</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">●准备可供试运行的环境</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">●不要让Pull Request中有太多反馈</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">●不要积攒Pull Request</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id15">GitHub Flow的小结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">GitHub上面找开源项目</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Github入门到实践</a> &raquo;</li>
+      <li>模拟体验GitHub Flow</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Github/07.模拟体验GitHub-Flow.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#github-flow" id="id16">模拟体验GitHub Flow</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id17">1. 创建新的分支</a></p>
+<ul>
+<li><p><a class="reference internal" href="#clone" id="id18">1.1 如果尚未clone仓库</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id19">1.2 如果之前clone过仓库</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id3" id="id20">2. 创建特性分支</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id21">3. 实现新功能</a></p></li>
+<li><p><a class="reference internal" href="#pull-request" id="id22">4. 创建Pull Request</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id23">5. 接收反馈</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id24">6. 修正被指出的问题</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id25">7. 添加测试</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id26">8. 培育Pull Request</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id27">9. Pull Request被合并</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id28">团队实践GitHub Flow时的几点建议</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id11" id="id29">●减小Pull Request的体积</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id30">●准备可供试运行的环境</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id31">●不要让Pull Request中有太多反馈</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id32">●不要积攒Pull Request</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id15" id="id33">GitHub Flow的小结</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="github-flow">
+<h1><a class="toc-backref" href="#id16">模拟体验GitHub Flow</a><a class="headerlink" href="#github-flow" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id17">1. 创建新的分支</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="clone">
+<h3><a class="toc-backref" href="#id18">1.1 如果尚未clone仓库</a><a class="headerlink" href="#clone" title="Permalink to this headline">¶</a></h3>
+<p>首先需要Fork已经公开的仓库。如果尚未获取仓库，则需要使用下面的命令进行clone。各位请将仓库路径替换为自己的对应路径。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git clone git@github,com:ituring/fizzbuzz.git
+</pre></div>
+</div>
+<p>在fizzbuzz目录下新建了一个仓库，这个仓库与远程仓库拥有相同状态。</p>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id19">1.2 如果之前clone过仓库</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>假设本地已经有之前clone来的仓库，现在正在开发途中并不需要重新clone，那么我们应该将master分支更新成远程仓库最新master分支的状态</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git checkout master
+$ git pull
+</pre></div>
+</div>
+<p>通过以上操作，我们手头就有了最新状态的master分支。</p>
+</section>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id20">2. 创建特性分支</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>现在我们已经完成了从master分支创建新分支的所有准备工作。我们将新分支的名字定为7-case-output-github。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>//创建新分支，并切换到新分支。
+$ git checkout -b <span class="m">7</span>-case-output-github
+</pre></div>
+</div>
+<p>为方便团队其他人通过分支名称知道我们在做什么，我们在GitHub端的远程仓库中创建一个同名分支。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git push -u origin <span class="m">7</span>-case-output-github
+</pre></div>
+</div>
+<p>创建分支大概就是这个步骤。今后我们可以每当工作告一段落时，定期将这个特性分支push到远程仓库。</p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id21">3. 实现新功能</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>写代码…..</p>
+<p>提交本次实现的新功能和需求</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit -am <span class="s2">&quot;Add output GitHub&quot;</span>
+//新功能已经顺利实现，现在将其push到远程仓库。
+$ git push
+</pre></div>
+</div>
+<p>GitHub端远程仓库中的分支应该已经被更新。</p>
+</section>
+<section id="pull-request">
+<h2><a class="toc-backref" href="#id22">4. 创建Pull Request</a><a class="headerlink" href="#pull-request" title="Permalink to this headline">¶</a></h2>
+<p>至此，我们已经顺利实现了新功能，接下来就是从7-case-output-github分支创建一个Pull
+Request发送给master分支，请求与master合并。</p>
+<p>在Pull
+Request中写明希望得到审查。<code class="docutils literal notranslate"><span class="pre">如果想让特定的人来进行审查，可以在评论中加入“&#64;用户名”，这样该用户就会收到Notifications。</span></code></p>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id23">5. 接收反馈</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>至于测试代码，我们确实在添加新功能时没有添加相应的测试代码，对方指出的问题确实存在。</p>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id24">6. 修正被指出的问题</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>然后将修改提交至本地的7-case-output-github分支。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git commit -am &quot;Fix index&quot;
+//该分支push到GitHub端的远程仓库，为远程仓库分支添加这项修改
+$ git push
+</pre></div>
+</div>
+<p>我们再打开GitHub查看Pull Request，会发现这个用于修正的提交已经添加至Pull
+Request</p>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id25">7. 添加测试</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>在GitHub
+Flow中，不可以将没有测试代码的成品代码加入master分支。因此我们被其他开发者指出没有编写测试代码了。</p>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id26">8. 培育Pull Request</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>为了将我们编写的新功能合并到master分支中，要进行提交并push。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git commit -am <span class="s2">&quot;Fix output Github&quot;</span>
+//该分支push到GitHub端的远程仓库，为远程仓库分支添加这项修改
+$ git push
+</pre></div>
+</div>
+<p>确认Pull Request没有问题之后，便可以通过评论请求与master合并了</p>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id27">9. Pull Request被合并</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>合并完成后，这个master分支将被立刻部署至正式环境。</p>
+<p>习惯了在Pull
+Request上进行交流后，我们将能更精确地表达出代码的意图，审查的效率也会越来越快。熟练运用Pull
+Request是这一开发流程成功的关键。</p>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id28">团队实践GitHub Flow时的几点建议</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<section id="id11">
+<h3><a class="toc-backref" href="#id29">●减小Pull Request的体积</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>开发时间越长或者代码量越大，代码审查时的成本就越高。过长的开发时间让审查者难以了解开发该功能时的背景，过大的代码量会让审查者难以阅读到代码的每个细节。这样一来BUG更容易出现，久而久之整个团队的代码审查都会漏洞频出。
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id30">●准备可供试运行的环境</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>我们不妨创建一个与正式环境高度相似的预演（Staging）环境，在这个预演环境中部署关键修改，借以确认代码的实际运行状况。当然，向预演环境的部署也需要实现自动化。
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id31">●不要让Pull Request中有太多反馈</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一是交流不足。如果创建Pull Request的理由没有获得认同，那就不要通过PullRequest进行讨论，而是应该选择其他手段进行交流。最好的解决途径是直接面谈。
+
+
+另一个原因是技术或能力不足。如果代码经常被指出问题，那么不是编程能力方面有问题，就是团队编写代码时没有一个明确的规则。为避免在无用的讨论上浪费时间，团队应该制定一个最低限度的编程规则，并且告知每一名团队成员。如果在开发过程中还需要其他规则，可以将这些规则整合到Wiki中，便于阅览及修改。
+</pre></div>
+</div>
+<p>GitHub
+Flow是以部署为中心的开发流程，所以要求团队中每一名开发者都能编写出高品质的代码，以便顺利通过审查，迅速完成从合并到部署的过程。因此需要锻炼开发者，保证每一名团队成员都能达到这一水平。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>●结对编程
+●组织学习小组共享知识
+●共享可供参考的资料
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id32">●不要积攒Pull Request</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>建议团队制定一个新的规则：想创建Pull Request的人要先去对其他人的Pull Request进行审查及反馈，并在可以部署时及时部署。
+
+这样一来，自己想创建Pull Request时必须先处理其他人的Pull Request，就可以有效避免Pull Request堆积的情况发生。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id33">GitHub Flow的小结</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>●开发流程以部署为中心
+
+●高速源于简单
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="06.%E6%8E%A5%E6%94%B6Pull-Request.html" class="btn btn-neutral float-left" title="接收Pull Request" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html" class="btn btn-neutral float-right" title="便于理解的标准流程" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

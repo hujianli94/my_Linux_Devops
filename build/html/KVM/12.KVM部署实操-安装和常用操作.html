@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>12. KVM部署实操-安裝和常用操作 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="13. Zstack入门初体验" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html" />
+    <link rel="prev" title="11. KVM虚拟化学习笔记系列文章列表(转)" href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01%E6%9E%84%E5%BB%BAKVM%E7%8E%AF%E5%A2%83.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">2. KVM管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html">4. KVM设备高级管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.Vagrant%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">5. Vagrant虚拟机快速创建开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html">6. KVM相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E8%BD%AC%E6%8D%A2V2V.html">7. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM%E5%B8%A6web%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2.html">8. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.CentOS7-ks.cfg%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">12. KVM部署实操-安裝和常用操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#centos7">12.1. 1.安装centos7操作系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#centos7xrdp">12.2. 2.CentOS7安装xrdp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">12.3. 3.安装kvm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">12.4. 4.设置KVM网络</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">12.5. 5.虚拟机关机、开机、开机自启等操作</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">12.5.1. 5.1 配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">12.5.2. 5.2 关机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">12.5.3. 5.3 开机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virsh">12.5.4. 5.4 virsh 创建桥接网卡</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">12.5.5. 5.5 挂起/恢复（暂停）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">12.5.6. 5.6 修改虚拟机名称</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vnc">12.5.7. 5.7 查询虚拟机vnc端口</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">12.5.8. 5.8 开机自启动设置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">12.5.9. 5.9 删除虚拟机配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">12.5.10. 5.10 备份与恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">12.5.11. 5.11 管理KVM虚拟机文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">12.5.12. 5.12 虚拟机克隆</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">12.5.13. 5.13 虚拟机快照</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">12.5.14. 5.14 创建虚拟机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id18">12.5.15. 5.15 存储池和存储卷的管理命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">12.5.16. 5.9 格式转换</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">12.6. 6.KVM命令总结</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id21">12.7. 7. 虚拟机系统管理器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ovirt">12.8. 8. oVirt虚拟化管理平台</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">12.9. 9.参考博客</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id23">12.10. KVM虚拟化学习目录</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">KVM实践</a> &raquo;</li>
+      <li><span class="section-number">12. </span>KVM部署实操-安裝和常用操作</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/KVM/12.KVM部署实操-安装和常用操作.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#kvm" id="id24">KVM部署实操-安裝和常用操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#centos7" id="id25">1.安装centos7操作系统</a></p></li>
+<li><p><a class="reference internal" href="#centos7xrdp" id="id26">2.CentOS7安装xrdp</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id27">3.安装kvm</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id28">4.设置KVM网络</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id29">5.虚拟机关机、开机、开机自启等操作</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id30">5.1 配置文件</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id31">5.2 关机</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id32">5.3 开机</a></p></li>
+<li><p><a class="reference internal" href="#virsh" id="id33">5.4 virsh 创建桥接网卡</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id34">5.5 挂起/恢复（暂停）</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id35">5.6 修改虚拟机名称</a></p></li>
+<li><p><a class="reference internal" href="#vnc" id="id36">5.7 查询虚拟机vnc端口</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id37">5.8 开机自启动设置</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id38">5.9 删除虚拟机配置</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id39">5.10 备份与恢复</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id40">5.11 管理KVM虚拟机文件</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id41">5.12 虚拟机克隆</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id42">5.13 虚拟机快照</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id43">5.14 创建虚拟机</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id44">5.15 存储池和存储卷的管理命令</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id45">5.9 格式转换</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id20" id="id46">6.KVM命令总结</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id47">7. 虚拟机系统管理器</a></p></li>
+<li><p><a class="reference internal" href="#ovirt" id="id48">8. oVirt虚拟化管理平台</a></p></li>
+<li><p><a class="reference internal" href="#id22" id="id49">9.参考博客</a></p></li>
+<li><p><a class="reference internal" href="#id23" id="id50">KVM虚拟化学习目录</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="kvm">
+<h1><a class="toc-backref" href="#id24"><span class="section-number">12. </span>KVM部署实操-安裝和常用操作</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
+<section id="centos7">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">12.1. </span>1.安装centos7操作系统</a><a class="headerlink" href="#centos7" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">刻盘或者ISO引导方式安装</span>
+</pre></div>
+</div>
+</section>
+<section id="centos7xrdp">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">12.2. </span>2.CentOS7安装xrdp</a><a class="headerlink" href="#centos7xrdp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>CentOS安装桌面，如果无桌面，请执行：
+yum -y groups install <span class="s2">&quot;GNOME Desktop&quot;</span>  startx <span class="o">&amp;&amp;</span> yum -y groupinstall <span class="s2">&quot;X Window System&quot;</span>
+
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target          //设置开机默认为图形化界面
+
+ln -sf /lib/systemd/system/runlevel3.target /etc/systemd/system/default.target          //设置开机默认为命令行界面
+
+reboot          //重启生效
+
+<span class="m">2</span>.16.2. 安装xrdp
+
+cp -rf /etc/yum.repos.d/CentOS-Base.repo<span class="o">{</span>,.bak<span class="o">}</span>
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo   <span class="c1">#更换阿里源国内源</span>
+wget -O /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo           <span class="c1">#改为aliyun的epel源,先备份epel本身的源</span>
+yum clean all
+yum makecache
+
+yum --enablerepo<span class="o">=</span>epel -y install xrdp
+
+启动xrdp并设置开机启动
+
+systemctl start xrdp
+systemctl <span class="nb">enable</span> xrdp
+
+安装好了之后将防火墙关闭,或者开放3389端口
+
+//开放3389端口
+firewall-cmd --permanent --zone<span class="o">=</span>public --add-port<span class="o">=</span><span class="m">3389</span>/tcp
+firewall-cmd --reload
+
+
+//或者关闭防火墙//临时关闭
+systemctl stop firewalld
+//禁止开机启动
+systemctl disable firewalld
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">12.3. </span>3.安装kvm</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>已装系统</p>
+<blockquote>
+<div><p>在已有系统基础上，只需安装KVM所需软件即可</p>
+</div></blockquote>
+<blockquote>
+<div><p>配置本地yum源</p>
+</div></blockquote>
+</li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#安装前要查看 CPU 是否支持虚拟化
+Intel CPU：cat /proc/cpuinfo |grep --color vmx
+AMD CPU：cat /proc/cpuinfo |grep --color smv
+</pre></div>
+</div>
+<p>配置本地yum源</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 详细组件一步步安装
+yum -y groupinstall &quot;X Window System&quot;           //安装软件包组支持桌面环境
+yum -y groupinstall &quot;GNOME Desktop&quot;         //安装软件包组Gnome桌面
+
+ln -sf /lib/systemd/system/runlevel5.target /etc/systemd/system/default.target          //设置开机默认为图形化界面
+ln -sf /lib/systemd/system/runlevel3.target /etc/systemd/system/default.target          //设置开机默认为命令行界面
+reboot          //重启生效
+
+
+yum -y install qemu-kvm         //KVM模块
+yum -y install qemu-kvm-tools           //KVM调试工具，可不安装
+yum -y install bridge-utils              //网络支持工具
+yum -y install virt-install              //命令管理虚拟机工具
+yum -y install libvirt                   //虚拟机管理工具
+yum -y install virt-manager          //图形界面管理虚拟机
+yum -y install libguestfs-tools          //virt-cat等命令的支持软件包
+reboot                              //重启系统
+lsmod | grep kvm                    //检查KVM模块是否安装
+
+
+
+或者直接使用一条命令安装kvm：
+yum install qemu-kvm libvirt virt-install bridge-utils -y
+
+
+## 或者直接使用一条命令安装kvm全套插件：
+yum -y install libvirt libvirt-python python-virtinst \
+qemu-kvm-tools \
+libguestfs-tools qemu-kvm libvirt virt-install bridge-utils \
+virt-manager libguestfs-tools-c qemu-img virt-viewer virt-2v
+
+
+reboot                              //重启系统
+
+lsmod | grep kvm                    //检查KVM模块是否安装
+
+# 设置开机自启动
+systemctl start libvirtd &amp;&amp;  systemctl enable libvirtd
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">12.4. </span>4.设置KVM网络</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>宿主服务器安装完成KVM，首先要设定网络，在libvirt中运行KVM网络有两种方法：NAT和Bridge，默认是NAT</p>
+<ul class="simple">
+<li><p><strong>用户模式：即NAT方式，这种方式是默认网络，数据包由NAT方式通过主机的接口进行传送，可以访问外网，但是无法从外部访问虚拟机网络</strong></p></li>
+</ul>
+<p>NAT方式的适用范围 桌面主机虚拟化。</p>
+<ul class="simple">
+<li><p><strong>桥接模式：即Bridge方式，这种模式允许虚拟机像一台独立的主机一样拥有网络，外部的机器可以直接访问到虚拟机内部，但需要网卡支持，一般有线网卡都支持</strong></p></li>
+</ul>
+<p>在 QEMU/KVM
+的网络使用中，桥接模式可以让虚拟机需物理机共享一个物理网络设备连接外部网络，虚拟机有自己独立的
+IP 地址， 可以访问外部网络，外部网络也可以访问虚拟机。</p>
+<p>优缺点：使用桥接模式配置简单，但如果你的网络环境是ip资源很缺少或对ip管理比较严格的话，那桥接模式就不太适用了</p>
+<p>Bridge方式的适用范围 服务器主机虚拟化。</p>
+<p>详细网络实现配置方式参考如下文章：</p>
+<p><a class="reference external" href="https://www.cnblogs.com/kevingrace/p/7551304.html">https://www.cnblogs.com/kevingrace/p/7551304.html</a></p>
+<p><a class="reference external" href="https://blog.csdn.net/weixin_36820871/article/details/80595855">https://blog.csdn.net/weixin_36820871/article/details/80595855</a></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@localhost network-scripts<span class="o">]</span><span class="c1"># cat ifcfg-em1</span>
+<span class="nv">TYPE</span><span class="o">=</span>Ethernet
+<span class="nv">NAME</span><span class="o">=</span>em1
+<span class="nv">UUID</span><span class="o">=</span>25c135e0-2ae5-4975-864e-f07d18161aba
+<span class="nv">DEVICE</span><span class="o">=</span>em1
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+<span class="nv">BRIDGE</span><span class="o">=</span>br0
+
+
+<span class="o">[</span>root@localhost network-scripts<span class="o">]</span><span class="c1"># cat ifcfg-br0</span>
+<span class="nv">STP</span><span class="o">=</span>no
+<span class="nv">TYPE</span><span class="o">=</span>Bridge
+<span class="nv">PROXY_METHOD</span><span class="o">=</span>none
+<span class="nv">BROWSER_ONLY</span><span class="o">=</span>no
+<span class="nv">BOOTPROTO</span><span class="o">=</span>none
+<span class="nv">DEFROUTE</span><span class="o">=</span>yes
+<span class="nv">IPV4_FAILURE_FATAL</span><span class="o">=</span>no
+<span class="c1">#IPV6INIT=yes</span>
+<span class="c1">#IPV6_AUTOCONF=yes</span>
+<span class="c1">#IPV6_DEFROUTE=yes</span>
+<span class="c1">#IPV6_FAILURE_FATAL=no</span>
+<span class="c1">#IPV6_ADDR_GEN_MODE=stable-privacy</span>
+<span class="nv">NAME</span><span class="o">=</span>br0
+<span class="c1">#UUID=d2d68553-f97e-7549-7a26-b34a26f29318</span>
+<span class="nv">DEVICE</span><span class="o">=</span>br0
+<span class="nv">ONBOOT</span><span class="o">=</span>yes
+<span class="nv">IPADDR</span><span class="o">=</span><span class="m">192</span>.168.1.131
+<span class="nv">PREFIX</span><span class="o">=</span><span class="m">24</span>
+<span class="nv">GATEWAY</span><span class="o">=</span><span class="m">192</span>.168.1.1
+<span class="nv">DNS1</span><span class="o">=</span><span class="m">192</span>.168.1.60
+<span class="nv">IPV6INIT</span><span class="o">=</span>no
+<span class="nv">UUID</span><span class="o">=</span>d2d68553-f97e-7549-7a26-b34a26f29318
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">12.5. </span>5.虚拟机关机、开机、开机自启等操作</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>常用的命令如下</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 42%" />
+<col style="width: 58%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>命令形式</p></th>
+<th class="head"><p>作用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>virt-install</p></td>
+<td><p>创建虚拟机</p></td>
+</tr>
+<tr class="row-odd"><td><p>virsh list –all</p></td>
+<td><p>查看所有虚拟机</p></td>
+</tr>
+<tr class="row-even"><td><p>virsh start name</p></td>
+<td><p>启动名为name的虚拟机</p></td>
+</tr>
+<tr class="row-odd"><td><p>virsh destory name</p></td>
+<td><p>停止名为name的虚拟机</p></td>
+</tr>
+<tr class="row-even"><td><p>virsh undefine name</p></td>
+<td><p>删除名为name的虚拟机</p></td>
+</tr>
+<tr class="row-odd"><td><p>virsh console name</p></td>
+<td><p>连接名为name的虚拟机控制台</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id4">
+<h3><a class="toc-backref" href="#id30"><span class="section-number">12.5.1. </span>5.1 配置文件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>KVM虚拟机配置文件位置</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /etc/libvirt/qemu/centos7.xml</span>
+</pre></div>
+</div>
+<p>修改KVM虚拟机配置的方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh edit centos7</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id31"><span class="section-number">12.5.2. </span>5.2 关机</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">shutdown</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span>            <span class="o">//</span><span class="n">关闭名为Centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">的KVM虚拟机</span>
+<span class="n">virsh</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span>
+
+<span class="o">//</span><span class="n">强制关机</span>
+<span class="n">virsh</span> <span class="n">destroy</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span>         <span class="o">//</span><span class="n">强制关闭名为centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">的KVM虚拟机</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id32"><span class="section-number">12.5.3. </span>5.3 开机</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">start</span> <span class="n">cento6</span><span class="o">.</span><span class="mi">5</span>            <span class="o">//</span><span class="n">开启名为centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">的kvm虚拟机</span>
+<span class="n">virsh</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span>
+</pre></div>
+</div>
+</section>
+<section id="virsh">
+<h3><a class="toc-backref" href="#id33"><span class="section-number">12.5.4. </span>5.4 virsh 创建桥接网卡</a><a class="headerlink" href="#virsh" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#相比于手动配置，好像用virsh配置桥接网卡可以不用重启网络</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@ubuntu01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh iface-bridge --interface eth0 --bridge br0</span>
+<span class="n">Created</span> <span class="n">bridge</span> <span class="n">br0</span> <span class="k">with</span> <span class="n">attached</span> <span class="n">device</span> <span class="n">eth0</span>
+<span class="n">Bridge</span> <span class="n">interface</span> <span class="n">br0</span> <span class="n">started</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@ubuntu01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ls /etc/sysconfig/network-scripts/ | grep br     #</span>
+<span class="n">ifcfg</span><span class="o">-</span><span class="n">br0</span>        <span class="c1">#确定有此文件就行</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@ubuntu01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># brctl show</span>
+<span class="n">bridge</span> <span class="n">name</span>     <span class="n">bridge</span> <span class="nb">id</span>               <span class="n">STP</span> <span class="n">enabled</span>     <span class="n">interfaces</span>
+<span class="n">br0</span>             <span class="mf">8000.000</span><span class="n">c29acc95e</span>       <span class="n">yes</span>             <span class="n">eth0</span>
+<span class="n">virbr0</span>          <span class="mf">8000.000000000000</span>       <span class="n">yes</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@ubuntu01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh iface-list</span>
+ <span class="n">Name</span>                 <span class="n">State</span>      <span class="n">MAC</span> <span class="n">Address</span>
+<span class="o">---------------------------------------------------</span>
+ <span class="n">br0</span>                  <span class="n">active</span>     <span class="mi">00</span><span class="p">:</span><span class="mi">0</span><span class="n">c</span><span class="p">:</span><span class="mi">29</span><span class="p">:</span><span class="n">ac</span><span class="p">:</span><span class="n">c9</span><span class="p">:</span><span class="mi">5</span><span class="n">e</span>
+ <span class="n">lo</span>                   <span class="n">active</span>     <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id34"><span class="section-number">12.5.5. </span>5.5 挂起/恢复（暂停）</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 挂起虚拟机</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh suspend centos6.5           //挂起名为centos6.5的虚拟机</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh list --all</span>
+ <span class="n">Id</span>    <span class="n">名称</span>                         <span class="n">状态</span>
+<span class="o">----------------------------------------------------</span>
+ <span class="mi">6</span>     <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span>                      <span class="n">pausd</span>
+
+
+<span class="c1">#恢复虚拟机</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh resume centos6.5</span>
+
+
+<span class="c1">#开机自启KVM虚拟机</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh autostart centos6.5</span>
+<span class="n">域</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">5</span><span class="n">标记为自动开始</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id35"><span class="section-number">12.5.6. </span>5.6 修改虚拟机名称</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 重命名</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh domrename centos7 clsn7</span>
+<span class="n">Domain</span> <span class="n">successfully</span> <span class="n">renamed</span>
+<span class="c1"># 查看</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh list</span>
+ <span class="n">Id</span>    <span class="n">名称</span>                         <span class="n">状态</span>
+<span class="o">----------------------------------------------------</span>
+ <span class="mi">9</span>     <span class="n">clsn7</span>                          <span class="n">关闭</span>
+</pre></div>
+</div>
+</section>
+<section id="vnc">
+<h3><a class="toc-backref" href="#id36"><span class="section-number">12.5.7. </span>5.7 查询虚拟机vnc端口</a><a class="headerlink" href="#vnc" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh vncdisplay clsn7</span>
+<span class="p">:</span><span class="mi">0</span>
+<span class="c1"># :0 即 为 5900 端口，以此类推 :1为5901 。</span>
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id37"><span class="section-number">12.5.8. </span>5.8 开机自启动设置</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 设置 libvirtd 服务开机自启动。</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># systemctl is-enabled libvirtd.service</span>
+<span class="n">enabled</span>
+</pre></div>
+</div>
+<p>设置宿主机开机虚拟机在其他</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh autostart clsn7</span>
+<span class="n">域</span> <span class="n">clsn7标记为自动开始</span>
+<span class="c1"># 实质为创建软连接</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ll /etc/libvirt/qemu/autostart/clsn7.xml</span>
+<span class="n">lrwxrwxrwx</span> <span class="mi">1</span> <span class="n">root</span> <span class="n">root</span> <span class="mi">27</span> <span class="mi">1</span><span class="n">月</span>  <span class="mi">22</span> <span class="mi">12</span><span class="p">:</span><span class="mi">17</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">qemu</span><span class="o">/</span><span class="n">autostart</span><span class="o">/</span><span class="n">clsn7</span><span class="o">.</span><span class="n">xml</span> <span class="o">-&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">qemu</span><span class="o">/</span><span class="n">clsn7</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>取消开机自启动</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh autostart --disable clsn7</span>
+<span class="n">域</span> <span class="n">clsn7取消标记为自动开始</span>
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id38"><span class="section-number">12.5.9. </span>5.9 删除虚拟机配置</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 查看</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh list --all</span>
+ <span class="n">Id</span>    <span class="n">名称</span>                         <span class="n">状态</span>
+<span class="o">----------------------------------------------------</span>
+ <span class="o">-</span>     <span class="n">centos7</span>                        <span class="n">关闭</span>
+ <span class="c1"># 删除</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh undefine centos7</span>
+<span class="n">域</span> <span class="n">centos7</span> <span class="n">已经被取消定义</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh list --all</span>
+ <span class="n">Id</span>    <span class="n">名称</span>                         <span class="n">状态</span>
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id39"><span class="section-number">12.5.10. </span>5.10 备份与恢复</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p><strong>备份虚拟机配置(关机时备份):</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virsh dumpxml centos7  &gt; centos7.xml</span>
+</pre></div>
+</div>
+<p><strong>导入虚拟机</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 导入
+[root@kvm ~]# virsh define centos7-off.xml
+定义域 centos7（从 centos7-off.xml）
+# 查看
+[root@kvm ~]# virsh list --all
+ Id    名称                         状态
+----------------------------------------------------
+ -     centos7                        关闭
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id40"><span class="section-number">12.5.11. </span>5.11 管理KVM虚拟机文件</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#virt-cat -a 磁盘文件路径 文件绝对路径 //查看指定KVM虚拟机磁盘文件里指定路径内容</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-cat -a /kvm/store/Centos6.5 /etc/sysconfig/network           #//查看centos6.5磁盘文件中/etc/sysconfig/network内容</span>
+
+
+
+<span class="c1">#virt-edit -a 磁盘文件路径 文件决定路径 //编辑指定KVM虚拟机磁盘文件里指定路径内容</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@kvm</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-edit -a /kvm/store/Centos6.5 /etc/sysconfig/network</span>
+
+
+<span class="c1">#virt-df -h 虚拟机名称 //查看指定KVM虚拟机磁盘使用情况</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-df -h gitee2</span>
+<span class="n">Filesystem</span>                                <span class="n">Size</span>       <span class="n">Used</span>  <span class="n">Available</span>  <span class="n">Use</span><span class="o">%</span>
+<span class="n">gitee2</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda2</span>                          <span class="mi">509</span><span class="n">M</span>       <span class="mi">118</span><span class="n">M</span>       <span class="mi">391</span><span class="n">M</span>   <span class="mi">24</span><span class="o">%</span>
+<span class="n">gitee2</span><span class="p">:</span><span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="n">root</span>                    <span class="mi">58</span><span class="n">G</span>       <span class="mf">1.4</span><span class="n">G</span>        <span class="mi">57</span><span class="n">G</span>    <span class="mi">3</span><span class="o">%</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id41"><span class="section-number">12.5.12. </span>5.12 虚拟机克隆</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>virsh shutdown <span class="m">15</span>
+virsh list --all
+
+
+<span class="o">[</span>root@localhost network-scripts<span class="o">]</span><span class="c1"># virt-clone -o gitee1 -n gitee2 -f /kvm/store/Centos7_clone</span>
+Allocating <span class="s1">&#39;Centos7_clone&#39;</span>                                                                                             <span class="p">|</span>  <span class="m">60</span> GB  <span class="m">00</span>:00:02
+
+Clone <span class="s1">&#39;gitee2&#39;</span> created successfully.
+<span class="o">[</span>root@localhost network-scripts<span class="o">]</span><span class="c1"># virsh list --all</span>
+ Id    Name                           State
+----------------------------------------------------
+ -     gitee1                         shut off
+ -     gitee2                         shut off
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id42"><span class="section-number">12.5.13. </span>5.13 虚拟机快照</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>    快照：将虚拟机系统的某个状态保存，通过快照可快速恢复到虚拟机系统的某个状态
+
+    注：KVM快照只支持qcow2磁盘格式，如不是需转换
+
+<span class="c1">#创建快照</span>
+virsh snapshot-create 虚拟机名称
+
+<span class="o">[</span>root@kvm ~<span class="o">]</span><span class="c1"># virsh snapshot-create centos6.5           //给名为centos6.5虚拟机创建快照</span>
+已生成域快照 <span class="m">1558427973</span>
+
+    查看快照信息 virsh snapshot-list 虚拟机名称
+
+<span class="o">[</span>root@kvm ~<span class="o">]</span><span class="c1"># virsh snapshot-list centos6.5         //查看指定虚拟机所有创建的快照信息</span>
+
+ 名称               生成时间              状态
+------------------------------------------------------------
+ <span class="m">1558427973</span>           <span class="m">2019</span>-05-21 <span class="m">16</span>:39:33 +0800 shutoff
+
+
+<span class="o">[</span>root@kvm ~<span class="o">]</span><span class="c1"># virsh snapshot-current centos6.5          //查看名为centos6.5虚拟机详细快照信息</span>
+
+&lt;domainsnapshot&gt;
+  &lt;name&gt;1558427973&lt;/name&gt;
+  &lt;state&gt;shutoff&lt;/state&gt;
+  &lt;creationTime&gt;1558427973&lt;/creationTime&gt;
+  &lt;memory <span class="nv">snapshot</span><span class="o">=</span><span class="s1">&#39;no&#39;</span>/&gt;
+  &lt;disks&gt;
+    &lt;disk <span class="nv">name</span><span class="o">=</span><span class="s1">&#39;vda&#39;</span> <span class="nv">snapshot</span><span class="o">=</span><span class="s1">&#39;internal&#39;</span>/&gt;
+    &lt;disk <span class="nv">name</span><span class="o">=</span><span class="s1">&#39;hda&#39;</span> <span class="nv">snapshot</span><span class="o">=</span><span class="s1">&#39;no&#39;</span>/&gt;
+  &lt;/disks&gt;
+  &lt;domain <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;kvm&#39;</span>&gt;
+......
+
+
+
+<span class="c1">#恢复快照</span>
+virsh snapshot-revert 虚拟机名称 快照序号
+
+<span class="o">[</span>root@kvm ~<span class="o">]</span><span class="c1"># virsh snapshot-revert centos6.5 1558427973            //将名为centos6.5的虚拟机恢复到&quot;Name&quot;为1558427973时的状态</span>
+
+
+<span class="c1">#删除快照</span>
+virsh snapshot-delete 虚拟机名称 快照序号
+
+<span class="o">[</span>root@kvm ~<span class="o">]</span><span class="c1"># virsh snapshot-delete centos6.5 1558427973            //将centos6.5虚拟机&quot;Name&quot;为1558427973的快照删除</span>
+
+已删除域快照 <span class="m">1558427973</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id43"><span class="section-number">12.5.14. </span>5.14 创建虚拟机</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<section id="id16">
+<h4>方式1<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h4>
+<p>使用命令创建虚拟机</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#virt-install 的--network选项指定bridge：</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@ubuntu01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># virt-install \</span>
+    <span class="o">--</span><span class="n">name</span><span class="o">=</span><span class="n">centos_vm_01</span> \
+    <span class="o">--</span><span class="n">virt</span><span class="o">-</span><span class="nb">type</span><span class="o">=</span><span class="n">kvm</span> \
+    <span class="o">--</span><span class="n">ram</span><span class="o">=</span><span class="mi">1024</span> \
+    <span class="o">--</span><span class="n">cdrom</span><span class="o">=/</span><span class="n">data</span><span class="o">/</span><span class="n">iso</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="n">V6</span><span class="o">.</span><span class="mf">5.23</span><span class="o">.</span><span class="n">iso</span> \
+    <span class="o">--</span><span class="n">disk</span> <span class="n">path</span><span class="o">=/</span><span class="n">data</span><span class="o">/</span><span class="n">img</span><span class="o">/</span><span class="n">disk01</span><span class="o">.</span><span class="n">raw</span> \
+    <span class="o">--</span><span class="n">network</span> <span class="n">bridge</span><span class="o">=</span><span class="n">br0</span> \
+    <span class="o">--</span><span class="n">graphics</span> <span class="n">vnc</span><span class="p">,</span><span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> \
+    <span class="o">--</span><span class="n">noautoconsole</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virt</span><span class="o">-</span><span class="n">install</span> <span class="o">-</span><span class="n">n</span> <span class="n">centos6</span><span class="o">.</span><span class="mi">6</span><span class="o">-</span><span class="mi">2</span> <span class="o">-</span><span class="n">r</span> <span class="mi">1024</span> \
+<span class="o">--</span><span class="n">disk</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">rhel6</span><span class="o">.</span><span class="mi">6</span><span class="o">-</span><span class="mf">2.</span><span class="n">img</span><span class="p">,</span><span class="n">size</span> <span class="mi">10</span> \
+<span class="o">--</span><span class="n">network</span> <span class="n">bridge</span><span class="o">=</span><span class="n">br0</span> <span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="nb">type</span><span class="o">=</span><span class="n">linux</span> <span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="n">variant</span><span class="o">=</span><span class="n">rhe16</span><span class="o">.</span><span class="mi">6</span> \
+<span class="o">--</span><span class="n">cdrom</span> <span class="o">/</span><span class="n">iso</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="mf">6.6</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">iso</span> \
+<span class="o">--</span><span class="n">graphics</span> <span class="n">vnc</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">5910</span><span class="p">,</span><span class="n">listen</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span><span class="p">,</span><span class="n">password</span><span class="o">=</span><span class="s1">&#39;redhat&#39;</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virt</span><span class="o">-</span><span class="n">install</span> <span class="o">--</span><span class="n">virt</span><span class="o">-</span><span class="nb">type</span> <span class="n">kvm</span> \
+<span class="o">--</span><span class="n">name</span> <span class="n">centos</span> <span class="o">--</span><span class="n">ram</span> <span class="mi">1024</span> \
+<span class="o">--</span><span class="n">disk</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">centos</span><span class="o">.</span><span class="n">qcow2</span><span class="p">,</span><span class="nb">format</span><span class="o">=</span><span class="n">qcow2</span> \
+<span class="o">--</span><span class="n">network</span> <span class="n">bridge</span><span class="o">=</span><span class="n">br0</span> <span class="o">--</span><span class="n">graphics</span> <span class="n">vnc</span><span class="p">,</span><span class="n">listen</span><span class="o">=</span><span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> \
+<span class="o">--</span><span class="n">noautoconsole</span> \
+<span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="nb">type</span><span class="o">=</span><span class="n">linux</span> <span class="o">--</span><span class="n">os</span><span class="o">-</span><span class="n">variant</span><span class="o">=</span><span class="n">rhel7</span> \
+<span class="o">--</span><span class="n">location</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">CentOS</span><span class="o">-</span><span class="mi">7</span><span class="o">-</span><span class="n">x86_64</span><span class="o">-</span><span class="n">Minimal</span><span class="o">-</span><span class="mf">1611.</span><span class="n">iso</span>
+</pre></div>
+</div>
+<p>参数说明：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>-r和-n：指明虚拟机名称和内存容量
+--disk 设置磁盘参数，size表示设置磁盘容量
+--network 设置虚拟机网络，bridge=br0表示使用桥接网络br0
+--os-type 设置操作系统类型
+--os-variant 表示操作系统版本
+--cdrom  设置ISO光驱路径
+--graphics 设置图形、监视器等，VNC监视器访问密码为redhat，端口5910，所有网口监听
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h4>方式2<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li><p>通过xml文件创建虚拟机</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">domain</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;kvm&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">name</span><span class="o">&gt;</span><span class="n">centos7</span><span class="o">-</span><span class="mi">0</span><span class="o">&lt;/</span><span class="n">name</span><span class="o">&gt;</span>      <span class="c1">#虚拟机名称</span>
+<span class="o">&lt;</span><span class="n">memory</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;KiB&#39;</span><span class="o">&gt;</span><span class="mi">2048576</span><span class="o">&lt;/</span><span class="n">memory</span><span class="o">&gt;</span>      <span class="c1">#虚拟机内存大小</span>
+<span class="o">&lt;</span><span class="n">currentMemory</span> <span class="n">unit</span><span class="o">=</span><span class="s1">&#39;KiB&#39;</span><span class="o">&gt;</span><span class="mi">2048576</span><span class="o">&lt;/</span><span class="n">currentMemory</span><span class="o">&gt;</span>      <span class="c1">#虚拟机在开机时分配的内存大小</span>
+<span class="o">&lt;</span><span class="n">vcpu</span> <span class="n">placement</span><span class="o">=</span><span class="s1">&#39;static&#39;</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">vcpu</span><span class="o">&gt;</span>      <span class="c1">#cpu个数</span>
+<span class="o">&lt;</span><span class="n">os</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nb">type</span> <span class="n">arch</span><span class="o">=</span><span class="s1">&#39;x86_64&#39;</span> <span class="n">machine</span><span class="o">=</span><span class="s1">&#39;pc-i440fx-rhel7.0.0&#39;</span><span class="o">&gt;</span><span class="n">hvm</span><span class="o">&lt;/</span><span class="nb">type</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">boot</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;cdrom&#39;</span><span class="o">/&gt;</span>      <span class="c1">#启动方式  cdrom为从光盘启动(ISO镜像)，后面会再次修改启动方式</span>
+<span class="o">&lt;/</span><span class="n">os</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">features</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">acpi</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">apic</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">features</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">cpu</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;custom&#39;</span> <span class="n">match</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">model</span> <span class="n">fallback</span><span class="o">=</span><span class="s1">&#39;allow&#39;</span><span class="o">&gt;</span><span class="n">Nehalem</span><span class="o">&lt;/</span><span class="n">model</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">cpu</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">clock</span> <span class="n">offset</span><span class="o">=</span><span class="s1">&#39;localtime&#39;</span><span class="o">/&gt;</span>
+<span class="o">&lt;</span><span class="n">on_poweroff</span><span class="o">&gt;</span><span class="n">destroy</span><span class="o">&lt;/</span><span class="n">on_poweroff</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">on_reboot</span><span class="o">&gt;</span><span class="n">restart</span><span class="o">&lt;/</span><span class="n">on_reboot</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">on_crash</span><span class="o">&gt;</span><span class="n">restart</span><span class="o">&lt;/</span><span class="n">on_crash</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">devices</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">emulator</span><span class="o">&gt;/</span><span class="n">usr</span><span class="o">/</span><span class="n">libexec</span><span class="o">/</span><span class="n">qemu</span><span class="o">-</span><span class="n">kvm</span><span class="o">&lt;/</span><span class="n">emulator</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;disk&#39;</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">driver</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;qcow2&#39;</span><span class="o">/&gt;</span>
+    <span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;/opt/image/centos7-0.qcow2&#39;</span><span class="o">/&gt;</span>      <span class="c1">#虚拟硬盘</span>
+    <span class="o">&lt;</span><span class="n">target</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hda&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ide&#39;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;/</span><span class="n">disk</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;cdrom&#39;</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;/mnt/ISO/CentOS-7-x86_64-DVD-1810.iso&#39;</span><span class="o">/&gt;</span>      <span class="c1">#ISO镜像路径</span>
+  <span class="o">&lt;</span><span class="n">target</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hdb&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ide&#39;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;/</span><span class="n">disk</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">interface</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;bridge&#39;</span><span class="o">&gt;</span>      <span class="c1">#网络模式为桥接</span>
+    <span class="o">&lt;</span><span class="n">source</span> <span class="n">network</span><span class="o">=</span><span class="s1">&#39;virbr0&#39;</span> <span class="n">bridge</span><span class="o">=</span><span class="s1">&#39;virbr0&#39;</span><span class="o">/&gt;</span>      <span class="c1">#此处要和自己虚拟交换机的配置对应</span>
+  <span class="o">&lt;/</span><span class="n">interface</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;tablet&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;usb&#39;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;mouse&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ps2&#39;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="nb">input</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;keyboard&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ps2&#39;</span><span class="o">/&gt;</span>
+  <span class="o">&lt;</span><span class="n">graphics</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;vnc&#39;</span> <span class="n">port</span><span class="o">=</span><span class="s1">&#39;5905&#39;</span> <span class="n">autopart</span><span class="o">=</span><span class="s1">&#39;no&#39;</span> <span class="n">listen</span><span class="o">=</span><span class="s1">&#39;0.0.0.0&#39;</span> <span class="n">keymap</span><span class="o">=</span><span class="s1">&#39;en-us&#39;</span><span class="o">/&gt;</span>　　<span class="c1">#5905为端口号</span>
+<span class="o">&lt;/</span><span class="n">devices</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">domain</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>关于虚拟硬盘的创建</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">qemu</span><span class="o">-</span><span class="n">img</span> <span class="n">create</span> <span class="o">-</span><span class="n">f</span> <span class="n">qcow2</span> <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">image</span><span class="o">/</span><span class="n">centos7</span><span class="o">-</span><span class="mf">0.</span><span class="n">qcow2</span> <span class="mi">40</span><span class="n">G</span>  <span class="c1">#此处的路径与上方xml文件中的硬盘路径一致</span>
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>创建虚拟机</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">define</span> <span class="n">centos7</span><span class="o">-</span><span class="mf">0.</span><span class="n">xml</span>    <span class="c1">#定义虚拟机</span>
+<span class="n">virsh</span> <span class="n">start</span> <span class="n">centos7</span><span class="o">-</span><span class="mi">0</span>    <span class="c1">#启动虚拟机</span>
+</pre></div>
+</div>
+<p>查看是否启动</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vir1</span><span class="o">.</span><span class="n">sh</span> <span class="nb">list</span> <span class="o">--</span><span class="nb">all</span>
+</pre></div>
+</div>
+<p>4、连接VNC Viewer -&gt; 宿主机IP：端口号</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>virsh shutdown centos7-0    #将虚拟机关机
+
+// 关机后先查看一下虚拟机的状态，如果还是运行态，则进行强制关机
+// virsh destroy centos7-0
+
+virsh undefine centos7-0    #取消定义
+</pre></div>
+</div>
+<p>5、连接以后进入安装系统界面，安装完成以后，要将虚拟机的开机方式改为从硬盘启动（否则将一直重复系统安装引导）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;/</span><span class="n">disk</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">disk</span> <span class="nb">type</span><span class="o">=</span><span class="s1">&#39;file&#39;</span> <span class="n">device</span><span class="o">=</span><span class="s1">&#39;hd&#39;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">source</span> <span class="n">file</span><span class="o">=</span><span class="s1">&#39;/mnt/ISO/CentOS-7-x86_64-DVD-1810.iso&#39;</span><span class="o">/&gt;</span>      <span class="c1">#ISO镜像路径</span>
+<span class="o">&lt;</span><span class="n">target</span> <span class="n">dev</span><span class="o">=</span><span class="s1">&#39;hdb&#39;</span> <span class="n">bus</span><span class="o">=</span><span class="s1">&#39;ide&#39;</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">disk</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>重新创建虚拟机</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">virsh</span> <span class="n">define</span> <span class="n">centos7</span><span class="o">-</span><span class="mf">0.</span><span class="n">xml</span>
+<span class="n">virsh</span> <span class="n">start</span> <span class="n">centos7</span><span class="o">-</span><span class="mi">0</span>
+</pre></div>
+</div>
+<p>至此完成</p>
+</section>
+</section>
+<section id="id18">
+<h3><a class="toc-backref" href="#id44"><span class="section-number">12.5.15. </span>5.15 存储池和存储卷的管理命令</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>virsh也可以对节点上的存储池和存储卷进行管理。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span> <span class="n">显示libvirt管理的存储池</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh pool-list</span>
+ <span class="n">Name</span>                 <span class="n">State</span>      <span class="n">Autostart</span>
+<span class="o">-------------------------------------------</span>
+ <span class="n">default</span>              <span class="n">active</span>     <span class="n">yes</span>
+ <span class="n">iso</span>                  <span class="n">active</span>     <span class="n">yes</span>
+ <span class="n">store</span>                <span class="n">active</span>     <span class="n">yes</span>
+<span class="o">//</span> <span class="n">根据存储池名称查询基本信息</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh pool-info default</span>
+<span class="n">Name</span><span class="p">:</span>           <span class="n">default</span>
+<span class="n">UUID</span><span class="p">:</span>           <span class="mi">8</span><span class="n">bd27a69</span><span class="o">-</span><span class="mi">7</span><span class="n">d78</span><span class="o">-</span><span class="mi">408</span><span class="n">d</span><span class="o">-</span><span class="n">acb7</span><span class="o">-</span><span class="mi">79</span><span class="n">de2d9c494c</span>
+<span class="n">State</span><span class="p">:</span>          <span class="n">running</span>
+<span class="n">Persistent</span><span class="p">:</span>     <span class="n">yes</span>
+<span class="n">Autostart</span><span class="p">:</span>      <span class="n">yes</span>
+<span class="n">Capacity</span><span class="p">:</span>       <span class="mf">14.53</span> <span class="n">TiB</span>
+<span class="n">Allocation</span><span class="p">:</span>     <span class="mf">259.32</span> <span class="n">GiB</span>
+<span class="n">Available</span><span class="p">:</span>      <span class="mf">14.28</span> <span class="n">TiB</span>
+
+<span class="o">//</span> <span class="n">查询存储池中存储卷的列表</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh vol-list default</span>
+ <span class="n">Name</span>                 <span class="n">Path</span>
+<span class="o">------------------------------------------------------------------------------</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">clone</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">clone</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">clone</span><span class="o">.</span><span class="n">qcow2</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">clone</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>       <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="mf">2.</span><span class="n">qcow2</span>       <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="mf">2.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="n">clone</span><span class="o">.</span><span class="n">qcow2</span>   <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="n">clone</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">-</span><span class="n">clone1</span><span class="o">.</span><span class="n">qcow2</span>  <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="n">clone1</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee1</span><span class="o">.</span><span class="n">qcow2</span>         <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee2</span><span class="o">.</span><span class="n">qcow2</span>         <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee2</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee3</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>       <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee3</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
+ <span class="n">gitee3</span><span class="o">.</span><span class="n">qcow2</span>         <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee3</span><span class="o">.</span><span class="n">qcow2</span>
+ <span class="n">gitee4</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>       <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee4</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
+ <span class="n">gitee4</span><span class="o">.</span><span class="n">qcow2</span>         <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee4</span><span class="o">.</span><span class="n">qcow2</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh vol-info --pool default gitee1-1.qcow2</span>
+<span class="n">Name</span><span class="p">:</span>           <span class="n">gitee1</span><span class="o">-</span><span class="mf">1.</span><span class="n">qcow2</span>
+<span class="n">Type</span><span class="p">:</span>           <span class="n">file</span>
+<span class="n">Capacity</span><span class="p">:</span>       <span class="mf">20.00</span> <span class="n">GiB</span>
+<span class="n">Allocation</span><span class="p">:</span>     <span class="mf">20.00</span> <span class="n">GiB</span>
+
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh vol-path --pool default gitee1-2.qcow2</span>
+<span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">libvirt</span><span class="o">/</span><span class="n">images</span><span class="o">/</span><span class="n">gitee1</span><span class="o">-</span><span class="mf">2.</span><span class="n">qcow2</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">store</span><span class="p">]</span><span class="c1"># virsh vol-name /var/lib/libvirt/images/gitee2.qcow2</span>
+<span class="n">gitee2</span><span class="o">.</span><span class="n">qcow2</span>
+</pre></div>
+</div>
+</section>
+<section id="id19">
+<h3><a class="toc-backref" href="#id45"><span class="section-number">12.5.16. </span>5.9 格式转换</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p><strong>raw磁盘格式转换为qcow2磁盘格式</strong></p>
+<p>VM虚拟机常用磁盘格式为raw与qcow2格式，默认使用qcow2格式，那么其中raw格式的磁盘性能最好、速度最快，但不支持AES加密、zlib磁盘压缩等新功能，
+而qcow2格式磁盘存储空间更小，并支持AES加密、zlib、快照等新功能，
+缺点是性能较差
+如果想管理指定虚拟机磁盘（如分区情况、磁盘数量等），可以使用”libguestfs-tools”工具（一般默认安装），
+下面举例，说明如和转换磁盘格式。</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>qemu-img info /kvm/store/centos6.5          <span class="c1">#//查看指定磁盘文件的信息（如磁盘格式、占用磁盘大小等）</span>
+
+
+qemu-img convert -f raw -O qcow2 raw格式磁盘镜像路径 qcow2格式磁盘镜像路径
+
+    <span class="c1">#选项：</span>
+
+    -c：对输出的镜像文件进行压缩，但只有qcow2和qcow格式支持
+    -f：指定源磁盘格式
+    -O：指定转换后磁盘格式
+
+
+<span class="c1">#//将指定raw格式文件转换为qcow2磁盘格式文件（注意该虚拟机需关机）</span>
+qemu-img convert -f raw -O qcow2 /kvm/store/centos6.5 /kvm/store/centos6.5.qcow2
+
+qemu-img info /kvm/store/centos6.5.qcow2            <span class="c1">#//查看转换后磁盘格式信息</span>
+
+
+    * 注：转换后，需更改KVM虚拟机配置文件，因为虚拟机中还是用原磁盘格式文件，需要更改为新转换后的磁盘文件，才能使用新磁盘格式
+
+virsh edit centos6.5                //编辑指定名为centos6.5虚拟机配置文件
+ <span class="m">24</span>       &lt;driver <span class="nv">name</span><span class="o">=</span><span class="s1">&#39;qemu&#39;</span> <span class="nv">type</span><span class="o">=</span><span class="s1">&#39;qcow2&#39;</span> <span class="nv">cache</span><span class="o">=</span><span class="s1">&#39;none&#39;</span>/&gt;
+ <span class="m">25</span>       &lt;<span class="nb">source</span> <span class="nv">file</span><span class="o">=</span><span class="s1">&#39;/kvm/store/centos6.5.qcow2&#39;</span>/&gt;
+
+virsh start centos6.5                   //启动该KVM虚拟机
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id20">
+<h2><a class="toc-backref" href="#id46"><span class="section-number">12.6. </span>6.KVM命令总结</a><a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://blog.csdn.net/chengyinwu/article/details/104074802">https://blog.csdn.net/chengyinwu/article/details/104074802</a></p>
+</section>
+<section id="id21">
+<h2><a class="toc-backref" href="#id47"><span class="section-number">12.7. </span>7. 虚拟机系统管理器</a><a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h2>
+<p>虚拟机系统管理器由软件包<code class="docutils literal notranslate"><span class="pre">virt-manager</span></code>提供。可以用<code class="docutils literal notranslate"><span class="pre">yum</span> <span class="pre">-y</span> <span class="pre">install</span> <span class="pre">virt-manager</span></code>,安装完毕后使用<code class="docutils literal notranslate"><span class="pre">virt-manager</span></code>GUI界面进行设置和管理虚拟机。</p>
+</section>
+<section id="ovirt">
+<h2><a class="toc-backref" href="#id48"><span class="section-number">12.8. </span>8. oVirt虚拟化管理平台</a><a class="headerlink" href="#ovirt" title="Permalink to this headline">¶</a></h2>
+<p>oVirt是Red Hat公司下的RHEV开源版本，主要用来管理和部署虚拟化主机。</p>
+<ul class="simple">
+<li><p>oVirt由两部分组成，客户端称为oVirt
+Node，与VMware公司的ESXI类似，主要实现主机虚拟化</p></li>
+<li><p>oVirt-engine 类似于VMware vCenter，主要用来管理虚拟化主机。</p></li>
+</ul>
+<p>oVirt 管理平台的安装过程十分简便， 其官方网站上对其有十分详尽的说明。</p>
+<p>oVirt官方网站： <a class="reference external" href="http://www.ovirt.org/Home">http://www.ovirt.org/Home</a></p>
+</section>
+<section id="id22">
+<h2><a class="toc-backref" href="#id49"><span class="section-number">12.9. </span>9.参考博客</a><a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">blog</span><span class="o">.</span><span class="n">linuxli</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">2019</span><span class="o">/</span><span class="mi">05</span><span class="o">/</span><span class="n">Hypervisor_kvm</span><span class="o">/</span>
+
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">cnblogs</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">clsn</span><span class="o">/</span><span class="n">p</span><span class="o">/</span><span class="mf">8366251.</span><span class="n">html</span><span class="c1">#auto-id-13</span>
+
+<span class="o">//</span><span class="n">CentOS</span> <span class="mi">7</span> <span class="n">安装配置KVM</span> <span class="n">通过KVM安装CentOS系统</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">cnblogs</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">bigdevilking</span><span class="o">/</span><span class="n">p</span><span class="o">/</span><span class="mf">9615261.</span><span class="n">html</span>
+</pre></div>
+</div>
+</section>
+<section id="id23">
+<h2><a class="toc-backref" href="#id50"><span class="section-number">12.10. </span>KVM虚拟化学习目录</a><a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/itzgr/tag/%E8%99%9A%E6%8B%9F%E5%8C%96/">https://www.cnblogs.com/itzgr/tag/%E8%99%9A%E6%8B%9F%E5%8C%96/</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/yxiaodao/p/10708078.html">https://www.cnblogs.com/yxiaodao/p/10708078.html</a></p>
+<p><a class="reference external" href="https://www.cnblogs.com/yizhangheka/p/12011418.html#%E7%83%AD%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C">https://www.cnblogs.com/yizhangheka/p/12011418.html#%E7%83%AD%E8%BF%81%E7%A7%BB%E6%93%8D%E4%BD%9C</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html" class="btn btn-neutral float-left" title="11. KVM虚拟化学习笔记系列文章列表(转)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html" class="btn btn-neutral float-right" title="13. Zstack入门初体验" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

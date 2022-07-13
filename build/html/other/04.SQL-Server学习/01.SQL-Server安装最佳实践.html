@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.1. SQL-Server安装最佳实践 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.2. 利用HAProxy代理SQL-Server的AlwaysOn辅助副本" href="02.%E5%88%A9%E7%94%A8HAProxy%E4%BB%A3%E7%90%86SQL-Server%E7%9A%84AlwaysOn%E8%BE%85%E5%8A%A9%E5%89%AF%E6%9C%AC.html" />
+    <link rel="prev" title="4. SQL-Server学习" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. SQL-Server学习</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.1. SQL-Server安装最佳实践</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.1.1. 全新安装（单机安装）</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.1.2. 安装SQL Server集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">4.1.3. 添加SQL Server集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.1.4. SQL Server集群测试切换</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%88%A9%E7%94%A8HAProxy%E4%BB%A3%E7%90%86SQL-Server%E7%9A%84AlwaysOn%E8%BE%85%E5%8A%A9%E5%89%AF%E6%9C%AC.html">4.2. 利用HAProxy代理SQL-Server的AlwaysOn辅助副本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.SQL-Server-2014%E6%95%B0%E6%8D%AE%E5%BA%93%E9%9B%86%E7%BE%A4%E6%90%AD%E5%BB%BA%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%8C%87%E5%8D%97.html">4.3. SQL Server 2014数据库集群搭建与配置指南</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.APP%E5%90%8E%E5%8F%B0%E5%BC%80%E5%8F%91%E8%BF%90%E7%BB%B4_%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/index.html">6. APP后台开发运维_读书笔记</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>SQL-Server学习</a> &raquo;</li>
+      <li><span class="section-number">4.1. </span>SQL-Server安装最佳实践</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/04.SQL-Server学习/01.SQL-Server安装最佳实践.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#sql-server" id="id7">SQL-Server安装最佳实践</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id8">全新安装（单机安装）</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id9">安装SQL Server集群</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id10">添加SQL Server集群</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id11">SQL Server集群测试切换</a></p>
+<ul>
+<li><p><a class="reference internal" href="#win-sql01-1" id="id12">10.144.113.10（WIN-SQL01） 节点1</a></p></li>
+<li><p><a class="reference internal" href="#win-sql02-2" id="id13">10.144.113.11 （WIN-SQL02）节点2</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id14">验证切换1</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id15">验证切换2</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="sql-server">
+<h1><a class="toc-backref" href="#id7"><span class="section-number">4.1. </span>SQL-Server安装最佳实践</a><a class="headerlink" href="#sql-server" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">4.1.1. </span>全新安装（单机安装）</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>最简单、最常见的SQL-Server部署方式是使用安装向导提供的GUI进行手动。手动安装需要用户频繁参与，以提供完成SQL
+Server2014安装所需的信息和参数值。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(1)从SQL-Server2014安装媒介中启动Setup.exe。“SQL Server安装中心”将会打开
+</pre></div>
+</div>
+<p><img alt="image0" src="../../_images/sql-SQL01.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(2)单击左侧的“ 安装” 选项卡， 然后单击右侧的第一个选项， 其标题为“ 全新SQL Server
+独立安装或向现有安装添加功能” 。SQL Server 2014 安装向导将会启动。
+
+(3)初始化安装操作会需要一点时间
+
+(4)对于某些安装媒体和许可协议， 可能需要选择SQL Server 的版本， 并在下一个屏幕中
+输入产品密钥。单击“ 下一步” 按钮继续。
+
+(5)“ 许可条款” 屏幕将会打开。接受许可条款， 然后单击“ 下一步” 。
+
+(6)“ 全局规则” 屏幕将会打开， 并自动前进到下一个屏幕。
+
+(7)“ Microsoft Update &quot; 屏幕将会打开。组织应该确定一个最小版本号。不要选中这个复
+选框。单击“ 下一步” 。根据组织的指导原则将更新应用到SQL Server 。
+
+(8)“ 产品史新” 屏幕将会打开。单击“ 下一步” 继续。
+
+(9)“ 安装安装程序文件&quot; 屏幕将会打开， 并进行到下一个屏幕。
+</pre></div>
+</div>
+<p><img alt="image1" src="../../_images/SQL-server06.PNG" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>(10)“ 安装规则” 屏幕标识了安装支持文件时可能发生的问题。这一步完成后， 如果所有
+状态均通过， 就单击“ 下一步” 。
+(11)“ 设置角色” 屏幕将会打开。选择&quot;SQLServer 功能安装” 选项， 然后单击“ 下一步” 。
+(12)“ 功能选择” 屏幕将会打开。选择“ 数据库引擎服务” 和“ 管理工具． 基本” ， 然后单
+击“ 下一步&quot; 。如下图显示了SQL Server 2014 中可以安装的功能列表。
+</pre></div>
+</div>
+<p><img alt="image2" src="../../_images/SQL-Server02.png" /></p>
+<p><img alt="image3" src="../../_images/SQL-Server03.png" /> <img alt="image4" src="../../_images/SQL-Server05.png" /> <img alt="image5" src="../../_images/SQL-Sever04.png" /></p>
+<p>SQL Server安装完毕之后如下图所示： <img alt="image6" src="../../_images/SQLServer003.png" /></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">4.1.2. </span>安装SQL Server集群</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>① 挂载华为的OceanStor 5600 V3 存储磁盘 <img alt="image7" src="../../_images/cipanguazhai.png" /></p>
+<p>② 在第一台机器上插入光驱和SQL-Sever2014光盘，点击setup.exe进行安装
+<img alt="image8" src="../../_images/install_SQL_cluster.png" /> <img alt="image9" src="../../_images/install_sql01.png" /> <img alt="image10" src="../../_images/install_sql02.png" /></p>
+<p>③ 检测故障转移集群规则是否满足SQL Server集群的规则 <img alt="image11" src="../../_images/install_sql04.png" /></p>
+<p>④ 安装SQL Server实例名和设置网络名称，实例配置 <img alt="image12" src="../../_images/install_05.png" /></p>
+<p>⑤ 集群资源组 <img alt="image13" src="../../_images/install_SQL_server06.png" /></p>
+<p>⑥ 集群磁盘选择 <img alt="image14" src="../../_images/install_sqlSever08.png" /></p>
+<p>⑦ 集群网络配置 <img alt="image15" src="../../_images/install_sql09.png" /></p>
+<p>⑧ 服务器配置 <img alt="image16" src="../../_images/install_SQL10.png" /></p>
+<p>⑨ 数据库引擎配置 <img alt="image17" src="../../_images/install_SQL11.png" /></p>
+<p>⑩ Analysis Services 配置 <img alt="image18" src="../../_images/install_sql12.png" /></p>
+<ul class="simple">
+<li><p>安装进度 <img alt="image19" src="../../_images/install_sql13.png" /></p></li>
+<li><p>安装完成 <img alt="image20" src="../../_images/instell_SQL_over.png" /></p></li>
+</ul>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">4.1.3. </span>添加SQL Server集群</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>1.向集群中添加SQL Server节点 <img alt="image21" src="../../_images/install_SQL20.png" /></p>
+<p>2.安装程序文件、添加节点规则 <img alt="image22" src="../../_images/install_sql21.png" /> <img alt="image23" src="../../_images/install_SQL22.png" /></p>
+<p>3.群集节点配置 <img alt="image24" src="../../_images/install_sql23.png" /></p>
+<p>4.集群网络配置 <img alt="image25" src="../../_images/install_sql24.png" /></p>
+<p>5.服务账户 <img alt="image26" src="../../_images/install_sql25.png" /></p>
+<p>6.添加节点进度 <img alt="image27" src="../../_images/install_sql26.png" /></p>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">4.1.4. </span>SQL Server集群测试切换</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<section id="win-sql01-1">
+<h3><a class="toc-backref" href="#id12">10.144.113.10（WIN-SQL01） 节点1</a><a class="headerlink" href="#win-sql01-1" title="Permalink to this headline">¶</a></h3>
+<p>故障转移节点情况,存储实例的磁盘在节点1（WIN-SQL01）上。 <img alt="image28" src="../../_images/sql_yz01.png" /></p>
+<p>实例的运行状态为 <img alt="image29" src="../../_images/sql_yz03.png" /></p>
+<p>存储磁盘状态 <img alt="image30" src="../../_images/sql_yz04.png" /></p>
+</section>
+<section id="win-sql02-2">
+<h3><a class="toc-backref" href="#id13">10.144.113.11 （WIN-SQL02）节点2</a><a class="headerlink" href="#win-sql02-2" title="Permalink to this headline">¶</a></h3>
+<p>故障转移节点情况,存储实例的磁盘在节点1（WIN-SQL01）上。 <img alt="image31" src="../../_images/sql_yz06.png" /></p>
+<p>实例的运行状态为 <img alt="image32" src="../../_images/SQL_yz8.png" /></p>
+<p>存储磁盘状态 <img alt="image33" src="../../_images/sql_yz09.png" /></p>
+<p>节点1上使用SQL Server客户端连接8个实例，进行登录测试，如图： <img alt="image34" src="../../_images/sql.png" /></p>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id14">验证切换1</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>重启节点1，模拟机器宕机
+前提：两台服务器之间网络正常访问
+</pre></div>
+</div>
+<p><img alt="image35" src="../../_images/sql_yz12.png" /></p>
+<p>（WIN-SQL02）节点2上查看故障转移集群和磁盘纳管情况如下： <img alt="image36" src="../../_images/sql_yz13.png" /></p>
+<p>（WIN-SQL02）节点2上实例状态全部变成运行中，如图： <img alt="image37" src="../../_images/sql_yz14.png" /></p>
+<p>节点2上使用SQL Server客户端连接8个实例，进行登录测试，如图： <img alt="image38" src="../../_images/sql_yz15.png" /></p>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id15">验证切换2</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>重启节点2，模拟机器宕机
+前提：节点1服务器已经启动，修复硬件完成。
+</pre></div>
+</div>
+<p>群集目前在节点2，如图： <img alt="image39" src="../../_images/sql_yz20.png" /></p>
+<ul class="simple">
+<li><p>进行重启节点2</p></li>
+<li><p>故障转移已经将SQL集群切换到节点1，如图： <img alt="image40" src="../../_images/sql_yz21.png" /> <img alt="image41" src="../../_images/sql_yz22.png" /></p></li>
+<li><p>所有实例的运行状态，全部为运行中 <img alt="image42" src="../../_images/sql_yz24.png" /></p></li>
+</ul>
+<p>验证结果：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>当群集在节点 1 时，我们可以正常访问数据库，
+如果节点1的服务器出现宕机时候，存储数据实例的磁盘会通过故障转移集群自动切换到节点2.
+同时数据库集群实例也自动进行切换，节点2实例全部启动，客户端访问无明显感知后端数据库的变化。
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="4. SQL-Server学习" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.%E5%88%A9%E7%94%A8HAProxy%E4%BB%A3%E7%90%86SQL-Server%E7%9A%84AlwaysOn%E8%BE%85%E5%8A%A9%E5%89%AF%E6%9C%AC.html" class="btn btn-neutral float-right" title="4.2. 利用HAProxy代理SQL-Server的AlwaysOn辅助副本" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

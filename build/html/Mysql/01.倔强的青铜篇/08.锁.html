@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.8. 08.锁 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. 02.秩序的白银篇" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html" />
+    <link rel="prev" title="1.7. 07.事务" href="07.%E4%BA%8B%E5%8A%A1.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 01.倔强的青铜篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html">1.2. 02.Mysql数据库的安装启动和关闭</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E8%A1%A8.html">1.5. 05.表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html">1.6. 06.索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.8. 08.锁</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#innodb">1.8.1. InnoDB的锁类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.8.2. InnoDB行锁种类</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.8.3. 锁等待和死锁</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.8.4. 锁问题的监控</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>01.倔强的青铜篇</a> &raquo;</li>
+      <li><span class="section-number">1.8. </span>08.锁</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/08.锁.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id9">08.锁</a></p>
+<ul>
+<li><p><a class="reference internal" href="#innodb" id="id10">InnoDB的锁类型</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id11">读锁</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id12">写锁</a></p></li>
+<li><p><a class="reference internal" href="#dml" id="id13">DML锁</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id14">意向锁</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id15">InnoDB行锁种类</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id16">记录锁，单个行记录的锁</a></p></li>
+<li><p><a class="reference internal" href="#gap-lock" id="id17">间隙锁Gap lock</a></p></li>
+<li><p><a class="reference internal" href="#next-key-locks" id="id18">Next-key Locks</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id7" id="id19">锁等待和死锁</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id20">锁问题的监控</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">1.8. </span>08.锁</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>为保证数据一致性，让各种共享资源在被并发访问时变得有序而设置的规则</p>
+<p>不同的存储引擎支持不同的锁机制。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>InnoDB支持行锁，有时也会升级为表锁；
+MyISAM只支持表锁 表锁的特点是开销小、加锁快；不会出现死锁；锁粒度大，发生锁冲突概率高，并发度相对低
+行锁特点是开销大，加锁慢；会出现死锁；锁粒度小，发生锁冲突概率低，并发度相对行锁较高
+</pre></div>
+</div>
+<section id="innodb">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">1.8.1. </span>InnoDB的锁类型</a><a class="headerlink" href="#innodb" title="Permalink to this headline">¶</a></h2>
+<p>InnoDB的行锁主要有读锁(共享锁)、写锁(排他锁)、意向锁和MDL锁</p>
+<section id="id2">
+<h3><a class="toc-backref" href="#id11">读锁</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>简称S锁，一个事务获取了一个数据行的读锁，其他事务也可以获得该行的读锁，但不能获得写锁
+一个事务在读取一个数据行时，其他事务也可以读，但不能对该数据进行增删改操作
+1、一致性非锁定读，自动提交模式下的select查询语句，不需加任何锁，直接返回结果
+2、通过select ... lock in share mode，在被读取的行记录或记录范围上加读锁，其他事务写会被阻塞
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id12">写锁</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>简称X锁，写锁优化级最高，一个事务获得后，其他事务不能再获得其他锁
+一些DML语句的操作都会对行记录加写锁
+特殊的select for update会对读取的行加写锁
+</pre></div>
+</div>
+</section>
+<section id="dml">
+<h3><a class="toc-backref" href="#id13">DML锁</a><a class="headerlink" href="#dml" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>meta data lock，简称DML锁，用于保证表中元数据的信息。一个会话开启查询事务后，会自动获得一个MDL锁，其他会话就不能执行任何DDL语句
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id14">意向锁</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>InnoDB中，意向锁是表级锁，包括：意向共享锁和意向排他锁
+作用类似DML锁，防止在事务进行过程中，执行DDL语句的操作而导致数据不一致
+意向共享锁IS，给一个数据行加共享锁前必须先取得该表的IS锁
+意向排他锁IX，给一个数据行加排他锁前必须先取得该表的IX锁
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">1.8.2. </span>InnoDB行锁种类</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>InnoDB在默认事务隔离级别RR(可重复读repetable read)，且参数innodb_locks_unsafe_for_binlog=0模式下，行锁有三种：
+1）记录锁，单个行记录的锁 record lock
+#主键和唯一索引都是行记录的锁模式，在PC隔离级别下，只有record lock记录锁模式
+2）间隙锁 GAP Lock
+3）记录锁和间隙锁的组合叫作next-key lock
+#普通索引默认就是next-key lock模式
+</pre></div>
+</div>
+<section id="id6">
+<h3><a class="toc-backref" href="#id16">记录锁，单个行记录的锁</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>更新同一行数据时，会出现锁等待的现象，InnoDB的行锁是加在索引项上面的
+
+show index from tt;
+</pre></div>
+</div>
+</section>
+<section id="gap-lock">
+<h3><a class="toc-backref" href="#id17">间隙锁Gap lock</a><a class="headerlink" href="#gap-lock" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在RR事务隔离级别，为避免幻读现象引入Gap lock，它只锁定行记录数据的范围，不包含记录本身，即不允许在此范围内插入任何数据
+
+加锁方法：select * from tt where score&lt;80 lock share mode;插入score小于80的记录将出现锁等待
+
+间隙锁只针对RR隔离级别才管用，它就是用来避免幻读现象发生的
+
+RC隔离级别下是允许出现幻读现象的
+</pre></div>
+</div>
+</section>
+<section id="next-key-locks">
+<h3><a class="toc-backref" href="#id18">Next-key Locks</a><a class="headerlink" href="#next-key-locks" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Next-key Lock是记录锁Record Lock与间隙锁Gap lock的组合，当InnoDB扫描索引记录时，先对选中的索引记录加入记录锁，再对索引记录两加的间隙加上间隙锁
+select * from tt where score&lt;85 for update;再另一个会话中插入score=85的记录，无法插入成功，说明不光锁定了&lt;85的范围，也锁了85这个记录本身
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">1.8.3. </span>锁等待和死锁</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p><strong>锁等待</strong>，一个事务过程中产生的锁，其他事务需要等待上一个事务释放它的锁，才能占用该资源。会一直等待，直到锁等待超时</p>
+<p>innodb_lock_wait_timeout = 10 单位秒</p>
+<p><strong>死锁</strong>，两个或两个以上的进程在执行过程中，因争夺资源而造成的一种互相等待的现象。报错为Deadlock
+found when tring to get lock;try restarting transaction</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>避免死锁的四个方法：
+1）若不同程序会并发存取多个表，或涉及多行记录时，尽量约定以相同的顺序访问表，可以大大降低死锁的机会
+2）业务中尽量采用小事务，避免使用大事务，要及时提交或回滚事务，可减少死锁产生概率
+3）在同一事务中，尽可能做到一次锁定所需资源，减少死锁产生概率
+4）对于非常容易产生死锁的业务部分，可尝试升级锁粒度，通过表锁定来减少死锁产生概率
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">1.8.4. </span>锁问题的监控</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>通常情况下，当出现锁问题时，我们习惯性通过<code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">full</span> <span class="pre">processlist</span></code>和<code class="docutils literal notranslate"><span class="pre">show</span> <span class="pre">engine</span> <span class="pre">innodb</span> <span class="pre">status</span></code>命令来判断
+事务中锁问题的情况。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>show full processlist
+show engine innodb staus
+三张表
+information_schema.INNODB_TRX、INNODB_LOCKS、INNODB_LOCK_WAITS
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="07.%E4%BA%8B%E5%8A%A1.html" class="btn btn-neutral float-left" title="1.7. 07.事务" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html" class="btn btn-neutral float-right" title="2. 02.秩序的白银篇" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

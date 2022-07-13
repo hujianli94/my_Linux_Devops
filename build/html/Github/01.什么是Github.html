@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>什么是Github &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Git的导入" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html" />
+    <link rel="prev" title="Github入门到实践" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Github入门到实践</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">什么是Github</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Github</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#githubgit">GitHub与Git的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pull-request">Pull Request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">GitHub提供的主要功能</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#git">●Git仓库</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#organization">●Organization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#issue">●Issue</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wiki">●Wiki</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pull-request-1">●Pull Request</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html">实际操作学习Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html">模拟体验GitHub Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">GitHub上面找开源项目</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Github入门到实践</a> &raquo;</li>
+      <li>什么是Github</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Github/01.什么是Github.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#github" id="id4">什么是Github</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id5">Github</a></p></li>
+<li><p><a class="reference internal" href="#githubgit" id="id6">GitHub与Git的区别</a></p></li>
+<li><p><a class="reference internal" href="#pull-request" id="id7">Pull Request</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id8">GitHub提供的主要功能</a></p>
+<ul>
+<li><p><a class="reference internal" href="#git" id="id9">●Git仓库</a></p></li>
+<li><p><a class="reference internal" href="#organization" id="id10">●Organization</a></p></li>
+<li><p><a class="reference internal" href="#issue" id="id11">●Issue</a></p></li>
+<li><p><a class="reference internal" href="#wiki" id="id12">●Wiki</a></p></li>
+<li><p><a class="reference internal" href="#pull-request-1" id="id13">●Pull Request</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="github">
+<h1><a class="toc-backref" href="#id4">什么是Github</a><a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id5">Github</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>GitHub是为开发者提供Git仓库的托管服务。这是一个让开发者与朋友、同事、同学及陌生人共享代码的完美场所。</p>
+</section>
+<section id="githubgit">
+<h2><a class="toc-backref" href="#id6">GitHub与Git的区别</a><a class="headerlink" href="#githubgit" title="Permalink to this headline">¶</a></h2>
+<p>在Git中，开发者将源代码存入名叫“Git仓库”的资料库中并加以使用。而GitHub则是在网络上提供Git仓库的一项服务。也就是说，GitHub上公开的软件源代码全都由Git进行管理。</p>
+<p>理解Git，是熟练运用GitHub的关键所在</p>
+</section>
+<section id="pull-request">
+<h2><a class="toc-backref" href="#id7">Pull Request</a><a class="headerlink" href="#pull-request" title="Permalink to this headline">¶</a></h2>
+<p>Pull
+Request是指开发者在本地对源代码进行更改后，向GitHub中托管的Git仓库请求合并的功能。开发者可以在Pull
+Request上通过评论交流，例如“修正了BUG，可以合并一下吗？”以及“我试着做了这样一个新功能，可以合并一下吗？”等。通过这个功能，开发者可以轻松更改源代码，并公开更改的细节，然后向仓库提交合并请求。而且，如果请求的更改与项目的初衷相违，也可以选择拒绝合并。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id8">GitHub提供的主要功能</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<section id="git">
+<h3><a class="toc-backref" href="#id9">●Git仓库</a><a class="headerlink" href="#git" title="Permalink to this headline">¶</a></h3>
+<p>一般情况下，我们可以免费建立任意个GitHub提供的Git仓库。但如果需要建立只对特定人物或只对自己公开的私有仓库，则需要依照套餐类型[插图]支付每月最低7美元的使用费。</p>
+</section>
+<section id="organization">
+<h3><a class="toc-backref" href="#id10">●Organization</a><a class="headerlink" href="#organization" title="Permalink to this headline">¶</a></h3>
+<p>通常来说，个人使用时只要使用个人账户就足够了，但如果是公司，建议使用Organization账户。它的优点在于可以统一管理账户和权限，还能统一支付一些费用。</p>
+</section>
+<section id="issue">
+<h3><a class="toc-backref" href="#id11">●Issue</a><a class="headerlink" href="#issue" title="Permalink to this headline">¶</a></h3>
+<p>Issue功能，是将一个任务或问题分配给一个Issue进行追踪和管理的功能。</p>
+<p>每一个功能更改或修正都对应一个Issue，讨论或修正都以这个Issue为中心进行。只要查看Issue，就能知道和这个更改相关的一切信息，并以此进行管理。</p>
+<p>在Git的提交信息中写上Issue的ID（例如“#7”）,
+GitHub就会自动生成从Issue到对应提交的链接。另外，只要按照特定的格式描述提交信息，还可以关闭Issue。这是一个非常方便的功能</p>
+</section>
+<section id="wiki">
+<h3><a class="toc-backref" href="#id12">●Wiki</a><a class="headerlink" href="#wiki" title="Permalink to this headline">¶</a></h3>
+<p>通过Wiki功能，任何人都能随时对一篇文章进行更改并保存，因此可以多人共同完成一篇文章。该功能常用在开发文档或手册的编写中。</p>
+</section>
+<section id="pull-request-1">
+<span id="id3"></span><h3><a class="toc-backref" href="#id13">●Pull Request</a><a class="headerlink" href="#pull-request-1" title="Permalink to this headline">¶</a></h3>
+<p>开发者向GitHub的仓库推送更改或功能添加后，可以通过Pull
+Request功能向别人的仓库提出申请，请求对方合并。</p>
+<p>Pull Request送出后，目标仓库的管理者等人将能够查看Pull
+Request的内容及其中包含的代码更改。同时，GitHub还提供了对Pull
+Request和源代码前后差别进行讨论的功能。通过此功能，可以以行为单位对源代码添加评论，让程序员之间高效地交流。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Github入门到实践" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html" class="btn btn-neutral float-right" title="Git的导入" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

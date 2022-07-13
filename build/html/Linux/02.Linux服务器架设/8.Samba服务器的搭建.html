@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.9. Samba服务器搭建 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2.10. rsync数据同步" href="9.rsync%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5.html" />
+    <link rel="prev" title="2.8. 远程登录Linux系统" href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="0.1RPM%E7%BA%A2%E5%B8%BD%E8%BD%AF%E4%BB%B6%E5%8C%85%E7%AE%A1%E7%90%86.html">2.1. RPM软件包管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="1.RAID%E4%B8%8ELVM%E7%A3%81%E7%9B%98%E9%98%B5%E5%88%97%E6%8A%80%E6%9C%AF.html">2.2. RAID与LVM磁盘阵列</a></li>
+<li class="toctree-l3"><a class="reference internal" href="2.NFS%E5%85%B1%E4%BA%AB%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.3. NFS共享服务器搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="3.Vsftpd%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html">2.4. vsftpd服务安装配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="4.%E6%8C%82%E8%BD%BD%E7%A1%AC%E7%9B%98mount%E5%91%BD%E4%BB%A4.html">2.5. 挂载硬盘和分区</a></li>
+<li class="toctree-l3"><a class="reference internal" href="5.Apache%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA.html">2.6. Apache服务源码搭建</a></li>
+<li class="toctree-l3"><a class="reference internal" href="6.%E4%BD%BF%E7%94%A8iSCSI%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8.html">2.7. 使用iSCSI服务部署网络存储</a></li>
+<li class="toctree-l3"><a class="reference internal" href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html">2.8. 远程登录Linux系统</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.9. Samba服务器搭建</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.9.1. Samba的概念和功能</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.9.2. Samba的安装与配置</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="9.rsync%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5.html">2.10. rsync数据同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.iptables%E4%B8%8Efirewalld%E9%98%B2%E7%81%AB%E5%A2%99.html">2.11. iptables与firewalld 防火墙</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.Tomcat%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA%E9%85%8D%E7%BD%AE.html">2.12. Tomcat服务搭建配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.autofs%E8%87%AA%E5%8A%A8%E6%8C%82%E8%BD%BD%E6%9C%8D%E5%8A%A1.html">2.13. autofs自动挂载服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E4%BD%BF%E7%94%A8Squid%E9%83%A8%E7%BD%B2%E4%BB%A3%E7%90%86%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1.html">2.14. 使用Squid部署代理缓存服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.Jenkins%E6%8C%81%E7%BB%AD%E9%9B%86%E6%88%90%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">2.15. Jenkins持续集成企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.CentOS7%E5%AE%89%E8%A3%85xrdp%28windows%E8%BF%9C%E7%A8%8B%E6%A1%8C%E9%9D%A2%E8%BF%9E%E6%8E%A5linux%29.html">2.16. CentOS7安装xrdp(windows远程桌面连接linux)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Haproxy%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%AE%89%E8%A3%85%E9%85%8D%E7%BD%AE%E8%AF%A6%E8%A7%A3.html">2.17. Haproxy负载均衡安装配置详解</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.%E5%9B%BD%E5%86%85%E5%B8%B8%E4%BD%BF%E7%94%A8%E7%9A%84yum%E6%BA%90%E4%BF%A1%E6%81%AF.html">2.18. 国内常使用的yum源信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.Centos7%E5%AE%89%E8%A3%85VNC%EF%BC%8C%E6%89%8B%E5%8A%A8%E7%BD%91%E7%BB%9C%E9%87%8D%E8%A3%85VPS.html">2.19. Centos7安装VNC，手动网络重装VPS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.windows%E4%B8%8A%E6%90%AD%E5%BB%BAyum%E6%BA%90%E7%AB%99%E7%82%B9.html">2.20. windows上搭建yum源站点</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.%E7%94%A8Python%E5%BF%AB%E9%80%9F%E5%AE%9E%E7%8E%B0HTTP%E5%92%8CFTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.21. 用 Python 快速实现 HTTP 和 FTP 服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.%E4%BD%BF%E7%94%A8%E5%9B%BE%E5%BD%A2%E9%85%8D%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%9C%8D%E5%8A%A1nmtui.html">2.22. nmtui图形配置网络服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Openssh%E6%9B%B4%E6%96%B0%E5%8D%87%E7%BA%A7.html">2.23. Openssh更新升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.rabbitmq%E6%9C%8D%E5%8A%A1%E9%83%A8%E7%BD%B2.html">2.24. rabbitmq服务部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.Cobbler%E6%97%A0%E4%BA%BA%E5%80%BC%E5%AE%88%E5%AE%89%E8%A3%85.html">2.25. Cobbler无人值守安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.Linux%E8%BF%90%E7%BB%B4%E5%B7%A5%E5%85%B7Supervisor%28%E8%BF%9B%E7%A8%8B%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%29.html">2.26. Linux运维工具Supervisor(进程管理工具)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E7%9B%AE%E5%89%8D%E6%B5%81%E8%A1%8C%E7%9A%84%E5%BC%80%E6%BA%90%E7%9B%91%E6%8E%A7%E6%A1%86%E6%9E%B6.html">2.27. 目前流行的开源监控框架</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%BA%90%E7%A0%81%E5%8C%85%E5%88%B6%E4%BD%9C%E6%88%90rpm%E5%8C%85.html">2.28. 源码包制作成rpm包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Yum%E8%87%AA%E5%8A%A8%E4%B8%8B%E8%BD%BDRPM%E5%8C%85%E5%8F%8A%E5%85%B6%E6%89%80%E6%9C%89%E4%BE%9D%E8%B5%96%E7%9A%84%E5%8C%85.html">2.29. Yum自动下载RPM包及其所有依赖的包</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E5%9F%BA%E4%BA%8EGalera_Cluster%E5%A4%9A%E4%B8%BB%E7%BB%93%E6%9E%84%E7%9A%84Mysql%E9%AB%98%E5%8F%AF%E7%94%A8%E9%9B%86%E7%BE%A4.html">2.30. 基于Galera多主结构的Mysql高可用集群</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Gitlab%E5%AE%89%E8%A3%85.html">2.31. Gitlab安装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.Rsync%E6%95%B0%E6%8D%AE%E5%A4%8D%E5%88%B6%E8%BD%AF%E4%BB%B6%E5%BA%94%E7%94%A8%E5%AE%9E%E8%B7%B5.html">2.32. Rsync数据复制软件应用实践</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.Extundelete%E6%95%B0%E6%8D%AE%E6%81%A2%E5%A4%8D.html">2.33. Extundelete 数据恢复</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.Openvpn%E9%83%A8%E7%BD%B2.html">2.34. Openvpn部署</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.CentOS8%E5%AE%89%E8%A3%85Docker%E5%92%8CDocker-componse.html">2.35. CentOS8 安装Docker和Docker-componse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.CentOS8%E5%BC%80%E5%90%AFBBR%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8.html">2.36. CentOS8开启BBR/升级内核</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Centos7%E9%80%9A%E8%BF%87python%2Bjs%E5%AE%9E%E7%8E%B0webssh.html">2.37. Centos7通过python+js实现webssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Centos7%E9%83%A8%E7%BD%B2NTP%E6%97%B6%E9%97%B4%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%90%8C%E6%AD%A5%E7%8E%AF%E5%A2%83.html">2.38. Centos7部署NTP时间服务器同步环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>Linux服务器架设</a> &raquo;</li>
+      <li><span class="section-number">2.9. </span>Samba服务器搭建</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/02.Linux服务器架设/8.Samba服务器的搭建.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#samba" id="id8">Samba服务器搭建</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id9">Samba的概念和功能</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">Samba的安装与配置</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id11">1.安装Samba</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id12">2.Samba服务的组成与使用</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">4.建立共享目录</a></p></li>
+<li><p><a class="reference internal" href="#smb" id="id14">5.重启SMB服务</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id15">6.访问Samba服务器的共享文件</a></p></li>
+<li><p><a class="reference internal" href="#sambalinux" id="id16">7将Samba服务器共享的目录挂载到一个Linux客户端，操作过程如下所示。</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id17">8.授权登录samba服务器</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="samba">
+<h1><a class="toc-backref" href="#id8"><span class="section-number">2.9. </span>Samba服务器搭建</a><a class="headerlink" href="#samba" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.9.1. </span>Samba的概念和功能</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Samba 是一个能让 Linux 系统应用 Microsoft 网络通信协议的软件。而 SMB 是 Server Message Block的缩写，即服务器消息块 ，SMB主要作为Microsoft的网络通信协议。后来Samba将SMB通信协议应用到了Linux系统上，就形成了现在的Samba软件。后来微软又把 SMB 改名为 CIFS（Common Internet File System，公共Internet文件系统），并且加入了许多新的功能，于是，Samba具有了更强大的功能。
+Samba 最大的功能就是可以用于 Linux 与 Windows 系统直接的文件共享和打印共享。Samba既可以用于Windows与Linux之间的文件共享，也可以用于Linux与Linux之间的资源共享。由于NFS（网络文件系统）可以很好地完成Linux与Linux之间的数据共享，因而Samba较多地用在了Linux与Windows之间的数据共享上面。
+SMB是基于客户机/服务器模型的协议，因而，一台Samba服务器既可以充当文件共享服务器，也可以充当一个Samba的客户端。例如，对于一台在Linux下已经架设好的Samba服务器，Windows客户端就可以通过SMB协议共享Samba服务器上的资源文件，同时，Samba服务器也可以访问网络中其他Windows系统或者Linux系统共享出来的文件。
+Samba在Windows下使用的是NetBIOS协议，如果要使用Linux下共享的文件，请确认Windows系统下是否安装了NetBIOS协议。
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">2.9.2. </span>Samba的安装与配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>这里的系统环境如下所示。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>操作系统：CentOS Linux release 7.1.1503
+Samba服务器IP地址：192.168.0.100
+Samba版本：samba-4.1.12-23.el7_1.x86_64
+</pre></div>
+</div>
+<section id="id3">
+<h3><a class="toc-backref" href="#id11">1.安装Samba</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>几乎所有的Linux发行版本中都默认自带了Samba软件包，登录系统，检查是否安装了Samba软件，执行如下操作。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm -q samba
+samba-4.1.12-23.el7_1.x86_64
+</pre></div>
+</div>
+<p>如果有显示，表示系统已经安装了Samba，如果没有任何显示，请从系统光盘中找到对应的Samba软件包，然后进行安装。
+Samba的安装很简单，安装过程如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# yum -y install samba samba-client samba-common
+</pre></div>
+</div>
+<p>Samba服务器安装完毕，会生成配置文件目录/etc/samba和其他一些Samba可执行命令工具，</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/etc/samba/smb.conf 是 Samba 的核心配置文件，
+/usr/lib/systemd/system/smb.service 是Samba的启动/关闭文件。
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id12">2.Samba服务的组成与使用</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Samba的运行有两个服务组成，一个是SMB，另一个是NMB。
+SMB是Samba的核心启动服务，只有SMB服务启动，才能实现文件的共享。
+而NMB服务是负责解析用的，类似于DNS实现的功能，NMB可以把Linux系统共享的工作组名称与其IP对应起来，如果NMB服务没有启动，就只能通过IP来访问共享文件。
+</pre></div>
+</div>
+<p>例如，如果某台Samba服务器的IP地址为192.168.0.100，对应的工作组名称为ixdba，那么在Windows的IE浏览器地址栏中输入下面两条指令都可以访问共享文件。</p>
+<p>其实这就是在Windows下查看Linux Samba服务器共享文件的方法。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="mf">192.168</span><span class="o">.</span><span class="mf">0.100</span>\<span class="n">共享目录名称</span>
+\\<span class="n">ixdba</span>\<span class="n">共享目录名称</span>
+</pre></div>
+</div>
+<p>可以通过systemctl start/stop/restart
+smb来启动、关闭、重启SMB服务。启动SMB服务的操作如下所示。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost  system]#  systemctl  start  smb
+[root@localhost  system]#  ps  -ef|grep  smbd
+root     5315     1  0 15:44 ?       00:00:00 /usr/sbin/smbd
+root     5316  5315  0 15:44 ?       00:00:00 /usr/sbin/smbd
+root     5382  3037  0 15:50 pts/0   00:00:00 grep --color=auto smbd
+</pre></div>
+</div>
+<p>从启动的输出中，可以看出，SMB服务包含一个父进程和一个子进程。</p>
+<p>接下来详细讲述smb.conf文件的属性配置。 ### 3.核心配置文件smb.conf 默认的
+smb.conf
+有很多个选项和内容，比较繁琐，这里从简单讲起，先备份自己的smb.conf文件，然后重新建立一个smb.conf，添加如下内容。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    [global]
+    workgroup  =  IXDBA.NET
+    netbios  name  =  ixdba
+    server  string  =  My  Linux  Samba  Server
+    log file = /var/log/samba/%m.log
+    security  =  user
+    map  to  guest  =Bad  User
+     [Linuxdata]
+            path = /ixdba/Linuxdata
+            writeable  =  yes
+            browseable  =  yes
+            guest  ok  =  yes
+上面每行的解释如下。
+[global]表示以下内容为全局配置，为必选项。
+workgroup 用来定义工作组，也就是 Windows 中的工作组概念，这里设置为IXDBA.NET。
+netbios name用来定义Windows中显示出来的计算机名称。
+server string用来定义Samba服务器的说明信息，可以随便指定。
+log file用来定义Samba用户的日志文件，
+%m代表客户端主机名，Samba服务器会在指定的目录中为每个登录主机建立不同的日志文件。
+security用来定义数据共享的方式。此选项有多个可选值，常用的有user、share、server和domain，user表示需要密码验证后才能共享数据，share表示可以直接共享数据，无须输入密码。在Samba 4中share和server两个选项已经被禁用，如果要实现无密码登录，需要添加“security=user”和“map to guest =Bad User”两个选项。
+
+[Linuxdata]用来设定在Windows中显示出来的共享目录的名称。
+path用来指定共享的目录，为必选项。
+writeable用来设置是否可写，yes表示可写，no表示不可写。
+browseable用来定义是否可以在Windows工作组下看到共享文件夹，如果需要隐藏共享文件夹，选择no即可。
+guest ok用来定义匿名用户是否可以登录，如果security设置为user，此选项默认值为no。
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id13">4.建立共享目录</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>上面设置了共享目录为/ixdba/Linuxdata，下面就需要建立/ixdba/Linuxdata目录。
+    [root@localhost ～]# mkdir -p /ixdba/Linuxdata
+    [root@localhost ～]# chown -R nobody:nobody /ixdba/Linuxdata
+因为要设置匿名用户可以下载或上传共享文件，所以要给/ixdba/Linuxdata 目录授予nobody权限。
+    [root@localhost Linuxdata]# cp /root/install.log* /ixdba/Linuxdata
+上面的指令把一些测试文件复制到共享目录中。
+</pre></div>
+</div>
+</section>
+<section id="smb">
+<h3><a class="toc-backref" href="#id14">5.重启SMB服务</a><a class="headerlink" href="#smb" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>执行如下命令重启SMB服务。
+    [root@localhost  samba]#  systemctl  restart  smb.service
+    [root@localhost  samba]#  ps  -ef|grep  smb
+    root     7290     1  0 17:49 ?       00:00:00 /usr/sbin/smbd
+    root     7291  7290  0 17:49 ?       00:00:00 /usr/sbin/smbd
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id15">6.访问Samba服务器的共享文件</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>（1）在Windows下访问Samba服务器的共享文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在浏览器地址栏或者运行框中输入以下地址：
+    \\192.168.60.231  或者 \\ixdba
+就看到打开共享目录了，这里的ixdba是smb.conf中netbios name选项定义的名
+</pre></div>
+</div>
+<p><img alt="image0" src="../../_images/smb1.png" /></p>
+<p>（2）在Linux下访问Samba服务器的共享文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在Linux作为客户端时，要查看其他Linux Samba服务器共享的文件，应该如何操作呢？这就要用到smbclient这个工具。系统默认自带了这个命令。
+smbclient常见用法介绍如下。
+1）查看Samba服务器的共享资料。
+
+ smbclient  –L  //Samba服务器的IP地址  -U  Samba用户名
+“-L”即为list的含义，“-U”是user的意思。要建立一个Samba用户，需要通过Samba提供的命令pdbedit来实现。pdbedit用法如下。
+    pdbedit –a 用户名
+</pre></div>
+</div>
+<p>需要注意的是，要建立的Samba用户必须先是系统用户。例如，要建立一个名为admin的Samba用户，操作如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">samba</span><span class="p">]</span><span class="c1">#  useradd  admin</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">samba</span><span class="p">]</span><span class="c1">#  pdbedit  –a  admin</span>
+<span class="n">new</span>  <span class="n">password</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>如果Samba服务器无密码即可访问，可以省略“-U Samba用户名”。
+例如：当Samba需要密码才能登录时，查看共享方法如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@web ～]# smbclient  -L //192.168.60.231/Linuxdata –U admin
+Password:  在这里输入admin的密码
+</pre></div>
+</div>
+<p>当Samba无密码即可访问时，执行如下命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@web ～]# smbclient  -L //192.168.60.231/Linuxdata
+Password: 直接按Enter键即可
+</pre></div>
+</div>
+<p>2）登录Samba服务器。 如果需要在Linux客户端登录Samba服务器，用法如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>smbclient  //Samba服务器的IP地址  -U  Samba用户名
+
+请看下面执行的操作。
+[root@web samba]# smbclient  //192.168.60.231/Linuxdata
+Password:
+Enter  admin&#39;s  password:
+Domain=[IXDBA.NET]  OS=[Unix]  Server=[Samba  4.1.12].
+smb:  \&gt;  ls
+smb: \&gt; ?          #在这里输入&quot;?&quot;即可查看在smb命令行可用的所有命令
+</pre></div>
+</div>
+</section>
+<section id="sambalinux">
+<h3><a class="toc-backref" href="#id16">7将Samba服务器共享的目录挂载到一个Linux客户端，操作过程如下所示。</a><a class="headerlink" href="#sambalinux" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># yum install cifs-utils cifs-utils-devel</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># mount -t cifs  -o username=admin,password=****** \</span>
+<span class="o">&gt;//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">60.231</span><span class="o">/</span><span class="n">Linuxdata</span>  <span class="o">/</span><span class="n">samba</span>
+<span class="n">Password</span><span class="p">:</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># df -Th|grep /samba</span>
+<span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">60.231</span><span class="o">/</span><span class="n">Linuxdata</span> <span class="n">cifs</span>     <span class="mf">8.5</span><span class="n">G</span>  <span class="mf">5.0</span><span class="n">G</span>  <span class="mf">3.5</span><span class="n">G</span>  <span class="mi">60</span><span class="o">%</span> <span class="o">/</span><span class="n">samba</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># uname -a</span>
+<span class="n">Linux</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="mf">3.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">229.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span> <span class="c1">#1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux</span>
+</pre></div>
+</div>
+<p>这里的操作系统环境为 CentOS 7.1 版本。在 CentOS 5.x 以前的版本中，
+还存在一个smbmount命令，是专门用于挂载Samba共享数据用的，此命令从CentOS
+5开始被取消。 例如，下面是在CentOS 4.x版本中的操作过程。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# uname -a
+Linux localhost 2.6.9-22.ELsmp #1 SMP Mon Sep 19 18:32:14 EDT 2005 i686 i686 i386 GNU/Linux
+[root@localhost ～]# smbmount  //192.168.60.231/Linuxdata /samba
+Password:
+[root@localhost ～]# df -Th|grep /samba
+//192.168.60.231/Linuxdata smbfs     8.5G  5.0G  3.5G  60% /samba
+</pre></div>
+</div>
+<p>由此可见，Samba共享文件系统格式在CentOS 5.x以前版本称为smbfs，而从CentOS
+5开始变为CIFS。</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id17">8.授权登录samba服务器</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>面介绍了Samba服务器匿名共享数据的设置方法。而在很多时候，
+对共享的数据是需要进行权限控制的，也就是说，用户在访问Samba服务器时需要输入用户名和密码。下面就介绍如何配置有权限控制的Samba服务器。</p>
+<p>（1）添加系统级用户</p>
+<p>这里首先添加 ixdba1、ixdba2 两个系统级用户，
+并分别指定工作目录为/ixdba/ixdba1 和/ixdba/ixdba2，操作如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost /]# useradd -d /ixdba/ixdba1 ixdba1
+[root@localhost /]# useradd -d /ixdba/ixdba2  -s  /sbin/nologin  ixdba2
+[root@localhost /]# cp -r /root/* /ixdba/ixdba1
+[root@localhost /]# cd /ixdba
+[root@localhost  ixdba]#  ll
+
+其中，useradd 是创建系统用户的命令，
+参数“-d”指定 ixdba1 用户的工作目录，而 ixdba1就是创建用户的名称，
+“-s”指定用户使用的默认shell，/sbin/nologin表示ixdba2是个虚拟用户，
+也就是ixdba2不能通过shell登录系统。
+
+
+这些概念在下面章节有详细的讲述，这里不再介绍。
+每当创建一个用户时，Linux系统都会在/etc/passwd文件中添加一行对应的用户名信息，
+这里仅仅用到的是/etc/passwd文件中的用户名信息，
+因此，不必对两个用户设置登录系统的密码。
+</pre></div>
+</div>
+<p>（2）创建Samba登录用户 这里需要注意的是：系统用户是 Linux
+上面对应的用户， 而 Samba 用户是客户端连接Samba 服务器时需要使用的用户。
+创建 Samba 用户使用的命令有 pdbedit 和 smbpasswd。smbpasswd
+的原理是通过读取/etc/passwd 文件中存在的用户名，
+进而设置密码的，因此，对于系统用户，可以设置密码，也可以不设置密码。
+如果设置密码，可以和对应的Samba用户密码相同，也可以不同。
+下面分别为ixdba1和ixdba2设置Samba服务器的登录密码，操作如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">samba</span><span class="p">]</span><span class="c1">#  smbpasswd   -a  ixdba1</span>
+<span class="n">New</span>  <span class="n">SMB</span>  <span class="n">password</span><span class="p">:</span>
+<span class="n">Retype</span>  <span class="n">new</span>  <span class="n">SMB</span>  <span class="n">password</span><span class="p">:</span>
+<span class="n">Added</span>  <span class="n">user</span>  <span class="n">ixdba1</span><span class="o">.</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">samba</span><span class="p">]</span><span class="c1">#  smbpasswd   -a  ixdba2</span>
+<span class="n">New</span>  <span class="n">SMB</span>  <span class="n">password</span><span class="p">:</span>
+<span class="n">Retype</span>  <span class="n">new</span>  <span class="n">SMB</span>  <span class="n">password</span><span class="p">:</span>
+<span class="n">Added</span>  <span class="n">user</span>  <span class="n">ixdba2</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>这样设置完毕，就可以用ixdba1和ixdba2在客户端登录Samba服务器了。</p>
+<p>（3）配置smb.conf文件
+Samba配置的核心文件是smb.conf，设置好的配置文件如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="k">global</span><span class="p">]</span>
+   <span class="n">workgroup</span>  <span class="o">=</span>  <span class="n">IXDBA</span><span class="o">.</span><span class="n">NET</span>
+   <span class="n">netbios</span>  <span class="n">name</span>  <span class="o">=</span>  <span class="n">ixdba</span>
+   <span class="n">server</span>  <span class="n">string</span>  <span class="o">=</span>  <span class="n">My</span>  <span class="n">Linux</span>  <span class="n">Samba</span>  <span class="n">Server</span>
+   <span class="n">log</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">samba</span><span class="o">/%</span><span class="n">m</span><span class="o">.</span><span class="n">log</span>
+   <span class="nb">max</span>  <span class="n">log</span>  <span class="n">size</span>  <span class="o">=</span>  <span class="mi">50</span>
+
+   <span class="n">security</span>  <span class="o">=</span>  <span class="n">user</span>
+   <span class="n">encrypt</span>  <span class="n">passwords</span>  <span class="o">=</span>  <span class="n">yes</span>
+   <span class="n">smb</span> <span class="n">passwd</span> <span class="n">file</span> <span class="o">=</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">samba</span><span class="o">/</span><span class="n">smbpasswd</span>
+   <span class="n">socket</span> <span class="n">options</span> <span class="o">=</span> <span class="n">TCP_NODELAY</span> <span class="n">SO_RCVBUF</span><span class="o">=</span><span class="mi">8192</span> <span class="n">SO_SNDBUF</span><span class="o">=</span><span class="mi">8192</span>
+   <span class="c1">#interfaces = 192.168.1.254/24 192.168.2.254/24</span>
+   <span class="n">os</span>  <span class="n">level</span>  <span class="o">=</span>  <span class="mi">33</span>
+<span class="p">[</span><span class="n">ixdba1</span><span class="p">]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">ixdba</span><span class="o">/</span><span class="n">ixdba1</span>
+    <span class="n">comment</span>  <span class="o">=</span>  <span class="n">This</span>  <span class="ow">is</span>  <span class="n">ixdba1</span>
+    <span class="n">valid</span>  <span class="n">users</span>  <span class="o">=</span>  <span class="n">ixdba1</span>
+    <span class="n">writeable</span>  <span class="o">=</span>  <span class="n">yes</span>
+    <span class="n">browseable</span>  <span class="o">=</span>  <span class="n">yes</span>
+<span class="p">[</span><span class="n">ixdba2</span><span class="p">]</span>
+     <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">ixdba</span><span class="o">/</span><span class="n">ixdba2</span>
+     <span class="n">comment</span>  <span class="o">=</span>  <span class="n">This</span>  <span class="ow">is</span>  <span class="n">ixdba2</span>
+     <span class="n">valid</span>  <span class="n">users</span>  <span class="o">=</span>  <span class="n">ixdba2</span>
+     <span class="n">create</span>  <span class="n">mask</span>  <span class="o">=</span>   <span class="mi">664</span>
+     <span class="n">directory</span>  <span class="n">mask</span>  <span class="o">=</span>  <span class="mi">775</span>
+     <span class="n">writeable</span>  <span class="o">=</span>  <span class="n">yes</span>
+     <span class="n">browseable</span>  <span class="o">=</span>  <span class="n">yes</span>
+</pre></div>
+</div>
+<p>这段配置与上面那个例子基本相同，只是增加了一些权限控制的东西。
+新增的各个选项的含义如下所示。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>max log size用来定义日志文件的大小，设置为0代表不做限制，默认单位是KB。
+encrypt passwords 用来设定用户密码是否加密，yes 表示需要加密，否则，不加密。由于现在的Windows系统都以加密形式发送 SMB/CIFS 密码，因此这里选择yes。
+smb passwd file用来指定Samba的密码文件。
+socket options用来设定Samba服务器和客户端之间会话的Socket选项值，此项的设置可以优化数据传输速度。
+os level用来设定Samba服务器的OS level，OS level的值为0～255，winNT的OS level为33，Windows 95/98的OS level是1，Samba服务器的OS level值至少要大于33。
+comment是对共享目录的说明文件，自己可以定义说明信息。
+valid users用来定义可以访问该Samba服务器的用户。
+create mask用来定义客户端用户创建文件的默认权限，664表示对用户来可读写，对用户组可读写，对其他用户仅仅有只读权限。
+directory mask用来定义客户端用户创建目录的默认权限，755表示对用户可读写并且可执行，对用户组和其他用户可读、可执行。
+</pre></div>
+</div>
+<p>（4）测试Samba服务器
+特别注意，在Samba服务器处于运行状态时，最好使Selinux处于关闭状态，不然，需要进行很多权限的设定。</p>
+<p>所有设置完成后，重新启动SMB服务。然后在Windows客户端进行授权登录。在IE浏览器地址栏中输入192.168.1.100，然后按Enter键</p>
+<p>如果需要对ixdba1用户下的文件或者目录进行权限控制，
+只须在Linux服务器上对相应的文件或者目录进行权限设置即可。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>最后，有一个小技巧，在Windows下通过“\\IP地址”的方式访问其他文件资源时，一般第一次需要输入密码，以后就无须输入密码即可直接登录了，那么如果要切换到其他Samba用户怎么办呢？可以在Windows下执行如下指令。
+首先通过“开始”→“运行”，在“运行”界面中，输入“cmd”，打开命令窗口，在命令窗口中，输入“net use”命令查看现有的连接，然后执行“net use \\Samba服务器IP地址或者netbios名称\ipc$ /del”，删除Samba服务器已经建立的连接。或者执行“net use * /del”将现在所有的连接全部删除。最后，再次执行“\\IP地址”时，就可以切换用户了。
+到此为止，Samba服务器的搭建已经介绍完毕。
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="7.%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95Linux%E7%B3%BB%E7%BB%9F.html" class="btn btn-neutral float-left" title="2.8. 远程登录Linux系统" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="9.rsync%E6%95%B0%E6%8D%AE%E5%90%8C%E6%AD%A5.html" class="btn btn-neutral float-right" title="2.10. rsync数据同步" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

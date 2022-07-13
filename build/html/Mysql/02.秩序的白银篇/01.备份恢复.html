@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. 01.备份恢复 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. 03.荣耀的黄金篇" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html" />
+    <link rel="prev" title="2. 02.秩序的白银篇" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 02.秩序的白银篇</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. 01.备份恢复</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mysql">2.1.1. 1.1 MySQL的备份方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">2.1.2. 1.2冷备及恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">2.1.3. 1.3热备及恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#select-into-outfile">2.1.4. select … into outfile</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#load-datainsert">2.1.5. load data与insert插入速度对比</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mydumper">2.1.6. mydumper</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#xtrabackup">2.1.7. 裸文件备份XtraBackup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mariabackup">2.1.8. Mariabackup 热备工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.9. 流式化备份XtraBackup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">2.1.10. 表空间传输</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binlog2sql">2.1.11. 利用binlog2sql进行闪回</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binlog-server">2.1.12. binlog server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>02.秩序的白银篇</a> &raquo;</li>
+      <li><span class="section-number">2.1. </span>01.备份恢复</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/02.秩序的白银篇/01.备份恢复.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id9">01.备份恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysql" id="id10">1.1 MySQL的备份方式</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id11">1.2冷备及恢复</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id12">1.3热备及恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysqldump" id="id13">mysqldump备份与恢复</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#select-into-outfile" id="id14">select … into outfile</a></p></li>
+<li><p><a class="reference internal" href="#load-datainsert" id="id15">load data与insert插入速度对比</a></p></li>
+<li><p><a class="reference internal" href="#mydumper" id="id16">mydumper</a></p></li>
+<li><p><a class="reference internal" href="#xtrabackup" id="id17">裸文件备份XtraBackup</a></p></li>
+<li><p><a class="reference internal" href="#mariabackup" id="id18">Mariabackup 热备工具</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id19">流式化备份XtraBackup</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id20">非压缩模式的备份</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id21">压缩模式的备份</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id22">远程备份</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id8" id="id23">表空间传输</a></p></li>
+<li><p><a class="reference internal" href="#binlog2sql" id="id24">利用binlog2sql进行闪回</a></p></li>
+<li><p><a class="reference internal" href="#binlog-server" id="id25">binlog server</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">2.1. </span>01.备份恢复</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<section id="mysql">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">2.1.1. </span>1.1 MySQL的备份方式</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<p>MySQL数据库按照其服务的运行状态（即停库和非停库）分为冷备和热备。
+热备份又可以分为逻辑备份和裸文件备份。
+按照备份后的内容量又可以分为全量备份和增量备份。</p>
+<p>如下图所示： <img alt="image0" src="../../_images/mysql_backup0001.png" /></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">2.1.2. </span>1.2冷备及恢复</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>MySQL备份的方式方法有两种，一种叫冷备，另一种叫热备。</p>
+<p>冷备：数据库处于关闭状态下的备份，好处是可以保证数据库的完整性，
+备份过程简单并且恢复速度相对快一些。但是数据的关闭也就意味着会影响现有业务的进行。
+用户不能再访问你的网站。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#先停掉MySQL服务
+./mysqladmin -uroot -proot123 shutdown
+#备份整个数据目录到远端或本地磁盘
+scp -r /data/mysql/ root@192.168.1.100:/backup
+copy -r /data/mysql /backup
+#恢复
+把备份的文件替换原目录，然后重启服务
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">2.1.3. </span>1.3热备及恢复</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>热备细分为逻辑备份和裸文件备份。逻辑备份就是备份SQL语句</p>
+<section id="mysqldump">
+<h3><a class="toc-backref" href="#id13">mysqldump备份与恢复</a><a class="headerlink" href="#mysqldump" title="Permalink to this headline">¶</a></h3>
+<p>先从buffer中找到需要备份的数据进行备份，若buffer中没有，则去磁盘中数据文件中查找并调回到buffer里面再备份，最后形成一个可编辑的备份文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./mysqldump --help 获取帮助
+重要参数：
+--single-transaction
+用于保证InnoDB备份数据时的一致性，配合RR隔离级别一起使用
+当发起事务时，读取一个数据快照，直到备份结束时，都不会读取到本事务开始之后提交的任何数据
+
+--all-databases -A
+备份所有数据库
+
+--master-data
+值有1和2，为1时，备份出来的文件中会添加change master语句；为2时，change master语句添加注释符号
+
+--dump-slave
+用于在从库端备份数据，在搭建新的从库时使用。值有1和2，为1时，备份出来的文件中会添加change master语句；为2时，change master语句添加注释符号
+
+--no-create-info -t
+只备份数据，不备份表结构
+
+--no-data -d
+只备份表结构，不备份表数据
+
+--complete-insert -c
+使用完整的insert语句，会包含表中的列信息，可以提高插入效率
+
+--databases -B
+备份多个数据库，如--database db1 db2
+
+--default-character-set
+字符集，默认为utf8，需要与备份出的表的字符集保持一致
+
+--quick -q
+相当于加sql_no_query，并不会读取缓存中的数据
+
+--where=name -w
+按条件备份出想要的数据
+
+示例
+#备份全库
+./mysqldump --single-transaction -uroot -proot123 -A &gt; all_20180702.sql
+
+#若数据库中已开启gtid选项，但备份过程中不想带gtid信息，可以这样
+./mysqldump --single-transaction -uroot -proot123 -A --set-gtid-purged=OFF &gt; all_20180702.sql
+
+#恢复全库
+./mysql -uroot -proot123 &lt; all_20180702.sql
+
+#备份单个库
+./mysqldump --single-transaction --set-gtid-purged=OFF -uroot -proot123 test &gt;test_2018_07_02.sql
+
+#恢复单个库(若test库存在，可直接恢复，若不存在，需创建test)
+#create database test;
+./mysql -uroot -proot123 test &lt; test_2018_07_02.sql
+
+#备份单表，test库下aa表
+./mysqldump --single-transaction --set-gtid-purged=OFF -uroot -proot123 test aa &gt; aa_2018_07_02.sql
+
+#恢复单表(恢复单表时，只需写库的名字，不用写表的名字)
+./mysql -uroot -proot123 test&lt;aa_2018_07_02.sql
+
+#备份test库aa表结构信息
+./mysqldump --single-transaction --set-gtid-purged=OFF -uroot -proot123 test aa -d&gt;aa.sql
+
+#备份test库aa表数据信息
+./mysqldump --single-transaction --set-gtid-purged=OFF -uroot -proot123 test aa -t&gt;aa.sql
+
+#备份test库tt表中id&gt;3的记录(条件中必须使用双引号)
+./mysqldump --single-transaction --set-gtid-purged=OFF -uroot -proot123 test tt --where=&quot;id&gt;3&quot; &gt; tt.sql
+</pre></div>
+</div>
+<p>mysqldump备份时，可能会出现数据库性能抖动的问题，性能急剧下降。
+原因是buffer中无需备份数据时，要读盘到buffer，可能会冲掉内存中的热数据，从而影响业务访问。
+innodb_buffer_pool_dump_pct = 25，innodb buffer pages的比例，默认25%</p>
+</section>
+</section>
+<section id="select-into-outfile">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">2.1.4. </span>select … into outfile</a><a class="headerlink" href="#select-into-outfile" title="Permalink to this headline">¶</a></h2>
+<p>恢复速度非常快，比insert的插入速度要快很多。只能备份表中的数据，并不能包含表的结构。
+备份出的数据可以通过load data的方式实现还原操作</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>语法：
+select col1,col2... from table_name into outfile &#39;/path/to/filename&#39;;
+load data infile &#39;/path/to/filename&#39; into table db.table_name;
+
+ERROR 1290 (HY000): The MySQL server is running with the --secure-file-priv option so it cannot execute this statement
+解决：
+secure_file_priv = NULL  #需要在配置文件中设置，并重启服务
+#mysqld段中添加secure_file_priv = /data/mysql
+./mysqladmin -uroot -proot123 shutdown
+./mysqld_safe &amp;
+show variables like &#39;%secure%&#39;;
+#导出数据
+select * from tt into outfile &#39;/data/mysql/aa.sql&#39;; #70W记录1.25sec，纯文本数据
+#导入数据
+load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt; #70W记录12.83秒
+##若不知道load data的语法，可以在命令前加？获取帮助
+##？ load data
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span><span class="p">;</span>
+<span class="o">+----+------+---------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">address</span> <span class="o">|</span>
+<span class="o">+----+------+---------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">dd</span>   <span class="o">|</span> <span class="n">wuhan2</span>  <span class="o">|</span>
+<span class="o">+----+------+---------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span> <span class="n">into</span> <span class="n">outfile</span> <span class="s1">&#39;/tmp/tt.sql&#39;</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">exit</span>
+<span class="n">Bye</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="nb">bin</span><span class="p">]</span><span class="c1"># cat /tmp/tt.sql</span>
+<span class="mi">1</span>   <span class="n">dd</span>  <span class="n">wuhan2</span>
+
+<span class="c1"># 用load data的方式导入已备份的数据文件</span>
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">LOAD</span> <span class="n">DATA</span> <span class="n">INFILE</span> <span class="s1">&#39;/tmp/tt.sql&#39;</span> <span class="n">INTO</span> <span class="n">TABLE</span> <span class="n">ttport</span><span class="o">.</span><span class="n">t</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">1</span> <span class="n">row</span> <span class="n">affected</span> <span class="p">(</span><span class="mf">0.01</span> <span class="n">sec</span><span class="p">)</span>
+<span class="n">Records</span><span class="p">:</span> <span class="mi">1</span>  <span class="n">Deleted</span><span class="p">:</span> <span class="mi">0</span>  <span class="n">Skipped</span><span class="p">:</span> <span class="mi">0</span>  <span class="n">Warnings</span><span class="p">:</span> <span class="mi">0</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">t</span><span class="p">;</span>
+<span class="o">+----+------+---------+</span>
+<span class="o">|</span> <span class="nb">id</span> <span class="o">|</span> <span class="n">name</span> <span class="o">|</span> <span class="n">address</span> <span class="o">|</span>
+<span class="o">+----+------+---------+</span>
+<span class="o">|</span>  <span class="mi">1</span> <span class="o">|</span> <span class="n">dd</span>   <span class="o">|</span> <span class="n">wuhan2</span>  <span class="o">|</span>
+<span class="o">+----+------+---------+</span>
+<span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="load-datainsert">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">2.1.5. </span>load data与insert插入速度对比</a><a class="headerlink" href="#load-datainsert" title="Permalink to this headline">¶</a></h2>
+<p>mysql -e 可以调用数据库的命令行命令 load data速度快于insert</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="o">./</span><span class="n">mysqldump</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="o">--</span><span class="n">single</span><span class="o">-</span><span class="n">transaction</span> <span class="o">--</span><span class="nb">set</span><span class="o">-</span><span class="n">gtid</span><span class="o">-</span><span class="n">purged</span><span class="o">=</span><span class="n">OFF</span> <span class="n">test</span> <span class="n">tt</span><span class="o">&gt;</span><span class="n">tt</span><span class="o">.</span><span class="n">sql</span>  <span class="c1">#用时1.828s</span>
+<span class="n">time</span> <span class="o">./</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="n">test</span> <span class="o">&lt;</span> <span class="n">tt</span><span class="o">.</span><span class="n">sql</span> <span class="c1">#用时16.9s</span>
+<span class="n">truncate</span> <span class="n">test</span><span class="o">.</span><span class="n">tt</span><span class="p">;</span>
+<span class="n">time</span> <span class="o">./</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="o">-</span><span class="n">e</span> <span class="s2">&quot;load data infile &#39;/data/mysql/aa.sql&#39; into table test.tt&quot;</span> <span class="c1">#用时14.1s</span>
+</pre></div>
+</div>
+</section>
+<section id="mydumper">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">2.1.6. </span>mydumper</a><a class="headerlink" href="#mydumper" title="Permalink to this headline">¶</a></h2>
+<p>mysqldump是单线程的工具，只能逐个导出表
+mydumper是针对MySQL和Drizzle的高性能多线程备份工具，速度远高于mysqldump，逻辑备份，还原使用myloader工具</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>项目地址：https://github.com/maxbube/mydumper/releases
+
+编译安装需要的依赖：yum install glib2-devel mysql-devel zlib-devel pcre-devel openssl-devel cmake
+安装：yum install https://github.com/maxbube/mydumper/releases/download/v0.9.5/mydumper-0.9.5-2.el7.x86_64.rpm
+
+
+# 若上面安装失败了，采用下面的方式
+yum install glib2-devel mysql-devel zlib-devel pcre-devel openssl-devel cmake
+wget https://launchpad.net/mydumper/0.9/0.9.1/+download/mydumper-0.9.1.tar.gz
+tar zxvf mydumper-0.9.1.tar.gz
+cd mydumper-0.9.1/
+cmake .
+make
+make install
+
+安装后生成两个文件：/usr/bin/mydumper、/usr/bin/myloader
+注意：mydumper导出数据时需要有服务器reload权限(用于执行flash类语句)，导出过程中会加全局锁！
+# Couldn&#39;t acquire global lock, snapshots will not be consistent: Access denied; you need (at least one of) the RELOAD privilege(s)
+GRANT RELOAD ON *.* TO &#39;user&#39;@&#39;localhost&#39;;
+参数说明：
+mydumper --help  查看帮助
+-B,--database 需要备份的数据库
+-T,--tables-list 需要备份的表，多表用逗号分隔
+-o,--outputdir 输出文件的目录
+-s,--statement-size 生成insert语句的字节数，默认为1000000
+-r,--rows 将表按行分块时，指定的块行数，指定该选项会关闭--chunk-filesize
+-F,--chunk-filesize 将表按大小分块时，指定块的大小，单位MB
+-c,--compress 压缩
+-e,--build-empty-files 即使表没有数据，还是会生成一个空文件
+-x,--regex 正则表达式 ‘db.table&#39;
+-i,--ignore-engines 忽略的存储引擎，用逗号分隔
+-m,--no-schemas 不导出表结构
+-k,--no-locks 不执行共享读锁，警告，这将导致不一致的备份
+-l,--long-query-guard 设置长查询时间，默认60s
+-K,--kill-long-queries kill掉长时间执行的查询
+-D,--daemon 启用守护进程模式
+-I,--snapshot-interval 快照间隔时间，默认60s，需要在daemon模式下
+-L,--logfile 日志文件
+-h,--host -u,--user -p,--password -P,--port -S,--socket 连接参数
+-t,--threads 线程数，默认4
+-C,--compress-protocol 在MySQL连接上使用压缩协议
+
+myloader --help
+-d,--directory 备份文件的目录
+-q,--queries-per-transaction 每次事务执行的查询数量，默认1000
+-o,--overwrite-tables 若要恢复的表存在，先drop掉该表
+-B,--database 需恢复的备用数据库
+-s,--source-db 要恢复的数据库
+-e,--enable-binlog 启用还原数据的二进制日志
+-h,--host -u,--user -p,--password -P,--port -S,--socket 连接参数
+-t,--threads 还原使用的线程数，默认为4
+-C,--compress-protocol 压缩协议
+注意，还原时若max_binlog_cache_size不够大，会报错
+
+#备份全库
+mydumper -u root -p root123 -o /data/backup/
+##每个表两个文件，一个是schema表结构，一个是数据
+##备份目录下有个metadata文件，记录了当前binlog和position号，方便搭建slave库
+#备份test库
+mydumper -u root -p root123 -B test -o /data/backup2/
+#备份test库下tt表
+mydumper -u root -p root123 -B test -T tt -o /data/backup3/
+#备份test库下tt、aa表
+mydumper -u root -p root123 -B test -T tt,aa -o /data/backup3/
+#备份表数据不备份表结构
+mydumper -u root -p root123 -B test -T tt -m -o /data/backup4/
+#备份表并压缩
+mydumper -u root -p root123 -B test -T tt -c -o /data/backup4/  #备份过程会自动创建目录
+注意：还原时还原目录必须要有metadata文件 否则报错：the specified directory is not a mydumper backup
+#还原test库
+myloader -u root -p root123 -B test -d /data/backup2/ #用时18s
+#还原test库下tt表
+myloader -u root -p root123 -B test -o tt -d /data/backup3/
+
+mydumper优点
+1）多线程备份
+2）支持文件压缩功能
+3）支持多线程恢复
+4）保证数据一致性
+5）比mysqldump速度快
+</pre></div>
+</div>
+<p>实际使用效果： 数据表t_schedule大小3千万行，t_schedule.ibd 文件 8.3GB</p>
+<p>备份：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">time</span> <span class="n">mydumper</span> <span class="o">-</span><span class="n">u</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">p</span> <span class="n">xxx</span> <span class="o">-</span><span class="n">h</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.10</span> <span class="o">-</span><span class="n">P</span> <span class="mi">3306</span> <span class="o">-</span><span class="n">t</span> <span class="mi">2</span> <span class="o">-</span><span class="n">B</span> <span class="n">test</span> <span class="o">-</span><span class="n">T</span> <span class="n">t_schedule</span> <span class="o">-</span><span class="n">o</span> <span class="o">.</span>   <span class="c1"># 用时1m27.633s</span>
+</pre></div>
+</div>
+<p>还原：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>time myloader -u xxx -p xxx -h 192.168.1.10 -P 3306 -q 100 -s test -o -d .                   # 用时33m8.014s
+set global max_binlog_cache_size=536870912; 512MB 设置 -q 500 正常
+set global max_binlog_cache_size=134217728; 128MB 设置 -q 100 正常
+-q 设置的值大小对总耗时几乎没有影响
+-q 过大会报错：
+Multi-statement transaction required more than &#39;max_binlog_cache_size&#39; bytes of storage
+</pre></div>
+</div>
+</section>
+<section id="xtrabackup">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">2.1.7. </span>裸文件备份XtraBackup</a><a class="headerlink" href="#xtrabackup" title="Permalink to this headline">¶</a></h2>
+<p>裸文件备份比逻辑备份在速度上更快</p>
+<p>XtraBackup是唯一一款开源的能够对InnoDB和XtraDB数据库进行热备的工具，优点是备份和恢复过程速度很快，安全可靠，且在备份过程中不会锁表，不影响现有业务。但它目前不能对表结构文件。备份MyISAM这类非事务表时，会加锁</p>
+<p>原理：XtraBackup是基于InnoDB的crash
+recovery功能进行备份的。InnoDB内部维护一个redo
+log，即事务日志，它包含InnoDB数据的所有更改信息，InnoDB启动时，会先检查datafile和redo
+log，前滚所有已提交的事务并回滚未提交的事务。XtraBackup备份时不锁表，而是一页页复制InnoDB数据，同时监控redo
+log。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>下载地址：https://www.percona.com/downloads/XtraBackup/LATEST/
+文件1：https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.12/binary/redhat/7/x86_64/percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm
+文件2：https://www.percona.com/downloads/XtraBackup/Percona-XtraBackup-2.4.12/binary/tarball/percona-xtrabackup-2.4.12-Linux-x86_64.libgcrypt11.tar.gz
+安装1：yum install percona-xtrabackup-24-2.4.12-1.el7.x86_64.rpm 依赖 libev 4.15
+安装2：tar zxf percona-xtrabackup-2.4.12-Linux-x86_64.libgcrypt11.tar.gz 依赖 libgcrypt  1.5.3
+./xtrabackup --help 查看帮助
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、全备过程
+#创建备份帐号
+create user &#39;zsbak&#39;@&#39;192.168.%&#39; identified by &#39;zsbak&#39;;
+grant reload,lock tables,replication client,process on *.* to &#39;zsbak&#39;@&#39;192.168.%&#39;;
+flush privileges;
+#创建备份目录
+mkdir -p /data/backup/
+#备份
+./xtrabackup --defaults-file=/etc/my.cnf --no-timestamp --user=zsbak --password=zsbak --host=192.168.158.139 --target-dir=/data/backup/all-20170921bak --backup
+##--no-timestamp 自己指定备份文件夹的名称，不使用系统默认的时间格式
+##备份文件中
+##xtrabackup_checkpoints 记录备份完成时检查点的lsn号和该备份文件类型，full-backuped全量备份
+##xtrabackup_binlog_info 记录二进制日志和偏移量，若开启gtid，还会记录gtid位置，为在线搭建从库做准备
+##xtrabackup_info 记录备份详细信息，如备份命令、开始结束时间、版本等
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>2、全备的恢复
+#准备数据，回滚日志
+./xtrabackup --target-dir=/data/backup/all-20170921bak --prepare
+##xtrabackup_checkpoints backup_type = full-prepared
+#停掉MySQL实例，重命名原来的数据目录，替换文件，修改权限，启动MySQL
+./mysqladmin -uroot -proot123 shutdown
+--------------------------------------------------
+rm -fr /data/mysql
+./xtrabackup --target-dir=/data/backup/all-20170921bak --move-back
+./xtrabackup --target-dir=/data/backup/all-20170921bak --copy-back
+--------------------------------------------------
+mv /data/mysql/ /data/mysql_bak/
+cd /data/backup/
+mv all-20170921bak/ /data/
+cd /data/
+mv all-20170921bak/ mysql
+chown mysql:mysql -R mysql
+./mysqld_safe --defaults-file=/etc/my.cnf &amp;搭建MySQL主从时，以xtrabackup_binlog_info为准还是以xtrabackup_binlog_pos_innodb为准？
+xtrabackup_binlog_pos_innodb是prepare后生成的，position比xtrabackup_binlog_info中的小，因为有回滚操作
+应当以xtrabackup_binlog_info为准
+若都是InnoDB引擎，可以以xtrabackup_binlog_pos_innodb为准
+若是混合引擎，建议(官方)以xtrabackup_binlog_info为准
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>3、XtraBackup增备
+原理：全备中有xtrabackup_checkpoints文件，记录了完成备份时的检查点lsn，增备时比较表空间中每页的lsn号，进行备份
+第一次的增备基于上一次的全备，之后的增备基于上一次的增备#做一次全备
+./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --target-dir=/data/backup/20180704 --backup
+#第一次增量备份
+./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --incremental-basedir=/data/backup/20180704 --target-dir=/data/backup/20180705 --backup
+##查看xtrabackup_checkpoints ：backup_type = incremental 类型为增备
+#第二次增量备份
+./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --incremental-basedir=/data/backup/20180705 --target-dir=/data/backup/20180706 --backup
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>4、增备的恢复
+操作步骤：先进行全备恢复，再进行增备的恢复，除最后一个外，需添加--apply-log-only
+第一步，准备全备
+./xtrabackup --prepare --apply-log-only --target-dir=/data/backup/20180704
+第二步，合并第一份增备
+./xtrabackup --prepare --apply-log-only --target-dir=/data/backup/20180704 --incremental-dir=/data/backup/20180705
+第三步，合并最后一份增备
+./xtrabackup --prepare --target-dir=/data/backup/20180704 --incremental-dir=/data/backup/20180706
+第四步，停服、清空目录、还原文件、修改权限、重启服务
+./mysqladmin -uroot -proot123 shutdown
+rm -fr /data/mysql/*
+./xtrabackup --move-back --target-dir=/data/backup/20180704
+chown -R mysql:mysql /data/mysql
+./mysqld_safe &amp;
+</pre></div>
+</div>
+</section>
+<section id="mariabackup">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">2.1.8. </span>Mariabackup 热备工具</a><a class="headerlink" href="#mariabackup" title="Permalink to this headline">¶</a></h2>
+<p>MariaDB 10.2.7(含)以上版本，不再支持Percona
+XtraBackup工具做在线物理备份，因为MariaDB引入了InnoDB页面压缩和静态数据加密等功能
+Mariabackup工具基于Percona XtraBackup 2.3.8版本改写扩展
+mariabackup工具包含在二进制tar包bin目录下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、备份
+shell&gt; mariabackup --defaults-file=/etc/my.cnf -S /tmp/mysql3306.sock --backup --target-dir=/data/bak/ --user=root --password=123456
+2、恢复备份期间增量数据 类似innobackupex --apply-log
+shell&gt; mariabackup --prepare --target-dir=/data/bak/
+# /data/bak/xtrabackup_binlog_pos_innodb文件，记录主库show master status的POS点
+3、恢复
+关闭mysqld进程
+确保datadir目录为空
+恢复
+shell&gt; mariabackup --defaults-file=/etc/my.cnf --copy-back --target-dir=/data/bak/
+更改目录属性
+shell&gt; chown -R mysql:mysql /var/lib/mysql/
+4、在从库上备份，并想记录从库的show slave status的POS点，以便后续再接一个从库
+shell&gt; mariabackup --defaults-file=/etc/my.cnf -S /tmp/mysql3306.sock --backup --slave-info --safe-slave-backup --target-dir=/data/bak/ --user=root --password=123456
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">2.1.9. </span>流式化备份XtraBackup</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>流式化备份有两种输出格式，一种是基于tar，另一种是基于xbstream</p>
+<p>主要是介绍基于tar格式的备份</p>
+<section id="id5">
+<h3><a class="toc-backref" href="#id20">非压缩模式的备份</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id21">压缩模式的备份</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">./</span><span class="n">xtrabackup</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">password</span><span class="o">=</span><span class="n">zsbak</span> <span class="o">--</span><span class="n">host</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">158.139</span> <span class="o">--</span><span class="n">stream</span><span class="o">=</span><span class="n">tar</span> <span class="o">--</span><span class="n">backup</span> <span class="o">|</span><span class="n">gzip</span> <span class="o">-</span> <span class="o">&gt;/</span><span class="n">data</span><span class="o">/</span><span class="n">backup</span><span class="o">/</span><span class="mf">20180801.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id22">远程备份</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>./xtrabackup --defaults-file=/etc/my.cnf --user=zsbak --password=zsbak --host=192.168.158.139 --stream=tar --backup |gzip |ssh root@192.168.1.100 &quot;cat - &gt;/data/backup/20180801.tar.gz&quot;
+192.168.1.100需要能免密登录，且创建好/data/backup目录
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">2.1.10. </span>表空间传输</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>5.6版本开始，可以把一张表从一个数据库移到另一个数据库或者另一台机器上。做数据迁移时很方便，相比mysqldump方式，表空间传输要快很多，且更加灵活</p>
+<p>限制条件：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）5.6以上版本
+2）使用独立表空间方式，开启innodb_file_per_table
+3）源库与目标库page size必须一致
+4）当表做导出操作时，该表只能进行读操作
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>目标：将test库下面tt表传输到tzy库下tt表中
+#创建tzy库，并创建tt表，表结构与test库tt表一样
+create database tzy;
+#卸载tzy库下tt表的表空间
+use tzy;
+alter table tt discard tablespace;  #文件tt.ibd将移除
+#在test库下执行表空间导出操作
+use test;
+flush table tt for export; #生成tt.cfg文件
+#将test库的tt.cfg和tt.ibd文件复制到tzy库下，修改mysql权限
+cp tt.cfg tt.ibd ../tzy/
+chown mysql:mysql tt.cfg tt.ibd
+[test]&gt; unlock tables; #因为目前处于只读，需要执行解锁操作
+#在tzy库执行表空间导入操作
+use tzy;
+alter table tt import tablespace;
+神奇的事情发生了，数据已经迁移过去了
+数据是存储于表空间中的！
+</pre></div>
+</div>
+</section>
+<section id="binlog2sql">
+<h2><a class="toc-backref" href="#id24"><span class="section-number">2.1.11. </span>利用binlog2sql进行闪回</a><a class="headerlink" href="#binlog2sql" title="Permalink to this headline">¶</a></h2>
+<p>mysqlbinlog可以进行基于位置或者时间点的数据恢复操作</p>
+<p>binlog2sql可以实现数据的快速回滚，从binlog中提取SQL，并生成回滚SQL语句。对于insert会生成delete，对于delete会生成insert，对update会生成相反的update语句，该工具只能使用binlog格式为row</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>项目地址：https://github.com/danfengcao/binlog2sql
+安装：
+git clone https://github.com/danfengcao/binlog2sql.git &amp;&amp; cd binlog2sql
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+python get-pip.py
+pip install -r requirements.txt
+用途：从MySQL binlog解析出SQL，可得到原始SQL、回滚SQL、去除主键的insert SQL等
+前置条件：my.cnf中需要有这些配置
+[mysqld]
+server_id = 1
+log_bin = /var/log/mysql/mysql-bin.log
+max_binlog_size = 1G
+binlog_format = row
+binlog_row_image = full
+最小授权：
+grant select,replication slave,replication client on *.* to &#39;testuser&#39;@&#39;%&#39; identified by &#39;testpasswd&#39;;flush privileges;
+select，读取information_schema.COLUMNS表，获取表结构元信息，拼接成可视化的sql语句
+replication client，执行show master status，获取binlog列表
+replication slave，通过binlog_dump协议获取binlog内容
+限制：
+离线模式不能解析
+binlog_row_image必须为FULL，不支持MINIMAL
+解析速度不如mysqlbinlog
+优点：
+纯python，自带flashback、no-primary-key，解析标准SQL，代码更易改造
+
+连接参数：
+-h host;-P port;-u user;-p password 连接参数
+解析模式：
+--stop-never，持续解析binlog，可选，默认false，同步至执行命令时最新位置
+-K,--no-primary-key，对insert语句去除主键，可选，默认false
+-B,--flashback，生成回滚sql，可解析大文件，不受内存限制，可选，默认false，与stop-never或no-primary-key不能同时添加
+--back-interval，-B模式下，每打印一千行回滚sql，加一句sleep，可选，默认为1.0s
+解析范围控制：
+--start-file，起始解析文件，只需文件名，不需要全路径，必选
+--start-position/--start-pos，起始解析位置，可选，默认为start-file起始位置
+--stop-file/--end-file，终止解析文件，可选，默认为start-file同一文件，若解析模式为stop-never，此选项失效
+--stop-position/--stop-pos，终止解析位置，可选，默认为stop-file最末位置，若解析模式为stop-never，此选项失效
+--start-datetime/--stop-datatime，起始解析时间，可选，格式:%Y-%m-%d %H:%M:%S
+对象过滤：
+-d,--database，指定库，多库用空格隔开，可选，默认为空
+-t,--tables，指定表，多表用空格隔开，可选，默认为空
+--only-dml，只解析dml，忽略ddl，可选，默认false
+--sql-type，只解析指定类型，支持INSERT/UPDATE/DELETE，多个类型用空格隔开，可选，默认全部
+
+实操：
+#查看当前binlog文件
+show master status;
+#获取正向SQL
+python binlog2sql.py -h127.0.0.1 -P3306 -utestuser -ptestpasswd -dtest -ttbl --start-file=&#39;mysql-binlog.000002&#39;
+python binlog2sql.py -h127.0.0.1 -P3306 -utestuser -ptestpasswd -dtest -ttbl --start-file=&#39;mysql-binlog.000002&#39; --start-datetime=&#39;2018-07-04 23:36:40&#39; --stop-datetime=&#39;2018-07-04 23:37:30&#39;
+##得到准确位置1626-1852
+#获取正向SQL
+python binlog2sql.py -h127.0.0.1 -P3306 -utestuser -ptestpasswd -dtest -ttbl --start-file=&#39;mysql-binlog.000002&#39; --start-pos=1626 --stop-pos=1852 --flashback &gt; rollback.sql
+#恢复
+./mysql -uroot -proot123 test &lt; /root/rollback.sql
+</pre></div>
+</div>
+</section>
+<section id="binlog-server">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">2.1.12. </span>binlog server</a><a class="headerlink" href="#binlog-server" title="Permalink to this headline">¶</a></h2>
+<p>利用mysqlbinlog命令把远程机器binlog备份到本地</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>重点参数：
+-R --read-from-remote-server 从远程MySQL服务器上读取binlog
+-raw 以binlog格式存储，方便后期使用
+--stop-never 一直连接，除非远程服务关闭或者被kill
+mysql-bin.***  代表从那个日志开始备份
+--stop-never-slave-server-id 相当于从库拉主库的日志，需要server-id做唯一标识命令：
+#创建备份目录
+mkdir -p /data/binbak
+#开始备份
+./mysqlbinlog --raw --read-from-remote-server --stop-never --host=192.168.158.139 --port=3306 --user=testuser --password=testpasswd mysql-binlog.000001
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="2. 02.秩序的白银篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html" class="btn btn-neutral float-right" title="3. 03.荣耀的黄金篇" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

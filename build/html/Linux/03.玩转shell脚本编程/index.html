@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3. 玩转shell脚本编程 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.1. 1 基础知识" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" />
+    <link rel="prev" title="2.43. ubuntu20.04-desktop-vmware-workstation" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/45.ubuntu20.04-desktop-vmware-workstation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">3. 玩转shell脚本编程</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">3.1. 1 基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html">3.2. 2 字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html">3.3. 3 运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html">3.4. 4 流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html">3.5. 5 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">3.6. 6 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html">3.7. 7 三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html">3.8. 8 三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html">3.9. 9 三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html">3.10. shell技巧与杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85zabbix%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85cacti%E8%84%9A%E6%9C%AC.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85MongoDB%E8%84%9A%E6%9C%AC.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.%E5%A4%87%E4%BB%BDMongoDB%E8%84%9A%E6%9C%AC.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85memcached%E8%84%9A%E6%9C%AC.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system%E6%A3%80%E6%B5%8B%E8%84%9A%E6%9C%AC.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.%E5%AE%89%E8%A3%85tomcat%E8%84%9A%E6%9C%AC.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper%E8%84%9A%E6%9C%AC.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch%E8%84%9A%E6%9C%AC.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6shell%E8%84%9A%E6%9C%AC.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%BF%AE%E6%94%B9IP_%E4%B8%BB%E6%9C%BA%E5%90%8D_%E7%BD%91%E5%8D%A1%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E6%A3%80%E6%9F%A5%E6%81%B6%E6%84%8FIP%E7%99%BB%E5%BD%95%EF%BC%8C%E6%8B%92%E7%BB%9DSSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html">3.30. 数据库备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6%E5%BC%80%E6%9C%BA%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python%E6%A3%80%E6%B5%8Bip%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BDMongodb%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0FTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Docker%E8%84%9A%E6%9C%AC.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.%E7%94%A8if%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.%E4%BD%BF%E7%94%A8while%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.%E4%BD%BF%E7%94%A8until%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E8%84%9A%E6%9C%AC.html">3.48. 批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html">3.52. 老男孩Shell编程实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC%E5%A4%A7%E5%85%A8.html">3.54. 常用shell脚本大全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E7%BC%96%E5%86%99Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html">3.55. 编写Shell脚本的最佳实践</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+      <li><span class="section-number">3. </span>玩转shell脚本编程</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/03.玩转shell脚本编程/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="shell">
+<h1><span class="section-number">3. </span>玩转shell脚本编程<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">3.1. 1 基础知识</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#shell">3.1.1. 1 Shell简介</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id2">3.1.2. 2 Shell分类</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#shell-gui-shell">2.1 图形界面 Shell（GUI Shell）</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#shell-cli-shell">2.2 命令行界面 Shell（CLI Shell）</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id3">3.1.3. 3 第一个Shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id4">3.1.4. 4. 执行Shell的三种方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#bash">4.1 直接bash执行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id5">4.2 ./执行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#source">4.3 source执行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id6">3.1.5. 5 Shell变量</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id7">5.1 变量命名规则</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id8">5.2 系统内置变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id9">5.3 设置环境变量永久生效的常用设置文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id10">5.4 用户自定义变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id11">5.5 变量引用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id12">5.6 变量的作用域</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id13">3.1.6. 6 引号</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id14">3.1.7. 7 Shell脚本中的注释和风格</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id15">3.1.8. 8 Shell程序的退出状态</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id16">3.1.9. 9.命令替换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id17">3.1.10. 10.转义</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html#id18">3.1.11. 参考手册</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html">3.2. 2 字符串与数组</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id2">3.2.1. 1 字符串常用操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id3">1.1 获取字符串长度</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id4">1.2 字符串切片</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id5">1.3 字符串替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id6">1.4 字符串删除</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id7">1.5 字符串截取</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id8">1.6 变量状态赋值</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#shell">3.2.2. 2. Shell变量操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id9">2.1 变量替换扩展</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id10">2.2 变量字符串操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id11">2.3 代码总结</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id12">3.2.3. 3 数组</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id13">3.1 数组定义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id14">3.2 通过元素值集合来创建数组变量</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id15">3.3 通过键值对定义数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id16">3.4 数组元素读取</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id17">3.5 以切片方式获取部分数组元素</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#declare">3.6 通过declare语句定义关联数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id19">3.7 在数组末尾追加新元素</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id20">3.8 通过循环为数组赋值</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id21">3.9 数组元素的替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id22">3.10 删除数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id23">3.11 数组的其它操作</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html#id24">3.2.4. 4 字符显示颜色</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html">3.3. 3 运算符</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#shell">3.3.1. 1 Shell表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id2">3.3.2. 1.1 整数测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id3">3.3.3. 1.2 算术运算符</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#expr">* 使用expr外部程序</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id4">* 使用$((…))</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id5">* 使用$[…]</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#let">* 使用let命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id6">3.3.4. 2 复合算术运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id7">3.3.5. 3 自增/自减运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id8">3.3.6. 4 数字常量的进制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id9">3.3.7. 5 条件测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id10">3.3.8. 6 布尔运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id11">3.3.9. 7 逻辑运算符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id12">3.3.10. 8 文件测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id13">3.3.11. 9 字符串测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id14">3.3.12. 10 Shell 中的中括号用法总结</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#id15">举例说明</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html#x">3.3.13. 11 字符串判断中x的作用</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html">3.4. 4 流程控制</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#if">3.4.1. 1 if语句</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id2">1.1 单分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id3">1.2 双分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id4">1.3 多分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#for">3.4.2. 2 for循环</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id5">2.1 带列表的for循环语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#for-c">2.2 for 循环C 语言风格的语法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id6">2.3 for循环的死循环写法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id7">2.4 不带列表的for循环语句</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#id8">2.5 使用for循环语句处理数组</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#while">3.4.3. 3 while语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#until">3.4.4. 4 until语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#break-continue">3.4.5. 5 break 和 continue 语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#case">3.4.6. 6 case语句</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html#select">3.4.7. 7 select语句</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html">3.5. 5 函数</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id2">3.5.1. 1 概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id3">3.5.2. 2 格式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id4">基本的脚本函数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id5">3.5.3. 3 函数参数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id6">指定位置参数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id7">移动位置参数</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id8">3.5.4. 4 函数的嵌套</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id9">3.5.5. 5 函数的返回值</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id10">3.5.6. 6 全局变量和局部变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id11">3.5.7. 7 函数库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id12">7.1 函数库文件的定义</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#id13">7.2 函数库文件的调用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html#etc-init-d-functions">3.5.8. 8 函数库/etc/init.d/functions简介</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">3.6. 6 正则表达式</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id2">3.6.1. 基本正则表达式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id3">1.1 字符匹配</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id4">1.2 次数匹配</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id5">1.3 位置锚定</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html#id6">1.4 分组引用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html">3.7. 7 三剑客之grep</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html#id1">3.7.1. 7.1 概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html#id2">3.7.2. 7.2 语法格式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html#id3">选项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html#id5">3.7.3. 7.3 使用举例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html">3.8. 8 三剑客之sed</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id1">3.8.1. 概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id2">3.8.2. 适用场景</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id3">3.8.3. 语法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id4">3.8.4. 使用举例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#keepalive">3.8.5. 修改keepalive配置剔除后端服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id5">3.8.6. sed练习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id6">3.8.7. 使用sed修改文件流的方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id7">删除</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#sed2-txt">将删除后的内容重定向到sed2.txt中</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id8">直接删除文件中的第1行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id9">删除1-3行的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id10">清空整个文件，1~最后一行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id11">删除最后1行的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#empty">删除包含Empty的行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id12">删除空行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id13">删除包含1以外的其它行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id14">3.8.8. 查找和替换</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#line-1">替换匹配到line的行，只替换匹配到的第1次</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#line-2">替换匹配到line的行，只替换匹配到的第2次</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id15">所有匹配值的替换</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#this">替换开头以this的行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id16">3.8.9. 字符转换</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id17">3.8.10. 插入文本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id18">在第2行后添加一行空行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#shui">若是一行里面有shui这个单词，那么在他后面会添加一个空行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id19">若是一行里面有shui这个单词，那么在他前后各添加一个空行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id20">若是一行里面有shui这个单词，那么在他前面添加一个空行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id21">在第一行前面添加空行，想在第几行，号令中的1就改成几</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id22">在第二行前插入文本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id23">在第二行后插入文本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id24">在匹配行的前面插入1行文本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id25">3.8.11. 读入文本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#etc-passwdsed-txt">将/etc/passwd的内容读入到sed.txt的空行之后</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id26">3.8.12. 打印</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id27">打印第1行</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id28">只打印匹配到的行</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id29">3.8.13. 写文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id30">3.8.14. sed 脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id31">编写一个sed脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id32">加载sed脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id33">3.8.15. 高级替换</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id34">替换空白行后的一行的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html#id35">更多内容查看</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html">3.9. 9 三剑客之awk</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id1">3.9.1. 概念</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id2">3.9.2. awk输出</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id3">3.9.3. awk变量</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id4">3.9.4. 操作符</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#pattern">3.9.5. Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#action">3.9.6. 常用action</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id5">控制语句</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#array">3.9.7. array</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id6">3.9.8. 函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id7">3.9.9. awk判断</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id8">3.9.10. awk循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html#id9">3.9.11. awk练习题</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html">3.10. shell技巧与杂项</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#echoprintf">3.10.1. echo和printf打印</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#echo">echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#printf">printf</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#cron">3.10.2. cron</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id1">3.10.3. 标准输入输出重定向</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#io">文件IO标识符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#tree">tree</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#here-document">Here Document</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id5">3.10.4. 常见小技巧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#stty">stty关闭回显</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id6">计算运行时间</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#date">date的常见用法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id7">持续执行命令直至成功才退出</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#tr">tr:替换或删除字符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#screen">screen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id8">脚本编写注意事项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id9">3.10.5. Shell脚本的调试技术</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id10">使用echo命令调试脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#trapshell">使用trap命令调试Shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#teeshell">使用tee命令调试shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id11">使用钩子函数，调试shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id12">shell自带的调试选项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id13">3.10.6. 信号的名称和值</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id14">捕获信号</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id15">3.10.7. Shell脚本的参数解析工具</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#while-case">while+case命令行参数传递</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#getopts">getopts处理多命令行选项</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id16">3.10.8. 子shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id17">在子shell中执行命令</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id21">3.10.9. 自动化</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id22">开机自启动脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id23">3.10.10. Shell脚本实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id24">3.10.11. 服务脚本的基本语法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#apache">1. Apache服务器日志管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id25">2 文件扫描校验</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id26">3 自定义垃圾回收</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#linux">4 Linux系统检测</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#lnmp">5 自动化安装lnmp，安装提示菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id27">6 选择菜单 2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id28">7 启动脚本示例</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id29">8 备份24小时被修改的文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#rpmrpm">9 卸载相关的rpm包、检查rpm包的方法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#id30">10 检查软件状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#color-print">11 color_print输出</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html#linuxfunction">12 Linux下function函数库</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html">3.11. xagrs使用</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html#xargs">3.11.1. xargs功能：从标准输入执行命令</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html#id1">3.11.2. 常用选项：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html">3.12. 收集的一些shell脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id1">3.12.1. 监控服务器主要性能参数指标</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#sshd">3.12.2. 修改SSHD配置文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#dhcp">3.12.3. 一键安装部署DHCP服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#vsftpd">3.12.4. 自动部署配置vsftpd服务器</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#mysql">3.12.5. 使用脚本操作MySQL数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#system-opt">3.12.6. system_opt系统优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#centos61">3.12.7. Centos6最小化安装后优化1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#centos62">3.12.8. Centos6最小化安装后优化2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#centos7">3.12.9. Centos7安装后优化</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id2">3.12.10. 备份数据库脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#s3">3.12.11. 备份数据库上传到S3存储库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#run-py">3.12.12. 控制进程数执行run.py脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id3">3.12.13. 转换数据库表存储引擎</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id4">3.12.14. 监控网站状态脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#httpd">3.12.15. 监控httpd服务状态脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#nginx-stop-keepalived">3.12.16. 监控Nginx进程，如果尝试启动失败就stop Keepalived</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id5">3.12.17. 进程控制示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#lnmp">3.12.18. lnmp一键安装示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id6">3.12.19. 服务器初始化脚本示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id7">3.12.20. 服务启动脚本示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id8">3.12.21. 监控mysql数据库示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#tar-var-log">3.12.22. 每周五使用tar命令备份/var/log下的所有日志文件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id9">3.12.23. 一些常用的函数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id10">3.12.24. 检查监控内存、硬盘</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id11">3.12.25. 猜随机数</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#ip">3.12.26. 检查网段内存活的主机IP信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id12">3.12.27. 进度条</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#nginx">3.12.28. nginx启动脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#test">3.12.29. 3种test的写法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#case-color">3.12.30. case+color用法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#io">3.12.31. 监控磁盘IO脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#color-print">3.12.32. color_print</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id13">3.12.33. 网页检测</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id14">检测网页状态发送邮件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id15">检测网页状态是否变化</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id16">3.12.34. 函数检查服务</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html#id17">3.12.35. 编写脚本抓取单个网页中的图片数据</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="13.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85zabbix%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC.html">3.13. 自动化安装zabbix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="13.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85zabbix%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC.html#install-zabbix-sh">3.13.1. install_zabbix.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="14.%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85cacti%E8%84%9A%E6%9C%AC.html">3.14. 自动化安装cacti服务器</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="14.%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85cacti%E8%84%9A%E6%9C%AC.html#install-cacti-sh">3.14.1. install_cacti.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="15.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85MongoDB%E8%84%9A%E6%9C%AC.html">3.15. 自动化安装MongoDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="15.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85MongoDB%E8%84%9A%E6%9C%AC.html#install-mongodb-sh">3.15.1. install_mongodb.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="16.%E5%A4%87%E4%BB%BDMongoDB%E8%84%9A%E6%9C%AC.html">3.16. 备份MongoDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="16.%E5%A4%87%E4%BB%BDMongoDB%E8%84%9A%E6%9C%AC.html#backup-mongodb-sh">3.16.1. backup_mongodb.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="17.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85memcached%E8%84%9A%E6%9C%AC.html">3.17. 自动安装memcached</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="17.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85memcached%E8%84%9A%E6%9C%AC.html#install-memcached-sh">3.17.1. install_memcached.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="18.system%E6%A3%80%E6%B5%8B%E8%84%9A%E6%9C%AC.html">3.18. 系统各项内容检测check_os</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="18.system%E6%A3%80%E6%B5%8B%E8%84%9A%E6%9C%AC.html#check-system-sh">3.18.1. check_system.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="19.%E5%AE%89%E8%A3%85tomcat%E8%84%9A%E6%9C%AC.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="20.install_zookeeper%E8%84%9A%E6%9C%AC.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="21.install_elasticserch%E8%84%9A%E6%9C%AC.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html">3.23. install_vsftpd_or_nfs脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html#install-vsftpd-sh">3.23.1. install_vsftpd.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html#install-nsf-sh">3.23.2. install_nsf.sh</a></li>
+<li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html#vsftp">3.23.3. vsftp主动和被动模式脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html#auto-config-vsftpd-sh">3.23.4. auto_config_vsftpd.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l1"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html">3.25. Linux下以秒为单位执行脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html#id1">3.25.1. 方法一</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html#id2">3.25.2. 方法二</a></li>
+<li class="toctree-l2"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html#id3">3.25.3. 方法三</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="26.%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6shell%E8%84%9A%E6%9C%AC.html">3.26. 备份文件shell脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="26.%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6shell%E8%84%9A%E6%9C%AC.html#auto-backup-linux-system-files-sh">3.26.1. Auto_Backup_Linux_System_Files.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="27.monitor_Linux%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l1"><a class="reference internal" href="28.%E4%BF%AE%E6%94%B9IP_%E4%B8%BB%E6%9C%BA%E5%90%8D_%E7%BD%91%E5%8D%A1%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="29.%E6%A3%80%E6%9F%A5%E6%81%B6%E6%84%8FIP%E7%99%BB%E5%BD%95%EF%BC%8C%E6%8B%92%E7%BB%9DSSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l1"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html">3.30. 数据库备份</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html#id2">3.30.1. 备份数据库</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html#linuxcos">3.30.2. Linux定时备份数据库到COS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html#centosmysql">3.30.3. Centos环境下编写mysql定时备份脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html#mysql">3.30.4. MySQL数据库分库备份</a></li>
+<li class="toctree-l2"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html#id3">3.30.5. MySQL数据库分库分表备份</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="31.Centos6%E5%BC%80%E6%9C%BA%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l1"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html">3.32. 百宝箱脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#shell">3.32.1. Shell 实践、常用脚本进阶</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#shell-2">3.32.2. Shell 脚本进阶2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id2">3.32.3. Shell 实践、常用脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#docker">3.32.4. 备份所有docker镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id3">3.32.5. 批量加载镜像</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id4">3.32.6. 批量杀死僵尸进程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#nginx">3.32.7. nginx启动脚本示例</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#spring-boot">3.32.8. Spring Boot启动脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id5">3.32.9. 安装nginx脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id6">3.32.10. 函数输出帮助信息</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id7">3.32.11. 设置锁文件防止脚本重复执行</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#python">3.32.12. Python颜色打印</a></li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id8">3.32.13. 实用脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id9">python 爬虫</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id10">python循环接口下载图片</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id11">python遍历目录修改文件名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id12">字节单位换算</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#url">对一组url测试能否访问成功</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#ip">查询可用IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#mysql">MySQL单表数据同步脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#shellsql">Shell执行SQL示例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html#id13">3.32.14. 参考文献：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="33.deploy_mongo.html#id1">3.33.1. 安装包和脚本的目录结构如下</a></li>
+<li class="toctree-l2"><a class="reference internal" href="33.deploy_mongo.html#id2">3.33.2. 安装完成之后的目录结构如下：</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html">3.34. python实现端口扫描</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html#socket">3.34.1. 使用socket工厂函数</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html#id1">代码示例1</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html#telnetlib">3.34.2. 使用telnetlib标准库模块</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html#id2">代码示例2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="35.python%E6%A3%80%E6%B5%8Bip%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81.html">3.35. python检测ip存活状态</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="35.python%E6%A3%80%E6%B5%8Bip%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81.html#id1">3.35.1. 代码示例1</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html">3.36. k8s_deploy脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html#master">3.36.1. Master节点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html#node">3.36.2. node节点</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html">3.37. example(字符串处理)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html#id1">3.37.1. 变量替换的六种形式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html#id2">3.37.2. 字符串处理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html#id3">3.37.3. 抽取子串</a></li>
+<li class="toctree-l2"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html#example-sh">3.37.4. 字符串处理完整脚本 example.sh</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="38.%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BDMongodb%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0FTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l1"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html">3.39. Nginx日志切割脚本</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html#id1">3.39.1. 示例1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html#id2">3.39.2. 示例2</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="40.%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Docker%E8%84%9A%E6%9C%AC.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html">3.41. shell实现多并发控制</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id1">3.41.1. 1.不并发</a></li>
+<li class="toctree-l2"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id2">3.41.2. 2.控制并发</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id3">2.1 控制并发示例1</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id4">2.2 控制并发示例2</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id5">2.3 控制并发示例3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id6">2.4 控制并发示例4</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#id7">2.5 控制并发示例5</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html#ping">2.6 控制进程数量的ping脚本</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="42.%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l1"><a class="reference internal" href="43.%E7%94%A8if%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="44.%E4%BD%BF%E7%94%A8while%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="45.%E4%BD%BF%E7%94%A8until%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l1"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html">3.46. 目录定时备份</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html#id2">3.46.1. 对指定目录定时备份</a></li>
+<li class="toctree-l2"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html#id3">3.46.2. 连续对多个目录逐个备份</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html">3.47. 远程操作ftp进行上传和下载</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html#id1">3.47.1. 自动下载指定文档</a></li>
+<li class="toctree-l2"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html#id2">3.47.2. 自动上传指定文档</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="48.%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E8%84%9A%E6%9C%AC.html">3.48. 批量创建用户脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html">3.49. Centos升级内核版本(附带升级脚本)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html#id1">3.49.1. 参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html#linux">3.49.2. Linux内核升级到最新</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="50.CPU%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l1"><a class="reference internal" href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l1"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html">3.52. 老男孩Shell编程实战</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id1">3.52.1. 什么是shell脚本</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id2">脚本的执行方式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id3">环境变量初始化与对应文件的生效顺序</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id4">3.52.2. 初始化操作系统脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id5">3.52.3. 开发检测脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#shellrsync">3.52.4. 利用Shell函数开发rsync服务启动脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id6">3.52.5. 一个颜色打印示例脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#case">3.52.6. 结合case给输出的语句加颜色</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#while">3.52.7. while循环</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id7">3.52.8. 数组用法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id8">3.52.9. while循环按行读文件的方式总结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id9">3.52.10. 批量检查多个网站地址是否正常。</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#mysql">3.52.11. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id10">3.52.12. Shell脚本调试技巧</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#echo">使用echo命令调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#bash">使用bash命令参数调试</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#set">使用set命令调试部分脚本内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id11">其他调试Shell脚本的工具</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#expect">3.52.13. Expect用法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id12">在不使用密钥的情况下，实现非人为交互登录。</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id13">对服务器批量管理（了解)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id14">3.52.14. 企业生产场景下的Expect案例</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id15">批量执行命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#id16">批量执行Shell脚本</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#ssh-ansible">3.52.15. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#exec">3.52.16. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#fork">3.52.17. fork子进程的示例.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#ping1">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#ping2">3.52.19. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#ping">3.52.20. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l2"><a class="reference internal" href="52.%E8%80%81%E7%94%B7%E5%AD%A9Shell%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98.html#sshd-ssh">3.52.21. 修改SSHD配置文件,提升SSH安全性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l1"><a class="reference internal" href="54.%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC%E5%A4%A7%E5%85%A8.html">3.54. 常用shell脚本大全</a></li>
+<li class="toctree-l1"><a class="reference internal" href="55.%E7%BC%96%E5%86%99Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html">3.55. 编写Shell脚本的最佳实践</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="55.%E7%BC%96%E5%86%99Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html#id1">3.55.1. 参考文献</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/45.ubuntu20.04-desktop-vmware-workstation.html" class="btn btn-neutral float-left" title="2.43. ubuntu20.04-desktop-vmware-workstation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html" class="btn btn-neutral float-right" title="3.1. 1 基础知识" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

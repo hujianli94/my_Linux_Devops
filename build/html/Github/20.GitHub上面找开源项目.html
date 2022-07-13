@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GitHub上面找开源项目 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Jenkins持续化集成" href="../Jenkins/index.html" />
+    <link rel="prev" title="便于理解的标准流程" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Github入门到实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html">实际操作学习Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html">模拟体验GitHub Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">GitHub上面找开源项目</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">1. GitHub的高级搜索方式</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.1 单条件使用</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2 组合条件使用</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">2. GitHub实用的搜索小技巧</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">Github入门到实践</a> &raquo;</li>
+      <li>GitHub上面找开源项目</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Github/20.GitHub上面找开源项目.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#github" id="id5">GitHub上面找开源项目</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id6">1. GitHub的高级搜索方式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id7">1.1 单条件使用</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id8">1.2 组合条件使用</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id9">2. GitHub实用的搜索小技巧</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="github">
+<h1><a class="toc-backref" href="#id5">GitHub上面找开源项目</a><a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id6">1. GitHub的高级搜索方式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id7">1.1 单条件使用</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p><strong>项目名称</strong> 仓库名称包含 spring 的项目 <em>in:name spring</em></p></li>
+<li><p><strong>项目描述</strong> 仓库描述中包含 spring 的项目 <em>in:description spring</em></p></li>
+<li><p><strong>readme文件</strong> readme 中的描述包含 spring 的项目 <em>in:readme spring</em></p></li>
+<li><p><strong>star数量</strong> star 数量大于 1000 的项目 <em>starts: &gt;1000</em> star 数量在
+10~20直接的项目 <em>stars:10..20</em></p></li>
+<li><p><strong>fork 数量</strong> fork 数量大于 1000 的项目 <em>fork:&gt;1000</em> fork 数量在
+10~20 之间的项目</p></li>
+<li><p><strong>仓库大小</strong> 按照仓库大小进行搜索，单位：KB，仓库大于1000kB的项目
+<em>size:&gt;=1000</em></p></li>
+<li><p><strong>最近更新时间</strong> 最近一次提交在2019年以后的仓库 <em>pushed:&gt;2019-01-01
+关键词</em></p></li>
+<li><p><strong>仓库创建时间</strong> 2019年以后创建的仓库 <em>created:&gt;2019-01-01 关键词</em></p></li>
+<li><p><strong>license</strong> 使用 apache-2.0 协议的仓库 <em>license:apache-2.0 关键词</em></p></li>
+<li><p><strong>仓库使用的开发语言</strong> 用java 语言写的仓库 <em>language:java 关键词</em></p></li>
+<li><p><strong>仓库的作者</strong> 用户google 上传的仓库 <em>user:google 关键词</em></p></li>
+<li><p><strong>组织的仓库</strong> 列出org 的 spring-cloud 仓库 <em>org:spring-cloud</em></p></li>
+</ol>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id8">1.2 组合条件使用</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><strong>1. 搜索名字包含 spring boot ,并且 star 在 1000 以上的项目。</strong></p>
+<p><em>in:name spring boot stars:&gt;1000</em></p>
+<p><strong>2. 搜索描述中包含 spring boot,并且 star 在1000以上，language 为 java
+的项目。</strong></p>
+<p><em>in:description spring boot stars:&gt;1000 language:java</em></p>
+<p><strong>3. 搜索 readme 中包含关键字【测试自动化框架】，并且 star 在 100
+以上，language 是 python 的项目.</strong></p>
+<p><em>in:readme 测试自动化框架 stars:&gt;100 language:python</em></p>
+</section>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id9">2. GitHub实用的搜索小技巧</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>参考文献 <a class="reference external" href="https://www.cnblogs.com/flydashpig/p/11795238.html">https://www.cnblogs.com/flydashpig/p/11795238.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html" class="btn btn-neutral float-left" title="便于理解的标准流程" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../Jenkins/index.html" class="btn btn-neutral float-right" title="Jenkins持续化集成" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

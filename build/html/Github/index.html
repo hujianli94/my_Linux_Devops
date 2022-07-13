@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Github入门到实践 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="什么是Github" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html" />
+    <link rel="prev" title="10. 分布式队列管理Cerely" href="../DevOps/10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Github入门到实践</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html">实际操作学习Git</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html">模拟体验GitHub Flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">GitHub上面找开源项目</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+      <li>Github入门到实践</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/Github/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="github">
+<h1>Github入门到实践<a class="headerlink" href="#github" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#id1">Github</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#githubgit">GitHub与Git的区别</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#pull-request">Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#id2">GitHub提供的主要功能</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#git">●Git仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#organization">●Organization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#issue">●Issue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#wiki">●Wiki</a></li>
+<li class="toctree-l3"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html#pull-request-1">●Pull Request</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html">Git的导入</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#id1">什么是版本管理</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#id2">集中型与分散型</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#id3">集中型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#id4">分散型</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#id5">初始设置</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.Git%E7%9A%84%E5%AF%BC%E5%85%A5.html#clone">clone已有仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html">实际操作学习Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id1">基本操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id2">分支的操作</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id3">●特性分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id4">●主干分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id5">合并分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id6">更改提交的操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id7">消除冲突</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id8">提交解决后的结果冲突解决后</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id9">修改提交信息</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id10">压缩历史</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id11">推送至远程仓库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#master">推送至master分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id12">推送至master以外的分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#id13">从远程仓库获取</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%AE%9E%E9%99%85%E6%93%8D%E4%BD%9C%E5%AD%A6%E4%B9%A0Git.html#git-clone">git clone</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html">详细解说GitHub的功能</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#id1">控制面板</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#ui">*UI</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#id2">仓库</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#id3">用户名（组织名）/仓库名</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#watch-star-fork">Watch/Star/Fork</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#code">Code</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#issue">Issue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#pull-requests-1">Pull Requests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#wiki">Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#issue-1">Issue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#pull-request">Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4GitHub%E7%9A%84%E5%8A%9F%E8%83%BD.html#wiki-1">Wiki</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html">尝试Pull Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id1">什么是Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id2">让Pull Request更加有效的方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id3">●明确标出“正在开发过程中”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#forkpull-request">●不进行Fork直接从分支发送Pull Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id4">仓库的维护</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#forkclone">●仓库的Fork与clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id5">●给原仓库设置名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id6">●获取最新数据</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E5%B0%9D%E8%AF%95Pull-Request.html#id7">小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html">接收Pull Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id1">采纳Pull Request前的准备</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id2">●代码审查</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id3">1.在本地开发环境中反映Pull Request的内容</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id4">2. 获取发送方的远程仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id5">3.创建用于检查的分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id6">4.合并</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id7">5.删除分支</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id8">采纳Pull Request</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#id9">●合并到主分支</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#push">●push修改内容</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#fork">不Fork仓库的方法</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%8E%A5%E6%94%B6Pull-Request.html#github-flow">GitHub Flow的流程</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html">模拟体验GitHub Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id1">1. 创建新的分支</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#clone">1.1 如果尚未clone仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id2">1.2 如果之前clone过仓库</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id3">2. 创建特性分支</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id4">3. 实现新功能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#pull-request">4. 创建Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id5">5. 接收反馈</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id6">6. 修正被指出的问题</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id7">7. 添加测试</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id8">8. 培育Pull Request</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id9">9. Pull Request被合并</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id10">团队实践GitHub Flow时的几点建议</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id11">●减小Pull Request的体积</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id12">●准备可供试运行的环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id13">●不要让Pull Request中有太多反馈</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id14">●不要积攒Pull Request</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E6%A8%A1%E6%8B%9F%E4%BD%93%E9%AA%8CGitHub-Flow.html#id15">GitHub Flow的小结</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html">便于理解的标准流程</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#git-flow">模拟体验Git Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id2">1.创建分支(前期工作)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id4">实践 Git Flow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#masterdevelop"><strong>1. master分支与develop分支的区别</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id6"><strong>2. 创建分支</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id7"><strong>3.在分支中进行作业</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#pull-request"><strong>4.发送Pull Request</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id8"><strong>5.通过代码审查提高代码质量</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id9"><strong>6.更新本地的 develop 分支</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#release"><strong>7.在 release 分支中进行的工作</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id15"><strong>8.更新到远程仓库</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#hotfix"><strong>9.在 hotfix 分支中进行的工作</strong></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#id16">Git Flow的小结</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.%E4%BE%BF%E4%BA%8E%E7%90%86%E8%A7%A3%E7%9A%84%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B.html#git">能实现Git托管的软件</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html">GitHub上面找开源项目</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html#id1">1. GitHub的高级搜索方式</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html#id2">1.1 单条件使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html#id3">1.2 组合条件使用</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="20.GitHub%E4%B8%8A%E9%9D%A2%E6%89%BE%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE.html#id4">2. GitHub实用的搜索小技巧</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../DevOps/10.%E5%88%86%E5%B8%83%E5%BC%8F%E9%98%9F%E5%88%97%E7%AE%A1%E7%90%86Cerely.html" class="btn btn-neutral float-left" title="10. 分布式队列管理Cerely" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html" class="btn btn-neutral float-right" title="什么是Github" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

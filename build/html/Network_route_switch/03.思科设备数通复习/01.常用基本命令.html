@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2.1. Cisco交换机路由器常用命令 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. H3C设备数通" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html" />
+    <link rel="prev" title="2. 思科设备数通复习" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%8D%8E%E4%B8%BA%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">1. 华为设备数通玩转</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">2. 思科设备数通复习</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">2.1. Cisco交换机路由器常用命令</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">2.1.1. 交换机</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">2.1.2. 路由器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">3. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">2. </span>思科设备数通复习</a> &raquo;</li>
+      <li><span class="section-number">2.1. </span>Cisco交换机路由器常用命令</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Network_route_switch/03.思科设备数通复习/01.常用基本命令.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#cisco" id="id8">Cisco交换机路由器常用命令</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id9">交换机</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id10">交换机口令设置</a></p></li>
+<li><p><a class="reference internal" href="#vlan" id="id11">交换机VLAN设置</a></p></li>
+<li><p><a class="reference internal" href="#ip" id="id12">交换机设置IP地址：</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">交换机显示命令：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id14">路由器</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id15">静态路由：</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">基本配置</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id17">特权模式下查看</a></p></li>
+<li><p><a class="reference internal" href="#hsrp" id="id18">HSRP思科私有热备网关协议</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="cisco">
+<h1><a class="toc-backref" href="#id8"><span class="section-number">2.1. </span>Cisco交换机路由器常用命令</a><a class="headerlink" href="#cisco" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">2.1.1. </span>交换机</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>switch: ；ROM状态， 路由器是rommon&gt;
+hostname&gt; ；用户模式
+hostname# ；特权模式
+hostname(config)# ；全局配置模式
+hostname(config-if)# ；接口状态
+</pre></div>
+</div>
+<section id="id2">
+<h3><a class="toc-backref" href="#id10">交换机口令设置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>switch&gt;enable ；进入特权模式
+switch#config terminal ；进入全局配置模式
+switch(config)#hostname  ；设置交换机的主机名
+switch(config)#enable secret xxx ；设置特权加密口令
+switch(config)#enable password xxa ；设置特权非密口令
+switch(config)#line console 0 ；进入控制台口
+switch(config-line)#line vty 0 4 ；进入虚拟终端
+switch(config-line)#login ；允许登录
+switch(config-line)#password xx ；设置登录口令xx
+switch#exit ；返回命令
+</pre></div>
+</div>
+</section>
+<section id="vlan">
+<h3><a class="toc-backref" href="#id11">交换机VLAN设置</a><a class="headerlink" href="#vlan" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span><span class="c1">#vlan database                    ；进入VLAN设置</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">vlan</span><span class="p">)</span><span class="c1">#vlan 2                     ；建VLAN 2</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">vlan</span><span class="p">)</span><span class="c1">#no vlan 2                  ；删vlan 2</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#int f0/1                 ；进入端口1</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="c1">#switchport access vlan 2              ；当前端口加入vlan 2</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="c1">#switchport mode trunk                 ；设置为干线</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="c1">#switchport trunk allowed vlan 1，2         ；设置允许的vlan</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="c1">#switchport trunk encap dot1q          ；设置vlan 中继</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#vtp domain                       ；设置发vtp域名</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#vtp password                     ；设置发vtp密码</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#vtp mode server                  ；设置发vtp模式</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#vtp mode client                  ；设置发vtp模式</span>
+</pre></div>
+</div>
+</section>
+<section id="ip">
+<h3><a class="toc-backref" href="#id12">交换机设置IP地址：</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#interface vlan 1             ；进入vlan 1</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="o">-</span><span class="k">if</span><span class="p">)</span><span class="c1">#ip address                ；设置IP地址</span>
+<span class="n">switch</span><span class="p">(</span><span class="n">config</span><span class="p">)</span><span class="c1">#ip default-gateway           ；设置默认网关</span>
+<span class="n">switch</span><span class="c1">#dir flash:                           ；查看闪存</span>
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id13">交换机显示命令：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>switch#write ；保存配置信息
+switch#show vtp ；查看vtp配置信息
+switch#show run ；查看当前配置信息
+show vlan brief  ；查看vlan和接口信息
+switch#show vlan ；查看vlan配置信息
+switch#show interface ；查看端口信息
+switch#show int f0/0 ；查看指定端口信息
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">2.1.2. </span>路由器</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>路由器显示命令：
+router#show run ；显示配置信息
+router#show interface ；显示接口信息
+router#show ip route ；显示路由信息
+router#show cdp nei ；显示邻居信息
+router#reload 　 　 ；重新起动
+</pre></div>
+</div>
+<section id="id5">
+<h3><a class="toc-backref" href="#id15">静态路由：</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>ip route    ；命令格式
+router(config)#ip route 2.0.0.0 255.0.0.0 1.1.1.2 ；静态路由举例
+router(config)#ip route 0.0.0.0 0.0.0.0 1.1.1.2 ；默认路由举例
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id16">基本配置</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、基本配置：
+router&gt;enable       /进入特权模式
+router#conf t       /进入全局配置模式
+router(config)#hostname xxx         /设置设备名称就好像给我们的计算机起个名字
+router(config)#enable password      /设置特权口令
+router(config)#no ip domain-lookup /不允许路由器缺省使用DNS解析命令
+router(config)#line console 0       /进入控制口的服务模式
+router(config-line)#password xxx    /要设置console的密码
+router(config-line)#login           /使能可以登陆
+router(config-line)#logging synchronous         /日志同步
+router(config-line)#exec-timeout 0 0            /设置时间溢出为0
+router(config-line)#line vty 0 4                /进入设置telnet服务模式
+router(config-line)#password xxx                /设置telnet的密码
+router(config-line)#login                       /使能可以登陆
+router(config-line)#exit                        /保存退出到特权模式
+router(config)# Service password-encrypt        /对所有在路由器上输入的口令进行暗文加密
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id17">特权模式下查看</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>特权模式下：
+router#show ip route /查看当前的路由表
+router#clear ip route * /清楚当前的路由表
+router#show ip protocol /查看当前路由器运行的动态路由协议情况
+router#show ip int brief /查看当前的路由器的接口ip地址启用情况
+router#show running-config /查看当前运行配置
+router#show startup-config /查看启动配置
+router#debug ip pack /打开ip报文的调试
+router#terminal monitor /输出到终端上显示调试信息
+router#show ip eigrp neighbors /查看eigrp协议的邻居表
+router#show ip eigrp top /查看eigrp协议的拓朴表
+router#show ip eigrp interface /查看当前路由器运行eigrp协议的接口情况
+router#show ip ospf neighbor /查看当前路由器的ospf协议的邻居表
+router#show ip ospf interface /查看当前路由器运行ospf协议的接口情况
+router#clear ip ospf process /清楚当前路由器ospf协议的进程
+router#Show interfaces /显示设置在路由器和访问服务器上所有接口的统计信息. 显示路由器上配置的所有接口的状态
+router#Show interfaces serial /显示关于一个串口的信息
+router#Show ip interface /列出一个接口的IP信息和状态的小结, 列出接口的状态和全局参数
+
+
+状态查看
+Show memory 显示路由器内存的大小，包括空闲内存的大小
+Show processes 显示路由器的进程
+Show protocols 显示设置的协议
+Show protocols 显示配置的协议。这条命令显示任何配置了的第3层协议的状态
+Show running-config 显示RAM中的当前配置信息
+Show spantree 显示关于虚拟局域网（VLAN）的生成树信息
+Show stacks 监控和中断程序对堆栈的使用，并显示系统上一次重启的原因
+Show startup-config 显示NVRAM中的启动配置文件
+Show ststus 显示ISDN线路和两个B信道的当前状态
+Show version 显示系统硬件的配置，软件的版本，配置文件的名称和来源及引导映像
+Shutdown 关闭一个接口
+Telnet 开启一个telect连接
+Term ip 指定当前会话的网络掩码的格式
+Term ip netmask-format 规定了在show命令输出中网络掩码显示的格式
+Timers basic 控制着IGRP以多少时间间隔发送更新信息
+Trace 跟踪IP路由
+Username password 规定了在CHAP和PAP呼叫者身份验证过程中使用的密码
+Verify 检验flash文件
+Where 显示活动连接
+Which-route OSI路由表查找和显示结果
+Write 运行的配置信息写入内存，网络或终端
+Write erase 现在由copy startup-config命令替换
+</pre></div>
+</div>
+</section>
+<section id="hsrp">
+<h3><a class="toc-backref" href="#id18">HSRP思科私有热备网关协议</a><a class="headerlink" href="#hsrp" title="Permalink to this headline">¶</a></h3>
+<p><strong>热备份路由协议，可以配置一个交换机和路由器群集。虚拟出一个MAC地址和IP地址，就像一台大交换机，下面是多台互为备份的交换机</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>HSRP配置：
+configure terminal                  #全局模式
+interface port-id                   #接口模式
+standby number ip ip_address        #创建HSRP组，分配组号和虚拟IP地址
+standby number priority priority        #设置优先级，默认是100，数值越高，优先权越高
+standby number preempt                  #设置抢占模式，当路由器比活动路由器有较高的优先权时，自动升级为活动路由器
+
+#查看HSRP状态是否正常
+Show standby
+Show standby brief
+R#debug standby ?
+
+
+#R1配置
+r1(config)#int f0/0
+r1(config-if)#ip add 192.168.1.1 255.255.255.0
+r1(config-if)#no shu
+r1(config-if)#int f1/0
+r1(config-if)#ip add 192.168.2.1 255.255.255.0
+r1(config-if)#no shu
+r1(config)#router rip
+r1(config-router)#network 192.168.1.0
+r1(config-router)#network 192.168.2.0
+r1(config)#int f0/0
+r1(config-if)#standby 47 ip 192.168.1.254    备份组为47虚拟IP为1.254
+r1(config-if)#standby 47 priority 180        优先级为180
+r1(config-if)#standby 47 preemtp             配置占先权
+r1(config-if)#standby 47 track f1/0 100      端口跟踪，优先级减少100
+
+
+#R2配置
+r2(config)#int f0/0r2(config-if)#ip add 192.168.1.2 255.255.255.0
+r2(config-if)#no shu
+r2(config-if)#int f1/0
+r2(config-if)#ip add 192.168.3.1 255.255.255.0
+r2(config-if)#no shu
+r2(config)#router rip
+r2(config-router)#network 192.168.1.0
+r2(config-router)#network 192.168.3.0
+r2(config)#int f0/0
+r2(config-if)#standby 47 ip 192.168.1.254    备份组为47虚拟IP为1.254
+r2(config-if)#standby 47 priority 150        优先级为150
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="2. 思科设备数通复习" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html" class="btn btn-neutral float-right" title="3. H3C设备数通" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

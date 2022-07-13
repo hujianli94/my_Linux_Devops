@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5. Vagrant虚拟机快速创建开发环境 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. KVM相关参考文献" href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html" />
+    <link rel="prev" title="4. KVM设备高级管理" href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01%E6%9E%84%E5%BB%BAKVM%E7%8E%AF%E5%A2%83.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">2. KVM管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html">4. KVM设备高级管理</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">5. Vagrant虚拟机快速创建开发环境</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#install-virtualbox">5.1. 1. Install VirtualBox</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#install-vagrant">5.2. 2. Install Vagrant</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vagrant-config">5.3. 3. vagrant Config</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">5.3.1. 3.1 配置文件详解</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">5.3.2. 3.2 常用命令详解</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#vagrantcentos7">5.4. 4. vagrant创建一个CentOS7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vagrantubuntu">5.5. 5. vagrant启动一个Ubuntu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#vm">5.6. 6. vm进行封装</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">5.7. 7. 使用vm封装后的虚拟机</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">5.8. 8.使用vagrant创建多台虚拟机</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html">6. KVM相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E8%BD%AC%E6%8D%A2V2V.html">7. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM%E5%B8%A6web%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2.html">8. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.CentOS7-ks.cfg%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%93%8D-%E5%AE%89%E8%A3%85%E5%92%8C%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html">12. KVM部署实操-安裝和常用操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">KVM实践</a> &raquo;</li>
+      <li><span class="section-number">5. </span>Vagrant虚拟机快速创建开发环境</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/KVM/05.Vagrant虚拟机快速创建开发环境.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#vagrant" id="id5">Vagrant虚拟机快速创建开发环境</a></p>
+<ul>
+<li><p><a class="reference internal" href="#install-virtualbox" id="id6">1. Install VirtualBox</a></p></li>
+<li><p><a class="reference internal" href="#install-vagrant" id="id7">2. Install Vagrant</a></p></li>
+<li><p><a class="reference internal" href="#vagrant-config" id="id8">3. vagrant Config</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id9">3.1 配置文件详解</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">3.2 常用命令详解</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#vagrantcentos7" id="id11">4. vagrant创建一个CentOS7</a></p></li>
+<li><p><a class="reference internal" href="#vagrantubuntu" id="id12">5. vagrant启动一个Ubuntu</a></p></li>
+<li><p><a class="reference internal" href="#vm" id="id13">6. vm进行封装</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id14">7. 使用vm封装后的虚拟机</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id15">8.使用vagrant创建多台虚拟机</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="vagrant">
+<h1><a class="toc-backref" href="#id5"><span class="section-number">5. </span>Vagrant虚拟机快速创建开发环境</a><a class="headerlink" href="#vagrant" title="Permalink to this headline">¶</a></h1>
+<p>Vagrant在DevOps环境中的应用</p>
+<p>Vagrant是为了方便地实现虚拟化环境而设计的，使用Ruby开发，基于VirtualBox等虚拟机管理软件的接口，提供了一个可配置、轻量级的便携式虚拟开发环境。</p>
+<p>我们可以利用Vagrant虚拟开发环境，这样的特别适合团队在开发环境和测试环境中自由切换，这样就可以使得整个团队保持一致的环境，从而方便团队协同进行开发工作。</p>
+<p>此外，Vagrant除了虚拟开发环境之外，还可以模拟多台虚拟机，这样我们平时还可以在自己的个人机器（很多读者朋友最常用的就是自己的笔记本）上模拟分布式环境来测试Ansible或Saltstack等自动化配置工具。</p>
+<section id="install-virtualbox">
+<h2><a class="toc-backref" href="#id6"><span class="section-number">5.1. </span>1. Install VirtualBox</a><a class="headerlink" href="#install-virtualbox" title="Permalink to this headline">¶</a></h2>
+<p>系统OS: Windows10</p>
+<p>VirtualBox安装：
+官方下载地址：<a class="reference external" href="https://www.virtualbox.org/wiki/Downloads/">https://www.virtualbox.org/wiki/Downloads/</a></p>
+<p>提供安装包版本：VirtualBox-6.1.16-140961-Win.exe</p>
+<p>其安装过程很简单，逐步选择“下一步”就可以完成安装了。</p>
+</section>
+<section id="install-vagrant">
+<h2><a class="toc-backref" href="#id7"><span class="section-number">5.2. </span>2. Install Vagrant</a><a class="headerlink" href="#install-vagrant" title="Permalink to this headline">¶</a></h2>
+<p>Vagrant软件的安装地址：<a class="reference external" href="https://www.vagrantup.com/downloads">https://www.vagrantup.com/downloads</a></p>
+<p>提供安装包版本： vagrant_2.2.15_x86_64.msi</p>
+<p>逐步执行就可以完成安装了。</p>
+<p>检测安装是否成功，可以打开命令终端，输入vagrant，看看程序的执行状态</p>
+<p>命令显示结果如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span><span class="o">&gt;</span> <span class="n">vagrant</span>
+<span class="n">Usage</span><span class="p">:</span> <span class="n">vagrant</span> <span class="p">[</span><span class="n">options</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">args</span><span class="o">&gt;</span><span class="p">]</span>
+
+    <span class="o">-</span><span class="n">h</span><span class="p">,</span> <span class="o">--</span><span class="n">help</span>                       <span class="n">Print</span> <span class="n">this</span> <span class="n">help</span><span class="o">.</span>
+
+<span class="n">Common</span> <span class="n">commands</span><span class="p">:</span>
+     <span class="n">autocomplete</span>    <span class="n">manages</span> <span class="n">autocomplete</span> <span class="n">installation</span> <span class="n">on</span> <span class="n">host</span>
+     <span class="n">box</span>             <span class="n">manages</span> <span class="n">boxes</span><span class="p">:</span> <span class="n">installation</span><span class="p">,</span> <span class="n">removal</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+     <span class="n">cloud</span>           <span class="n">manages</span> <span class="n">everything</span> <span class="n">related</span> <span class="n">to</span> <span class="n">Vagrant</span> <span class="n">Cloud</span>
+     <span class="n">destroy</span>         <span class="n">stops</span> <span class="ow">and</span> <span class="n">deletes</span> <span class="nb">all</span> <span class="n">traces</span> <span class="n">of</span> <span class="n">the</span> <span class="n">vagrant</span> <span class="n">machine</span>
+     <span class="k">global</span><span class="o">-</span><span class="n">status</span>   <span class="n">outputs</span> <span class="n">status</span> <span class="n">Vagrant</span> <span class="n">environments</span> <span class="k">for</span> <span class="n">this</span> <span class="n">user</span>
+     <span class="n">halt</span>            <span class="n">stops</span> <span class="n">the</span> <span class="n">vagrant</span> <span class="n">machine</span>
+     <span class="n">help</span>            <span class="n">shows</span> <span class="n">the</span> <span class="n">help</span> <span class="k">for</span> <span class="n">a</span> <span class="n">subcommand</span>
+     <span class="n">init</span>            <span class="n">initializes</span> <span class="n">a</span> <span class="n">new</span> <span class="n">Vagrant</span> <span class="n">environment</span> <span class="n">by</span> <span class="n">creating</span> <span class="n">a</span> <span class="n">Vagrantfile</span>
+     <span class="n">login</span>
+     <span class="n">package</span>         <span class="n">packages</span> <span class="n">a</span> <span class="n">running</span> <span class="n">vagrant</span> <span class="n">environment</span> <span class="n">into</span> <span class="n">a</span> <span class="n">box</span>
+     <span class="n">plugin</span>          <span class="n">manages</span> <span class="n">plugins</span><span class="p">:</span> <span class="n">install</span><span class="p">,</span> <span class="n">uninstall</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+     <span class="n">port</span>            <span class="n">displays</span> <span class="n">information</span> <span class="n">about</span> <span class="n">guest</span> <span class="n">port</span> <span class="n">mappings</span>
+     <span class="n">powershell</span>      <span class="n">connects</span> <span class="n">to</span> <span class="n">machine</span> <span class="n">via</span> <span class="n">powershell</span> <span class="n">remoting</span>
+     <span class="n">provision</span>       <span class="n">provisions</span> <span class="n">the</span> <span class="n">vagrant</span> <span class="n">machine</span>
+     <span class="n">push</span>            <span class="n">deploys</span> <span class="n">code</span> <span class="ow">in</span> <span class="n">this</span> <span class="n">environment</span> <span class="n">to</span> <span class="n">a</span> <span class="n">configured</span> <span class="n">destination</span>
+     <span class="n">rdp</span>             <span class="n">connects</span> <span class="n">to</span> <span class="n">machine</span> <span class="n">via</span> <span class="n">RDP</span>
+     <span class="n">reload</span>          <span class="n">restarts</span> <span class="n">vagrant</span> <span class="n">machine</span><span class="p">,</span> <span class="n">loads</span> <span class="n">new</span> <span class="n">Vagrantfile</span> <span class="n">configuration</span>
+     <span class="n">resume</span>          <span class="n">resume</span> <span class="n">a</span> <span class="n">suspended</span> <span class="n">vagrant</span> <span class="n">machine</span>
+     <span class="n">snapshot</span>        <span class="n">manages</span> <span class="n">snapshots</span><span class="p">:</span> <span class="n">saving</span><span class="p">,</span> <span class="n">restoring</span><span class="p">,</span> <span class="n">etc</span><span class="o">.</span>
+     <span class="n">ssh</span>             <span class="n">connects</span> <span class="n">to</span> <span class="n">machine</span> <span class="n">via</span> <span class="n">SSH</span>
+     <span class="n">ssh</span><span class="o">-</span><span class="n">config</span>      <span class="n">outputs</span> <span class="n">OpenSSH</span> <span class="n">valid</span> <span class="n">configuration</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">the</span> <span class="n">machine</span>
+     <span class="n">status</span>          <span class="n">outputs</span> <span class="n">status</span> <span class="n">of</span> <span class="n">the</span> <span class="n">vagrant</span> <span class="n">machine</span>
+     <span class="n">suspend</span>         <span class="n">suspends</span> <span class="n">the</span> <span class="n">machine</span>
+     <span class="n">up</span>              <span class="n">starts</span> <span class="ow">and</span> <span class="n">provisions</span> <span class="n">the</span> <span class="n">vagrant</span> <span class="n">environment</span>
+     <span class="n">upload</span>          <span class="n">upload</span> <span class="n">to</span> <span class="n">machine</span> <span class="n">via</span> <span class="n">communicator</span>
+     <span class="n">validate</span>        <span class="n">validates</span> <span class="n">the</span> <span class="n">Vagrantfile</span>
+     <span class="n">version</span>         <span class="n">prints</span> <span class="n">current</span> <span class="ow">and</span> <span class="n">latest</span> <span class="n">Vagrant</span> <span class="n">version</span>
+     <span class="n">winrm</span>           <span class="n">executes</span> <span class="n">commands</span> <span class="n">on</span> <span class="n">a</span> <span class="n">machine</span> <span class="n">via</span> <span class="n">WinRM</span>
+     <span class="n">winrm</span><span class="o">-</span><span class="n">config</span>    <span class="n">outputs</span> <span class="n">WinRM</span> <span class="n">configuration</span> <span class="n">to</span> <span class="n">connect</span> <span class="n">to</span> <span class="n">the</span> <span class="n">machine</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Users</span>\<span class="mi">18793</span><span class="o">&gt;</span> <span class="n">vagrant</span> <span class="o">-</span><span class="n">v</span>
+<span class="n">Vagrant</span> <span class="mf">2.2</span><span class="o">.</span><span class="mi">15</span>
+</pre></div>
+</div>
+</section>
+<section id="vagrant-config">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">5.3. </span>3. vagrant Config</a><a class="headerlink" href="#vagrant-config" title="Permalink to this headline">¶</a></h2>
+<p>vagrant官网下载各种最新.box资源：<a class="reference external" href="https://app.vagrantup.com/boxes/search">https://app.vagrantup.com/boxes/search</a></p>
+<p>这边下载：<a class="reference external" href="https://app.vagrantup.com/geerlingguy">geerlingguy</a>/<a class="reference external" href="https://app.vagrantup.com/geerlingguy/boxes/centos7">centos7</a></p>
+<p>1）下载及添加Box镜像</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">base</span> <span class="n">vagrant</span><span class="o">-</span><span class="n">cenots</span><span class="o">-</span><span class="mf">7.6</span><span class="o">.</span><span class="n">mini</span><span class="o">.</span><span class="n">box</span>
+</pre></div>
+</div>
+<p>2）我们执行以下命令来建立Box镜像关联</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">box</span> <span class="n">add</span> <span class="n">centos7mini</span> <span class="n">vagrant</span><span class="o">-</span><span class="n">cenots</span><span class="o">-</span><span class="mf">7.6</span><span class="o">.</span><span class="n">mini</span><span class="o">.</span><span class="n">box</span>
+</pre></div>
+</div>
+<p>3）初始化的命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">init</span> <span class="n">centos7mini</span>
+</pre></div>
+</div>
+<p>这样就会在当前目录下生成一个Vagrantfile的文件，里面包含很多配置信息</p>
+<p>4）启动虚拟机的命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>D:\work\deploy&gt;vagrant up
+Bringing machine &#39;default&#39; up with &#39;virtualbox&#39; provider...
+==&gt; default: Importing base box &#39;centos7mini&#39;...
+==&gt; default: Matching MAC address for NAT networking...
+==&gt; default: Setting the name of the VM: deploy_default_1618985040385_958
+Vagrant is currently configured to create VirtualBox synced folders with
+the `SharedFoldersEnableSymlinksCreate` option enabled. If the Vagrant
+guest is not trusted, you may want to disable this option. For more
+information on this option, please refer to the VirtualBox manual:
+
+  https://www.virtualbox.org/manual/ch04.html#sharedfolders
+
+This option can be disabled globally with an environment variable:
+
+  VAGRANT_DISABLE_VBOXSYMLINKCREATE=1
+
+or on a per folder basis within the Vagrantfile:
+
+  config.vm.synced_folder &#39;/host/path&#39;, &#39;/guest/path&#39;, SharedFoldersEnableSymlinksCreate: false
+==&gt; default: Clearing any previously set network interfaces...
+==&gt; default: Preparing network interfaces based on configuration...
+    default: Adapter 1: nat
+==&gt; default: Forwarding ports...
+    default: 22 (guest) =&gt; 2222 (host) (adapter 1)
+==&gt; default: Booting VM...
+==&gt; default: Waiting for machine to boot. This may take a few minutes...
+    default: SSH address: 127.0.0.1:2222
+    default: SSH username: vagrant
+    default: SSH auth method: private key
+    default: Warning: Connection aborted. Retrying...
+    default:
+    default: Vagrant insecure key detected. Vagrant will automatically replace
+    default: this with a newly generated keypair for better security.
+    default:
+    default: Inserting generated public key within guest...
+    default: Removing insecure key from the guest if it&#39;s present...
+    default: Key inserted! Disconnecting and reconnecting using new SSH key...
+==&gt; default: Machine booted and ready!
+==&gt; default: Checking for guest additions in VM...
+==&gt; default: Mounting shared folders...
+    default: /vagrant =&gt; D:/work/deploy
+</pre></div>
+</div>
+<p>然后，我们通过vagrant
+ssh命令来查看刚刚新建的虚拟机的SSH配置信息，命令输出结果如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>D:\work\deploy&gt;vagrant ssh
+Last login: Wed Apr 21 06:05:16 2021 from 10.0.2.2
+[vagrant@localhost ~]$ ip a
+1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+2: enp0s3: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc pfifo_fast state UP group default qlen 1000
+    link/ether 08:00:27:b8:1a:94 brd ff:ff:ff:ff:ff:ff
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global noprefixroute dynamic enp0s3
+       valid_lft 86310sec preferred_lft 86310sec
+    inet6 fe80::a00:27ff:feb8:1a94/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+
+
+[vagrant@localhost ~]$ sudo su
+[root@localhost vagrant]#
+
+[root@localhost vagrant]# lsblk
+NAME            MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
+sda               8:0    0  80G  0 disk
+├─sda1            8:1    0   1G  0 part /boot
+└─sda2            8:2    0  79G  0 part
+  ├─centos-root 253:0    0  50G  0 lvm  /
+  ├─centos-swap 253:1    0   1G  0 lvm  [SWAP]
+  └─centos-home 253:2    0  28G  0 lvm  /home
+
+[root@localhost vagrant]# id
+uid=0(root) gid=0(root) groups=0(root) context=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023
+</pre></div>
+</div>
+<section id="id1">
+<h3><a class="toc-backref" href="#id9"><span class="section-number">5.3.1. </span>3.1 配置文件详解</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>HOSTNAME设置HOSTNAME的设置非常简单，在Vagrantfile中加入下面这行就可以了：</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;deploy_ruby&quot;</span>
+</pre></div>
+</div>
+<p>2．内存设置内存设置的具体方法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+<span class="c1">#   # Display the VirtualBox GUI when booting the machine</span>
+<span class="c1"># vb.gui = true       # 开启图形界面</span>
+<span class="c1">#</span>
+<span class="c1">#   # Customize the amount of memory on the VM:</span>
+<span class="n">vb</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="s2">&quot;2048&quot;</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>3．网络配置Vagrant中一共提供了三种网络配置。这几种配置可以在Vagrant的配置文件中看到。</p>
+<p>（1）端口映射（Forwarded
+port）端口映射的网络配置方式，就是将本机和虚拟机的端口进行映射。比如，笔者配置本计算机的8088端口为虚拟机的80端口，这样当笔者访问该机器的8088端口时，Vagrant会把请求转发到虚拟机的80端口上去处理。端口映射命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;forwarded_port&quot;</span><span class="p">,</span> <span class="n">guest</span><span class="p">:</span> <span class="mi">80</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="mi">8080</span><span class="p">,</span> <span class="n">host_ip</span><span class="p">:</span> <span class="s2">&quot;127.0.0.1&quot;</span>
+</pre></div>
+</div>
+<p>通过这种方式，我们可以有针对性地把虚拟机的某些端口公布到外网让其他人去访问。</p>
+<p>（2）私有网络（Private
+network）既然是私有的，那么这种方式只允许主机访问虚拟机。这种方式就好像是搭建了一个私有的Linux集群。而且只有一个出口，那就是该主机。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="n">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.33.10&quot;</span>
+</pre></div>
+</div>
+<p>（3）公有网络（Public
+network）虚拟机享受与实体机器一样的待遇，一样的网络配置，即bridge模式。设定语法如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span>
+</pre></div>
+</div>
+<p>这种网络配置方式比较便于进行团队开发，别人也可以访问你的虚拟机。当然，你和你的虚拟机必须在同一个网段之中。</p>
+<p>DHCP自动获取</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="n">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>静态地址</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span><span class="p">,</span> <span class="n">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.0.17&quot;</span>
+</pre></div>
+</div>
+<p>如果更新配置以后，要想使得更新以后的配置生效，可以用命令vagrant
+reload重启虚拟机。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">reload</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id10"><span class="section-number">5.3.2. </span>3.2 常用命令详解</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 显示当前已经添加的box列表</span>
+<span class="n">vagrant</span> <span class="n">box</span> <span class="nb">list</span>
+
+<span class="c1">#删除相应的box列表</span>
+<span class="n">vagrant</span> <span class="n">box</span> <span class="n">remove</span>
+
+<span class="c1">#停止当前正在运行的虚拟机并销毁所有创建的资源</span>
+<span class="n">vagrant</span> <span class="n">destroy</span>
+
+<span class="c1">#与操作真实机器一样，关闭虚拟机器</span>
+<span class="n">vagrant</span> <span class="n">halt</span>
+
+<span class="c1">#打包命令，将当前运行的虚拟机环境打包</span>
+<span class="n">vagrant</span> <span class="n">package</span>
+
+<span class="c1">#重新启动虚拟机，主要用于重新载入配置文件</span>
+<span class="n">vagrant</span> <span class="n">reload</span>
+
+<span class="c1">#输出用于SSH连接的一些信息：</span>
+<span class="n">vagrant</span> <span class="n">ssh</span><span class="o">-</span><span class="n">config</span>
+
+<span class="c1">#挂起当前的虚拟机</span>
+<span class="n">vagrant</span> <span class="n">suspend</span>
+
+<span class="c1">#恢复前面被挂起的状态</span>
+<span class="n">vagrant</span> <span class="n">resume</span>
+
+<span class="c1">#获取当前虚拟机的状态</span>
+<span class="n">vagrant</span> <span class="n">status</span>
+
+<span class="c1"># 可查看全局所有虚拟机的状态</span>
+<span class="n">vagrant</span> <span class="k">global</span><span class="o">-</span><span class="n">status</span>
+
+
+<span class="c1"># 重启2f5fb92这台虚拟机，使用完整的ID</span>
+<span class="n">vagrant</span> <span class="n">reload</span> <span class="mi">2</span><span class="n">f5fb92</span>
+
+<span class="c1"># 将2f5fb92这台虚拟机关机，使用缩写的ID</span>
+<span class="n">vagrant</span> <span class="n">halt</span> <span class="mi">2</span><span class="n">f5</span>
+
+<span class="c1"># 使用name，以及省略目标参数</span>
+<span class="c1"># 都只能操作当前.vagrant所在目录下的虚拟机</span>
+<span class="n">vagrant</span> <span class="n">ssh</span> <span class="n">default</span>
+<span class="n">vagrant</span> <span class="n">ssh</span>   <span class="c1"># ssh进入当前目录下.vagrant内的虚拟机</span>
+
+<span class="c1"># 切换其他目录后，id可全局使用，name不可使用</span>
+<span class="n">cd</span> <span class="o">..</span>
+<span class="n">vagrant</span> <span class="n">up</span> <span class="mi">2</span><span class="n">f5</span>
+<span class="n">vagrant</span> <span class="n">up</span> <span class="n">default</span>
+</pre></div>
+</div>
+<p>这里只是简单概括常用子命令的功能而不介绍如何使用，后面涉及到的时候自然就会用了。</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>子命令</p></th>
+<th class="head"><p>功能说明</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>box</p></td>
+<td><p>管理box镜像(box是创建虚拟机的模板)</p></td>
+</tr>
+<tr class="row-odd"><td><p>init</p></td>
+<td><p>初始化项目目录，将在当前目录下生成Vagrantfile文件</p></td>
+</tr>
+<tr class="row-even"><td><p>up</p></td>
+<td><p>启动虚拟机，第一次执行将创建并初始化并启动虚拟机</p></td>
+</tr>
+<tr class="row-odd"><td><p>reload</p></td>
+<td><p>重启虚拟机</p></td>
+</tr>
+<tr class="row-even"><td><p>halt</p></td>
+<td><p>将虚拟机关机</p></td>
+</tr>
+<tr class="row-odd"><td><p>destroy</p></td>
+<td><p>删除虚拟机(包括虚拟机文件)</p></td>
+</tr>
+<tr class="row-even"><td><p>suspend</p></td>
+<td><p>暂停(休眠、挂起)虚拟机</p></td>
+</tr>
+<tr class="row-odd"><td><p>resume</p></td>
+<td><p>恢复已暂停(休眠、挂起)的虚拟机</p></td>
+</tr>
+<tr class="row-even"><td><p>snapshot</p></td>
+<td><p>管理虚拟机快照(hyperv中叫检查点)</p></td>
+</tr>
+<tr class="row-odd"><td><p>status</p></td>
+<td><p>列出当前目录
+(Vagrantfile所在目录)下安装的虚拟机列表及它们的状态</p></td>
+</tr>
+<tr class="row-even"><td><p>global-status</p></td>
+<td><p>列出全局已安装虚拟机列表及它们的状态</p></td>
+</tr>
+<tr class="row-odd"><td><p>ssh</p></td>
+<td><p>通过ssh连接虚拟机</p></td>
+</tr>
+<tr class="row-even"><td><p>ssh-config</p></td>
+<td><p>输出ssh连接虚拟机时使用的配置项</p></td>
+</tr>
+<tr class="row-odd"><td><p>port</p></td>
+<td><p>查看各虚拟机映射的端口列表(hyperv不支持该功能)</p></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>D:\work\deploy&gt;vagrant ssh-config
+Host server
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile D:/work/deploy/.vagrant/machines/server/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+Host server2
+  HostName 127.0.0.1
+  User vagrant
+  Port 2200
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentityFile D:/work/deploy/.vagrant/machines/server2/virtualbox/private_key
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+# 连接方式
+D:\work\deploy&gt;ssh vagrant@127.0.0.1 -p 2222 -i D:/work/deploy/.vagrant/machines/server/virtualbox/private_key
+
+
+D:\work\deploy&gt;ssh vagrant@127.0.0.1 -p 2200 -i D:/work/deploy/.vagrant/machines/server2/virtualbox/private_key
+[vagrant@server2 ~]$
+</pre></div>
+</div>
+<p>Vagrantfile文件示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="n">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span>  <span class="s2">&quot;server1&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="mi">2048</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">cpus</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">end</span>
+    <span class="n">vb</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">host_name</span> <span class="o">=</span> <span class="s2">&quot;server1&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="n">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.1.100&quot;</span>
+    <span class="n">vb</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;centos7mini&quot;</span>
+  <span class="n">end</span>
+
+<span class="c1">#  config.vm.define  &quot;server2&quot; do |vb|</span>
+<span class="c1">#    config.vm.provider &quot;virtualbox&quot; do |v|</span>
+<span class="c1">#      v.memory = 2048</span>
+<span class="c1">#      v.cpus = 2</span>
+<span class="c1">#    end</span>
+<span class="c1">#    vb.vm.host_name = &quot;server2&quot;</span>
+<span class="c1">#   config.vm.network &quot;private_network&quot;, ip: &quot;192.168.1.101&quot;</span>
+<span class="c1">#    vb.vm.box = &quot;centos7mini&quot;</span>
+<span class="c1">#  end</span>
+
+<span class="n">end</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="vagrantcentos7">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">5.4. </span>4. vagrant创建一个CentOS7</a><a class="headerlink" href="#vagrantcentos7" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="n">centos7</span><span class="o">-</span><span class="n">vm1</span>
+<span class="n">vagrant</span> <span class="n">init</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Vagrantfile</span></code>内容如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># -*- mode: ruby -*-</span>
+<span class="c1"># vi: set ft=ruby :</span>
+
+<span class="c1"># All Vagrant configuration is done below. The &quot;2&quot; in Vagrant.configure</span>
+<span class="c1"># configures the configuration version (we support older styles for</span>
+<span class="c1"># backwards compatibility). Please don&#39;t change it unless you know what</span>
+<span class="c1"># you&#39;re doing.</span>
+
+<span class="n">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="s2">&quot;2&quot;</span><span class="p">)</span> <span class="n">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span>  <span class="s2">&quot;server1&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">vb</span><span class="o">|</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="mi">1024</span>
+      <span class="n">v</span><span class="o">.</span><span class="n">cpus</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">end</span>
+    <span class="n">vb</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">host_name</span> <span class="o">=</span> <span class="s2">&quot;server1&quot;</span>
+    <span class="n">vb</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;vagrant&quot;</span>
+    <span class="n">vb</span><span class="o">.</span><span class="n">ssh</span><span class="o">.</span><span class="n">insert_key</span> <span class="o">=</span> <span class="n">false</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;private_network&quot;</span><span class="p">,</span> <span class="n">ip</span><span class="p">:</span> <span class="s2">&quot;192.168.100.100&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;centos7&quot;</span>
+    <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box_url</span> <span class="o">=</span> <span class="s2">&quot;http://mirrors.ustc.edu.cn/centos-cloud/centos/7/vagrant/x86_64/images/CentOS-7-x86_64-Vagrant-2002_01.VirtualBox.box&quot;</span>
+  <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>然后执行：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vagrant up
+$ vagrant ssh-config
+Host server1
+  HostName 127.0.0.1
+  User vagrant
+  Port 2222
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentitiesOnly yes
+  LogLevel FATAL
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 删除根据当前目录下的Vagrantfile所安装的虚拟机
+$ vagrant destroy --force
+</pre></div>
+</div>
+</section>
+<section id="vagrantubuntu">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">5.5. </span>5. vagrant启动一个Ubuntu</a><a class="headerlink" href="#vagrantubuntu" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkdir</span> <span class="n">test4</span>
+<span class="n">cd</span> <span class="n">test4</span>
+
+<span class="n">vagrant</span> <span class="n">init</span> <span class="n">ubuntu1804</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">ustc</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">images</span><span class="o">/</span><span class="n">bionic</span><span class="o">/</span><span class="mi">20201007</span><span class="o">/</span><span class="n">bionic</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="n">cloudimg</span><span class="o">-</span><span class="n">amd64</span><span class="o">-</span><span class="n">vagrant</span><span class="o">.</span><span class="n">box</span>
+
+<span class="n">vagrant</span> <span class="n">up</span>
+<span class="n">vagrant</span> <span class="n">ssh</span>
+</pre></div>
+</div>
+<p>比较常见的centos box镜像和ubuntu
+box镜像，可以在它们的cloud站点找到，例如它们自己的官方站点、中科大镜像源站点：</p>
+<p>CentOS7:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># CentOS cloud官方镜像站点</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cloud</span><span class="o">.</span><span class="n">centos</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">images</span><span class="o">/</span>
+
+<span class="c1"># CentOS Cloud中科大镜像站点</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">ustc</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">centos</span><span class="o">-</span><span class="n">cloud</span><span class="o">/</span><span class="n">centos</span><span class="o">/</span><span class="mi">7</span><span class="o">/</span><span class="n">vagrant</span><span class="o">/</span><span class="n">x86_64</span><span class="o">/</span><span class="n">images</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>Ubuntu(以focal即20.04为例)，找到其中的xxx-yyy-vagrant.box文件：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Ubuntu cloud官方镜像站点</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cloud</span><span class="o">-</span><span class="n">images</span><span class="o">.</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">focal</span><span class="o">/</span><span class="mi">20201012</span><span class="o">/</span>
+
+<span class="c1"># Ubuntu Cloud中科大镜像站点</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="n">ustc</span><span class="o">.</span><span class="n">edu</span><span class="o">.</span><span class="n">cn</span><span class="o">/</span><span class="n">ubuntu</span><span class="o">-</span><span class="n">cloud</span><span class="o">-</span><span class="n">images</span><span class="o">/</span><span class="n">focal</span><span class="o">/</span><span class="mi">20201007</span><span class="o">/</span>
+</pre></div>
+</div>
+</section>
+<section id="vm">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">5.6. </span>6. vm进行封装</a><a class="headerlink" href="#vm" title="Permalink to this headline">¶</a></h2>
+<p>每一个box都是由他人打包好的虚拟机，只不过它是特殊格式的文件，且后缀名一般为<code class="docutils literal notranslate"><span class="pre">.box</span></code>。我们也可以使用<code class="docutils literal notranslate"><span class="pre">vagrant</span> <span class="pre">package</span></code>打包自己的虚拟机并分发给别人使用。</p>
+<p>（1）升级Python版本，安装IPython</p>
+<p>（2）安装ruby、gcc、cmake、git</p>
+<p>（3）安装Go</p>
+<p>等基础，安装完毕之后，进行打包封装</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">package</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>vagrant package -hUsage: vagrant package [options] [name]Options:
+        --base NAME                  virtualbox程序里面的虚拟机的名称，不是box的名字也不是Vagrantfile里面的虚拟机名称.默认是打包当前目录下面的虚拟机。
+        --output NAME                要打包成的box名称，不会自动添加.box后缀，要手动加.默认值package.box        --include FILE...            打包时包含的文件名，你可以把.box文件理解为一个压缩包
+        --vagrantfile FILE           打包时包含的Vagrantfile文件，原理和上面类似
+    -h, --help                       Print this help
+</pre></div>
+</div>
+<p>查看虚拟机主机名</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">C</span><span class="p">:</span>\<span class="n">Program</span> <span class="n">Files</span>\<span class="n">Oracle</span>\<span class="n">VirtualBox</span><span class="o">&gt;</span><span class="n">vboxmanage</span> <span class="nb">list</span> <span class="n">vms</span>
+<span class="s2">&quot;deploy_server1_1618996977653_7473&quot;</span> <span class="p">{</span><span class="n">c49f3534</span><span class="o">-</span><span class="mi">4</span><span class="n">dd5</span><span class="o">-</span><span class="mi">4</span><span class="n">d54</span><span class="o">-</span><span class="n">a974</span><span class="o">-</span><span class="n">d3cb1c312eae</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>结果如下所示：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">package</span> <span class="o">--</span><span class="n">base</span> <span class="n">deploy_server1_1618996977653_7473</span> <span class="o">--</span><span class="n">output</span> <span class="n">D</span><span class="p">:</span>\<span class="n">work</span>\<span class="n">deploy</span>\<span class="n">CentOS7mini_ruby</span><span class="o">.</span><span class="n">box</span>
+</pre></div>
+</div>
+<p>至此，我们可以将这个CentOS7mini_ruby.box放进优盘，供自己的工作机器使用，或者放进公司内部的FTP服务器里，供DevOps团队的其他同事们使用。</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">5.7. </span>7. 使用vm封装后的虚拟机</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>到上面第二步的时候已经打包完毕了，如果想在其他电脑部署自己的box很简单
+先把box文件和Vagrantfile文件放到需要部署的磁盘目录下。</p>
+<div class="line-block">
+<div class="line">执行以下操作命令：</div>
+<div class="line">1、将box安装到vagrant容器</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> $ vagrant box add test CentOS7mini_ruby.box
+
+#vagrant box add  [虚拟机名称] [box放置的位置]
+</pre></div>
+</div>
+<p>2、修改vagrantfile中的vm.box名称为虚拟机名称</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vb</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;test&quot;</span>
+</pre></div>
+</div>
+<p>然后直接启动即可</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ vagrant up
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">5.8. </span>8.使用vagrant创建多台虚拟机</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>单机上如何通过虚拟机打造分布式集群系统。这种多机器模式特别适用于以下几种场景。</p>
+<p>❑ 快速建立产品网络的多机器环境集群，例如Web服务器集群、DB服务器集群等。</p>
+<p>❑ 建立一个分布式系统，学习它们是如何进行交互的。</p>
+<p>❑ 测试API与其他组件的通信。</p>
+<p>❑ 容灾模拟，测试网络断网、机器死机、连接超时等情况。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">VAGRANTFILE_API_VERSION</span> <span class="o">=</span> <span class="s2">&quot;2&quot;</span>
+<span class="n">Vagrant</span><span class="o">.</span><span class="n">configure</span><span class="p">(</span><span class="n">VAGRANTFILE_API_VERSION</span><span class="p">)</span> <span class="n">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+   <span class="p">(</span><span class="mf">1.</span><span class="o">.</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">each</span> <span class="n">do</span> <span class="o">|</span><span class="n">i</span><span class="o">|</span>
+       <span class="n">config</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">define</span> <span class="s2">&quot;node#</span><span class="si">{i}</span><span class="s2">&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">node</span><span class="o">|</span>
+           <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">box</span> <span class="o">=</span> <span class="s2">&quot;../iso/CentOS-7-x86_64-Vagrant-1811_02.VirtualBox.box&quot;</span>
+           <span class="c1">#node.vm.box = &quot;Centos/7&quot;</span>
+           <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">hostname</span> <span class="o">=</span> <span class="s2">&quot;node#</span><span class="si">{i}</span><span class="s2">&quot;</span>
+           <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">network</span> <span class="s2">&quot;public_network&quot;</span>
+           <span class="n">node</span><span class="o">.</span><span class="n">vm</span><span class="o">.</span><span class="n">provider</span> <span class="s2">&quot;virtualbox&quot;</span> <span class="n">do</span> <span class="o">|</span><span class="n">v</span><span class="o">|</span>
+               <span class="n">v</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;node#</span><span class="si">{i}</span><span class="s2">&quot;</span>
+               <span class="n">v</span><span class="o">.</span><span class="n">memory</span> <span class="o">=</span> <span class="mi">1024</span>
+               <span class="n">v</span><span class="o">.</span><span class="n">cpus</span> <span class="o">=</span> <span class="mi">2</span>
+           <span class="n">end</span>
+       <span class="n">end</span>
+   <span class="n">end</span>
+<span class="n">end</span>
+</pre></div>
+</div>
+<p>利用vagrant启动各VM的命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vagrant</span> <span class="n">up</span>
+</pre></div>
+</div>
+<p>参考文献：</p>
+<blockquote>
+<div><p><a class="reference external" href="https://mp.weixin.qq.com/s/_wheaptZ2IvMK1x2QIEMBA">https://mp.weixin.qq.com/s/_wheaptZ2IvMK1x2QIEMBA</a></p>
+<p><a class="reference external" href="https://www.jianshu.com/p/a87a37d73202">https://www.jianshu.com/p/a87a37d73202</a></p>
+<p><a class="reference external" href="https://github.com/astaxie/go-best-practice/blob/master/ebook/zh/01.1.md">https://github.com/astaxie/go-best-practice/blob/master/ebook/zh/01.1.md</a></p>
+</div></blockquote>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04.KVM%E8%AE%BE%E5%A4%87%E9%AB%98%E7%BA%A7%E7%AE%A1%E7%90%86.html" class="btn btn-neutral float-left" title="4. KVM设备高级管理" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html" class="btn btn-neutral float-right" title="6. KVM相关参考文献" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.9. 架构选型的要点 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="7. 一些常用的工具" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html" />
+    <link rel="prev" title="6.8. MongoDB—App后台新兴的数据库" href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. APP后台开发运维_读书笔记</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.APP%E5%90%8E%E5%8F%B0%E5%85%A5%E9%97%A8.html">6.1. APP后台入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.Linux-APP%E5%90%8E%E5%8F%B0%E5%BA%94%E7%94%A8%E6%9C%80%E5%B9%BF%E6%B3%9B%E7%9A%84%E7%B3%BB%E7%BB%9F.html">6.4. Linux-APP后台应用最广泛的系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html">6.5. Nginx—App后台HTTP服务的利器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.8. MongoDB—App后台新兴的数据库</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.9. 架构选型的要点</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">6.9.1. 用成熟稳定的开源软件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">6.9.2. 尽可能使用云服务</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">6.9.3. 架构的演进</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>APP后台开发运维_读书笔记</a> &raquo;</li>
+      <li><span class="section-number">6.9. </span>架构选型的要点</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/09.架构选型的要点.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id9">架构选型的要点</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id10">用成熟稳定的开源软件</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id11">尽可能使用云服务</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id12">列举两个提供这类服务的网站。</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id13">架构的演进</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id14">单机部署</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id15">分布式部署</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id16">服务化</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id9"><span class="section-number">6.9. </span>架构选型的要点</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>开发App后台，当需求初步确定后，就要考虑用什么技术去实现架构。基于架构设计的递进关系，笔者认为架构选型有如下两个要点。</p>
+<p>·用成熟稳定的开源软件。</p>
+<p>·优先选择云服务。</p>
+<section id="id2">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">6.9.1. </span>用成熟稳定的开源软件</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>用开源软件方案有下面两个原因。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·节省资金。
+·非开源方案，如果不是被广泛使用而且没提供技术支持的话，出了问题也很难从代码层面查找。
+</pre></div>
+</div>
+<p>以前由于开源软件的不成熟，没法满足公司业务上的需求，某些大型公司的基础组件需要采用自研的方案。随着时间的发展，众多开发者（甚至是公司）参与到开源软件的编写与反馈迭代工作，开源软件越来越成熟，众多开发者对其也越来越熟悉，使用开源软件在短时间内就能搭建一个成熟稳定的App后台。</p>
+<p>当然也有不少的公司在开源软件的基础上，结合自身的业务特点对开源软件进行改造，
+例如，淘宝就把其定制开发的<code class="docutils literal notranslate"><span class="pre">Nginx</span></code>版本命名为<code class="docutils literal notranslate"><span class="pre">Tengine</span></code>，并对其开源。</p>
+<p>笔者之所以一直强调用成熟稳定的开源软件，是基于以下几点理由。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·由于成熟稳定的开源软件用户基数足够大，其内部出现的各种代码错误和功能缺陷极大可能已经被其他开发者反馈给开源软件团队修复。
+·在使用开源软件的过程中出现的各种在使用者认知水平之外的问题，由于开源软件用户基数足够大，可能别的开发者也曾经遇过并解决了这些问题，能通过搜索引擎在网络上找到合适的解决方案。
+  当使用非成熟稳定的开源软件时，出了什么问题在搜索无效的情况下，只能查看源码来定位问题，或者和软件的开发者沟通，看看有哪些解决问题的方案。
+  但一般软件的开发者只留下E-Mail等非即时沟通方式，沟通并解决一个问题所需的时间周期很漫长。
+
+·由于成熟稳定的开源软件被广大开发者所熟悉，也有庞大的用户群。在移动互联网行业人员的流动性比较大，如果采用自研的软件方案，新招聘的人员需要花大量的时间熟悉自研的软件方案，而采用成熟稳定的开源软件就不存在这个成本。
+</pre></div>
+</div>
+<p>下面以这个具备了基本社交功能的App为例，列举其功能和项目管理中可供选择的开源软件方案。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·使用手机号、微博、QQ注册和登录。
+·手机号注册需要使用验证码。
+·用户之间能互相添加为好友。
+·能搜索App内的用户。
+·能查看附近的人。
+·用户能发表类似微博的东西（包括文字、图片、声音和地理位置），并在App首页显示所有好友发表的内容。
+·用户可以把内容分享到社交网络。
+·聊天功能，能发送文字、图片、声音和地理位置。
+·运营方可以给App用户推送各种产品消息、最新的通知等。
+</pre></div>
+</div>
+<p>从上面这个App的功能实现和项目管理中可供选择的开源软件方案如下表所示。</p>
+<p>可供选择的开源软件方案</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 26%" />
+<col style="width: 74%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能</p></th>
+<th class="head"><p>可使用的开源软件</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>项目管理工具</p></td>
+<td><p>Mantis、BugFree</p></td>
+</tr>
+<tr class="row-odd"><td><p>代码管理工具</p></td>
+<td><p>SVN、GIT</p></td>
+</tr>
+<tr class="row-even"><td><p>编程语言</p></td>
+<td><p>PHP、Java、Python等</p></td>
+</tr>
+<tr class="row-odd"><td><p>服务器软件</p></td>
+<td><p>CentOS、Ubuntu</p></td>
+</tr>
+<tr class="row-even"><td><p>HTTP服务</p></td>
+<td><p>Nginx、Tomcat、Apache</p></td>
+</tr>
+<tr class="row-odd"><td><p>负载均衡</p></td>
+<td><p>Nginx、LVS、HAProxy</p></td>
+</tr>
+<tr class="row-even"><td><p>邮件服务</p></td>
+<td><p>Postfix、Sendmail</p></td>
+</tr>
+<tr class="row-odd"><td><p>消息队列</p></td>
+<td><p>RabbitMQ、ZeroMQ、Redis</p></td>
+</tr>
+<tr class="row-even"><td><p>文件系统</p></td>
+<td><p>Fastdfs、mogileFS、TFS（Taobao FileSystem）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Android推送</p></td>
+<td><p>Androidpn、gopush</p></td>
+</tr>
+<tr class="row-even"><td><p>iOS推送</p></td>
+<td><p>Javapns、Pyapns</p></td>
+</tr>
+<tr class="row-odd"><td><p>LBS</p></td>
+<td><p>MongoDB</p></td>
+</tr>
+<tr class="row-even"><td><p>聊天</p></td>
+<td><p>Openfire、ejobberd</p></td>
+</tr>
+<tr class="row-odd"><td><p>监控</p></td>
+<td><p>ngios、zabbix</p></td>
+</tr>
+<tr class="row-even"><td><p>缓存</p></td>
+<td><p>Memcache、Redis</p></td>
+</tr>
+<tr class="row-odd"><td><p>关系型数据库</p></td>
+<td><p>MySQL、postgreSQL</p></td>
+</tr>
+<tr class="row-even"><td><p>NoSQL数据库</p></td>
+<td><p>Redis、MongoDB、Cassandra</p></td>
+</tr>
+<tr class="row-odd"><td><p>搜索</p></td>
+<td><p>Coreseek、Solr、ElasticSearch</p></td>
+</tr>
+<tr class="row-even"><td><p>图片处理</p></td>
+<td><p>GraphicsMagick、ImageMagick</p></td>
+</tr>
+<tr class="row-odd"><td><p>分布式访问服务</p></td>
+<td><p>dubbo、dubbox</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id11"><span class="section-number">6.9.2. </span>尽可能使用云服务</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>移动互联网时代涌现了大量小而美的创业型公司，这些公司由于受到资金的限制，研发人员的配置非常精简，典型的研发人员配置如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·Android开发1～2人。
+·iOS开发1～2人。
+·App后台开发1～2人。
+</pre></div>
+</div>
+<p>用表列举了开发这个App所需要使用的开源软件，里面所需要使用的开源软件多达20个，想想都觉得可怕，一个开发人员掌握20个开源软件需要付出多少精力！这里的掌握还是指基本的配置和使用，如果需要对其原理和运作机制有深入的理解，所付出的精力更是无法评估。</p>
+<p>随着云平台的不断发展，越来越多可复用场景的需求以云的形式提供服务，云服务也越来越完善。云服务和使用复杂多样的开源软件进行配置、运维相比，能极大地减少开发人员认知成本和运维成本，从而把精力专注于业务。</p>
+<p>因此，笔者推崇创业公司的App后台的架构原则是，<code class="docutils literal notranslate"><span class="pre">“尽量使用成熟可靠的云服务和开源软件，自身只专注于业务逻辑”</span></code>。</p>
+<p>功能实现和项目管理中可供选择的云服务如表</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>功能</p></th>
+<th class="head"><p>可使用的云服务</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>项目管理工具</p></td>
+<td><p>Teambition、Tower</p></td>
+</tr>
+<tr class="row-odd"><td><p>代码管理工具</p></td>
+<td><p>GitHub</p></td>
+</tr>
+<tr class="row-even"><td><p>负载均衡</p></td>
+<td><p>阿里云负载均衡服务SLB，UCloud负载均衡服务ULB</p></td>
+</tr>
+<tr class="row-odd"><td><p>邮件服务</p></td>
+<td><p>SendCloud、MailGun</p></td>
+</tr>
+<tr class="row-even"><td><p>消息队列</p></td>
+<td><p>阿里云消息通知服务MNS</p></td>
+</tr>
+<tr class="row-odd"><td><p>文件系统</p></td>
+<td><p>七牛、又拍云，阿里云对象存储OSS，UCloud对象存储UFile</p></td>
+</tr>
+<tr class="row-even"><td><p>Android推送</p></td>
+<td><p>极光、个推、百度推送</p></td>
+</tr>
+<tr class="row-odd"><td><p>iOS推送</p></td>
+<td><p>极光、个推、百度推送</p></td>
+</tr>
+<tr class="row-even"><td><p>聊天</p></td>
+<td><p>融云、环信</p></td>
+</tr>
+<tr class="row-odd"><td><p>监控</p></td>
+<td><p>监控宝、云服务器自带的监控服务</p></td>
+</tr>
+<tr class="row-even"><td><p>缓存</p></td>
+<td><p>阿里云开放缓存服务OCS，UCloud云内存存储UMem</p></td>
+</tr>
+<tr class="row-odd"><td><p>关系型数据库</p></td>
+<td><p>阿里云云数据库RDS，UCloud云数据库UDB</p></td>
+</tr>
+<tr class="row-even"><td><p>NoSQL数据库</p></td>
+<td><p>阿里云开放结构化数据服务OTS，UCloud云内存存储UMem</p></td>
+</tr>
+<tr class="row-odd"><td><p>搜索</p></td>
+<td><p>阿里云开放搜索服务OpenSearch</p></td>
+</tr>
+<tr class="row-even"><td><p>图片处理</p></td>
+<td><p>七牛、又拍云，阿里云对象存储OSS，UCloud对象存储Ufile等</p></td>
+</tr>
+<tr class="row-odd"><td><p>分布式访问服务</p></td>
+<td><p>阿里云企业级分布式应用服务EDAS</p></td>
+</tr>
+<tr class="row-even"><td><p>防火墙</p></td>
+<td><p>阿里云云盾，UCloud防火墙</p></td>
+</tr>
+<tr class="row-odd"><td><p>短信发送</p></td>
+<td><p>bmob、shareSDK、Luosimao</p></td>
+</tr>
+<tr class="row-even"><td><p>社交登录分享</p></td>
+<td><p>shareSDK</p></td>
+</tr>
+</tbody>
+</table>
+<p>由于现在云服务的提供商越来越多，搜索相应的云服务比较麻烦，现在有网站把云服务收录起来并做了分类，以方便开发者查找。</p>
+<section id="id4">
+<h3><a class="toc-backref" href="#id12">列举两个提供这类服务的网站。</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>1．DevStore（<a class="reference external" href="http://www.devstore.cn/">http://www.devstore.cn/</a>）</p>
+<p>这个网站除了收集常用的开发者需要的云服务外，还收集设计、产品等相关的工具。这个网站的云服务分类界面如下图所示。</p>
+<p>2．百度APIstore（<a class="reference external" href="http://apistore.baidu.com/">http://apistore.baidu.com/</a>）</p>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">6.9.3. </span>架构的演进</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<section id="id6">
+<h3><a class="toc-backref" href="#id14">单机部署</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>搭建一个能满足业务需求的最简化App后台架构。</p>
+<p>App后台极简化架构 <img alt="image0" src="../../_images/danji0001.png" /></p>
+<p>App后台极简化架构把HTTP服务器、应用服务器、Redis、数据库都部署在一台云服务器。</p>
+<p>这个架构设计有3个关键点需要解释一下。</p>
+<p>1．为什么要加入负载均衡ULB？</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>一般来说，只有在访问量达到一定的程度时，才需要使用负载均衡把请求分发到集群中的服务器，减轻单台服务器的压力。
+
+因为UCloud的负载均衡ULB是免费的，在这个阶段提前使用负载均衡ULB，把外网的请求转发到云服务器，云服务器就不需要直接暴露在外网，增加整个架构的安全性，同时也不会增加额外的资金支出。
+
+开发人员需要连接云服务器的ssh服务，只需要在负载均衡ULB中把ssh端口的请求转发到云服务器的ssh端口，就能通过ssh操作云服务器。
+</pre></div>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>为什么一开始就使用Redis？</p></li>
+</ol>
+<p>因为Redis既能用作缓存，又能充当队列服务，使用同样的软件减轻运维的负担。同时其并发性能高，能在长时间内应对业务压力，非常适于初期的项目。</p>
+<p>在这个业务时期，Redis具有下面的作用。</p>
+<p>（1）验证用户信息</p>
+<p>在需要用户登录的App中，为了保持应用服务器的无状态，在需要验证用户信息的场景，每次App的请求附带用户的信息来验证用户的状态，由于每次App的请求都要验证信息，这种访问频次非常高的用户信息行为应该在Redis中进行，如图</p>
+<p>在Redis中验证用户信息示意图 <img alt="image1" src="../../_images/app_redis001.png" /></p>
+<p>（2）充当消息队列
+这个阶段架构的要求是极简化设计，但极简化设计不能牺牲用户体验。</p>
+<p>在App中，有个常见的响应时间比较长的功能需求：发送验证码。</p>
+<p>用户注册的时候，App为了获取用户真实的社交关系，需要获取用户的手机号和手机通信录信息，获取手机号时为了验证手机号的真伪，要通过手机验证码验证手机号，但由于发送手机验证码只能通过第三方的短信发送平台发送，因此发送验证码功能有可能响应时间比较长。</p>
+<p>为了使发送手机验证码这个功能不影响API接口的响应时间，通常的做法是把发送验证码的功能放在消息队列中处理，在这里Redis充当消息队列的角色，</p>
+<p>如图 <img alt="image2" src="../../_images/redis_duilie001.png" /></p>
+<p>3．架构中不包含文件服务
+文件服务作为App后台中使用得非常频繁的服务，在服务器中搭建文件服务有下面一系列运维和开发成本。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·当容量不足时，要及时给文件系统扩容。
+·图片的缩略、剪裁、水印等常见功能都需要研发。
+·为了保证文件服务的高可用，最少需要两台文件服务器做互备。
+·为了获得更快的文件上传和下载速度，需要更大的带宽，但带宽的成本非常高（视频网站的财务报表显示，带宽的支出占总收入的30%以上），为了提升用户体验投入这么多的资金不划算。
+</pre></div>
+</div>
+<p>开发人员在架构App后台、涉及文件服务的时候，都应该考虑以上的问题。</p>
+<p>笔者一向推崇的架构原则是，<code class="docutils literal notranslate"><span class="pre">“尽量使用成熟可靠的云服务和开源软件，自身只专注于业务逻辑”</span></code>
+，使用文件云存储服务后以上的问题都能解决。文件云存储服务有如下的优点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·全网加速，根据使用场景选择最优的加速线路。
+·云端数据处理，图片缩略、剪裁、水印等常见操作都能通过相应的API实现，无须再重复造轮子。
+·安全存储，多机房互相备份，保证数据安全性。
+·存储无上限、支持高并发访问。
+·按下载量计费的付费模式更加灵活，节省更多的流动资金。
+</pre></div>
+</div>
+<section id="centos-4nginx-php-redis-mysql">
+<h4>笔者以CentOS系统为例，列举4种能快速安装Nginx+PHP+Redis+MySQL的方法。<a class="headerlink" href="#centos-4nginx-php-redis-mysql" title="Permalink to this headline">¶</a></h4>
+<p>（1）使用yum i
+nstall命令，很快就能把Nginx+PHP+Redis+MySQL环境安装完。但这种方法不推荐，因为这种方法安装的软件无法配置具体的编译参数，太多不可控的因素。</p>
+<p>（2）在使用云服务器提供的镜像市场中选择镜像安装。</p>
+<p>（3）使用一键安装包</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>网络上有很多一键安装包，只要输入相应的软件版本和安装路径后，能很方便地安装相应的软件，例如lnmp一键安装包（http://www.lnmp.org/）和ezhttp一键安装包（https://github．com/centos-bz/ezhttp）。
+如果安装某个软件需要修改其编译参数，则查找安装脚本对应的部分修改就行。
+</pre></div>
+</div>
+<p>（4）Docker</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Docker是用于统一开发和部署的轻量级Linux容器，让开发者打包其应用及相关的依赖包到一个可移植的容器中，再发布到生产环境。
+通过Docker能保证开发者机器和生产服务器上的软件环境是一致的。
+</pre></div>
+</div>
+<p>在这一阶段，随着业务的发展，云服务器的性能慢慢不能应对增长的访问量，这时就有两种升级选择。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·硬件升级（scale up）
+·独立部署、集群或分布式（scale out）
+</pre></div>
+</div>
+<p>在这个阶段，笔者认为应该是优先选择硬件升级（scale
+up）的方案，通过升级相应硬件（CPU、内存、带宽等）来解决性能问题。</p>
+<p>优先使用硬件升级（scale up）有下面几点原因。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·云服务器升级硬件非常方便，在控制台选择相应的配置、付款、重启云服务器，5分钟不用就完成升级。
+·如果选择独立部署、集群或分布式（scale out），需要额外的运维成本。这是个野蛮生长的时期，产品处于不断摸索的阶段，开发人员应该把精力专注于业务和打磨产品上，尽量保持极简化架构，不应该花费太多的精力在运维。
+</pre></div>
+</div>
+<p>由于每个App的业务不一样，可能某些App后台把硬件配置升级到极限也没法应付访问量上的压力，
+这时就要根据具体的业务情况选择独立部署、集群或分布式（scale
+out）这些架构升级的方案。
+而这些方案中，独立部署是成本最低的，集群或分布式的成本较高，优先考虑低成本的升级方案。</p>
+<p>这个阶段的总结如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·优先考虑使用云服务和熟悉的开源软件，降低人力和时间成本。
+·重视迭代速度，避免过度设计，务必先让后台能用。
+·优先考虑硬件升级（scale up）。
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id15">分布式部署</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>分布式部署阶段研发任务依然很重，架构特点是原有的单机部署架构已经不足以支撑业务的发展和高性能、高可用的要求，需要考虑某些组件独立部署、集群或分布式等架构方案，依然优先考虑云服务完成这些架构方案。
+在这个阶段，架构演进如图 <img alt="image3" src="../../_images/app_fenbushi0001.png" /></p>
+<p>当业务不断发展，数据库分表后的读写性能也可能没法满足业务上的需求，
+这时只能采用进一步的拆分策略：分库。用<code class="docutils literal notranslate"><span class="pre">Cobar</span></code>或<code class="docutils literal notranslate"><span class="pre">MyCat</span></code>等关系型数据的分布式处理系统后，
+分库的架构如图 <img alt="image4" src="../../_images/app_redis0001.png" /></p>
+<p>关于MySQL的主从、分表、分库等优化策略</p>
+<p>如果数据库是使用MongoDB，则可以采用其原生的副本集、分片等优化策略</p>
+<p>这个阶段的总结如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·开始考虑高性能和高可用，优先使用云服务商提供的基础组件来确保高性能和高可用，当云服务无法满足需求时，才考虑使用第三方开源软件。
+·继续保持快速迭代速度。
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id16">服务化</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>随着业务越来越复杂，App后台聚合了大量的应用和服务，各个模块之间有很多功能重复实现，造成了开发、运维、部署的麻烦。同时，业务发展伴随着研发人员增加，代码变得更多，使用的技术和语言也会越来越多，App后台维护成本高。</p>
+<p>为了应对越来越复杂的业务，通过分而治之的方法把App后台根据业务拆分为不同的模块，各个模块之间，互相独立，功能明确。同时把一些各自模块共同的业务需求提炼为公共的服务。按业务拆分后，
+架构如图 <img alt="image5" src="../../_images/app_fenbushi01.png" /></p>
+<p>随着业务越来越大，App后台对读写的性能要求越来越高，所有服务器都需要和数据库以及缓存连接，
+在数百、数千台规模的服务器集群中，频繁的数据库读写请求有可能造成数据库连接资源不足，
+同时为了避免不同业务之间的相互影响（例如某个业务有慢查询导致整个数据库的性能急剧下降，从而影响到其他业务的查询），因此为了取得更好的稳定性，把缓存和数据库集群按照业务继续拆分，不同的业务使用不同的缓存和数据库。</p>
+<p>这个阶段的总结如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·架构的核心要素（高性能、高可用等）逐渐成为主角。
+·迭代速度放慢，业务渐渐趋于稳定。
+</pre></div>
+</div>
+<p>架构如图</p>
+<p><strong>注意</strong>：
+本节描述的是一般的App后台架构的发展，由于每个App的业务特性不一样，不一定适用于每个App。</p>
+<p>不同的业务模块使用不用的缓存和数据库 <img alt="image6" src="../../_images/app_fenbushi02.png" /></p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html" class="btn btn-neutral float-left" title="6.8. MongoDB—App后台新兴的数据库" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html" class="btn btn-neutral float-right" title="7. 一些常用的工具" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

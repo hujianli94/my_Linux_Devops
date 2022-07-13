@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6. LNMP、LAMP学习 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.1. LAMP+WordPress环境" href="01.LAMP%E9%83%A8%E7%BD%B2.html" />
+    <link rel="prev" title="5.20. Nginx文件下载服务器搭建" href="../05.Nginx%E5%AD%A6%E4%B9%A0/21.Nginx%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">6. LNMP、LAMP学习</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html">6.1. LAMP+WordPress环境</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html">6.2. LAMP企业架构实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">6.3. LAMP+Radis企业实战</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">6.4. MySQL主从同步、读写分离解决方案</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html">6.5. 一键快速lnmp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html">6.6. 宝塔安装CRM系列软件</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+      <li><span class="section-number">6. </span>LNMP、LAMP学习</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/06.LAMP、LNMP学习/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lnmplamp">
+<h1><span class="section-number">6. </span>LNMP、LAMP学习<a class="headerlink" href="#lnmplamp" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html">6.1. LAMP+WordPress环境</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#lamp">6.1.1. 更多LAMP部署参考</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#lampwordpress">6.1.2. LAMP与WordPress概述</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#apache">1.安装并配置Apache</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#mariadb-mysql">6.1.3. 安装并配置MariaDB（MySQL）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#php">6.1.4. 3.安装并配置PHP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#phpmyadmin">6.1.5. 4.安装phpMyAdmin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#wordpress">6.1.6. 5.部署WordPress程序</a></li>
+<li class="toctree-l2"><a class="reference internal" href="01.LAMP%E9%83%A8%E7%BD%B2.html#id1">6.1.7. 测试LAMP环境安装的正确性</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html">6.2. LAMP企业架构实战</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html#id1">6.2.1. LAMP企业安装配置</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html#id2">构建LAMP架构有两种方法：</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html#id3">6.2.2. LAMP企业架构拓展实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html#centos7yummysql5-7-22">6.2.3. Centos7使用yum源安装mysql5.7.22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E5%AE%9E%E6%88%98.html#id4">6.2.4. 忘记密码</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html">6.3. LAMP+Radis企业实战</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html#id1">6.3.1. LAMP+Radis工作机制</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.LAMP%2BRedis%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98.html#lamp-redis">6.3.2. LAMP+Redis操作案例</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html">6.4. MySQL主从同步、读写分离解决方案</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="04.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html#mysql-proxy">6.4.1. MySQL-proxy读写分离架构图</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="04.LAMP%E4%BC%81%E4%B8%9A%E6%9E%B6%E6%9E%84%E8%AF%BB%E5%86%99%E5%88%86%E7%A6%BB.html#id1">Mysql主从同步</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html">6.5. 一键快速lnmp</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#oneinstack">6.5.1. oneinstack快速部署</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#id1">6.5.2. 服务软件各类套件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#id2">6.5.3. 宝塔面板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#id3">6.5.4. 运维自动化脚本网站</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#id4">6.5.5. LNMP一键安装包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="05.%E4%B8%80%E9%94%AE%E5%BF%AB%E9%80%9Flnmp.html#ezhttp">6.5.6. ezhttp一键安装包</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html">6.6. 宝塔安装CRM系列软件</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#id1">6.6.1. 1.安装宝塔面板</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#lamp">6.6.2. 2.安装LAMP环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#suitecrm">6.6.3. 3.上传SuiteCRM安装包</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#id2">6.6.4. 4.安装相关依赖和插件</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#id3">6.6.5. 5. 添加站点</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.%E5%AE%9D%E5%A1%94%E5%AE%89%E8%A3%85CRM%E7%B3%BB%E5%88%97%E8%BD%AF%E4%BB%B6.html#expocrm">6.6.6. 6. 安装expocrm</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../05.Nginx%E5%AD%A6%E4%B9%A0/21.Nginx%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%90%AD%E5%BB%BA.html" class="btn btn-neutral float-left" title="5.20. Nginx文件下载服务器搭建" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="01.LAMP%E9%83%A8%E7%BD%B2.html" class="btn btn-neutral float-right" title="6.1. LAMP+WordPress环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

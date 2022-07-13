@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.40. Linux下软件的安装与管理 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.41. Linux下绑定网卡的操作记录" href="45.Linux%E4%B8%8B%E7%BB%91%E5%AE%9A%E7%BD%91%E5%8D%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95.html" />
+    <link rel="prev" title="1.39. Vim编辑器学习" href="43.Vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 命令行和操作系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget%E5%92%8Ccurl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.%E8%BF%90%E7%AE%97%E7%AC%A6.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc%E5%91%BD%E4%BB%A4.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su%E5%91%BD%E4%BB%A4%E4%B8%8Esudo%E6%9C%8D%E5%8A%A1.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7%E5%BF%98%E8%AE%B0root%E5%AF%86%E7%A0%81%E3%80%81%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware%E5%85%8B%E9%9A%86%E5%90%8E%E6%93%8D%E4%BD%9C.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell%E7%99%BB%E5%BD%95-%E9%87%87%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84shell%E8%84%9A%E6%9C%AC.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E4%BD%BF%E7%94%A8OpenSSH%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86Linux%E6%9C%8D%E5%8A%A1%E5%99%A8.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump%E8%B7%9F%E8%B8%AA%E5%88%86%E7%BB%84.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E7%BB%88%E7%AB%AF.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo%E8%BE%93%E5%87%BA%E9%A2%9C%E8%89%B2.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Ubuntu%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96.html">1.34. Ubuntu安装和初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.DRBD%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95.html">1.35. DRBD详细解说及配置过程记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE.html">1.36. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.%E4%BD%BF%E7%94%A8tar%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BDscripts.html">1.37. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E9%85%8D%E7%BD%AEYum%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93.html">1.38. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0.html">1.39. Vim编辑器学习</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.40. Linux下软件的安装与管理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.40.1. 源码安装方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rpm">1.40.2. RPM包方式安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#yum">1.40.3. yum安装方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.40.4. 二进制软件安装方式</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="45.Linux%E4%B8%8B%E7%BB%91%E5%AE%9A%E7%BD%91%E5%8D%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95.html">1.41. Linux下绑定网卡的操作记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.Linux%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E6%81%A2%E5%A4%8D%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd%E6%9C%8D%E5%8A%A1%E5%B0%81%E8%A3%85server.html">1.44. Centos7-systemd服务封装server.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.DELLR730%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85centos7.3%E6%95%99%E7%A8%8B.html">1.45. DELL R730服务器安装centos7.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.ssh%E7%99%BB%E5%BD%95%E7%BC%93%E6%85%A2%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html">1.46. ssh登录缓慢解决办法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.Centos7.x%E4%BD%BF%E7%94%A8yum%E5%AE%89%E8%A3%85mysql-server.html">1.47. Centos7.x使用yum安装mysql-server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.Linux%E5%AE%89%E8%A3%85zsh%E5%92%8Coh-my-zsh.html">1.48. Linux安装zsh和oh-my-zsh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7.html">1.49. Linux命令大全搜索工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.CentOS7%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0.html">1.50. CentOS7安装笔记</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E4%BE%8B-Linux-windows.html">1.51. 静态路由实例-Linux-windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="56.Centos7%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7.html">1.52. Centos7内核升级</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>命令行和操作系统</a> &raquo;</li>
+      <li><span class="section-number">1.40. </span>Linux下软件的安装与管理</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/01.命令行和操作系统/44.Linux下软件的安装与管理.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#linux" id="id17">Linux下软件的安装与管理</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id18">源码安装方式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id19">1.下载、解压源码</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id20">2.分析安装平台环境</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id21">3.编译、安装软件</a></p></li>
+<li><p><a class="reference internal" href="#apache-http-server" id="id22">4.通过源码安装Apache Http server</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#rpm" id="id23">RPM包方式安装</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id24">1.RPM包的种类和组成</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id25">2. RPM工具的使用</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id26">1.安装软件包</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id27">2.查询软件包</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id28">3.验证软件包</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id29">4.更新软件包</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id30">5.删除软件包</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#yum" id="id31">yum安装方式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id12" id="id32">1. yum的安装与配置</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id33">2.yum的配置</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id34">3.几个不错的yum源</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id15" id="id35">二进制软件安装方式</a></p>
+<ul>
+<li><p><a class="reference internal" href="#tar-gz-bz2" id="id36">1.安装“<em>.tar.gz”、“</em>.bz2”二进制软件包</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id37">2.提供安装程序的软件包</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="linux">
+<h1><a class="toc-backref" href="#id17"><span class="section-number">1.40. </span>Linux下软件的安装与管理</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">1.40.1. </span>源码安装方式</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id19">1.下载、解压源码</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Linux下软件的源码一般都是C或者C++语言编写的，并且都会在软件的官方网站上提供源码包下载，例如Apache开源项目的官方网站为http://httpd.apache.org。此外，在网上的很多开源社区一般也提供一些常用软件的源码下载，源码都打包成压缩文件。常见的源码打包压缩格式有“.tar.gz”、“.tar.baz2”等。我们可以从网站上首先下载源码文件，然后再传到所在的Linux系统下，如果你的Linux系统处于联网状态下，也可以直接在系统内通过wget之类的下载命令将源码包直接下载到Linux系统下。
+
+下载完成，把相应的软件解包即可。针对下载软件包的不同，使用不同的方法进行解压，解压完毕后进入解压生成的目录中。在这个目录下，一般都存在一个REDAME文件。这个文本文件非常重要，它详细介绍了这个软件所能完成的功能、授权许可、安装需求、安装注意事项、安装方式等。由于 Linux 各个版本的差异，以及安装环境的不同，软件的安装方式也不尽相同，因此在安装软件前，一定要事先阅读这个README文件，确保安装的正确性。
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id20">2.分析安装平台环境</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>在软件包解压完毕之后，源码目录中，一般都会存在configure和README这两个文件。README就是上面讲到的，是对软件的介绍和安装说明。Linux下软件的安装受到操作系统安装环境的影响，比如某些软件在安装或者运行过程中需要调用操作系统本身的库文件，或者需要运行系统的某个工具等，但是若系统中不存在这个库文件或者这个工具没有安装，安装或者运行软件就会失败。
+
+为了避免这个问题的出现，在安装软件的时候就需要分析操作系统环境，检测当前系统是否拥有安装软件所需的所有文件和工具，如果系统缺少某个文件，就给出提示，直到满足软件的所有需求为止。这个就是configure文件的功能，configure文件一般是个可执行文件，可以在当前目录下直接输入“./configure”进行软件安装的环境测试，如果提示缺少某些安装包，就需要进行安装，直到测试通过。通常，源码安装都需要GCC或者CC编译器，这些编译器一般在安装系统时定制安装包中的开发工具选项下，其实这也是在第2章安装Linux系统时要求选择开发工具包的原因所在。
+
+此外，在执行 configure 分析软件需求时，还可以在“./configure”后面加上软件的安装路径以及安装所需的模块等选项，来定制用户需要的软件功能。
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id21">3.编译、安装软件</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>make与make install
+
+在了解 Makefile 文件结构后，我们就可以控制编译的选项，定制自己所需的软件功能。接下来，我们只须在命令行输入make命令，即可进入编译阶段，根据软件源程序的大小和系统的硬件配置，编译时间不定，编译完毕，会在当前目录以及子目录下生成相应的可执行文件。之后，就进入最后的安装软件阶段，在命令行输入make install命令，开始安装软件。安装进程会首先创建安装目录，如果没有指定安装的目录，安装程序默认会在系统的/usr/local目录下创建安装目录，然后将相应的文件和可执行程序从源码目录复制到安装目录下，这样安装就完毕了。
+</pre></div>
+</div>
+</section>
+<section id="apache-http-server">
+<h3><a class="toc-backref" href="#id22">4.通过源码安装Apache Http server</a><a class="headerlink" href="#apache-http-server" title="Permalink to this headline">¶</a></h3>
+<p>1.下载、解压Apache源码</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@WEBServer～]#mkdir /apache    #在根目录下创建一个apache目录
+ [root@WEBServer～]#cd /apache       #切换到apache目录
+ [root@WEBServer apache]#wget \      #下载apache源码
+ &gt;http://mirrors.cnnic.cn/apache//httpd/httpd-2.4.12.tar.bz2
+ [root@WEBServer apache]#tar -jxvf httpd-2.4.12.tar.bz2 #解压apache源码
+ [root@WEBServer apache]#ls           #显示解压结果
+ httpd-2.4.12            httpd-2.4.12.tar.bz2
+</pre></div>
+</div>
+<p>2.设置安装环境</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@WEBServer</span> <span class="n">apache</span><span class="p">]</span><span class="c1">#cd httpd-2.4.12 #切换到httpd-2.4.12目录下</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@WEBServer</span> <span class="n">httpd</span><span class="o">-</span><span class="mf">2.4</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#./configure  --prefix=/opt/httpd-2.4.12 \</span>
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">so</span>  \
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">mods</span><span class="o">-</span><span class="n">shared</span><span class="o">=</span><span class="n">most</span>  \
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">proxy</span><span class="o">-</span><span class="n">balancer</span><span class="o">=</span><span class="n">shared</span>  \
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">proxy</span><span class="o">-</span><span class="n">http</span><span class="o">=</span><span class="n">shared</span>  \
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">proxy</span><span class="o">-</span><span class="n">ajp</span>  \
+<span class="o">&gt;--</span><span class="n">enable</span><span class="o">-</span><span class="n">rewrite</span>
+</pre></div>
+</div>
+<p>3.编译、安装软件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>可以通过以下命令编译、安装软件。
+    [root@WEBServer  httpd-2.4.12]#make
+    [root@WEBServer  httpd-2.4.12]#make  install
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rpm">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">1.40.2. </span>RPM包方式安装</a><a class="headerlink" href="#rpm" title="Permalink to this headline">¶</a></h2>
+<p>RPM是Red Hat Package Manager的缩写，本意就是Red
+Hat软件包管理器，是最先由Red Hat公司开发出来的Linux下软件包管理工具。</p>
+<p>RPM包管理类似于Windows下的“添加/删除程序”，但是功能比“添加/删除程序”强大很多。在
+Linux
+的系统安装光盘中，有很多以“.rpm”结尾的软件包，这些包文件就是我们所说的RPM文件。每个RPM文件中包含了已经编译好的二进制可执行文件，其实就是将软件源码文件进行编译、安装，然后进行封装，就成了RPM文件，类似于Windows安装包中的“.exe”文件。此外，RPM文件中还包含了运行可执行文件所需的其他文件，这点也和Windows下的软件包类似，Windows程序的安装包中，除了“exe”可执行文件之外，还有其他依赖运行的文件。</p>
+<section id="id5">
+<h3><a class="toc-backref" href="#id24">1.RPM包的种类和组成</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>下面讲述两种RPM包对应的文件名含义，以rpm文件：nxserver-2.1.0-
+22.i386.rpm为例，其中：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>“nxserver”表示软件的名称；
+
+“2.1.0”表示软件的版本号；
+
+“22”表示软件更新发行的次数；
+
+“i386”表示适合硬件的平台；
+
+“.rpm”是RPM软件包的标识。
+</pre></div>
+</div>
+<p>一般RPM封装包的命名方式都由这5个部分组成。由于SRPM包是需要编译才能使用的，因此没有上面所显示项中对应的平台选项，其他与RPM包命令格式完全一样。</p>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id25">2. RPM工具的使用</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>RPM工具的使用分为安装、查询、验证、更新、删除等操作。</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id26">1.安装软件包</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpm</span> <span class="o">-</span><span class="n">ivh</span> <span class="n">ipvsadm</span><span class="o">-</span><span class="mf">1.27</span><span class="o">-</span><span class="mf">7.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+<p>2.安装xxxxxx.src.rpm的方法。</p>
+<p>这里以my-package.src.rpm名称为例，在CentOS 7.1的
+x86_64系统平台下介绍src.rpm软件包基本安装方法，步骤如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>① 执行rpm -i my-package.src.rpm命令。
+② 执行以下命令切换目录。
+cd /root/rpmbuild/SPECS
+在CentOS 5.x以及之前版本中的路径是/usr/src/redhat/SPECS，从CentOS 6.x以及之后版本路径变为/root/rpmbuild/SPECS。
+
+③ 通过以下命令执行rpmbuild操作。
+rpmbuild-bb  my-package.specs
+my-package.specs是一个和软件包同名的specs文件。
+
+此时，在/root/rpmbuild/RPMS/x86_64这个目录下，有一个或者多个已经生成的rpm包，这个就是已经编译好的可执行rpm文件。
+</pre></div>
+</div>
+<p>④ 执行安装命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rpm</span>  <span class="o">-</span><span class="n">ivh</span>  <span class="n">new</span><span class="o">-</span><span class="n">package</span><span class="o">.</span><span class="n">rpm</span>
+</pre></div>
+</div>
+<p>src.rpm包安装方法 <img alt="image0" src="../../_images/rpm_src01.PNG" /></p>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id27">2.查询软件包</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rpm -q [辅助选项] package1…packageN
+</pre></div>
+</div>
+<p>主选项含义如下。</p>
+<p>-q：query的意思，也可以使用“–query”。</p>
+<p>参数说明：package1…packageN为已经安装的软件包名称。</p>
+<p>辅助选项含义如下。</p>
+<p>-f：查询操作系统中某个文件属于哪个对应的rpm软件包。</p>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm -qf /bin/bash
+bash-4.2.46-12.el7.x86_64
+</pre></div>
+</div>
+<p>-p：查询以“.rpm”为后缀的软件包安装后对应的包名称。</p>
+<p>例如：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@server ～]#rpm -qp gcc-4.8.3-9.el7.x86_64.rpm
+gcc-4.8.3-9.el7.x86_64
+</pre></div>
+</div>
+<p>例如：在得到一个软件，安装之前一般都需要查看软件包中有什么内容，可以使用以下命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>   [root@server ～]# rpm -qi gcc-4.8.3-9.el7.x86_64
+或者使用
+    [root@server ～]# rpm -qpi gcc-4.8.3-9.el7.x86_64.rpm
+输出如下。
+    Name              :  gcc
+    Version         :  4.8.3
+    Release         :  9.el7
+    Architecture : x86_64
+    Install  Date  :  Sat  09  May  2015  10:40:59  PM  CST
+    Group        : Development/Languages
+    Size              :  39010208
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id28">3.验证软件包</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>（1）验证已经安装的软件包。</p>
+<p>校验软件包比较的是某软件包安装的文件和原始软件包中同一文件的信息是否一致。它校验每个文件的大小、权限、MD5
+值、类型、所有者以及组群。</p>
+<p>命令格式：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rpm -V [辅助选项] package1…packageN
+主选项含义如下。
+
+-V：verify 的意思，也可以用“--verify”代替。此参数主要校验已经安装的软件包内的文件和最初安装时是否一致。
+
+参数说明：package1…packageN 表示需要校验的且已经安装的软件包名。
+
+辅助选项含义如下。
+
+-p：验证软件包文件。
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h3><a class="toc-backref" href="#id29">4.更新软件包</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>命令格式：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rpm -U [辅助选项] file1.rpm……fileN.rpm
+主选项含义如下。
+
+-U：upgrade的意思，可以使用“--upgrade”代替。
+参数说明：file1.rpm…fileN.rpm表示需要升级的rpm文件包。
+
+辅助选项含义如下。
+--oldpackage 表示允许“升级”到一个老版本，即软件版本降级。其他选项与安装RPM软件包的辅助参数完全相同，这里不再讲述。
+</pre></div>
+</div>
+<p>例子：要将rsh从rsh-0.17-65升级到rsh-0.17-76，步骤如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm  -q rsh
+rsh-0.17-65.el7.x86_64
+
+[root@localhost ～]# rpm  -Uvh rsh-0.17-76.el7.x86_64.rpm
+Preparing...                        ################################# [100%]
+Updating / installing...
+1:rsh-0.17-76.el7                ################################# [100%]
+
+[root@localhost ～]# rpm  -q rsh
+rsh-0.17-76.el7.x86_64
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id30">5.删除软件包</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>命令格式：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rpm -e [辅助选项] package1…packageN
+主选项含义如下。
+-e：erase的意思，也可以用“--erase”代替。
+参数说明：package1„„packageN表示已经安装的软件包名称。
+
+辅助选项含义如下。
+--test：只执行删除的测试。
+--nodeps：不检查依赖性。
+</pre></div>
+</div>
+<p>下面举例说明。</p>
+<p>1）要删除rsh软件包，使用以下命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm  -q rsh
+rsh-0.17-76.el7.x86_64
+[root@localhost ～]# rpm  -e rsh
+[root@localhost ～]# rpm  -q rsh
+package  rsh  is  not  installed
+</pre></div>
+</div>
+<p>2）要删除gcc软件包，但是存在依赖关系，操作过程如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm -e gcc
+error:  Failed  dependencies:
+gcc = 4.8.3-9.el7 is needed by (installed) gcc-c++-4.8.3-9.el7.x86_64
+gcc = 4.8.2 is needed by (installed) libtool-2.4.2-20.el7.x86_64
+</pre></div>
+</div>
+<p>这里又出现了删除依赖性了，根据上面的提示可知，要删除gcc软件包，必须删除与gcc相互依赖的5个软件包。这个操作要非常慎重，除非知道删除后对系统没有影响，否则一定不要盲目执行删除操作，因为这样可能导致系统的崩溃。</p>
+<p>其实我们也可以加入“–nodeps”参数，忽略依赖关系，但是这样可能会导致相关依赖软件的不可用。</p>
+</section>
+</section>
+<section id="yum">
+<h2><a class="toc-backref" href="#id31"><span class="section-number">1.40.3. </span>yum安装方式</a><a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h2>
+<section id="id12">
+<h3><a class="toc-backref" href="#id32">1. yum的安装与配置</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>以CentOS 7.x为例，要检查yum是否已经安装，执行如下命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm -qa|grep yum
+</pre></div>
+</div>
+<p>如果没有任何显示，表示系统中还没有安装yum工具，yum安装包在CentOS系统光盘中可以找到，执行如下指令进行安装。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@localhost ～]# rpm -ivh yum-*.noarch.rpm
+</pre></div>
+</div>
+<p>安装yum需要python-elementtree、python-sqlite、urlgrabber、yumconf等软件包的支持，这些软件包在CentOS
+Linux系统安装光盘均可找到，如果在安装yum过程中出现软件包之间的依赖性，只须按照依赖提示寻找相应软件包安装即可，直到yum包安装成功。</p>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id33">2.yum的配置</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>yum 工具安装完毕，接下来的工作是进行 yum 的配置。yum
+的配置文件有主配置文件/etc/yum.conf、资源库配置目录/etc/yum.repos.d。yum安装后，默认的一些资源库配置可能无法使用，因此需要进行修改。下面是/etc/yum.repos.d/CentOS-Base.repo
+资源库配置文件中各项的详细含义。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="nb">list</span>                 <span class="c1"># 所有软件列表</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">包名</span>         <span class="c1"># 安装包和依赖包</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">update</span>            <span class="c1"># 升级所有包版本,依赖关系，系统版本内核都升级</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">update</span> <span class="n">软件包名</span>   <span class="c1"># 升级指定的软件包</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">ss</span> <span class="o">-</span><span class="n">tnl</span><span class="o">|</span> <span class="n">grep</span> <span class="mi">3306</span>          <span class="c1"># 不改变软件设置更新软件，系统版本升级，内核不改变</span>
+<span class="n">yum</span> <span class="n">search</span> <span class="n">mail</span>                    <span class="c1"># yum搜索相关包</span>
+<span class="n">yum</span> <span class="n">grouplist</span>                       <span class="c1"># 软件包组</span>
+<span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">groupinstall</span> <span class="s2">&quot;Virtualization&quot;</span>   <span class="c1"># 安装软件包组</span>
+<span class="n">rpm</span> <span class="o">-</span><span class="n">ql</span> <span class="n">gstreamer</span>       <span class="c1"># 不安装软件查看包含文件</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>                   <span class="c1"># 清除var下缓存</span>
+
+<span class="n">yum</span> <span class="n">repolist</span> <span class="nb">all</span>  <span class="c1">#列出所有仓库</span>
+<span class="n">yum</span> <span class="nb">list</span> <span class="nb">all</span>     <span class="c1">#列出仓库中所有软件包</span>
+<span class="n">yum</span> <span class="n">info</span>        <span class="c1">#查看软件包信息</span>
+<span class="n">yum</span> <span class="n">install</span>     <span class="c1">#安装软件包</span>
+<span class="n">yum</span> <span class="n">reinstall</span>   <span class="c1">#重新安装软件包</span>
+<span class="n">yum</span> <span class="n">update</span>      <span class="c1">#升级软件包</span>
+<span class="n">yum</span> <span class="n">remove</span>      <span class="c1">#移除软件包</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>   <span class="c1">#清除所有仓库缓存</span>
+<span class="n">yum</span> <span class="n">check</span><span class="o">-</span><span class="n">update</span>  <span class="c1">#检查可更新的软件包</span>
+<span class="n">yum</span> <span class="n">grouplist</span>    <span class="c1">#查看系统中已经安装的软件包组</span>
+<span class="n">yum</span> <span class="n">groupinstall</span> <span class="c1">#安装指定的软件包组</span>
+<span class="n">yum</span> <span class="n">groupremove</span>  <span class="c1">#移除指定的软件包组</span>
+<span class="n">yum</span> <span class="n">groupinfo</span>    <span class="c1">#查询指定的软件包组信息</span>
+
+<span class="n">yum</span> <span class="n">makecache</span>   <span class="c1">#重新做缓存</span>
+
+<span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span>               <span class="c1">#安装httpd软件包</span>
+<span class="n">yum</span> <span class="n">search</span>                      <span class="c1">#YUM搜索软件包。</span>
+<span class="n">yum</span> <span class="nb">list</span> <span class="n">httpd</span>                  <span class="c1">#显示指定程序包安装情况httpdo</span>
+<span class="n">yum</span> <span class="nb">list</span>                        <span class="c1">#显示所有已安装及可安装的软件包。</span>
+<span class="n">yum</span> <span class="n">remove</span> <span class="n">httpd</span>                <span class="c1">#删除程序包httpdo</span>
+<span class="n">yum</span> <span class="n">erase</span> <span class="n">httpd</span>                 <span class="c1">#删除程序包httpdo</span>
+<span class="n">yum</span> <span class="n">update</span>                      <span class="c1">#内核升级或者软件更新。</span>
+<span class="n">yum</span> <span class="n">update</span> <span class="n">httpd</span>                <span class="c1">#更新httpd 软件。</span>
+<span class="n">yum</span> <span class="n">check</span><span class="o">-</span><span class="n">update</span>                <span class="c1">#检查可更新的程序。</span>
+<span class="n">yum</span> <span class="n">info</span> <span class="n">httpd</span>                  <span class="c1">#显示安装包信息httpdo</span>
+<span class="n">yum</span> <span class="n">provides</span>                             <span class="c1">#列出软件包提供哪些文件。</span>
+<span class="n">yum</span> <span class="n">provides</span> <span class="s2">&quot;*/rz&quot;</span>                     <span class="c1">#列出rz 命令由哪个软件包提供。</span>
+<span class="n">yum</span> <span class="n">grouplist</span>                           <span class="c1">#查询可以用groupinstall 安装的组名称。</span>
+
+<span class="n">yum</span> <span class="n">groupinstall</span> <span class="s2">&quot;Chinese Support&quot;</span>      <span class="c1">#安装中文支持。</span>
+<span class="n">yum</span> <span class="n">groupremove</span> <span class="s2">&quot;Chinese Support&quot;</span>       <span class="c1">#删除程序组Chinese Support0</span>
+
+<span class="n">yum</span> <span class="n">deplist</span> <span class="n">httpd</span>                       <span class="c1">#查看程序httpd依赖情况。</span>
+
+<span class="n">yum</span> <span class="n">ckean</span> <span class="n">packages</span>                      <span class="c1">#清除缓存目录下的软件包</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="n">headers</span>                       <span class="c1">#清除缓存目录下的headers</span>
+<span class="n">yum</span> <span class="n">clean</span> <span class="nb">all</span>                           <span class="c1">#清除换出目录下的软件包及旧的headers</span>
+
+
+<span class="c1">#下载对应版本 repo 文件, 放入 /etc/yum.repos.d/ (操作前请做好相应备份)</span>
+<span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">mirrors</span><span class="o">.</span><span class="mf">163.</span><span class="n">com</span><span class="o">/.</span><span class="n">help</span><span class="o">/</span><span class="n">centos</span><span class="o">.</span><span class="n">html</span>    <span class="c1">#163的Centos 5~6~7 yum源下载地址</span>
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id34">3.几个不错的yum源</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>EPEL包含一个叫做“epel-release”的包，这个包包含了EPEL源的gpg密钥和软件源信息。可以通过yum命令将这个软件包安装到企业级Linux发行版上。这样就可以使用最全面、最稳定的Linux软件包了。除了epel-release源之外，还有一个叫做“epel-testing”的源，这个源包含最新的测试软件包，其版本很新但是安装有风险，可以根据情况自行斟酌使用。</p>
+<p>相关的EPEL可以从EPEL官方网站下载到，针对CentOS系统，有EL5、EL6、EL7三个版本，分别针对CentOS
+5.x、CentOS 6.x、CentOS
+7.x三个系列版本。读者可根据系统环境进行下载使用。</p>
+<p>RPMForge是一个第三方软件源仓库，也是CentOS官方社区推荐的第三方yum源，它为CentOS系统提供了超过10000个软件包，被CentOS社区认为是最安全也是最稳定的一个软件仓库。但是由于这个安装源不是CentOS本身的组成部分，因此要使用RPMForge，需要手动下载并安装。</p>
+<p>RPMForge的官方网站是http://repoforge.org/，可以在http://pkgs.repoforge.
+org/rpmforge-release/ 下载 RHEL/CentOS
+各个版本的“rpmforge-release”包，这样就可以使用RPMForge提供的丰富软件了。</p>
+</section>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id35"><span class="section-number">1.40.4. </span>二进制软件安装方式</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p>Linux
+下二进制格式的软件是指事先已经在各种平台编译安装好相关软件，<strong>然后压缩打包，在安装时只需解压或者执行安装可执行文件即可。</strong></p>
+<p><strong>二进制软件包的优点是安装简单、容易，缺点是缺乏灵活性，相应的软件包只能在对应平台下安装，离开这个环境软件就无法运行。</strong></p>
+<section id="tar-gz-bz2">
+<h3><a class="toc-backref" href="#id36">1.安装“<em>.tar.gz”、“</em>.bz2”二进制软件包</a><a class="headerlink" href="#tar-gz-bz2" title="Permalink to this headline">¶</a></h3>
+<p>对于这种格式的软件包，安装其实就是简单的解压过程，根据不同的软件打包格式，用相应的解压命令解压即可。</p>
+<p>对于*.tar.gz软件格式，解压命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">xxxxxx</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>对于*.bz2软件格式，解压命令如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">tar</span> <span class="o">-</span><span class="n">jxvf</span> <span class="n">xxxxxx</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>关于这类软件的卸载，由于解压后只有单一的目录，可以直接删除对应软件目录即可，如果解压后文件分散在几个目录中，需要一一手动删除目录。</p>
+<p>例如：我们常用的应用服务器容器Tomcat软件就是基于这种打包压缩格式发行的。我们只须下载后解压即可完成安装，如果需要卸载，直接删除对应的Tomcat目录即可。</p>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id37">2.提供安装程序的软件包</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>这种软件包都提供了安装脚本或者安装向导程序，<code class="docutils literal notranslate"><span class="pre">只须在下载此类软件包后解压，然后进入安装目录，找到类似于</span> <span class="pre">setup、install、install.sh</span> <span class="pre">之类的可执行文件运行即可</span></code>，接着根据提示（如安装路径、参数设置等）进行相应的设置，之后安装就自动完成。</p>
+<p>这类软件的卸载也提供了相应的卸载脚本或者卸载向导，根据提示即可完成软件卸载。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="43.Vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0.html" class="btn btn-neutral float-left" title="1.39. Vim编辑器学习" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="45.Linux%E4%B8%8B%E7%BB%91%E5%AE%9A%E7%BD%91%E5%8D%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95.html" class="btn btn-neutral float-right" title="1.41. Linux下绑定网卡的操作记录" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

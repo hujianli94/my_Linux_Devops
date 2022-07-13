@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4.1. 01.高可用集群之MHA &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4.2. 02.Keepalived加双主架构" href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html" />
+    <link rel="prev" title="4. 04.尊贵的铂金篇" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">4. 04.尊贵的铂金篇</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">4.1. 01.高可用集群之MHA</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#mysql">4.1.1. MySQL高可用集群</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">4.1.2. MHA</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.1.3. MHA原理及优缺点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">4.1.4. MHA工具包功能</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html">4.2. 02.Keepalived加双主架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.PXC.html">4.3. 03.PXC</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.ProxySQL.html">4.4. 04.ProxySQL</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">4. </span>04.尊贵的铂金篇</a> &raquo;</li>
+      <li><span class="section-number">4.1. </span>01.高可用集群之MHA</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/04.尊贵的铂金篇/01.高可用集群之MHA.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mha" id="id7">01.高可用集群之MHA</a></p>
+<ul>
+<li><p><a class="reference internal" href="#mysql" id="id8">MySQL高可用集群</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id9">MHA</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id10">MHA原理及优缺点</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id11">原理：</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id12">优点：</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">缺点：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id6" id="id14">MHA工具包功能</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mha">
+<h1><a class="toc-backref" href="#id7"><span class="section-number">4.1. </span>01.高可用集群之MHA</a><a class="headerlink" href="#mha" title="Permalink to this headline">¶</a></h1>
+<section id="mysql">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">4.1.1. </span>MySQL高可用集群</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<p>负载均衡：后端服务器没有状态，可任意分配，同时工作，增加负载和吞吐量
+高可用性：后端服务器有状态，一主一备，一个工作一个等待接管服务，保证系统可用性
+高可用100%是不存在的，生产中努力达到99.99%，即全年业务不可用时间大概只有52分钟</p>
+<p><img alt="image0" src="../../_images/mysql_mha0001.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）最常用的基于主从复制的方案：MHA和MM+Keepalived
+2）基于Galera协议的Percona XtraDB Cluster(简称PXC)实现真正意义上的同步复制
+3）基于中间件Proxy，如ProxySQL
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">4.1.2. </span>MHA</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>MHA，即MasterHigh Availability Manager and Tools for
+MySQL，是采用Perl编写的一个脚本管理工具，适用于MySQL
+Replication环境，目的在于维护master主库的高可用性，是自动的master故障转移和slave提升软件包，基于标准的MySQL复制(异步/半同步)</p>
+<p>MHA在生产环境使得得比较多，包括两个组成部分：MHA Manager管理节点和MHA
+Node数据节点</p>
+<p>项目地址：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yoshinorim</span><span class="o">/</span><span class="n">mha4mysql</span><span class="o">-</span><span class="n">manager</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">yoshinorim</span><span class="o">/</span><span class="n">mha4mysql</span><span class="o">-</span><span class="n">node</span>
+</pre></div>
+</div>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">4.1.3. </span>MHA原理及优缺点</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>MHA
+Manager管理节点可以单独部署在一台独立服务器上管理多个master-slave集群，也可以部署在一台slave上。
+MHA
+Manager探测集群中的node节点，当发现master故障后，可以自动将具有最新数据的slave提升为新的master，然后将所有其他slave导向新的master上，整个故障转移过程对程序是透明的
+MHA
+node数据节点可以运行在每台MySQL服务器上，它通过监控具备解析和清理logs功能的脚本来加快故障转移</p>
+<section id="id3">
+<h3><a class="toc-backref" href="#id11">原理：</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>MHA目的在于维持MySQL
+Replication中master库的高可用性，最大特点是可以修复多个slave之间的差异日志，最终使所有slave保持数据一致，然后从中选择一个充当新的master，并将其他slave指向它。当master故障时，可以通过对比slave之间IO
+thread读取主库binlog的pos号，选取最接近的slave作为备胎。其他从库可以通过与备选主库对比生成差异的中继日志，在备选主库上应用从原来master保存的binlog，同时将备选主库提升为master。最后在其他slave上应用相应的差异中继日志并从新的master开始复制</p>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id12">优点：</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>故障切换时，可以自行判断哪个从库与主库数据最接近，然后切换，减少数据丢失
+支持binlog server 可以提高binlog传送效率，进一步减少数据丢失风险
+结合5.7的增强半同步功能，确保故障切换时数据不丢失</p>
+</section>
+<section id="id5">
+<h3><a class="toc-backref" href="#id13">缺点：</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>自动切换的脚本太简单，且比较老化
+搭建MHA架构，需开启linux系统互信协议，有系统安全性风险</p>
+</section>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">4.1.4. </span>MHA工具包功能</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、Manager管理工具
+masterha_check_ssh，检查mha的ssh配置
+masterha_check_repl，检查数据库主从复制功能
+masterha_manager，启动mha服务
+masterha_check_status，查看当前mha运行状态
+masterha_master_monitor，监测master是否宕机
+masterha_master_switch，控制故障转移(自动或手动)
+masterha_conf_host，添加或删除配置的server信息
+
+
+2、Node数据节点工具
+save_binary_logs，保存和复制binlog日志
+apply_diff_replay_logs，识别差异的中继日志事件并应用于其他slave
+filter_mysqlbinlog，去除不必要的rollback事件(mha已不再使用这个工具)
+purge_relay_logs，清除中继日志(不会阻塞SQL线程)
+</pre></div>
+</div>
+<p>部署实现过程在此省略，可自行百度。</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="4. 04.尊贵的铂金篇" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.Keepalived%E5%8A%A0%E5%8F%8C%E4%B8%BB%E6%9E%B6%E6%9E%84.html" class="btn btn-neutral float-right" title="4.2. 02.Keepalived加双主架构" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

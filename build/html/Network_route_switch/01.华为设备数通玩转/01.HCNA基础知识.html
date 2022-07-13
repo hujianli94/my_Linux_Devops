@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.1. HCNA基础知识 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.2. HCNA网络技术实验指南" href="02.HCNA%E5%AE%9E%E9%AA%8C%E4%B8%BE%E4%BE%8B.html" />
+    <link rel="prev" title="1. 华为设备数通玩转" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 华为设备数通玩转</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.1. HCNA基础知识</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#console">1.1.1. 华为设备初始化及Console端口密码认证</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.1.2. Console口登录密码丢失后如何恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bootrom">1.1.3. BootROM密码丢失后如何恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.1.4. 清空配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.1.5. 通过Console口首次登录设备</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#telnet">1.1.6. Telnet登录密码丢失后如何恢复</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">1.1.7. 配置Telnet类型的本地用户</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">1.1.8. 备份配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">1.1.9. 恢复配置文件</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stelnet-ssh">1.1.10. 配置通过STelnet登录设备(ssh连接交换机)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#acl">1.1.11. 使用基本ACL规则限制用户登录</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vrp">1.1.12. VRP（通用路由平台）操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ip">1.1.13. 熟悉常用的IP相关命令</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">1.1.14. 交换机基础配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mac">1.1.15. 常见的MAC地址操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">1.1.16. 接口配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.1.17. 一键清除接口下的配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">1.1.18. 链路聚合操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vlan">1.1.19. vlan学习</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dhcp">1.1.20. 常见的DHCP操作</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">1.1.21. 利用三层交换机实现vlan间路由</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#stp">1.1.22. STP生成树学习</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#eth-trunk">1.1.23. Eth-trunk 链路聚合</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id19">1.1.24. 静态路由</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="02.HCNA%E5%AE%9E%E9%AA%8C%E4%B8%BE%E4%BE%8B.html">1.2. HCNA网络技术实验指南</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E5%8D%8E%E4%B8%BA%E8%B7%AF%E7%94%B1%E5%99%A8%E3%80%81%E4%BA%A4%E6%8D%A2%E6%9C%BA%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4.html">1.3. 华为设备常用命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E5%B0%8F%E5%9E%8B%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html">1.4. 小型园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E4%B8%AD%E5%B0%8F%E5%9B%AD%E5%8C%BA%E7%BB%84%E7%BD%91%E5%9C%BA%E6%99%AF.html">1.5. 中小园区组网场景</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%BB%BC%E5%90%88%E9%85%8D%E7%BD%AE%E6%A1%88%E4%BE%8B.html">1.6. 综合配置案例</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E6%80%9D%E7%A7%91%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E5%A4%8D%E4%B9%A0/index.html">2. 思科设备数通复习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.H3C%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">3. H3C设备数通</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Network_route_switch</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>华为设备数通玩转</a> &raquo;</li>
+      <li><span class="section-number">1.1. </span>HCNA基础知识</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Network_route_switch/01.华为设备数通玩转/01.HCNA基础知识.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#hcna" id="id20">HCNA基础知识</a></p>
+<ul>
+<li><p><a class="reference internal" href="#console" id="id21">华为设备初始化及Console端口密码认证</a></p></li>
+<li><p><a class="reference internal" href="#id1" id="id22">Console口登录密码丢失后如何恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id23">方式1</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id24">方式2</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#bootrom" id="id25">BootROM密码丢失后如何恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id26">说明：</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id5" id="id27">清空配置</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id28">通过Console口首次登录设备</a></p></li>
+<li><p><a class="reference internal" href="#telnet" id="id29">Telnet登录密码丢失后如何恢复</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id7" id="id30">说明：</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id31">通过Console口登录设备。</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id10" id="id32">配置Telnet类型的本地用户</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id33">备份配置文件</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id34">恢复配置文件</a></p></li>
+<li><p><a class="reference internal" href="#stelnet-ssh" id="id35">配置通过STelnet登录设备(ssh连接交换机)</a></p></li>
+<li><p><a class="reference internal" href="#acl" id="id36">使用基本ACL规则限制用户登录</a></p></li>
+<li><p><a class="reference internal" href="#vrp" id="id37">VRP（通用路由平台）操作</a></p></li>
+<li><p><a class="reference internal" href="#ip" id="id38">熟悉常用的IP相关命令</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id39">交换机基础配置</a></p></li>
+<li><p><a class="reference internal" href="#mac" id="id40">常见的MAC地址操作</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id41">接口配置</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id42">一键清除接口下的配置</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id43">链路聚合操作</a></p></li>
+<li><p><a class="reference internal" href="#vlan" id="id44">vlan学习</a></p></li>
+<li><p><a class="reference internal" href="#dhcp" id="id45">常见的DHCP操作</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id46">利用三层交换机实现vlan间路由</a></p></li>
+<li><p><a class="reference internal" href="#stp" id="id47">STP生成树学习</a></p></li>
+<li><p><a class="reference internal" href="#eth-trunk" id="id48">Eth-trunk 链路聚合</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id18" id="id49">手工聚合</a></p></li>
+<li><p><a class="reference internal" href="#lacp" id="id50">配置静态LACP模式</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id19" id="id51">静态路由</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="hcna">
+<h1><a class="toc-backref" href="#id20"><span class="section-number">1.1. </span>HCNA基础知识</a><a class="headerlink" href="#hcna" title="Permalink to this headline">¶</a></h1>
+<section id="console">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">1.1.1. </span>华为设备初始化及Console端口密码认证</a><a class="headerlink" href="#console" title="Permalink to this headline">¶</a></h2>
+<p>产品说明书，或者查询以下链接：<a class="reference external" href="http://support.huawei.com/onlinetoolsweb/pqt/index.jsp">http://support.huawei.com/onlinetoolsweb/pqt/index.jsp</a>，这是华为的默认账号/密码查询工具。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">system</span><span class="o">-</span><span class="n">view</span>
+<span class="n">Enter</span> <span class="n">system</span> <span class="n">view</span><span class="p">,</span> <span class="k">return</span> <span class="n">user</span> <span class="n">view</span> <span class="k">with</span> <span class="n">Ctrl</span><span class="o">+</span><span class="n">Z</span><span class="o">.</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">console</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="n">se</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="nb">set</span> <span class="n">au</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="nb">set</span> <span class="n">authentication</span> <span class="n">pa</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="nb">set</span> <span class="n">authentication</span> <span class="n">password</span> <span class="n">ci</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="nb">set</span> <span class="n">authentication</span> <span class="n">password</span> <span class="n">cipher</span> <span class="n">Huawei12</span><span class="c1">#$       // 密文方式存储密码，请牢记</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span><span class="n">quit</span>
+<span class="p">[</span><span class="n">Huawei</span><span class="p">]</span><span class="n">quit</span>
+<span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span><span class="n">quit</span>
+
+  <span class="n">Configuration</span> <span class="n">console</span> <span class="n">exit</span><span class="p">,</span> <span class="n">please</span> <span class="n">press</span> <span class="nb">any</span> <span class="n">key</span> <span class="n">to</span> <span class="n">log</span> <span class="n">on</span>
+
+
+<span class="n">Login</span> <span class="n">authentication</span>
+
+
+<span class="n">Password</span><span class="p">:</span>
+<span class="o">&lt;</span><span class="n">Huawei</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</section>
+<section id="id1">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">1.1.2. </span>Console口登录密码丢失后如何恢复</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>如果忘记了Console口登录密码，用户可以通过以下两种方式来设置新的Console口登录密码。</p></li>
+</ul>
+<section id="id2">
+<h3><a class="toc-backref" href="#id23">方式1</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">*</span> <span class="n">通过STelnet</span><span class="o">/</span><span class="n">Telnet登录交换机设置新的Console口登录密码</span>
+</pre></div>
+</div>
+<p>这种方法的前提是：用户拥有STelnet/Telnet账号并且具有管理员的权限。以下涉及的命令行及回显信息以STelnet登录设备修改Console口密码为例。用户通过STelnet账号登录交换机后，请按照如下步骤进行配置。</p>
+<section id="huawei-123">
+<h4>以登录用户界面的认证方式为密码认证，密码为Huawei&#64;123为例，配置如下<a class="headerlink" href="#huawei-123" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">HUAWEI</span><span class="o">&gt;</span> <span class="n">system</span><span class="o">-</span><span class="n">view</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="p">]</span> <span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">console</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span> <span class="n">authentication</span><span class="o">-</span><span class="n">mode</span> <span class="n">password</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span> <span class="nb">set</span> <span class="n">authentication</span> <span class="n">password</span> <span class="n">cipher</span> <span class="n">Huawei</span><span class="o">@</span><span class="mi">123</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span> <span class="k">return</span>
+<span class="o">&lt;</span><span class="n">HUAWEI</span><span class="o">&gt;</span> <span class="n">save</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>以登录用户界面的认证方式为AAA认证，用户名为admin123，密码为Huawei&#64;123为例，配置如下。</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">HUAWEI</span><span class="o">&gt;</span> <span class="n">system</span><span class="o">-</span><span class="n">view</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="p">]</span> <span class="n">user</span><span class="o">-</span><span class="n">interface</span> <span class="n">console</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span> <span class="n">authentication</span><span class="o">-</span><span class="n">mode</span> <span class="n">aaa</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">ui</span><span class="o">-</span><span class="n">console0</span><span class="p">]</span> <span class="n">quit</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="p">]</span> <span class="n">aaa</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">aaa</span><span class="p">]</span> <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin123</span> <span class="n">password</span> <span class="n">irreversible</span><span class="o">-</span><span class="n">cipher</span> <span class="n">Huawei</span><span class="o">@</span><span class="mi">123</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">aaa</span><span class="p">]</span> <span class="n">local</span><span class="o">-</span><span class="n">user</span> <span class="n">admin123</span> <span class="n">service</span><span class="o">-</span><span class="nb">type</span> <span class="n">terminal</span>
+<span class="p">[</span><span class="n">HUAWEI</span><span class="o">-</span><span class="n">aaa</span><span class="p">]</span> <span class="k">return</span>
+<span class="o">&lt;</span><span class="n">HUAWEI</span><span class="o">&gt;</span> <span class="n">save</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id24">方式2</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<section id="bootrom-bootloadconsole">
+<h4>通过BootROM/BootLoad清除Console口登录密码<a class="headerlink" href="#bootrom-bootloadconsole" title="Permalink to this headline">¶</a></h4>
+<p>交换机的BootROM/BootLoad提供了清除Console口登录密码的功能，用户可以在交换机启动后修改Console口登录密码，然后保存配置。</p>
+<p>对于S2720EI（V200R011C10）、S5710-X-LI、S5700S-28X-LI-AC、S5700S-52X-LI-AC、S5720SI、S5730SI、S6720SI、S6720S-SI、S5720S-SI、S5720EI、S5730S-EI、S5720HI、S6720EI、S6720S-EI、S5720LI、S6720LI、S6720S-LI、S5720S-LI和SRUH/SRUK/SRUE/SRUF主控板的框式交换机，是通过BootLoad清除Console口登录密码；对于其他款型的交换机，是通过BootROM清除Console口登录密码。</p>
+<ul class="simple">
+<li><p>说明：</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>如果交换机是双主控，则需要在执行以下操作前将备用主控板拔下，待执行完以下操作后，再插上备用主控板，执行save命令以保证主用主控板和备用主控板配置一致。
+</pre></div>
+</div>
+<p>交换机的BootROM/BootLoad提供了清除Console口登录密码的功能，用户可以在交换机启动后修改Console口登录密码，然后保存配置。请按照如下步骤进行配置。</p>
+<p>以BootROM菜单为例，请按照如下步骤进行配置。</p>
+<p>1.通过Console口连接交换机，并重启交换机。当界面出现以下打印信息时，及时按下快捷键“Ctrl+B”并输入BootROM密码，进入BootROM主菜单。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>框式交换机打印信息：
+Press Ctrl+B to enter boot menu ...  1
+
+Password:       //输入BootROM密码
+
+盒式交换机打印信息：
+Press Ctrl+B or Ctrl+E to enter BootROM menu ... 2
+password:      //输入BootROM密码
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="bootrom">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">1.1.3. </span>BootROM密码丢失后如何恢复</a><a class="headerlink" href="#bootrom" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>如果忘记了BootROM密码，用户可以在登录交换机后在用户视图执行命令reset boot password重置BootROM菜单的密码为缺省值。
+
+缺省情况下:
+•盒式交换机在V100R006C03之前的版本，BootROM默认密码为huawei；在V100R006C03及之后的版本，默认密码为Admin@huawei.com。
+
+
+•框式交换机在V100R006及之前的版本，BootROM默认密码为9300；在V100R006之后的版本，默认密码为Admin@huawei.com。
+</pre></div>
+</div>
+<section id="id4">
+<h3><a class="toc-backref" href="#id26">说明：</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>- 盒式交换机的某些款型支持使用快捷键“Ctrl+E”进入BootROM主菜单，请根据设备的界面提示操作。
+- 盒式交换机在V100R006C03之前的版本，BootROM默认密码为huawei；在V100R006C03及之后的版本，默认密码为Admin@huawei.com。
+- 框式交换机在V100R006及之前的版本，BootROM默认密码为9300；在V100R006之后的版本，默认密码为Admin@huawei.com。
+- 不同版本和不同形态的设备回显有差异，请以实际设备显示为准。
+
+2.在BootROM主菜单下选择“Clear password for console user”清除Console口登录密码。
+
+3.根据交换机的提示，在BootROM主菜单下选择“Boot with default mode”启动设备。
+ 说明：
+请注意，此处不要选择“Reboot”选项，否则此次清除密码将失效。
+4.完成系统启动后，通过Console口登录时不需要认证，登录后按照系统提示配置验证密码。（V200R009及之后版本，完成系统启动后，通过Console口登录时认证方式为None，系统启动后不会提示配置验证密码。）
+
+5.登录交换机后，用户可以根据需要配置Console用户界面的认证方式及密码
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">1.1.4. </span>清空配置</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>如果需要清除配置，恢复成出厂配置，请执行命令reset
+saved-configuration，清除设备下次启动时使用的配置文件信息，然后重启设备，重启时如果提示保存配置，请选择“N”不保存。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;HUAWEI&gt; reset saved-configuration
+Warning: The action will delete the saved configuration in the device.
+The configuration will be erased to reconfigure. Continue? [Y/N]:y
+Warning: Now clearing the configuration in the device.
+Info: Succeeded in clearing the configuration in the device.
+&lt;HUAWEI&gt; reboot
+Info: The system is now comparing the configuration, please wait.
+Warning: The configuration has been modified, and it will be saved to the next startup saved-configuration file flash:/vrpcfg.zip. Continue? [Y/N]:n    //此处请选择“N”
+Info: If want to reboot with saving diagnostic information, input &#39;N&#39; and then execute &#39;reboot save diagnostic-information&#39;.
+System will reboot! Continue?[Y/N]:y
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">1.1.5. </span>通过Console口首次登录设备</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>设置连接的接口以及通信参数</p></li>
+<li><p>单击“Connect”，终端界面会出现如下显示信息，提示用户输入用户名和密码。首次登录时缺省的用户名为admin，密码为admin&#64;huawei.com。登录后必须修改密码.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Login authentication
+
+
+Username:admin
+Password:
+Warning: The default password poses security risks.
+The password needs to be changed. Change now? [Y/N]: y
+Please enter old password:
+Please enter new password:
+Please confirm new password:
+The password has been changed successfully
+&lt;HUAWEI&gt;
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>采用交互方式输入的密码不会在终端屏幕上显示出来。</p></li>
+<li><p>进入用户视图后，如果用户没有修改验证方式及验证密码，当用户再次登录设备时，用户验证密码即为初次登录时所配置的验证密码。
+此时用户可以键入命令，对设备进行配置，如果需要帮助可以随时键入“?”。</p></li>
+</ul>
+</section>
+<section id="telnet">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">1.1.6. </span>Telnet登录密码丢失后如何恢复</a><a class="headerlink" href="#telnet" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Telnet登录密码丢失后如何恢复</p></li>
+<li><p>如果忘记了Telnet登录密码，用户可以通过Console口登录交换机后设置新的Telnet登录密码。</p></li>
+</ul>
+<section id="id7">
+<span id="id8"></span><h3><a class="toc-backref" href="#id30">说明：</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>以下涉及的命令行以V200R008C00版本的S7700交换机为例。</p>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id31">通过Console口登录设备。</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>1.将Console通信电缆的DB9（孔）插头插入PC机的串口（COM）中，再将RJ-45插头端插入设备的Console口中。
+2.在PC上打开终端仿真软件，新建连接，设置连接的接口，配置通信参数如下：•波特率：9600
+•数据位：8 •停止位：1 •奇偶校验位：无 •流控：无</p>
+<p>3.单击“Connect”，根据提示输入或配置登录密码，完成登录。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 以登录VTY0的验证方式为密码验证，密码为Huawei@123为例，配置如下。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] user-interface vty 0
+[HUAWEI-ui-vty0] protocol inbound telnet   //V200R006及之前版本缺省使用的协议为Telnet协议，可以不配置该项；V200R007及之后版本缺省使用的协议为SSH协议，必须配置。
+[HUAWEI-ui-vty0] authentication-mode password
+[HUAWEI-ui-vty0] set authentication password cipher Huawei@123
+[HUAWEI-ui-vty0] user privilege level 15
+[HUAWEI-ui-vty0] return
+&lt;HUAWEI&gt; save
+
+# 以登录VTY0的验证方式为AAA授权验证，用户名为admin123，密码为Huawei@123为例，配置如下。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] user-interface vty 0
+[HUAWEI-ui-vty0] protocol inbound telnet   //V200R006及之前版本缺省使用的协议为Telnet协议，可以不配置该项；V200R007及之后版本缺省使用的协议为SSH协议，必须配置。
+[HUAWEI-ui-vty0] authentication-mode aaa
+[HUAWEI-ui-vty0] quit
+[HUAWEI] aaa
+[HUAWEI-aaa] local-user admin123 password irreversible-cipher Huawei@123
+[HUAWEI-aaa] local-user admin123 service-type telnet
+[HUAWEI-aaa] local-user admin123 privilege level 15
+[HUAWEI-aaa] return
+&lt;HUAWEI&gt; save
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id32"><span class="section-number">1.1.7. </span>配置Telnet类型的本地用户</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span># 以登录用户界面的验证方式为AAA授权验证，用户名为admin123，密码为Huawei@123为例，配置如下。
+
+本操作的前置条件是设备已经使能了Telnet服务器功能。
+
+ 说明：
+
+以下涉及的命令行以V200R008C00版本的S7700交换机为例。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] user-interface vty 0
+[HUAWEI-ui-vty0] protocol inbound telnet   //V200R006及之前版本缺省使用的协议为Telnet协议，可以不配置该项；V200R007及之后版本缺省使用的协议为SSH协议，必须配置。
+[HUAWEI-ui-vty0] authentication-mode aaa
+[HUAWEI-ui-vty0] quit
+[HUAWEI] aaa
+[HUAWEI-aaa] local-user admin123 password irreversible-cipher Huawei@123
+[HUAWEI-aaa] local-user admin123 service-type telnet
+[HUAWEI-aaa] local-user admin123 privilege level 15
+[HUAWEI-aaa] return
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id33"><span class="section-number">1.1.8. </span>备份配置文件</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>为防止设备意外损坏，导致配置文件无法恢复，用户可以通过FTP方式将配置文件备份至服务器。假设用户PC的IP地址为10.110.24.254/24，设备的IP地址为10.136.23.5/24，配置如下。
+
+
+•设备作为FTP服务器，用户PC作为FTP客户端
+
+# 配置设备的FTP功能及FTP用户信息。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] ftp server enable
+[HUAWEI] aaa
+[HUAWEI-aaa] local-user admin1234 password irreversible-cipher Helloworld@6789
+[HUAWEI-aaa] local-user admin1234 privilege level 15
+[HUAWEI-aaa] local-user admin1234 service-type ftp
+[HUAWEI-aaa] local-user admin1234 ftp-directory cfcard:/
+[HUAWEI-aaa] quit
+[HUAWEI] quit
+
+# 保存设备当前配置。
+&lt;HUAWEI&gt; save
+
+# 从终端PC通过FTP连接设备，输入用户名admin1234和密码Helloworld@6789，并采用binary模式进行文件传输。
+
+终端以Windows XP操作系统为例说明。
+C:\Documents and Settings\Administrator&gt; ftp 10.136.23.5
+连接到 10.136.23.5。
+220 FTP service ready.
+用户 (10.136.23.5:(none)): admin1234
+331 Password required for admin1234.
+密码:
+230 User logged in.
+ftp&gt; binary
+200 Type set to I.
+ftp&gt;
+
+# 备份配置文件。
+ftp&gt; get vrpcfg.zip
+200 Port command okay.
+150 Opening BINARY mode data connection for vrpcfg.zip.
+226 Transfer complete.
+ftp: 收到 1257 字节，用时 0.03秒 40.55千字节/秒。
+
+
+•用户PC作为FTP服务器，设备作为FTP客户端
+
+# 启动FTP服务器程序。
+
+在用户PC上启动FTP服务器应用程序，设置好配置文件的传输路径、FTP服务器IP地址、端口号、用户名和密码。
+
+# 保存设备当前配置。
+&lt;HUAWEI&gt; save
+
+# 登录FTP服务器。
+&lt;HUAWEI&gt; ftp 10.110.24.254
+Trying 10.110.24.254 ...
+Press CTRL+K to abort
+Connected to 10.110.24.254.
+220 WFTPD 2.0 service (by Texas Imperial Software) ready for new user   //WFTPD为本地FTP服务器程序。
+User(10.135.86.164:(none)):admin123   //输入用户名。
+331 Give me your password, please
+Enter password:   //输入用户密码。
+230 Logged in successfully
+
+[ftp]
+
+# 备份配置文件。
+[ftp] put config.cfg
+200 Port command successful.
+150 Opening data connection for config.cfg.
+226 File received ok
+FTP: 1257 byte(s) sent in 0.03 second(s) 40.55Kbyte(s)/sec.
+
+ 说明：
+
+◾将配置文件备份到用户PC后，请对比用户PC上配置文件大小是否与设备上一致。如果不一致，可能是在文件备份过程中出现异常，请重新备份。
+
+
+◾如果用户需要使用更简单的配置过程，可以使用TFTP方式备份配置文件，配置用户PC作为TFTP服务器，设备作为TFTP客户端。此配置过程与配置用户PC作为FTP服务器，设备作为FTP客户端的过程相似，只是在配置本地服务器程序的时候不需要用户名和密码，直接在设备上执行命令tftp 10.110.24.254 put config.cfg即可。
+
+◾TFTP方式没有授权和认证，并且为明文传输数据；FTP方式具有授权和认证功能，也采用明文传输数据。这两种方式均存在安全隐患，适合在网络条件良好的环境下使用。如果用户对网络安全性能要求较高，建议使用SFTP V2、SCP或FTPS方式备份配置文件。
+</pre></div>
+</div>
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id34"><span class="section-number">1.1.9. </span>恢复配置文件</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>当用户进行了错误的配置，导致功能异常的时候，可以将备份的配置文件传输到设备上并设置为下次启动配置文件。以用户PC的IP地址为10.110.24.254/24，设备的IP地址为10.136.23.5/24为例，配置如下。
+
+1.通过FTP方式将备份的配置文件传输到设备中
+
+•设备作为FTP服务器，本地PC作为FTP客户端，将备份的配置文件上传到设备中
+
+# 配置设备的FTP服务器功能及FTP用户信息。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] ftp server enable
+[HUAWEI] aaa
+[HUAWEI-aaa] local-user admin1234 password irreversible-cipher Helloworld@6789
+[HUAWEI-aaa] local-user admin1234 privilege level 15
+[HUAWEI-aaa] local-user admin1234 service-type ftp
+[HUAWEI-aaa] local-user admin1234 ftp-directory cfcard:/
+[HUAWEI-aaa] quit
+[HUAWEI] quit
+
+# 从终端PC通过FTP连接设备，输入用户名admin1234和密码Helloworld@6789，并采用binary模式进行文件传输。
+
+终端以Windows XP操作系统为例说明。
+C:\Documents and Settings\Administrator&gt; ftp 10.136.23.5
+连接到 10.136.23.5。
+220 FTP service ready.
+用户 (10.136.23.5:(none)): admin1234
+331 Password required for admin1234.
+密码:
+230 User logged in.
+ftp&gt; binary
+200 Type set to I.
+ftp&gt;
+
+# 上传备份的配置文件到设备中。
+ftp&gt; put vrpcfg.zip
+200 Port command okay.
+150 Opening BINARY mode data connection for vrpcfg.zip.
+226 Transfer complete.
+ftp: 发送 1257 字节，用时 0.03秒 40.55千字节/秒。
+
+
+•用户PC作为FTP服务器，设备作为FTP客户端
+
+# 启动FTP服务器程序。
+
+在PC上启动FTP服务器应用程序，设置好配置文件的传输路径、FTP服务器IP地址、端口号、用户名和密码。
+
+# 登录FTP服务器。
+&lt;HUAWEI&gt; ftp 10.110.24.254
+Trying 10.110.24.254 ...
+Press CTRL+K to abort
+Connected to 10.110.24.254.
+220 WFTPD 2.0 service (by Texas Imperial Software) ready for new user   //WFTPD为本地FTP服务器程序。
+User(10.135.86.164:(none)):admin123   //输入用户名。
+331 Give me your password, please
+Enter password:   //输入用户密码。
+230 Logged in successfully
+
+[ftp]
+
+# 下载备份的配置文件到设备中。
+[ftp] get config.cfg
+Warning: The file config.cfg already exists. Overwrite it? [Y/N]:Y
+//覆盖设备当前保存的配置文件。如果用户需要保留当前设备的配置文件，可以选择N后停止本次文件上传，重命名服务器中配置文件名，确保其与设备当前配置文件名不一致后再下载服务器中的配置文件。
+200 Port command successful.
+150 Opening data connection for config.cfg.
+226 File sent ok
+FTP: 1257 byte(s) received in 0.03 second(s) 40.55byte(s)/sec.
+[ftp] bye
+
+ 说明：
+
+◾将配置文件备份上传或者下载到设备后，请对比用户PC上配置文件大小是否与设备上一致。如果不一致，可能是在文件传输过程中出现异常，请重新传输。
+
+
+◾如果用户需要使用更简单的配置过程，可以使用TFTP方式下载服务器中的备份配置文件，配置用户PC作为TFTP服务器，设备作为TFTP客户端。此配置过程与配置用户PC作为FTP服务器，设备作为FTP客户端的过程相似，只是在配置本地服务器程序的时候不需要用户名和密码，直接在设备上执行命令tftp 10.110.24.254 get config.cfg即可。
+
+◾TFTP方式没有授权和认证，并且为明文传输数据；FTP方式具有授权和认证功能，也采用明文传输数据。这两种方式均存在安全隐患，适合在网络条件良好的环境下使用。如果用户对网络安全性能要求较高，可以选择使用SFTP V2、SCP或FTPS方式上传或下载配置文件。
+
+
+
+2.设置恢复的配置文件为下次启动配置文件并重启设备
+&lt;HUAWEI&gt; startup saved-configuration config.cfg
+&lt;HUAWEI&gt; display startup
+MainBoard:
+  Configured startup system software:        cfcard:/device_software.cc
+  Startup system software:                   cfcard:/device_software.cc
+  Next startup system software:              cfcard:/device_software.cc
+  Startup saved-configuration file:          cfcard:/config_old.cfg   //设备当前的配置文件名。
+  Next startup saved-configuration file:     cfcard:/config.cfg   //下次启动的配置文件名。
+  Startup paf file:                          default
+  Next startup paf file:                     default
+  Startup license file:                      default
+  Next startup license file:                 default
+  Startup patch package:                     NULL
+  Next startup patch package:                NULL
+
+&lt;HUAWEI&gt; reboot   //重启设备。
+Info: The system is now comparing the configuration, please wait.
+Warning: The configuration has been modified, and it will be saved to the next startup saved-configuration file cfcard:/config.cfg. Continue? [Y/N]:N   //输入N防止设备当前的配置保存到备份的配置文件中。
+Now saving the current configuration to the slot 13.
+Save the configuration successfully.
+Info: If want to reboot with saving diagnostic information, input &#39;N&#39; and then execute &#39;reboot save diagnostic-information&#39;.
+System will reboot! Continue?[Y/N]:Y   //输入Y重启设备。
+</pre></div>
+</div>
+</section>
+<section id="stelnet-ssh">
+<h2><a class="toc-backref" href="#id35"><span class="section-number">1.1.10. </span>配置通过STelnet登录设备(ssh连接交换机)</a><a class="headerlink" href="#stelnet-ssh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>以登录用户界面的验证方式为AAA授权验证，用户名为admin123，密码为Huawei@123为例，配置如下。
+
+# 在服务器端生成本地密钥对。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] dsa local-key-pair create
+Info: The key name will be: HUAWEI_Host_DSA.
+Info: The key modulus can be any one of the following : 1024, 2048.
+Info: If the key modulus is greater than 512, it may take a few minutes.
+Please input the modulus [default=2048]:
+Info: Generating keys...
+Info: Succeeded in creating the DSA host keys.
+
+# 配置VTY用户界面。
+[HUAWEI] user-interface vty 0 4
+[HUAWEI-ui-vty0-4] authentication-mode aaa
+[HUAWEI-ui-vty0-4] protocol inbound ssh
+[HUAWEI-ui-vty0-4] quit
+
+
+ 注意：
+如果设备中已经配置了VTY 0～VTY 4界面支持的协议为Telnet方式，如果将其修改为SSH方式，退出当前登录界面后，不能再使用Telnet方式登录设备。此时建议用户先配置VTY 0～VTY 4界面支持的协议为all，即支持所有的协议。在成功配置STelnet后可以再执行protocol inbound ssh命令配置VTY 0～VTY 4界面支持的协议为SSH。
+
+# 新建用户名为admin123的SSH用户，且认证方式为Password。
+[HUAWEI] aaa
+[HUAWEI-aaa] local-user admin123 password irreversible-cipher Huawei@123
+[HUAWEI-aaa] local-user admin123 service-type ssh
+[HUAWEI-aaa] local-user admin123 privilege level 15
+[HUAWEI-aaa] quit
+[HUAWEI] ssh user admin123 authentication-type password
+
+# 设备开启STelnet服务功能。
+[HUAWEI] stelnet server enable
+
+# 配置SSH用户admin123的服务方式为STelnet。
+[HUAWEI] ssh user admin123 service-type stelnet
+
+# 通过第三方软件（例如PuTTY）登录设备，输入设备的IP地址，选择协议类型为SSH，输入用户名和密码STelnet登录设备。
+
+配置STelnet是否成功的测试方法：配置完成后在系统视图下执行ssh client first-time enable和stelnet 127.0.0.1命令登录设备本身。如果出现登录界面，则代表配置成功，否则配置失败。
+</pre></div>
+</div>
+</section>
+<section id="acl">
+<h2><a class="toc-backref" href="#id36"><span class="section-number">1.1.11. </span>使用基本ACL规则限制用户登录</a><a class="headerlink" href="#acl" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>通过STelnet/Telnet登录设备后，用户可以配置ACL规则限制用户登录的源地址，只允许特定IP的用户或者网段登录设备。
+
+ 说明：
+
+使用Telnet协议存在安全风险，建议用户使用STelnet V2登录设备。
+
+本操作中假设用户已经使用STelnet/Telnet登录设备。
+
+# 配置ACL 2005规则，限制VTY 0～VTY 4界面只允许IP地址为192.168.1.5的用户和10.10.5.0/24网段的用户登录设备，配置如下。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] acl 2005
+[HUAWEI-acl-basic-2005] rule permit source 192.168.1.5 0   //允许IP地址为192.168.1.5的用户登录设备。
+[HUAWEI-acl-basic-2005] rule permit source 10.10.5.0 0.0.0.255   //允许10.10.5.0/24网段的用户登录设备。
+[HUAWEI-acl-basic-2005] quit
+[HUAWEI] user-interface vty 0 4
+[HUAWEI-ui-vty0-4] acl 2005 inbound
+[HUAWEI-ui-vty0-4] quit
+</pre></div>
+</div>
+</section>
+<section id="vrp">
+<h2><a class="toc-backref" href="#id37"><span class="section-number">1.1.12. </span>VRP（通用路由平台）操作</a><a class="headerlink" href="#vrp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">用户视图</span><span class="o">---</span><span class="n">系统视图</span><span class="o">--</span><span class="n">接口视图</span>
+
+<span class="c1">#进入接口配置IP地址</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+<span class="n">ip</span> <span class="n">add</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.1</span> <span class="mi">24</span>
+
+<span class="c1">#查看接口配置信息</span>
+<span class="n">display</span> <span class="n">this</span>
+
+<span class="c1">#切换到系统视图</span>
+<span class="n">system</span><span class="o">-</span><span class="n">view</span>
+
+<span class="c1">#修改主机名称</span>
+<span class="n">sysname</span> <span class="n">R1</span>
+
+<span class="c1">#查看定义的快捷键</span>
+<span class="n">display</span> <span class="n">hotkey</span>
+
+<span class="c1">#查看版本信息</span>
+<span class="n">display</span> <span class="n">version</span>
+
+<span class="c1">#配置时间</span>
+<span class="n">clock</span> <span class="n">datetime</span> <span class="mi">12</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>  <span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">24</span>
+
+<span class="c1">#配置时区</span>
+<span class="n">clock</span> <span class="n">timezone</span> <span class="n">BJ</span> <span class="n">add</span> <span class="mi">08</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
+
+<span class="c1">#查看路由/交换 机器当前的配置</span>
+<span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span>
+
+<span class="c1">#查看接口的配置</span>
+<span class="n">display</span> <span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+
+<span class="c1">#查看设备是否存在紧急或重要告警</span>
+<span class="n">display</span> <span class="n">alarm</span> <span class="n">active</span> <span class="o">|</span> <span class="n">include</span> <span class="n">Critical</span>
+
+<span class="c1">#查看设备内存占用率信息</span>
+<span class="n">display</span> <span class="n">memory</span><span class="o">-</span><span class="n">usage</span>
+
+<span class="c1">#查看设备CPU占用率</span>
+<span class="n">display</span> <span class="n">cpu</span><span class="o">-</span><span class="n">usage</span>
+
+<span class="c1">#查看介质使用信息，存储介质使用率是否超过80%</span>
+<span class="nb">dir</span>
+
+<span class="c1">#将二层接口切换为三层</span>
+<span class="n">undo</span> <span class="n">portswitch</span>
+
+<span class="c1">#从任意非用户视图退回到用户视图</span>
+<span class="k">return</span>
+</pre></div>
+</div>
+</section>
+<section id="ip">
+<h2><a class="toc-backref" href="#id38"><span class="section-number">1.1.13. </span>熟悉常用的IP相关命令</a><a class="headerlink" href="#ip" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sysname</span> <span class="n">R1</span>
+<span class="n">nterface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">0</span>
+<span class="n">ip</span> <span class="n">add</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">1.254</span> <span class="mi">24</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">ip</span> <span class="n">add</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">2.254</span> <span class="mi">24</span>
+
+<span class="c1">#查看所有接口信息</span>
+<span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+
+<span class="c1">#查看路由表信息</span>
+<span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id39"><span class="section-number">1.1.14. </span>交换机基础配置</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#查看交换机配置
+display current-configuration
+
+#查看所有的arp记录，ip对应的mac地址
+display arp all
+
+#设置静态arp绑定
+arp static 10.1.2.3 5489-98a6-74a8
+
+#关闭接口自协商功能
+undo negotiation auto
+
+#配置接口速率
+speed 100
+
+#工作模式为全双工
+duplex full
+
+#查看接口状态
+display iinterface  GigabitEthernet 0/0/1
+
+#如果需要清除配置，恢复成出厂配置
+reset saved-configuration
+reboot
+#重启设备，选择 “N ”不保存
+
+#查看设备的序列号
+display esn
+
+#查看设备的补丁信息
+display patch-information
+
+#查看设备的版本信息
+display version
+
+#清除设备上所有的ARP表项。
+reset arp all
+
+# 清除设备上IP地址为172.16.10.1的动态ARP表项。
+reset arp dynamic ip 172.16.10.1 //如果不指定IP地址，则删除设备上所有的动态ARP表项。
+
+# 查询整个网段的arp表
+display arp network 172.16.10.0 24
+</pre></div>
+</div>
+</section>
+<section id="mac">
+<h2><a class="toc-backref" href="#id40"><span class="section-number">1.1.15. </span>常见的MAC地址操作</a><a class="headerlink" href="#mac" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#查看所有MAC地址
+display mac-address
+
+#查看某个接口学习到的MAC地址
+display mac-address dynamic gigabitethernet1/0/1
+
+#查看某个VLAN学习到的MAC地址
+display mac-address dynamic vlan 10
+
+#查看系统的MAC地址
+display interface gigabitethernet1/0/1      #二层接口的MAC地址就是设备的MAC地址
+display bridge mac-address                  #在V200R002版本及之后版本，执行命令display bridge mac-address，查看设备的MAC地址
+
+
+#查看接口的MAC地址
+display interface gigabitethernet1/0/1
+
+#查看VLANIF接口的MAC地址
+display interface vlanif10
+display arp interface GigabitEthernet 0/0/1
+
+#根据IP获取对应设备的MAC地址
+display arp | include 192.168.150.2
+
+#根据IP获取对应设备的MAC地址
+display arp | include 192.168.150.20
+
+
+#配置黑洞MAC，将目标和源MAC匹配到的全部丢弃
+mac-address blackhole 0000-0012-0034        #全局模式
+mac-address blackhole 0000-0012-0035 vlan 10    #Vlan 10 广播内的MAC地址
+
+#配置静态MAC地址
+mac-address static 0000-0012-0034 GigabitEthernet0/0/1 vlan 10     //配置静态MAC地址，把mac地址0000-0012-0034和接口GigabitEthernet0/0/1静态绑定
+
+#查看和配置MAC地址的老化时间
+display mac-address aging-time
+mac-address aging-time 600          // 配置动态MAC地址的老化时间为600s
+
+#刷新ARP表项
+mac-address update ar
+</pre></div>
+</div>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id41"><span class="section-number">1.1.16. </span>接口配置</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#配置接口组，接口GE1/0/16至GE1/0/20加入到临时端口组</span>
+<span class="n">interface</span> <span class="nb">range</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">16</span> <span class="n">to</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">port</span><span class="o">-</span><span class="n">group</span> <span class="n">group</span><span class="o">-</span><span class="n">member</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">9</span> <span class="n">to</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">15</span>   <span class="c1">#配置接口GE1/0/9至GE1/0/15加入到临时端口组</span>
+
+<span class="c1">#配置永久端口组</span>
+<span class="n">port</span><span class="o">-</span><span class="n">group</span> <span class="n">portgroup1</span>
+<span class="n">group</span><span class="o">-</span><span class="n">member</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span> <span class="n">to</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">8</span>
+
+<span class="c1">#配置端口隔离组,二层数据隔离，三层数据互通</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">mode</span> <span class="n">l2</span>
+<span class="n">interface</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">enable</span> <span class="n">group</span> <span class="mi">1</span>
+<span class="n">interface</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">enable</span> <span class="n">group</span> <span class="mi">1</span>
+
+<span class="c1">#实现多个接口之间的二三层数据均隔离</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">mode</span> <span class="nb">all</span>
+<span class="n">port</span><span class="o">-</span><span class="n">group</span> <span class="n">portgroup1</span>
+<span class="n">group</span><span class="o">-</span><span class="n">member</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">10</span> <span class="n">to</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">20</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">enable</span> <span class="n">group</span> <span class="mi">2</span>
+
+
+<span class="c1">#配置单向隔离,GE1/0/5接口发送的二层数据报文无法到达接口GE1/0/6、GE1/0/7、GE1/0/8</span>
+<span class="n">port</span><span class="o">-</span><span class="n">isolate</span> <span class="n">mode</span> <span class="n">l2</span>
+<span class="n">interface</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">5</span>
+<span class="n">am</span> <span class="n">isolate</span> <span class="n">gigabitethernet</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">6</span> <span class="n">to</span> <span class="mi">1</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">8</span>
+</pre></div>
+</div>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id42"><span class="section-number">1.1.17. </span>一键清除接口下的配置</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">clear</span> <span class="n">configuration</span> <span class="n">interface</span> <span class="n">gigabitethernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>     <span class="c1">#系统视图下</span>
+
+<span class="n">interface</span> <span class="n">gigabitethernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>                         <span class="c1">#接口视图下</span>
+<span class="n">clear</span> <span class="n">configuration</span> <span class="n">thi</span>
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h2><a class="toc-backref" href="#id43"><span class="section-number">1.1.18. </span>链路聚合操作</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#将成员接口批量加入聚合组
+# 在Eth-Trunk1中批量加入五个成员接口GigabitEthernet1/0/1到GigabitEthernet1/0/5。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] interface eth-trunk 1
+[HUAWEI-Eth-Trunk1] trunkport gigabitethernet 1/0/1 to 1/0/5
+
+#将指定成员接口从聚合组中删除
+//在Eth-Trunk接口视图下执行命令undo trunkport interface-type { interface-number1 [ to interface-number2 ] } &amp;&lt;1-8&gt;。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] interface eth-trunk 1
+[HUAWEI-Eth-Trunk1] undo trunkport gigabitethernet 0/0/1
+
+//在成员接口视图下执行命令undo eth-trunk。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] interface gigabitethernet 0/0/1
+[HUAWEI-GigabitEthernet0/0/1] undo eth-trunk
+
+#删除聚合组
+//在系统视图下执行命令undo interface eth-trunk trunk-id。
+&lt;HUAWEI&gt; system-view
+[HUAWEI] undo interface eth-trunk 10
+
+# 查看所有Eth-Trunk接口配置信息
+display eth-trunk
+display eth-trunk 10
+
+
+#查看Eth-Trunk的成员接口信息
+display trunkmembership eth-trunk 2
+
+#查看设备支持的链路聚合组数目和成员接口数目
+display trunk configuratio
+</pre></div>
+</div>
+</section>
+<section id="vlan">
+<h2><a class="toc-backref" href="#id44"><span class="section-number">1.1.19. </span>vlan学习</a><a class="headerlink" href="#vlan" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>注意事项：
+    #建议独立规划业务VLAN和管理VLAN，以便业务VLAN上发生的任何广播风暴不会影响到交换机的管理。
+    #Trunk接口需要透传哪些VLAN就透传哪些VLAN，请不要用port trunk allow-pass vlan all
+    #更改接口类型时，需要先将接口上VLAN的配置恢复为缺省值
+    #接口绑定VLANIF接口进行三层转发时，建议接口从VLAN 1中退出，避免形成VLAN 1内的二层环路。
+    #建议不要使用VLAN 1作为管理VLAN或者业务VLAN。
+
+    &quot;&quot;&quot; 对于不需要加入VLAN1的接口要及时退出VLAN1，以避免环路。但Trunk接口上一般要保持允许VLAN1通过，
+    否则，一些通过VLAN1传输的协议报文会被Trunk接口错误丢弃而引起故障。
+    这种情况下，需要采取措施规避允许VLAN1通过所带来的潜在安全风险。&quot;&quot;&quot;
+
+
+
+
+#创建vlan
+vlan 10
+#批量创建
+vlan batch 10 20
+
+#查看所有的vlan信息
+display vlan summary
+
+
+#查看接口所开放的vlan信息
+display port vlan
+
+
+#接口批量加入VLAN
+port-group pg1
+group-member gigabitethernet1/0/1 to gigabitethernet1/0/5  #把接口gigabitethernet1/0/1到gigabitethernet1/0/5加入端口组
+port link-type access
+port default vlan 10
+
+
+#恢复接口下VLAN的缺省配置
+
+#access接口
+interface gigabitethernet 0/0/1
+undo port default vlan
+
+#trunk接口
+interface gigabitethernet 0/0/1
+undo port trunk pvid vlan
+undo port trunk allow-pass vlan all
+port trunk pvid vlan 1
+
+#hybrid接口
+interface gigabitethernet 0/0/1
+undo port hybrid pvid vlan
+undo port hybrid vlan all
+port hybrid untagged vlan 1
+
+
+
+
+#交换机之间开启trunk链路
+interface GigabitEthernet 0/0/2
+port link-type trunk
+port trunk allow-pass vlan 10 20
+
+
+#PC配置access口加入vlan
+interface e0/0/3
+port link-type access
+port default vlan 10
+
+#-----------------------------------------------------------------------------
+#hybrid接口两个交换机之间
+interface e0/0/1
+port trunk allow-pass vlan 1        #本帧vlan为1
+port link-type hybrid
+port hybrid tagged vlan 10 20       #允许vlan10或者vlan20 通过
+
+
+#hybrid接口和PC之间的模式，转发不同的vlan请求
+interface e0/0/3
+undo port default vlan          #去掉默认vlan信息
+port link-type hybrid
+port hybrid untagged vlan 10    #所有回来的包都摘掉vlan 10 标签
+port hybrid pvid vlan 10        #默认PC发出去的包都是打上 vlan 10标签
+#-----------------------------------------------------------------------------
+
+
+#-------------------------------------------
+#交换机与交换机相连
+#-------------------------------------------
+
+interface GigabitEthernet0/0/1
+port hybrid tagged vlan 10 20 30        #vlan 10 20 30的数据包都能转发
+
+#-----------------------------------------------
+#交换机连接PC
+#-----------------------------------------------
+
+#vlan20区域，能接收vlan30的数据，进行去标识
+interface GigabitEthernet0/0/2
+ port hybrid pvid vlan 20
+ port hybrid untagged vlan 20 30
+
+
+#vlan10区域，能接收vlan30的数据，进行去标识
+interface GigabitEthernet0/0/3
+port hybrid pvid vlan 10
+port hybrid untagged vlan 10 3
+</pre></div>
+</div>
+</section>
+<section id="dhcp">
+<h2><a class="toc-backref" href="#id45"><span class="section-number">1.1.20. </span>常见的DHCP操作</a><a class="headerlink" href="#dhcp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>undo dhcp enable    #关闭dhcp服务
+dhcp enable         #开启dhcp服务
+
+#全局地址池配置
+system-view
+ip pool pool1
+network 10.1.1.0 mask 24
+gateway-list 10.1.1.1
+excluded-ip-address 10.1.1.100 10.1.1.200
+
+
+#接口地址池时的配置
+system-view
+dhcp enable
+interface vlanif 100
+ip address 10.1.1.1 24
+dhcp select interface
+dhcp server excluded-ip-address 10.1.1.100 10.1.1.200
+
+
+
+
+#----------------缺省情况下，设备作为DHCP服务器的缺省租期是1天；----------------------#
+#-------------Server ------------------------------------
+#采用全局地址池时的配置：
+system-view
+ip pool pool1
+lease day 10
+
+#采用接口地址池时的配置：
+system-view
+interface vlanif 100
+dhcp server lease day 10
+
+
+
+
+#------------Client -------------------------------------
+# 在作为DHCP客户端的设备上，修改租期为10天（即864000秒）。
+system-view
+interface vlanif 100
+dhcp client expected-lease 864000
+
+
+#为客户端分配固定的IP地址
+
+采用全局地址池时的配置：
+system-view
+ip pool pool1
+static-bind ip-address 10.1.1.100 mac-address dcd2-fc96-e4c0
+
+#采用接口地址池时的配置：
+system-view
+interface vlanif 100
+dhcp server static-bind ip-address 10.1.1.100 mac-address dcd2-fc96-e4c0
+</pre></div>
+</div>
+</section>
+<section id="id17">
+<h2><a class="toc-backref" href="#id46"><span class="section-number">1.1.21. </span>利用三层交换机实现vlan间路由</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">interface</span> <span class="n">vlanif</span> <span class="mi">10</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.254</span> <span class="mi">24</span>
+
+<span class="n">interface</span> <span class="n">vlanif</span> <span class="mi">20</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">2.254</span> <span class="mi">24</span>
+
+<span class="c1">#查看接口状态</span>
+<span class="n">display</span> <span class="n">ip</span> <span class="n">interface</span> <span class="n">brief</span>
+</pre></div>
+</div>
+</section>
+<section id="stp">
+<h2><a class="toc-backref" href="#id47"><span class="section-number">1.1.22. </span>STP生成树学习</a><a class="headerlink" href="#stp" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#开启stp</span>
+<span class="n">stp</span> <span class="n">mode</span> <span class="n">stp</span>
+
+<span class="c1">#开启rstp</span>
+<span class="n">stp</span> <span class="n">mode</span> <span class="n">rstp</span>
+
+<span class="c1">#查看stp摘要信息</span>
+<span class="n">display</span> <span class="n">stp</span> <span class="n">brief</span>
+
+<span class="c1">#查看生成树详细信息</span>
+<span class="n">display</span> <span class="n">stp</span>
+
+<span class="c1">#配置根交换机，备份根交换机</span>
+<span class="n">priority</span> <span class="mi">0</span>          <span class="c1">#根交换机</span>
+<span class="n">priority</span> <span class="mi">4096</span>       <span class="c1">#备份根交换机</span>
+
+<span class="c1">#或者使用以下方式设置</span>
+<span class="n">stp</span> <span class="n">root</span> <span class="n">priority</span>
+<span class="n">stp</span> <span class="n">root</span> <span class="n">secondary</span>
+
+<span class="c1">#调整优先级</span>
+<span class="n">stp</span> <span class="n">priority</span> <span class="mi">4096</span>
+<span class="n">display</span> <span class="n">stp</span>
+<span class="n">display</span> <span class="n">stp</span> <span class="n">brie</span>
+</pre></div>
+</div>
+</section>
+<section id="eth-trunk">
+<h2><a class="toc-backref" href="#id48"><span class="section-number">1.1.23. </span>Eth-trunk 链路聚合</a><a class="headerlink" href="#eth-trunk" title="Permalink to this headline">¶</a></h2>
+<section id="id18">
+<h3><a class="toc-backref" href="#id49">手工聚合</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#开启Eth-Trunk1</span>
+<span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
+<span class="c1">#手工负载分担模式</span>
+<span class="n">mode</span> <span class="n">manual</span> <span class="n">load</span><span class="o">-</span><span class="n">balance</span>
+
+<span class="c1">#方式一：接口加入eth-trunk</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+
+<span class="c1">#方式二： Eth-trunk中加入接口成员</span>
+<span class="p">[</span><span class="n">Switch</span><span class="p">]</span> <span class="n">interface</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="p">[</span><span class="n">Switch</span><span class="o">-</span><span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="p">]</span> <span class="n">trunkport</span> <span class="n">gigabitethernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span> <span class="n">to</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+
+<span class="c1">#查看链路聚合状态</span>
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+    <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="s1">&#39;s state information is &#39;</span><span class="p">:</span>
+    <span class="n">WorkingMode</span><span class="p">:</span> <span class="n">NORMAL</span>         <span class="n">Hash</span> <span class="n">arithmetic</span><span class="p">:</span> <span class="n">According</span> <span class="n">to</span> <span class="n">SIP</span><span class="o">-</span><span class="n">XOR</span><span class="o">-</span><span class="n">DIP</span>
+    <span class="n">Least</span> <span class="n">Active</span><span class="o">-</span><span class="n">linknumber</span><span class="p">:</span> <span class="mi">1</span>  <span class="n">Max</span> <span class="n">Bandwidth</span><span class="o">-</span><span class="n">affected</span><span class="o">-</span><span class="n">linknumber</span><span class="p">:</span> <span class="mi">8</span>
+    <span class="n">Operate</span> <span class="n">status</span><span class="p">:</span> <span class="n">up</span>          <span class="n">Number</span> <span class="n">Of</span> <span class="n">Up</span> <span class="n">Port</span> <span class="n">In</span> <span class="n">Trunk</span><span class="p">:</span> <span class="mi">2</span>
+    <span class="o">--------------------------------------------------------------------------------</span>
+    <span class="n">PortName</span>                      <span class="n">Status</span>      <span class="n">Weight</span>
+    <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>          <span class="n">Up</span>          <span class="mi">1</span>
+    <span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>          <span class="n">Up</span>          <span class="mi">1</span>
+
+
+<span class="c1">#查看链路聚合状态详细内容</span>
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">display</span> <span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
+<span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span> <span class="n">current</span> <span class="n">state</span> <span class="p">:</span> <span class="n">UP</span>
+<span class="n">Line</span> <span class="n">protocol</span> <span class="n">current</span> <span class="n">state</span> <span class="p">:</span> <span class="n">UP</span>
+<span class="n">Description</span><span class="p">:</span>
+<span class="n">Switch</span> <span class="n">Port</span><span class="p">,</span> <span class="n">PVID</span> <span class="p">:</span>    <span class="mi">1</span><span class="p">,</span> <span class="n">Hash</span> <span class="n">arithmetic</span> <span class="p">:</span> <span class="n">According</span> <span class="n">to</span> <span class="n">SIP</span><span class="o">-</span><span class="n">XOR</span><span class="o">-</span><span class="n">DIP</span><span class="p">,</span><span class="n">Maximal</span> <span class="n">BW</span><span class="p">:</span>
+ <span class="mi">2</span><span class="n">G</span><span class="p">,</span> <span class="n">Current</span> <span class="n">BW</span><span class="p">:</span> <span class="mi">2</span><span class="n">G</span><span class="p">,</span> <span class="n">The</span> <span class="n">Maximum</span> <span class="n">Frame</span> <span class="n">Length</span> <span class="ow">is</span> <span class="mi">9216</span>
+<span class="n">IP</span> <span class="n">Sending</span> <span class="n">Frames</span><span class="s1">&#39; Format is PKTFMT_ETHNT_2, Hardware address is 4c1f-cc66-3a39&#39;</span>
+<span class="n">Current</span> <span class="n">system</span> <span class="n">time</span><span class="p">:</span> <span class="mi">2018</span><span class="o">-</span><span class="mi">11</span><span class="o">-</span><span class="mi">25</span> <span class="mi">09</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">12</span><span class="o">-</span><span class="mi">08</span><span class="p">:</span><span class="mi">00</span>
+    <span class="n">Input</span> <span class="n">bandwidth</span> <span class="n">utilization</span>  <span class="p">:</span>    <span class="mi">0</span><span class="o">%</span>
+    <span class="n">Output</span> <span class="n">bandwidth</span> <span class="n">utilization</span> <span class="p">:</span>    <span class="mi">0</span><span class="o">%</span>
+<span class="o">-----------------------------------------------------</span>
+<span class="n">PortName</span>                      <span class="n">Status</span>      <span class="n">Weight</span>
+<span class="o">-----------------------------------------------------</span>
+<span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>          <span class="n">UP</span>          <span class="mi">1</span>
+<span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>          <span class="n">UP</span>          <span class="mi">1</span>
+<span class="o">----------------------------------------------------</span>
+</pre></div>
+</div>
+</section>
+<section id="lacp">
+<h3><a class="toc-backref" href="#id50">配置静态LACP模式</a><a class="headerlink" href="#lacp" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
+<span class="c1">#配置静态LACP模式</span>
+<span class="p">[</span><span class="n">SW1</span><span class="o">-</span><span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="p">]</span><span class="n">mode</span> <span class="n">lacp</span><span class="o">-</span><span class="n">static</span>
+
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+<span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+<span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">3</span>
+<span class="n">eth</span><span class="o">-</span><span class="n">trunk</span> <span class="mi">1</span>
+
+<span class="c1">#SW1为主动端，由主动端来配置活动接口，通过主动端的优先级数字，比较较小的为主动端，两端都已主动端的优先级来选择活动端口</span>
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">lacp</span> <span class="n">priority</span> <span class="mi">100</span>
+
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">interface</span> <span class="n">Eth</span><span class="o">-</span><span class="n">Trunk</span> <span class="mi">1</span>
+<span class="c1">#活动接口上限阈值为2</span>
+<span class="p">[</span><span class="n">SW1</span><span class="o">-</span><span class="n">Eth</span><span class="o">-</span><span class="n">Trunk1</span><span class="p">]</span><span class="nb">max</span> <span class="n">active</span><span class="o">-</span><span class="n">linknumber</span> <span class="mi">2</span>
+
+<span class="c1">#配置接口的优先级，确定活动链路</span>
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span>
+<span class="p">[</span><span class="n">SW1</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">lacp</span> <span class="n">priority</span> <span class="mi">100</span>
+<span class="p">[</span><span class="n">SW1</span><span class="p">]</span><span class="n">interface</span> <span class="n">GigabitEthernet</span> <span class="mi">0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">2</span>
+<span class="p">[</span><span class="n">SW1</span><span class="o">-</span><span class="n">GigabitEthernet0</span><span class="o">/</span><span class="mi">0</span><span class="o">/</span><span class="mi">1</span><span class="p">]</span><span class="n">lacp</span> <span class="n">priority</span> <span class="mi">10</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id19">
+<h2><a class="toc-backref" href="#id51"><span class="section-number">1.1.24. </span>静态路由</a><a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#配置缺省路由</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">4.2</span>
+
+<span class="c1">#配置静态路由</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.0</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">4.1</span>
+
+<span class="c1">#查看路由表信息</span>
+<span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span>
+
+<span class="c1">#静态路由有5个主要的参数：目的地址和掩码、出接口和下一跳、优先级</span>
+<span class="c1">#静态路由主备备份</span>
+
+<span class="c1">#出去路由</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">2.0</span> <span class="mi">24</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.2</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">2.0</span> <span class="mi">24</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">14.2</span> <span class="n">preference</span> <span class="mi">70</span>
+
+<span class="c1">#回城路由</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.0</span> <span class="mi">24</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">23.1</span>
+<span class="n">ip</span> <span class="n">route</span><span class="o">-</span><span class="n">static</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">1.0</span> <span class="mi">24</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">34.2</span> <span class="n">preference</span> <span class="mi">70</span>
+
+<span class="c1">#查看路由表详细信息</span>
+<span class="n">display</span> <span class="n">ip</span> <span class="n">routing</span><span class="o">-</span><span class="n">table</span> <span class="mf">10.1</span><span class="o">.</span><span class="mf">2.0</span> <span class="mi">24</span> <span class="n">verbos</span>
+
+<span class="c1">#查看当前配置的静态路由条目</span>
+<span class="n">display</span> <span class="n">current</span><span class="o">-</span><span class="n">configuration</span> <span class="o">|</span> <span class="n">include</span> <span class="n">static</span><span class="o">-</span><span class="n">route</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="1. 华为设备数通玩转" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="02.HCNA%E5%AE%9E%E9%AA%8C%E4%B8%BE%E4%BE%8B.html" class="btn btn-neutral float-right" title="1.2. HCNA网络技术实验指南" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

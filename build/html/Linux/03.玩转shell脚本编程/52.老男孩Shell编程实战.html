@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3.52. 老男孩Shell编程实战 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3.53. 快捷安装不同版本Python" href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html" />
+    <link rel="prev" title="3.51. 检测函数执行是否超时" href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">3. 玩转shell脚本编程</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86.html">3.1. 1 基础知识</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8E%E6%95%B0%E7%BB%84.html">3.2. 2 字符串与数组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.%E8%BF%90%E7%AE%97%E7%AC%A6.html">3.3. 3 运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6.html">3.4. 4 流程控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E5%87%BD%E6%95%B0.html">3.5. 5 函数</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">3.6. 6 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bgrep.html">3.7. 7 三剑客之grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E4%B8%89%E5%89%91%E5%AE%A2%E4%B9%8Bsed.html">3.8. 8 三剑客之sed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E4%B8%89%E5%89%91%E5%AE%A2-awk.html">3.9. 9 三剑客之awk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.shell%E6%8A%80%E5%B7%A7%E4%B8%8E%E6%9D%82%E9%A1%B9.html">3.10. shell技巧与杂项</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.xagrs%E4%BD%BF%E7%94%A8.html">3.11. xagrs使用</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.%E6%94%B6%E9%9B%86%E7%9A%84%E4%B8%80%E4%BA%9Bshell%E8%84%9A%E6%9C%AC.html">3.12. 收集的一些shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85zabbix%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%84%9A%E6%9C%AC.html">3.13. 自动化安装zabbix</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.%E8%87%AA%E5%8A%A8%E5%8C%96%E5%AE%89%E8%A3%85cacti%E8%84%9A%E6%9C%AC.html">3.14. 自动化安装cacti服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85MongoDB%E8%84%9A%E6%9C%AC.html">3.15. 自动化安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.%E5%A4%87%E4%BB%BDMongoDB%E8%84%9A%E6%9C%AC.html">3.16. 备份MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.%E8%87%AA%E5%8A%A8%E5%AE%89%E8%A3%85memcached%E8%84%9A%E6%9C%AC.html">3.17. 自动安装memcached</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.system%E6%A3%80%E6%B5%8B%E8%84%9A%E6%9C%AC.html">3.18. 系统各项内容检测check_os</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.%E5%AE%89%E8%A3%85tomcat%E8%84%9A%E6%9C%AC.html">3.19. 安装tomcat脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.install_zookeeper%E8%84%9A%E6%9C%AC.html">3.20. install_zookeeper脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.install_elasticserch%E8%84%9A%E6%9C%AC.html">3.21. install_elasticserch脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.%E8%87%AA%E5%8A%A8Autoinstall_ELK_V1.3.html">3.22. 自动Autoinstall_ELK_V1.3脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.install_vsftpd%E8%84%9A%E6%9C%AC.html">3.23. install_vsftpd_or_nfs脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.install_mysql5.7.html">3.24. install_mysql5.7</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Linux%E4%B8%8B%E4%BB%A5%E7%A7%92%E4%B8%BA%E5%8D%95%E4%BD%8D%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC.html">3.25. Linux下以秒为单位执行脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.%E5%A4%87%E4%BB%BD%E6%96%87%E4%BB%B6shell%E8%84%9A%E6%9C%AC.html">3.26. 备份文件shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.monitor_Linux%E7%B3%BB%E7%BB%9F%E6%80%A7%E8%83%BD.html">3.27. monitor_Linux系统性能</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%BF%AE%E6%94%B9IP_%E4%B8%BB%E6%9C%BA%E5%90%8D_%E7%BD%91%E5%8D%A1%E4%BF%A1%E6%81%AF%E8%84%9A%E6%9C%AC.html">3.28. 修改IP_主机名_网卡信息脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E6%A3%80%E6%9F%A5%E6%81%B6%E6%84%8FIP%E7%99%BB%E5%BD%95%EF%BC%8C%E6%8B%92%E7%BB%9DSSH.html">3.29. 检查恶意IP登录，拒绝SSH</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.%E6%95%B0%E6%8D%AE%E5%BA%93%E5%A4%87%E4%BB%BD.html">3.30. 数据库备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.Centos6%E5%BC%80%E6%9C%BA%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96.html">3.31. Centos6x开机性能优化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.%E7%99%BE%E5%AE%9D%E7%AE%B1%E8%84%9A%E6%9C%AC.html">3.32. 百宝箱脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.deploy_mongo.html">3.33. 使用python脚本安装MongoDB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.python%E5%AE%9E%E7%8E%B0%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F.html">3.34. python实现端口扫描</a></li>
+<li class="toctree-l3"><a class="reference internal" href="35.python%E6%A3%80%E6%B5%8Bip%E5%AD%98%E6%B4%BB%E7%8A%B6%E6%80%81.html">3.35. python检测ip存活状态</a></li>
+<li class="toctree-l3"><a class="reference internal" href="36.k8s_deploy%E8%84%9A%E6%9C%AC.html">3.36. k8s_deploy脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="37.example%28%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%A4%84%E7%90%86%29.html">3.37. example(字符串处理)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="38.%E7%94%A8Python%E5%AE%9E%E7%8E%B0%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BDMongodb%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%B9%B6%E4%B8%8A%E4%BC%A0%E5%88%B0FTP%E6%9C%8D%E5%8A%A1%E5%99%A8.html">3.38. 用Python实现定时备份Mongodb数据，并上传到FTP服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="39.Nginx%E6%97%A5%E5%BF%97%E5%88%87%E5%89%B2%E8%84%9A%E6%9C%AC.html">3.39. Nginx日志切割脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.%E4%B8%80%E9%94%AE%E5%AE%89%E8%A3%85Docker%E8%84%9A%E6%9C%AC.html">3.40. 一键安装docker脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.shell%E5%AE%9E%E7%8E%B0%E5%A4%9A%E5%B9%B6%E5%8F%91%E6%8E%A7%E5%88%B6%E8%84%9A%E6%9C%AC.html">3.41. shell实现多并发控制</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E7%B1%BB%E5%9E%8B.html">3.42. 判断文件类型</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.%E7%94%A8if%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.43. 用if语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.%E4%BD%BF%E7%94%A8while%E8%AF%AD%E5%8F%A5%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.44. 使用while语句编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.%E4%BD%BF%E7%94%A8until%E7%BC%96%E5%86%99%E9%80%89%E6%8B%A9%E8%8F%9C%E5%8D%95.html">3.45. 使用until编写选择菜单</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.%E7%9B%AE%E5%BD%95%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD.html">3.46. 目录定时备份</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E8%BF%9C%E7%A8%8B%E6%93%8D%E4%BD%9Cftp%E8%BF%9B%E8%A1%8C%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD.html">3.47. 远程操作ftp进行上传和下载</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.%E6%89%B9%E9%87%8F%E5%88%9B%E5%BB%BA%E7%94%A8%E6%88%B7%E8%84%9A%E6%9C%AC.html">3.48. 48.批量创建用户脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.Centos%E5%8D%87%E7%BA%A7%E5%86%85%E6%A0%B8%E7%89%88%E6%9C%AC%28%E9%99%84%E5%B8%A6%E5%8D%87%E7%BA%A7%E8%84%9A%E6%9C%AC%29.html">3.49. Centos升级内核版本(附带升级脚本)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.CPU%E7%9B%91%E6%8E%A7%E8%84%9A%E6%9C%AC.html">3.50. CPU监控脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html">3.51. 检测函数执行是否超时</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">3.52. 老男孩Shell编程实战</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">3.52.1. 什么是shell脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">3.52.2. 初始化操作系统脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">3.52.3. 开发检测脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#shellrsync">3.52.4. 利用Shell函数开发rsync服务启动脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">3.52.5. 一个颜色打印示例脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#case">3.52.6. 结合case给输出的语句加颜色</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#while">3.52.7. while循环</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">3.52.8. 数组用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">3.52.9. while循环按行读文件的方式总结</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">3.52.10. 批量检查多个网站地址是否正常。</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysql">3.52.11. 开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">3.52.12. Shell脚本调试技巧</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#expect">3.52.13. Expect用法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">3.52.14. 企业生产场景下的Expect案例</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ssh-ansible">3.52.15. 自动化部署SSH密钥认证+ansible的项目实战</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#exec">3.52.16. 使用exec调用其他外部命令或脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#fork">3.52.17. fork子进程的示例.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping1">3.52.18. 使用函数与&amp;后台进程实现多进程ping测试1.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping2">3.52.19. 使用函数与&amp;后台进程实现多进程ping测试2.</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#ping">3.52.20. 控制进程数量的ping测试脚本</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sshd-ssh">3.52.21. 修改SSHD配置文件,提升SSH安全性</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html">3.53. 快捷安装不同版本Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.%E5%B8%B8%E7%94%A8shell%E8%84%9A%E6%9C%AC%E5%A4%A7%E5%85%A8.html">3.54. 常用shell脚本大全</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E7%BC%96%E5%86%99Shell%E8%84%9A%E6%9C%AC%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5.html">3.55. 编写Shell脚本的最佳实践</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">3. </span>玩转shell脚本编程</a> &raquo;</li>
+      <li><span class="section-number">3.52. </span>老男孩Shell编程实战</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/03.玩转shell脚本编程/52.老男孩Shell编程实战.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#shell" id="id17">老男孩Shell编程实战</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id18">什么是shell脚本</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id19">脚本的执行方式</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id20">环境变量初始化与对应文件的生效顺序</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id4" id="id21">初始化操作系统脚本</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id22">开发检测脚本</a></p></li>
+<li><p><a class="reference internal" href="#shellrsync" id="id23">利用Shell函数开发rsync服务启动脚本</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id24">一个颜色打印示例脚本</a></p></li>
+<li><p><a class="reference internal" href="#case" id="id25">结合case给输出的语句加颜色</a></p></li>
+<li><p><a class="reference internal" href="#while" id="id26">while循环</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id27">数组用法</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id28">while循环按行读文件的方式总结</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id29">批量检查多个网站地址是否正常。</a></p></li>
+<li><p><a class="reference internal" href="#mysql" id="id30">开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id31">Shell脚本调试技巧</a></p>
+<ul>
+<li><p><a class="reference internal" href="#echo" id="id32">使用echo命令调试</a></p></li>
+<li><p><a class="reference internal" href="#bash" id="id33">使用bash命令参数调试</a></p></li>
+<li><p><a class="reference internal" href="#set" id="id34">使用set命令调试部分脚本内容</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id35">其他调试Shell脚本的工具</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#expect" id="id36">Expect用法</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id12" id="id37">在不使用密钥的情况下，实现非人为交互登录。</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id38">对服务器批量管理（了解)</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id14" id="id39">企业生产场景下的Expect案例</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id15" id="id40">批量执行命令</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id41">批量执行Shell脚本</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#ssh-ansible" id="id42">自动化部署SSH密钥认证+ansible的项目实战</a></p></li>
+<li><p><a class="reference internal" href="#exec" id="id43">使用exec调用其他外部命令或脚本</a></p></li>
+<li><p><a class="reference internal" href="#fork" id="id44">fork子进程的示例.</a></p></li>
+<li><p><a class="reference internal" href="#ping1" id="id45">使用函数与&amp;后台进程实现多进程ping测试1.</a></p></li>
+<li><p><a class="reference internal" href="#ping2" id="id46">使用函数与&amp;后台进程实现多进程ping测试2.</a></p></li>
+<li><p><a class="reference internal" href="#ping" id="id47">控制进程数量的ping测试脚本</a></p></li>
+<li><p><a class="reference internal" href="#sshd-ssh" id="id48">修改SSHD配置文件,提升SSH安全性</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="shell">
+<h1><a class="toc-backref" href="#id17"><span class="section-number">3.52. </span>老男孩Shell编程实战</a><a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">3.52.1. </span>什么是shell脚本</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>第一个脚本示例</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/env bash
+LPG_DIR=/var/log
+ROOT_UID=0
+
+#脚本需要使用root用户权限
+if [ -$&quot;$UID&quot; -ne &quot;$ROOT_UID&quot; ]; then
+  echo &quot;Must be root to run this script.&quot;
+  exit 1
+fi
+
+cd $LPG_DIR || {
+  echo &quot;Cannot change to necessary directory.&quot;
+  exit 1
+}
+
+cat /dev/null&gt;messages &amp;&amp; {
+   echo &quot;Logs cleaned up.&quot;
+   exit 0  # 退出之前返回0表示成功，返回1表示失
+}
+
+echo &quot;Logs cleaned up fail.&quot;
+exit 1
+</pre></div>
+</div>
+<blockquote>
+<div><p>脚本开头（第一行）</p>
+<p>#!/bin/sh</p>
+<p>#!/bin/bash</p>
+<p>提示：sh为bash的软链接，大多数情况下，脚本的开头使用“#！/bin/bash”和“#！/bin/sh”是没有区别的，但更规范的写法是在脚本的开头使用“#！/bin/bash”。</p>
+</div></blockquote>
+<section id="id2">
+<h3><a class="toc-backref" href="#id19">脚本的执行方式</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>1）bash script-name或sh script-name</p>
+<p>2）path/script-name或./script-name：指在当前路径下执行脚本（脚本需要有执行权限）</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">chmod</span> <span class="mi">755</span> <span class="n">path</span><span class="o">/</span><span class="n">script</span><span class="o">-</span><span class="n">name</span>
+</pre></div>
+</div>
+<p>3）source script-name或.script-name</p>
+<p>使用source或“.”可以将san.sh自身脚本中的变量值或函数等的返回值传递到当前父Shell脚本father.sh中使用。这是它和其他几种方法最大的区别</p>
+<p>使用的是父shell</p>
+<p>4）sh&lt;script-name或cat scripts-name|sh：同样适用于bash</p>
+<blockquote>
+<div><p>结论：通过source或“.”加载执行过的脚本，由于是在当前Shell中执行脚本，因此在脚本结束之后，脚本中的变量（包括函数）值在当前Shell中依然存在，而sh和bash执行脚本都会启动新的子Shell执行，执行完后退回到父Shell。因此，变量（包括函数）值等无法保留。</p>
+</div></blockquote>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="c1"># 通过管道符也能执行</span>
+cat oldboy.sh <span class="p">|</span> bash
+</pre></div>
+</div>
+</section>
+<section id="id3">
+<h3><a class="toc-backref" href="#id20">环境变量初始化与对应文件的生效顺序</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>/etc/profile —&gt; /etc/profile.d –&gt; $HOME/.bash_profile —-&gt; $HOME/.bashrc
+—&gt; /etc/bashrc</p>
+<p>顺序如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/etc/profile     #每个用户登录时都将启动此文件,存储环境变量,加载完/etc/profile再去加载/etc/profile.d/
+/etc/profile.d/*.sh
+$HOME/.bash_profile  #存储环境变量
+$HOME/.bashrc
+/etc/bashrc
+</pre></div>
+</div>
+<p>交互式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/etc/profile——当用户在运行级别3登录系统时首先运行。
+/etc/profile.d——当/etc/profile运行时，会调用该目录下的一些脚本。
+$HOME/.bash_profile
+$HOME/.bashrc——上述脚本的中一个运行后即调用此脚本。
+</pre></div>
+</div>
+<p>非交互式</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/.bashrc——如果此文件存在即被运行。
+/etc/bashrc——将被$HOME/.bashrc调用运行。
+/etc/profile.d——此目录下的脚本将被/etc/bashrc或/etc/bash.bashrc调用运行。
+</pre></div>
+</div>
+<blockquote>
+<div><p>提示</p>
+<p>如果希望在非登录Shell下也可读到设置的环境变量等内容，就需要将变量设定等写入</p>
+<p>$HOME/.bashrc</p>
+<p>/etc/bashrc</p>
+</div></blockquote>
+</section>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">3.52.2. </span>初始化操作系统脚本</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/bin:/sbin:/usr/sbin
+<span class="c1"># Require root to run this script.</span>
+<span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="nv">$UID</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Please run this script by root.&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="c1">#define cmd var</span>
+<span class="nv">SERVICE</span><span class="o">=</span><span class="sb">`</span>which service<span class="sb">`</span>
+<span class="nv">CHKCONFIG</span><span class="o">=</span><span class="sb">`</span>which chkconfig<span class="sb">`</span>
+
+<span class="k">function</span> mod_yum<span class="o">(){</span>
+<span class="c1">#modify yum path</span>
+<span class="k">if</span> <span class="o">[</span> -e /etc/yum.repos.d/CentOS-Base.repo <span class="o">]</span>
+    <span class="k">then</span>
+    mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup<span class="o">&amp;&amp;</span><span class="se">\</span>
+    wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+ <span class="k">fi</span>
+ <span class="o">}</span>
+
+<span class="k">function</span> close_selinux<span class="o">(){</span>
+<span class="c1">#1.close selinux</span>
+sed -i <span class="s1">&#39;s/SELINUX=enforcing/SELINUX=disabled/&#39;</span> /etc/selinux/config
+<span class="c1">#grep SELINUX=disabled /etc/selinux/config</span>
+setenforce <span class="m">0</span> <span class="p">&amp;</span>&gt;/dev/null
+<span class="c1">#getenforce</span>
+<span class="o">}</span>
+
+<span class="k">function</span> close_iptables<span class="o">(){</span>
+<span class="c1">#2.close iptables</span>
+/etc/init.d/iptables stop
+/etc/init.d/iptables stop
+chkconfig iptables off
+<span class="o">}</span>
+
+<span class="k">function</span> least_service<span class="o">(){</span>
+<span class="c1">#3.least service startup</span>
+chkconfig<span class="p">|</span>awk <span class="s1">&#39;{print &quot;chkconfig&quot;,$1,&quot;off&quot;}&#39;</span><span class="p">|</span>bash
+chkconfig<span class="p">|</span>egrep <span class="s2">&quot;crond|sshd|network|rsyslog|sysstat&quot;</span><span class="p">|</span>awk <span class="s1">&#39;{print &quot;chkconfig&quot;,$1,&quot;on&quot;}&#39;</span><span class="p">|</span>bash
+<span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en
+chkconfig --list<span class="p">|</span>grep <span class="m">3</span>:on
+<span class="o">}</span>
+
+<span class="k">function</span> adduser<span class="o">(){</span>
+<span class="c1">#4.add oldboy and sudo</span>
+<span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>grep -w oldboy /etc/passwd<span class="p">|</span>wc -l<span class="sb">`</span> -lt <span class="m">1</span> <span class="o">]</span>
+<span class="k">then</span>
+    useradd oldboy
+    <span class="nb">echo</span> <span class="m">123456</span><span class="p">|</span>passwd --stdin oldboy <span class="se">\c</span>p /etc/sudoers /etc/sudoers.ori
+    <span class="nb">echo</span> <span class="s2">&quot;oldboy&quot;</span> <span class="nv">ALL</span><span class="o">=(</span>ALL<span class="o">)</span> NOPASSWD: ALL <span class="s2">&quot; &gt;&gt;/etc/sudoers</span>
+<span class="s2">    tail -1 /etc/sudoers</span>
+<span class="s2">    visudo -c &amp;&gt;/dev/null</span>
+<span class="s2">fi</span>
+<span class="s2">}</span>
+
+
+<span class="s2">function charset(){</span>
+<span class="s2">#5.charset config</span>
+<span class="s2">cp /etc/sysconfig/i18n /etc/sysconfig/i18n.ori</span>
+<span class="s2">echo &#39;LANG=&quot;</span>zh_CN.UTF-8<span class="s2">&quot;&#39; &gt;/etc/sysconfig/i18n</span>
+<span class="s2">source /etc/sysconfig/i18n</span>
+<span class="s2">#echo </span><span class="nv">$LANG</span><span class="s2"></span>
+<span class="s2">}</span>
+
+<span class="s2">function time_sync(){</span>
+<span class="s2">#6.time sync.</span>
+<span class="s2">cron=/var/spool/cron/root</span>
+<span class="s2">if [ `grep -w &quot;</span>ntpdate<span class="s2">&quot; </span><span class="nv">$cron</span><span class="s2">|wc -l` -lt 1 ]</span>
+<span class="s2">then</span>
+<span class="s2">    echo &#39;#time sync by oldboy at 2010-2-1&#39; &gt;&gt;</span><span class="nv">$cron</span><span class="s2"></span>
+<span class="s2">    echo &#39;*/5 * * * * /usr/sbin/ntpdate time.nist.gov &gt;/dev/null 2&gt;&amp;1&#39; &gt;&gt;</span><span class="nv">$cron</span><span class="s2"></span>
+<span class="s2">    crontab -l</span>
+<span class="s2">fi</span>
+<span class="s2">}</span>
+
+<span class="s2">function com_line_set(){</span>
+<span class="s2">#7.command set.</span>
+<span class="s2">if [ `egrep &quot;</span>TMOUT<span class="p">|</span>HISTSIZE<span class="p">|</span>ISTFILESIZE<span class="s2">&quot; /etc/profile|wc -l` -lt 3 ]</span>
+<span class="s2">then</span>
+<span class="s2">    echo &#39;export TMOUT=300&#39; &gt;&gt;/etc/profile</span>
+<span class="s2">    echo &#39;export HISTSIZE=5&#39; &gt;&gt;/etc/profile</span>
+<span class="s2">    echo &#39;export HISTFILESIZE=5&#39; &gt;&gt;/etc/profile</span>
+<span class="s2">    . /etc/profile</span>
+<span class="s2">fi</span>
+<span class="s2">}</span>
+
+<span class="s2">function open_file_set(){</span>
+<span class="s2">#8.increase open file.</span>
+<span class="s2">if [ `grep 65535 /etc/security/limits.conf|wc -l` -lt 1 ]</span>
+<span class="s2">then</span>
+<span class="s2">    echo &#39;*   -   nofile 65535 &#39; &gt;&gt;/etc/security/limits.conf</span>
+<span class="s2">    tail -1 /etc/security/limits.conf</span>
+<span class="s2">    fi</span>
+<span class="s2">}</span>
+
+<span class="s2">function set_kernel(){</span>
+<span class="s2">#9.kernel set.</span>
+<span class="s2">if [ `grep kernel_flag /etc/sysctl.conf|wc -l` -lt 1 ]</span>
+<span class="s2">    then</span>
+<span class="s2">    cat &gt;&gt; /etc/sysctl.conf &lt;&lt;-EOF</span>
+<span class="s2">    #kernel_flag</span>
+<span class="s2">    net.ipv4.tcp_fin_timeout = 2</span>
+<span class="s2">    net.ipv4.tcp_tw_reuse = 1</span>
+<span class="s2">    net.ipv4.tcp_tw_recycle = 1</span>
+<span class="s2">    net.ipv4.tcp_syncookies = 1</span>
+<span class="s2">    net.ipv4.tcp_keepalive_time = 600</span>
+<span class="s2">    net.ipv4.ip_local_port_range = 4000 65000</span>
+<span class="s2">    net.ipv4.tcp_max_syn_backlog = 16384</span>
+<span class="s2">    net.ipv4.tcp_max_tw_buckets = 36000</span>
+<span class="s2">    net.ipv4.route.gc_timeout = 100</span>
+<span class="s2">    net.ipv4.tcp_syn_retries = 1</span>
+<span class="s2">    net.ipv4.tcp_synack_retries = 1</span>
+<span class="s2">    net.core.somaxconn = 16384</span>
+<span class="s2">    net.core.netdev_max_backlog = 16384</span>
+<span class="s2">    net.ipv4.tcp_max_orphans = 16384</span>
+<span class="s2">    net.nf_conntrack_max = 25000000</span>
+<span class="s2">    net.netfilter.nf_conntrack_max = 25000000</span>
+<span class="s2">    net.netfilter.nf_conntrack_tcp_timeout_established = 180</span>
+<span class="s2">    net.netfilter.nf_conntrack_tcp_timeout_time_wait = 120</span>
+<span class="s2">    net.netfilter.nf_conntrack_tcp_timeout_close_wait = 60</span>
+<span class="s2">    net.netfilter.nf_conntrack_tcp_timeout_fin_wait = 120</span>
+<span class="s2">EOF</span>
+<span class="s2">    sysctl -p</span>
+<span class="s2">    fi</span>
+
+<span class="s2">}</span>
+
+<span class="s2">function init_ssh(){</span>
+<span class="s2">    cp /etc/ssh/sshd_config /etc/ssh/sshd_config.`date +&quot;</span>%Y-%m-%d_%H-%M-%S<span class="s2">&quot;`</span>
+<span class="s2">    sed -i &#39;s%#Port 22%Port 52113%&#39; /etc/ssh/sshd_config</span>
+<span class="s2">    sed -i &#39;s%#PermitRootLogin yes%PermitRootLogin no%&#39; /etc/ssh/sshd_config</span>
+<span class="s2">    sed -i &#39;s%#PermitEmptyPasswords no%PermitEmptyPasswords no%&#39; /etc/ssh/ sshd_config</span>
+<span class="s2">    sed -i &#39;s%#UseDNS yes%UseDNS no%&#39; /etc/ssh/sshd_config</span>
+<span class="s2">    /etc/init.d/sshd reload &amp;&gt;/dev/null</span>
+<span class="s2">}</span>
+
+<span class="s2">function update_linux(){</span>
+<span class="s2">#10.upgrade linux.</span>
+<span class="s2">if [ `rpm -qa lrzsz nmap tree dos2unix nc|wc -l` -le 3 ]</span>
+<span class="s2">then</span>
+<span class="s2">    yum install lrzsz nmap tree dos2unix nc -y</span>
+<span class="s2">    yum update -y</span>
+<span class="s2">fi</span>
+<span class="s2">}</span>
+
+<span class="s2">function main() {</span>
+<span class="s2">    mod_yum</span>
+<span class="s2">    close_iptables</span>
+<span class="s2">    close_selinux</span>
+<span class="s2">    least_service</span>
+<span class="s2">    adduser</span>
+<span class="s2">    charset</span>
+<span class="s2">    time_sync</span>
+<span class="s2">    com_line_set</span>
+<span class="s2">    open_file_set</span>
+<span class="s2">    set_kernel</span>
+<span class="s2">    init_ssh</span>
+<span class="s2">    update_linux</span>
+<span class="s2">}</span>
+<span class="s2">main</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">3.52.3. </span>开发检测脚本</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="c1"># set env</span>
+<span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/bin:/sbin:/usr/sbin
+
+<span class="o">[</span> <span class="s2">&quot;UID&quot;</span> !<span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span> <span class="o">&amp;&amp;</span> <span class="o">{</span> <span class="nb">echo</span> <span class="s2">&quot;Please run this script by root.&quot;</span> <span class="p">;</span><span class="nb">exit</span> <span class="m">1</span> <span class="o">}</span>
+
+<span class="c1"># Source function library</span>
+. /etc/init.d/functions
+
+
+<span class="k">function</span> check_yum<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">Base</span><span class="o">=</span>/etc/yum.repos.d/CentOS-Base.repo
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>grep aliyun <span class="nv">$Base</span><span class="p">|</span>wc -l<span class="sb">`</span> -ge <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        action <span class="s2">&quot;</span><span class="nv">$Base</span><span class="s2"> config&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;</span><span class="nv">$Base</span><span class="s2"> config&quot;</span> /bin/false
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> check_selinux<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">config</span><span class="o">=</span>/etc/selinux/config
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>grep <span class="s2">&quot;SELINUX=disabled&quot;</span> <span class="nv">$config</span><span class="p">|</span>wc -l<span class="sb">`</span> -ge <span class="m">1</span>  <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+        action <span class="s2">&quot;</span><span class="nv">$config</span><span class="s2"> config&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;</span><span class="nv">$config</span><span class="s2"> config&quot;</span> /bin/false
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> check_service<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">export</span> <span class="nv">LANG</span><span class="o">=</span>en
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>chkconfig<span class="p">|</span>grep <span class="m">3</span>:on<span class="p">|</span>egrep <span class="s2">&quot;crond|sshd|network|rsyslog|sysstat&quot;</span><span class="p">|</span>wc -l<span class="sb">`</span> -eq <span class="m">5</span> <span class="o">]</span>
+    <span class="k">then</span>
+        action <span class="s2">&quot;sys service init&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;sys service init&quot;</span> /bin/false
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+
+<span class="k">function</span> check_open_file<span class="o">(){</span>
+    <span class="nv">limits</span><span class="o">=</span>/etc/security/limits.conf
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>grep <span class="m">65535</span> <span class="nv">$limits</span><span class="p">|</span>wc -l<span class="sb">`</span> -eq <span class="m">1</span> <span class="o">]</span>
+    <span class="k">then</span>
+        action <span class="s2">&quot;</span><span class="nv">$limits</span><span class="s2">&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;</span><span class="nv">$limits</span><span class="s2">&quot;</span> /bin/false
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> main<span class="o">()</span> <span class="o">{</span>
+    check_yum
+    check_selinux
+    check_service
+    check_open_file
+<span class="o">}</span>
+
+main
+</pre></div>
+</div>
+</section>
+<section id="shellrsync">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">3.52.4. </span>利用Shell函数开发rsync服务启动脚本</a><a class="headerlink" href="#shellrsync" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+. /etc/init.d/functions
+
+<span class="k">function</span> usage<span class="o">(){</span>
+    <span class="nb">echo</span> $<span class="s2">&quot;usage:</span><span class="nv">$0</span><span class="s2"> {start|stop|restart}&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+ <span class="o">}</span>
+
+
+<span class="k">function</span> start<span class="o">(){</span>
+    rsync --daemon
+    sleep <span class="m">1</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>netstat -lntup<span class="p">|</span>grep rsync<span class="p">|</span>wc -l<span class="sb">`</span> -ge <span class="m">1</span> <span class="o">]</span>
+    <span class="k">then</span>
+        action <span class="s2">&quot;rsyncd is started.&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;rsyncd is started.&quot;</span> /bin/false
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> stop<span class="o">(){</span>
+    killall rsync <span class="p">&amp;</span>&gt;/dev/null
+    sleep <span class="m">2</span>
+    <span class="k">if</span> <span class="o">[</span> <span class="sb">`</span>netstat -lntup<span class="p">|</span>grep rsync<span class="p">|</span>wc -l<span class="sb">`</span> -eq <span class="m">0</span> <span class="o">]</span>
+    <span class="k">then</span>
+        action <span class="s2">&quot;rsyncd is stopped.&quot;</span> /bin/true
+    <span class="k">else</span>
+        action <span class="s2">&quot;rsyncd is started.&quot;</span> /bin/false
+<span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="k">function</span> main<span class="o">(){</span>
+<span class="c1">#    if [ $# -ne 1 ];then</span>
+<span class="c1">#        usage</span>
+<span class="c1">#    fi</span>
+<span class="c1">#    if [ &quot;$1&quot; = &quot;start&quot; ]</span>
+<span class="c1">#    then</span>
+<span class="c1">#        start</span>
+<span class="c1">#    elif [ &quot;$1&quot; = &quot;stop&quot; ]</span>
+<span class="c1">#    then</span>
+<span class="c1">#        stop</span>
+<span class="c1">#    elif [ &quot;$1&quot; = &quot;restart&quot; ]</span>
+<span class="c1">#    then</span>
+<span class="c1">#        stop</span>
+<span class="c1">#        sleep 1</span>
+<span class="c1">#        start</span>
+<span class="c1">#    else</span>
+<span class="c1">#        usage</span>
+<span class="c1">#    fi</span>
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2">&quot;</span> <span class="k">in</span>
+    <span class="s2">&quot;start&quot;</span><span class="o">)</span>
+        start
+       <span class="p">;;</span>
+    <span class="s2">&quot;stop&quot;</span><span class="o">)</span>
+        stop
+       <span class="p">;;</span>
+    <span class="s2">&quot;restart&quot;</span><span class="o">)</span>
+        stop
+        sleep <span class="m">1</span>
+        start
+       <span class="p">;;</span>
+     *<span class="o">)</span>
+        usage
+     <span class="p">;;</span>
+    <span class="k">esac</span>
+<span class="o">}</span>
+main <span class="nv">$*</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id24"><span class="section-number">3.52.5. </span>一个颜色打印示例脚本</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+<span class="nv">RED_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;31m&#39;</span>
+<span class="nv">GREEN_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;32m&#39;</span>
+<span class="nv">YELLOW_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;33m&#39;</span>
+<span class="nv">BLUE_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;34m&#39;</span>
+<span class="nv">RES</span><span class="o">=</span><span class="s1">&#39;\E[0m&#39;</span>
+
+usage<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Usage: basename </span><span class="nv">$0</span><span class="s2"> {1|2|3|4}&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="o">}</span>
+
+menu<span class="o">(){</span>
+cat <span class="s">&lt;&lt;END</span>
+<span class="s">1.apple</span>
+<span class="s">2.pear</span>
+<span class="s">3.banana</span>
+<span class="s">END</span>
+<span class="o">}</span>
+
+chose<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">read</span> -p <span class="s2">&quot;Pls input your choice: &quot;</span> fruit
+    <span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$fruit</span><span class="s2">&quot;</span> <span class="k">in</span>
+        <span class="m">1</span><span class="o">)</span>
+            <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED_COLOR</span><span class="si">}</span><span class="s2">apple</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">;;</span>
+        <span class="m">2</span><span class="o">)</span>
+           <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GREEN_COLOR</span><span class="si">}</span><span class="s2">pear</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span>
+           <span class="p">;;</span>
+        <span class="m">3</span><span class="o">)</span>
+            <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">YELLOW_COLOR</span><span class="si">}</span><span class="s2">banana</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">;;</span>
+        *<span class="o">)</span>
+            usage
+    <span class="k">esac</span>
+<span class="o">}</span>
+
+main<span class="o">()</span> <span class="o">{</span>
+    menu
+    chose
+<span class="o">}</span>
+
+main
+</pre></div>
+</div>
+</section>
+<section id="case">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">3.52.6. </span>结合case给输出的语句加颜色</a><a class="headerlink" href="#case" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+plus_color<span class="o">(){</span>
+<span class="nv">RED_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;31m&#39;</span>
+<span class="nv">GREEN_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;32m&#39;</span>
+<span class="nv">YELLOW_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;33m&#39;</span>
+<span class="nv">BLUE_COLOR</span><span class="o">=</span><span class="s1">&#39;\E[1;34m&#39;</span>
+<span class="nv">PINK</span><span class="o">=</span><span class="s1">&#39;\E[1;35m&#39;</span>
+<span class="nv">RES</span><span class="o">=</span><span class="s1">&#39;\E[0m&#39;</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -ne <span class="m">2</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Usage </span><span class="nv">$0</span><span class="s2"> content {red|yellow|blue|green|pink}&quot;</span>
+    <span class="nb">exit</span>
+<span class="k">fi</span>
+
+<span class="k">case</span> <span class="s2">&quot;</span><span class="nv">$2</span><span class="s2">&quot;</span> <span class="k">in</span>
+red<span class="p">|</span>RED<span class="o">)</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">RED_COLOR</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;;</span>
+green<span class="p">|</span>GREEN<span class="o">)</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">GREEN_COLOR</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;;</span>
+yellow<span class="p">|</span>YELLOW<span class="o">)</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">YELLOW_COLOR</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;;</span>
+blue<span class="p">|</span>BLUE<span class="o">)</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">BLUE_COLOR</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;;</span>
+pink<span class="p">|</span>PINK<span class="o">)</span>
+    <span class="nb">echo</span> -e <span class="s2">&quot;</span><span class="si">${</span><span class="nv">PINK</span><span class="si">}</span><span class="nv">$1</span><span class="si">${</span><span class="nv">RES</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">;;</span>
+*<span class="o">)</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Usage </span><span class="nv">$0</span><span class="s2"> content {red|yellow|blue|green|pink}&quot;</span>
+    <span class="nb">exit</span>
+<span class="k">esac</span>
+
+<span class="o">}</span>
+plus_color <span class="s2">&quot;I&quot;</span> red
+plus_color <span class="s2">&quot;am&quot;</span> green
+plus_color <span class="s2">&quot;hujianli&quot;</span> blue
+</pre></div>
+</div>
+</section>
+<section id="while">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">3.52.7. </span>while循环</a><a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="c1"># 每隔2s在屏幕上输出负载值</span>
+<span class="c1">#while true</span>
+<span class="c1">#do</span>
+<span class="c1">#    uptime</span>
+<span class="c1">#    sleep 2</span>
+<span class="c1">#done</span>
+
+<span class="k">while</span> <span class="o">[</span> <span class="m">1</span> <span class="o">]</span><span class="p">;</span> <span class="k">do</span>
+    uptime &gt;&gt; /tmp/uptime.log
+    usleep <span class="m">2000000</span>          <span class="c1">#单位是微秒，其实也是两秒</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">3.52.8. </span>数组用法</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="nv">array</span><span class="o">=(</span>
+hujianli1
+hujianli2
+hujianli3
+hujianli4
+<span class="o">)</span>
+
+<span class="k">for</span> <span class="o">((</span> <span class="nv">i</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span> i &lt;<span class="si">${#</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span><span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;This is num </span><span class="nv">$i</span><span class="s2">,then content is </span><span class="si">${</span><span class="nv">array</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+<span class="nb">echo</span> <span class="s2">&quot;---------------------------&quot;</span>
+<span class="nb">echo</span> <span class="s2">&quot;array len:</span><span class="si">${#</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1">#This is num 0,then content is hujianli1</span>
+<span class="c1">#This is num 1,then content is hujianli2</span>
+<span class="c1">#This is num 2,then content is hujianli3</span>
+<span class="c1">#This is num 3,then content is hujianli4</span>
+<span class="c1">#---------------------------</span>
+<span class="c1">#array len:4</span>
+
+
+
+
+<span class="c1">#  C语言的for循环</span>
+<span class="nv">array</span><span class="o">=(</span><span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">5</span><span class="o">)</span>
+
+<span class="k">for</span> <span class="o">((</span> <span class="nv">VAR</span> <span class="o">=</span> <span class="m">0</span><span class="p">;</span> VAR &lt; <span class="si">${#</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span><span class="p">;</span> VAR++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[VAR]</span><span class="si">}</span>
+<span class="k">done</span>
+
+
+
+<span class="c1"># 普通for循环</span>
+<span class="nv">array</span><span class="o">=(</span><span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">5</span><span class="o">)</span>
+<span class="k">for</span> VAR <span class="k">in</span> <span class="si">${</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span> <span class="p">;</span> <span class="k">do</span>
+    <span class="nb">echo</span> <span class="nv">$VAR</span>
+<span class="k">done</span>
+
+
+<span class="c1"># 使用while循环打印数组元素</span>
+<span class="nv">array</span><span class="o">=(</span><span class="m">1</span> <span class="m">2</span> <span class="m">3</span> <span class="m">4</span> <span class="m">5</span><span class="o">)</span>
+<span class="nv">i</span><span class="o">=</span><span class="m">0</span>
+<span class="k">while</span> <span class="o">((</span>i&lt;<span class="si">${#</span><span class="nv">array</span><span class="p">[*]</span><span class="si">}</span><span class="o">))</span>
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="si">${</span><span class="nv">array</span><span class="p">[i]</span><span class="si">}</span>
+    <span class="o">((</span>i++<span class="o">))</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">3.52.9. </span>while循环按行读文件的方式总结</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<p>方式1：采用exec读取文件，然后进入while循环处理。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">exec</span> &lt;FILE
+<span class="nv">sum</span><span class="o">=</span><span class="m">0</span>
+<span class="k">while</span> <span class="nb">read</span> line <span class="k">do</span>
+    cmd
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>方式2：使用cat读取文件内容，然后通过管道进入while循环处理。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>cat FILE_PATH<span class="p">|</span><span class="k">while</span> <span class="nb">read</span> line
+<span class="k">do</span>
+    cmd
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>方式3：在while循环结尾done处通过输入重定向指定读取的文件。</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="k">while</span> <span class="nb">read</span> line
+<span class="k">do</span>
+    cmd
+<span class="k">done</span>&lt;FILE
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id29"><span class="section-number">3.52.10. </span>批量检查多个网站地址是否正常。</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+. /etc/init.d/functions
+<span class="nv">check_count</span><span class="o">=</span><span class="m">0</span>
+<span class="nv">url_list</span><span class="o">=(</span>
+<span class="c1">#&lt;==定义检测的URL数组，包含多个URL地址。</span>
+http://blog.oldboyedu.com
+http://blog.etiantian.org
+http://oldboy.blog.51cto.com
+http://10.0.0.7
+<span class="o">)</span>
+
+<span class="k">function</span> wait<span class="o">(){</span>
+    <span class="nb">echo</span> -n <span class="s1">&#39;3秒后,执行检查URL操作.&#39;</span><span class="p">;</span>
+    <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">0</span><span class="p">;</span>i&lt;<span class="m">3</span><span class="p">;</span>i++<span class="o">))</span>
+    <span class="k">do</span>
+        <span class="nb">echo</span> -n <span class="s2">&quot;.&quot;</span><span class="p">;</span>sleep <span class="m">1</span>
+    <span class="k">done</span>
+    <span class="nb">echo</span>
+<span class="o">}</span>
+
+<span class="k">function</span> check_url<span class="o">()</span> <span class="o">{</span>
+    <span class="nb">wait</span>
+    <span class="k">for</span> <span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">0</span><span class="p">;</span> i&lt;<span class="sb">`</span><span class="nb">echo</span> <span class="si">${#</span><span class="nv">url_list</span><span class="p">[*]</span><span class="si">}</span><span class="sb">`</span><span class="p">;</span> i++<span class="o">))</span>
+    <span class="k">do</span>
+        wget -o /dev/null -T <span class="m">3</span> --tries<span class="o">=</span><span class="m">1</span> --spider <span class="si">${</span><span class="nv">url_list</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span> &gt;/dev/null <span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span>
+            <span class="k">then</span>
+            action <span class="s2">&quot;</span><span class="si">${</span><span class="nv">url_list</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> /bin/true
+        <span class="k">else</span>
+            action <span class="s2">&quot;</span><span class="si">${</span><span class="nv">url_list</span><span class="p">[</span><span class="nv">$i</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> /bin/false
+        <span class="k">fi</span>
+    <span class="k">done</span>
+    <span class="o">((</span>check_count++<span class="o">))</span>
+<span class="o">}</span>
+main<span class="o">()</span> <span class="o">{</span>
+    <span class="k">while</span> true<span class="p">;</span> <span class="k">do</span>
+        check_url
+        <span class="nb">echo</span> <span class="s2">&quot;-----------check count:</span><span class="si">${</span><span class="nv">check_count</span><span class="si">}</span><span class="s2">-----------------&quot;</span>
+        sleep <span class="m">10</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+
+main
+</pre></div>
+</div>
+</section>
+<section id="mysql">
+<h2><a class="toc-backref" href="#id30"><span class="section-number">3.52.11. </span>开发一个守护进程脚本，每30秒监控一次MySQL主从复制是否异常</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+CheckDb<span class="o">(){</span>
+    <span class="nv">status</span><span class="o">=(</span><span class="k">$(</span>awk -F <span class="s1">&#39;:&#39;</span> <span class="s1">&#39;/_Running|_Behind/{print $NF}&#39;</span> slave.log<span class="k">)</span><span class="o">)</span>
+    <span class="k">for</span><span class="o">((</span><span class="nv">i</span><span class="o">=</span><span class="m">0</span><span class="p">;</span>i&lt;<span class="si">${#</span><span class="nv">status</span><span class="p">[*]</span><span class="si">}</span><span class="p">;</span>i++<span class="o">))</span>
+        <span class="k">do</span>
+            <span class="nv">count</span><span class="o">=</span><span class="m">0</span>
+        <span class="k">if</span> <span class="o">[</span> <span class="s2">&quot;</span><span class="si">${</span><span class="nv">status</span><span class="p">[</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;Yes&quot;</span> -a <span class="s2">&quot;</span><span class="si">${</span><span class="nv">status</span><span class="p">[</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span> !<span class="o">=</span> <span class="s2">&quot;0&quot;</span> <span class="o">]</span>
+        <span class="k">then</span>
+            <span class="nb">let</span> <span class="nv">count</span><span class="o">+=</span><span class="m">1</span>
+        <span class="k">fi</span>
+    <span class="k">done</span>
+
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$count</span> -ne <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;mysql replcation is failed&quot;</span>
+        <span class="k">return</span> <span class="m">1</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;mysql replcation is sucess&quot;</span>
+        <span class="k">return</span> <span class="m">0</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+main<span class="o">(){</span>
+    <span class="k">while</span> <span class="nb">true</span>
+    <span class="k">do</span>
+        CheckDb
+        sleep <span class="m">30</span>
+    <span class="k">done</span>
+<span class="o">}</span>
+
+main
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id31"><span class="section-number">3.52.12. </span>Shell脚本调试技巧</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<section id="echo">
+<h3><a class="toc-backref" href="#id32">使用echo命令调试</a><a class="headerlink" href="#echo" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>echo命令是最有用的调试脚本的工具之一。
+一般应在可能出现问题的脚本的重要部分加入echo命令，
+例如在变量读取或修改操作的前后加入echo命令，并紧挨着退出命令exit。
+</pre></div>
+</div>
+</section>
+<section id="bash">
+<h3><a class="toc-backref" href="#id33">使用bash命令参数调试</a><a class="headerlink" href="#bash" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>sh [-nvx] scripts.sh
+
+参数说明如下。
+
+
+·-n：不会执行该脚本，仅查询脚本语法是否有问题，并给出错误提示。
+·-v：在执行脚本时，先将脚本的内容输出到屏幕上，然后执行脚本，如果有错误，也会给出错误提示。
+·-x：将执行的脚本内容及输出显示到屏幕上，这是对调试很有用的参数。跟踪sh脚本的执行过程。
+
+利用“sh-x脚本名”调试的缺点可以用set-x命令来弥补，它可以缩小调试的作用域。
+</pre></div>
+</div>
+</section>
+<section id="set">
+<h3><a class="toc-backref" href="#id34">使用set命令调试部分脚本内容</a><a class="headerlink" href="#set" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>set命令也可以用于辅助脚本调试。
+
+以下是set命令常用的调试选项。
+·set-n：读命令但并不执行。
+·set-v：显示读取的所有行。
+·set-x：显示所有命令及其参数。
+</pre></div>
+</div>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id35">其他调试Shell脚本的工具</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>（1）Shell调试工具：bashdb</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Shell调试器bashdb是一个类似于GDB的调试工具，可以完成对Shell脚本的断点设置、单步执行、变量观察等许多功能，
+</pre></div>
+</div>
+<p>（2）Shell调试工具：shellcheck</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">shellcheck是一个可检查sh</span><span class="o">/</span><span class="n">bash脚本和命令语法的小工具</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="expect">
+<h2><a class="toc-backref" href="#id36"><span class="section-number">3.52.13. </span>Expect用法</a><a class="headerlink" href="#expect" title="Permalink to this headline">¶</a></h2>
+<section id="id12">
+<h3><a class="toc-backref" href="#id37">在不使用密钥的情况下，实现非人为交互登录。</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">ssh.exp</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/expect</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+<span class="nb">set</span> IP <span class="s2">&quot;192.168.1.9&quot;</span>
+<span class="nb">set</span> USER <span class="s2">&quot;root&quot;</span>
+<span class="nb">set</span> PASS <span class="s2">&quot;admin#123&quot;</span>
+<span class="nb">set</span> timeout <span class="m">30</span>
+spawn ssh <span class="nv">$USER</span>@<span class="nv">$IP</span>
+expect <span class="o">{</span>
+<span class="s2">&quot;(yes/no)&quot;</span> <span class="o">{</span>send <span class="s2">&quot;yes\r&quot;</span><span class="p">;</span> exp_continue<span class="o">}</span>
+<span class="s2">&quot;password:&quot;</span> <span class="o">{</span>send <span class="s2">&quot;</span><span class="nv">$PASS</span><span class="s2">\r&quot;</span><span class="o">}</span>
+<span class="o">}</span>
+expect <span class="s2">&quot;#&quot;</span>          <span class="c1"># 判断上次输入结果中是否包含&quot;password:&quot;字符串，如果有则立即返回，向下执行，否则就一直等待，知道超时时间到</span>
+send <span class="s2">&quot;touch /root/hujianli001.txt\r&quot;</span>
+send <span class="s2">&quot;ls /etc &gt; /root/hujianli001.txt\r&quot;</span>
+send <span class="s2">&quot;mkdir /tmp/hujianli001\r&quot;</span>
+send <span class="s2">&quot;exit\r&quot;</span>
+expect eof
+</pre></div>
+</div>
+<p>执行</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">ssh</span><span class="o">.</span><span class="n">exp</span>
+</pre></div>
+</div>
+</section>
+<section id="id13">
+<h3><a class="toc-backref" href="#id38">对服务器批量管理（了解)</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">login.sh</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+<span class="nb">echo</span>
+<span class="k">for</span> ip <span class="k">in</span> <span class="sb">`</span>awk <span class="s1">&#39;{print $1}&#39;</span> /root/ip_pass.txt<span class="sb">`</span> <span class="p">;</span> <span class="k">do</span>
+    <span class="nv">pass</span><span class="o">=</span><span class="sb">`</span>grep <span class="nv">$ip</span> /root/ip_pass.txt<span class="p">|</span>awk <span class="s1">&#39;{print $2}&#39;</span><span class="sb">`</span>
+    expect /root/ssh2.exp <span class="nv">$ip</span> <span class="nv">$pass</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ip_pass.txt</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.9</span> <span class="n">admin</span><span class="c1">#123</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">ssh2.exp</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/expect</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+<span class="nb">set</span> IP <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">0</span><span class="o">]</span>
+<span class="nb">set</span> USER <span class="s2">&quot;root&quot;</span>
+<span class="nb">set</span> PASS <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">1</span><span class="o">]</span>
+<span class="nb">set</span> timeout <span class="m">30</span>
+spawn ssh <span class="nv">$USER</span>@<span class="nv">$IP</span>
+expect <span class="o">{</span>
+<span class="s2">&quot;(yes/no)&quot;</span> <span class="o">{</span>send <span class="s2">&quot;yes\r&quot;</span><span class="p">;</span> exp_continue<span class="o">}</span>
+<span class="s2">&quot;password:&quot;</span> <span class="o">{</span>send <span class="s2">&quot;</span><span class="nv">$PASS</span><span class="s2">\r&quot;</span><span class="o">}</span>
+<span class="o">}</span>
+
+expect <span class="s2">&quot;#&quot;</span>          <span class="c1"># 判断上次输入结果中是否包含&quot;password:&quot;字符串，如果有则立即返回，向下执行，否则就一直等待，知道超时时间到</span>
+
+send <span class="s2">&quot;touch /root/hujianli001.txt\r&quot;</span>
+send <span class="s2">&quot;ls /etc &gt; /root/hujianli001.txt\r&quot;</span>
+send <span class="s2">&quot;mkdir /tmp/hujianli001\r&quot;</span>
+send <span class="s2">&quot;exit\r&quot;</span>
+expect eof
+</pre></div>
+</div>
+</section>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id39"><span class="section-number">3.52.14. </span>企业生产场景下的Expect案例</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 44%" />
+<col style="width: 28%" />
+<col style="width: 28%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>IP地址</p></th>
+<th class="head"><p>主机名</p></th>
+<th class="head"><p>角色</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>192.168.33.128</p></td>
+<td><p>oldgirl</p></td>
+<td><p>管理机</p></td>
+</tr>
+<tr class="row-odd"><td><p>192.168.33.129</p></td>
+<td><p>littleboy</p></td>
+<td><p>被管理机1</p></td>
+</tr>
+<tr class="row-even"><td><p>192.168.33.130</p></td>
+<td><p>oldboy</p></td>
+<td><p>被管理机2</p></td>
+</tr>
+</tbody>
+</table>
+<section id="id15">
+<h3><a class="toc-backref" href="#id40">批量执行命令</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>1）实现Expect自动交互的脚本： <code class="docutils literal notranslate"><span class="pre">sample1.exp</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/expect</span>
+
+<span class="k">if</span> <span class="o">{</span> <span class="nv">$argc</span> !<span class="o">=</span> <span class="m">2</span> <span class="o">}</span> <span class="o">{</span>
+    puts <span class="s2">&quot;usage: expect </span><span class="nv">$argv0</span><span class="s2"> ip command&quot;</span>
+    <span class="nb">exit</span>
+<span class="o">}</span>
+
+<span class="nb">set</span> ip <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">0</span><span class="o">]</span>
+<span class="nb">set</span> cmd <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">1</span><span class="o">]</span>
+<span class="nb">set</span> password <span class="s2">&quot;123456&quot;</span>
+<span class="c1">#</span>
+spawn ssh root@<span class="nv">$ip</span> <span class="nv">$cmd</span>
+expect <span class="o">{</span>       <span class="s2">&quot;yes/no&quot;</span> <span class="o">{</span>send <span class="s2">&quot;yes\r&quot;</span><span class="p">;</span>exp_continue<span class="o">}</span>
+               <span class="s2">&quot;*password&quot;</span> <span class="o">{</span>send <span class="s2">&quot;</span><span class="nv">$password</span><span class="s2">\r&quot;</span><span class="o">}</span>
+<span class="o">}</span>
+expect eof
+</pre></div>
+</div>
+<p>执行命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample1</span><span class="o">.</span><span class="n">exp</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
+</pre></div>
+</div>
+<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal notranslate"><span class="pre">sample2.sh</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/sh</span>
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -ne <span class="m">1</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nb">echo</span> $<span class="s2">&quot;USAGE:</span><span class="nv">$0</span><span class="s2"> cmd&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">cmd</span><span class="o">=</span><span class="nv">$1</span>
+<span class="k">for</span> n <span class="k">in</span> <span class="m">128</span> <span class="m">129</span> <span class="m">130</span>
+<span class="k">do</span>
+    expect sample1.exp <span class="m">192</span>.168.33.<span class="nv">$n</span> <span class="s2">&quot;</span><span class="nv">$cmd</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>使用命令如下： <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">sample2.sh</span> <span class="pre">uptime</span></code></p>
+<p>如果遇到连接SSH反应慢的问题，请在所有被管理的机器上提前执行如下命令：
+<code class="docutils literal notranslate"><span class="pre">sed</span> <span class="pre">-ir</span> <span class="pre">'13iUseDNS</span> <span class="pre">no\nGSSAPIAuthentication</span> <span class="pre">no\n'</span> <span class="pre">/etc/ssh/sshd_config</span>&#160; <span class="pre">/etc/init.d/sshd</span> <span class="pre">restart</span></code></p>
+<p>### 批量发送文件</p>
+<p>1）实现Expect自动交互的脚本：</p>
+<p><code class="docutils literal notranslate"><span class="pre">sample001.exp</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span> <span class="c1">#!/usr/bin/expect</span>
+<span class="k">if</span> <span class="o">{</span> <span class="nv">$argc</span> !<span class="o">=</span> <span class="m">3</span> <span class="o">}</span> <span class="o">{</span>
+    puts <span class="s2">&quot;usage: expect </span><span class="nv">$argv0</span><span class="s2"> file host dir&quot;</span>
+    <span class="nb">exit</span>
+<span class="o">}</span>
+
+<span class="c1">#define var</span>
+<span class="nb">set</span> file <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">0</span><span class="o">]</span>
+<span class="nb">set</span> host <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">1</span><span class="o">]</span>
+<span class="nb">set</span> dir <span class="o">[</span>lindex <span class="nv">$argv</span> <span class="m">2</span><span class="o">]</span>
+<span class="nb">set</span> password <span class="s2">&quot;123456&quot;</span> s
+pawn scp -P22 -rp <span class="nv">$file</span> root@<span class="nv">$host</span>:<span class="nv">$dir</span>
+
+expect <span class="o">{</span> <span class="s2">&quot;yes/no&quot;</span> <span class="o">{</span>send <span class="s2">&quot;yes\r&quot;</span><span class="p">;</span>exp_continue<span class="o">}</span>
+            <span class="s2">&quot;*password&quot;</span> <span class="o">{</span>send <span class="s2">&quot;</span><span class="nv">$password</span><span class="s2">\r&quot;</span><span class="o">}</span>
+<span class="o">}</span>
+
+expect eof
+</pre></div>
+</div>
+<p>使用方法</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">expect</span> <span class="n">sample001</span><span class="o">.</span><span class="n">exp</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">hosts</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">oldboy</span>
+</pre></div>
+</div>
+<p>2）利用Shell循环执行Expect脚本命令： <code class="docutils literal notranslate"><span class="pre">sample002.sh</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$#</span> -ne <span class="m">2</span> <span class="o">]</span>
+<span class="k">then</span>
+    <span class="nb">echo</span> $<span class="s2">&quot;USAGE:</span><span class="nv">$0</span><span class="s2"> file dir&quot;</span>
+    <span class="nb">exit</span> <span class="m">1</span>
+<span class="k">fi</span>
+
+<span class="nv">file</span><span class="o">=</span><span class="nv">$1</span>
+<span class="nv">dir</span><span class="o">=</span><span class="nv">$2</span>
+<span class="k">for</span> n <span class="k">in</span> <span class="m">128</span> <span class="m">129</span> <span class="m">130</span>
+<span class="k">do</span>
+    expect sample001.exp <span class="nv">$file</span> <span class="m">192</span>.168.33.<span class="nv">$n</span> <span class="nv">$dir</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>将/server/scripts目录批量发送到所有服务器指定的/tmp目录：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
+</pre></div>
+</div>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id41">批量执行Shell脚本</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>1）准备脚本文件：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">httpd</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>2）使用范例<code class="docutils literal notranslate"><span class="pre">sample002.sh</span></code>的脚本发送要执行的脚本文件到所有机器：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample002</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">server</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span><span class="n">yum</span><span class="o">.</span><span class="n">sh</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>3）使用范例<code class="docutils literal notranslate"><span class="pre">sample2.sh</span></code>的脚本远程连接所有服务器并远程执行脚本：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sh</span> <span class="n">sample2</span><span class="o">.</span><span class="n">sh</span> <span class="s2">&quot;source /tmp/yum.sh&quot;</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="ssh-ansible">
+<h2><a class="toc-backref" href="#id42"><span class="section-number">3.52.15. </span>自动化部署SSH密钥认证+ansible的项目实战</a><a class="headerlink" href="#ssh-ansible" title="Permalink to this headline">¶</a></h2>
+<p>1）本地生成密钥对，代码如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>2）开发Expect脚本自动化交互分发公钥到所有的服务器：</p>
+<p><code class="docutils literal notranslate"><span class="pre">ansible.exp</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#!/usr/bin/expect
+if { $argc != 2 } { send_user &quot;usage: expect expect.exp file host\n&quot;
+                           exit }
+#define var
+
+set file [lindex $argv 0]
+set host [lindex $argv 1]
+set password &quot;123456&quot;
+
+#start exec command
+spawn ssh-copy-id -i $file &quot;-p 22 root@$host&quot;
+expect {  &quot;yes/no&quot; {send &quot;yes\r&quot;;exp_continue}
+                &quot;*password&quot; {send &quot;$password\r&quot;}
+}
+expect eof
+</pre></div>
+</div>
+<p>3）开发Shell脚本循环执行Expect脚本：</p>
+<p><code class="docutils literal notranslate"><span class="pre">sample003.sh</span></code></p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env bash</span>
+<span class="c1">#usage:xxx</span>
+<span class="c1">#scripts_name:${NAME}.sh</span>
+<span class="c1"># author：xiaojian</span>
+
+<span class="k">for</span> n <span class="k">in</span> <span class="m">128</span> <span class="m">129</span> <span class="m">130</span>
+<span class="k">do</span>
+    expect ansible.exp ~/.ssh/id_dsa.pub <span class="m">192</span>.168.33.<span class="nv">$n</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+<p>操作过程如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">fr</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span>
+<span class="n">ssh</span><span class="o">-</span><span class="n">keygen</span> <span class="o">-</span><span class="n">t</span> <span class="n">dsa</span> <span class="o">-</span><span class="n">P</span> <span class="s1">&#39;&#39;</span> <span class="o">-</span><span class="n">f</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_dsa</span> <span class="o">&gt;/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span>
+<span class="n">sh</span> <span class="n">sample003</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>4）实现无密码且不需要Expect就可以批量管理： cat exec.sh</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span> <span class="n">uptime</span>
+<span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.129</span> <span class="n">uptime</span>
+<span class="n">ssh</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span> <span class="n">uptime</span>
+</pre></div>
+</div>
+<p>5）配合ansible（Python开发的基于SSH的批量管理工具）实现自动化运维管理。
+首先安装ansible，命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span> <span class="o">-</span><span class="n">y</span>
+<span class="n">yum</span> <span class="n">install</span> <span class="n">ansible</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>然后编辑ansible的主机配置文件hosts，添加主机组oldboy：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@oldboy</span> <span class="o">~</span><span class="p">]</span><span class="c1"># tail -4 /etc/ansible/hosts</span>
+<span class="p">[</span><span class="n">oldboy</span><span class="p">]</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">33.128</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">33.129</span>
+<span class="mf">192.168</span><span class="o">.</span><span class="mf">33.130</span>
+</pre></div>
+</div>
+<p>接着使用ansible并借助Expect建立好的SSH密钥认证执行命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ansible</span> <span class="n">oldboy</span> <span class="o">-</span><span class="n">m</span> <span class="n">command</span> <span class="o">-</span><span class="n">a</span> <span class="s2">&quot;uptime&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="exec">
+<h2><a class="toc-backref" href="#id43"><span class="section-number">3.52.16. </span>使用exec调用其他外部命令或脚本</a><a class="headerlink" href="#exec" title="Permalink to this headline">¶</a></h2>
+<p>exec调用后会自动退出</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#功能描述(Description):使用exec调用其他外部命令或脚本示例.</span>
+ls
+<span class="nb">echo</span>
+<span class="nb">echo</span> <span class="s2">&quot;----------------------&quot;</span>
+<span class="nb">exec</span> ls
+
+
+<span class="nb">echo</span> <span class="s2">&quot;te</span>
+</pre></div>
+</div>
+</section>
+<section id="fork">
+<h2><a class="toc-backref" href="#id44"><span class="section-number">3.52.17. </span>fork子进程的示例.</a><a class="headerlink" href="#fork" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#功能描述(Description):fork子进程的示例.</span>
+
+<span class="c1">#调用外部命令时会导致fork子进程.</span>
+sleep <span class="m">5</span>
+
+<span class="c1">#绝对路径或相对路径调用外部脚本时会导致fork子进程.</span>
+/root/tmp.sh
+<span class="nb">cd</span> /root<span class="p">;</span> ./tmp.sh
+</pre></div>
+</div>
+</section>
+<section id="ping1">
+<h2><a class="toc-backref" href="#id45"><span class="section-number">3.52.18. </span>使用函数与&amp;后台进程实现多进程ping测试1.</a><a class="headerlink" href="#ping1" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#Version:1.0</span>
+<span class="c1">#功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.</span>
+
+<span class="nv">net</span><span class="o">=</span><span class="s2">&quot;192.168.4&quot;</span>
+
+multi_ping<span class="o">()</span> <span class="o">{</span>
+    ping -c2 -i0.2 -W1 <span class="nv">$1</span> <span class="p">&amp;</span>&gt;/dev/null
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is up.&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is down.&quot;</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1">#通过循环反复调用函数并将其放入后台并行执行.</span>
+<span class="k">for</span> i <span class="k">in</span> <span class="o">{</span><span class="m">1</span>..254<span class="o">}</span>
+<span class="k">do</span>
+    multi_ping <span class="nv">$net</span>.<span class="nv">$i</span> <span class="p">&amp;</span>
+<span class="k">done</span>
+</pre></div>
+</div>
+</section>
+<section id="ping2">
+<h2><a class="toc-backref" href="#id46"><span class="section-number">3.52.19. </span>使用函数与&amp;后台进程实现多进程ping测试2.</a><a class="headerlink" href="#ping2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#Version:2.0</span>
+<span class="c1">#功能描述(Description):使用函数与&amp;后台进程实现多进程ping测试.</span>
+<span class="c1">#使用wait命令等待所有子进程结束后再退出脚本.</span>
+
+<span class="nv">net</span><span class="o">=</span><span class="s2">&quot;192.168.4&quot;</span>
+
+multi_ping<span class="o">()</span> <span class="o">{</span>
+    ping -c2 -i0.2 -W1 <span class="nv">$1</span> <span class="p">&amp;</span>&gt;/dev/null
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is up.&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is down.&quot;</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1">#通过循环反复调用函数并将其放入后台并行执行.</span>
+<span class="k">for</span> i <span class="k">in</span> <span class="o">{</span><span class="m">1</span>..254<span class="o">}</span>
+<span class="k">do</span>
+    multi_ping <span class="nv">$net</span>.<span class="nv">$i</span> <span class="p">&amp;</span>
+<span class="k">done</span>
+<span class="nb">wait</span>
+</pre></div>
+</div>
+</section>
+<section id="ping">
+<h2><a class="toc-backref" href="#id47"><span class="section-number">3.52.20. </span>控制进程数量的ping测试脚本</a><a class="headerlink" href="#ping" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#Version:3.0</span>
+<span class="c1">#功能描述(Description):控制进程数量的ping测试脚本.</span>
+<span class="c1">#使用wait命令等待所有子进程结束后再退出脚本.</span>
+
+<span class="nv">num</span><span class="o">=</span><span class="m">10</span>             <span class="c1">#控制进程数量.</span>
+<span class="nv">net</span><span class="o">=</span><span class="s2">&quot;192.168.4&quot;</span>
+<span class="nv">pipefile</span><span class="o">=</span><span class="s2">&quot;/tmp/multiping_</span><span class="nv">$$</span><span class="s2">.tmp&quot;</span>
+
+multi_ping<span class="o">()</span> <span class="o">{</span>
+    ping -c2 -i0.2 -W1 <span class="nv">$1</span> <span class="p">&amp;</span>&gt;/dev/null
+    <span class="k">if</span> <span class="o">[</span> <span class="nv">$?</span> -eq <span class="m">0</span> <span class="o">]</span><span class="p">;</span><span class="k">then</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is up.&quot;</span>
+    <span class="k">else</span>
+        <span class="nb">echo</span> <span class="s2">&quot;</span><span class="nv">$1</span><span class="s2"> is down.&quot;</span>
+    <span class="k">fi</span>
+<span class="o">}</span>
+
+<span class="c1">#创建命名管道文件,创建其文件描述符,通过重定向导入数据到管道文件中.</span>
+mkfifo <span class="nv">$pipefile</span>
+<span class="nb">exec</span> <span class="m">12</span>&lt;&gt;<span class="nv">$pipefile</span>
+<span class="k">for</span> i <span class="k">in</span> <span class="sb">`</span>seq <span class="nv">$num</span><span class="sb">`</span>
+<span class="k">do</span>
+    <span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt;<span class="p">&amp;</span><span class="m">12</span> <span class="p">&amp;</span>
+<span class="k">done</span>
+
+<span class="c1">#通过循环反复调用函数并将其放入后台并行执行.</span>
+<span class="c1">#成功读取命名管道中的数据后开启新的进程.</span>
+<span class="c1">#所有内容读取完后read被阻塞,无法再启动新进程.</span>
+<span class="c1">#等待前面启动的进程结束后,继续往管道文件中写入数据,释放阻塞,再次开启新的进程.</span>
+<span class="k">for</span> j <span class="k">in</span> <span class="o">{</span><span class="m">1</span>..254<span class="o">}</span>
+<span class="k">do</span>
+    <span class="nb">read</span> -u12
+    <span class="o">{</span>
+        multi_ping <span class="nv">$net</span>.<span class="nv">$j</span>
+        <span class="nb">echo</span> <span class="s2">&quot;&quot;</span> &gt;<span class="p">&amp;</span><span class="m">12</span>
+    <span class="o">}</span> <span class="p">&amp;</span>
+<span class="k">done</span>
+<span class="nb">wait</span>
+rm -rf <span class="nv">$pipfile</span>
+</pre></div>
+</div>
+</section>
+<section id="sshd-ssh">
+<h2><a class="toc-backref" href="#id48"><span class="section-number">3.52.21. </span>修改SSHD配置文件,提升SSH安全性</a><a class="headerlink" href="#sshd-ssh" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1">#功能描述(Description):修改SSHD配置文件,提升SSH安全性.</span>
+
+<span class="nv">config_file</span><span class="o">=</span><span class="s2">&quot;/etc/ssh/sshd_config&quot;</span>
+<span class="nv">PORT</span><span class="o">=</span><span class="m">12345</span>
+
+<span class="c1">#将默认端口号修改为自定义端口号.</span>
+<span class="k">if</span> grep -q <span class="s2">&quot;^Port&quot;</span> <span class="nv">$config_file</span><span class="p">;</span><span class="k">then</span>
+    sed -i <span class="s2">&quot;/^Port/c Port </span><span class="nv">$PORT</span><span class="s2">&quot;</span> <span class="nv">$config_file</span>
+<span class="k">else</span>
+    <span class="nb">echo</span> <span class="s2">&quot;Port </span><span class="nv">$PORT</span><span class="s2">&quot;</span> &gt;&gt; <span class="nv">$config_file</span>
+<span class="k">fi</span>
+
+<span class="c1">#禁止root远程登陆SSH服务器.</span>
+<span class="k">if</span> grep -q <span class="s2">&quot;^PermitRootLogin&quot;</span> <span class="nv">$config_file</span><span class="p">;</span><span class="k">then</span>
+    sed -i <span class="s1">&#39;/^PermitRootLogin/s/yes/no/&#39;</span> <span class="nv">$config_file</span>
+<span class="k">else</span>
+    sed -i <span class="s1">&#39;$a PermitRootLogin no&#39;</span> <span class="nv">$config_file</span>
+<span class="k">fi</span>
+
+<span class="c1">#禁止使用密码远程登陆SSH服务器.</span>
+<span class="k">if</span> grep -q <span class="s2">&quot;^PasswordAuthentication&quot;</span> <span class="nv">$config_file</span><span class="p">;</span><span class="k">then</span>
+    sed -i <span class="s1">&#39;/^PasswordAuthentication/s/yes/no/&#39;</span> <span class="nv">$config_file</span>
+<span class="k">else</span>
+    sed -i <span class="s1">&#39;$a PasswordAuthentication no&#39;</span> <span class="nv">$config_file</span>
+<span class="k">fi</span>
+
+<span class="c1">#禁止X11图形转发功能.</span>
+<span class="k">if</span> grep -q <span class="s2">&quot;^X11Forwarding&quot;</span> <span class="nv">$config_file</span><span class="p">;</span><span class="k">then</span>
+    sed -i <span class="s1">&#39;/^X11Forwarding/s/yes/no/&#39;</span> <span class="nv">$config_file</span>
+<span class="k">else</span>
+    sed -i <span class="s1">&#39;$a X11Forwarding no&#39;</span> <span class="nv">$config_file</span>
+<span class="k">fi</span>
+
+<span class="c1">#禁止DNS查询.</span>
+<span class="k">if</span> grep -q <span class="s2">&quot;^UseDNS&quot;</span> <span class="nv">$config_file</span><span class="p">;</span><span class="k">then</span>
+    sed -i <span class="s1">&#39;/^UseDNS/s/yes/no/&#39;</span> <span class="nv">$config_file</span>
+<span class="k">else</span>
+    sed -i <span class="s1">&#39;$a UseDNS no&#39;</span> <span class="nv">$config_file</span>
+<span class="k">fi</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="51.%E6%A3%80%E6%B5%8B%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E6%98%AF%E5%90%A6%E8%B6%85%E6%97%B6.html" class="btn btn-neutral float-left" title="3.51. 检测函数执行是否超时" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="53.%E5%BF%AB%E6%8D%B7%E5%AE%89%E8%A3%85%E4%B8%8D%E5%90%8C%E7%89%88%E6%9C%ACPython.html" class="btn btn-neutral float-right" title="3.53. 快捷安装不同版本Python" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

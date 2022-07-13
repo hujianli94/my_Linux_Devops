@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4. KVM设备高级管理 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5. Vagrant虚拟机快速创建开发环境" href="05.Vagrant%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html" />
+    <link rel="prev" title="3. qemu-img命令学习" href="03.qemu-img%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">KVM实践</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="01%E6%9E%84%E5%BB%BAKVM%E7%8E%AF%E5%A2%83.html">1. 构建KVM环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="02KVM%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7.html">2. KVM管理工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="03.qemu-img%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.html">3. qemu-img命令学习</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">4. KVM设备高级管理</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.1. 1.半虚拟化驱动</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#virtio">4.1.1. 1.1 virtio概述</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">4.1.2. 1.2 virtio的基本原理和优缺点</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#linuxvirtio">4.1.3. 1.3 Linux下virtio的支持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#windowsvirtio">4.1.4. 1.4 Windows下的virtio驱动</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#virtio-balloon">4.1.5. 1.5 使用virtio_balloon(气球内存)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="05.Vagrant%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html">5. Vagrant虚拟机快速创建开发环境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="06.KVM%E7%9B%B8%E5%85%B3%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE.html">6. KVM相关参考文献</a></li>
+<li class="toctree-l2"><a class="reference internal" href="07.%E8%99%9A%E6%8B%9F%E6%9C%BA%E9%95%9C%E5%83%8F%E8%BD%AC%E6%8D%A2V2V.html">7. 镜像转换V2V</a></li>
+<li class="toctree-l2"><a class="reference internal" href="08.KVM%E5%B8%A6web%E7%AE%A1%E7%90%86%E7%95%8C%E9%9D%A2.html">8. KVM带web管理界面</a></li>
+<li class="toctree-l2"><a class="reference internal" href="09.Proxmox_VE.html">9. Proxmox VE</a></li>
+<li class="toctree-l2"><a class="reference internal" href="10.CentOS7-ks.cfg%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%E6%8A%80%E5%B7%A7.html">10. CentOS7-ks.cfg系统安装与配置技巧</a></li>
+<li class="toctree-l2"><a class="reference internal" href="11.KVM%E8%99%9A%E6%8B%9F%E5%8C%96%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E7%B3%BB%E5%88%97%E6%96%87%E7%AB%A0%E5%88%97%E8%A1%A8%28%E8%BD%AC%29.html">11. KVM虚拟化学习笔记系列文章列表(转)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="12.KVM%E9%83%A8%E7%BD%B2%E5%AE%9E%E6%93%8D-%E5%AE%89%E8%A3%85%E5%92%8C%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C.html">12. KVM部署实操-安裝和常用操作</a></li>
+<li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="index.html">KVM实践</a> &raquo;</li>
+      <li><span class="section-number">4. </span>KVM设备高级管理</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/KVM/04.KVM设备高级管理.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#kvm" id="id3">KVM设备高级管理</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id4">1.半虚拟化驱动</a></p>
+<ul>
+<li><p><a class="reference internal" href="#virtio" id="id5">1.1 virtio概述</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id6">1.2 virtio的基本原理和优缺点</a></p></li>
+<li><p><a class="reference internal" href="#linuxvirtio" id="id7">1.3 Linux下virtio的支持</a></p></li>
+<li><p><a class="reference internal" href="#windowsvirtio" id="id8">1.4 Windows下的virtio驱动</a></p></li>
+<li><p><a class="reference internal" href="#virtio-balloon" id="id9">1.5 使用virtio_balloon(气球内存)</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="kvm">
+<h1><a class="toc-backref" href="#id3"><span class="section-number">4. </span>KVM设备高级管理</a><a class="headerlink" href="#kvm" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id4"><span class="section-number">4.1. </span>1.半虚拟化驱动</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<section id="virtio">
+<h3><a class="toc-backref" href="#id5"><span class="section-number">4.1.1. </span>1.1 virtio概述</a><a class="headerlink" href="#virtio" title="Permalink to this headline">¶</a></h3>
+<p>客户机可以使用的设备大致分为三类： QEMU纯软件模拟、使用virtio
+API半虚拟化的设备和直接分配设备。QEMU纯软件模拟的优点是对硬件的平台依赖性低，兼容性高，但是性能比较差。使用virtio
+API半虚拟化的设备比普通的I/O模拟效率高，但是需要相关virtio驱动程序的支持。直接分配设备允许将物理机上的设备直接给虚拟机用，缺点是：主板空间有限，硬件的添加会加大成本。</p>
+</section>
+<section id="id2">
+<h3><a class="toc-backref" href="#id6"><span class="section-number">4.1.2. </span>1.2 virtio的基本原理和优缺点</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>virtio半虚拟化驱动的方式，可以获得很好的I/O性能，其性能几乎可以达到与native（即非虚拟化环境中的原生系统）差不多的I/O性能。所以，在使用KVM之时，如果宿主机内核和客户机都支持virtio，一般推荐使用virtio，以达到更好的性能。当然，virtio也是有缺点的，它要求客户机必须安装特定的virtio驱动使其知道是运行在虚拟化环境中，并且按照virtio的规定格式进行数据传输。客户机中可能有一些老的Linux系统不支持virtio，还有一些主流的Windows系统需要安装特定的驱动才支持virtio。不过，较新的一些Linux发行版（如RHEL
+6.3、Fedora
+17以后等）默认都将virtio相关驱动编译为模块，可直接作为客户机使用，然而主流Windows系统中都有对应的virtio驱动程序可供下载使用。</p>
+</section>
+<section id="linuxvirtio">
+<h3><a class="toc-backref" href="#id7"><span class="section-number">4.1.3. </span>1.3 Linux下virtio的支持</a><a class="headerlink" href="#linuxvirtio" title="Permalink to this headline">¶</a></h3>
+<p>virtio是一个比较成熟的技术，目前，<strong>在Linux的2.6.24及以上的内核版本中都支持virtio</strong>。virtio分为前端驱动程序和后端处理程序，前端驱动程序运行在客户机中，后端处理程序在宿主机的QEMU中实现。因此，<strong>在宿主机上，只需使用比较新的Linux内核，安装QEMU即可，不需要做特别的与virtio相关的编译配置</strong>。而在客户机上，需要有特定的virtio驱动程序的支持，以便客户机处理I/O操作请求时调用virtio驱动程序而不是其原生的驱动程序。<strong>因此，如果客户机是Linux系统，只需要使用较新的Linux内核即可</strong>。如果客户机是Windows系统，因为Windows系统不是开源操作系统，微软也没有提供Windows下相应的virtio的驱动程序，所以需要在宿主机上安装使得Windows支持virtio的驱动程序。</p>
+</section>
+<section id="windowsvirtio">
+<h3><a class="toc-backref" href="#id8"><span class="section-number">4.1.4. </span>1.4 Windows下的virtio驱动</a><a class="headerlink" href="#windowsvirtio" title="Permalink to this headline">¶</a></h3>
+<section id="virt-install">
+<h4>1.4.1 使用virt-install方式创建虚机和打驱动<a class="headerlink" href="#virt-install" title="Permalink to this headline">¶</a></h4>
+<p>（1）通过官方的RPM获得</p>
+<p>以RHEL为例，它有一个名为virtio-win的RPM软件包（在RHEL发行版的Supplementary
+repository中），能为主流的Windows版本提供virtio相关的驱动。</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@desktop-pmjtngi ~<span class="o">]</span><span class="c1"># wget https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo -O /etc/yum.repos.d/virtio-win.repo</span>
+
+<span class="o">[</span>root@desktop-pmjtngi ~<span class="o">]</span><span class="c1"># yum install virtio-win -y</span>
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>安装完以后，在<code class="docutils literal notranslate"><span class="pre">/usr/share/virtio-win</span></code>目录下可以看到<code class="docutils literal notranslate"><span class="pre">virtio-win-xxx.iso</span></code>文件，其中包含了所需要的驱动程序。可以将virtio-win.iso文件通过网络共享到Windows客户机中使用，或者通过qemu命令行的“-cdrom”参数将virtio-win.iso文件作为客户机的光盘镜像。</p>
+<hr class="docutils" />
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="o">[</span>root@kvm-host ~<span class="o">]</span><span class="c1"># ls -l /usr/share/virtio-win/</span>
+total <span class="m">137548</span>
+drwxr-xr-x <span class="m">4</span> root root        <span class="m">31</span> Dec <span class="m">18</span> <span class="m">15</span>:35 drivers
+drwxr-xr-x <span class="m">2</span> root root        <span class="m">52</span> Dec <span class="m">18</span> <span class="m">15</span>:35 guest-agent
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">2949120</span> Sep <span class="m">19</span> <span class="m">22</span>:34 virtio-win-1.9.0_amd64.vfd
+-rw-r--r-- <span class="m">1</span> root root <span class="m">134948864</span> Sep <span class="m">19</span> <span class="m">23</span>:26 virtio-win-1.9.0.iso
+-rw-r--r-- <span class="m">1</span> root root   <span class="m">2949120</span> Sep <span class="m">19</span> <span class="m">22</span>:34 virtio-win-1.9.0_x86.vfd
+lrwxrwxrwx <span class="m">1</span> root root        <span class="m">26</span> Dec <span class="m">18</span> <span class="m">15</span>:35 virtio-win_amd64.vfd -&gt; virtio-win-1.9.0_amd64.vfd
+lrwxrwxrwx <span class="m">1</span> root root        <span class="m">20</span> Dec <span class="m">18</span> <span class="m">15</span>:35 virtio-win.iso -&gt; virtio-win-1.9.0.iso
+lrwxrwxrwx <span class="m">1</span> root root        <span class="m">24</span> Dec <span class="m">18</span> <span class="m">15</span>:35 virtio-win_x86.vfd -&gt; virtio-win-1.9.0_x86.vfd
+</pre></div>
+</div>
+<hr class="docutils" />
+<p>virtio-win.1.9.0中的内容，Balloon目录是内存气球相关的virtio_balloon驱动，NetKVM目录是网络相关的virtio_net驱动，vioserial目录是控制台相关的驱动，viostor是磁盘块设备存储相关的virtio_blk驱动，vioscsi是SCSI磁盘设备存储。</p>
+<p>以NetKVM目录为例，其中又包含了各个Windows版本各自的驱动，从古老的XP到最新的Windows
+10、Windows
+2016等都有。每个Windows版本的目录下又包含“amd64”和“x86”两个版本，分别对应Intel/AMD的x86-64架构和x86-32架构，即64位的Windows系统应该选择amd64中的驱动，而32位Windows则应选择x86中的驱动。</p>
+<p>（2）通过开源的Fedora项目获得</p>
+<p>添加<a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo">https://fedorapeople.org/groups/virt/virtio-win/virtio-win.repo</a>
+到本地的软件仓库以后，也可以通过yum来装virtio-win这个软件包。</p>
+<p>（3）如何在Windows中如何安装virtio驱动</p>
+<p>Windows
+OS本身是没有安装virtio驱动的，所以直接分配给Windows客户机以半虚拟化设备的话，是无法识别加载驱动的，需要我们事先安装好。</p>
+<p>首先，下载硬盘Virtio驱动，下载地址为：</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>http://www.linux-kvm.org/page/WindowsGuest Drivers/Download_Drivers
+
+https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/
+</pre></div>
+</div>
+<p>下面以Windows
+10为例，来介绍如何在Windows客户机中安装半虚拟化硬盘、网卡的驱动。</p>
+<p>安装一个全新的客户机的时候，它的硬盘里还没有操作系统，更别说驱动了。所以，一开始就分配给它半虚拟硬盘，安装过程会无法识别，也就无法安装客户机了。那么，怎么解决这个问题呢？我们可以在安装客户机时，除了加载安装光盘以外，还加载virtio-win.iso。</p>
+<p>安装win10示例</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span><span class="m">1</span>.1 新建磁盘镜像
+qemu-img create -f qcow2 /vm/win10.qcow2 80G
+
+<span class="m">1</span>.2 准备驱动光盘（/vm/virtio-win-0.1.173.iso）以及系统iso安装文件（/vm/iso/cn_windows_10_business_editions_version_1909_updated_jan_2020_x64_dvd_b3e1f3a6.iso）
+
+<span class="m">1</span>.3 安装系统
+virt-install --virt-type kvm <span class="se">\</span>
+--name win10 --ram <span class="m">1024</span> <span class="se">\</span>
+--os-type<span class="o">=</span>windows --os-variant<span class="o">=</span>win10 <span class="se">\</span>
+--disk <span class="nv">path</span><span class="o">=</span>/vm/win10.qcow2,bus<span class="o">=</span>virtio,format<span class="o">=</span>qcow2,cache<span class="o">=</span>writeback <span class="se">\</span>
+--cdrom<span class="o">=</span>/vm/virtio-win-0.1.173.iso <span class="se">\</span>
+--disk <span class="nv">path</span><span class="o">=</span>/vm/iso/cn_windows_10_business_editions_version_1903_x64_dvd_e001dd2c.iso,device<span class="o">=</span>cdrom <span class="se">\</span>
+--graphics vnc,listen<span class="o">=</span><span class="m">0</span>.0.0.0 --noautoconsole
+</pre></div>
+</div>
+<p>此时客户机的Windows安装程序没有发现存在硬盘，如图</p>
+<figure class="align-default">
+<img alt="" src="../_images/kvm_viostor001.png" />
+</figure>
+<p>选择“加载驱动程序”选项，从启动客户机时给它的virtio-win的光驱中安装virtio-blk（viostor文件夹→win10→amd64）磁盘驱动程序，</p>
+<figure class="align-default">
+<img alt="" src="../_images/kvm_virto0002.png" />
+</figure>
+<figure class="align-default">
+<img alt="" src="../_images/kvm_virt000010.png" />
+</figure>
+<p>安装完以后，客户机的Windows 10安装程序就可以识别半虚拟硬盘了。</p>
+<figure class="align-default">
+<img alt="" src="../_images/kvm_virt0000011.png" />
+</figure>
+<p>安装完virtio-win.iso中的半虚拟化网卡驱动（NetKVM目录中）后，网卡被识别并可以使用。</p>
+<p>对于已安装好Windows操作系统的客户机，我们可以将virtio-win.iso作为客户机的光驱分配给客户机，然后在客户机中安装或升级驱动。对于virtio磁盘驱动的安装，也可以以QEMU完全模拟硬盘的方式（前面章节中-hda参数），先安装好客户机。然后，另外分配给它一块半虚拟化硬盘，再在客户机中安装virtio-win.iso中的驱动程序即可。</p>
+<p>设备管理器中识别半虚拟化网卡</p>
+<figure class="align-default">
+<img alt="" src="../_images/kvm_virtor0003.png" />
+</figure>
+<p>在64位的Windows系统中，从Windows
+Vista开始，所安装的驱动就要求有数字签名。如果使用的发行版并没有提供Windows
+virtio驱动的二进制文件，或者没有对应的数字签名，则可以选择从Fedora项目中下载二进制ISO文件，它们都进行了数字签名，并且通过了在Windows系统上的测试。</p>
+</section>
+<section id="virt-managekvmwindowsvirtio">
+<h4>1.4.2 使用virt-manage方式在kvm中打Windows的virTio驱动<a class="headerlink" href="#virt-managekvmwindowsvirtio" title="Permalink to this headline">¶</a></h4>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>解决办法：安装VirtIO驱动
+1.通过virt-manager打开windows虚拟机
+2.磁盘、网卡使用默认驱动，即磁盘使用ide、网卡使用rt
+3.添加一块CD/DVD设备，选择virtio镜像包的位置
+4.添加一块临时硬盘，设置为virtio模式，大小可以随意，设置为1G即可
+5.启动虚拟机，为新磁盘、网卡更新virtio驱动
+6.关机，删除零时磁盘，同时将原硬盘设置为virtio模式
+7.开机后，磁盘与网卡均为virtio模式。
+</pre></div>
+</div>
+<p><strong>virtio-win驱动下载地址：</strong></p>
+<p><a class="reference external" href="https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/">https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/</a></p>
+<p><strong>参考文献：</strong></p>
+<p><a class="reference external" href="https://www.centos.bz/2017/08/kvm-virtio-windows-server-virtual-host/">https://www.centos.bz/2017/08/kvm-virtio-windows-server-virtual-host/</a></p>
+</section>
+</section>
+<section id="virtio-balloon">
+<h3><a class="toc-backref" href="#id9"><span class="section-number">4.1.5. </span>1.5 使用virtio_balloon(气球内存)</a><a class="headerlink" href="#virtio-balloon" title="Permalink to this headline">¶</a></h3>
+<p>ballooning在节约和灵活分配内存方面有明显的优势，其好处有如下3点。</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03.qemu-img%E5%91%BD%E4%BB%A4%E5%AD%A6%E4%B9%A0.html" class="btn btn-neutral float-left" title="3. qemu-img命令学习" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05.Vagrant%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%BF%AB%E9%80%9F%E5%88%9B%E5%BB%BA%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83.html" class="btn btn-neutral float-right" title="5. Vagrant虚拟机快速创建开发环境" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

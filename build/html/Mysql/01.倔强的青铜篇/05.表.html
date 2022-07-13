@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.5. 05.表 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.6. 06.索引" href="06.%E7%B4%A2%E5%BC%95.html" />
+    <link rel="prev" title="1.4. 04.数据库文件" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 01.倔强的青铜篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.Mysql%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9A%84%E5%AE%89%E8%A3%85%E5%90%AF%E5%8A%A8%E5%92%8C%E5%85%B3%E9%97%AD.html">1.2. 02.Mysql数据库的安装启动和关闭</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.5. 05.表</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.5.1. 整型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.5.2. 浮点型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.5.3. 时间类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.5.4. 字符串类型</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.5.5. 字符集</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.5.6. 表碎片产生的原因</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.5.7. 碎片计算方法及整理过程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">1.5.8. 表统计信息</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id10">1.5.9. 统计信息的收集方法</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysq">1.5.10. Mysq库表常用命令总结</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html">1.6. 06.索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html">1.8. 08.锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>01.倔强的青铜篇</a> &raquo;</li>
+      <li><span class="section-number">1.5. </span>05.表</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/05.表.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id11">05.表</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id2" id="id12">整型</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id13">浮点型</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id14">时间类型</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">字符串类型</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">字符集</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id17">表碎片产生的原因</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id18">碎片计算方法及整理过程</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id19">表统计信息</a></p></li>
+<li><p><a class="reference internal" href="#id10" id="id20">统计信息的收集方法</a></p></li>
+<li><p><a class="reference internal" href="#mysq" id="id21">Mysq库表常用命令总结</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="id1">
+<h1><a class="toc-backref" href="#id11"><span class="section-number">1.5. </span>05.表</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>禁止使用中文做字段名；禁止使用字符型做主键；禁止无主键或是唯一索引的表出现</p>
+<p>MySQL数据类型可分为整型、浮点型、字符型、日期时间型。允许指定数值字段中的值是否有正负之分或者用零填补</p>
+<section id="id2">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">1.5.1. </span>整型</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>int、tinyint使用最多 <img alt="image0" src="../../_images/mysql_int0001.png" />
+因为InnoDB表是索引组织表，需要保证索引结构不经常翻转，避免造成性能消耗
+所以在选择主键时，需要选择不经常修改的、尽量与业务无关的、没有什么具体含义的字段，例如id字段</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>int(4)和int(8)有区别么？
+int(n)括号里面的n表示显示宽度，实际存储大小没有区别，都是4字节
+但如果写义了zerofill，int(4)中的4就有意义了，写入数字1，会补充成0001
+#CREATE TABLE NewTable (id int(8) ZEROFILL NULL );
+</pre></div>
+</div>
+<p>查看表结构概要：<code class="docutils literal notranslate"><span class="pre">desc</span> <span class="pre">table_name;</span></code></p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">1.5.2. </span>浮点型</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image1" src="../../_images/mysql_float0001.png" />
+避免使用浮点类型，因为它属于不精确类型，在生产中不建议使用float和double
+生产环境中，大多使用decimal来存储金钱字段，但数值在运算过程中还是会转成浮点来运算，且运算过程中会出现四舍五入的情况，会造成金额的不准确</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREATE TABLE NewTable (money decimal(6,2) NOT NULL );
+这里的decimal(6,2)的6代表整数部分加小数部分的总长度，即整数部分位数是6-2=4；2代表小数部分保留位数，
+若插入小数部分超过2，会发生截断，并四舍五入。这种四舍五入是应该避免的，
+实际可以使用int来存储金钱，让单位为分，这样就不存在四舍五入且数值更精确
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">1.5.3. </span>时间类型</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image2" src="../../_images/mysql_time_type0001.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>datetime和timestamp
+timestamp用得比较多
+datetime在5.6之前占8字节，5.6之后占5字节，datetime时间范围比timestamp大，物理存储仅比timestamp多占1个字节，整体性能上区别不大
+生产环境可以使用datetime时间类型
+也可以使用int类型来存储时间，通过unix_timestamp和from_unixtime函数来转换
+#select unix_timestamp(&#39;2018-06-25 16:30:11&#39;); ##1529915411
+#select from_unixtime(1529915411); ##2018-06-25 16:30:11
+timestamp和datetime从5.6开始都支持自动更新为当前时间
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">1.5.4. </span>字符串类型</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p><img alt="image3" src="../../_images/mysql_string00001.png" />
+text和blob这种存在大量文字或者图片的大数据类型切忌与业务表放在一起，业务表不能出现这样的字段</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>char和varchar
+char类型用于定长字符串，范围为0~255。若数据未达到定义的位数，会用空格补全存入数据库中；若数据超过长度，会被截断
+varchar是变长长度，范围为0~65535，存储时，若数据未达到定义的位数，不会补空格；若超过指定长度，会被截断
+varchar根据实际内容动态改变长度。数据位小于255时，用1个字节记录长度；大于256时，用2个字节来记录长度；还有一个位用于记录是否为nul值
+varchar(100)里面的100代表字符：
+utf8字符集下，存储空间为100x3+1=301字节；gbk字符集下，存储空间为100x2+1=201字节
+latin1字符集下char与varchar存储空间比较：
+</pre></div>
+</div>
+<p><img alt="image4" src="../../_images/mysql_char_vchar0001.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>MySQL每一行最大字节数为65535，使用uft8，最大不能超过(65535-1-2)/3=21844；若使用gbk则(65535-1-2)/2=36766
+</pre></div>
+</div>
+<p>IPv4推荐使用int类型来存储，需要使用到inet_aton和inet_ntoa两个函数</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">inet_aton</span><span class="p">(</span><span class="s1">&#39;192.168.1.100&#39;</span><span class="p">);</span> <span class="c1">##3232235876</span>
+<span class="n">select</span> <span class="n">inet_ntoa</span><span class="p">(</span><span class="mi">3232235876</span><span class="p">);</span> <span class="c1">##192.168.1.100</span>
+</pre></div>
+</div>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">1.5.5. </span>字符集</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>MySQL数据库字符集包括字符集character和校对规则collation两个概念。字符集用来定义MySQL数据字符串的存储方式，校对规则是定义比较字符串的方式</p>
+<p>常用字符集有：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>GBK(2字节)、Latin1(1字节)、UTF8(3字节)、UTF8mb4(4字节)。UTF8mb4是UTF8的超集，针对5.7，建议使用UTF8mb4字符集
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>字符集最容易出现的问题是中文乱码
+字符集涉及连接配置、数据库、服务器、表、字段、结果集
+避免中文乱码，保证三线统一就可以了：
+1）连接终端的字符集必须是UTF8
+
+2）操作系统的字符集必须是UTF8
+#echo $LANG ##en_US.UTF-8
+
+3）MySQL数据库字符集必须是UTF8
+查看命令 \s; 或status;
+
+Server characterset: utf8mb4
+Db characterset: utf8mb4
+Client characterset: utf8
+Conn. characterset: utf8
+
+show variables like &quot;%char%&quot;;
+
+配置文件：
+character-set-server = utf8mb4
+临时修改数据库字符集：set manes 字符集
+#set names utf8
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id17"><span class="section-number">1.5.6. </span>表碎片产生的原因</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>delete删除数据时，并不会把数据文件真实删除，只是将数据文件标识位删除，也不会整理数据文件，因此不会彻底释放表空间</p>
+<p>delete删除会产生数据碎片，这些碎片会占用磁盘空间，且会影响读取效率，因而需要对表进行优化，对碎片进行整理</p>
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id18"><span class="section-number">1.5.7. </span>碎片计算方法及整理过程</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>show table status like &quot;%table_name%&quot;; #table_name为实际表名
+碎片大小 = 数据总大小 - 实际表空间文件大小
+数据总大小 = data_length + index_length
+实际表空间大小 = rows x avg_row_length
+#计算出来后，除以1024平方即可得到MB清除碎片方法一
+alter table table_name engine=innodb
+#该语句重新整理一遍全表数据，整理后数据连续性好，全表扫描快，表空间文件也变小，节约磁盘空间，清除碎片
+#缺点是会给整表加写锁，速度较慢，业务高峰期不建议使用
+备份原表数据，然后删掉，重新导入到新表中，新表和原表结构一样清除碎片方法二
+备份恢复pt-online-schema-change可以在线整理表结构、收集碎片、给大表添加字段和索引，避免出现锁表导致阻塞读写的操作
+5.7版本不需要使用这个命令，因为可以在线Online DDL
+./pt-online-schema-change --user=root --password=root123 --host=localhost --alter=&quot;ENGINE=InnoDB&quot; D=test,t=su --execute
+</pre></div>
+</div>
+</section>
+<section id="id9">
+<h2><a class="toc-backref" href="#id19"><span class="section-number">1.5.8. </span>表统计信息</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<p>统计每个库的大小、表的大小、数据和索引的大小等</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>统计每个库大小，单位GB
+select table_schema,sum(data_length)/1024/1024/1024 as data_length,sum(index_length)/1024/1024/1024 as index_length,sum(data_length+index_length)/1024/1024/1024 as sum_data_index from information_schema.tables where table_schema!=&#39;information_schema&#39; and table_schema!=&#39;mysql&#39; group by table_schema;
+
+统计库中每个表的大小，单位byte
+#set SESSION sql_mode =&#39;STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION &#39;;
+#解决sql_mode=only_full_group_by引起的异常
+select table_name,data_length,index_length,sum(data_length+index_length) as total_size from information_schema.tables where table_schema=&#39;test&#39; group by table_name;
+
+统计所有数据库的大小，单位GB
+select sum(data_length+index_length)/1024/1024/1024 from information_schema.tables;
+
+查看sql模式
+select @@global.sql_mode;
+ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION
+解释：
+ONLY_FULL_GROUP_BY，对GROUP BY聚合操作，若在SELECT中的列，没有在GROUP BY中出现，那么这个SQL是不合法的
+#在使用group by 的时候，就要用MAX(),SUM(),ANT_VALUE()这种聚合函数，才能完成GROUP BY 的聚合操作
+STRICT_TRANS_TABLES，一个值不能插入到一个事务表中，则中断当前操作，对非事务表不做限制
+NO_ZERO_IN_DATE，严格模式下，不允许日期和月份为零
+NO_ZERO_DATE，不允许插入零日期，插入零日期直接抛出错误
+ERROR_FOR_DIVISION_BY_ZERO，insert或update中，若数据被零除，产生错误；无该指令则数据被零除时返回NULL
+NO_AUTO_CREATE_USER，不自动创建用户
+NO_ENGINE_SUBSTITUTION，如果需要的存储引擎被禁用或未编译，抛出错误；无该指令时，用默认存储引擎，并抛出一个异常
+PIPES_AS_CONCAT，将&quot;||&quot;视为字符串连接操作符而非或运算符
+ANSI_QUOTES，不能用双引号引用字符串，双引号解释为识别符
+NO_AUTO_VALUE_ON_ZERO，影响自增长列的插入，若用户希望插入的值为0，可启用该项。默认插入0或NULL代表生成下一个自增长值
+</pre></div>
+</div>
+</section>
+<section id="id10">
+<h2><a class="toc-backref" href="#id20"><span class="section-number">1.5.9. </span>统计信息的收集方法</a><a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）遍历information_schema.tables，收集某表的统计信息
+2）show table status like &quot;%table_name%&quot;;
+</pre></div>
+</div>
+</section>
+<section id="mysq">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">1.5.10. </span>Mysq库表常用命令总结</a><a class="headerlink" href="#mysq" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">use</span> <span class="n">database_name</span><span class="p">:</span><span class="n">选择数据库</span>
+<span class="n">show</span> <span class="n">databases</span><span class="p">:</span><span class="n">显示数据库</span>
+<span class="n">show</span> <span class="n">tables</span><span class="p">:</span><span class="n">显示表</span>
+<span class="n">create</span> <span class="n">database</span> <span class="n">database_name</span><span class="p">:</span><span class="n">创建数据库</span>
+<span class="n">drop</span> <span class="n">database</span> <span class="n">database_name</span><span class="p">:</span><span class="n">删除数据库</span>
+<span class="n">create</span> <span class="n">table</span> <span class="n">table_name</span> <span class="p">(</span><span class="n">字段列表</span><span class="p">):</span><span class="n">创建表</span>
+<span class="n">drop</span> <span class="n">table</span> <span class="n">table_name</span><span class="p">:</span><span class="n">删除表</span>
+<span class="n">delete</span> <span class="kn">from</span> <span class="nn">table_name</span> <span class="p">(</span><span class="n">where</span><span class="p">):</span><span class="n">删除表内数据</span>
+<span class="n">truncate</span> <span class="n">table</span> <span class="n">table_name</span><span class="p">:</span><span class="n">清空表内数据</span>
+<span class="n">insert</span> <span class="n">into</span> <span class="n">table_name</span> <span class="p">(</span><span class="n">字段列表</span><span class="p">)</span> <span class="n">values</span> <span class="p">(</span><span class="n">对应字段的值</span><span class="p">):</span><span class="n">插入数据</span>
+<span class="n">update</span> <span class="n">table_name</span> <span class="nb">set</span> <span class="n">字段名</span><span class="o">=</span><span class="n">值</span> <span class="p">(</span><span class="n">where</span><span class="p">):</span><span class="n">更新数据</span>
+<span class="n">select</span> <span class="o">*</span> <span class="kn">from</span> <span class="nn">table_name</span> <span class="p">(</span><span class="n">where</span><span class="p">):</span><span class="n">查询数据</span>
+<span class="n">show</span> <span class="n">create</span> <span class="n">table</span> <span class="n">table_name</span>\<span class="n">G</span><span class="p">:</span><span class="n">查看建表语句</span>
+<span class="n">desc</span> <span class="n">table_name</span><span class="p">:</span><span class="n">查看表结构</span>
+<span class="n">show</span> <span class="n">table</span> <span class="n">status</span><span class="p">:</span><span class="n">获取表基础信息</span>
+<span class="n">show</span> <span class="n">index</span> <span class="kn">from</span> <span class="nn">table_name</span><span class="p">:</span><span class="n">查看当前表下索引情况</span>
+<span class="n">show</span> <span class="n">full</span> <span class="n">processlist</span><span class="p">:</span><span class="n">查看数据库当前连接情况</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html" class="btn btn-neutral float-left" title="1.4. 04.数据库文件" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06.%E7%B4%A2%E5%BC%95.html" class="btn btn-neutral float-right" title="1.6. 06.索引" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

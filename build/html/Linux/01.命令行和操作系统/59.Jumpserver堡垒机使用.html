@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.55. Jumpserver堡垒机使用 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Linux服务器架设" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html" />
+    <link rel="prev" title="1.54. 检查服务器端口连通性的几种方法" href="58.%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BF%9E%E9%80%9A%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 命令行和操作系统</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.find.html">1.1. find查找</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F.html">1.2. 正则表达式</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.lsof.html">1.3. lsof</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.xargs.html">1.4. xargs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.scp.html">1.5. scp</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.wget%E5%92%8Ccurl.html">1.6. wget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.curl.html">1.7. curl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.cut.html">1.8. cut</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.1.less.html">1.9. less</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.ss.html">1.10. ss</a></li>
+<li class="toctree-l3"><a class="reference internal" href="10.date.html">1.11. date</a></li>
+<li class="toctree-l3"><a class="reference internal" href="11.nestat.html">1.12. netstat</a></li>
+<li class="toctree-l3"><a class="reference internal" href="12.eval.html">1.13. eval</a></li>
+<li class="toctree-l3"><a class="reference internal" href="13.ssh.html">1.14. ssh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="14.nohup.html">1.15. nohup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="15.grep.html">1.16. grep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.route.html">1.17. route路由和网关设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="17.exec.html">1.18. exec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="18.%E8%BF%90%E7%AE%97%E7%AC%A6.html">1.19. let运算符</a></li>
+<li class="toctree-l3"><a class="reference internal" href="19.read.html">1.20. read</a></li>
+<li class="toctree-l3"><a class="reference internal" href="20.wc%E5%91%BD%E4%BB%A4.html">1.21. wc命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="21.printf.html">1.22. printf和echo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="22.dd.html">1.23. dd命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="23.tar.html">1.24. tar命令</a></li>
+<li class="toctree-l3"><a class="reference internal" href="24.su%E5%91%BD%E4%BB%A4%E4%B8%8Esudo%E6%9C%8D%E5%8A%A1.html">1.25. su命令与sudo服务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="25.Centos7%E5%BF%98%E8%AE%B0root%E5%AF%86%E7%A0%81%E3%80%81%E4%BF%AE%E6%94%B9%E7%BD%91%E5%8D%A1%E5%90%8D%E7%A7%B0.html">1.26. Centos7忘记root密码、修改网卡名称</a></li>
+<li class="toctree-l3"><a class="reference internal" href="26.vmware%E5%85%8B%E9%9A%86%E5%90%8E%E6%93%8D%E4%BD%9C.html">1.27. vmware克隆后操作</a></li>
+<li class="toctree-l3"><a class="reference internal" href="27.xshell%E7%99%BB%E5%BD%95-%E9%87%87%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E5%BD%95.html">1.28. xshell登录-采用密钥登录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="28.%E4%B8%80%E4%BA%9B%E6%9C%89%E7%94%A8%E7%9A%84shell%E8%84%9A%E6%9C%AC.html">1.29. 一些有用的shell脚本</a></li>
+<li class="toctree-l3"><a class="reference internal" href="29.%E4%BD%BF%E7%94%A8OpenSSH%E8%BF%9C%E7%A8%8B%E7%AE%A1%E7%90%86Linux%E6%9C%8D%E5%8A%A1%E5%99%A8.html">1.30. 使用OpenSSH远程管理Linux服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="30.tcpdump%E8%B7%9F%E8%B8%AA%E5%88%86%E7%BB%84.html">1.31. tcpdump跟踪分组</a></li>
+<li class="toctree-l3"><a class="reference internal" href="31.screen%E9%9B%86%E4%B8%AD%E7%AE%A1%E7%90%86%E5%A4%9A%E4%B8%AA%E7%BB%88%E7%AB%AF.html">1.32. screen集中管理多个终端</a></li>
+<li class="toctree-l3"><a class="reference internal" href="32.echo%E8%BE%93%E5%87%BA%E9%A2%9C%E8%89%B2.html">1.33. echo 输出颜色</a></li>
+<li class="toctree-l3"><a class="reference internal" href="33.Ubuntu%E5%AE%89%E8%A3%85%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96.html">1.34. Ubuntu安装和初始化</a></li>
+<li class="toctree-l3"><a class="reference internal" href="34.DRBD%E8%AF%A6%E7%BB%86%E8%A7%A3%E8%AF%B4%E5%8F%8A%E9%85%8D%E7%BD%AE%E8%BF%87%E7%A8%8B%E8%AE%B0%E5%BD%95.html">1.35. DRBD详细解说及配置过程记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="40.Linux%E5%88%9D%E5%A7%8B%E5%8C%96%E7%B3%BB%E7%BB%9F%E5%AE%89%E5%85%A8%E8%AE%BE%E7%BD%AE.html">1.36. Linux初始化系统安全设置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="41.%E4%BD%BF%E7%94%A8tar%E5%91%BD%E4%BB%A4%E8%BF%9B%E8%A1%8C%E6%9C%AC%E5%9C%B0%E5%A4%87%E4%BB%BDscripts.html">1.37. 使用tar命令进行本地备份scripts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="42.%E9%85%8D%E7%BD%AEYum%E8%BD%AF%E4%BB%B6%E4%BB%93%E5%BA%93.html">1.38. 配置Yum软件仓库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="43.Vim%E7%BC%96%E8%BE%91%E5%99%A8%E5%AD%A6%E4%B9%A0.html">1.39. Vim编辑器学习</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Linux%E4%B8%8B%E8%BD%AF%E4%BB%B6%E7%9A%84%E5%AE%89%E8%A3%85%E4%B8%8E%E7%AE%A1%E7%90%86.html">1.40. Linux下软件的安装与管理</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.Linux%E4%B8%8B%E7%BB%91%E5%AE%9A%E7%BD%91%E5%8D%A1%E7%9A%84%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95.html">1.41. Linux下绑定网卡的操作记录</a></li>
+<li class="toctree-l3"><a class="reference internal" href="46.Linux%E6%80%A7%E8%83%BD%E7%9B%91%E6%8E%A7%E5%B7%A5%E5%85%B7PyDash.html">1.42. 一个基于Web界面的Linux性能监控工具:PyDash</a></li>
+<li class="toctree-l3"><a class="reference internal" href="47.%E6%81%A2%E5%A4%8D%E6%96%87%E4%BB%B6%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7.html">1.43. 恢复文件相关工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="48.Centos7-systemd%E6%9C%8D%E5%8A%A1%E5%B0%81%E8%A3%85server.html">1.44. Centos7-systemd服务封装server.md</a></li>
+<li class="toctree-l3"><a class="reference internal" href="49.DELLR730%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%AE%89%E8%A3%85centos7.3%E6%95%99%E7%A8%8B.html">1.45. DELL R730服务器安装centos7.3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="50.ssh%E7%99%BB%E5%BD%95%E7%BC%93%E6%85%A2%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95.html">1.46. ssh登录缓慢解决办法</a></li>
+<li class="toctree-l3"><a class="reference internal" href="51.Centos7.x%E4%BD%BF%E7%94%A8yum%E5%AE%89%E8%A3%85mysql-server.html">1.47. Centos7.x使用yum安装mysql-server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="52.Linux%E5%AE%89%E8%A3%85zsh%E5%92%8Coh-my-zsh.html">1.48. Linux安装zsh和oh-my-zsh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="53.Linux%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8%E6%90%9C%E7%B4%A2%E5%B7%A5%E5%85%B7.html">1.49. Linux命令大全搜索工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="54.CentOS7%E5%AE%89%E8%A3%85%E7%AC%94%E8%AE%B0.html">1.50. CentOS7安装笔记</a></li>
+<li class="toctree-l3"><a class="reference internal" href="55.%E9%9D%99%E6%80%81%E8%B7%AF%E7%94%B1%E5%AE%9E%E4%BE%8B-Linux-windows.html">1.51. 静态路由实例-Linux-windows</a></li>
+<li class="toctree-l3"><a class="reference internal" href="56.Centos7%E5%86%85%E6%A0%B8%E5%8D%87%E7%BA%A7.html">1.52. Centos7内核升级</a></li>
+<li class="toctree-l3"><a class="reference internal" href="57.bash_Vim%E5%BF%AB%E6%8D%B7%E9%94%AE.html">1.53. bash_Vim快捷键</a></li>
+<li class="toctree-l3"><a class="reference internal" href="58.%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BF%9E%E9%80%9A%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95.html">1.54. 检查服务器端口连通性的几种方法</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.55. Jumpserver堡垒机使用</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.55.1. 1.安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.55.2. 2. 用户配置</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.55.3. 3.用户组</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.55.4. 4.用户列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.55.5. 5.网域列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.55.6. 6.资产列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">1.55.7. 7.管理用户</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.55.8. 8.系统用户</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id9">1.55.9. 9.资产列表</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id11">1.55.10. 10.资产授权</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id12">1.55.11. 11.测试</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id13">1.55.12. 12.配置命令规则</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id14">1.55.13. 13.会话管理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.55.14. 参考文献</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E7%8E%A9%E8%BD%AC%E6%95%B0%E6%8D%AE%E5%BA%93%EF%BC%88mysql%E3%80%81Redis%EF%BC%89/index.html">4. 玩转数据库(mysql、Redis)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.Nginx%E5%AD%A6%E4%B9%A0/index.html">5. Nginx学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.LAMP%E3%80%81LNMP%E5%AD%A6%E4%B9%A0/index.html">6. LNMP、LAMP学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.Zabbix%E7%9B%91%E6%8E%A7%E4%BC%81%E4%B8%9A%E5%AE%9E%E6%88%98/index.html">7. Zabbix监控企业实战</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Linux%E6%9E%84%E5%BB%BA%E9%AB%98%E5%8F%AF%E7%94%A8%E6%9E%B6%E6%9E%84/index.html">8. 构建Linux高可用架构</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../09.Zabbix3.0%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A/index.html">9. Zabbix3.0入门到精通</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../10.%E5%BF%AB%E9%80%9F%E9%98%85%E8%AF%BBLinux%E5%85%A5%E9%97%A8-%E9%98%BF%E9%93%ADLinux/index.html">10. 快速阅读Linux入门-阿铭Linux</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Linux</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>命令行和操作系统</a> &raquo;</li>
+      <li><span class="section-number">1.55. </span>Jumpserver堡垒机使用</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Linux/01.命令行和操作系统/59.Jumpserver堡垒机使用.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#jumpserver" id="id20">Jumpserver堡垒机使用</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id21">1.安装</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id22">2. 用户配置</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id23">3.用户组</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id24">4.用户列表</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id25">5.网域列表</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id26">6.资产列表</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id27">7.管理用户</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id28">8.系统用户</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id29">9.资产列表</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id30">10.资产授权</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id31">11.测试</a></p></li>
+<li><p><a class="reference internal" href="#id13" id="id32">12.配置命令规则</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id33">13.会话管理</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id34">参考文献</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="jumpserver">
+<h1><a class="toc-backref" href="#id20"><span class="section-number">1.55. </span>Jumpserver堡垒机使用</a><a class="headerlink" href="#jumpserver" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id21"><span class="section-number">1.55.1. </span>1.安装</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/12172811.html">Jumpserver
+docker搭建</a></p>
+<p>docker部署</p>
+<p><a class="reference external" href="https://github.com/jumpserver/Dockerfile/tree/master/allinone">https://github.com/jumpserver/Dockerfile/tree/master/allinone</a></p>
+<p><a class="reference external" href="https://github.com/jumpserver/Dockerfile">https://github.com/jumpserver/Dockerfile</a></p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id22"><span class="section-number">1.55.2. </span>2. 用户配置</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>用户、系统用户、管理用户的关系</p>
+<p>用户管理里面的用户列表 是用来登录jumpserver平台的用户,
+用户需要先登录jumpserver平台, 才能管理或者连接资产
+资产管理里面的管理用户 是jumpserver用来管理资产需要的服务账户
+资产管理里面的系统用户 是jumpserver用户连接资产需要的登录账户</p>
+</section>
+<section id="id3">
+<h2><a class="toc-backref" href="#id23"><span class="section-number">1.55.3. </span>3.用户组</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/image-20220601144916533.png" src="../../_images/image-20220601144916533.png" />
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id24"><span class="section-number">1.55.4. </span>4.用户列表</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/image-20220601145058859.png" src="../../_images/image-20220601145058859.png" />
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id25"><span class="section-number">1.55.5. </span>5.网域列表</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/image-20220601145312779.png" src="../../_images/image-20220601145312779.png" />
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">1.55.6. </span>6.资产列表</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/image-20220601150234232.png" src="../../_images/image-20220601150234232.png" />
+<figure class="align-default" id="id16">
+<img alt="image-20220601150250981" src="../../_images/image-20220601150250981.png" />
+<figcaption>
+<p><span class="caption-text">image-20220601150250981</span><a class="headerlink" href="#id16" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">1.55.7. </span>7.管理用户</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>注释：
+这里的管理用户，要在被管理节点提前创建，用户名密码保持一致，并且要在被管理节点进行sudo提权</p>
+</div></blockquote>
+<p>配置sudo</p>
+<p>使用root用户登录已经存在的服务器，创建一个管理用户，密码全部统一。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">useradd</span> <span class="n">gitee</span>
+<span class="n">echo</span> <span class="s2">&quot;123456&quot;</span><span class="o">|</span><span class="n">passwd</span> <span class="n">gitee</span> <span class="o">--</span><span class="n">stdin</span>
+<span class="n">chmod</span> <span class="mi">644</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+<span class="n">echo</span> <span class="s2">&quot;gitee ALL=(ALL) NOPASSWD:ALL&quot;</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+<span class="n">chmod</span> <span class="mi">400</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+<span class="n">sudo</span> <span class="n">chmod</span> <span class="o">-</span><span class="n">w</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">sudoers</span>
+</pre></div>
+</div>
+<p>测试配置是否成功</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>测试提权是否成功
+[root@gitee-k8s-m2 ~]# su - gitee
+[gitee@gitee-k8s-m2 ~]$ sudo touch /tmp/aaa.txt  //如果创建成功，说明提权成功，再进行一下操作
+</pre></div>
+</div>
+<img alt="../../_images/image-20220601154802098.png" src="../../_images/image-20220601154802098.png" />
+<img alt="../../_images/image-20220601154845164.png" src="../../_images/image-20220601154845164.png" />
+</section>
+<section id="id8">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">1.55.8. </span>8.系统用户</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<figure class="align-default" id="id17">
+<img alt="image-20220601154957415" src="../../_images/image-20220601154957415.png" />
+<figcaption>
+<p><span class="caption-text">image-20220601154957415</span><a class="headerlink" href="#id17" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<img alt="../../_images/image-20220601155051449.png" src="../../_images/image-20220601155051449.png" />
+<img alt="../../_images/image-20220601155115629.png" src="../../_images/image-20220601155115629.png" />
+</section>
+<section id="id9">
+<span id="id10"></span><h2><a class="toc-backref" href="#id29"><span class="section-number">1.55.9. </span>9.资产列表</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<figure class="align-default" id="id18">
+<img alt="image-20220601155332519" src="../../_images/image-20220601155332519.png" />
+<figcaption>
+<p><span class="caption-text">image-20220601155332519</span><a class="headerlink" href="#id18" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>点击推送所有系统用户到资产-<code class="docutils literal notranslate"><span class="pre">推送</span></code></p>
+<p>然后再点击测试所有系统用户可连接性: <code class="docutils literal notranslate"><span class="pre">测试</span></code></p>
+<img alt="../../_images/image-20220601164607698.png" src="../../_images/image-20220601164607698.png" />
+<p>创建完成，进行验证主机是否可连接</p>
+<figure class="align-default" id="id19">
+<img alt="image-20220601155401068" src="../../_images/image-20220601155401068.png" />
+<figcaption>
+<p><span class="caption-text">image-20220601155401068</span><a class="headerlink" href="#id19" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<img alt="../../_images/image-20220601155447636.png" src="../../_images/image-20220601155447636.png" />
+</section>
+<section id="id11">
+<h2><a class="toc-backref" href="#id30"><span class="section-number">1.55.10. </span>10.资产授权</a><a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h2>
+<img alt="../../_images/image-20220601155535252.png" src="../../_images/image-20220601155535252.png" />
+<img alt="../../_images/image-20220601155610881.png" src="../../_images/image-20220601155610881.png" />
+</section>
+<section id="id12">
+<h2><a class="toc-backref" href="#id31"><span class="section-number">1.55.11. </span>11.测试</a><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic simple">
+<li><p>退出admin管理员用户，使用hujianli普通用户登录Jumpserver堡垒机平台</p></li>
+<li><p>查看自己对所分配的资产有无连接权限</p></li>
+</ol>
+<img alt="../../_images/image-20220601155744495.png" src="../../_images/image-20220601155744495.png" />
+<p>公司一般都使用如下方式进行登录</p>
+<img alt="../../_images/image-20220601171333496.png" src="../../_images/image-20220601171333496.png" />
+<p>还有另外一种连接方式，使用ssh系统用户名和服务器地址</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ssh -p 2222 hujianli@192.168.1.141
+hujianli@192.168.1.141&#39;s password:
+                胡建力,  JumpServer 开源堡垒机
+
+        1) 输入 部分IP，主机名，备注 进行搜索登录(如果唯一).
+        2) 输入 / + IP，主机名，备注 进行搜索，如：/192.168.
+        3) 输入 p 进行显示您有权限的主机.
+        4) 输入 g 进行显示您有权限的节点.
+        5) 输入 d 进行显示您有权限的数据库.
+        6) 输入 k 进行显示您有权限的Kubernetes.
+        7) 输入 r 进行刷新最新的机器和节点信息.
+        8) 输入 h 进行显示帮助.
+        9) 输入 q 进行退出.
+Opt&gt;
+</pre></div>
+</div>
+<p>按p查看有权限的主机，然后输入他的id 就能连接上 然后可以进行增删改查。</p>
+<p>历史操作命令在jumpserver上都能看见 也可以看到</p>
+</section>
+<section id="id13">
+<h2><a class="toc-backref" href="#id32"><span class="section-number">1.55.12. </span>12.配置命令规则</a><a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id14">
+<h2><a class="toc-backref" href="#id33"><span class="section-number">1.55.13. </span>13.会话管理</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="id15">
+<h2><a class="toc-backref" href="#id34"><span class="section-number">1.55.14. </span>参考文献</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://blog.csdn.net/hanjinjuan/article/details/120894974">https://blog.csdn.net/hanjinjuan/article/details/120894974</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="58.%E6%A3%80%E6%9F%A5%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%AB%AF%E5%8F%A3%E8%BF%9E%E9%80%9A%E6%80%A7%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E6%B3%95.html" class="btn btn-neutral float-left" title="1.54. 检查服务器端口连通性的几种方法" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html" class="btn btn-neutral float-right" title="2. Linux服务器架设" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

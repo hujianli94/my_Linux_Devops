@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>1.2. 02.Mysql数据库的安装启动和关闭 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="1.3. 03.MySQL体系结构与存储引擎" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html" />
+    <link rel="prev" title="1.1. 01.Mysql简介与主流分支版本" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">1. 01.倔强的青铜篇</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html">1.1. 01.Mysql简介与主流分支版本</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">1.2. 02.Mysql数据库的安装启动和关闭</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">1.2.1. 下载MySQL二进制软件包</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.2.2. 安装前系统环境检测</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysql5-6">1.2.3. MySQL5.6版本的安装过程</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysql-5-7">1.2.4. MySQL 5.7版本的安装</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysqlroot">1.2.5. MySQL数据库root密码丢失的问题</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.2.6. MySQL数据库的连接方式</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">1.2.7. 经常还是要连接MySQL的客户端工具</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">1.2.8. 用户权限管理</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html">1.3. 03.MySQL体系结构与存储引擎</a></li>
+<li class="toctree-l3"><a class="reference internal" href="04.%E6%95%B0%E6%8D%AE%E5%BA%93%E6%96%87%E4%BB%B6.html">1.4. 04.数据库文件</a></li>
+<li class="toctree-l3"><a class="reference internal" href="05.%E8%A1%A8.html">1.5. 05.表</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.%E7%B4%A2%E5%BC%95.html">1.6. 06.索引</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.%E4%BA%8B%E5%8A%A1.html">1.7. 07.事务</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.%E9%94%81.html">1.8. 08.锁</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E7%A7%A9%E5%BA%8F%E7%9A%84%E7%99%BD%E9%93%B6%E7%AF%87/index.html">2. 02.秩序的白银篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.%E8%8D%A3%E8%80%80%E7%9A%84%E9%BB%84%E9%87%91%E7%AF%87/index.html">3. 03.荣耀的黄金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.%E5%B0%8A%E8%B4%B5%E7%9A%84%E9%93%82%E9%87%91%E7%AF%87/index.html">4. 04.尊贵的铂金篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E6%B0%B8%E6%81%92%E7%9A%84%E9%92%BB%E7%9F%B3%E7%AF%87/index.html">5. 05.永恒的钻石篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../06.%E8%87%B3%E5%B0%8A%E7%9A%84%E6%98%9F%E8%80%80%E7%AF%87/index.html">6. 06.至尊的星耀篇</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Mysql王者之路</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">1. </span>01.倔强的青铜篇</a> &raquo;</li>
+      <li><span class="section-number">1.2. </span>02.Mysql数据库的安装启动和关闭</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/Mysql/01.倔强的青铜篇/02.Mysql数据库的安装启动和关闭.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#mysql" id="id7">02.Mysql数据库的安装启动和关闭</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id1" id="id8">下载MySQL二进制软件包</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id9">安装前系统环境检测</a></p></li>
+<li><p><a class="reference internal" href="#mysql5-6" id="id10">MySQL5.6版本的安装过程</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id3" id="id11">创建密码</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#mysql-5-7" id="id12">MySQL 5.7版本的安装</a></p></li>
+<li><p><a class="reference internal" href="#mysqlroot" id="id13">MySQL数据库root密码丢失的问题</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id14">MySQL数据库的连接方式</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id15">经常还是要连接MySQL的客户端工具</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id16">用户权限管理</a></p></li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="mysql">
+<h1><a class="toc-backref" href="#id7"><span class="section-number">1.2. </span>02.Mysql数据库的安装启动和关闭</a><a class="headerlink" href="#mysql" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2><a class="toc-backref" href="#id8"><span class="section-number">1.2.1. </span>下载MySQL二进制软件包</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>官网MySQL 有四个版本，分别为GA 版、DMR 版、RC 版和Beta版。
+一般情况下,生产环境或者测试环境要选择GA版(常规可用的版本,经过bug
+修复测试过)。</p>
+<p>大家可以去MySQL官网下载软件包,官网链接地址为www.mysql.com。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">//</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.7</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.7</span><span class="o">.</span><span class="mi">22</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">cdn</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">//</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.6</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">40</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">downloads</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span>
+</pre></div>
+</div>
+<p><img alt="image0" src="../../_images/mysql_install_wangzhe0001.png" /></p>
+<p>校验MD5如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># md5sum mysql-5.6.16-linux-glibc2.5-x86_64.tar.gz</span>
+<span class="mi">41</span><span class="n">b4533f4fcec2d0132794f26f378f2a</span>  <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">16</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+</pre></div>
+</div>
+<p>这里学习MySQL5.6和MySQL5.7版本的安装过程，是因为MySQL5.7之前版本
+在数据库初始化过程中需要借助于/usr/local/mysql/scripts/mysql_install_db命令,
+但在MySQL 5.7 之后版本mysql_install_db被废弃了。</p>
+</section>
+<section id="id2">
+<h2><a class="toc-backref" href="#id9"><span class="section-number">1.2.2. </span>安装前系统环境检测</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1、SELinux和系统防火墙iptables需要关闭
+2、I/O调度系统默认是cfq模式，强烈建议使用deadline模式
+cat /sys/block/sda/queue/scheduler
+#cfq完全公平队列；noop电梯式调度；deadline截止时间调度
+3、swap分区的设置
+不分配swap或分配4GB的swap
+swappiness控制如何使用swap分区，0表示最大限度使用物理内存，然后才使用swap，可能导致内存溢出，导致MySQL被意外kill掉；100，积极使用swap，把内存数据及时搬到swap，不建议
+cat /proc/sys/vm/swappiness
+编辑 /etc/sysctl.conf 加入vm.swappiess的值
+4、文件系统的选择 [xfs]
+5、操作系统限制
+ulinit -a
+open files和max user processes，建议均设置为65535
+vim /etc/security/limits.conf
+* soft nproc 65535
+* hard nproc 65535
+* soft nofile 65535
+* hard nofile 65535
+6、numa需要关闭
+numa --interleave=all /usr/local/mysql/bin/mysqld_safe -defaults-file=/etc/my.cnf &amp;
+关闭numa，可以更好地分配内存，不需要采用swap的方式来获取内存
+可以在BIOS、操作系统或者在数据库启动过程中关闭
+yum install numactl
+numastat -H 、lscpu
+</pre></div>
+</div>
+</section>
+<section id="mysql5-6">
+<h2><a class="toc-backref" href="#id10"><span class="section-number">1.2.3. </span>MySQL5.6版本的安装过程</a><a class="headerlink" href="#mysql5-6" title="Permalink to this headline">¶</a></h2>
+<p>1.第一步：创建MySQL用户，指定MySQL所在的用户组，如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># groupadd mysql</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># useradd -g mysql mysql -s /sbin/nologin</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="o">~</span><span class="p">]</span><span class="c1"># mv mysql-5.6.16-linux-glibc2.5-x86_64.tar.gz /usr/local/</span>
+
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="n">local</span><span class="p">]</span><span class="c1"># tar -zxvf mysql-5.6.16-linux-glibc2.5-x86_64.tar.gz</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="n">local</span><span class="p">]</span><span class="c1"># ln -s mysql-5.6.16-linux-glibc2.5-x86_64 mysql</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="n">local</span><span class="p">]</span><span class="c1"># chown mysql:mysql -R mysql</span>
+</pre></div>
+</div>
+<p>2.第二步，粗昂见mysql的虎数据库的数据目录（datadir），这里可以选择创建在/data/mysql下面。命令如下：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="n">local</span><span class="p">]</span><span class="c1"># mkdir -p /data/mysql</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="n">local</span><span class="p">]</span><span class="c1"># chown mysql:mysql -R /data/mysql/</span>
+</pre></div>
+</div>
+<p>3.第三步，配置my.cnf配置文件</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">&lt;&lt;-</span><span class="n">EOF</span>
+<span class="p">[</span><span class="n">client</span><span class="p">]</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span> <span class="o">=</span> <span class="n">utf8</span>
+<span class="p">[</span><span class="n">mysql</span><span class="p">]</span>
+<span class="n">default</span><span class="o">-</span><span class="n">character</span><span class="o">-</span><span class="nb">set</span> <span class="o">=</span> <span class="n">utf8</span>
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">basedir</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">datadir</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">open_files_limit</span> <span class="o">=</span> <span class="mi">65535</span>
+<span class="n">back_log</span> <span class="o">=</span> <span class="mi">103</span>
+<span class="n">max_connections</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">max_connect_errors</span> <span class="o">=</span> <span class="mi">100000</span>
+<span class="n">table_open_cache</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">external</span><span class="o">-</span><span class="n">locking</span> <span class="o">=</span> <span class="n">FALSE</span>
+<span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">128</span><span class="n">M</span>
+<span class="n">sort_buffer_size</span> <span class="o">=</span> <span class="mi">2</span><span class="n">M</span>
+<span class="n">join_buffer_size</span> <span class="o">=</span> <span class="mi">2</span><span class="n">M</span>
+<span class="n">thread_cache_size</span> <span class="o">=</span> <span class="mi">51</span>
+<span class="n">query_cache_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">tmp_table_size</span> <span class="o">=</span> <span class="mi">96</span><span class="n">M</span>
+<span class="n">max_heap_table_size</span> <span class="o">=</span> <span class="mi">96</span><span class="n">M</span>
+<span class="n">slow_query_log</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">slow_query_log_file</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span>
+<span class="n">log</span><span class="o">-</span><span class="n">error</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+<span class="n">long_query_time</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">server</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="mi">1323306</span>
+<span class="n">log</span><span class="o">-</span><span class="nb">bin</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span>
+<span class="n">sync_binlog</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">binlog_cache_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+<span class="n">max_binlog_cache_size</span> <span class="o">=</span> <span class="mi">128</span><span class="n">M</span>
+<span class="n">max_binlog_size</span> <span class="o">=</span> <span class="mi">1024</span><span class="n">M</span>
+<span class="n">expire_logs_days</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">key_buffer_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">read_buffer_size</span> <span class="o">=</span> <span class="mi">1</span><span class="n">M</span>
+<span class="n">read_rnd_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+<span class="n">bulk_insert_buffer_size</span> <span class="o">=</span> <span class="mi">64</span><span class="n">M</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8</span>
+<span class="n">default</span><span class="o">-</span><span class="n">storage</span><span class="o">-</span><span class="n">engine</span> <span class="o">=</span> <span class="n">InnoDB</span>
+<span class="n">binlog_format</span> <span class="o">=</span> <span class="n">row</span>
+<span class="c1">#gtid_mode = on</span>
+<span class="c1">#log_slave_updates = 1</span>
+<span class="c1">#enforce_gtid_consistency = 1</span>
+<span class="n">interactive_timeout</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">wait_timeout</span> <span class="o">=</span> <span class="mi">300</span>
+<span class="n">transaction_isolation</span> <span class="o">=</span> <span class="n">REPEATABLE</span><span class="o">-</span><span class="n">READ</span>
+<span class="n">innodb_buffer_pool_size</span> <span class="o">=</span> <span class="mi">1434</span><span class="n">M</span>
+<span class="n">innodb_data_file_path</span> <span class="o">=</span> <span class="n">ibdata1</span><span class="p">:</span><span class="mi">1024</span><span class="n">M</span><span class="p">:</span><span class="n">autoextend</span>
+<span class="n">innodb_flush_log_at_trx_commit</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_log_buffer_size</span> <span class="o">=</span> <span class="mi">16</span><span class="n">M</span>
+<span class="n">innodb_log_file_size</span> <span class="o">=</span> <span class="mi">256</span><span class="n">M</span>
+<span class="n">innodb_log_files_in_group</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">innodb_max_dirty_pages_pct</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">innodb_file_per_table</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_locks_unsafe_for_binlog</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="p">[</span><span class="n">mysqldump</span><span class="p">]</span>
+<span class="n">quick</span>
+<span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">EOF</span>
+</pre></div>
+</div>
+<p>4.一步走</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#初始化数据库</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">scripts</span><span class="o">/</span>
+<span class="c1">#依赖 yum install perl-Data-Dumper</span>
+<span class="o">./</span><span class="n">mysql_install_db</span> <span class="o">--</span><span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span> <span class="o">--</span><span class="n">datadir</span><span class="o">=/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span>
+</pre></div>
+</div>
+<p>当出现两个“ok”的时候，证明初始化数据库成功了。</p>
+<p><img alt="image1" src="../../_images/mysql_5.6_install0001.png" /></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#启动MySQL</span>
+<span class="p">[</span><span class="n">root</span><span class="o">@</span><span class="mi">192</span> <span class="nb">bin</span><span class="p">]</span><span class="c1"># /usr/local/mysql/bin/mysqld_safe --defaults-file=/etc/my.cnf &amp;</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="mi">14756</span>
+
+
+<span class="c1"># 设置环境变量</span>
+<span class="n">echo</span> <span class="s1">&#39;PATH=$PATH&#39;</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+</pre></div>
+</div>
+<p>查看MySQL进程验证是否启动成功 <img alt="image2" src="../../_images/check_wangzhe_mysql00001.png" /></p>
+<p>MySQL读取配置文件顺序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>/etc/my.cnf -&gt; /etc/mysql/my.cnf -&gt; /usr/local/mysql/etc/my.cnf -&gt; ~/.my.cnf
+
+
+手动指定配置文件 --defaults-file
+--defaults-extra-file，除读取默认配置文件，还读取额外的配置文件
+--no-defaults，忽略所有配置文件
+如果指定多个配置文件，以最后一次读取为准
+</pre></div>
+</div>
+<section id="id3">
+<h3><a class="toc-backref" href="#id11">创建密码</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># 进入数据库</span>
+<span class="o">./</span><span class="n">mysql</span>
+
+<span class="n">use</span> <span class="n">mysql</span><span class="p">;</span>
+<span class="n">update</span> <span class="n">user</span> <span class="nb">set</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;root123&#39;</span><span class="p">)</span> <span class="n">where</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>正常管理Mysql</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">关闭MySQL数据库</span>
+<span class="n">正常关闭</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">mysqladmin</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="n">shutdown</span>
+<span class="n">非正常关闭</span>
+<span class="n">kill掉MySQL进程</span>
+</pre></div>
+</div>
+<p>基础数据库</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>information_schema是在安装MySQL过程中的初始化阶段自动生成的，提供访问数据库元数据的所有信息，只读。常用的表有
+TABLES，记录所有表基本信息，访问该表可以收集表的统计信息
+PROCESSLIST，查看当前数据库连接
+GLOBAL_STATUS，查看数据库运行的各种状态值
+GLOBAL_VARIABLES，查看数据库中的参数
+PARTITIONS，数据库中表分分区情况
+INNODB_LOCKS,INNODB_TRX,INNODB_LOCK_WAITS，监控数据库中锁情况
+</pre></div>
+</div>
+</section>
+</section>
+<section id="mysql-5-7">
+<h2><a class="toc-backref" href="#id12"><span class="section-number">1.2.4. </span>MySQL 5.7版本的安装</a><a class="headerlink" href="#mysql-5-7" title="Permalink to this headline">¶</a></h2>
+<p>唯一区别在初始化数据库那一步，因为5.7废弃了mysql_install_db这个初始化命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span>
+<span class="p">[</span><span class="n">client</span><span class="p">]</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="p">[</span><span class="n">mysql</span><span class="p">]</span>
+<span class="n">prompt</span> <span class="o">=</span> <span class="s2">&quot;\u@db \R:\m:\s [\d]&gt; &quot;</span>
+<span class="n">no</span><span class="o">-</span><span class="n">auto</span><span class="o">-</span><span class="n">rehash</span>
+<span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
+<span class="n">user</span> <span class="o">=</span> <span class="n">mysql</span>
+<span class="n">port</span> <span class="o">=</span> <span class="mi">3306</span>
+<span class="n">basedir</span> <span class="o">=</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">datadir</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">socket</span> <span class="o">=</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+<span class="n">character</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">server</span> <span class="o">=</span> <span class="n">utf8mb4</span>
+<span class="n">skip_name_resolve</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">open_files_limit</span> <span class="o">=</span> <span class="mi">65535</span>
+<span class="n">back_log</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">max_connections</span> <span class="o">=</span> <span class="mi">512</span>
+<span class="n">max_connect_errors</span> <span class="o">=</span> <span class="mi">1000000</span>
+<span class="n">table_open_cache</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">table_definition_cache</span> <span class="o">=</span> <span class="mi">1024</span>
+<span class="n">table_open_cache_instances</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">thread_stack</span> <span class="o">=</span> <span class="mi">512</span><span class="n">K</span>
+<span class="n">external</span><span class="o">-</span><span class="n">locking</span> <span class="o">=</span> <span class="n">FALSE</span>
+<span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">sort_buffer_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+<span class="n">join_buffer_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+<span class="n">thread_cache_size</span> <span class="o">=</span> <span class="mi">768</span>
+<span class="n">query_cache_size</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">query_cache_type</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">interactive_timeout</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">wait_timeout</span> <span class="o">=</span> <span class="mi">600</span>
+<span class="n">tmp_table_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">max_heap_table_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">slow_query_log</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">slow_query_log_file</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">slow</span><span class="o">.</span><span class="n">log</span>
+<span class="n">log</span><span class="o">-</span><span class="n">error</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span>
+<span class="n">long_query_time</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">server</span><span class="o">-</span><span class="nb">id</span> <span class="o">=</span> <span class="mi">3306100</span>
+<span class="n">log</span><span class="o">-</span><span class="nb">bin</span> <span class="o">=</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="n">binlog</span>
+<span class="n">sync_binlog</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">binlog_cache_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+<span class="n">max_binlog_cache_size</span> <span class="o">=</span> <span class="mi">1</span><span class="n">G</span>
+<span class="n">max_binlog_size</span> <span class="o">=</span> <span class="mi">1</span><span class="n">G</span>
+<span class="n">expire_logs_days</span> <span class="o">=</span> <span class="mi">7</span>
+<span class="n">master_info_repository</span> <span class="o">=</span> <span class="n">TABLE</span>
+<span class="n">relay_log_info_repository</span> <span class="o">=</span> <span class="n">TABLE</span>
+<span class="n">gtid_mode</span> <span class="o">=</span> <span class="n">on</span>
+<span class="n">enforce_gtid_consistency</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">log_slave_updates</span>
+<span class="n">binlog_format</span> <span class="o">=</span> <span class="n">row</span>
+<span class="n">relay_log_recovery</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">relay</span><span class="o">-</span><span class="n">log</span><span class="o">-</span><span class="n">purge</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">key_buffer_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">read_buffer_size</span> <span class="o">=</span> <span class="mi">8</span><span class="n">M</span>
+<span class="n">read_rnd_buffer_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">M</span>
+<span class="n">bulk_insert_buffer_size</span> <span class="o">=</span> <span class="mi">64</span><span class="n">M</span>
+
+<span class="n">lock_wait_timeout</span> <span class="o">=</span> <span class="mi">3600</span>
+<span class="n">explicit_defaults_for_timestamp</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_thread_concurrency</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">innodb_sync_spin_loops</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">innodb_spin_wait_delay</span> <span class="o">=</span> <span class="mi">30</span>
+<span class="n">transaction_isolation</span> <span class="o">=</span> <span class="n">REPEATABLE</span><span class="o">-</span><span class="n">READ</span>
+<span class="n">innodb_buffer_pool_size</span> <span class="o">=</span> <span class="mi">1024</span><span class="n">M</span>
+<span class="n">innodb_buffer_pool_instances</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">innodb_buffer_pool_load_at_startup</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_buffer_pool_dump_at_shutdown</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_data_file_path</span> <span class="o">=</span> <span class="n">ibdata1</span><span class="p">:</span><span class="mi">1</span><span class="n">G</span><span class="p">:</span><span class="n">autoextend</span>
+<span class="n">innodb_flush_log_at_trx_commit</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_log_buffer_size</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+<span class="n">innodb_log_file_size</span> <span class="o">=</span> <span class="mi">2</span><span class="n">G</span>
+<span class="n">innodb_log_files_in_group</span> <span class="o">=</span><span class="mi">2</span>
+<span class="n">innodb_io_capacity</span> <span class="o">=</span> <span class="mi">2000</span>
+<span class="n">innodb_io_capacity_max</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="n">innodb_flush_neighbors</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">innodb_write_io_threads</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">innodb_read_io_threads</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">innodb_purge_threads</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">innodb_page_cleaners</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">innodb_open_files</span> <span class="o">=</span> <span class="mi">65535</span>
+<span class="n">innodb_max_dirty_pages_pct</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">innodb_flush_method</span> <span class="o">=</span> <span class="n">O_DIRECT</span>
+<span class="n">innodb_lru_scan_depth</span> <span class="o">=</span> <span class="mi">4000</span>
+<span class="n">innodb_checksum_algorithm</span> <span class="o">=</span> <span class="n">crc32</span>
+<span class="n">innodb_lock_wait_timeout</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">innodb_rollback_on_timeout</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_print_all_deadlocks</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_file_per_table</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_online_alter_log_max_size</span> <span class="o">=</span> <span class="mi">4</span><span class="n">G</span>
+<span class="n">internal_tmp_disk_storage_engine</span> <span class="o">=</span> <span class="n">InnoDB</span>
+<span class="n">innodb_stats_on_metadata</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">innodb_status_file</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">innodb_status_output</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">innodb_status_output_locks</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="c1">#performance_schema</span>
+<span class="n">performance_schema</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">performance_schema_instrument</span> <span class="o">=</span> <span class="s1">&#39;%=on&#39;</span>
+<span class="c1">#innodb monitor</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_innodb&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_server&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_dml&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_ddl&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_trx&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_os&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_purge&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_log&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_lock&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_buffer&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_index&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_ibuf_system&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_buffer_page&quot;</span>
+<span class="n">innodb_monitor_enable</span><span class="o">=</span><span class="s2">&quot;module_adaptive_hash&quot;</span>
+<span class="p">[</span><span class="n">mysqldump</span><span class="p">]</span>
+<span class="n">quick</span>
+<span class="n">max_allowed_packet</span> <span class="o">=</span> <span class="mi">32</span><span class="n">M</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#初始化</span>
+<span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span>
+<span class="o">./</span><span class="n">mysqld</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">basedir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span> <span class="o">--</span><span class="n">datadir</span><span class="o">=/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">mysql</span> <span class="o">--</span><span class="n">initialize</span>
+<span class="c1">#--initialize参数，生成一个临时数据库初始密码，记录在log-error里面</span>
+<span class="c1">#--initialize-insecure参数，无密码进入#启动数据库</span>
+<span class="o">./</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">&amp;</span>
+
+<span class="c1"># 设置环境变量</span>
+<span class="n">echo</span> <span class="s1">&#39;PATH=$PATH&#39;</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="nb">bin</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+<span class="n">source</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">profile</span>
+
+<span class="c1">#修改密码</span>
+<span class="n">cat</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">error</span><span class="o">.</span><span class="n">log</span> <span class="o">|</span><span class="n">grep</span> <span class="n">password</span>
+<span class="nb">set</span> <span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;root123&#39;</span><span class="p">;</span>
+<span class="n">alter</span> <span class="n">user</span> <span class="s1">&#39;root&#39;</span><span class="o">@</span><span class="s1">&#39;localhost&#39;</span> <span class="n">password</span> <span class="n">expire</span> <span class="n">never</span><span class="p">;</span>
+<span class="n">use</span> <span class="n">mysql</span><span class="p">;</span>
+<span class="n">update</span> <span class="n">user</span> <span class="nb">set</span> <span class="n">host</span><span class="o">=</span><span class="s1">&#39;%&#39;</span> <span class="n">where</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>  <span class="c1">#允许远程访问</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span><span class="c1">#关闭数据库</span>
+<span class="o">./</span><span class="n">mysqladmin</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">proot123</span> <span class="n">shutdown</span>
+</pre></div>
+</div>
+</section>
+<section id="mysqlroot">
+<h2><a class="toc-backref" href="#id13"><span class="section-number">1.2.5. </span>MySQL数据库root密码丢失的问题</a><a class="headerlink" href="#mysqlroot" title="Permalink to this headline">¶</a></h2>
+<p>通过添加–skip-grant-tables跳过权限表</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">kill掉mysql进程</span><span class="p">(</span><span class="n">共两个进程</span><span class="p">)</span>
+<span class="o">./</span><span class="n">mysqld_safe</span> <span class="o">--</span><span class="n">defaults</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">etc</span><span class="o">/</span><span class="n">my</span><span class="o">.</span><span class="n">cnf</span> <span class="o">--</span><span class="n">skip</span><span class="o">-</span><span class="n">grant</span><span class="o">-</span><span class="n">tables</span> <span class="o">&amp;</span>
+<span class="o">./</span><span class="n">mysql</span>
+<span class="n">设置新的密码并刷新权限</span>
+<span class="n">use</span> <span class="n">mysql</span>
+<span class="n">update</span> <span class="n">user</span> <span class="nb">set</span> <span class="n">authentication_string</span><span class="o">=</span><span class="n">password</span><span class="p">(</span><span class="s1">&#39;root123&#39;</span><span class="p">)</span> <span class="n">where</span> <span class="n">user</span><span class="o">=</span><span class="s1">&#39;root&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="n">重启数据库</span>
+</pre></div>
+</div>
+</section>
+<section id="id4">
+<h2><a class="toc-backref" href="#id14"><span class="section-number">1.2.6. </span>MySQL数据库的连接方式</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<p>TCP/IP连接，socket连接，name pipe连接(windows)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">username</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="o">-</span><span class="n">P</span> <span class="n">port</span> <span class="o">-</span><span class="n">h</span> <span class="n">IP</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">u</span> <span class="n">username</span> <span class="o">-</span><span class="n">p</span> <span class="n">password</span> <span class="o">-</span><span class="n">S</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">sock</span>
+</pre></div>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id15"><span class="section-number">1.2.7. </span>经常还是要连接MySQL的客户端工具</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<p>· sqlyog</p>
+<p>· navicat</p>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id16"><span class="section-number">1.2.8. </span>用户权限管理</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>root用户避免作为web连接用，超管权限的用户(root和all
+privileges权限用户)只能归DBA管理</p>
+<p>创建用户时，最好保证专库专帐号</p>
+<p>主机IP避免使用%，可以分配一个IP地址段</p>
+<p>只读权限只能查询，不能进行DML操作</p>
+<p>读写权限包含insert/update/delete/select，没有create/alter等建表改表权限</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span> <span class="n">user</span><span class="p">,</span><span class="n">host</span><span class="p">,</span><span class="n">authentication_string</span> <span class="kn">from</span> <span class="nn">user</span><span class="p">;</span>
+<span class="n">create</span> <span class="n">user</span> <span class="n">用户名</span><span class="nd">@主机IP</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;密码&#39;</span><span class="p">;</span>
+<span class="c1">#只读用户</span>
+<span class="n">create</span> <span class="n">user</span> <span class="s1">&#39;erp_read&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.56.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;erp123&#39;</span><span class="p">;</span>
+<span class="n">grant</span> <span class="n">select</span> <span class="n">on</span> <span class="n">erp</span><span class="o">.*</span> <span class="n">to</span> <span class="s1">&#39;erp_read&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.56.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;erp123&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+<span class="c1">#读写用户</span>
+<span class="n">create</span> <span class="n">user</span> <span class="s1">&#39;erp_user&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.56.*&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;erp456&#39;</span><span class="p">;</span>
+<span class="n">grant</span> <span class="n">select</span><span class="p">,</span><span class="n">insert</span><span class="p">,</span><span class="n">update</span><span class="p">,</span><span class="n">delete</span> <span class="n">on</span> <span class="n">erp</span><span class="o">.*</span> <span class="n">to</span> <span class="s1">&#39;erp_user&#39;</span><span class="o">@</span><span class="s1">&#39;192.168.56.%&#39;</span> <span class="n">identified</span> <span class="n">by</span> <span class="s1">&#39;erp456&#39;</span><span class="p">;</span>
+<span class="n">flush</span> <span class="n">privileges</span><span class="p">;</span>
+</pre></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01.Mysql%E7%AE%80%E4%BB%8B%E4%B8%8E%E4%B8%BB%E6%B5%81%E5%88%86%E6%94%AF%E7%89%88%E6%9C%AC.html" class="btn btn-neutral float-left" title="1.1. 01.Mysql简介与主流分支版本" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03.MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E4%B8%8E%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E.html" class="btn btn-neutral float-right" title="1.3. 03.MySQL体系结构与存储引擎" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

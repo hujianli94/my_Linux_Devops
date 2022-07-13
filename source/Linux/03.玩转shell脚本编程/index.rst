@@ -1,0 +1,62 @@
+
+玩转shell脚本编程
+==========================================
+
+.. toctree::
+    :maxdepth: 3
+
+    01.基础知识
+    02.字符串与数组
+    03.运算符
+    04.流程控制
+    05.函数
+    06.正则表达式
+    07.三剑客之grep
+    08.三剑客之sed
+    09.三剑客-awk
+    10.shell技巧与杂项
+    11.xagrs使用
+    12.收集的一些shell脚本
+    13.自动安装zabbix服务器脚本
+    14.自动化安装cacti脚本
+    15.自动安装MongoDB脚本
+    16.备份MongoDB脚本
+    17.自动安装memcached脚本
+    18.system检测脚本
+    19.安装tomcat脚本
+    20.install_zookeeper脚本
+    21.install_elasticserch脚本
+    22.自动Autoinstall_ELK_V1.3
+    23.install_vsftpd脚本
+    24.install_mysql5.7
+    25.Linux下以秒为单位执行脚本
+    26.备份文件shell脚本
+    27.monitor_Linux系统性能
+    28.修改IP_主机名_网卡信息脚本
+    29.检查恶意IP登录，拒绝SSH
+    30.数据库备份
+    31.Centos6开机性能优化
+    32.百宝箱脚本
+    33.deploy_mongo
+    34.python实现端口扫描
+    35.python检测ip存活状态
+    36.k8s_deploy脚本
+    37.example(字符串处理)
+    38.用Python实现定时备份Mongodb数据，并上传到FTP服务器
+    39.Nginx日志切割脚本
+    40.一键安装Docker脚本
+    41.shell实现多并发控制脚本
+    42.判断文件类型
+    43.用if语句编写选择菜单
+    44.使用while语句编写选择菜单
+    45.使用until编写选择菜单
+    46.目录定时备份
+    47.远程操作ftp进行上传和下载
+    48.批量创建用户脚本
+    49.Centos升级内核版本(附带升级脚本)
+    50.CPU监控脚本
+    51.检测函数执行是否超时
+    52.老男孩Shell编程实战
+    53.快捷安装不同版本Python
+    54.常用shell脚本大全
+    55.编写Shell脚本的最佳实践

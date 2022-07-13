@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>6.4. Linux-APP后台应用最广泛的系统 &mdash; 运维开发修炼之路</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6.5. Nginx—App后台HTTP服务的利器" href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html" />
+    <link rel="prev" title="6.3. APP后台核心技术" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="../../index.html" class="icon icon-home"> 小健_Linux-shell-Devops_Blog
+            <img src="../../_static/devops_photo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Other</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../01.Git%E5%85%A5%E9%97%A8%E5%88%B0%E7%86%9F%E7%BB%83/index.html">1. Git入门到熟练</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../02.%E6%9E%84%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84%E5%86%99%E4%B9%A6%E5%8D%9A%E5%AE%A2/index.html">2. 构建写书博客</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../03.Vim%E6%95%99%E7%A8%8B/index.html">3. Vim教程</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../04.SQL-Server%E5%AD%A6%E4%B9%A0/index.html">4. SQL-Server学习</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../05.%E7%A8%8B%E5%BA%8F%E5%91%98%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E7%BD%91%E7%AB%99/index.html">5. 程序员实用工具网站</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">6. APP后台开发运维_读书笔记</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="01.APP%E5%90%8E%E5%8F%B0%E5%85%A5%E9%97%A8.html">6.1. APP后台入门</a></li>
+<li class="toctree-l3"><a class="reference internal" href="02.APP%E5%90%8E%E5%8F%B0%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF.html">6.2. APP后台基础技术</a></li>
+<li class="toctree-l3"><a class="reference internal" href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html">6.3. APP后台核心技术</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">6.4. Linux-APP后台应用最广泛的系统</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#superivisor">6.4.1. 进程管理利器——superivisor</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html">6.5. Nginx—App后台HTTP服务的利器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="06.MySQL%E2%80%94App%E5%90%8E%E5%8F%B0%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.6. MySQL—App后台最常用的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="07.Redis%E2%80%94App%E5%90%8E%E5%8F%B0%E9%AB%98%E6%80%A7%E8%83%BD%E7%9A%84%E7%BC%93%E5%AD%98%E7%B3%BB%E7%BB%9F.html">6.7. Redis—App后台高性能的缓存系统</a></li>
+<li class="toctree-l3"><a class="reference internal" href="08.MongoDB%E2%80%94App%E5%90%8E%E5%8F%B0%E6%96%B0%E5%85%B4%E7%9A%84%E6%95%B0%E6%8D%AE%E5%BA%93.html">6.8. MongoDB—App后台新兴的数据库</a></li>
+<li class="toctree-l3"><a class="reference internal" href="09.%E6%9E%B6%E6%9E%84%E9%80%89%E5%9E%8B%E7%9A%84%E8%A6%81%E7%82%B9.html">6.9. 架构选型的要点</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../07.%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7/index.html">7. 一些常用的工具</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../08.Windows%E7%B3%BB%E7%BB%9F%E7%9B%B8%E5%85%B3/index.html">8. Windows系统相关</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">小健_Linux-shell-Devops_Blog</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="../index.html">Other</a> &raquo;</li>
+          <li><a href="index.html"><span class="section-number">6. </span>APP后台开发运维_读书笔记</a> &raquo;</li>
+      <li><span class="section-number">6.4. </span>Linux-APP后台应用最广泛的系统</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/other/06.APP后台开发运维_读书笔记/04.Linux-APP后台应用最广泛的系统.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <div class="contents topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#linux-app" id="id1">Linux-APP后台应用最广泛的系统</a></p>
+<ul>
+<li><p><a class="reference internal" href="#superivisor" id="id2">进程管理利器——superivisor</a></p>
+<ul>
+<li><p><a class="reference internal" href="#supervisor" id="id3">使用supervisor管理进程有如下的优点。</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<section id="linux-app">
+<h1><a class="toc-backref" href="#id1"><span class="section-number">6.4. </span>Linux-APP后台应用最广泛的系统</a><a class="headerlink" href="#linux-app" title="Permalink to this headline">¶</a></h1>
+<section id="superivisor">
+<h2><a class="toc-backref" href="#id2"><span class="section-number">6.4.1. </span>进程管理利器——superivisor</a><a class="headerlink" href="#superivisor" title="Permalink to this headline">¶</a></h2>
+<p>supervisor是用Python语言编写的基于Linux操作系统的一款进程管理工具，用于监控进程的运行，当发现进程闪退时能自动重启。</p>
+<p>比如开发人员想在后台运行一个从消息队列中取出消息再发送到邮件的脚本sendmail.sh，常常会使用&amp;在程序结尾让程序自动运行，并且在退出登录后也继续执行，采用如下的命令。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">nohupsh</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">sendmail</span><span class="o">.</span><span class="n">sh</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&gt;&gt;</span> <span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">logs</span><span class="o">/</span><span class="n">sendmail</span><span class="o">.</span><span class="n">log</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>当要把运行sh脚本的进程kill掉，则需要通过下面两步:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ps aux |grep *.sh |grep -v grep</span>
+<span class="n">root</span>     <span class="mi">3263335</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span> <span class="mi">113184</span>   <span class="mi">824</span> <span class="n">pts</span><span class="o">/</span><span class="mi">0</span>    <span class="n">S</span>    <span class="mi">12</span><span class="p">:</span><span class="mi">01</span>   <span class="mi">0</span><span class="p">:</span><span class="mi">00</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span> <span class="n">sendmail</span><span class="o">.</span><span class="n">sh</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="o">~</span><span class="p">]</span><span class="c1"># kill -9 3263335</span>
+</pre></div>
+</div>
+<p>上面管理进程的方法有如下的缺点。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·不知道进程的状态，不知道进程在运行的过程中是否终止。
+·每次重启进程，kill进程都需要烦琐的步骤。
+·如果需要运行大量的守护进程，用这种方法不方便管理。
+</pre></div>
+</div>
+<section id="supervisor">
+<h3><a class="toc-backref" href="#id3">使用supervisor管理进程有如下的优点。</a><a class="headerlink" href="#supervisor" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>·能自动启动配置好的进程，并监控每个进程的状态，例如进程是运行着还是停止的。
+·监控的进程如果因为各种原因闪退，能自动重启改进程。
+</pre></div>
+</div>
+<p>安装supervisor很简单</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="n">install</span> <span class="n">supervisor</span> <span class="o">-</span><span class="n">y</span>
+</pre></div>
+</div>
+<p>supervisor安装完成后，在“/usr/bin/”目录下增加了两个命令：</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>· supervisord : supervisor的服务器端，启动supervisor就是运行这个命令。
+· supervisorctl：通过该命令和supervisord进行交换。
+</pre></div>
+</div>
+<p>启动supervisor，先为其创建配置文件/etc/supervisord.conf，内容如下。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[unix_http_server]
+file=/var/run/supervisor/supervisor.sock   ; (the path to the socket file)
+;chmod=0700                 ; sockef file mode (default 0700)
+;chown=nobody:nogroup       ; socket file uid:gid owner
+;username=user              ; (default is no username (open server))
+;password=123               ; (default is no password (open server))
+
+;[inet_http_server]         ; inet (TCP) server disabled by default
+;port=127.0.0.1:9001        ; (ip_address:port specifier, *:port for all iface)
+;username=user              ; (default is no username (open server))
+;password=123               ; (default is no password (open server))
+
+[supervisord]
+logfile=/var/log/supervisor/supervisord.log  ; (main log file;default $CWD/supervisord.log)
+logfile_maxbytes=50MB       ; (max main logfile bytes b4 rotation;default 50MB)
+logfile_backups=10          ; (num of main logfile rotation backups;default 10)
+loglevel=info               ; (log level;default info; others: debug,warn,trace)
+pidfile=/var/run/supervisord.pid ; (supervisord pidfile;default supervisord.pid)
+nodaemon=false              ; (start in foreground if true;default false)
+minfds=1024                 ; (min. avail startup file descriptors;default 1024)
+minprocs=200                ; (min. avail process descriptors;default 200)
+;umask=022                  ; (process file creation umask;default 022)
+;user=chrism                 ; (default is current user, required if root)
+;identifier=supervisor       ; (supervisord identifier, default is &#39;supervisor&#39;)
+;directory=/tmp              ; (default is not to cd during start)
+;nocleanup=true              ; (don&#39;t clean up tempfiles at start;default false)
+;childlogdir=/tmp            ; (&#39;AUTO&#39; child log dir, default $TEMP)
+;environment=KEY=value       ; (key value pairs to add to environment)
+;strip_ansi=false            ; (strip ansi escape codes in logs; def. false)
+
+[rpcinterface:supervisor]
+supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
+
+[supervisorctl]
+serverurl=unix:///var/run/supervisor/supervisor.sock ; use a unix:// URL  for a unix socket
+
+[include]
+files = /etc/supervisord.conf.d/*.conf
+</pre></div>
+</div>
+<p>在上面的文件中，为了更好地管理进程监控脚本，把进程监控脚本放在<code class="docutils literal notranslate"><span class="pre">/etc/supervisord.conf.d/</span></code>。</p>
+<p>例如，为监控运行脚本/data/sendmail.sh，创建文件/etc/supervisord.conf.d/mail.conf，内容如下</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[program:mail]                        ; 在supervisor 监控列表中的标识
+directory = /data                     ; 启动命令时进入的目录，如果command 中的命令没有使用绝对路径，这项一定要设置
+command = /bin/sh /data/sendmail.sh   ; 启动的命令
+autostart = true                      ; 随着supervisor 启动而启动。
+autoRESTart = true                    ; 自动重启。
+startretries = 10                     ; 启动失败时的最多重试次数
+startsecs = 5                         ; supervisor 启动5 秒后启动
+user = root                           ; 以root 用户的身份运行
+redirect_stderr = true                ; 重定向stderr 到stdout
+numprocs=1                            ; 启动1个进程
+stdout_logfile = /data/logs/mail.log  ; 输出日志的位置
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">/data/logs/</span></code>目录</p>
+<p>运行supervisord服务端程序</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">supervisord</span> <span class="o">-</span><span class="n">c</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">supervisord</span><span class="o">.</span><span class="n">conf</span>
+</pre></div>
+</div>
+<p>使用supervisorctl查看supervisor管理进程的状态。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="n">data</span><span class="p">]</span><span class="c1"># supervisorctl status</span>
+<span class="n">mail</span>                             <span class="n">RUNNING</span>   <span class="n">pid</span> <span class="mi">3360232</span><span class="p">,</span> <span class="n">uptime</span> <span class="mi">0</span><span class="p">:</span><span class="mi">02</span><span class="p">:</span><span class="mi">24</span>
+</pre></div>
+</div>
+<p>测试自动重启</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[root@k8s-master data]# ps aux|grep *.sh|grep -v grep|awk &#39;{print $2}&#39;|xargs kill -9
+[root@k8s-master data]# ps aux|grep *.sh
+root     3370736  0.2  0.0 113184   528 ?        S    12:32   0:00 /bin/sh /data/sendmail.sh
+root     3370771  0.0  0.0    440     4 pts/0    S+   12:32   0:00 grep --color=auto sendmail.sh
+</pre></div>
+</div>
+<p>停止名为“mail”的进程。</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="n">data</span><span class="p">]</span><span class="c1"># supervisorctl stop mail</span>
+<span class="n">mail</span><span class="p">:</span> <span class="n">stopped</span>
+
+<span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="n">data</span><span class="p">]</span><span class="c1"># ps aux|grep *.sh</span>
+<span class="n">root</span>     <span class="mi">3380991</span>  <span class="mf">0.0</span>  <span class="mf">0.0</span>    <span class="mi">436</span>     <span class="mi">4</span> <span class="n">pts</span><span class="o">/</span><span class="mi">0</span>    <span class="n">R</span><span class="o">+</span>   <span class="mi">12</span><span class="p">:</span><span class="mi">35</span>   <span class="mi">0</span><span class="p">:</span><span class="mi">00</span> <span class="n">grep</span> <span class="o">--</span><span class="n">color</span><span class="o">=</span><span class="n">auto</span> <span class="n">sendmail</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>supervisor还包含了很多实用的命令，可通过帮助查看这些命令</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@k8s</span><span class="o">-</span><span class="n">master</span> <span class="n">data</span><span class="p">]</span><span class="c1"># supervisorctl help</span>
+
+<span class="n">default</span> <span class="n">commands</span> <span class="p">(</span><span class="nb">type</span> <span class="n">help</span> <span class="o">&lt;</span><span class="n">topic</span><span class="o">&gt;</span><span class="p">):</span>
+<span class="o">=====================================</span>
+<span class="n">add</span>    <span class="n">clear</span>  <span class="n">fg</span>        <span class="nb">open</span>  <span class="n">quit</span>    <span class="n">remove</span>  <span class="n">restart</span>   <span class="n">start</span>   <span class="n">stop</span>  <span class="n">update</span>
+<span class="n">avail</span>  <span class="n">exit</span>   <span class="n">maintail</span>  <span class="n">pid</span>   <span class="n">reload</span>  <span class="n">reread</span>  <span class="n">shutdown</span>  <span class="n">status</span>  <span class="n">tail</span>  <span class="n">version</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03.APP%E5%90%8E%E5%8F%B0%E6%A0%B8%E5%BF%83%E6%8A%80%E6%9C%AF.html" class="btn btn-neutral float-left" title="6.3. APP后台核心技术" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05.Nginx%E2%80%94App%E5%90%8E%E5%8F%B0HTTP%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%88%A9%E5%99%A8.html" class="btn btn-neutral float-right" title="6.5. Nginx—App后台HTTP服务的利器" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2019, huxiaojian.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
