@@ -22,8 +22,23 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dad7f313-e91d-469a-aaf1-9f1653f7aa96" name="默认更改列表" comment="20220712 commit">
+    <list default="true" id="dad7f313-e91d-469a-aaf1-9f1653f7aa96" name="默认更改列表" comment="20220713 commit">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux/05.Nginx学习/16.nginx正向代理配置.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux/05.Nginx学习/16.nginx正向代理配置.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/Linux/05.Nginx学习/index.doctree" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/Linux/05.Nginx学习/index.doctree" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/doctrees/environment.pickle" beforeDir="false" afterPath="$PROJECT_DIR$/build/doctrees/environment.pickle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux/05.Nginx学习/16.nginx正向代理配置.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux/05.Nginx学习/16.nginx正向代理配置.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux/05.Nginx学习/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux/05.Nginx学习/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/Linux/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/Linux/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux/05.Nginx学习/16.nginx正向代理配置.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux/05.Nginx学习/16.nginx正向代理配置.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/_sources/Linux/05.Nginx学习/index.rst.txt" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/_sources/Linux/05.Nginx学习/index.rst.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/objects.inv" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/objects.inv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/html/searchindex.js" beforeDir="false" afterPath="$PROJECT_DIR$/build/html/searchindex.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/file_md5.json" beforeDir="false" afterPath="$PROJECT_DIR$/file_md5.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux/05.Nginx学习/16.nginx正向代理配置.md" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux/05.Nginx学习/16.nginx正向代理配置.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux/05.Nginx学习/16.nginx正向代理配置.rst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/source/Linux/05.Nginx学习/index.rst" beforeDir="false" afterPath="$PROJECT_DIR$/source/Linux/05.Nginx学习/index.rst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -508,13 +523,8 @@
       <workItem from="1657623710001" duration="1398000" />
       <workItem from="1657675014511" duration="7000" />
       <workItem from="1657677008867" duration="733000" />
-    </task>
-    <task id="LOCAL-00004" summary="2020-04-25 first commit">
-      <created>1587821961259</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1587821961259</updated>
+      <workItem from="1657708833633" duration="528000" />
+      <workItem from="1657867615952" duration="133000" />
     </task>
     <task id="LOCAL-00005" summary="2020-04-28 first commit">
       <created>1588040351715</created>
@@ -852,7 +862,14 @@
       <option name="project" value="LOCAL" />
       <updated>1657624366407</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="20220713 commit">
+      <created>1657708993536</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1657708993536</updated>
+    </task>
+    <option name="localTasksCounter" value="54" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -872,7 +889,6 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="2020-08-24 first commit" />
     <MESSAGE value="2020-09-28 first commit" />
     <MESSAGE value="2020-10-27 first commit" />
     <MESSAGE value="2020-10-28 first commit" />
@@ -897,10 +913,11 @@
     <MESSAGE value="20211118更新" />
     <MESSAGE value="20220629更新调整目录，新增shell内容" />
     <MESSAGE value="20220712 commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="20220712 commit" />
+    <MESSAGE value="20220713 commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="20220713 commit" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/my_Linux_Devops$Delete_staticPhoto.coverage" NAME="Delete_staticPhoto Coverage Results" MODIFIED="1610266076871" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool 覆盖结果" MODIFIED="1657677130130" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/my_Linux_Devops$md_to_rst_tool.coverage" NAME="md_to_rst_tool 覆盖结果" MODIFIED="1657867707628" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
