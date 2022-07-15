@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.1. H3C设备升级版本补丁 &mdash; 运维开发修炼之路</title>
@@ -42,15 +42,12 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Network_route_switch</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%8D%8E%E4%B8%BA%E8%AE%BE%E5%A4%87%E6%95%B0%E9%80%9A%E7%8E%A9%E8%BD%AC/index.html">1. 华为设备数通玩转</a></li>
@@ -132,14 +129,14 @@
 <span class="n">quit</span>
 
 <span class="n">interface</span> <span class="n">Vlan</span><span class="o">-</span><span class="n">interface1</span>
-<span class="n">ip</span> <span class="n">address</span> <span class="mf">1.1</span><span class="o">.</span><span class="mf">1.2</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">255.0</span>
+<span class="n">ip</span> <span class="n">address</span> <span class="mf">1.1.1.2</span> <span class="mf">255.255.255.0</span>
 </pre></div>
 </div>
 </section>
 <section id="pc">
 <h2><a class="toc-backref" href="#id5"><span class="section-number">3.1.2. </span>PC作为客户端进行上传</a><a class="headerlink" href="#pc" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">PC配置地址</span> <span class="mf">1.1</span><span class="o">.</span><span class="mf">1.1</span><span class="o">/</span><span class="mi">24</span>
- <span class="n">ftp</span> <span class="mf">1.1</span><span class="o">.</span><span class="mf">1.2</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">PC配置地址</span> <span class="mf">1.1.1.1</span><span class="o">/</span><span class="mi">24</span>
+ <span class="n">ftp</span> <span class="mf">1.1.1.2</span>
  <span class="n">put</span> <span class="n">xxx绝对路径</span>
 
  <span class="nb">dir</span> <span class="n">slot1</span><span class="c1">#flash:/</span>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>8.4. Redis+keepalived高可用集群实战 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -91,7 +89,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -166,9 +163,9 @@ Redis支持数据的备份，即master-slave模式的数据备份。
 <section id="id2">
 <h2><a class="toc-backref" href="#id10"><span class="section-number">8.4.3. </span>环境介绍</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p><img alt="image0" src="../../_images/redis+keep1.png" /></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Centos7</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.111</span> <span class="o">--&gt;</span><span class="n">主Redis</span> <span class="o">--&gt;</span><span class="n">主Keepalived</span>
-<span class="n">Centos7</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.112</span> <span class="o">--&gt;</span><span class="n">从Redis</span> <span class="o">--&gt;</span><span class="n">备Keepalived</span>
-<span class="n">VIP</span> <span class="o">--&gt;</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.200</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Centos7</span> <span class="mf">192.168.1.111</span> <span class="o">--&gt;</span><span class="n">主Redis</span> <span class="o">--&gt;</span><span class="n">主Keepalived</span>
+<span class="n">Centos7</span> <span class="mf">192.168.1.112</span> <span class="o">--&gt;</span><span class="n">从Redis</span> <span class="o">--&gt;</span><span class="n">备Keepalived</span>
+<span class="n">VIP</span> <span class="o">--&gt;</span> <span class="mf">192.168.1.200</span>
 </pre></div>
 </div>
 </section>
@@ -203,7 +200,7 @@ nohup /usr/local/redis/bin/redis-server /usr/local/redis/redis.conf &amp;
 <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">pid</span>
 <span class="n">port</span> <span class="mi">6379</span>
 <span class="n">tcp</span><span class="o">-</span><span class="n">backlog</span> <span class="mi">511</span>
-<span class="n">bind</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>                    <span class="c1">#访问权限</span>
+<span class="n">bind</span> <span class="mf">0.0.0.0</span>                    <span class="c1">#访问权限</span>
 <span class="n">requirepass</span> <span class="mi">123456</span>              <span class="c1">#设置登录密码</span>
 <span class="n">slave</span><span class="o">-</span><span class="n">serve</span><span class="o">-</span><span class="n">stale</span><span class="o">-</span><span class="n">data</span> <span class="n">yes</span>
 <span class="n">slave</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">no</span>
@@ -252,12 +249,12 @@ nohup /usr/local/redis/bin/redis-server /usr/local/redis/redis.conf &amp;
 </pre></div>
 </div>
 <p>Backup配置文件</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nginx_keepalived_backup</span> <span class="n">redis</span><span class="o">-</span><span class="mf">2.8</span><span class="o">.</span><span class="mi">13</span><span class="p">]</span><span class="c1"># cat /usr/local/redis/redis.conf | grep -v &quot;^$&quot;|grep -v &quot;^#&quot;</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@nginx_keepalived_backup</span> <span class="n">redis</span><span class="o">-</span><span class="mf">2.8.13</span><span class="p">]</span><span class="c1"># cat /usr/local/redis/redis.conf | grep -v &quot;^$&quot;|grep -v &quot;^#&quot;</span>
 <span class="n">daemonize</span> <span class="n">yes</span>
 <span class="n">pidfile</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">redis</span><span class="o">.</span><span class="n">pid</span>
 <span class="n">port</span> <span class="mi">6379</span>
 <span class="n">tcp</span><span class="o">-</span><span class="n">backlog</span> <span class="mi">511</span>
-<span class="n">bind</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span class="n">bind</span> <span class="mf">0.0.0.0</span>
 <span class="n">timeout</span> <span class="mi">0</span>
 <span class="n">tcp</span><span class="o">-</span><span class="n">keepalive</span> <span class="mi">0</span>
 <span class="n">loglevel</span> <span class="n">notice</span>
@@ -271,7 +268,7 @@ nohup /usr/local/redis/bin/redis-server /usr/local/redis/redis.conf &amp;
 <span class="n">rdbchecksum</span> <span class="n">yes</span>
 <span class="n">dbfilename</span> <span class="n">dump</span><span class="o">.</span><span class="n">rdb</span>
 <span class="nb">dir</span> <span class="o">./</span>
-<span class="n">slaveof</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.111</span> <span class="mi">6379</span>              <span class="c1">#主机IP</span>
+<span class="n">slaveof</span> <span class="mf">192.168.1.111</span> <span class="mi">6379</span>              <span class="c1">#主机IP</span>
 <span class="n">masterauth</span> <span class="mi">123456</span>
 <span class="n">slave</span><span class="o">-</span><span class="n">serve</span><span class="o">-</span><span class="n">stale</span><span class="o">-</span><span class="n">data</span> <span class="n">yes</span>
 <span class="n">slave</span><span class="o">-</span><span class="n">read</span><span class="o">-</span><span class="n">only</span> <span class="n">no</span>
@@ -434,7 +431,7 @@ esac
 <span class="c1"># Replication</span>
 <span class="n">role</span><span class="p">:</span><span class="n">master</span>
 <span class="n">connected_slaves</span><span class="p">:</span><span class="mi">1</span>
-<span class="n">slave0</span><span class="p">:</span><span class="n">ip</span><span class="o">=</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.112</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span><span class="n">state</span><span class="o">=</span><span class="n">online</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">505</span><span class="p">,</span><span class="n">lag</span><span class="o">=</span><span class="mi">1</span>
+<span class="n">slave0</span><span class="p">:</span><span class="n">ip</span><span class="o">=</span><span class="mf">192.168.1.112</span><span class="p">,</span><span class="n">port</span><span class="o">=</span><span class="mi">6379</span><span class="p">,</span><span class="n">state</span><span class="o">=</span><span class="n">online</span><span class="p">,</span><span class="n">offset</span><span class="o">=</span><span class="mi">505</span><span class="p">,</span><span class="n">lag</span><span class="o">=</span><span class="mi">1</span>
 <span class="n">master_repl_offset</span><span class="p">:</span><span class="mi">505</span>
 <span class="n">repl_backlog_active</span><span class="p">:</span><span class="mi">1</span>
 <span class="n">repl_backlog_size</span><span class="p">:</span><span class="mi">1048576</span>
@@ -463,7 +460,7 @@ esac
 
 <span class="c1"># Replication</span>
 <span class="n">role</span><span class="p">:</span><span class="n">slave</span>
-<span class="n">master_host</span><span class="p">:</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.111</span>
+<span class="n">master_host</span><span class="p">:</span><span class="mf">192.168.1.111</span>
 <span class="n">master_port</span><span class="p">:</span><span class="mi">6379</span>
 <span class="n">master_link_status</span><span class="p">:</span><span class="n">up</span>
 <span class="n">master_last_io_seconds_ago</span><span class="p">:</span><span class="mi">9</span>

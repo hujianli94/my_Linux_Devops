@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2.37. Centos7通过python+js实现webssh &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
@@ -95,6 +93,8 @@
 <li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Nginx%E6%95%B4%E5%90%88FastDFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.42. Nginx整合FastDFS实现文件服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.ubuntu20.04-desktop-vmware-workstation.html">2.43. ubuntu20.04-desktop-vmware-workstation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
@@ -108,7 +108,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -160,23 +159,23 @@
 <h2><a class="toc-backref" href="#id3"><span class="section-number">2.37.1. </span>安装python3、pip3</a><a class="headerlink" href="#python3pip3" title="Permalink to this headline">¶</a></h2>
 <section id="yum">
 <h3><a class="toc-backref" href="#id4">yum方式</a><a class="headerlink" href="#yum" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">配置好Python3</span><span class="o">.</span><span class="mi">6</span><span class="n">和pip3</span> <span class="n">安装EPEL和IUS软件源</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">配置好Python3</span><span class="mf">.6</span><span class="n">和pip3</span> <span class="n">安装EPEL和IUS软件源</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">epel</span><span class="o">-</span><span class="n">release</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">centos7</span><span class="o">.</span><span class="n">iuscommunity</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">ius</span><span class="o">-</span><span class="n">release</span><span class="o">.</span><span class="n">rpm</span> <span class="o">-</span><span class="n">y</span>
 
-<span class="o">//</span><span class="n">安装Python3</span><span class="o">.</span><span class="mi">6</span>
+<span class="o">//</span><span class="n">安装Python3</span><span class="mf">.6</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">python36u</span> <span class="o">-</span><span class="n">y</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">python36u</span><span class="o">-</span><span class="n">devel</span> <span class="o">-</span><span class="n">y</span>
 
 <span class="o">//</span><span class="n">创建python3连接符</span>
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span><span class="mf">.6</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span>
 
 <span class="o">//</span><span class="n">安装pip3</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">python36u</span><span class="o">-</span><span class="n">pip</span> <span class="o">-</span><span class="n">y</span>
 
 
 <span class="o">//</span><span class="n">创建pip3链接符</span>
-<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span><span class="o">.</span><span class="mi">6</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
+<span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span><span class="mf">.6</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">pip3</span>
 </pre></div>
 </div>
 </section>

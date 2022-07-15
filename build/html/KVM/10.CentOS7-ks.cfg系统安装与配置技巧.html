@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>10. CentOS7-ks.cfg系统安装与配置技巧 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
@@ -66,10 +65,8 @@
 <li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -250,41 +247,41 @@ echo &#39;PS1=&quot;\[\e[32;1m\][\u@\h \W]\\$ \[\e[0m\]&quot;&#39; &gt;&gt; /roo
 
 <span class="c1">#Libvirt的客户端，最重要的功能之一就是就在宿主机关机时可以通知虚拟机也关机，</span>
 <span class="c1">#使虚拟机系统正常关机，而不是被强制关机，造成数据丢失</span>
-<span class="n">libvirt</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">libvirt</span><span class="o">-</span><span class="n">client</span><span class="o">-</span><span class="mf">0.10.2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 
 
 
 <span class="c1">#虚拟机iPXE的启动固件，支持虚拟机从网络启动</span>
-<span class="n">gpxe</span><span class="o">-</span><span class="n">roms</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">7</span><span class="o">-</span><span class="mf">6.10</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">noarch</span>
+<span class="n">gpxe</span><span class="o">-</span><span class="n">roms</span><span class="o">-</span><span class="n">qemu</span><span class="o">-</span><span class="mf">0.9.7</span><span class="o">-</span><span class="mf">6.10</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">noarch</span>
 
 <span class="c1">#libvirt为Python提供的API</span>
-<span class="n">libvirt</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">libvirt</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="mf">0.10.2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#一套Python的虚拟机安装工具</span>
-<span class="n">python</span><span class="o">-</span><span class="n">virtinst</span><span class="o">-</span><span class="mf">0.600</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">18.</span><span class="n">el6</span><span class="o">.</span><span class="n">noarch</span>
+<span class="n">python</span><span class="o">-</span><span class="n">virtinst</span><span class="o">-</span><span class="mf">0.600.0</span><span class="o">-</span><span class="mf">18.</span><span class="n">el6</span><span class="o">.</span><span class="n">noarch</span>
 
 <span class="c1">#KVM在用户空间运行的程序</span>
-<span class="n">qemu</span><span class="o">-</span><span class="n">KVM</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.2</span><span class="o">-</span><span class="mf">2.415</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">KVM</span><span class="o">-</span><span class="mf">0.12.1.2</span><span class="o">-</span><span class="mf">2.415</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#基于Libvirt 的图像化虚拟机管理软件</span>
-<span class="n">Virt</span><span class="o">-</span><span class="n">manager</span><span class="o">-</span><span class="mf">0.9</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">19.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">Virt</span><span class="o">-</span><span class="n">manager</span><span class="o">-</span><span class="mf">0.9.0</span><span class="o">-</span><span class="mf">19.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#用于管理虚拟机，它提供了一套虚拟机操作API</span>
-<span class="n">libvirt</span><span class="o">-</span><span class="mf">0.10</span><span class="o">.</span><span class="mi">2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">libvirt</span><span class="o">-</span><span class="mf">0.10.2</span><span class="o">-</span><span class="mf">29.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#显示虚拟机的控制台console</span>
-<span class="n">virt</span><span class="o">-</span><span class="n">viewer</span><span class="o">-</span><span class="mf">0.5</span><span class="o">.</span><span class="mi">6</span><span class="o">-</span><span class="mf">8.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">virt</span><span class="o">-</span><span class="n">viewer</span><span class="o">-</span><span class="mf">0.5.6</span><span class="o">-</span><span class="mf">8.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 
 <span class="c1">#类似于top命令，查看虚拟机的资源使用情况</span>
-<span class="n">virt</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="mf">1.0</span><span class="o">.</span><span class="mi">4</span><span class="o">-</span><span class="mf">3.15</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">virt</span><span class="o">-</span><span class="n">top</span><span class="o">-</span><span class="mf">1.0.4</span><span class="o">-</span><span class="mf">3.15</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#在虚拟机内部执行，查看虚拟机运行的虚拟化平台</span>
 <span class="n">virt</span><span class="o">-</span><span class="n">what</span><span class="o">-</span><span class="mf">1.11</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
 <span class="c1">#用于操作虚拟机硬盘镜像的创建、查看和格式转化</span>
-<span class="n">qemu</span><span class="o">-</span><span class="n">img</span><span class="o">-</span><span class="mf">0.12</span><span class="o">.</span><span class="mf">1.2</span><span class="o">-</span><span class="mf">2.415</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">qemu</span><span class="o">-</span><span class="n">img</span><span class="o">-</span><span class="mf">0.12.1.2</span><span class="o">-</span><span class="mf">2.415</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 </pre></div>
 </div>
 <p>2.CentOS 7宿主机系统安装及配置</p>

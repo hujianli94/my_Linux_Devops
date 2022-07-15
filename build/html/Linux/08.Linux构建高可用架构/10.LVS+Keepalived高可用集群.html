@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>8.10. LVS+keeplaived高可用集群 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -85,7 +83,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -191,10 +188,10 @@ Address Translation）将一组服务器构成一个高性能的、高可用的�
 <h2><a class="toc-backref" href="#id3"><span class="section-number">8.10.1. </span>LVS+keepalived 主从高可用模式</a><a class="headerlink" href="#lvs-keepalived" title="Permalink to this headline">¶</a></h2>
 <p>环境</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">主机名</span>         <span class="n">IP地址</span>            <span class="n">软件</span>                  <span class="n">系统版本</span>
-<span class="n">lvs01</span>         <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
-<span class="n">lvs02</span>         <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.35</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
-<span class="n">web03</span>         <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span>     <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
-<span class="n">web04</span>         <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span>    <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6</span><span class="o">.</span><span class="mi">1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">lvs01</span>         <span class="mf">172.17.252.34</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6.1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">lvs02</span>         <span class="mf">172.17.252.35</span>     <span class="n">lvs</span> <span class="n">keepalived</span>      <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6.1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">web03</span>         <span class="mf">39.106.40.172</span>     <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6.1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
+<span class="n">web04</span>         <span class="mf">39.107.137.111</span>    <span class="n">tomcat</span>              <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.6.1810</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>主机</p>
@@ -254,7 +251,7 @@ yum -y install tomcat-webapps tomcat-admin-webapps
 
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ipvsadm</span>
-<span class="n">IP</span> <span class="n">Virtual</span> <span class="n">Server</span> <span class="n">version</span> <span class="mf">1.2</span><span class="o">.</span><span class="mi">1</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
+<span class="n">IP</span> <span class="n">Virtual</span> <span class="n">Server</span> <span class="n">version</span> <span class="mf">1.2.1</span> <span class="p">(</span><span class="n">size</span><span class="o">=</span><span class="mi">4096</span><span class="p">)</span>
 <span class="n">Prot</span> <span class="n">LocalAddress</span><span class="p">:</span><span class="n">Port</span> <span class="n">Scheduler</span> <span class="n">Flags</span>
   <span class="o">-&gt;</span> <span class="n">RemoteAddress</span><span class="p">:</span><span class="n">Port</span>           <span class="n">Forward</span> <span class="n">Weight</span> <span class="n">ActiveConn</span> <span class="n">InActConn</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@bogon</span> <span class="o">~</span><span class="p">]</span><span class="c1"># lsmod | grep ip_vs</span>
@@ -374,18 +371,18 @@ TCP  172.17.252.38:8080 wlc persistent 120
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip a</span>
 <span class="mi">1</span><span class="p">:</span> <span class="n">lo</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">LOOPBACK</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">65536</span> <span class="n">qdisc</span> <span class="n">noqueue</span> <span class="n">state</span> <span class="n">UNKNOWN</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">loopback</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">brd</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-    <span class="n">inet</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
+    <span class="n">inet</span> <span class="mf">127.0.0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17.255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="mi">315359320</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359320</span><span class="n">sec</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17.252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 </pre></div>
 </div>
 <p>客户端配置</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">addr</span> <span class="n">add</span> <span class="mf">10.0</span><span class="o">.</span><span class="mf">0.13</span><span class="o">/</span><span class="mi">32</span> <span class="n">dev</span> <span class="n">lo</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="n">addr</span> <span class="n">add</span> <span class="mf">10.0.0.13</span><span class="o">/</span><span class="mi">32</span> <span class="n">dev</span> <span class="n">lo</span>
 
 <span class="n">cat</span> <span class="o">&gt;&gt;/</span><span class="n">etc</span><span class="o">/</span><span class="n">sysctl</span><span class="o">.</span><span class="n">conf</span><span class="o">&lt;&lt;</span><span class="n">EOF</span>
 <span class="n">net</span><span class="o">.</span><span class="n">ipv4</span><span class="o">.</span><span class="n">conf</span><span class="o">.</span><span class="n">all</span><span class="o">.</span><span class="n">arp_ignore</span> <span class="o">=</span> <span class="mi">1</span>
@@ -460,7 +457,7 @@ esac
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">keepalived</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># rpm -qa keepalived</span>
-<span class="n">keepalived</span><span class="o">-</span><span class="mf">1.3</span><span class="o">.</span><span class="mi">5</span><span class="o">-</span><span class="mf">8.</span><span class="n">el7_6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">keepalived</span><span class="o">-</span><span class="mf">1.3.5</span><span class="o">-</span><span class="mf">8.</span><span class="n">el7_6</span><span class="o">.</span><span class="n">x86_64</span>
 </pre></div>
 </div>
 <p>lvs01</p>
@@ -480,19 +477,19 @@ esac
         <span class="n">auth_pass</span> <span class="mi">1111</span>
     <span class="p">}</span>
     <span class="n">virtual_ipaddress</span> <span class="p">{</span>
-     <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span>
+     <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">20</span>
     <span class="p">}</span>
 <span class="p">}</span>
 
-<span class="n">virtual_server</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="mi">8080</span> <span class="p">{</span>
+<span class="n">virtual_server</span> <span class="mf">172.17.252.38</span> <span class="mi">8080</span> <span class="p">{</span>
     <span class="n">delay_loop</span> <span class="mi">6</span>
     <span class="n">lb_algo</span> <span class="n">wrr</span>
     <span class="n">lb_kind</span> <span class="n">DR</span>
-    <span class="n">nat_mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">240.0</span>
+    <span class="n">nat_mask</span> <span class="mf">255.255.240.0</span>
     <span class="n">persistence_timeout</span> <span class="mi">50</span>
     <span class="n">protocol</span> <span class="n">TCP</span>
 
-    <span class="n">real_server</span> <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">real_server</span> <span class="mf">39.106.40.172</span> <span class="mi">8080</span> <span class="p">{</span>
         <span class="n">weight</span> <span class="mi">1</span>
         <span class="n">TCP_CHECK</span> <span class="p">{</span>
         <span class="n">connect_timeout</span> <span class="mi">8</span>
@@ -502,7 +499,7 @@ esac
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="n">real_server</span> <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">real_server</span> <span class="mf">39.107.137.111</span> <span class="mi">8080</span> <span class="p">{</span>
         <span class="n">weight</span> <span class="mi">1</span>
         <span class="n">TCP_CHECK</span> <span class="p">{</span>
         <span class="n">connect_timeout</span> <span class="mi">8</span>
@@ -531,18 +528,18 @@ esac
         <span class="n">auth_pass</span> <span class="mi">1111</span>
     <span class="p">}</span>
     <span class="n">virtual_ipaddress</span> <span class="p">{</span>
-     <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span>
+     <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">20</span>
     <span class="p">}</span>
 <span class="p">}</span>
-<span class="n">virtual_server</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="mi">8080</span> <span class="p">{</span>
+<span class="n">virtual_server</span> <span class="mf">172.17.252.38</span> <span class="mi">8080</span> <span class="p">{</span>
     <span class="n">delay_loop</span> <span class="mi">6</span>
     <span class="n">lb_algo</span> <span class="n">wrr</span>
     <span class="n">lb_kind</span> <span class="n">DR</span>
-    <span class="n">nat_mask</span> <span class="mf">255.255</span><span class="o">.</span><span class="mf">240.0</span>
+    <span class="n">nat_mask</span> <span class="mf">255.255.240.0</span>
     <span class="n">persistence_timeout</span> <span class="mi">50</span>
     <span class="n">protocol</span> <span class="n">TCP</span>
 
-    <span class="n">real_server</span> <span class="mf">39.106</span><span class="o">.</span><span class="mf">40.172</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">real_server</span> <span class="mf">39.106.40.172</span> <span class="mi">8080</span> <span class="p">{</span>
         <span class="n">weight</span> <span class="mi">1</span>
         <span class="n">TCP_CHECK</span> <span class="p">{</span>
         <span class="n">connect_timeout</span> <span class="mi">8</span>
@@ -552,7 +549,7 @@ esac
         <span class="p">}</span>
     <span class="p">}</span>
 
-    <span class="n">real_server</span> <span class="mf">39.107</span><span class="o">.</span><span class="mf">137.111</span> <span class="mi">8080</span> <span class="p">{</span>
+    <span class="n">real_server</span> <span class="mf">39.107.137.111</span> <span class="mi">8080</span> <span class="p">{</span>
         <span class="n">weight</span> <span class="mi">1</span>
         <span class="n">TCP_CHECK</span> <span class="p">{</span>
         <span class="n">connect_timeout</span> <span class="mi">8</span>
@@ -581,11 +578,11 @@ esac
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip ad li eth0</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17.255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="mi">315359683</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359683</span><span class="n">sec</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17.252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 
 
@@ -594,9 +591,9 @@ esac
 <span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip ad li eth0</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17.255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="mi">315359449</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359449</span><span class="n">sec</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17.252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 </pre></div>
 </div>
@@ -606,15 +603,15 @@ esac
 <span class="p">[</span><span class="n">root</span><span class="nd">@lvs01</span> <span class="o">~</span><span class="p">]</span><span class="c1"># ip a</span>
 <span class="mi">1</span><span class="p">:</span> <span class="n">lo</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">LOOPBACK</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">65536</span> <span class="n">qdisc</span> <span class="n">noqueue</span> <span class="n">state</span> <span class="n">UNKNOWN</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">loopback</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span> <span class="n">brd</span> <span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">00</span>
-    <span class="n">inet</span> <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
+    <span class="n">inet</span> <span class="mf">127.0.0.1</span><span class="o">/</span><span class="mi">8</span> <span class="n">scope</span> <span class="n">host</span> <span class="n">lo</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 <span class="mi">2</span><span class="p">:</span> <span class="n">eth0</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">BROADCAST</span><span class="p">,</span><span class="n">MULTICAST</span><span class="p">,</span><span class="n">UP</span><span class="p">,</span><span class="n">LOWER_UP</span><span class="o">&gt;</span> <span class="n">mtu</span> <span class="mi">1500</span> <span class="n">qdisc</span> <span class="n">mq</span> <span class="n">state</span> <span class="n">UP</span> <span class="n">group</span> <span class="n">default</span> <span class="n">qlen</span> <span class="mi">1000</span>
     <span class="n">link</span><span class="o">/</span><span class="n">ether</span> <span class="mi">00</span><span class="p">:</span><span class="mi">16</span><span class="p">:</span><span class="mi">3</span><span class="n">e</span><span class="p">:</span><span class="mi">12</span><span class="p">:</span><span class="mi">80</span><span class="p">:</span><span class="n">a4</span> <span class="n">brd</span> <span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span><span class="p">:</span><span class="n">ff</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.34</span><span class="o">/</span><span class="mi">20</span> <span class="n">brd</span> <span class="mf">172.17.255.255</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">dynamic</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="mi">315359367</span><span class="n">sec</span> <span class="n">preferred_lft</span> <span class="mi">315359367</span><span class="n">sec</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">32</span> <span class="n">brd</span> <span class="mf">172.17.252.38</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">eth0</span><span class="p">:</span><span class="mi">0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
-    <span class="n">inet</span> <span class="mf">172.17</span><span class="o">.</span><span class="mf">252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
+    <span class="n">inet</span> <span class="mf">172.17.252.38</span><span class="o">/</span><span class="mi">20</span> <span class="n">scope</span> <span class="k">global</span> <span class="n">secondary</span> <span class="n">eth0</span>
        <span class="n">valid_lft</span> <span class="n">forever</span> <span class="n">preferred_lft</span> <span class="n">forever</span>
 </pre></div>
 </div>

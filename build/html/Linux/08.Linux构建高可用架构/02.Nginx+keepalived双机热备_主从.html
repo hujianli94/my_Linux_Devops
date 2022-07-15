@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>8.2. 企业级Nginx+keepalived 集群实战 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -86,7 +84,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -235,8 +232,8 @@ http://www.keepalived.org/software/keepalived-1.2.1.tar.gz
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">##之前预编译需要的gcc、gcc-c++、openssl、openssl-devel等默认已经安装好</span>
 <span class="n">yum</span> <span class="n">install</span> <span class="n">psmisc</span>   <span class="c1">#两台机器都安装killall命令</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">gcc</span> <span class="n">pcre</span><span class="o">-</span><span class="n">devel</span> <span class="n">zlib</span><span class="o">-</span><span class="n">devel</span> <span class="n">openssl</span><span class="o">-</span><span class="n">devel</span>  <span class="c1">##安装perl兼容的正则表达式库</span>
-<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mf">0.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">cd</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12</span><span class="o">.</span><span class="mi">0</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">nginx</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">download</span><span class="o">/</span><span class="n">nginx</span><span class="o">-</span><span class="mf">1.12.0</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">nginx</span><span class="o">-</span><span class="mf">1.12.0</span>
 <span class="n">sed</span> <span class="o">-</span><span class="n">i</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/1.12.0//g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/nginx\//TDTWS/g&#39;</span> <span class="o">-</span><span class="n">e</span> <span class="s1">&#39;s/&quot;NGINX&quot;/&quot;TDTWS&quot;/g&#39;</span> <span class="n">src</span><span class="o">/</span><span class="n">core</span><span class="o">/</span><span class="n">nginx</span><span class="o">.</span><span class="n">h</span>         <span class="c1">##sed修改Nginx版本信息为TDTWS</span>
 <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">nginx</span> <span class="o">--</span><span class="n">user</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="n">group</span><span class="o">=</span><span class="n">www</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_stub_status_module</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">http_ssl_module</span>
 <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
@@ -255,10 +252,10 @@ http://www.keepalived.org/software/keepalived-1.2.1.tar.gz
 <section id="masterbackupkeepalived">
 <h3><a class="toc-backref" href="#id14">(2)master和backup均安装keepalived</a><a class="headerlink" href="#masterbackupkeepalived" title="Permalink to this headline">¶</a></h3>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
-<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">keepalived</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">keepalived</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">libnl</span> <span class="n">libnl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libnfnetlink</span> <span class="n">libnfnetlink</span><span class="o">-</span><span class="n">devel</span> <span class="n">popt</span><span class="o">-</span><span class="n">devel</span>
-<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">cd</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span>
 <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">keepalived</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">init</span><span class="o">=</span><span class="n">SYSV</span>
 <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span>

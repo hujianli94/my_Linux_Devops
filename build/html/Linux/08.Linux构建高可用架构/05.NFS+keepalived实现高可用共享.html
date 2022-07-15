@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>8.5. nfs+ keepalived高可用集群 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -90,7 +88,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -164,10 +161,10 @@
 <section id="nfskeepalived">
 <h2><a class="toc-backref" href="#id5"><span class="section-number">8.5.2. </span>NFS主备分别安装keepalived服务</a><a class="headerlink" href="#nfskeepalived" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span>
-<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">keepalived</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">wget</span> <span class="o">-</span><span class="n">c</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">keepalived</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">software</span><span class="o">/</span><span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">libnl</span> <span class="n">libnl</span><span class="o">-</span><span class="n">devel</span> <span class="n">libnfnetlink</span> <span class="n">libnfnetlink</span><span class="o">-</span><span class="n">devel</span> <span class="n">popt</span><span class="o">-</span><span class="n">devel</span>
-<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mf">1.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
-<span class="n">cd</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">1</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">zxvf</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">cd</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.1</span>
 <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">keepalived</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">init</span><span class="o">=</span><span class="n">SYSV</span>
 <span class="n">make</span> <span class="o">&amp;&amp;</span> <span class="n">make</span> <span class="n">install</span>
 <span class="n">ln</span> <span class="o">-</span><span class="n">s</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">keepalived</span><span class="o">/</span><span class="n">etc</span><span class="o">/</span><span class="n">keepalived</span> <span class="o">/</span><span class="n">etc</span><span class="o">/</span>
@@ -301,7 +298,7 @@ fi
 <span class="n">tmpfs</span>                   <span class="n">tmpfs</span>     <span class="mi">488</span><span class="n">M</span>     <span class="mi">0</span>  <span class="mi">488</span><span class="n">M</span>    <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">fs</span><span class="o">/</span><span class="n">cgroup</span>
 <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span>               <span class="n">xfs</span>       <span class="mi">509</span><span class="n">M</span>  <span class="mi">123</span><span class="n">M</span>  <span class="mi">386</span><span class="n">M</span>   <span class="mi">25</span><span class="o">%</span> <span class="o">/</span><span class="n">boot</span>
 <span class="n">tmpfs</span>                   <span class="n">tmpfs</span>      <span class="mi">98</span><span class="n">M</span>     <span class="mi">0</span>   <span class="mi">98</span><span class="n">M</span>    <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="mi">0</span>
-<span class="mf">192.168</span><span class="o">.</span><span class="mf">1.200</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>     <span class="n">nfs4</span>       <span class="mi">98</span><span class="n">G</span>  <span class="mf">2.0</span><span class="n">G</span>   <span class="mi">96</span><span class="n">G</span>    <span class="mi">2</span><span class="o">%</span> <span class="o">/</span><span class="n">nfs_temp</span>
+<span class="mf">192.168.1.200</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>     <span class="n">nfs4</span>       <span class="mi">98</span><span class="n">G</span>  <span class="mf">2.0</span><span class="n">G</span>   <span class="mi">96</span><span class="n">G</span>    <span class="mi">2</span><span class="o">%</span> <span class="o">/</span><span class="n">nfs_temp</span>
 </pre></div>
 </div>
 </section>
@@ -319,7 +316,7 @@ fi
 <span class="n">tmpfs</span>                   <span class="n">tmpfs</span>     <span class="mi">488</span><span class="n">M</span>     <span class="mi">0</span>  <span class="mi">488</span><span class="n">M</span>    <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">sys</span><span class="o">/</span><span class="n">fs</span><span class="o">/</span><span class="n">cgroup</span>
 <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">sda1</span>               <span class="n">xfs</span>       <span class="mi">509</span><span class="n">M</span>  <span class="mi">123</span><span class="n">M</span>  <span class="mi">386</span><span class="n">M</span>   <span class="mi">25</span><span class="o">%</span> <span class="o">/</span><span class="n">boot</span>
 <span class="n">tmpfs</span>                   <span class="n">tmpfs</span>      <span class="mi">98</span><span class="n">M</span>     <span class="mi">0</span>   <span class="mi">98</span><span class="n">M</span>    <span class="mi">0</span><span class="o">%</span> <span class="o">/</span><span class="n">run</span><span class="o">/</span><span class="n">user</span><span class="o">/</span><span class="mi">0</span>
-<span class="mf">192.168</span><span class="o">.</span><span class="mf">1.200</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>     <span class="n">nfs4</span>       <span class="mi">98</span><span class="n">G</span>  <span class="mf">2.3</span><span class="n">G</span>   <span class="mi">96</span><span class="n">G</span>    <span class="mi">3</span><span class="o">%</span> <span class="o">/</span><span class="n">nfs_temp</span>
+<span class="mf">192.168.1.200</span><span class="p">:</span><span class="o">/</span><span class="n">data</span>     <span class="n">nfs4</span>       <span class="mi">98</span><span class="n">G</span>  <span class="mf">2.3</span><span class="n">G</span>   <span class="mi">96</span><span class="n">G</span>    <span class="mi">3</span><span class="o">%</span> <span class="o">/</span><span class="n">nfs_temp</span>
 </pre></div>
 </div>
 <p>模拟主机的nfs服务故障，不影响nfs的正常使用</p>

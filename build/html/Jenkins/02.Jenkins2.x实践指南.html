@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Jenkins2.x实践指南 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Jenkins持续化集成</a><ul class="current">
@@ -162,10 +161,8 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -573,30 +570,30 @@ Username with private key”，接下来按照提示设置就好了</p>
 key就可以了，然后Jenkins本身提供了这种方式让我们设置，我们首先配置一个ssh的全局凭证。我们需要提前将SSH的公钥放到Git仓库中。</p>
 <p>在Pipeline节点下，在“Definition”中选择“Pipeline script from
 SCM”，并在“SCM”中选择“Git”，然后根据选项填入信息内容就可以了</p>
-<img alt="../_images/jenkintest0001.png" src="../_images/jenkintest0001.png" />
-<img alt="../_images/jenkins_test002.png" src="../_images/jenkins_test002.png" />
+<p><img alt="image0" src="../_images/jenkintest0001.png" /></p>
+<p><img alt="image1" src="../_images/jenkins_test002.png" /></p>
 <p>查看开发机器上的ssh公钥信息：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cat ~/.ssh/id_rsa.pub
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCe7MOCVnYO49leDorAxmIcicmC6Fow5yRiTG+FmTea6/zki8CFeLG4c1qRSepb7OpLUoMCIH9LerDyeG3lKhtdtbLYPOEeBz7Eq2qlf/jiStWjK36PictgdEVVEvorRGZAcLJ8fMd1N3xe04wBslWqi1qulXJuPaAusrHcAZX6KFeNd29YtltLOdTou94vNktvGzYzZa2QwFHsTsPQE3OTBS9+JZfKQHwSPbg71bUHRfQCrZzY8tCeFg3bHN4KmyL6vdq3r4dQCAAc/SrUCppx youremail@example.com
 </pre></div>
 </div>
 <p>配置Gitlab上的公钥认证</p>
-<img alt="../_images/gitlab-000ssh.png" src="../_images/gitlab-000ssh.png" />
+<p><img alt="image2" src="../_images/gitlab-000ssh.png" /></p>
 <p>编写一个Jenkinsfile文件上传到master分支中，Jenkinsfile文件就是之前的Hello
 world。</p>
-<img alt="../_images/jenkins_test003.png" src="../_images/jenkins_test003.png" />
+<p><img alt="image3" src="../_images/jenkins_test003.png" /></p>
 <p>手动触发Jenkins任务。</p>
-<img alt="../_images/jenkins_test004.png" src="../_images/jenkins_test004.png" />
+<p><img alt="image4" src="../_images/jenkins_test004.png" /></p>
 <p>查看pipline执行日志输出</p>
-<img alt="../_images/gitlab-jenkins00002.png" src="../_images/gitlab-jenkins00002.png" />
+<p><img alt="image5" src="../_images/gitlab-jenkins00002.png" /></p>
 <p><strong>Jenkins SCM</strong> 在拉取代码时候执行输出如下信息</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="o">&gt;</span> <span class="n">git</span> <span class="n">init</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">jenkins_home</span><span class="o">/</span><span class="n">workspace</span><span class="o">/</span><span class="n">first_pipleline</span> <span class="c1"># timeout=10</span>
-<span class="n">Fetching</span> <span class="n">upstream</span> <span class="n">changes</span> <span class="kn">from</span> <span class="nn">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span>
+<span class="n">Fetching</span> <span class="n">upstream</span> <span class="n">changes</span> <span class="kn">from</span> <span class="nn">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span>
  <span class="o">&gt;</span> <span class="n">git</span> <span class="o">--</span><span class="n">version</span> <span class="c1"># timeout=10</span>
  <span class="o">&gt;</span> <span class="n">git</span> <span class="o">--</span><span class="n">version</span> <span class="c1"># &#39;git version 2.11.0&#39;</span>
 <span class="n">using</span> <span class="n">GIT_ASKPASS</span> <span class="n">to</span> <span class="nb">set</span> <span class="n">credentials</span>
- <span class="o">&gt;</span> <span class="n">git</span> <span class="n">fetch</span> <span class="o">--</span><span class="n">tags</span> <span class="o">--</span><span class="n">progress</span> <span class="o">--</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span> <span class="o">+</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/*</span><span class="p">:</span><span class="n">refs</span><span class="o">/</span><span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/*</span> <span class="c1"># timeout=10</span>
- <span class="o">&gt;</span> <span class="n">git</span> <span class="n">config</span> <span class="n">remote</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span> <span class="c1"># timeout=10</span>
+ <span class="o">&gt;</span> <span class="n">git</span> <span class="n">fetch</span> <span class="o">--</span><span class="n">tags</span> <span class="o">--</span><span class="n">progress</span> <span class="o">--</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span> <span class="o">+</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/*</span><span class="p">:</span><span class="n">refs</span><span class="o">/</span><span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/*</span> <span class="c1"># timeout=10</span>
+ <span class="o">&gt;</span> <span class="n">git</span> <span class="n">config</span> <span class="n">remote</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">url</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="mf">192.168.1.25</span><span class="p">:</span><span class="mi">10080</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">test_jenkins</span> <span class="c1"># timeout=10</span>
  <span class="o">&gt;</span> <span class="n">git</span> <span class="n">config</span> <span class="o">--</span><span class="n">add</span> <span class="n">remote</span><span class="o">.</span><span class="n">origin</span><span class="o">.</span><span class="n">fetch</span> <span class="o">+</span><span class="n">refs</span><span class="o">/</span><span class="n">heads</span><span class="o">/*</span><span class="p">:</span><span class="n">refs</span><span class="o">/</span><span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/*</span> <span class="c1"># timeout=10</span>
 <span class="n">Avoid</span> <span class="n">second</span> <span class="n">fetch</span>
  <span class="o">&gt;</span> <span class="n">git</span> <span class="n">rev</span><span class="o">-</span><span class="n">parse</span> <span class="n">refs</span><span class="o">/</span><span class="n">remotes</span><span class="o">/</span><span class="n">origin</span><span class="o">/</span><span class="n">master</span><span class="o">^</span><span class="p">{</span><span class="n">commit</span><span class="p">}</span> <span class="c1"># timeout=10</span>
@@ -609,9 +606,9 @@ world。</p>
 <section id="mavenjava">
 <h3><a class="toc-backref" href="#id118">2.6 使用Maven构建Java应用</a><a class="headerlink" href="#mavenjava" title="Permalink to this headline">¶</a></h3>
 <p>Jenkins上安装JDK和Maven。我们可以登录Jenkins服务器手动安装，也可以让Jenkins自动安装。这里选择后者。方法如下：</p>
-<img alt="../_images/jenkins_test005.png" src="../_images/jenkins_test005.png" />
-<img alt="../_images/jenkins_test006.png" src="../_images/jenkins_test006.png" />
-<img alt="../_images/jenkins_test007.png" src="../_images/jenkins_test007.png" />
+<p><img alt="image6" src="../_images/jenkins_test005.png" /></p>
+<p><img alt="image7" src="../_images/jenkins_test006.png" /></p>
+<p><img alt="image8" src="../_images/jenkins_test007.png" /></p>
 <p>当Jenkins执行到tools时，就会根据Maven的设置自动下载指定版本的Maven，并安装。tools是pipeline中的一个指令，用于自动安装工具，同时将其路径放到PATH变量中。通过命令sh
 “printenv”，可以看到tools将MAVEN_HOME放到了当前任务的环境变量中。</p>
 <p><code class="docutils literal notranslate"><span class="pre">Jenkinsfile</span></code></p>
@@ -636,7 +633,7 @@ world。</p>
 </pre></div>
 </div>
 <p>单击构建后，通过Jenkins执行日志，我们看到指定版本的Maven被下载和安装，mvn执行打包。</p>
-<img alt="../_images/jenkins_test008.png" src="../_images/jenkins_test008.png" />
+<p><img alt="image9" src="../_images/jenkins_test008.png" /></p>
 <p>两个完整的pipeline入门示例完成了。</p>
 <p>总结：</p>
 <p>Jenkins pipeline支持两种语法。</p>
@@ -962,7 +959,7 @@ pipeline基本结构的补充。</p>
 </pre></div>
 </div>
 <p>CI流程效果图如下</p>
-<img alt="../_images/image-20220520182556265.png" src="../_images/image-20220520182556265.png" />
+<p><img alt="image10" src="../_images/image-20220520182556265.png" /></p>
 </section>
 <section id="id15">
 <h4>4. 配置pipeline本身<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h4>
@@ -1422,8 +1419,8 @@ bat、powershell步骤
           <span class="o">//</span> <span class="n">env</span><span class="o">.</span><span class="n">DEPLOY_ENV</span> <span class="o">=</span> <span class="nb">input</span> <span class="n">message</span><span class="p">:</span> <span class="s2">&quot;选择部署的环境的版本1&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="p">:</span> <span class="s1">&#39;deploy&#39;</span><span class="p">,</span>
           <span class="o">//</span>     <span class="n">parameters</span><span class="p">:</span> <span class="p">[</span><span class="n">string</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s1">&#39;DEPLOY_ENV&#39;</span><span class="p">,</span><span class="n">defaultValue</span><span class="p">:</span> <span class="s2">&quot;$</span><span class="si">{RELEASE}</span><span class="s2">&quot;</span><span class="p">,</span><span class="n">description</span><span class="p">:</span> <span class="s2">&quot;可选项选择的版本 $</span><span class="si">{RELEASE}</span><span class="s2">&quot;</span><span class="p">)]</span>
           <span class="o">//</span> <span class="p">}</span>
-          <span class="n">println</span> <span class="n">RELE</span> <span class="o">//</span> <span class="p">[</span><span class="s1">&#39;v1.1,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;v1.11,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;v1.3,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;v1.7,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;v1.9&#39;</span><span class="p">]</span>
-          <span class="o">//</span> <span class="n">选择部署的环境的版本</span> <span class="p">[</span><span class="s1">&#39;v1.1,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">10</span><span class="p">,</span><span class="s1">&#39;v1.11,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">2</span><span class="p">,</span><span class="s1">&#39;v1.3,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">6</span><span class="p">,</span><span class="s1">&#39;v1.7,&#39;</span><span class="n">v1</span><span class="o">.</span><span class="mi">8</span><span class="p">,</span><span class="s1">&#39;v1.9&#39;</span><span class="p">]</span>
+          <span class="n">println</span> <span class="n">RELE</span> <span class="o">//</span> <span class="p">[</span><span class="s1">&#39;v1.1,&#39;</span><span class="n">v1</span><span class="mf">.10</span><span class="p">,</span><span class="s1">&#39;v1.11,&#39;</span><span class="n">v1</span><span class="mf">.2</span><span class="p">,</span><span class="s1">&#39;v1.3,&#39;</span><span class="n">v1</span><span class="mf">.6</span><span class="p">,</span><span class="s1">&#39;v1.7,&#39;</span><span class="n">v1</span><span class="mf">.8</span><span class="p">,</span><span class="s1">&#39;v1.9&#39;</span><span class="p">]</span>
+          <span class="o">//</span> <span class="n">选择部署的环境的版本</span> <span class="p">[</span><span class="s1">&#39;v1.1,&#39;</span><span class="n">v1</span><span class="mf">.10</span><span class="p">,</span><span class="s1">&#39;v1.11,&#39;</span><span class="n">v1</span><span class="mf">.2</span><span class="p">,</span><span class="s1">&#39;v1.3,&#39;</span><span class="n">v1</span><span class="mf">.6</span><span class="p">,</span><span class="s1">&#39;v1.7,&#39;</span><span class="n">v1</span><span class="mf">.8</span><span class="p">,</span><span class="s1">&#39;v1.9&#39;</span><span class="p">]</span>
           <span class="n">env</span><span class="o">.</span><span class="n">DEPLOY_RELEASE</span> <span class="o">=</span> <span class="nb">input</span> <span class="n">message</span><span class="p">:</span> <span class="s2">&quot;选择部署的环境的版本 $</span><span class="si">{RELE}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">ok</span><span class="p">:</span> <span class="s1">&#39;deploy&#39;</span><span class="p">,</span>
           <span class="n">parameters</span><span class="p">:</span> <span class="p">[</span><span class="n">choice</span><span class="p">(</span><span class="n">name</span><span class="p">:</span> <span class="s1">&#39;PREJECT_OPERATION&#39;</span><span class="p">,</span> <span class="n">choices</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;ss&quot;</span><span class="p">,</span><span class="s2">&quot;s&quot;</span><span class="p">],</span> <span class="n">description</span><span class="p">:</span> <span class="s1">&#39;Message: 选择项目版本? $</span><span class="si">{RELE}</span><span class="s1">&#39;</span><span class="p">)]</span>
     <span class="p">}</span>
@@ -1512,7 +1509,7 @@ pipeline的很多步骤的参数也会使用此表达式。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>checkout([$class: &#39;GitSCM&#39;, branches: [[name: &#39;*/master&#39;]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: &#39;b4c8b4e9-2777-44a1-a1ed-e9dc21d37f4f&#39;, url: &#39;git@gitlab.weiyigeek.top:ci-cd/java-maven.git&#39;]]])
 </pre></div>
 </div>
-<img alt="../_images/image-20220520181149891.png" src="../_images/image-20220520181149891.png" />
+<p><img alt="image11" src="../_images/image-20220520181149891.png" /></p>
 <p><strong>(3) Kubernetes 动态节点 Pod 模板的选择</strong></p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="c1">// # Scripted Pipeline</span>
 <span class="n">podTemplate</span><span class="o">(</span><span class="nl">label:</span> <span class="s1">&#39;jenkins-jnlp-slave&#39;</span><span class="o">,</span> <span class="nl">cloud:</span> <span class="s1">&#39;k8s_115&#39;</span><span class="o">)</span> <span class="o">{</span>
@@ -1731,7 +1728,7 @@ WORKSPACE_TMP=/var/jenkins_home/workspace/jenkins_test001@tmp
 <p>进入Manage Jenkins→Configure System→Global
 properties页，勾选“Environment
 variables”复选框，单击“Add”按钮，在输入框中输入变量名和变量值即可。</p>
-<img alt="../_images/jenkins_test009.png" src="../_images/jenkins_test009.png" />
+<p><img alt="image12" src="../_images/jenkins_test009.png" /></p>
 <p>通过单击“Add”按钮，还可以添加多个全局环境变量。</p>
 <p>自定义全局环境变量会被加入 env
 属性列表中，所以，使用自定义全局环境变量与使用Jenkins内置变量的方法无异：<code class="docutils literal notranslate"><span class="pre">${env.redis_user}</span></code>。</p>
@@ -1839,7 +1836,7 @@ variables”复选框，单击“Add”按钮，在输入框中输入变量名�
     <span class="n">skipStagesAfterUnstable</span><span class="o">()</span>
     <span class="c1">// retry(2)</span>
     <span class="n">skipDefaultCheckout</span> <span class="kc">true</span>
-    <span class="n">buildDiscarder</span> <span class="nf">logRotator</span><span class="o">(</span><span class="nl">artifactDaysToKeepStr:</span> <span class="s1">&#39;1&#39;</span><span class="o">,</span> <span class="nl">artifactNumToKeepStr:</span> <span class="s1">&#39;1&#39;</span><span class="o">,</span> <span class="nl">daysToKeepStr:</span> <span class="s1">&#39;10&#39;</span><span class="o">,</span> <span class="nl">numToKeepStr:</span> <span class="s1">&#39;5&#39;</span><span class="o">)</span>
+    <span class="n">buildDiscarder</span> <span class="n">logRotator</span><span class="o">(</span><span class="nl">artifactDaysToKeepStr:</span> <span class="s1">&#39;1&#39;</span><span class="o">,</span> <span class="nl">artifactNumToKeepStr:</span> <span class="s1">&#39;1&#39;</span><span class="o">,</span> <span class="nl">daysToKeepStr:</span> <span class="s1">&#39;10&#39;</span><span class="o">,</span> <span class="nl">numToKeepStr:</span> <span class="s1">&#39;5&#39;</span><span class="o">)</span>
 <span class="o">}</span>
 <span class="n">stages</span> <span class="o">{</span>
     <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;拉取代码&#39;</span><span class="o">)</span> <span class="o">{</span>
@@ -2069,7 +2066,7 @@ variables”复选框，单击“Add”按钮，在输入框中输入变量名�
 <h4>4.4.3 带参数选择项的CICD pipeline示例<a class="headerlink" href="#cicd-pipeline" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="kt">def</span> <span class="nf">createVersion</span><span class="o">()</span> <span class="o">{</span>
     <span class="c1">// 定义一个版本号作为当次构建的版本，输出结果 20191210175842_69</span>
-    <span class="k">return</span> <span class="k">new</span> <span class="nf">Date</span><span class="o">().</span><span class="na">format</span><span class="o">(</span><span class="s1">&#39;yyyyMMddHHmmss&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s2">&quot;_${env.BUILD_ID}&quot;</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Date</span><span class="o">().</span><span class="na">format</span><span class="o">(</span><span class="s1">&#39;yyyyMMddHHmmss&#39;</span><span class="o">)</span> <span class="o">+</span> <span class="s2">&quot;_${env.BUILD_ID}&quot;</span>
 <span class="o">}</span>
 
 <span class="n">pipeline</span><span class="o">{</span>
@@ -2492,7 +2489,7 @@ variables”复选框，单击“Add”按钮，在输入框中输入变量名�
 
     <span class="n">options</span> <span class="o">{</span>
        <span class="n">skipDefaultCheckout</span> <span class="kc">true</span>
-       <span class="nf">timestamps</span><span class="o">()</span>
+       <span class="n">timestamps</span><span class="o">()</span>
        <span class="n">quietPeriod</span><span class="o">(</span><span class="mi">5</span><span class="o">)</span>
        <span class="n">buildDiscarder</span><span class="o">(</span><span class="n">logRotator</span><span class="o">(</span><span class="nl">numToKeepStr:</span> <span class="s1">&#39;10&#39;</span><span class="o">))</span>
        <span class="n">timeout</span><span class="o">(</span><span class="nl">time:</span> <span class="mi">30</span><span class="o">,</span> <span class="nl">unit:</span> <span class="s1">&#39;MINUTES&#39;</span><span class="o">)</span>
@@ -3874,7 +3871,7 @@ variables”复选框，单击“Add”按钮，在输入框中输入变量名�
 </pre></div>
 </div>
 <p>部署效果如下：</p>
-<img alt="../_images/image-20220520181833236.png" src="../_images/image-20220520181833236.png" />
+<p><img alt="image13" src="../_images/image-20220520181833236.png" /></p>
 </section>
 </section>
 </section>
@@ -3890,8 +3887,8 @@ none的情况下不会生效。</p>
 <p><strong>自动安装JDK</strong></p>
 <p>设置自动安装Oracle JDK时有一些特殊，因为下载Oracle
 JDK时需要输入用户名和密码。</p>
-<img alt="../_images/jenkins_test010.png" src="../_images/jenkins_test010.png" />
-<img alt="../_images/jenkins_test011.png" src="../_images/jenkins_test011.png" />
+<p><img alt="image14" src="../_images/jenkins_test010.png" /></p>
+<p><img alt="image15" src="../_images/jenkins_test011.png" /></p>
 <p>进入Manage Jenkins→Global Tool Configuration→JDK页，单击“Add
 JDK”按钮，就可以设置自动安装JDK。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">pipeline</span> <span class="p">{</span>
@@ -3919,7 +3916,7 @@ JDK”按钮，就可以设置自动安装JDK。</p>
 <p><strong>使用Maven进行构建</strong></p>
 <p>Jenkins pipeline的tools指令默认就支持Maven。所以，使用Maven只需要两步。</p>
 <p>（1）进入Manage Jenkins→Global Tool Configuration→Maven页设置</p>
-<img alt="../_images/jenkins_test012.png" src="../_images/jenkins_test012.png" />
+<p><img alt="image16" src="../_images/jenkins_test012.png" /></p>
 <p>这样，当执行到tools指令时，Jenkins会自动下载并安装Maven。将mvn命令加入环境变量中，可以使我们在pipeline中直接执行mvn命令。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span> <span class="n">pipeline</span> <span class="p">{</span>
     <span class="n">agent</span> <span class="nb">any</span>
@@ -3946,7 +3943,7 @@ JDK”按钮，就可以设置自动安装JDK。</p>
 <p>Maven默认使用的是其官方仓库，国内下载速度很慢。所以，我们通常会使用国内的Maven镜像仓库。</p>
 <p>Config File
 Provider插件（<a class="reference external" href="https://plugins.jenkins.io/config-file-provider">https://plugins.jenkins.io/config-file-provider</a>）能很好地解决这个问题。只需要在Jenkins的界面上填入settings.xml的内容，然后在pipeline中指定settings.xml就可以了。</p>
-<img alt="../_images/managed_files001.png" src="../_images/managed_files001.png" />
+<p><img alt="image17" src="../_images/managed_files001.png" /></p>
 <p>具体实现方法如下：</p>
 <p>（1）安装Config File Provider插件。</p>
 <p>（2）进入Manage Jenkins页面，就可以看到多出一个“Managed
@@ -3955,8 +3952,8 @@ Config”，就会看到该插件支持很多种配置文件的格式及方式�
 <p>（4）选择“Global Maven
 settings.xml”选项。因为我们的设置是全局的。填写“ID”字段，Jenkins
 pipeline会引用此变量名。假如使用的ID为<code class="docutils literal notranslate"><span class="pre">maven-global-settings</span></code>。</p>
-<img alt="../_images/manage_file002.png" src="../_images/manage_file002.png" />
-<img alt="../_images/manage_file003.png" src="../_images/manage_file003.png" />
+<p><img alt="image18" src="../_images/manage_file002.png" /></p>
+<p><img alt="image19" src="../_images/manage_file003.png" /></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="p">{</span>
     <span class="n">agent</span> <span class="nb">any</span>
 
@@ -4000,7 +3997,7 @@ pipeline会引用此变量名。假如使用的ID为<code class="docutils litera
 <p>（2）进入Manage Jenkins→Global Tool Configuration→Go页，设置如下图所示。</p>
 <p>（3）在pipeline中加入tools部分。</p>
 <p>在环境变量中会增加一个GOROOT变量。</p>
-<img alt="../_images/go_tools0001.png" src="../_images/go_tools0001.png" />
+<p><img alt="image20" src="../_images/go_tools0001.png" /></p>
 <p>（4）设置GOPATH。了解Go语言开发的读者都会知道，编译时需要设置GOPATH环境变量。直接在environment指令中添加就可以了。</p>
 <p>完整代码如下：</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">{</span>
@@ -4042,12 +4039,12 @@ $ python setup.py install
 </pre></div>
 </div>
 <p>（2）安装Pyenv Pipeline插件和ShiningPanda插件。</p>
-<img alt="../_images/python_tools001.png" src="../_images/python_tools001.png" />
+<p><img alt="image21" src="../_images/python_tools001.png" /></p>
 <p><strong>配置python路径</strong></p>
 <p><code class="docutils literal notranslate"><span class="pre">Manage</span> <span class="pre">Jenkins</span> <span class="pre">&gt;</span> <span class="pre">Global</span> <span class="pre">Tool</span> <span class="pre">Configuration</span></code>
 填写python2或者python3在jenkins机器上的路径，一般都为：/usr/bin/python3.6，也可以使用<code class="docutils literal notranslate"><span class="pre">which</span> <span class="pre">python</span></code>来找；
 名称随便写即可，后续会用到。</p>
-<img alt="../_images/python_tools002.png" src="../_images/python_tools002.png" />
+<p><img alt="image22" src="../_images/python_tools002.png" /></p>
 <p>然后，在pipeline中使用Pyenv Pipeline插件提供的withPythonEnv方法。</p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">{</span>
     <span class="n">agent</span> <span class="n">any</span>
@@ -4167,7 +4164,7 @@ pipeline中使用trigger指令来定义时间触发。</p>
 <h4>6.1.1 定时执行：cron<a class="headerlink" href="#cron" title="Permalink to this headline">¶</a></h4>
 <p>定时执行就像cronjob，一到时间点就执行。它的使用场景通常是执行一些周期性的job，如每夜构建。</p>
 <p>必须手动执行一次，手动执行一次后，配置文件生效如下：</p>
-<img alt="../_images/jenkins_cicd_corn001.png" src="../_images/jenkins_cicd_corn001.png" />
+<p><img alt="image23" src="../_images/jenkins_cicd_corn001.png" /></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="p">{</span>
     <span class="n">agent</span> <span class="nb">any</span>
     <span class="n">triggers</span> <span class="p">{</span>
@@ -4184,7 +4181,7 @@ pipeline中使用trigger指令来定义时间触发。</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/pipeline_cron0001.png" src="../_images/pipeline_cron0001.png" />
+<p><img alt="image24" src="../_images/pipeline_cron0001.png" /></p>
 <p>Jenkins trigger cron语法采用的是UNIX
 cron语法（有些细微的区别）。一条cron包含5个字段，使用空格或Tab分隔，</p>
 <p>格式为：<code class="docutils literal notranslate"><span class="pre">MINUTE</span> <span class="pre">HOUR</span> <span class="pre">DOM</span> <span class="pre">MONTH</span> <span class="pre">DOW</span></code>。每个字段的含义为：</p>
@@ -4425,21 +4422,21 @@ hook。如果直接在Jenkins当中安装插件失败，可以在国内镜像站
 首先需要在Jenkins界面上手动勾选“Buildwhen a change is pushed to
 GitLab”复选框，还需要手动单击“Generate”按钮生成Secret
 token或手动输入Secret token。</p>
-<img alt="../_images/webhook_gitlab001.png" src="../_images/webhook_gitlab001.png" />
-<img alt="../_images/webhook_gitlab002.png" src="../_images/webhook_gitlab002.png" />
+<p><img alt="image25" src="../_images/webhook_gitlab001.png" /></p>
+<p><img alt="image26" src="../_images/webhook_gitlab002.png" /></p>
 <p>在Integrations配置页的相应输入框中粘贴上一步中Jenkins暴露的webhook及相应的Secret
 token如下</p>
-<img alt="../_images/gitlab_webhook003.png" src="../_images/gitlab_webhook003.png" />
+<p><img alt="image27" src="../_images/gitlab_webhook003.png" /></p>
 <p>测试整个链路是否通了。在GitLab上添加好这个webhook后，可以跳到表单下方，有一个已添加的webhook列表，找到我们刚刚创建的webbook。单击“Test”按钮，选择“Pushevents”，GitLab就会向该webhook发送一个event。</p>
-<img alt="../_images/webhook_test0001.png" src="../_images/webhook_test0001.png" />
+<p><img alt="image28" src="../_images/webhook_test0001.png" /></p>
 <p>如果是首次添加，现在新版本的Gitlab可能会失败，报错
 <code class="docutils literal notranslate"><span class="pre">Urlis</span> <span class="pre">blocked:</span> <span class="pre">Requests</span> <span class="pre">to</span> <span class="pre">the</span> <span class="pre">local</span> <span class="pre">network</span> <span class="pre">are</span> <span class="pre">not</span> <span class="pre">allowed</span></code>，需要选中如下：</p>
-<img alt="../_images/jenkins_webhook2021001.png" src="../_images/jenkins_webhook2021001.png" />
+<p><img alt="image29" src="../_images/jenkins_webhook2021001.png" /></p>
 <p>添加之后，可以点击一下test看看流程是否能够走通，如果走通，那么我们以后开发的时候直接推送代码即可触发构建。</p>
 <p>正常状态返回如下：</p>
 <p><code class="docutils literal notranslate"><span class="pre">Hook</span> <span class="pre">executed</span> <span class="pre">successfully:</span> <span class="pre">HTTP</span> <span class="pre">200</span></code></p>
 <p>Jenkins任务被GitLab事件触发，在gitlab中提交代码，每次提交，jenkins会进行自动的构建，如下图所示：</p>
-<img alt="../_images/webhook_gitlan0003.png" src="../_images/webhook_gitlan0003.png" />
+<p><img alt="image30" src="../_images/webhook_gitlan0003.png" /></p>
 <p>可参考如下文献</p>
 <p><a class="reference external" href="http://www.eryajf.net/3304.html">Jenkins-pipeline学习笔记–自动构建的原始配置以及pipeline中的用法</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/xiao987334176/p/11443002.html">Jenkins+Gitlab配置Webhook实现提交自动部署</a></p>
@@ -4458,7 +4455,7 @@ a change is pushed to
 GitLab”复选框，还需要手动单击“Generate”按钮生成Secret
 token或手动输入Secret
 token。这部分手动操作，我们也希望通过修改Jenkinsfile就能实现。显然，不只是我们这样想，早就有人想到了，并在GitLab插件上实现了基于GitLab的trigger。以下是具体使用方法。</p>
-<img alt="../_images/jenkins_secretToken.png" src="../_images/jenkins_secretToken.png" />
+<p><img alt="image31" src="../_images/jenkins_secretToken.png" /></p>
 <div class="highlight-groovy notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="o">{</span>
     <span class="n">agent</span> <span class="n">any</span>
     <span class="n">triggers</span> <span class="o">{</span>
@@ -4533,7 +4530,7 @@ URL&gt;/generic-webhook-trigger/invoke，即由GWT插件来处理此API的请求
 </pre></div>
 </div>
 <p>接着，我们就看到pipeline被触发执行了。</p>
-<img alt="../_images/jenkins_GWT0001.png" src="../_images/jenkins_GWT0001.png" />
+<p><img alt="image32" src="../_images/jenkins_GWT0001.png" /></p>
 <p>日志信息如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Triggered</span> <span class="n">on</span> <span class="n">ref</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span>
 <span class="n">GenericWebhookEnvironmentContributor</span>
@@ -4547,7 +4544,7 @@ URL&gt;/generic-webhook-trigger/invoke，即由GWT插件来处理此API的请求
     <span class="n">ref</span> <span class="o">=</span> <span class="n">ref</span><span class="o">/</span><span class="n">heads</span><span class="o">/</span><span class="n">master</span>
 
 
-<span class="n">Obtained</span> <span class="n">Jenkinsfile</span> <span class="kn">from</span> <span class="nn">git</span> <span class="n">ssh</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">@</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">1.31</span><span class="p">:</span><span class="mi">11022</span><span class="o">/</span><span class="n">hu_admin</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="n">trigger</span><span class="o">.</span><span class="n">git</span>
+<span class="n">Obtained</span> <span class="n">Jenkinsfile</span> <span class="kn">from</span> <span class="nn">git</span> <span class="n">ssh</span><span class="p">:</span><span class="o">//</span><span class="n">git</span><span class="o">@</span><span class="mf">192.168.1.31</span><span class="p">:</span><span class="mi">11022</span><span class="o">/</span><span class="n">hu_admin</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">test</span><span class="o">-</span><span class="n">trigger</span><span class="o">.</span><span class="n">git</span>
 </pre></div>
 </div>
 <p>GenericTrigger触发条件由GWT插件提供。此触发条件可以说是GWT的所有内容。</p>
@@ -4692,9 +4689,9 @@ body中提取出的ref变量值。</p></li>
 <section id="id43">
 <h2><a class="toc-backref" href="#id138">7.将构建状态信息推送到GitLab</a><a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h2>
 <p>先生成一个访问令牌，用于在jenkins的系统配置去配置连接gitlab的选项，</p>
-<img alt="../_images/gitlab-token001.png" src="../_images/gitlab-token001.png" />
+<p><img alt="image33" src="../_images/gitlab-token001.png" /></p>
 <p>首先在<code class="docutils literal notranslate"><span class="pre">系统管理</span></code>-<code class="docutils literal notranslate"><span class="pre">系统配置</span></code>中配置好连接Gitlab的信息如下</p>
-<img alt="../_images/jenkins-gitlab0001.png" src="../_images/jenkins-gitlab0001.png" />
+<p><img alt="image34" src="../_images/jenkins-gitlab0001.png" /></p>
 <p><strong>在pipeline的post部分，将构建结果更新到GitLab的相应commit记录上</strong>。除此之外，</p>
 <p>还需要在<strong>options部分加入gitLabConnection配置，同时传入“gitlab”参数</strong>。“gitlab”就是<code class="docutils literal notranslate"><span class="pre">Connection</span> <span class="pre">name</span></code>的值。</p>
 <p>Jenkinsfile</p>
@@ -4934,8 +4931,8 @@ body中提取出的ref变量值。</p></li>
 </pre></div>
 </div>
 <p>提交代码后，需要手动触发一次构建，pipeline才会生效。</p>
-<img alt="../_images/webhook_gitlab_00004.png" src="../_images/webhook_gitlab_00004.png" />
-<img alt="../_images/webhook_gitlab0005.png" src="../_images/webhook_gitlab0005.png" />
+<p><img alt="image35" src="../_images/webhook_gitlab_00004.png" /></p>
+<p><img alt="image36" src="../_images/webhook_gitlab0005.png" /></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>//jenkins 构建过程中的日志记录，每次成功都会将返回信息updating到gitlab上，如下
 2020-12-11 17:05:01.300+0000 [id=1257]  INFO    c.d.g.util.CommitStatusUpdater#retrieveGitlabProjectIds: Retrieving gitlab project ids
 2020-12-11 17:05:01.397+0000 [id=1257]  INFO    c.d.g.util.CommitStatusUpdater#updateCommitStatus: Updating build &#39;1&#39; to &#39;running&#39;
@@ -4946,7 +4943,7 @@ body中提取出的ref变量值。</p></li>
 2020-12-11 17:05:33.545+0000 [id=1366]  INFO    o.j.p.workflow.job.WorkflowRun#finish: jenkins_pipline00001 #7 completed: SUCCESS
 </pre></div>
 </div>
-<img alt="../_images/gitlab_webhook0006.png" src="../_images/gitlab_webhook0006.png" />
+<p><img alt="image37" src="../_images/gitlab_webhook0006.png" /></p>
 <p>参考文献：</p>
 <p><a class="reference external" href="https://blog.51cto.com/ygqygq2/2461766">https://blog.51cto.com/ygqygq2/2461766</a></p>
 <p><a class="reference external" href="https://www.jianshu.com/p/d2af2915cfea">https://www.jianshu.com/p/d2af2915cfea</a></p>
@@ -4957,20 +4954,20 @@ body中提取出的ref变量值。</p></li>
 <h3><a class="toc-backref" href="#id140">8.1 创建多分支pipeline</a><a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h3>
 <p>进入创建页面，我们介绍关键的几个选项。</p>
 <p>（1）设置代码仓库地址</p>
-<img alt="../_images/duo_branch_pipeline001.png" src="../_images/duo_branch_pipeline001.png" />
+<p><img alt="image38" src="../_images/duo_branch_pipeline001.png" /></p>
 <p>（2）设置分支扫描触发策略。</p>
 <p>分支扫描是指Jenkins根据一定的策略去代码仓库扫描分支，如果有新分支就创建一个以分支名命名的任务，如果发现有分支被删除了，就删除相应的Jenkins任务。</p>
-<img alt="../_images/duo_branch0002.png" src="../_images/duo_branch0002.png" />
+<p><img alt="image39" src="../_images/duo_branch0002.png" /></p>
 <p>在“Scan Multibranch Pipeline Triggers”下就只有一个可选项：Periodically
 ifnot otherwise run
 （没有手动触发，就定期扫描分支）。勾选此选项，设置扫描的间隔时长。</p>
-<img alt="../_images/duo_branch0003.png" src="../_images/duo_branch0003.png" />
+<p><img alt="image40" src="../_images/duo_branch0003.png" /></p>
 <p>越频繁建立分支，扫描周期应越短。当然，我们也可以单击任务页面左侧的“Scan
 Multibranch PipelineNow”项，手动触发Jenkins去扫描分支。</p>
 <p>（3）孤儿任务（Orphaned Item）处理策略。</p>
 <p>如果在代码仓库中删除了release分支，那么在多分支任务页面上，该分支在Jenkins上的任务也应该被删除。至于什么时候删除，取决于下次分支扫描的时间。如果代码仓库中的分支被删除了，而Jenkins上的相应任务没有被删除，那么这个任务就被称为孤儿任务。</p>
 <p>对于分支任务上的历史记录，保存多长时间是可以设置的。</p>
-<img alt="../_images/duo_branch0004.png" src="../_images/duo_branch0004.png" />
+<p><img alt="image41" src="../_images/duo_branch0004.png" /></p>
 <p>两个参数的含义分别是：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>• Days to keep old items：保留多少天。
 
@@ -5313,7 +5310,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 • name：参数名。
 </pre></div>
 </div>
-<img alt="../_images/pipeline_parameters00001.png" src="../_images/pipeline_parameters00001.png" />
+<p><img alt="image42" src="../_images/pipeline_parameters00001.png" /></p>
 <p>构建输出如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">Pipeline</span><span class="p">]</span> <span class="p">}</span>
 <span class="p">[</span><span class="n">Pipeline</span><span class="p">]</span> <span class="o">//</span> <span class="n">stage</span>
@@ -5354,7 +5351,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/pipeline_parameters00002.png" src="../_images/pipeline_parameters00002.png" />
+<p><img alt="image43" src="../_images/pipeline_parameters00002.png" /></p>
 <ul class="simple">
 <li><p>text，多行文本类型，换行使用:raw-latex:<cite>n</cite>。</p></li>
 </ul>
@@ -5373,7 +5370,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/pipeline_parameters00004.png" src="../_images/pipeline_parameters00004.png" />
+<p><img alt="image44" src="../_images/pipeline_parameters00004.png" /></p>
 <ul class="simple">
 <li><p>booleanParam，布尔类型。</p></li>
 </ul>
@@ -5401,8 +5398,8 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/jenkins_hu_parameters0001.png" src="../_images/jenkins_hu_parameters0001.png" />
-<img alt="../_images/jenkins_hu_parameters0002.png" src="../_images/jenkins_hu_parameters0002.png" />
+<p><img alt="image45" src="../_images/jenkins_hu_parameters0001.png" /></p>
+<p><img alt="image46" src="../_images/jenkins_hu_parameters0002.png" /></p>
 <ul class="simple">
 <li><p>password，密码类型。</p></li>
 </ul>
@@ -5421,8 +5418,8 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/jenkins_parameters0003.png" src="../_images/jenkins_parameters0003.png" />
-<img alt="../_images/jenkins_parameter00004.png" src="../_images/jenkins_parameter00004.png" />
+<p><img alt="image47" src="../_images/jenkins_parameters0003.png" /></p>
+<p><img alt="image48" src="../_images/jenkins_parameter00004.png" /></p>
 </section>
 <section id="id52">
 <h4>9.2.2 多参数<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h4>
@@ -5446,7 +5443,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/jenkins_parameter00005.png" src="../_images/jenkins_parameter00005.png" />
+<p><img alt="image49" src="../_images/jenkins_parameter00005.png" /></p>
 </section>
 </section>
 <section id="id53">
@@ -5461,7 +5458,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 </pre></div>
 </div>
 <p>创建一个pipeline，名叫<code class="docutils literal notranslate"><span class="pre">pipeline1</span></code></p>
-<img alt="../_images/jenkins_simple0001.png" src="../_images/jenkins_simple0001.png" />
+<p><img alt="image50" src="../_images/jenkins_simple0001.png" /></p>
 <p>pipeline脚本如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="p">{</span>
     <span class="n">agent</span> <span class="nb">any</span>
@@ -5517,7 +5514,7 @@ pipeline中定义参数使用的是parameters指令，其只允许被放在pipel
 </pre></div>
 </div>
 <p>pipeline1也被触发运行，如下：</p>
-<img alt="../_images/jenkins_sample0002.png" src="../_images/jenkins_sample0002.png" />
+<p><img alt="image51" src="../_images/jenkins_sample0002.png" /></p>
 </section>
 <section id="conditional-buildstep">
 <h3><a class="toc-backref" href="#id149">9.4 使用Conditional BuildStep插件处理复杂的判断逻辑</a><a class="headerlink" href="#conditional-buildstep" title="Permalink to this headline">¶</a></h3>
@@ -5606,8 +5603,8 @@ BuildStep插件后的写法。</p>
 </pre></div>
 </div>
 <p>此pipeline会根据choice的选择做出相应的部署操作。</p>
-<img alt="../_images/jenkins_20201215001.png" src="../_images/jenkins_20201215001.png" />
-<img alt="../_images/jenkins_20201215002.png" src="../_images/jenkins_20201215002.png" />
+<p><img alt="image52" src="../_images/jenkins_20201215001.png" /></p>
+<p><img alt="image53" src="../_images/jenkins_20201215002.png" /></p>
 <p>现实中，我们会面对更复杂的判断条件。而expression表达式本质上就是一个Groovy代码块，大大提高了表达式的灵活性。以下是比较常用的例子。</p>
 <ul class="simple">
 <li><p>或逻辑</p></li>
@@ -5667,8 +5664,8 @@ BuildStep插件后的写法。</p>
 </pre></div>
 </div>
 <p>（2）当pipeline执行到deploy阶段后，就会暂停。</p>
-<img alt="../_images/jenkins_202012150003.png" src="../_images/jenkins_202012150003.png" />
-<img alt="../_images/jenkins_202012150004.png" src="../_images/jenkins_202012150004.png" />
+<p><img alt="image54" src="../_images/jenkins_202012150003.png" /></p>
+<p><img alt="image55" src="../_images/jenkins_202012150004.png" /></p>
 <p>这是简单的input步骤使用方式——手动确定是否通过。</p>
 </section>
 <section id="id55">
@@ -5722,8 +5719,8 @@ pipeline{
 </div>
 <p>我们在pipeline外定义了一个变量approvalMap。</p>
 <p>这是因为定义在阶段内的变量的作用域只在这个阶段中，而input步骤的返回值需要跨阶段使用，所以需要将其定义在pipeline外。这样变量approvalMap的作用域就是整个pipeline了。</p>
-<img alt="../_images/jenkins_202012150005.png" src="../_images/jenkins_202012150005.png" />
-<img alt="../_images/jenkins_202012150006.png" src="../_images/jenkins_202012150006.png" />
+<p><img alt="image56" src="../_images/jenkins_202012150005.png" /></p>
+<p><img alt="image57" src="../_images/jenkins_202012150006.png" /></p>
 </section>
 </section>
 <section id="id56">
@@ -5812,8 +5809,8 @@ key就是凭证。</p>
 </section>
 <section id="secret-filesecret-file">
 <h4>9.3.3 Secret fileSecret file<a class="headerlink" href="#secret-filesecret-file" title="Permalink to this headline">¶</a></h4>
-<img alt="../_images/jenkins_secret0001.png" src="../_images/jenkins_secret0001.png" />
-<img alt="../_images/jenkins_secret0002.png" src="../_images/jenkins_secret0002.png" />
+<p><img alt="image58" src="../_images/jenkins_secret0001.png" /></p>
+<p><img alt="image59" src="../_images/jenkins_secret0002.png" /></p>
 <p>指需要保密的文本文件。使用Secret
 file时，Jenkins会将文件复制到一个临时目录中，再将文件路径设置到一个变量中。构建结束后，所复制的Secret
 file会被删除。</p>
@@ -5962,7 +5959,7 @@ key检查。</p>
 <p>如果要求安全级别高，则应该提前将所有受控机器的fingerprint放到主控机器的know_hosts文件中。</p>
 <p>（3）在Jenkins上进入Manage Jenkins→Global Tool
 Configuration→Ansible配置页面，配置Ansible的执行路径</p>
-<img alt="../_images/jenkins_ansible0004.png" src="../_images/jenkins_ansible0004.png" />
+<p><img alt="image60" src="../_images/jenkins_ansible0004.png" /></p>
 <p>（5）在pipeline中加入ansiblePlaybook步骤。</p>
 <p>部署项目的目录结构如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ tree -L 3
@@ -5980,7 +5977,7 @@ Configuration→Ansible配置页面，配置Ansible的执行路径</p>
 </div>
 <p>hosts文件内容如下：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">example</span><span class="p">]</span>
-<span class="mf">192.168</span><span class="o">.</span><span class="mf">1.31</span> <span class="n">ansible_ssh_port</span><span class="o">=</span><span class="mi">222</span> <span class="n">ansible_ssh_user</span><span class="o">=</span><span class="n">git</span> <span class="n">ansible_ssh_pass</span><span class="o">=</span><span class="n">China</span><span class="o">@</span><span class="mi">2020</span>
+<span class="mf">192.168.1.31</span> <span class="n">ansible_ssh_port</span><span class="o">=</span><span class="mi">222</span> <span class="n">ansible_ssh_user</span><span class="o">=</span><span class="n">git</span> <span class="n">ansible_ssh_pass</span><span class="o">=</span><span class="n">China</span><span class="o">@</span><span class="mi">2020</span>
 </pre></div>
 </div>
 <p>playbook.yml文件内容如下：</p>
@@ -6014,7 +6011,7 @@ Configuration→Ansible配置页面，配置Ansible的执行路径</p>
 </div>
 <p>ansiblePlaybook步骤执行的是ansible-playbook命令，其中playbook参数是playook文件的路径，inventory参数是inventory文件的路径，credentialsId参数就是在上一步中添加的凭证ID。</p>
 <p>最后打印日志如下：</p>
-<img alt="../_images/jenkins_ansible0005.png" src="../_images/jenkins_ansible0005.png" />
+<p><img alt="image61" src="../_images/jenkins_ansible0005.png" /></p>
 <p>这样，Jenkins与Ansible的集成就算完成了。但是这只是刚刚开始，在实际工作中，我们还需要考虑自定义的公共role应该放在哪里等与Ansible相关的问题。</p>
 <p>我们来看一下完整的代码示例</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>pipeline{
@@ -6123,9 +6120,9 @@ Configuration→Ansible配置页面，配置Ansible的执行路径</p>
 <p>转到<code class="docutils literal notranslate"><span class="pre">管理Jenkins-&gt;配置系统-&gt;扩展电子邮件通知</span></code></p>
 <p>并勾选<strong>允许发送给未注册用户的单选按钮</strong></p>
 <p>配置方法如下所示：</p>
-<img alt="../_images/jenkins_sendm0001.png" src="../_images/jenkins_sendm0001.png" />
-<img alt="../_images/jenkins_sendm0002.png" src="../_images/jenkins_sendm0002.png" />
-<img alt="../_images/jenkins_sendm0004.png" src="../_images/jenkins_sendm0004.png" />
+<p><img alt="image62" src="../_images/jenkins_sendm0001.png" /></p>
+<p><img alt="image63" src="../_images/jenkins_sendm0002.png" /></p>
+<p><img alt="image64" src="../_images/jenkins_sendm0004.png" /></p>
 <p>必须点击测试成功，表示邮件可以正常发送。</p>
 <p>参考文献：</p>
 <p><a class="reference external" href="https://www.linuxea.com/1767.html">https://www.linuxea.com/1767.html</a></p>
@@ -6210,7 +6207,7 @@ Configuration→Ansible配置页面，配置Ansible的执行路径</p>
 </pre></div>
 </div>
 <p>查看邮箱信息如下：</p>
-<img alt="../_images/jenkins_email00001.png" src="../_images/jenkins_email00001.png" />
+<p><img alt="image65" src="../_images/jenkins_email00001.png" /></p>
 <p>jenkins示例2</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pipeline</span> <span class="p">{</span>
   <span class="n">agent</span> <span class="nb">any</span>
@@ -6365,7 +6362,7 @@ Configuration→Ansible配置页面，配置Ansible的执行路径</p>
 <span class="p">}</span>
 </pre></div>
 </div>
-<img alt="../_images/jenkins_mail0003.png" src="../_images/jenkins_mail0003.png" />
+<p><img alt="image66" src="../_images/jenkins_mail0003.png" /></p>
 <p>Editable Email Notification邮件正文模板1</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>&lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -6571,7 +6568,7 @@ to servletcontainer”和“Jenkins’ own user database”。</p>
 <p>“Jenkins’ own user
 database”即使用Jenkins自带的用户数据库进行认证。如果你所在的公司没有搭建LDAP服务，则可以考虑使用这种认证方式。在Manage
 Jenkins→Manage Configure Global Security页面打开Jenkins的安全检查后，</p>
-<img alt="../_images/jenkins_options001.png" src="../_images/jenkins_options001.png" />
+<p><img alt="image67" src="../_images/jenkins_options001.png" /></p>
 <p>创建用户在“Jenkins’ own user
 database”认证方式下，创建的所有用户都具有Jenkins管理权限。</p>
 <p>注册用户如果Jenkins管理员觉得为团队每个成员手动添加用户比较麻烦，则可以开启“Allow
@@ -6618,7 +6615,7 @@ Strategy（<a class="reference external" href="https://plugins.jenkins.io/role-s
 Node roles：有设置Jenkins节点相关权限的角色
 </pre></div>
 </div>
-<img alt="../_images/jenkins_quanxian0001.png" src="../_images/jenkins_quanxian0001.png" />
+<p><img alt="image68" src="../_images/jenkins_quanxian0001.png" /></p>
 </section>
 <section id="id91">
 <h4>15.2.3 权限大全<a class="headerlink" href="#id91" title="Permalink to this headline">¶</a></h4>
@@ -6709,7 +6706,7 @@ Strategy插件的授权管理功能真的非常弱，</p>
 JavaMelody（<a class="reference external" href="https://github.com/javamelody/javamelody/wiki">https://github.com/javamelody/javamelody/wiki</a>）对Jenkins进行监控</p>
 <p>单击“Monitoring of Jenkins
 master”菜单项进入后，显示Monitoring仪表盘，然而，它没有告警功能。因此，这款插件并不适合在大型企业中使用。</p>
-<img alt="../_images/jenkins_monitor0001.png" src="../_images/jenkins_monitor0001.png" />
+<p><img alt="image69" src="../_images/jenkins_monitor0001.png" /></p>
 </section>
 <section id="prometheus">
 <h4>15.3.2 使用Prometheus监控<a class="headerlink" href="#prometheus" title="Permalink to this headline">¶</a></h4>
@@ -6720,13 +6717,13 @@ Native Computing Foundation（云原生计算基金会，简称CNCF）“毕业�
 <p>这里假设读者已经安装好了Prometheus和Grafana。以下是具体的整合步骤。</p>
 <p>（1）Jenkins：安装Prometheus插件（<a class="reference external" href="https://plugins.jenkins.io/prometheus">https://plugins.jenkins.io/prometheus</a>），Jenkins将暴露一个“/prometheus”接口。Prometheus插件本身是可以配置的。进入ManageJenkins→Configure
 System页面.</p>
-<img alt="../_images/jenkins_prometheus001.png" src="../_images/jenkins_prometheus001.png" />
+<p><img alt="image70" src="../_images/jenkins_prometheus001.png" /></p>
 <p>配置Prometheus插件通过此配置，我们可以选择暴露接口的URL，以及暴露哪些指标数据。</p>
 <p>设置完成后重启<code class="docutils literal notranslate"><span class="pre">Jenkins</span></code>服务，并且访问<code class="docutils literal notranslate"><span class="pre">jenkins</span></code>的<code class="docutils literal notranslate"><span class="pre">url</span></code>查看指标情况</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">jenkinsurl</span><span class="o">/</span><span class="n">prometheus</span>
 </pre></div>
 </div>
-<img alt="../_images/jenkins_prumetheus0002.png" src="../_images/jenkins_prumetheus0002.png" />
+<p><img alt="image71" src="../_images/jenkins_prumetheus0002.png" /></p>
 <p>（2）配置Prometheus向Jenkins拉取监控指标数据，加入配置：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cat</span> <span class="n">prometheus</span><span class="o">.</span><span class="n">yml</span>
 <span class="k">global</span><span class="p">:</span>
@@ -6755,7 +6752,7 @@ System页面.</p>
 </pre></div>
 </div>
 <p>（3）Grafana：增加“Jenkins：Performance and health overview”面板</p>
-<img alt="../_images/jenkins_proumetheus0002.png" src="../_images/jenkins_proumetheus0002.png" />
+<p><img alt="image72" src="../_images/jenkins_proumetheus0002.png" /></p>
 <p>参考文献：</p>
 <p><a class="reference external" href="https://my.oschina.net/u/4357035/blog/3313700">https://my.oschina.net/u/4357035/blog/3313700</a></p>
 <p><a class="reference external" href="https://www.cnblogs.com/ssgeek/p/12272629.html">Prometheus监控Jenkins</a></p>
@@ -6766,7 +6763,7 @@ System页面.</p>
 <section id="jenkins-home">
 <h4>15.4.1 JENKINS_HOME介绍<a class="headerlink" href="#jenkins-home" title="Permalink to this headline">¶</a></h4>
 <p>Jenkins的所有数据都是存放在文件中的，所以，Jenkins备份其实就是备份JENKINS_HOME目录。</p>
-<img alt="../_images/jenkins_tree0001.png" src="../_images/jenkins_tree0001.png" />
+<p><img alt="image73" src="../_images/jenkins_tree0001.png" /></p>
 <p>并不是所有的内容都必须要备份。以下目录是可以不备份的。</p>
 <ul class="simple">
 <li><p>workspace</p></li>
@@ -6787,7 +6784,7 @@ Backup插件（<a class="reference external" href="https://plugins.jenkins.io/pe
 <p>安装Periodic Backup插件后，在“Manage Jenkins”菜单下就会多出一个“Periodic
 Backup Manager”菜单项。</p>
 <p>单击“Configure”选项后，进入插件配置页面</p>
-<img alt="../_images/jenkins_backup1221.png" src="../_images/jenkins_backup1221.png" />
+<p><img alt="image74" src="../_images/jenkins_backup1221.png" /></p>
 <ul class="simple">
 <li><p>Backup schedule （cron）：进行备份的cron表达式，单击“Validate
 cronsyntax”按钮可进行校验。由于Jenkins是使用本地文件存储的方式来保存配置的，在备份过程中如果有其他操作，则很容易出现数据不一致的问题。所以，应尽量选择在无人使用Jenkins的时候进行备份。</p></li>
@@ -6796,21 +6793,21 @@ cronsyntax”按钮可进行校验。由于Jenkins是使用本地文件存储的
 <p>◦ ConfigOnly：只备份配置文件。</p>
 <p>◦ FullBackup：进行全量备份。可以通过在“Excludes
 list”中填入Ant风格路径表达式，排除不希望进行备份的文件。多个表达式之间使用分号分隔。</p>
-<img alt="../_images/jenkins_backup1221002.png" src="../_images/jenkins_backup1221002.png" />
+<p><img alt="image75" src="../_images/jenkins_backup1221002.png" /></p>
 <ul class="simple">
 <li><p>Backup Location：配置备份文件的存放位置。</p></li>
 </ul>
 <p>注意，Jenkins运行用户一定要有对该文件夹进行写的权限。保存配置，单击“Backup
 Now！”选项，可以马上进行一次备份。</p>
 <p>当需要恢复时，单击“Restore”选项，然后选择需要恢复的版本。</p>
-<img alt="../_images/jenkins_restor0001.png" src="../_images/jenkins_restor0001.png" />
+<p><img alt="image76" src="../_images/jenkins_restor0001.png" /></p>
 </section>
 </section>
 <section id="id95">
 <h3><a class="toc-backref" href="#id178">15.5 汉化</a><a class="headerlink" href="#id95" title="Permalink to this headline">¶</a></h3>
 <p>Jenkins默认根据用户浏览器的语言设置来显示。如果希望设置Jenkins界面的语言，则安装Local插件（<a class="reference external" href="https://plugins.jenkins.io/locale">https://plugins.jenkins.io/locale</a>）后，进入“ManageJenkins→Configure
 System”页面，找到“Local”进行设置</p>
-<img alt="../_images/jenkins_hanhua0001.png" src="../_images/jenkins_hanhua0001.png" />
+<p><img alt="image77" src="../_images/jenkins_hanhua0001.png" /></p>
 <p>注意：勾选“Ignore browser preference and force this language to
 allusers”复选框，代表忽略用户浏览器的语言设置，强制使用中文界面。</p>
 </section>
@@ -6849,7 +6846,7 @@ Zabbix、Open-Falcon、Prometheus 等。最终笔者选择了Prometheus。</p>
 </div>
 <p>以自己的工作电脑为控制机器，使用Ansible部署整个监控系统。</p>
 <p>使用Ansible部署整个监控系统示意图</p>
-<img alt="../_images/jenkins_ansible0001.png" src="../_images/jenkins_ansible0001.png" />
+<p><img alt="image78" src="../_images/jenkins_ansible0001.png" /></p>
 <ul class="simple">
 <li><p>Prometheus server负责监控数据收集和存储。</p></li>
 <li><p>Prometheus alert
@@ -6859,13 +6856,13 @@ manager负责根据告警规则进行告警，可集成多种告警通道。</p>
 <p>使用Ansible作为部署工具的一个好处是有很多现成的role。在安装Prometheus时，笔者使用的是现成的prometheus-ansble（<a class="reference external" href="https://github.com/ernestas-poskus/ansible-prometheus">https://github.com/ernestas-poskus/ansible-prometheus</a>）。</p>
 <p>有了监控数据后，我们就可以对数据进行可视化了。Grafana和Prometheus集成得非常好，所以我们又部署了Grafana。</p>
 <p>可是，我们不可能24小时盯着屏幕看CPU负载有没有超吧？这时候就要做告警了。Prome-htues默认集成了多种告警渠道，钉钉除外。由于当时笔者所在团队使用的是钉钉，所以告警通道只能选择钉钉。有好心人开源了钉钉集成Prometheus告警的组件：prometheus-webhook-dingtalk（<a class="reference external" href="https://github.com/timonwong/prometheus-webhook-dingtalk">https://github.com/timonwong/prometheus-webhook-dingtalk</a>）。于是，我们做了告警，</p>
-<img alt="../_images/jenkins_ansible_dingding001.png" src="../_images/jenkins_ansible_dingding001.png" />
+<p><img alt="image79" src="../_images/jenkins_ansible_dingding001.png" /></p>
 <p>完成以上工作后，我们的基础监控的架子就搭好了，为后期的Redis监控、JVM监控等更上层的监控做好了准备。</p>
 </section>
 <section id="id100">
 <h4>16.1.2 一开始就应该做配置版本化<a class="headerlink" href="#id100" title="Permalink to this headline">¶</a></h4>
 <p>一开始就做配置版本化。在搭建监控系统的过程中，已经将配置抽离出来，放到一个单独的代码仓库进行管理。以后所有部署，我们都会将配置和部署逻辑分离。这样，只需要复制一份配置，改一改，就可以在新的环境中快速搭建一套新的监控系统。关于如何管理Ansible部署脚本的配置，我们使用如下目录结构。</p>
-<img alt="../_images/jenkins_ansible0002.png" src="../_images/jenkins_ansible0002.png" />
+<p><img alt="image80" src="../_images/jenkins_ansible0002.png" /></p>
 <p>现阶段，所有的配置都以文本方式存储，将来切换成使用Consul做配置中心，只需要将配置本身部署到Consul中就可以了。而且，Ansible
 2.0以上版本已经原生支持Consul的操作。</p>
 </section>
@@ -6897,7 +6894,7 @@ plugins就可以了。</p>
 </pre></div>
 </div>
 <p>最终Jenkins搭建完成，示意图如图</p>
-<img alt="../_images/jenkins_ansible_install0003.png" src="../_images/jenkins_ansible_install0003.png" />
+<p><img alt="image81" src="../_images/jenkins_ansible_install0003.png" /></p>
 <p>现在我们需要告诉Jenkins如何对业务代码进行编译打包。我们逐步在每个业务系统的根目录中加入相应的Jenkinsfile。在为每个业务系统写Jenkinsfile的过程中，注意这些业务系统的Jenkinsfile的共性，及时进行抽象，避免大量重复。</p>
 </section>
 <section id="nexus">
@@ -6907,7 +6904,7 @@ plugins就可以了。</p>
 <section id="id101">
 <h4>16.1.5 让Jenkins帮助我们执行Ansible<a class="headerlink" href="#id101" title="Permalink to this headline">¶</a></h4>
 <p>不过，这里有一个问题需要考虑：是将Ansible脚本和业务系统放在同一个代码仓库中，还是分别放在不同的仓库中？笔者推荐将部署脚本与业务系统放在同一个代码仓库中，结构如下</p>
-<img alt="../_images/jenkins_ansibleo00003.png" src="../_images/jenkins_ansibleo00003.png" />
+<p><img alt="image82" src="../_images/jenkins_ansibleo00003.png" /></p>
 <p>这样做的好处是：</p>
 <ul class="simple">
 <li><p>职责清晰。Jenkinsfile负责构建逻辑，deploy目录负责部署逻辑。</p></li>

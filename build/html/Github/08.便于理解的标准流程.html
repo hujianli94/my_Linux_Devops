@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>便于理解的标准流程 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Github入门到实践</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01.%E4%BB%80%E4%B9%88%E6%98%AFGithub.html">什么是Github</a></li>
@@ -78,10 +77,8 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -248,7 +245,7 @@ $ git commit -am <span class="s2">&quot;git flow add user...&quot;</span>
 $ git diff
 </pre></div>
 </div>
-<img alt="../_images/github00001.png" src="../_images/github00001.png" />
+<p><img alt="image0" src="../_images/github00001.png" /></p>
 </section>
 <section id="pull-request">
 <h3><a class="toc-backref" href="#id24"><strong>4.发送Pull Request</strong></a><a class="headerlink" href="#pull-request" title="Permalink to this headline">¶</a></h3>
@@ -263,8 +260,8 @@ To https://gitee.com/hujianli94net/test_-gitee_-pr.git
 </pre></div>
 </div>
 <p>然后发送Pull Request之后</p>
-<img alt="../_images/github00002.png" src="../_images/github00002.png" />
-<img alt="../_images/gitee00001.png" src="../_images/gitee00001.png" />
+<p><img alt="image1" src="../_images/github00002.png" /></p>
+<p><img alt="image2" src="../_images/gitee00001.png" /></p>
 </section>
 <section id="id8">
 <h3><a class="toc-backref" href="#id25"><strong>5.通过代码审查提高代码质量</strong></a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
@@ -281,7 +278,7 @@ To https://gitee.com/hujianli94net/test_-gitee_-pr.git
 ❺ 确认 Pull Request 没有问题后，由其他开发者将其合并至 develop 分支
 </pre></div>
 </div>
-<img alt="../_images/gitee000002.png" src="../_images/gitee000002.png" />
+<p><img alt="image3" src="../_images/gitee000002.png" /></p>
 </section>
 <section id="id9">
 <h3><a class="toc-backref" href="#id26"><strong>6.更新本地的 develop 分支</strong></a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
@@ -337,7 +334,7 @@ Follow-up actions:
 </pre></div>
 </div>
 <p>release/1.0.0 分支已经成功创建，它就是这次的 release 分支</p>
-<img alt="../_images/gitee000003.png" src="../_images/gitee000003.png" />
+<p><img alt="image4" src="../_images/gitee000003.png" /></p>
 </section>
 <section id="id12">
 <h4><strong>7.2 分支内的工作</strong><a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
@@ -361,7 +358,7 @@ $ git flow release finish <span class="s1">&#39;1.0.0&#39;</span>
 </pre></div>
 </div>
 <p>当前状态如下：</p>
-<img alt="../_images/gitee00004.png" src="../_images/gitee00004.png" />
+<p><img alt="image5" src="../_images/gitee00004.png" /></p>
 <p><strong>release finish 之后</strong></p>
 <p>release 分支将合并至 master
 分支。分支在合并时会询问提交信息，如果没有需要特别声明的事项，可以直接保持默认状态。</p>
@@ -369,19 +366,19 @@ $ git flow release finish <span class="s1">&#39;1.0.0&#39;</span>
 </pre></div>
 </div>
 <p>接下来，合并后的 master 分支会加入一个与版本号相同编号的标签。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Release</span> <span class="mf">1.0</span><span class="o">.</span><span class="mi">0</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Release</span> <span class="mf">1.0.0</span>
 <span class="c1">#</span>
 </pre></div>
 </div>
 <p>当前状态如图</p>
-<img alt="../_images/gitee00005.png" src="../_images/gitee00005.png" />
+<p><img alt="image6" src="../_images/gitee00005.png" /></p>
 <p>全部工作结束后，会显示如下字样。</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>$ git flow release finish <span class="s1">&#39;1.0.0&#39;</span>
 </pre></div>
 </div>
 <p>当前的状态如下图</p>
 <p><strong>release 分支合并到 develop 分支后的状态</strong></p>
-<img alt="../_images/gitee000006.png" src="../_images/gitee000006.png" />
+<p><img alt="image7" src="../_images/gitee000006.png" /></p>
 </section>
 <section id="id14">
 <h4><strong>7.4 查看版本标签</strong><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
@@ -434,7 +431,7 @@ BUG
 或漏洞，而且其严重程度要求开发方必须立刻处理，无法等到下一个版本发布时，hotfix
 分支才会被创建。</p>
 <p>该分支迁移过程的示意图。</p>
-<img alt="../_images/gitee00006.png" src="../_images/gitee00006.png" />
+<p><img alt="image8" src="../_images/gitee00006.png" /></p>
 <p>有待补充……….。</p>
 </section>
 </section>

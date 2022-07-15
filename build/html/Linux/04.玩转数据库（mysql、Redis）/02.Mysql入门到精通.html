@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>4.2. mysql入门到精通 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -79,7 +77,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -200,12 +197,12 @@
 </div>
 <p>二.部署</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mf">1.</span><span class="n">下载MySQL</span>
-<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">get</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.6</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">dev</span><span class="o">.</span><span class="n">mysql</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">get</span><span class="o">/</span><span class="n">Downloads</span><span class="o">/</span><span class="n">MySQL</span><span class="o">-</span><span class="mf">5.6</span><span class="o">/</span><span class="n">mysql</span><span class="o">-</span><span class="mf">5.6.39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="mf">.12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 
 <span class="mf">2.</span><span class="n">安装</span>
-<span class="n">tar</span> <span class="o">-</span><span class="n">xf</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+<span class="n">tar</span> <span class="o">-</span><span class="n">xf</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6.39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="mf">.12</span><span class="o">-</span><span class="n">x86_64</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
 
-<span class="n">mv</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6</span><span class="o">.</span><span class="mi">39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="o">.</span><span class="mi">12</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">/</span><span class="n">usrlocal</span><span class="o">/</span><span class="n">mysql</span>
+<span class="n">mv</span> <span class="n">mysql</span><span class="o">-</span><span class="mf">5.6.39</span><span class="o">-</span><span class="n">linux</span><span class="o">-</span><span class="n">glibc2</span><span class="mf">.12</span><span class="o">-</span><span class="n">x86_64</span> <span class="o">/</span><span class="n">usrlocal</span><span class="o">/</span><span class="n">mysql</span>
 <span class="n">mkdir</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span>
 <span class="n">mkdir</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">data</span>
 </pre></div>
@@ -232,7 +229,7 @@
 <span class="n">max_allowed_packet</span><span class="o">=</span><span class="mi">16</span><span class="n">M</span>
 <span class="n">log</span><span class="o">-</span><span class="n">error</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">log</span>
 <span class="n">pid</span><span class="o">-</span><span class="n">file</span><span class="o">=/</span><span class="n">var</span><span class="o">/</span><span class="n">log</span><span class="o">/</span><span class="n">mysql</span><span class="o">/</span><span class="n">mysql</span><span class="o">.</span><span class="n">pid</span>
-<span class="n">bind</span><span class="o">-</span><span class="n">address</span> <span class="o">=</span> <span class="mf">0.0</span><span class="o">.</span><span class="mf">0.0</span>
+<span class="n">bind</span><span class="o">-</span><span class="n">address</span> <span class="o">=</span> <span class="mf">0.0.0.0</span>
 </pre></div>
 </div>
 <p>4.启动服务</p>
@@ -304,16 +301,16 @@ systemctl restart mysql
 <span class="o">--</span><span class="n">关闭mysql命令</span>
 <span class="n">net</span> <span class="n">stop</span> <span class="n">MYSQL</span>
 
-<span class="o">--</span><span class="n">需要将mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span>\<span class="nb">bin</span>\<span class="n">目录加入到环境变量中</span>
+<span class="o">--</span><span class="n">需要将mysql</span><span class="o">-</span><span class="mf">8.0.13</span>\<span class="nb">bin</span>\<span class="n">目录加入到环境变量中</span>
 
 <span class="c1">#my.cnf 配置文件</span>
 <span class="p">[</span><span class="n">mysqld</span><span class="p">]</span>
 <span class="c1"># 设置3306端口</span>
 <span class="n">port</span><span class="o">=</span><span class="mi">3306</span>
 <span class="c1"># 设置mysql的安装目录</span>
-<span class="n">basedir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>
+<span class="n">basedir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.13</span><span class="o">-</span><span class="n">winx64</span>
 <span class="c1"># 设置mysql数据库的数据的存放目录</span>
-<span class="n">datadir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>\<span class="n">Data</span>
+<span class="n">datadir</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.13</span><span class="o">-</span><span class="n">winx64</span>\<span class="n">Data</span>
 <span class="c1"># 允许最大连接数</span>
 <span class="n">max_connections</span><span class="o">=</span><span class="mi">200</span>
 <span class="c1"># 允许连接失败的次数。</span>
@@ -335,7 +332,7 @@ systemctl restart mysql
 
 <span class="p">[</span><span class="n">WindowsMySQLServer</span><span class="p">]</span>
 
-<span class="n">Server</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span><span class="o">-</span><span class="n">winx64</span>\<span class="nb">bin</span>\<span class="n">mysqld</span><span class="o">.</span><span class="n">exe</span>
+<span class="n">Server</span><span class="o">=</span><span class="n">D</span><span class="p">:</span>\<span class="n">mysql</span>\<span class="n">mysql</span><span class="o">-</span><span class="mf">8.0.13</span><span class="o">-</span><span class="n">winx64</span>\<span class="nb">bin</span>\<span class="n">mysqld</span><span class="o">.</span><span class="n">exe</span>
 
 
 
@@ -344,14 +341,14 @@ systemctl restart mysql
 
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">status</span>
 <span class="o">--------------</span>
-<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
+<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0.13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
 
 <span class="n">Connection</span> <span class="nb">id</span><span class="p">:</span>          <span class="mi">8</span>
 <span class="n">Current</span> <span class="n">database</span><span class="p">:</span>
 <span class="n">Current</span> <span class="n">user</span><span class="p">:</span>           <span class="n">root</span><span class="nd">@localhost</span>
 <span class="n">SSL</span><span class="p">:</span>                    <span class="n">Cipher</span> <span class="ow">in</span> <span class="n">use</span> <span class="ow">is</span> <span class="n">DHE</span><span class="o">-</span><span class="n">RSA</span><span class="o">-</span><span class="n">AES128</span><span class="o">-</span><span class="n">GCM</span><span class="o">-</span><span class="n">SHA256</span>
 <span class="n">Using</span> <span class="n">delimiter</span><span class="p">:</span>        <span class="p">;</span>
-<span class="n">Server</span> <span class="n">version</span><span class="p">:</span>         <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span>
+<span class="n">Server</span> <span class="n">version</span><span class="p">:</span>         <span class="mf">8.0.13</span> <span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span>
 <span class="n">Protocol</span> <span class="n">version</span><span class="p">:</span>       <span class="mi">10</span>
 <span class="n">Connection</span><span class="p">:</span>             <span class="n">localhost</span> <span class="n">via</span> <span class="n">TCP</span><span class="o">/</span><span class="n">IP</span>
 <span class="n">Server</span> <span class="n">characterset</span><span class="p">:</span>    <span class="n">utf8</span>
@@ -381,7 +378,7 @@ systemctl restart mysql
 
 <span class="c1">#查看mysql版本</span>
 <span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">V</span>
-<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0</span><span class="o">.</span><span class="mi">13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
+<span class="n">mysql</span>  <span class="n">Ver</span> <span class="mf">8.0.13</span> <span class="k">for</span> <span class="n">Win64</span> <span class="n">on</span> <span class="n">x86_64</span> <span class="p">(</span><span class="n">MySQL</span> <span class="n">Community</span> <span class="n">Server</span> <span class="o">-</span> <span class="n">GPL</span><span class="p">)</span>
 <span class="n">select</span> <span class="n">version</span><span class="p">();</span>
 
 
@@ -397,7 +394,7 @@ systemctl restart mysql
 
 <span class="c1">#--连接mysql数据库</span>
 <span class="n">mysql</span> <span class="o">-</span><span class="n">h</span> <span class="n">localhost</span> <span class="o">-</span><span class="n">u</span> <span class="n">root</span> <span class="o">-</span><span class="n">p</span> <span class="n">密码</span>
-<span class="n">mysql</span> <span class="o">-</span><span class="n">h127</span><span class="o">.</span><span class="mf">0.0</span><span class="o">.</span><span class="mi">1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123</span>
+<span class="n">mysql</span> <span class="o">-</span><span class="n">h127</span><span class="mf">.0.0.1</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123</span>
 
 <span class="c1">#修改命令提示符信息</span>
 <span class="n">C</span><span class="p">:</span>\<span class="n">Windows</span>\<span class="n">system32</span><span class="o">&gt;</span><span class="n">mysql</span> <span class="o">-</span><span class="n">uroot</span> <span class="o">-</span><span class="n">padmin</span><span class="c1">#123 --prompt hu_mysql</span>

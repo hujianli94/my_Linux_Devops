@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>10.7. Keepalived实现MySQL双主高可用 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -83,7 +81,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -259,7 +256,7 @@ Query  OK,  0  rows  affected  (0.00  sec)
 <span class="o">+------------------+----------+--------------+------------------+</span>
 <span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+</span>
-<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span> <span class="o">|</span>      <span class="mi">245</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000004</span> <span class="o">|</span>      <span class="mi">245</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+</span>
 <span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 
@@ -271,7 +268,7 @@ Query  OK,  0  rows  affected  (0.00  sec)
 <span class="o">+------------------+----------+--------------+------------------+</span>
 <span class="o">|</span> <span class="n">File</span>             <span class="o">|</span> <span class="n">Position</span> <span class="o">|</span> <span class="n">Binlog_Do_DB</span> <span class="o">|</span> <span class="n">Binlog_Ignore_DB</span> <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+</span>
-<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span> <span class="o">|</span>      <span class="mi">335</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000005</span> <span class="o">|</span>      <span class="mi">335</span> <span class="o">|</span>              <span class="o">|</span>                  <span class="o">|</span>
 <span class="o">+------------------+----------+--------------+------------------+</span>
 <span class="mi">1</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">set</span> <span class="p">(</span><span class="mf">0.00</span> <span class="n">sec</span><span class="p">)</span>
 </pre></div>
@@ -299,15 +296,15 @@ Query  OK,  0  rows  affected  (0.00  sec)
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
-                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.109</span>
+                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168.1.109</span>
                   <span class="n">Master_User</span><span class="p">:</span> <span class="n">RepUser</span>
                   <span class="n">Master_Port</span><span class="p">:</span> <span class="mi">3307</span>
                 <span class="n">Connect_Retry</span><span class="p">:</span> <span class="mi">60</span>
-              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span>
+              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000005</span>
           <span class="n">Read_Master_Log_Pos</span><span class="p">:</span> <span class="mi">335</span>
-               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000015</span>
+               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000015</span>
                 <span class="n">Relay_Log_Pos</span><span class="p">:</span> <span class="mi">619</span>
-        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000005</span>
+        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000005</span>
              <span class="n">Slave_IO_Running</span><span class="p">:</span> <span class="n">Yes</span>
             <span class="n">Slave_SQL_Running</span><span class="p">:</span> <span class="n">Yes</span>
 </pre></div>
@@ -316,15 +313,15 @@ Query  OK,  0  rows  affected  (0.00  sec)
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">MariaDB</span> <span class="p">[(</span><span class="n">none</span><span class="p">)]</span><span class="o">&gt;</span>  <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
-                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.108</span>
+                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168.1.108</span>
                   <span class="n">Master_User</span><span class="p">:</span> <span class="n">RepUser</span>
                   <span class="n">Master_Port</span><span class="p">:</span> <span class="mi">3307</span>
                 <span class="n">Connect_Retry</span><span class="p">:</span> <span class="mi">60</span>
-              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span>
+              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000004</span>
           <span class="n">Read_Master_Log_Pos</span><span class="p">:</span> <span class="mi">245</span>
-               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000015</span>
+               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">mariadb</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000015</span>
                 <span class="n">Relay_Log_Pos</span><span class="p">:</span> <span class="mi">529</span>
-        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000004</span>
+        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">mysql</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000004</span>
              <span class="n">Slave_IO_Running</span><span class="p">:</span> <span class="n">Yes</span>
             <span class="n">Slave_SQL_Running</span><span class="p">:</span> <span class="n">Yes</span>
 </pre></div>
@@ -337,14 +334,14 @@ Query  OK,  0  rows  affected  (0.00  sec)
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#tar zxvf keepalived-1.2.12.tar.gz</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#cd  keepalived-1.2.12</span>
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#./configure   --sysconf=/etc \</span>
-<span class="o">&gt;</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="nb">dir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="mf">2.6</span><span class="o">.</span><span class="mi">32</span><span class="o">-</span><span class="mf">431.5</span><span class="o">.</span><span class="mf">1.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#./configure   --sysconf=/etc \</span>
+<span class="o">&gt;</span> <span class="o">--</span><span class="k">with</span><span class="o">-</span><span class="n">kernel</span><span class="o">-</span><span class="nb">dir</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">kernels</span><span class="o">/</span><span class="mf">2.6.32</span><span class="o">-</span><span class="mf">431.5.1</span><span class="o">.</span><span class="n">el6</span><span class="o">.</span><span class="n">x86_64</span>
 
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#make</span>
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#make  install</span>
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#ln -s /usr/local/sbin/keepalived /sbin/</span>
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#chkconfig   --add  keepalived</span>
-<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2</span><span class="o">.</span><span class="mi">12</span><span class="p">]</span><span class="c1">#chkconfig   --level  35  keepalived  on</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#make</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#make  install</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span> <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#ln -s /usr/local/sbin/keepalived /sbin/</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#chkconfig   --add  keepalived</span>
+<span class="p">[</span><span class="n">root</span><span class="nd">@keepalived</span><span class="o">-</span><span class="n">master</span>  <span class="n">keepalived</span><span class="o">-</span><span class="mf">1.2.12</span><span class="p">]</span><span class="c1">#chkconfig   --level  35  keepalived  on</span>
 </pre></div>
 </div>
 </section>
@@ -358,7 +355,7 @@ Query  OK,  0  rows  affected  (0.00  sec)
        <span class="n">sysadmin</span><span class="nd">@firewall</span><span class="o">.</span><span class="n">loc</span>
      <span class="p">}</span>
      <span class="n">notification_email_from</span> <span class="n">Alexandre</span><span class="o">.</span><span class="n">Cassen</span><span class="nd">@firewall</span><span class="o">.</span><span class="n">loc</span>
-     <span class="n">smtp_server</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">200.1</span>
+     <span class="n">smtp_server</span> <span class="mf">192.168.200.1</span>
      <span class="n">smtp_connect_timeout</span> <span class="mi">30</span>
      <span class="n">router_id</span> <span class="n">MySQLHA_DEVEL</span>
    <span class="p">}</span>
@@ -382,7 +379,7 @@ Query  OK,  0  rows  affected  (0.00  sec)
        <span class="n">check_mysqld</span>
        <span class="p">}</span>
        <span class="n">virtual_ipaddress</span> <span class="p">{</span>
-         <span class="mf">192.168</span><span class="o">.</span><span class="mf">88.10</span><span class="o">/</span><span class="mi">24</span> <span class="n">dev</span> <span class="n">eth0</span>    <span class="c1">#mysql的对外服务IP，即VIP</span>
+         <span class="mf">192.168.88.10</span><span class="o">/</span><span class="mi">24</span> <span class="n">dev</span> <span class="n">eth0</span>    <span class="c1">#mysql的对外服务IP，即VIP</span>
        <span class="p">}</span>
    <span class="p">}</span>
 </pre></div>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>2.9. Samba服务器搭建 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2 current"><a class="reference internal" href="index.html">2. Linux服务器架设</a><ul class="current">
@@ -96,6 +94,8 @@
 <li class="toctree-l3"><a class="reference internal" href="41.Linux%E4%BC%98%E7%A7%80%E8%BD%AF%E4%BB%B6%E6%95%B4%E7%90%86.html">2.39. Linux优秀软件整理</a></li>
 <li class="toctree-l3"><a class="reference internal" href="42.Centos7%E5%AE%89%E8%A3%85Openvpn.html">2.40. CentOS 7上设置和配置OpenVPN服务器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="43.ubuntu%E5%AE%89%E8%A3%85Power-shell.html">2.41. ubuntu18.04 安装power shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="44.Nginx%E6%95%B4%E5%90%88FastDFS%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8.html">2.42. Nginx整合FastDFS实现文件服务器</a></li>
+<li class="toctree-l3"><a class="reference internal" href="45.ubuntu20.04-desktop-vmware-workstation.html">2.43. ubuntu20.04-desktop-vmware-workstation</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../03.%E7%8E%A9%E8%BD%ACshell%E8%84%9A%E6%9C%AC%E7%BC%96%E7%A8%8B/index.html">3. 玩转shell脚本编程</a></li>
@@ -109,7 +109,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -207,7 +206,7 @@ SMB是Samba的核心启动服务，只有SMB服务启动，才能实现文件的
 </div>
 <p>例如，如果某台Samba服务器的IP地址为192.168.0.100，对应的工作组名称为ixdba，那么在Windows的IE浏览器地址栏中输入下面两条指令都可以访问共享文件。</p>
 <p>其实这就是在Windows下查看Linux Samba服务器共享文件的方法。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="mf">192.168</span><span class="o">.</span><span class="mf">0.100</span>\<span class="n">共享目录名称</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\\<span class="mf">192.168.0.100</span>\<span class="n">共享目录名称</span>
 \\<span class="n">ixdba</span>\<span class="n">共享目录名称</span>
 </pre></div>
 </div>
@@ -328,14 +327,14 @@ smb: \&gt; ?          #在这里输入&quot;?&quot;即可查看在smb命令行�
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># yum install cifs-utils cifs-utils-devel</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># mount -t cifs  -o username=admin,password=****** \</span>
-<span class="o">&gt;//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">60.231</span><span class="o">/</span><span class="n">Linuxdata</span>  <span class="o">/</span><span class="n">samba</span>
+<span class="o">&gt;//</span><span class="mf">192.168.60.231</span><span class="o">/</span><span class="n">Linuxdata</span>  <span class="o">/</span><span class="n">samba</span>
 <span class="n">Password</span><span class="p">:</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># df -Th|grep /samba</span>
-<span class="o">//</span><span class="mf">192.168</span><span class="o">.</span><span class="mf">60.231</span><span class="o">/</span><span class="n">Linuxdata</span> <span class="n">cifs</span>     <span class="mf">8.5</span><span class="n">G</span>  <span class="mf">5.0</span><span class="n">G</span>  <span class="mf">3.5</span><span class="n">G</span>  <span class="mi">60</span><span class="o">%</span> <span class="o">/</span><span class="n">samba</span>
+<span class="o">//</span><span class="mf">192.168.60.231</span><span class="o">/</span><span class="n">Linuxdata</span> <span class="n">cifs</span>     <span class="mf">8.5</span><span class="n">G</span>  <span class="mf">5.0</span><span class="n">G</span>  <span class="mf">3.5</span><span class="n">G</span>  <span class="mi">60</span><span class="o">%</span> <span class="o">/</span><span class="n">samba</span>
 
 <span class="p">[</span><span class="n">root</span><span class="nd">@web</span> <span class="o">/</span><span class="p">]</span><span class="c1"># uname -a</span>
-<span class="n">Linux</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="mf">3.10</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mf">229.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span> <span class="c1">#1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux</span>
+<span class="n">Linux</span> <span class="n">localhost</span><span class="o">.</span><span class="n">localdomain</span> <span class="mf">3.10.0</span><span class="o">-</span><span class="mf">229.</span><span class="n">el7</span><span class="o">.</span><span class="n">x86_64</span> <span class="c1">#1 SMP Fri Mar 6 11:36:42 UTC 2015 x86_64 x86_64 x86_64 GNU/Linux</span>
 </pre></div>
 </div>
 <p>这里的操作系统环境为 CentOS 7.1 版本。在 CentOS 5.x 以前的版本中，

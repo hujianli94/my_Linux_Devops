@@ -307,9 +307,9 @@ key就可以了，然后Jenkins本身提供了这种方式让我们设置，我�
 在Pipeline节点下，在“Definition”中选择“Pipeline script from
 SCM”，并在“SCM”中选择“Git”，然后根据选项填入信息内容就可以了
 
-.. image:: ../_static/jenkintest0001.png
+|image0|
 
-.. image:: ../_static/jenkins_test002.png
+|image1|
 
 查看开发机器上的ssh公钥信息：
 
@@ -320,20 +320,20 @@ SCM”，并在“SCM”中选择“Git”，然后根据选项填入信息内�
 
 配置Gitlab上的公钥认证
 
-.. image:: ../_static/gitlab-000ssh.png
+|image2|
 
 编写一个Jenkinsfile文件上传到master分支中，Jenkinsfile文件就是之前的Hello
 world。
 
-.. image:: ../_static/jenkins_test003.png
+|image3|
 
 手动触发Jenkins任务。
 
-.. image:: ../_static/jenkins_test004.png
+|image4|
 
 查看pipline执行日志输出
 
-.. image:: ../_static/gitlab-jenkins00002.png
+|image5|
 
 **Jenkins SCM** 在拉取代码时候执行输出如下信息
 
@@ -358,11 +358,11 @@ world。
 
 Jenkins上安装JDK和Maven。我们可以登录Jenkins服务器手动安装，也可以让Jenkins自动安装。这里选择后者。方法如下：
 
-.. image:: ../_static/jenkins_test005.png
+|image6|
 
-.. image:: ../_static/jenkins_test006.png
+|image7|
 
-.. image:: ../_static/jenkins_test007.png
+|image8|
 
 当Jenkins执行到tools时，就会根据Maven的设置自动下载指定版本的Maven，并安装。tools是pipeline中的一个指令，用于自动安装工具，同时将其路径放到PATH变量中。通过命令sh
 “printenv”，可以看到tools将MAVEN_HOME放到了当前任务的环境变量中。
@@ -392,7 +392,7 @@ Jenkins上安装JDK和Maven。我们可以登录Jenkins服务器手动安装，�
 
 单击构建后，通过Jenkins执行日志，我们看到指定版本的Maven被下载和安装，mvn执行打包。
 
-.. image:: ../_static/jenkins_test008.png
+|image9|
 
 两个完整的pipeline入门示例完成了。
 
@@ -425,7 +425,6 @@ pipeline可以不需要任何Groovy知识，但是学习以下Groovy知识，对
       x=“abc”、def y=1。
 
    -  不像Java，Groovy语句最后的分号不是必需的。
-
    -  Groovy中的方法调用可以省略括号，比如System.out.println “Hello
       world”。
 
@@ -742,7 +741,7 @@ Jenkins pipeline支持的指令有：
 
 CI流程效果图如下
 
-.. image:: ../_static/image-20220520182556265.png
+|image10|
 
 4. 配置pipeline本身
 ^^^^^^^^^^^^^^^^^^^
@@ -1372,7 +1371,7 @@ https://blog.csdn.net/kikajack/article/details/79434552
 
    checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'b4c8b4e9-2777-44a1-a1ed-e9dc21d37f4f', url: 'git@gitlab.weiyigeek.top:ci-cd/java-maven.git']]])
 
-.. image:: ../_static/image-20220520181149891.png
+|image11|
 
 **(3) Kubernetes 动态节点 Pod 模板的选择**
 
@@ -1608,7 +1607,7 @@ environment指令可以在pipeline中定义，代表变量作用域为整个pipe
 properties页，勾选“Environment
 variables”复选框，单击“Add”按钮，在输入框中输入变量名和变量值即可。
 
-.. image:: ../_static/jenkins_test009.png
+|image12|
 
 通过单击“Add”按钮，还可以添加多个全局环境变量。
 
@@ -3773,7 +3772,7 @@ https://didispace-wx.blog.csdn.net/article/details/112550529
 
 部署效果如下：
 
-.. image:: ../_static/image-20220520181833236.png
+|image13|
 
 5.构建工具
 ----------
@@ -3794,9 +3793,9 @@ JDK环境搭建
 设置自动安装Oracle JDK时有一些特殊，因为下载Oracle
 JDK时需要输入用户名和密码。
 
-.. image:: ../_static/jenkins_test010.png
+|image14|
 
-.. image:: ../_static/jenkins_test011.png
+|image15|
 
 进入Manage Jenkins→Global Tool Configuration→JDK页，单击“Add
 JDK”按钮，就可以设置自动安装JDK。
@@ -3830,7 +3829,7 @@ Jenkins pipeline的tools指令默认就支持Maven。所以，使用Maven只需�
 
 （1）进入Manage Jenkins→Global Tool Configuration→Maven页设置
 
-.. image:: ../_static/jenkins_test012.png
+|image16|
 
 这样，当执行到tools指令时，Jenkins会自动下载并安装Maven。将mvn命令加入环境变量中，可以使我们在pipeline中直接执行mvn命令。
 
@@ -3863,7 +3862,7 @@ Maven默认使用的是其官方仓库，国内下载速度很慢。所以，我
 Config File
 Provider插件（https://plugins.jenkins.io/config-file-provider）能很好地解决这个问题。只需要在Jenkins的界面上填入settings.xml的内容，然后在pipeline中指定settings.xml就可以了。
 
-.. image:: ../_static/managed_files001.png
+|image17|
 
 具体实现方法如下：
 
@@ -3877,9 +3876,9 @@ Config”，就会看到该插件支持很多种配置文件的格式及方式�
 settings.xml”选项。因为我们的设置是全局的。填写“ID”字段，Jenkins
 pipeline会引用此变量名。假如使用的ID为\ ``maven-global-settings``\ 。
 
-.. image:: ../_static/manage_file002.png
+|image18|
 
-.. image:: ../_static/manage_file003.png
+|image19|
 
 ::
 
@@ -3930,7 +3929,7 @@ Jenkins支持Golang的构建，只需要以下几步。
 
 在环境变量中会增加一个GOROOT变量。
 
-.. image:: ../_static/go_tools0001.png
+|image20|
 
 （4）设置GOPATH。了解Go语言开发的读者都会知道，编译时需要设置GOPATH环境变量。直接在environment指令中添加就可以了。
 
@@ -3982,7 +3981,7 @@ Pipeline插件（https://plugins.jenkins.io/pyenv-pipeline）可以轻松地实�
 
 （2）安装Pyenv Pipeline插件和ShiningPanda插件。
 
-.. image:: ../_static/python_tools001.png
+|image21|
 
 **配置python路径**
 
@@ -3990,7 +3989,7 @@ Pipeline插件（https://plugins.jenkins.io/pyenv-pipeline）可以轻松地实�
 填写python2或者python3在jenkins机器上的路径，一般都为：/usr/bin/python3.6，也可以使用\ ``which python``\ 来找；
 名称随便写即可，后续会用到。
 
-.. image:: ../_static/python_tools002.png
+|image22|
 
 然后，在pipeline中使用Pyenv Pipeline插件提供的withPythonEnv方法。
 
@@ -4128,7 +4127,7 @@ trigger指令只能被定义在pipeline块下，Jenkins内置支持cron、pollSC
 
 必须手动执行一次，手动执行一次后，配置文件生效如下：
 
-.. image:: ../_static/jenkins_cicd_corn001.png
+|image23|
 
 ::
 
@@ -4147,7 +4146,7 @@ trigger指令只能被定义在pipeline块下，Jenkins内置支持cron、pollSC
         }
    }
 
-.. image:: ../_static/pipeline_cron0001.png
+|image24|
 
 Jenkins trigger cron语法采用的是UNIX
 cron语法（有些细微的区别）。一条cron包含5个字段，使用空格或Tab分隔，
@@ -4413,23 +4412,23 @@ hook。如果直接在Jenkins当中安装插件失败，可以在国内镜像站
 GitLab”复选框，还需要手动单击“Generate”按钮生成Secret
 token或手动输入Secret token。
 
-.. image:: ../_static/webhook_gitlab001.png
+|image25|
 
-.. image:: ../_static/webhook_gitlab002.png
+|image26|
 
 在Integrations配置页的相应输入框中粘贴上一步中Jenkins暴露的webhook及相应的Secret
 token如下
 
-.. image:: ../_static/gitlab_webhook003.png
+|image27|
 
 测试整个链路是否通了。在GitLab上添加好这个webhook后，可以跳到表单下方，有一个已添加的webhook列表，找到我们刚刚创建的webbook。单击“Test”按钮，选择“Pushevents”，GitLab就会向该webhook发送一个event。
 
-.. image:: ../_static/webhook_test0001.png
+|image28|
 
 如果是首次添加，现在新版本的Gitlab可能会失败，报错
 ``Urlis blocked: Requests to the local network are not allowed``\ ，需要选中如下：
 
-.. image:: ../_static/jenkins_webhook2021001.png
+|image29|
 
 添加之后，可以点击一下test看看流程是否能够走通，如果走通，那么我们以后开发的时候直接推送代码即可触发构建。
 
@@ -4439,7 +4438,7 @@ token如下
 
 Jenkins任务被GitLab事件触发，在gitlab中提交代码，每次提交，jenkins会进行自动的构建，如下图所示：
 
-.. image:: ../_static/webhook_gitlan0003.png
+|image30|
 
 可参考如下文献
 
@@ -4466,7 +4465,7 @@ GitLab”复选框，还需要手动单击“Generate”按钮生成Secret
 token或手动输入Secret
 token。这部分手动操作，我们也希望通过修改Jenkinsfile就能实现。显然，不只是我们这样想，早就有人想到了，并在GitLab插件上实现了基于GitLab的trigger。以下是具体使用方法。
 
-.. image:: ../_static/jenkins_secretToken.png
+|image31|
 
 .. code:: groovy
 
@@ -4550,7 +4549,7 @@ URL>/generic-webhook-trigger/invoke，即由GWT插件来处理此API的请求。
 
 接着，我们就看到pipeline被触发执行了。
 
-.. image:: ../_static/jenkins_GWT0001.png
+|image32|
 
 日志信息如下：
 
@@ -4734,11 +4733,11 @@ https://blog.csdn.net/weixin_42562106/article/details/107144445?utm_medium=distr
 
 先生成一个访问令牌，用于在jenkins的系统配置去配置连接gitlab的选项，
 
-.. image:: ../_static/gitlab-token001.png
+|image33|
 
 首先在\ ``系统管理``-``系统配置``\ 中配置好连接Gitlab的信息如下
 
-.. image:: ../_static/jenkins-gitlab0001.png
+|image34|
 
 **在pipeline的post部分，将构建结果更新到GitLab的相应commit记录上**\ 。除此之外，
 
@@ -4986,9 +4985,9 @@ Jenkinsfile
 
 提交代码后，需要手动触发一次构建，pipeline才会生效。
 
-.. image:: ../_static/webhook_gitlab_00004.png
+|image35|
 
-.. image:: ../_static/webhook_gitlab0005.png
+|image36|
 
 ::
 
@@ -5001,7 +5000,7 @@ Jenkinsfile
    2020-12-11 17:05:33.079+0000 [id=1257]  INFO    c.d.g.util.CommitStatusUpdater#updateCommitStatus: Updating build '1' to 'success'
    2020-12-11 17:05:33.545+0000 [id=1366]  INFO    o.j.p.workflow.job.WorkflowRun#finish: jenkins_pipline00001 #7 completed: SUCCESS
 
-.. image:: ../_static/gitlab_webhook0006.png
+|image37|
 
 参考文献：
 
@@ -5019,19 +5018,19 @@ https://www.jianshu.com/p/d2af2915cfea
 
 （1）设置代码仓库地址
 
-.. image:: ../_static/duo_branch_pipeline001.png
+|image38|
 
 （2）设置分支扫描触发策略。
 
 分支扫描是指Jenkins根据一定的策略去代码仓库扫描分支，如果有新分支就创建一个以分支名命名的任务，如果发现有分支被删除了，就删除相应的Jenkins任务。
 
-.. image:: ../_static/duo_branch0002.png
+|image39|
 
 在“Scan Multibranch Pipeline Triggers”下就只有一个可选项：Periodically
 ifnot otherwise run
 （没有手动触发，就定期扫描分支）。勾选此选项，设置扫描的间隔时长。
 
-.. image:: ../_static/duo_branch0003.png
+|image40|
 
 越频繁建立分支，扫描周期应越短。当然，我们也可以单击任务页面左侧的“Scan
 Multibranch PipelineNow”项，手动触发Jenkins去扫描分支。
@@ -5042,7 +5041,7 @@ Multibranch PipelineNow”项，手动触发Jenkins去扫描分支。
 
 对于分支任务上的历史记录，保存多长时间是可以设置的。
 
-.. image:: ../_static/duo_branch0004.png
+|image41|
 
 两个参数的含义分别是：
 
@@ -5412,7 +5411,7 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
    • description：参数的描述信息。
    • name：参数名。
 
-.. image:: ../_static/pipeline_parameters00001.png
+|image42|
 
 构建输出如下：
 
@@ -5458,7 +5457,7 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
        }
    }
 
-.. image:: ../_static/pipeline_parameters00002.png
+|image43|
 
 • text，多行文本类型，换行使用:raw-latex:`\n`。
 
@@ -5478,7 +5477,7 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
        }
    }
 
-.. image:: ../_static/pipeline_parameters00004.png
+|image44|
 
 • booleanParam，布尔类型。
 
@@ -5507,9 +5506,9 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
        }
    }
 
-.. image:: ../_static/jenkins_hu_parameters0001.png
+|image45|
 
-.. image:: ../_static/jenkins_hu_parameters0002.png
+|image46|
 
 • password，密码类型。
 
@@ -5529,9 +5528,9 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
        }
    }
 
-.. image:: ../_static/jenkins_parameters0003.png
+|image47|
 
-.. image:: ../_static/jenkins_parameter00004.png
+|image48|
 
 9.2.2 多参数
 ^^^^^^^^^^^^
@@ -5558,7 +5557,7 @@ booleanParam方法用于定义一个布尔类型的参数。booleanParam方法�
        }
    }
 
-.. image:: ../_static/jenkins_parameter00005.png
+|image49|
 
 9.3 由另一个pipeline传参并触发
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5579,7 +5578,7 @@ build步骤其实也是一种触发pipeline执行的方式，它与triggers指�
 
 创建一个pipeline，名叫\ ``pipeline1``
 
-.. image:: ../_static/jenkins_simple0001.png
+|image50|
 
 pipeline脚本如下：
 
@@ -5641,7 +5640,7 @@ pipeline脚本如下：
 
 pipeline1也被触发运行，如下：
 
-.. image:: ../_static/jenkins_sample0002.png
+|image51|
 
 9.4 使用Conditional BuildStep插件处理复杂的判断逻辑
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -5735,9 +5734,9 @@ BuildStep插件后的写法。
 
 此pipeline会根据choice的选择做出相应的部署操作。
 
-.. image:: ../_static/jenkins_20201215001.png
+|image52|
 
-.. image:: ../_static/jenkins_20201215002.png
+|image53|
 
 现实中，我们会面对更复杂的判断条件。而expression表达式本质上就是一个Groovy代码块，大大提高了表达式的灵活性。以下是比较常用的例子。
 
@@ -5807,9 +5806,9 @@ BuildStep插件后的写法。
 
 （2）当pipeline执行到deploy阶段后，就会暂停。
 
-.. image:: ../_static/jenkins_202012150003.png
+|image54|
 
-.. image:: ../_static/jenkins_202012150004.png
+|image55|
 
 这是简单的input步骤使用方式——手动确定是否通过。
 
@@ -5869,9 +5868,9 @@ input步骤的简单用法很难满足更复杂的场景。现在，我们来看
 
 这是因为定义在阶段内的变量的作用域只在这个阶段中，而input步骤的返回值需要跨阶段使用，所以需要将其定义在pipeline外。这样变量approvalMap的作用域就是整个pipeline了。
 
-.. image:: ../_static/jenkins_202012150005.png
+|image56|
 
-.. image:: ../_static/jenkins_202012150006.png
+|image57|
 
 9.6 小贴士
 ~~~~~~~~~~
@@ -5973,9 +5972,9 @@ Username with password指用户和密码凭证
 9.3.3 Secret fileSecret file
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-.. image:: ../_static/jenkins_secret0001.png
+|image58|
 
-.. image:: ../_static/jenkins_secret0002.png
+|image59|
 
 指需要保密的文本文件。使用Secret
 file时，Jenkins会将文件复制到一个临时目录中，再将文件路径设置到一个变量中。构建结束后，所复制的Secret
@@ -6174,7 +6173,7 @@ key检查。
 （3）在Jenkins上进入Manage Jenkins→Global Tool
 Configuration→Ansible配置页面，配置Ansible的执行路径
 
-.. image:: ../_static/jenkins_ansible0004.png
+|image60|
 
 （5）在pipeline中加入ansiblePlaybook步骤。
 
@@ -6238,7 +6237,7 @@ ansiblePlaybook步骤执行的是ansible-playbook命令，其中playbook参数�
 
 最后打印日志如下：
 
-.. image:: ../_static/jenkins_ansible0005.png
+|image61|
 
 这样，Jenkins与Ansible的集成就算完成了。但是这只是刚刚开始，在实际工作中，我们还需要考虑自定义的公共role应该放在哪里等与Ansible相关的问题。
 
@@ -6379,11 +6378,11 @@ https://www.cnblogs.com/imyalost/p/8781759.html
 
 配置方法如下所示：
 
-.. image:: ../_static/jenkins_sendm0001.png
+|image62|
 
-.. image:: ../_static/jenkins_sendm0002.png
+|image63|
 
-.. image:: ../_static/jenkins_sendm0004.png
+|image64|
 
 必须点击测试成功，表示邮件可以正常发送。
 
@@ -6476,7 +6475,7 @@ jenkinsfile示例
 
 查看邮箱信息如下：
 
-.. image:: ../_static/jenkins_email00001.png
+|image65|
 
 jenkins示例2
 
@@ -6634,7 +6633,7 @@ jenkins示例2
        }
    }
 
-.. image:: ../_static/jenkins_mail0003.png
+|image66|
 
 Editable Email Notification邮件正文模板1
 
@@ -6859,7 +6858,7 @@ to servletcontainer”和“Jenkins’ own user database”。
 database”即使用Jenkins自带的用户数据库进行认证。如果你所在的公司没有搭建LDAP服务，则可以考虑使用这种认证方式。在Manage
 Jenkins→Manage Configure Global Security页面打开Jenkins的安全检查后，
 
-.. image:: ../_static/jenkins_options001.png
+|image67|
 
 创建用户在“Jenkins’ own user
 database”认证方式下，创建的所有用户都具有Jenkins管理权限。
@@ -6917,7 +6916,7 @@ Strategy插件进行授权管理。因为现实中，其他插件真的很难满
 
    Node roles：有设置Jenkins节点相关权限的角色
 
-.. image:: ../_static/jenkins_quanxian0001.png
+|image68|
 
 15.2.3 权限大全
 ^^^^^^^^^^^^^^^
@@ -7027,7 +7026,7 @@ JavaMelody（https://github.com/javamelody/javamelody/wiki）对Jenkins进行监
 单击“Monitoring of Jenkins
 master”菜单项进入后，显示Monitoring仪表盘，然而，它没有告警功能。因此，这款插件并不适合在大型企业中使用。
 
-.. image:: ../_static/jenkins_monitor0001.png
+|image69|
 
 15.3.2 使用Prometheus监控
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -7044,7 +7043,7 @@ Prometheus实现了与Zabbix或者Open-Falcon类似的功能，但是更强大�
 （1）Jenkins：安装Prometheus插件（https://plugins.jenkins.io/prometheus），Jenkins将暴露一个“/prometheus”接口。Prometheus插件本身是可以配置的。进入ManageJenkins→Configure
 System页面.
 
-.. image:: ../_static/jenkins_prometheus001.png
+|image70|
 
 配置Prometheus插件通过此配置，我们可以选择暴露接口的URL，以及暴露哪些指标数据。
 
@@ -7054,7 +7053,7 @@ System页面.
 
    https://jenkinsurl/prometheus
 
-.. image:: ../_static/jenkins_prumetheus0002.png
+|image71|
 
 （2）配置Prometheus向Jenkins拉取监控指标数据，加入配置：
 
@@ -7087,7 +7086,7 @@ System页面.
 
 （3）Grafana：增加“Jenkins：Performance and health overview”面板
 
-.. image:: ../_static/jenkins_proumetheus0002.png
+|image72|
 
 参考文献：
 
@@ -7103,7 +7102,7 @@ https://my.oschina.net/u/4357035/blog/3313700
 
 Jenkins的所有数据都是存放在文件中的，所以，Jenkins备份其实就是备份JENKINS_HOME目录。
 
-.. image:: ../_static/jenkins_tree0001.png
+|image73|
 
 并不是所有的内容都必须要备份。以下目录是可以不备份的。
 
@@ -7131,7 +7130,7 @@ Backup Manager”菜单项。
 
 单击“Configure”选项后，进入插件配置页面
 
-.. image:: ../_static/jenkins_backup1221.png
+|image74|
 
 -  Backup schedule （cron）：进行备份的cron表达式，单击“Validate
    cronsyntax”按钮可进行校验。由于Jenkins是使用本地文件存储的方式来保存配置的，在备份过程中如果有其他操作，则很容易出现数据不一致的问题。所以，应尽量选择在无人使用Jenkins的时候进行备份。
@@ -7143,7 +7142,7 @@ Backup Manager”菜单项。
 ◦ FullBackup：进行全量备份。可以通过在“Excludes
 list”中填入Ant风格路径表达式，排除不希望进行备份的文件。多个表达式之间使用分号分隔。
 
-.. image:: ../_static/jenkins_backup1221002.png
+|image75|
 
 -  Backup Location：配置备份文件的存放位置。
 
@@ -7152,7 +7151,7 @@ Now！”选项，可以马上进行一次备份。
 
 当需要恢复时，单击“Restore”选项，然后选择需要恢复的版本。
 
-.. image:: ../_static/jenkins_restor0001.png
+|image76|
 
 15.5 汉化
 ~~~~~~~~~
@@ -7160,7 +7159,7 @@ Now！”选项，可以马上进行一次备份。
 Jenkins默认根据用户浏览器的语言设置来显示。如果希望设置Jenkins界面的语言，则安装Local插件（https://plugins.jenkins.io/locale）后，进入“ManageJenkins→Configure
 System”页面，找到“Local”进行设置
 
-.. image:: ../_static/jenkins_hanhua0001.png
+|image77|
 
 注意：勾选“Ignore browser preference and force this language to
 allusers”复选框，代表忽略用户浏览器的语言设置，强制使用中文界面。
@@ -7209,7 +7208,7 @@ Zabbix、Open-Falcon、Prometheus 等。最终笔者选择了Prometheus。
 
 使用Ansible部署整个监控系统示意图
 
-.. image:: ../_static/jenkins_ansible0001.png
+|image78|
 
 -  Prometheus server负责监控数据收集和存储。
 -  Prometheus alert
@@ -7222,7 +7221,7 @@ Zabbix、Open-Falcon、Prometheus 等。最终笔者选择了Prometheus。
 
 可是，我们不可能24小时盯着屏幕看CPU负载有没有超吧？这时候就要做告警了。Prome-htues默认集成了多种告警渠道，钉钉除外。由于当时笔者所在团队使用的是钉钉，所以告警通道只能选择钉钉。有好心人开源了钉钉集成Prometheus告警的组件：prometheus-webhook-dingtalk（https://github.com/timonwong/prometheus-webhook-dingtalk）。于是，我们做了告警，
 
-.. image:: ../_static/jenkins_ansible_dingding001.png
+|image79|
 
 完成以上工作后，我们的基础监控的架子就搭好了，为后期的Redis监控、JVM监控等更上层的监控做好了准备。
 
@@ -7231,7 +7230,7 @@ Zabbix、Open-Falcon、Prometheus 等。最终笔者选择了Prometheus。
 
 一开始就做配置版本化。在搭建监控系统的过程中，已经将配置抽离出来，放到一个单独的代码仓库进行管理。以后所有部署，我们都会将配置和部署逻辑分离。这样，只需要复制一份配置，改一改，就可以在新的环境中快速搭建一套新的监控系统。关于如何管理Ansible部署脚本的配置，我们使用如下目录结构。
 
-.. image:: ../_static/jenkins_ansible0002.png
+|image80|
 
 现阶段，所有的配置都以文本方式存储，将来切换成使用Consul做配置中心，只需要将配置本身部署到Consul中就可以了。而且，Ansible
 2.0以上版本已经原生支持Consul的操作。
@@ -7269,7 +7268,7 @@ plugins就可以了。
 
 最终Jenkins搭建完成，示意图如图
 
-.. image:: ../_static/jenkins_ansible_install0003.png
+|image81|
 
 现在我们需要告诉Jenkins如何对业务代码进行编译打包。我们逐步在每个业务系统的根目录中加入相应的Jenkinsfile。在为每个业务系统写Jenkinsfile的过程中，注意这些业务系统的Jenkinsfile的共性，及时进行抽象，避免大量重复。
 
@@ -7283,14 +7282,13 @@ plugins就可以了。
 
 不过，这里有一个问题需要考虑：是将Ansible脚本和业务系统放在同一个代码仓库中，还是分别放在不同的仓库中？笔者推荐将部署脚本与业务系统放在同一个代码仓库中，结构如下
 
-.. image:: ../_static/jenkins_ansibleo00003.png
+|image82|
 
 这样做的好处是：
 
 -  职责清晰。Jenkinsfile负责构建逻辑，deploy目录负责部署逻辑。
 
 -  标准化。所有需要部署的业务系统都可以使用此目录结构，而不论是Go项目还是Node.js项目。
-
 -  有助于推行DevOps。开发人员对构建逻辑和部署逻辑负责。虽然推行DevOps只是手段，不是目的。
 
 .. _小结-1:
@@ -7320,3 +7318,87 @@ plugins就可以了。
 -------------------
 
 https://xieys.club/python-jenkins/
+
+.. |image0| image:: ../_static/jenkintest0001.png
+.. |image1| image:: ../_static/jenkins_test002.png
+.. |image2| image:: ../_static/gitlab-000ssh.png
+.. |image3| image:: ../_static/jenkins_test003.png
+.. |image4| image:: ../_static/jenkins_test004.png
+.. |image5| image:: ../_static/gitlab-jenkins00002.png
+.. |image6| image:: ../_static/jenkins_test005.png
+.. |image7| image:: ../_static/jenkins_test006.png
+.. |image8| image:: ../_static/jenkins_test007.png
+.. |image9| image:: ../_static/jenkins_test008.png
+.. |image10| image:: ../_static/image-20220520182556265.png
+.. |image11| image:: ../_static/image-20220520181149891.png
+.. |image12| image:: ../_static/jenkins_test009.png
+.. |image13| image:: ../_static/image-20220520181833236.png
+.. |image14| image:: ../_static/jenkins_test010.png
+.. |image15| image:: ../_static/jenkins_test011.png
+.. |image16| image:: ../_static/jenkins_test012.png
+.. |image17| image:: ../_static/managed_files001.png
+.. |image18| image:: ../_static/manage_file002.png
+.. |image19| image:: ../_static/manage_file003.png
+.. |image20| image:: ../_static/go_tools0001.png
+.. |image21| image:: ../_static/python_tools001.png
+.. |image22| image:: ../_static/python_tools002.png
+.. |image23| image:: ../_static/jenkins_cicd_corn001.png
+.. |image24| image:: ../_static/pipeline_cron0001.png
+.. |image25| image:: ../_static/webhook_gitlab001.png
+.. |image26| image:: ../_static/webhook_gitlab002.png
+.. |image27| image:: ../_static/gitlab_webhook003.png
+.. |image28| image:: ../_static/webhook_test0001.png
+.. |image29| image:: ../_static/jenkins_webhook2021001.png
+.. |image30| image:: ../_static/webhook_gitlan0003.png
+.. |image31| image:: ../_static/jenkins_secretToken.png
+.. |image32| image:: ../_static/jenkins_GWT0001.png
+.. |image33| image:: ../_static/gitlab-token001.png
+.. |image34| image:: ../_static/jenkins-gitlab0001.png
+.. |image35| image:: ../_static/webhook_gitlab_00004.png
+.. |image36| image:: ../_static/webhook_gitlab0005.png
+.. |image37| image:: ../_static/gitlab_webhook0006.png
+.. |image38| image:: ../_static/duo_branch_pipeline001.png
+.. |image39| image:: ../_static/duo_branch0002.png
+.. |image40| image:: ../_static/duo_branch0003.png
+.. |image41| image:: ../_static/duo_branch0004.png
+.. |image42| image:: ../_static/pipeline_parameters00001.png
+.. |image43| image:: ../_static/pipeline_parameters00002.png
+.. |image44| image:: ../_static/pipeline_parameters00004.png
+.. |image45| image:: ../_static/jenkins_hu_parameters0001.png
+.. |image46| image:: ../_static/jenkins_hu_parameters0002.png
+.. |image47| image:: ../_static/jenkins_parameters0003.png
+.. |image48| image:: ../_static/jenkins_parameter00004.png
+.. |image49| image:: ../_static/jenkins_parameter00005.png
+.. |image50| image:: ../_static/jenkins_simple0001.png
+.. |image51| image:: ../_static/jenkins_sample0002.png
+.. |image52| image:: ../_static/jenkins_20201215001.png
+.. |image53| image:: ../_static/jenkins_20201215002.png
+.. |image54| image:: ../_static/jenkins_202012150003.png
+.. |image55| image:: ../_static/jenkins_202012150004.png
+.. |image56| image:: ../_static/jenkins_202012150005.png
+.. |image57| image:: ../_static/jenkins_202012150006.png
+.. |image58| image:: ../_static/jenkins_secret0001.png
+.. |image59| image:: ../_static/jenkins_secret0002.png
+.. |image60| image:: ../_static/jenkins_ansible0004.png
+.. |image61| image:: ../_static/jenkins_ansible0005.png
+.. |image62| image:: ../_static/jenkins_sendm0001.png
+.. |image63| image:: ../_static/jenkins_sendm0002.png
+.. |image64| image:: ../_static/jenkins_sendm0004.png
+.. |image65| image:: ../_static/jenkins_email00001.png
+.. |image66| image:: ../_static/jenkins_mail0003.png
+.. |image67| image:: ../_static/jenkins_options001.png
+.. |image68| image:: ../_static/jenkins_quanxian0001.png
+.. |image69| image:: ../_static/jenkins_monitor0001.png
+.. |image70| image:: ../_static/jenkins_prometheus001.png
+.. |image71| image:: ../_static/jenkins_prumetheus0002.png
+.. |image72| image:: ../_static/jenkins_proumetheus0002.png
+.. |image73| image:: ../_static/jenkins_tree0001.png
+.. |image74| image:: ../_static/jenkins_backup1221.png
+.. |image75| image:: ../_static/jenkins_backup1221002.png
+.. |image76| image:: ../_static/jenkins_restor0001.png
+.. |image77| image:: ../_static/jenkins_hanhua0001.png
+.. |image78| image:: ../_static/jenkins_ansible0001.png
+.. |image79| image:: ../_static/jenkins_ansible_dingding001.png
+.. |image80| image:: ../_static/jenkins_ansible0002.png
+.. |image81| image:: ../_static/jenkins_ansible_install0003.png
+.. |image82| image:: ../_static/jenkins_ansibleo00003.png

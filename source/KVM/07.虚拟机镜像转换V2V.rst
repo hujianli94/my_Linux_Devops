@@ -574,7 +574,7 @@ Vmware exsi vm迁移到Zstack实战
 
    URL: file:///root/VM-2-Zstack/vm_data/v2v/docker-s1-sda.qcow2
 
-.. image:: ../_static/vmware2zstack001.png
+|image0|
 
 添加完毕镜像以后再来到云主机的创建流程 云资源池->云主机->创建云主机
 
@@ -681,3 +681,5 @@ https://www.cnblogs.com/jinyuanliu/p/10488033.html
 
    https://blog.csdn.net/zstack_org/article/details/90082062
    https://www.cnblogs.com/she11s/p/14587920.html
+
+.. |image0| image:: ../_static/vmware2zstack001.png

@@ -37,12 +37,12 @@ GitLab的工作流程
 离线场景下，如图：
 ~~~~~~~~~~~~~~~~~~
 
-.. image:: ../_static/gitlab_nei01.png
+|image0|
 
 在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: ../_static/GitLab-wai01.png
+|image1|
 
 如果工作机器上包含几套公私钥的话，最好需要指定一下“~/.ssh/config”文件，代码如下所示。不然通过SSH协议连接到GitLab时会报错。config配置文件内容如下所示：
 
@@ -74,9 +74,9 @@ GitLub的操作流程
 2)将生成的id_rsa.pub文件的内容复制和粘贴到我们内部的GitLab（公网的GitLab）机器上去，选择菜单“Add
 SSH key”如图所示：
 
-.. image:: ../_static/gitlab_ssh.png
+|image2|
 
-.. image:: ../_static/gitlab_ssh02.png
+|image3|
 
 3) 成功以后还需要配置GitLab相关的连接配置，可以在自己的根目录下的“.ssh”目录下建立config文件，路径位置如下：
 
@@ -102,14 +102,14 @@ SSH key”如图所示：
    remote: Total 9 (delta 0), reused 0 (delta 0)
    Receiving objects: 100% (9/9), done.
 
-Git global setup(**Git全局设置**)
+Git global setup(\ **Git全局设置**)
 
 .. code:: shell
 
    git config --global user.name "jianlihu"
    git config --global user.email "1879324764@qq.com"
 
-Create a new repository(**创建仓库**)
+Create a new repository(\ **创建仓库**)
 
 .. code:: shell
 
@@ -120,7 +120,7 @@ Create a new repository(**创建仓库**)
    git commit -m "add README"
    git push -u origin master
 
-Push an existing folder(**推送现有文件夹**)
+Push an existing folder(\ **推送现有文件夹**)
 
 .. code:: shell
 
@@ -131,7 +131,7 @@ Push an existing folder(**推送现有文件夹**)
    git commit -m "Initial commit"
    git push -u origin master
 
-Push an existing Git repository(**推动现有的Git存储库，更新仓库信息**)
+Push an existing Git repository(\ **推动现有的Git存储库，更新仓库信息**)
 
 .. code:: shell
 
@@ -140,3 +140,8 @@ Push an existing Git repository(**推动现有的Git存储库，更新仓库信�
    git remote add origin git@git.lug.ustc.edu.cn:hjl722/test.git
    git push -u origin --all
    git push -u origin --tags
+
+.. |image0| image:: ../_static/gitlab_nei01.png
+.. |image1| image:: ../_static/GitLab-wai01.png
+.. |image2| image:: ../_static/gitlab_ssh.png
+.. |image3| image:: ../_static/gitlab_ssh02.png

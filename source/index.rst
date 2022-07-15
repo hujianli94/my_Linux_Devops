@@ -21,14 +21,12 @@ Devops学院【Linux架构|shell】专栏二
     :maxdepth: 4
     :glob:
 
-    Cloud_migration/index
     DevOps/index
     Github/index
     Jenkins/index
     KVM/index
     Linux/index
     Mysql/index
-    Openstack/index
     other/index
     Network_route_switch/index
 

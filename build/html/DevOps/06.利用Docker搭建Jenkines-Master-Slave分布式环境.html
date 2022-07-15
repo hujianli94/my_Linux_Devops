@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>6. 利用Docker搭建Jenkines-Master-Slave分布式环境 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
@@ -68,10 +67,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -377,7 +374,7 @@ ENTRYPOINT [&quot;setup-sshd&quot;]
     <span class="n">extra_hosts</span><span class="p">:</span>
     <span class="o">-</span> <span class="s2">&quot;gitlab.bmkp.cn:10.186.6.170&quot;</span>
   <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">jmeter</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">jmeter</span><span class="p">:</span><span class="n">v1</span><span class="mf">.0</span>
     <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">jmeter1</span>
     <span class="n">ports</span><span class="p">:</span>
     <span class="o">-</span> <span class="s2">&quot;2226:22&quot;</span>
@@ -390,7 +387,7 @@ ENTRYPOINT [&quot;setup-sshd&quot;]
     <span class="n">command</span><span class="p">:</span>
     <span class="o">-</span> <span class="s2">&quot;ssh-rsa B3NzaC1yc2EAAAADAQABAAABAQDQZb1vjKLkWAUOJaua/8CSFSID6L+8MbgutffdBqIeyoUvLUPpH2NkFAxKf8hW3Dj0lGkQ36hutsM23Jcs8b7rjhScmx2obyp7J1s7wic1GE3xaQY1Y0qwaxL3LIkmkrqkTdYyiVnD0Qv4PCx5GBTLQT2Xhf7wjE6oQcTOaIVu/RkooBv7sfEbcGMLwZmzFqqGtY0zEv/tbsvusVg7GPMFTvMw1r9l1C1G5Rxgcz76Vy+4MNskxdBsOZDWoX4gGulkbCBNP5Hf4WsvfH1HzPaoc3PTPUwht7/U2OtLNzO2C1rphRA6A4Eksyc3KI8OCSbku0KnGyM836QKtOv6UyR3 jenkins@1314520d&quot;</span>
   <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span><span class="p">:</span>
-    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">maven</span><span class="p">:</span><span class="n">v1</span><span class="o">.</span><span class="mi">0</span>
+    <span class="n">image</span><span class="p">:</span> <span class="n">yuhongchun</span><span class="o">/</span><span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">docker</span><span class="o">-</span><span class="n">maven</span><span class="p">:</span><span class="n">v1</span><span class="mf">.0</span>
     <span class="n">container_name</span><span class="p">:</span> <span class="n">jenkins</span><span class="o">-</span><span class="n">slave</span><span class="o">-</span><span class="n">mvn1</span>
     <span class="n">ports</span><span class="p">:</span>
     <span class="o">-</span> <span class="s2">&quot;2222:22&quot;</span>

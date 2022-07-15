@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>5.15. 案例-Nginx作为负载均衡服务器应用 &mdash; 运维开发修炼之路</title>
@@ -18,7 +18,7 @@
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="5.16. Nginx 正向代理配置" href="16.nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html" />
+    <link rel="next" title="5.16. Nginx 正向代理配置" href="16.Nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html" />
     <link rel="prev" title="5.14. 案例-Nginx作为Web缓存服务器应用" href="14.%E6%A1%88%E4%BE%8B-Nginx%E4%BD%9C%E4%B8%BAWeb%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BA%94%E7%94%A8.html" /> 
 </head>
 
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -73,7 +71,7 @@
 <li class="toctree-l4"><a class="reference internal" href="#id2">5.15.2. 2　Nginx的负载均衡配置实例</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="16.nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html">5.16. Nginx 正向代理配置</a></li>
+<li class="toctree-l3"><a class="reference internal" href="16.Nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html">5.16. Nginx 正向代理配置</a></li>
 <li class="toctree-l3"><a class="reference internal" href="18.Nginx%E4%B8%AD%E6%96%87%E6%89%8B%E5%86%8C.html">5.17. Nginx中文手册</a></li>
 <li class="toctree-l3"><a class="reference internal" href="19.Nginx%E9%85%8D%E7%BD%AE%E7%94%9F%E6%88%90%E5%99%A8.html">5.18. Nginx配置生成器</a></li>
 <li class="toctree-l3"><a class="reference internal" href="20.Nginx0.8.x%2BPHP5.2.13%28FastCGI%29%E6%90%AD%E5%BB%BA%E8%83%9C%E8%BF%87Apache%E5%8D%81%E5%80%8D%E7%9A%84Web%E6%9C%8D%E5%8A%A1%E5%99%A8.html">5.19. Nginx 0.8.x + PHP 5.2.13（FastCGI）搭建胜过Apache十倍的Web服务器</a></li>
@@ -88,7 +86,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -156,14 +153,14 @@ Upstream模块中，可以通过server命令指定后端服务器的IP地址和�
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span>
 <span class="p">{</span>
   <span class="n">upstream</span>  <span class="n">myserver</span> <span class="p">{</span>
-    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.181</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">3</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
-    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.182</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
-    <span class="n">server</span>   <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.183</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">4</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span>   <span class="mf">192.168.12.181</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">3</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span>   <span class="mf">192.168.12.182</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">1</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
+    <span class="n">server</span>   <span class="mf">192.168.12.183</span><span class="p">:</span><span class="mi">80</span> <span class="n">weight</span><span class="o">=</span><span class="mi">4</span> <span class="n">max_fails</span><span class="o">=</span><span class="mi">3</span> <span class="n">fail_timeout</span><span class="o">=</span><span class="mi">20</span><span class="n">s</span><span class="p">;</span>
   <span class="p">}</span>
   <span class="n">server</span>
   <span class="p">{</span>
     <span class="n">listen</span>       <span class="mi">80</span><span class="p">;</span>
-    <span class="n">server_name</span>  <span class="n">www</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">12.189</span><span class="p">;</span>
+    <span class="n">server_name</span>  <span class="n">www</span><span class="o">.</span><span class="n">domain</span><span class="o">.</span><span class="n">com</span> <span class="mf">192.168.12.189</span><span class="p">;</span>
     <span class="n">index</span> <span class="n">index</span><span class="o">.</span><span class="n">htm</span> <span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="p">;</span>
     <span class="n">root</span>  <span class="o">/</span><span class="n">ixdba</span><span class="o">/</span><span class="n">web</span><span class="o">/</span><span class="n">wwwroot</span><span class="p">;</span>
 <span class="n">location</span> <span class="o">/</span> <span class="p">{</span>
@@ -187,7 +184,7 @@ Upstream模块，这个模块通过一个简单的调度算法来实现客户端
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
         <a href="14.%E6%A1%88%E4%BE%8B-Nginx%E4%BD%9C%E4%B8%BAWeb%E7%BC%93%E5%AD%98%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BA%94%E7%94%A8.html" class="btn btn-neutral float-left" title="5.14. 案例-Nginx作为Web缓存服务器应用" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="16.nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html" class="btn btn-neutral float-right" title="5.16. Nginx 正向代理配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="16.Nginx%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE.html" class="btn btn-neutral float-right" title="5.16. Nginx 正向代理配置" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

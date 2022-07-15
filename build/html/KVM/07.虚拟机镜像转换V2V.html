@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>7. 镜像转换V2V &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
@@ -92,10 +91,8 @@
 <li class="toctree-l2"><a class="reference internal" href="13.Zstack%E5%85%A5%E9%97%A8%E5%88%9D%E4%BD%93%E9%AA%8C.html">13. Zstack入门初体验</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -214,7 +211,7 @@ ESX中的一个客户机迁移到KVM上。利用virt-v2v
 </div>
 <p>创建ESXI 验证文件</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">vim</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">netrc</span>
-<span class="n">machine</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.58</span> <span class="n">login</span> <span class="n">root</span> <span class="n">password</span> <span class="mi">123456</span>
+<span class="n">machine</span> <span class="mf">192.168.1.58</span> <span class="n">login</span> <span class="n">root</span> <span class="n">password</span> <span class="mi">123456</span>
 <span class="n">chmod</span> <span class="mi">0600</span> <span class="o">~/.</span><span class="n">netrc</span>
 </pre></div>
 </div>
@@ -625,7 +622,7 @@ vmkfstools -i myImage.vmdk outputName.vmdk -d thin
 <span class="p">[</span>  <span class="mf">50.8</span><span class="p">]</span> <span class="n">Inspecting</span> <span class="n">the</span> <span class="n">overlay</span>
 <span class="p">[</span>  <span class="mf">78.2</span><span class="p">]</span> <span class="n">Checking</span> <span class="k">for</span> <span class="n">sufficient</span> <span class="n">free</span> <span class="n">disk</span> <span class="n">space</span> <span class="ow">in</span> <span class="n">the</span> <span class="n">guest</span>
 <span class="p">[</span>  <span class="mf">78.2</span><span class="p">]</span> <span class="n">Estimating</span> <span class="n">space</span> <span class="n">required</span> <span class="n">on</span> <span class="n">target</span> <span class="k">for</span> <span class="n">each</span> <span class="n">disk</span>
-<span class="p">[</span>  <span class="mf">78.2</span><span class="p">]</span> <span class="n">Converting</span> <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.9</span><span class="o">.</span><span class="mi">2009</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span> <span class="n">to</span> <span class="n">run</span> <span class="n">on</span> <span class="n">KVM</span>
+<span class="p">[</span>  <span class="mf">78.2</span><span class="p">]</span> <span class="n">Converting</span> <span class="n">CentOS</span> <span class="n">Linux</span> <span class="n">release</span> <span class="mf">7.9.2009</span> <span class="p">(</span><span class="n">Core</span><span class="p">)</span> <span class="n">to</span> <span class="n">run</span> <span class="n">on</span> <span class="n">KVM</span>
 <span class="n">virt</span><span class="o">-</span><span class="n">v2v</span><span class="p">:</span> <span class="n">This</span> <span class="n">guest</span> <span class="n">has</span> <span class="n">virtio</span> <span class="n">drivers</span> <span class="n">installed</span><span class="o">.</span>
 <span class="p">[</span> <span class="mf">219.8</span><span class="p">]</span> <span class="n">Mapping</span> <span class="n">filesystem</span> <span class="n">data</span> <span class="n">to</span> <span class="n">avoid</span> <span class="n">copying</span> <span class="n">unused</span> <span class="ow">and</span> <span class="n">blank</span> <span class="n">areas</span>
 <span class="p">[</span> <span class="mf">220.9</span><span class="p">]</span> <span class="n">Closing</span> <span class="n">the</span> <span class="n">overlay</span>
@@ -654,7 +651,7 @@ vmkfstools -i myImage.vmdk outputName.vmdk -d thin
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">URL</span><span class="p">:</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">root</span><span class="o">/</span><span class="n">VM</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="n">Zstack</span><span class="o">/</span><span class="n">vm_data</span><span class="o">/</span><span class="n">v2v</span><span class="o">/</span><span class="n">docker</span><span class="o">-</span><span class="n">s1</span><span class="o">-</span><span class="n">sda</span><span class="o">.</span><span class="n">qcow2</span>
 </pre></div>
 </div>
-<img alt="../_images/vmware2zstack001.png" src="../_images/vmware2zstack001.png" />
+<p><img alt="image0" src="../_images/vmware2zstack001.png" /></p>
 <p>添加完毕镜像以后再来到云主机的创建流程 云资源池-&gt;云主机-&gt;创建云主机</p>
 <p>这里我选择了不由ZStack分配IP，来验证之前的由主路由器来分配IP，体验无修改迁移。
 创建完毕以后自动运行云主机，然后通过控制台访问，查看云主机IP以及是否能通过局域网ping通。</p>
@@ -696,9 +693,9 @@ vmkfstools -i myImage.vmdk outputName.vmdk -d thin
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># export LIBGUESTFS_BACKEND=direct</span>
 
 <span class="o">-</span> <span class="n">local模式</span><span class="p">,</span> <span class="o">%</span><span class="mi">40</span><span class="n">为</span><span class="o">@</span>
-<span class="o">-</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.40</span> <span class="n">为vcenterIP</span>
+<span class="o">-</span> <span class="mf">192.168.1.40</span> <span class="n">为vcenterIP</span>
 <span class="o">-</span> <span class="n">OSChina</span>  <span class="n">数据中心名称</span>
-<span class="o">-</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">1.58</span> <span class="n">为待转换虚拟机所在的esxi服务器IP</span>
+<span class="o">-</span> <span class="mf">192.168.1.58</span> <span class="n">为待转换虚拟机所在的esxi服务器IP</span>
 
 <span class="c1"># virt-v2v -ic vpx://administrator%40vsphere.local@192.168.1.40/OSChina/192.168.1.58?no_verify=1 docker-s1 -o libvirt -of qcow2</span>
 </pre></div>

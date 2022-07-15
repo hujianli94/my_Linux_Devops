@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>6.1. LAMP+WordPress环境 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Linux</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%92%8C%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/index.html">1. 命令行和操作系统</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../02.Linux%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%9E%B6%E8%AE%BE/index.html">2. Linux服务器架设</a></li>
@@ -79,7 +77,6 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -227,8 +224,8 @@ CustomLog /var/log/httpd/ixdba_access.log combined
 通过yum方式安装MariaDB非常简单，执行如下命令即可。</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#yum install mariadb-server mariadb</span>
 <span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span>  <span class="n">app</span><span class="p">]</span><span class="c1">#rpm -q mariadb mariadb-server</span>
-<span class="n">mariadb</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">41</span><span class="o">-</span><span class="mf">2.</span><span class="n">el7_0</span><span class="o">.</span><span class="n">x86_64</span>
-<span class="n">mariadb</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">5.5</span><span class="o">.</span><span class="mi">41</span><span class="o">-</span><span class="mf">2.</span><span class="n">el7_0</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">mariadb</span><span class="o">-</span><span class="mf">5.5.41</span><span class="o">-</span><span class="mf">2.</span><span class="n">el7_0</span><span class="o">.</span><span class="n">x86_64</span>
+<span class="n">mariadb</span><span class="o">-</span><span class="n">server</span><span class="o">-</span><span class="mf">5.5.41</span><span class="o">-</span><span class="mf">2.</span><span class="n">el7_0</span><span class="o">.</span><span class="n">x86_64</span>
 </pre></div>
 </div>
 <p>安装完成后，将MariaDB设置为开机自启动，操作如下。</p>
@@ -368,7 +365,7 @@ phpMyAdmin的默认安装目录是/usr/share/phpMyAdmin，
 由于这里介绍的 Apache版本是Apache
 2.4.6，所以需要对phpMyAdmin.conf文件做些修改，
 在phpMyAdmin.conf文件中找到类似下面的内容。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Allow</span>  <span class="kn">from</span>  <span class="mf">127.0</span><span class="o">.</span><span class="mf">0.1</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Allow</span>  <span class="kn">from</span>  <span class="mf">127.0.0.1</span>
 <span class="n">Allow</span>  <span class="kn">from</span>  <span class="p">::</span><span class="mi">1</span>
 </pre></div>
 </div>
@@ -425,7 +422,7 @@ all”，表示任何地方都可以访问，如果不对这个设置做修改�
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">root</span><span class="nd">@localhost</span> <span class="n">conf</span><span class="o">.</span><span class="n">d</span><span class="p">]</span><span class="c1"># mysql -uroot -padmin#123</span>
 <span class="n">Welcome</span> <span class="n">to</span> <span class="n">the</span> <span class="n">MariaDB</span> <span class="n">monitor</span><span class="o">.</span>  <span class="n">Commands</span> <span class="n">end</span> <span class="k">with</span> <span class="p">;</span> <span class="ow">or</span> \<span class="n">g</span><span class="o">.</span>
 <span class="n">Your</span> <span class="n">MariaDB</span> <span class="n">connection</span> <span class="nb">id</span> <span class="ow">is</span> <span class="mi">43</span>
-<span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.5</span><span class="o">.</span><span class="mi">60</span><span class="o">-</span><span class="n">MariaDB</span> <span class="n">MariaDB</span> <span class="n">Server</span>
+<span class="n">Server</span> <span class="n">version</span><span class="p">:</span> <span class="mf">5.5.60</span><span class="o">-</span><span class="n">MariaDB</span> <span class="n">MariaDB</span> <span class="n">Server</span>
 
 <span class="n">Copyright</span> <span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">2018</span><span class="p">,</span> <span class="n">Oracle</span><span class="p">,</span> <span class="n">MariaDB</span> <span class="n">Corporation</span> <span class="n">Ab</span> <span class="ow">and</span> <span class="n">others</span><span class="o">.</span>
 

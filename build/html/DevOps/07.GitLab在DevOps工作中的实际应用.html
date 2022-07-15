@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>7. GitLab在DevOps工作中的实际应用 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
@@ -73,10 +72,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -153,11 +150,11 @@ push，则会因为网络连接缓慢的问题而影响工作效率；我们部�
 <h2><a class="toc-backref" href="#id8"><span class="section-number">7.2. </span>GitLab的工作流程</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <section id="id2">
 <h3><a class="toc-backref" href="#id9"><span class="section-number">7.2.1. </span>离线场景下，如图：</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<img alt="../_images/gitlab_nei01.png" src="../_images/gitlab_nei01.png" />
+<p><img alt="image0" src="../_images/gitlab_nei01.png" /></p>
 </section>
 <section id="gitlab-repository">
 <h3><a class="toc-backref" href="#id10"><span class="section-number">7.2.2. </span>在线场景下，正常的GitLab工作流（Repository在这里表示本地版本仓库）,如图：</a><a class="headerlink" href="#gitlab-repository" title="Permalink to this headline">¶</a></h3>
-<img alt="../_images/GitLab-wai01.png" src="../_images/GitLab-wai01.png" />
+<p><img alt="image1" src="../_images/GitLab-wai01.png" /></p>
 <p>如果工作机器上包含几套公私钥的话，最好需要指定一下“~/.ssh/config”文件，代码如下所示。不然通过SSH协议连接到GitLab时会报错。config配置文件内容如下所示：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="n">www</span><span class="o">.</span><span class="n">github</span><span class="o">.</span><span class="n">com</span>
     <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">github</span>
@@ -183,12 +180,12 @@ Overwrite <span class="o">(</span>y/n<span class="o">)</span>?
 </div>
 <p>2)将生成的id_rsa.pub文件的内容复制和粘贴到我们内部的GitLab（公网的GitLab）机器上去，选择菜单“Add
 SSH key”如图所示：</p>
-<img alt="../_images/gitlab_ssh.png" src="../_images/gitlab_ssh.png" />
-<img alt="../_images/gitlab_ssh02.png" src="../_images/gitlab_ssh02.png" />
+<p><img alt="image2" src="../_images/gitlab_ssh.png" /></p>
+<p><img alt="image3" src="../_images/gitlab_ssh02.png" /></p>
 <ol class="arabic simple" start="3">
 <li><p>成功以后还需要配置GitLab相关的连接配置，可以在自己的根目录下的“.ssh”目录下建立config文件，路径位置如下：</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="mf">60.1</span><span class="o">.</span><span class="mf">2.3</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Host</span> <span class="mf">60.1.2.3</span>
     <span class="n">IdentityFile</span> <span class="o">~/.</span><span class="n">ssh</span><span class="o">/</span><span class="n">id_rsa</span>
 </pre></div>
 </div>

@@ -28,8 +28,7 @@ Celery有以下优点：
 
 Celery基本工作流程图
 
-.. figure:: ../_static/cerely001.png
-   :alt: 
+|image0|
 
 Demo演示
 --------
@@ -38,15 +37,14 @@ Demo演示
 
 启动一个面安装的redis，解压后直接bin下执行redis-server
 
-.. figure:: ../_static/redis_no_install.png
-   :alt: 
+|image1|
 
 pip命令来安装Celery及celery-with-redis，命令如下所示：
 
 ::
 
-    pip install celery
-    pip install celery-with-redis
+   pip install celery
+   pip install celery-with-redis
 
 简单使用
 ~~~~~~~~
@@ -55,10 +53,10 @@ pip命令来安装Celery及celery-with-redis，命令如下所示：
 
 ::
 
-    project/
-    ├── __init__.py  
-    ├── config.py
-    └── tasks.py
+   project/
+   ├── __init__.py  
+   ├── config.py
+   └── tasks.py
 
 各目录文件说明：
 
@@ -66,12 +64,12 @@ pip命令来安装Celery及celery-with-redis，命令如下所示：
 
 ::
 
-    #!/usr/bin/env python3
-    # -*- coding:utf-8 -*-
-    # Author:wd
-    from celery import Celery
-    app = Celery('project')                                # 创建 Celery 实例
-    app.config_from_object('project.config')               # 加载配置模块
+   #!/usr/bin/env python3
+   # -*- coding:utf-8 -*-
+   # Author:wd
+   from celery import Celery
+   app = Celery('project')                                # 创建 Celery 实例
+   app.config_from_object('project.config')               # 加载配置模块
 
 config.py:
 Celery相关配置文件，更多配置参考：http://docs.celeryproject.org/en/latest/userguide/configuration.html
@@ -80,120 +78,123 @@ Celery的默认设置就能满足基本的要求，worker以Pool模式启动，�
 
 ::
 
-    #!/usr/bin/env python3
-    # -*- coding:utf-8 -*-
-    # Author:wd
+   #!/usr/bin/env python3
+   # -*- coding:utf-8 -*-
+   # Author:wd
 
-    BROKER_URL = 'redis://localhost:6379/0'  # Broker配置，使用Redis作为消息中间件
+   BROKER_URL = 'redis://localhost:6379/0'  # Broker配置，使用Redis作为消息中间件
 
-    CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # BACKEND配置，这里使用redis
+   CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # BACKEND配置，这里使用redis
 
-    CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
+   CELERY_RESULT_SERIALIZER = 'json'  # 结果序列化方案
 
-    CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24  # 任务过期时间
+   CELERY_TASK_RESULT_EXPIRES = 60 * 60 * 24  # 任务过期时间
 
-    CELERY_TIMEZONE = 'Asia/Shanghai'  # 时区配置
+   CELERY_TIMEZONE = 'Asia/Shanghai'  # 时区配置
 
-    CELERY_IMPORTS = (  # 指定导入的任务模块,可以指定多个
-        'project.tasks',
-    )
+   CELERY_IMPORTS = (  # 指定导入的任务模块,可以指定多个
+       'project.tasks',
+   )
 
 tasks.py ：任务定义文件
 
 ::
 
-    #!/usr/bin/env python
-    # -*- coding:utf8 -*-
-    # auther; 18793
-    # Date：2020/4/24 11:59
-    # filename: tasks.py
-    import time
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/4/24 11:59
+   # filename: tasks.py
+   import time
 
-    from project import app
-
-
-    @app.task
-    def show_name(name):
-        return name
+   from project import app
 
 
-    @app.task
-    def sendmail(mail):
-        print("sendmail to {}.....".format(mail["to"]))
-        time.sleep(2.0)
-        print("mail sent .")
+   @app.task
+   def show_name(name):
+       return name
 
 
-    @app.task
-    def add(x, y):
-        return x + y
+   @app.task
+   def sendmail(mail):
+       print("sendmail to {}.....".format(mail["to"]))
+       time.sleep(2.0)
+       print("mail sent .")
+
+
+   @app.task
+   def add(x, y):
+       return x + y
 
 启动Worker：
 
 ::
 
-    celery worker -A project -l debug
+   celery worker -A project -l debug
 
-    各个参数含义：
+   各个参数含义：
 
-    　　worker: 代表第启动的角色是work当然还有beat等其他角色；
+   　　worker: 代表第启动的角色是work当然还有beat等其他角色；
 
-    　　-A ：项目路径，这里我的目录是project
+   　　-A ：项目路径，这里我的目录是project
 
-    　　-l：启动的日志级别，更多参数使用celery --help查看
+   　　-l：启动的日志级别，更多参数使用celery --help查看
 
 查看日志输出，会发现我们定义的任务，以及相关配置：
 
-.. figure:: ../_static/cerely0001.png
-   :alt: 
+|image2|
 
-虽然启动了worker，但是我们还需要通过delay或apply\_async来将任务添加到worker中，这里我们通过交互式方法添加任务，并返回AsyncResult对象，通过AsyncResult对象获取结果：
+虽然启动了worker，但是我们还需要通过delay或apply_async来将任务添加到worker中，这里我们通过交互式方法添加任务，并返回AsyncResult对象，通过AsyncResult对象获取结果：
 
 worker01.py
 
 .. code:: python
 
-    #!/usr/bin/env python
-    # -*- coding:utf8 -*-
-    # auther; 18793
-    # Date：2020/4/24 12:10
-    # filename: worker01.py
-    from project import tasks
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/4/24 12:10
+   # filename: worker01.py
+   from project import tasks
 
-    t = tasks.show_name.delay("wd")
-    print(t.get())
+   t = tasks.show_name.delay("wd")
+   print(t.get())
 
 worker02.py
 
 .. code:: python
 
-    #!/usr/bin/env python
-    # -*- coding:utf8 -*-
-    # auther; 18793
-    # Date：2020/4/24 12:10
-    # filename: worker01.py
+   #!/usr/bin/env python
+   # -*- coding:utf8 -*-
+   # auther; 18793
+   # Date：2020/4/24 12:10
+   # filename: worker01.py
 
-    from project import tasks
+   from project import tasks
 
-    # 模拟发送邮件
-    t = tasks.sendmail.delay(dict(to="1879324764@qq.com"))
+   # 模拟发送邮件
+   t = tasks.sendmail.delay(dict(to="1879324764@qq.com"))
 
 ::
 
-    AsyncResult除了get方法用于常用获取结果方法外还提以下常用方法或属性：
+   AsyncResult除了get方法用于常用获取结果方法外还提以下常用方法或属性：
 
-    * state: 返回任务状态；
-    * task_id: 返回任务id；
-    * result: 返回任务结果，同get()方法；
-    * ready(): 判断任务是否以及有结果，有结果为True，否则False；
-    * info(): 获取任务信息，默认为结果；
-    * wait(t): 等待t秒后获取结果，若任务执行完毕，则不等待直接获取结果，若任务在执行中，则wait期间一直阻塞，直到超时报错；
-    * successfu(): 判断任务是否成功，成功为True，否则为False；
+   * state: 返回任务状态；
+   * task_id: 返回任务id；
+   * result: 返回任务结果，同get()方法；
+   * ready(): 判断任务是否以及有结果，有结果为True，否则False；
+   * info(): 获取任务信息，默认为结果；
+   * wait(t): 等待t秒后获取结果，若任务执行完毕，则不等待直接获取结果，若任务在执行中，则wait期间一直阻塞，直到超时报错；
+   * successfu(): 判断任务是否成功，成功为True，否则为False；
 
 Cerely进阶参考文献
 ------------------
 
-**`分布式任务队列Celery入门与进阶 <https://www.cnblogs.com/wdliu/p/9517535.html>`__**
+`分布式任务队列Celery入门与进阶 <https://www.cnblogs.com/wdliu/p/9517535.html>`__
 
-`**Celery
-分布式任务队列快速入门** <https://www.cnblogs.com/alex3714/articles/6351797.html>`__
+`Celery
+分布式任务队列快速入门 <https://www.cnblogs.com/alex3714/articles/6351797.html>`__
+
+.. |image0| image:: ../_static/cerely001.png
+.. |image1| image:: ../_static/redis_no_install.png
+.. |image2| image:: ../_static/cerely0001.png

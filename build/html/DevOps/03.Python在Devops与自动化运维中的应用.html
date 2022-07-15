@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3. Python在Devops与自动化运维中的应用 &mdash; 运维开发修炼之路</title>
@@ -42,7 +42,6 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="01.Devops%E4%B8%8E%E8%87%AA%E5%8A%A8%E5%8C%96%E8%BF%90%E7%BB%B4%E7%9A%84%E6%84%8F%E4%B9%89.html">1. Devops与自动化运维的意义</a></li>
 <li class="toctree-l2"><a class="reference internal" href="02.Shell%E8%84%9A%E6%9C%AC%E5%9C%A8Devops%E4%B8%8B%E7%9A%84%E5%BA%94%E7%94%A8.html">2. Shell脚本在Devops下的应用</a></li>
@@ -69,10 +68,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Linux/index.html">Linux</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Mysql/index.html">Mysql王者之路</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -138,7 +135,7 @@
 <ol class="arabic simple" start="2">
 <li><p>贪婪模式与懒惰模式</p></li>
 </ol>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding:utf8 -*-</span>
 <span class="c1"># auther; 18793</span>
 <span class="c1"># Date：2019/5/21 17:31</span>
@@ -165,17 +162,13 @@
 </div>
 <p><strong>使用re模块处理正则表达式</strong> <img alt="image1" src="../_images/re_math0001.png" /></p>
 <p>re模块中的很多函数中都有一个flags标志位，该参数用于设置匹配的附加选项。例如，是否忽略大小写、是否支持多行匹配。</p>
-<figure class="align-default">
-<img alt="" src="../_images/re_devops_flags0001.png" />
-</figure>
+<p><img alt="image2" src="../_images/re_devops_flags0001.png" /></p>
 </section>
 <section id="pythonjson">
 <h3><a class="toc-backref" href="#id7"><span class="section-number">3.1.2. </span>3.1.2 使用Python解析JSON</a><a class="headerlink" href="#pythonjson" title="Permalink to this headline">¶</a></h3>
-<figure class="align-default">
-<img alt="" src="../_images/re_devops_encode001.png" />
-</figure>
+<p><img alt="image3" src="../_images/re_devops_encode001.png" /></p>
 <p>使用<code class="docutils literal notranslate"><span class="pre">dumps()</span></code>编码举例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding:utf8 -*-</span>
 <span class="c1"># auther; 18793</span>
 <span class="c1"># Date：2020/1/19 10:26</span>
@@ -201,7 +194,7 @@
 </pre></div>
 </div>
 <p>使用<code class="docutils literal notranslate"><span class="pre">loads()</span></code>解码举例：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding:utf8 -*-</span>
 <span class="c1"># auther; 18793</span>
 <span class="c1"># Date：2020/1/19 10:30</span>
@@ -218,13 +211,11 @@
 <span class="sd">&#39;&#39;&#39;</span>
 </pre></div>
 </div>
-<figure class="align-default">
-<img alt="" src="../_images/re_devops_decode0001.png" />
-</figure>
+<p><img alt="image4" src="../_images/re_devops_decode0001.png" /></p>
 </section>
 <section id="id2">
 <h3><a class="toc-backref" href="#id8"><span class="section-number">3.1.3. </span>3.1.3 Python多进程</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/usr/bin/env python</span>
 <span class="c1"># -*- coding:utf8 -*-</span>
 <span class="c1"># auther; 18793</span>
 <span class="c1"># Date：2020/1/20 15:12</span>
@@ -254,8 +245,8 @@
 <h2><a class="toc-backref" href="#id9"><span class="section-number">3.2. </span>3.2 Python常用的三方库</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <table class="docutils align-default">
 <colgroup>
-<col style="width: 24%" />
-<col style="width: 76%" />
+<col style="width: 20%" />
+<col style="width: 80%" />
 </colgroup>
 <thead>
 <tr class="row-odd"><th class="head"><p>三方库名</p></th>
@@ -328,9 +319,7 @@ Web框架之一。从根本上说，Flask是建立在可扩展性和简单性的
 使用Token来进行用户权限认证，比Cookie更安全。相对而言，Tocken认证比Cookie认证更为安全，毕竟Cookie认证是我们爬网站时使用最多的伪造渠道。</p>
 <p>❑ 越来越多的开放平台，开始使用API接口。</p>
 <p>HTTP方法与CURD数据处理的对应关系</p>
-<figure class="align-default">
-<img alt="" src="../_images/Restful_api001.png" />
-</figure>
+<p><img alt="image5" src="../_images/Restful_api001.png" /></p>
 </section>
 </section>
 

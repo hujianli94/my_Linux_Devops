@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>3.2. 02.复制原理及实战演练 &mdash; 运维开发修炼之路</title>
@@ -42,12 +42,10 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../../Cloud_migration/index.html">Cloud_migration</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../DevOps/index.html">DevOps和自动化运维实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Github/index.html">Github入门到实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Jenkins/index.html">Jenkins持续化集成</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../KVM/index.html">KVM实践</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../Linux_Cluster/index.html">Linux服务构建实战</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Linux/index.html">Linux</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Mysql王者之路</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="../01.%E5%80%94%E5%BC%BA%E7%9A%84%E9%9D%92%E9%93%9C%E7%AF%87/index.html">1. 01.倔强的青铜篇</a></li>
@@ -72,7 +70,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../07.%E6%9C%80%E5%BC%BA%E7%9A%84%E7%8E%8B%E8%80%85%E7%AF%87/index.html">7. 07.最强的王者篇</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../../Openstack/index.html">Openstack实践</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../other/index.html">Other</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../Network_route_switch/index.html">Network_route_switch</a></li>
 </ul>
@@ -600,7 +597,7 @@ thread接收完主库binlog后，写入relay中，然后会给主库一个回馈
 <p>建立主从复制： 主库</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">master</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
-             <span class="n">File</span><span class="p">:</span> <span class="n">on</span><span class="o">.</span><span class="mi">000002</span>
+             <span class="n">File</span><span class="p">:</span> <span class="n">on</span><span class="mf">.000002</span>
          <span class="n">Position</span><span class="p">:</span> <span class="mi">333</span>
      <span class="n">Binlog_Do_DB</span><span class="p">:</span>
  <span class="n">Binlog_Ignore_DB</span><span class="p">:</span>
@@ -626,15 +623,15 @@ thread接收完主库binlog后，写入relay中，然后会给主库一个回馈
 <span class="n">mysql</span><span class="o">&gt;</span> <span class="n">show</span> <span class="n">slave</span> <span class="n">status</span>\<span class="n">G</span><span class="p">;</span>
 <span class="o">***************************</span> <span class="mf">1.</span> <span class="n">row</span> <span class="o">***************************</span>
                <span class="n">Slave_IO_State</span><span class="p">:</span> <span class="n">Waiting</span> <span class="k">for</span> <span class="n">master</span> <span class="n">to</span> <span class="n">send</span> <span class="n">event</span>
-                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168</span><span class="o">.</span><span class="mf">0.128</span>
+                  <span class="n">Master_Host</span><span class="p">:</span> <span class="mf">192.168.0.128</span>
                   <span class="n">Master_User</span><span class="p">:</span> <span class="n">repl</span>
                   <span class="n">Master_Port</span><span class="p">:</span> <span class="mi">3306</span>
                 <span class="n">Connect_Retry</span><span class="p">:</span> <span class="mi">60</span>
-              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">on</span><span class="o">.</span><span class="mi">000002</span>
+              <span class="n">Master_Log_File</span><span class="p">:</span> <span class="n">on</span><span class="mf">.000002</span>
           <span class="n">Read_Master_Log_Pos</span><span class="p">:</span> <span class="mi">151</span>
-               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">slave</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="o">.</span><span class="mi">000002</span>
+               <span class="n">Relay_Log_File</span><span class="p">:</span> <span class="n">slave</span><span class="o">-</span><span class="n">relay</span><span class="o">-</span><span class="nb">bin</span><span class="mf">.000002</span>
                 <span class="n">Relay_Log_Pos</span><span class="p">:</span> <span class="mi">347</span>
-        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">on</span><span class="o">.</span><span class="mi">000002</span>
+        <span class="n">Relay_Master_Log_File</span><span class="p">:</span> <span class="n">on</span><span class="mf">.000002</span>
              <span class="n">Slave_IO_Running</span><span class="p">:</span> <span class="n">Yes</span>
             <span class="n">Slave_SQL_Running</span><span class="p">:</span> <span class="n">Yes</span>
 </pre></div>
