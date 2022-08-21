@@ -45,29 +45,29 @@
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">DevOps和自动化运维实践</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">1. Devops与自动化运维的意义</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">1.1. 1 为什么企业需要自动化运维</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id2">1.2. 2 为什么要前后端分离</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#web">1.3. 3 Web编程相关体系知识点</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id3">1.3.1. 3.1 为什么要前后端分离</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#restful">1.3.2. 3.2 什么是RESTful</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id5">1.3.3. 3.3 同步和异步、阻塞与非阻塞的区别</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#web">1.2. 2 Web编程相关体系知识点</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id2">1.2.1. 2.1 为什么要前后端分离</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#restful">1.2.2. 2.2 什么是RESTful</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id3">1.2.3. 2.3 Web 后台认证机制</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id4">1.2.4. 2.4 同步和异步、阻塞与非阻塞的区别</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id6">1.4. 4 从事Devops应该掌握的语言</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id7">1.5. 5 从事DevOps工作应该掌握的工具</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id8">1.6. 6 了解网站系统架构设计和高并发场景</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id9">1.6.1. 6.1细分五层解说网站架构</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">1.3. 4 从事Devops应该掌握的语言</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">1.4. 5 从事DevOps工作应该掌握的工具</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">1.5. 6 了解网站系统架构设计和高并发场景</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id8">1.5.1. 6.1细分五层解说网站架构</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#id15">1.7. 7 了解数据库集群主从复制的基本原理</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#redis">1.7.1. 7.1 redis主从复制的原理</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#mysqlreplication">1.7.2. 7.2 MySQL数据库主从Replication同步</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">1.6. 7 了解数据库集群主从复制的基本原理</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#redis">1.6.1. 7.1 redis主从复制的原理</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mysqlreplication">1.6.2. 7.2 MySQL数据库主从Replication同步</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#linux">1.8. Linux服务器的安全防护</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#ddos">1.8.1. 1.8.1 DDoS攻击和运营商劫持</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id16">1.8.2. 1.8.2 运营商劫持</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id17">1.8.3. 1.8.3 Linux服务器基础防护篇</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id18">1.8.4. 1.8.4 Linux服务器高级防护篇</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#linux">1.7. Linux服务器的安全防护</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ddos">1.7.1. 1.8.1 DDoS攻击和运营商劫持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id15">1.7.2. 1.8.2 运营商劫持</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id16">1.7.3. 1.8.3 Linux服务器基础防护篇</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id17">1.7.4. 1.8.4 Linux服务器高级防护篇</a></li>
 </ul>
 </li>
 </ul>
@@ -120,36 +120,36 @@
   <div class="contents topic" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="#devops" id="id20">Devops与自动化运维的意义</a></p>
+<li><p><a class="reference internal" href="#devops" id="id19">Devops与自动化运维的意义</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id1" id="id21">1 为什么企业需要自动化运维</a></p></li>
-<li><p><a class="reference internal" href="#id2" id="id22">2 为什么要前后端分离</a></p></li>
-<li><p><a class="reference internal" href="#web" id="id23">3 Web编程相关体系知识点</a></p>
+<li><p><a class="reference internal" href="#id1" id="id20">1 为什么企业需要自动化运维</a></p></li>
+<li><p><a class="reference internal" href="#web" id="id21">2 Web编程相关体系知识点</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id3" id="id24">3.1 为什么要前后端分离</a></p></li>
-<li><p><a class="reference internal" href="#restful" id="id25">3.2 什么是RESTful</a></p></li>
-<li><p><a class="reference internal" href="#id5" id="id26">3.3 同步和异步、阻塞与非阻塞的区别</a></p></li>
+<li><p><a class="reference internal" href="#id2" id="id22">2.1 为什么要前后端分离</a></p></li>
+<li><p><a class="reference internal" href="#restful" id="id23">2.2 什么是RESTful</a></p></li>
+<li><p><a class="reference internal" href="#id3" id="id24">2.3 Web 后台认证机制</a></p></li>
+<li><p><a class="reference internal" href="#id4" id="id25">2.4 同步和异步、阻塞与非阻塞的区别</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id6" id="id27">4 从事Devops应该掌握的语言</a></p></li>
-<li><p><a class="reference internal" href="#id7" id="id28">5 从事DevOps工作应该掌握的工具</a></p></li>
-<li><p><a class="reference internal" href="#id8" id="id29">6 了解网站系统架构设计和高并发场景</a></p>
+<li><p><a class="reference internal" href="#id5" id="id26">4 从事Devops应该掌握的语言</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id27">5 从事DevOps工作应该掌握的工具</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id28">6 了解网站系统架构设计和高并发场景</a></p>
 <ul>
-<li><p><a class="reference internal" href="#id9" id="id30">6.1细分五层解说网站架构</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id29">6.1细分五层解说网站架构</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#id15" id="id31">7 了解数据库集群主从复制的基本原理</a></p>
+<li><p><a class="reference internal" href="#id14" id="id30">7 了解数据库集群主从复制的基本原理</a></p>
 <ul>
-<li><p><a class="reference internal" href="#redis" id="id32">7.1 redis主从复制的原理</a></p></li>
-<li><p><a class="reference internal" href="#mysqlreplication" id="id33">7.2 MySQL数据库主从Replication同步</a></p></li>
+<li><p><a class="reference internal" href="#redis" id="id31">7.1 redis主从复制的原理</a></p></li>
+<li><p><a class="reference internal" href="#mysqlreplication" id="id32">7.2 MySQL数据库主从Replication同步</a></p></li>
 </ul>
 </li>
-<li><p><a class="reference internal" href="#linux" id="id34">Linux服务器的安全防护</a></p>
+<li><p><a class="reference internal" href="#linux" id="id33">Linux服务器的安全防护</a></p>
 <ul>
-<li><p><a class="reference internal" href="#ddos" id="id35">1.8.1 DDoS攻击和运营商劫持</a></p></li>
-<li><p><a class="reference internal" href="#id16" id="id36">1.8.2 运营商劫持</a></p></li>
-<li><p><a class="reference internal" href="#id17" id="id37">1.8.3 Linux服务器基础防护篇</a></p></li>
-<li><p><a class="reference internal" href="#id18" id="id38">1.8.4 Linux服务器高级防护篇</a></p></li>
+<li><p><a class="reference internal" href="#ddos" id="id34">1.8.1 DDoS攻击和运营商劫持</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id35">1.8.2 运营商劫持</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id36">1.8.3 Linux服务器基础防护篇</a></p></li>
+<li><p><a class="reference internal" href="#id17" id="id37">1.8.4 Linux服务器高级防护篇</a></p></li>
 </ul>
 </li>
 </ul>
@@ -157,10 +157,12 @@
 </ul>
 </div>
 <section id="devops">
-<h1><a class="toc-backref" href="#id20"><span class="section-number">1. </span>Devops与自动化运维的意义</a><a class="headerlink" href="#devops" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id19"><span class="section-number">1. </span>Devops与自动化运维的意义</a><a class="headerlink" href="#devops" title="Permalink to this headline">¶</a></h1>
 <section id="id1">
-<h2><a class="toc-backref" href="#id21"><span class="section-number">1.1. </span>1 为什么企业需要自动化运维</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
-<p>总结一下自动化运维可能带来的好处？</p>
+<h2><a class="toc-backref" href="#id20"><span class="section-number">1.1. </span>1 为什么企业需要自动化运维</a><a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div><p>总结一下自动化运维可能带来的好处？</p>
+</div></blockquote>
 <p><strong>消除无效率</strong>：
 运维工作的手动工作，如果可以实现自动化，将显著提升效率水平</p>
 <p><strong>减少错误</strong>：使用自动化运维工具来完成常规操作可以将错误率大大降低</p>
@@ -169,33 +171,10 @@
 自动化运维工具帮助IT运维，可以为内部员工和外部客户提供高水平支持，更好地拥抱SLA。</p>
 <p><strong>降低成本</strong>：系统中断、人为错误、重复工作，会导致不菲的费用和代价，而自动化运维几乎可以将这些成本完全消除。</p>
 </section>
-<section id="id2">
-<h2><a class="toc-backref" href="#id22"><span class="section-number">1.2. </span>2 为什么要前后端分离</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>如果从软件开发的层面上来理解，则前端与后端分别处理如下内容：</p>
-<p><strong>前端</strong>:负责View和Controller层</p>
-<p><strong>后端</strong>:只负责Model层，进行业务处理和数据处理</p>
-<p>当公司存在着PHP/Java技术团队，另外还有GO/python后端研发团队和移动端开发团队。这几个团队虽然是在做不同的产品，但是存在大量重复性的开发，团队就需要思考这样一个方案：</p>
-<p>如果前端实现与后端技术无关，那么页面呈现的部分就可以共用了，不同的后端技术只需要实现各自的后端业务逻辑就好。</p>
-<p>主要解决的根本问题是将数据和页面剥离开来。</p>
-<p>前端采用静态页面相关的技术：HTML+CSS+JavaScrips，通过AJAX技术调用后端提供的业务接口(主要是PHP研发团队负责).前后端协商好接口方式，通过HTTP来提供实现，统一使用POST提交数据。接口数据结构使用JSON实现，前端jQuery解析Json很方便，后端处理JSON的工具就跟多了。</p>
-<p>前后端分离之后，两端的开发人员都可以轻松不少，由于技术和业务变得更加专注，因此开发效率也得到了提高。分离带来的好处如下：</p>
-<p><strong>(1)前后职责分离</strong></p>
-<p>前端倾向于呈现，着重处理用户体验相关的问题；</p>
-<p>后端则倾向于处理业务逻辑、数据处理和持久化等相关的问题。在设计清晰的情况下，后端只需要以数据为中心对业务处理算法负责，并按约定为前端提供API；而前端则使用这些接口对用户体验负责即可。</p>
-<p><strong>(2)前后技术分离</strong></p>
-<p>前端只需要会HTML+CSS+JavaScript，不需要关注后端的开发技术</p>
-<p>后端只需关注后端开发技术和Web API即可，不用考虑特别复杂的数据组织和呈现</p>
-<p><strong>(3)前后分离带来了用户体验和业务处理解耦</strong></p>
-<p>前端的需求改版对后端毫无影响；</p>
-<p>后端的业务逻辑升级、数据持久方案变更，只要不影响接口，前端也毫无知情，</p>
-<p>当然需要变更引起了接口变化，那么前后端又需要在一起进行信息同步了。</p>
-<p><strong>（4）前后分离，可以分别归约两端的设计</strong></p>
-<p>后端只提供API而不用考虑页面呈现的问题，实现SOA架构的API可以服务于各种前端，而不仅仅是Web前端，可以做到一套服务各端使用。</p>
-</section>
 <section id="web">
-<h2><a class="toc-backref" href="#id23"><span class="section-number">1.3. </span>3 Web编程相关体系知识点</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h2>
-<section id="id3">
-<span id="id4"></span><h3><a class="toc-backref" href="#id24"><span class="section-number">1.3.1. </span>3.1 为什么要前后端分离</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<h2><a class="toc-backref" href="#id21"><span class="section-number">1.2. </span>2 Web编程相关体系知识点</a><a class="headerlink" href="#web" title="Permalink to this headline">¶</a></h2>
+<section id="id2">
+<h3><a class="toc-backref" href="#id22"><span class="section-number">1.2.1. </span>2.1 为什么要前后端分离</a><a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p><img alt="image0" src="../_images/qianhouduan_fenli01.png" /></p>
 <p>前后端分离的Web架构图示</p>
 <p>对于传统的一体式Web架构，大家会发现，业务逻辑处理单独分离出来了，交由后端统一处理，如果从软件开发的层面上来理解，则前端与后端分别处理如下内容。</p>
@@ -221,12 +200,13 @@ API的数据结构呈现也是View），不用考虑特别复杂的数据组织�
 </div>
 </section>
 <section id="restful">
-<h3><a class="toc-backref" href="#id25"><span class="section-number">1.3.2. </span>3.2 什么是RESTful</a><a class="headerlink" href="#restful" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id23"><span class="section-number">1.2.2. </span>2.2 什么是RESTful</a><a class="headerlink" href="#restful" title="Permalink to this headline">¶</a></h3>
 <p>什么是REST？</p>
 <p>REST（Representational State
 Transfer）这个概念首次出现是在2000年RoyThomas
 Fielding（他是HTTP规范的主要编写者之一）的博士论文中，它指的是一组架构约束条件和原则。满足这些约束条件和原则的应用程序或设计就是RESTful的。</p>
-<p>要理解什么是REST，我们需要理解如下的几个概念。REST是“表现层状态转化”，它省略了主语。其实“表现层”指的是“资源”的“表现层”。那么什么是资源（Resources）呢？就是我们平常上网访问的一张图片、一个文档、一个视频等。这些资源我们通过URI来定位，也就是一个URI表示一个资源。</p>
+<p>要理解什么是REST，我们需要理解如下的几个概念。REST是“表现层状态转化”，它省略了主语。其实“表现层”指的是“资源”的“表现层”。
+那么什么是资源（Resources）呢？就是我们平常上网访问的一张图片、一个文档、一个视频等。这些资源我们通过URI来定位，也就是一个URI表示一个资源。</p>
 <p>（1）表现层（Representation）</p>
 <p>资源是做一个具体的实体信息，其可以有很多种展现方式。而把实体展现出来就是表现层，例如一个txt文本信息，可以输出成html、json、xml等格式，一个图片可以通过jpg、png等方式展现，这个就是表现层的意思。URI确定一个资源，但是如何确定它的具体表现形式呢？应该在HTTP请求的头信息中用Accept和Content-Type字段进行指定，这两个字段才是对“表现层”的描述。</p>
 <p>（2）状态转化（State Transfer）</p>
@@ -244,17 +224,91 @@ Fielding（他是HTTP规范的主要编写者之一）的博士论文中，它�
 </ul>
 <p>RESTful用一句话可以总结为URL定位资源，用HTTP动词描述操作。符合REST原则的架构方式即称之为RESTful。</p>
 <p>综合上面的解释，我们下面来总结一下什么是RESTful架构。</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>1）每一个URI代表一种资源。
-2）在客户端和服务器之间传递这种资源的某种表现层。
-3）客户端通过HTTP动词，对服务器端资源进行操作，实现“表现层状态转化”。
-</pre></div>
-</div>
+<ol class="arabic simple">
+<li><p>每一个URI代表一种资源。</p></li>
+<li><p>在客户端和服务器之间传递这种资源的某种表现层。</p></li>
+<li><p>客户端通过HTTP动词，对服务器端资源进行操作，实现“表现层状态转化”。</p></li>
+</ol>
 <p>（3）HTTP状态码对于HTTP状态码，大家应该已经很熟了，即服务器向用户返回的状态码和提示信息，常见的HTTP状态码如表</p>
 <p>HTTP状态码详细定义图表</p>
 <p><img alt="image1" src="../_images/httpd_status001.png" /></p>
 </section>
-<section id="id5">
-<h3><a class="toc-backref" href="#id26"><span class="section-number">1.3.3. </span>3.3 同步和异步、阻塞与非阻塞的区别</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<section id="id3">
+<h3><a class="toc-backref" href="#id24"><span class="section-number">1.2.3. </span>2.3 Web 后台认证机制</a><a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li><p>HTTP Basic Auth</p></li>
+</ol>
+<p>简言之， HTTP Basic Auth简单点说就是每次请求
+API时都提供用户的username和password ，是配合 RESTful
+API使用的最简单的认证方式，只需提供用户名和密码即可，
+但由于存在将用户名和密码暴露给第三方客户端的风险，因此在生产环境下，
+HTTP BasicAuth 被使用得越来越少 。 因此，在开发对外开放的 RESTful API
+时，应尽量避免采用HTTP Basic Auth 。</p>
+<ol class="arabic simple" start="2">
+<li><p>OAuth</p></li>
+</ol>
+<p>OAuth(开放授权）是一个开放的授权标准，允许用户让第 三
+方应用访问该用户在某－Web
+服务上存储的私密的资源（如照片、视频、联系人列表），而无须将用户名和密码提供给第三方应用。</p>
+<p>OAuth
+允许用户提供一个令牌，而不是根据用户名和密码来访问他们存放在特定服务提供者处的数据
+。 每一个令牌授权一个特定的第
+三方系统（例如，视频编辑网站）在特定的时间段（例如，接下来的 2 个小时内
+）内访问特定的资源（例如仅仅是某一相册中的视频） 。 这样， OAuth
+就使得用户可以授权第
+三方网站访问他们存储在另外服务提供者处的某些特定信息，而非所有内容 。</p>
+<ol class="arabic simple" start="3">
+<li><p>Cookie Auth</p></li>
+</ol>
+<p>Cookie认证机制就是为一次请求认证在服务器端创建一个Session对象，同时在客户端的浏览器端创建一个Cookie对象；
+通过客户端发送的 Cookie 对象与服务器端的
+Session对象进行匹配来实现状态管理。
+默认情况下，当我们关闭浏览器的时候，Cookie会被删除，但是可以通过修改Cookie的expire
+time使Cookie在一定时间内有效。</p>
+<ol class="arabic simple" start="4">
+<li><p>Token Auth</p></li>
+</ol>
+<p>使用基于 Token
+的身份验证方法时，服务器端不需要存储用户的登录记录。大概的流程如下所示
+。</p>
+<p>1). 客户端使用用户名与密码请求登录。</p>
+<p>2). 服务器端收到请求，去验证用户名与密码</p>
+<p>3). 验证成功后，服务器端会签发一个Token，再把这个Token发送给客户端。</p>
+<p>4). 客户端收到Token之后可以把它存储起来， 比如放在Cookie里或者Local
+Storage里。</p>
+<p>5). 客户端每次向服务器端请求资源的时候都需要带着服务器端签发的 Token 。</p>
+<p>6). 服务器端收到请求，然后去验证客户端请求中所携带的 Token
+，如果验证成功，就向客户端返回请求的数据 。</p>
+<ol class="arabic simple" start="5">
+<li><p>Token Auth 的优点</p></li>
+</ol>
+<p>Token 机制相对于 Cookie 机制来说，具有如下好处 。</p>
+<p><strong>支持跨域访问</strong>：
+Cookie是不允许跨域访问的，这一点对Token机制来说是不存在的，Token
+机制支持跨域访问的前提是用户认证信息通过 HTTP 头传输 。</p>
+<p><strong>无状态(也称服务器端可扩展行)</strong> :
+Token机制在服务器端不需要存储Session信息，因为Token自身包含了所有登录用户的信息，因此只需要在客户端的Cookie或本地介质中存储状态信息即可
+。</p>
+<p><strong>更适用CDN</strong> ：可以通过内容分发网络请求你服务器端的所有资料（如
+JavaScri pt 、HTML 及图片等），而你的服务器端只要提供 API 即可。</p>
+<p><strong>去藕</strong> ：不需要绑定到 一个特定 的身份验证方案 。 Token
+可以在任何地方生成，当你的API 被调用的时候， 直接进行 Token
+生成调用即可。</p>
+<p><strong>更适用于移动应用</strong>： 当我们的客户端是一个原生平台(iOS 、 Android 或
+Wi ndows 8 等时， Cookie
+是不被支持的（需要通过Cookie容器进行处理），这时采用Token认证机制就会简单得多。</p>
+<p><strong>CSRF</strong>：因为不再依赖于Cookie，所以Token机制不需要考虑对CSRF(跨站请求伪造)的防范。</p>
+<p><strong>性能</strong>： 一次网络往返时间（通过数据库查询 Session
+信息）总比做一次HMACSHA256计算的Token 验证和解析要费时得多。</p>
+<p><strong>不需要为登录页面做特殊处理</strong>： 如果使用的是 Protractor
+做功能测试，那么我们 不再需要为登录页面做特殊处理。</p>
+<p><strong>基于标准化</strong>： 这个标准已经存在多个后端库（如 .NET 、 Ruby 、 Java
+、 Python 和 PHP)和多家公司的支持（如 Firebase 、 Google 和 Microsoft）
+。</p>
+<p>参考文档： <a class="reference external" href="http://www.cnblogs.com/xiekeli/p/5607107.html">http://www.cnblogs.com/xiekeli/p/5607107.html</a></p>
+</section>
+<section id="id4">
+<h3><a class="toc-backref" href="#id25"><span class="section-number">1.2.4. </span>2.4 同步和异步、阻塞与非阻塞的区别</a><a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>(1)同步与异步</p>
 <p>所谓的同步，就是在发出一个“调用”时，在没有得到结果之前，该“调用”不返回；
 但是一旦调用返回，就会得到返回值了。换句话来说就是“调用者”主动等待这个“调用”的结果。</p>
@@ -277,7 +331,7 @@ Fielding（他是HTTP规范的主要编写者之一）的博士论文中，它�
 <p>阻塞调用是指调用结果返回之前，当前线程会被挂起，调用线程只有在得到结果之后才返回。</p>
 <p>非阻塞调用是指在不能立刻得到结果之前，该调用不会阻塞当前线程。</p>
 <p>还是上面的例子：</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>阻塞： 当你打电话到报刊亭问有没有抖音相关的报纸的时候，你会一直把自己“挂起”，知道得到有没有这本书的结果。
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>阻塞： 当你打电话到报刊亭问有没有抖音相关的报纸的时候，你会一直把自己&quot;挂起&quot;，知道得到有没有这本书的结果。
 
 非阻塞： 你不用考虑老板有没有找到报纸，你自己先去做别的事，当然偶尔过几分钟也会来检查老板有没有返回结果，这里的阻塞与非阻塞与是否同步异步无关，也与老板回答你结果的方式无关。
 期间你是可以处理其他事情的。
@@ -285,8 +339,8 @@ Fielding（他是HTTP规范的主要编写者之一）的博士论文中，它�
 </div>
 </section>
 </section>
-<section id="id6">
-<h2><a class="toc-backref" href="#id27"><span class="section-number">1.4. </span>4 从事Devops应该掌握的语言</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<section id="id5">
+<h2><a class="toc-backref" href="#id26"><span class="section-number">1.3. </span>4 从事Devops应该掌握的语言</a><a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic simple">
 <li><p>shell</p></li>
 <li><p>Python</p></li>
@@ -311,8 +365,8 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 </ol>
 <p><strong>平常的Devops中，除了使用Python之外，还可以使用Go语言来编写某些项目需求，或自动化运维的API。</strong></p>
 </section>
-<section id="id7">
-<h2><a class="toc-backref" href="#id28"><span class="section-number">1.5. </span>5 从事DevOps工作应该掌握的工具</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<section id="id6">
+<h2><a class="toc-backref" href="#id27"><span class="section-number">1.4. </span>5 从事DevOps工作应该掌握的工具</a><a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <p><strong>版本控制管理（SCM）</strong></p>
 <p>Github、GitLab、SubVersion，考虑到汉化和网络方面的原因，国内企业在Github和GitLab之间进行选择的时候，一般是选择GitLab</p>
 <p><strong>构建工具</strong></p>
@@ -336,8 +390,8 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 <p><strong>消息中间件</strong></p>
 <p>ActiveMQ 、RabbitMQ 。</p>
 </section>
-<section id="id8">
-<h2><a class="toc-backref" href="#id29"><span class="section-number">1.6. </span>6 了解网站系统架构设计和高并发场景</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<section id="id7">
+<h2><a class="toc-backref" href="#id28"><span class="section-number">1.5. </span>6 了解网站系统架构设计和高并发场景</a><a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p><em>网站性能评估指标</em></p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>网站设计得好还是不好,我们可以参考吞吐量、每秒查询率（ QPS) 、响应时间(Response Time) 、并发用户数， PV 等作为辅助指标， 但它们并不能真实地反映网站的性能。
 
@@ -350,17 +404,17 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 ​并发用户数： 同时承载正常使用系统功能的用户数量。
 </pre></div>
 </div>
+<section id="id8">
+<h3><a class="toc-backref" href="#id29"><span class="section-number">1.5.1. </span>6.1细分五层解说网站架构</a><a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <section id="id9">
-<h3><a class="toc-backref" href="#id30"><span class="section-number">1.6.1. </span>6.1细分五层解说网站架构</a><a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<section id="id10">
-<h4>6.1.1 网页缓存层<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<h4>6.1.1 网页缓存层<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
 <p>专业的CDN租赁比自行部署Squid、Varnish更好，更专业。很多朋友喜欢尝试自建CDN，这是一个比较吃力不讨好的活。这一层有很多优秀的开源软件能胜任这个工作，比如传统的Squid，后起之秀Nginx、Varnish因为性能优异，越来越多开发者尝试在自己网站使用Nginx和Varnish，作为自己的网页缓存。事实上，Nginx已经具备Squid所拥有的Web缓存加速功能。</p>
 <p>此外Nginx对多核CPU的利用也胜过了Squid，现在越来越多的架构师都喜欢将Nginx同时作为“负载均衡器”与“Web缓存服务器”来使用，可以根据自己网站的情况，决定究竟使用哪种软件来对自己的网站提供反向代理加速服务。</p>
 <p>网站系统架构设计图</p>
 <p><img alt="image2" src="../_images/devops_5ceng01.png" /></p>
 </section>
-<section id="id11">
-<h4>6.1.2 负载均衡层<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<section id="id10">
+<h4>6.1.2 负载均衡层<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
 <p>我们熟悉的开源软件包括：LVS、HAProxy、Nginx，它们的性能全部都非常优异。</p>
 <p>建议将负载均衡分成两级来处理， 一级是流量四层分发，
 二级是应用层面七层转发（ 即业务层面） 。</p>
@@ -378,8 +432,8 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 这一层的Nginx 与业务相关联， 可以实现业务的一些通用逻辑。如果可能的话，
 这一层也应尽量设计成无状态， 以方便水平扩容。</p>
 </section>
-<section id="id12">
-<h4>6.1.3 Web服务层<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<section id="id11">
+<h4>6.1.3 Web服务层<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
 <p>web 服务器层压力比较大， 大的网站现在都选择将Nginx 作为web
 主要应用服务器，事实上， Nginx
 在抗并发能力和稳定性方面确实超过了预期。另外， 集群还有一个优势，
@@ -389,8 +443,8 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 <p>在进行实际的线上维护时我们发现在高峰期间， 实际上每台web
 的并发并不算特别大， 所以网站的压力在这一层也能通过技术手段加以克服。</p>
 </section>
-<section id="id13">
-<h4>6.1.4 文件服务器层<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
+<section id="id12">
+<h4>6.1.4 文件服务器层<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
 <p>1)单NFS作为文件服务器，存在单点故障，NFS机器出现故障时需要人为手动干预</p>
 <p>2）NFS分组，虽然这样可以分担压力，但是也会存在单点故障，NFS机器出现故障时需要人为手动干预</p>
 <p>3）DRBD+Heartbeat+NFS高可用文件服务器，维护方便，不存在单点故障问题，但是随着访问量的增大，后期一样会存在压力过大的情况</p>
@@ -400,18 +454,18 @@ Go语言虽然不如C和Java，但是比原生Pyhton应用还是高一个数量�
 <p>例如MooseFS、MooseFS易用、稳定，对于海量肖文杰的处理很高效，而且新版MooseFS解决了Master
 Server存在单点故障的问题，稳定和社区也非常成熟，国内越来越多的公司也在使用MFS。</p>
 </section>
-<section id="id14">
-<h4>6.1.5 数据库层<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h4>
+<section id="id13">
+<h4>6.1.5 数据库层<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h4>
 <p>Oracle RAC是很成熟的分布式方案，但是价格非常昂贵。</p>
 <p>Redis+RabbitmQ+Mysql方案较为常见</p>
 </section>
 </section>
 </section>
-<section id="id15">
-<h2><a class="toc-backref" href="#id31"><span class="section-number">1.7. </span>7 了解数据库集群主从复制的基本原理</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h2>
+<section id="id14">
+<h2><a class="toc-backref" href="#id30"><span class="section-number">1.6. </span>7 了解数据库集群主从复制的基本原理</a><a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
 <p>在数据库层面上，我们一般使用redis + MySQL比较多。</p>
 <section id="redis">
-<h3><a class="toc-backref" href="#id32"><span class="section-number">1.7.1. </span>7.1 redis主从复制的原理</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id31"><span class="section-number">1.6.1. </span>7.1 redis主从复制的原理</a><a class="headerlink" href="#redis" title="Permalink to this headline">¶</a></h3>
 <p><img alt="image3" src="../_images/redis_zhucong01.png" /></p>
 <p><strong>redis主从复制的具体流程:</strong></p>
 <p>1）若启动一个Slave机器进程，则它会向Master机器发送一个“synccommand”命令，请求同步连接。</p>
@@ -433,7 +487,7 @@ id相同，并且指定的偏移量在内存缓冲区中还有效，则复制就
 <p>redis主从复制的效果是很不错的，在很多跨机房的业务中其稳定性也很不错。另外，如果业务需要采用redis集群的话，则生产环境下不建议使用redis-cluster，建议采用codis、zookeeper来保证各节点之间的数据一致性。</p>
 </section>
 <section id="mysqlreplication">
-<h3><a class="toc-backref" href="#id33"><span class="section-number">1.7.2. </span>7.2 MySQL数据库主从Replication同步</a><a class="headerlink" href="#mysqlreplication" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id32"><span class="section-number">1.6.2. </span>7.2 MySQL数据库主从Replication同步</a><a class="headerlink" href="#mysqlreplication" title="Permalink to this headline">¶</a></h3>
 <p>MySQL数据库的主从Replication同步（又称为主从复制）是一个很成熟的架构，笔者的许多电商平台线上环境采用的都是这种方案。</p>
 <p>优点：</p>
 <p>1）在业务繁忙阶段，我们可以在从服务器上执行查询工作（即我们常说的读写分离），降低主服务器的压力。</p>
@@ -455,14 +509,14 @@ log）中，这个是由从服务器的I/O线程来负责的。</p>
 </section>
 </section>
 <section id="linux">
-<h2><a class="toc-backref" href="#id34"><span class="section-number">1.8. </span>Linux服务器的安全防护</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id33"><span class="section-number">1.7. </span>Linux服务器的安全防护</a><a class="headerlink" href="#linux" title="Permalink to this headline">¶</a></h2>
 <section id="ddos">
-<h3><a class="toc-backref" href="#id35"><span class="section-number">1.8.1. </span>1.8.1 DDoS攻击和运营商劫持</a><a class="headerlink" href="#ddos" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id34"><span class="section-number">1.7.1. </span>1.8.1 DDoS攻击和运营商劫持</a><a class="headerlink" href="#ddos" title="Permalink to this headline">¶</a></h3>
 <p>一般网站防御DDoS攻击的方法：</p>
 <p><code class="docutils literal notranslate"><span class="pre">一般会通过前端LVS切量的方式来转移DDoS流量，从而减少DDoS攻击所带来的损失。</span></code></p>
 </section>
-<section id="id16">
-<h3><a class="toc-backref" href="#id36"><span class="section-number">1.8.2. </span>1.8.2 运营商劫持</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<section id="id15">
+<h3><a class="toc-backref" href="#id35"><span class="section-number">1.7.2. </span>1.8.2 运营商劫持</a><a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <p>运营商劫持分为DNS劫持和HTTP劫持两种。</p>
 <p>运营商劫持的常见操作：</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>❑ 向正常网站加入额外的广告，包括网页内浮层或弹出广告窗口。
@@ -486,8 +540,8 @@ log）中，这个是由从服务器的I/O线程来负责的。</p>
 <p>解决方法：<code class="docutils literal notranslate"><span class="pre">最根本解决办法是使用HTTPS，不过这将会涉及很多业务的修改，成本很高。</span></code></p>
 </section>
 </section>
-<section id="id17">
-<h3><a class="toc-backref" href="#id37"><span class="section-number">1.8.3. </span>1.8.3 Linux服务器基础防护篇</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<section id="id16">
+<h3><a class="toc-backref" href="#id36"><span class="section-number">1.7.3. </span>1.8.3 Linux服务器基础防护篇</a><a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <p>从以下几个方面着手：</p>
 <p>1）首先要保证自己的Linux服务器的密码绝对安全，笔者一般将root密码设置为28位以上，而且某些重要的服务器只有几个人知道root密码，这将根据公司管理层的权限来进行设置，如果有系统管理员级别的相关人员离职，那么一定要更改root密码。现在我们的做法一般是禁止root远程登录，只分配一个具有sudo权限的用户。服务器的账号管理一定要严格，服务器上除了root账号之外，系统用户越少越好，如果非要添加用户来作为应用程序的执行者，那么请将他的登录Shell设为nologin，即此用户是没有权利登录服务器的。</p>
 <p>建议使用：堡垒机作为入口，因为可以审计人员操作。</p>
@@ -500,8 +554,8 @@ log）中，这个是由从服务器的I/O线程来负责的。</p>
 <p>6）推荐使用Tiprwire开源软件来检查文件系统的完整性，并做好相应的日志分析工作。</p>
 <p>7）停掉一些系统不必要的服务，强化内核。多关注一下服务器的内核漏洞，现在Linux的很多攻击都是针对内核的，因此应尽量保证内核版本是最新的。</p>
 </section>
-<section id="id18">
-<h3><a class="toc-backref" href="#id38"><span class="section-number">1.8.4. </span>1.8.4 Linux服务器高级防护篇</a><a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<section id="id17">
+<h3><a class="toc-backref" href="#id37"><span class="section-number">1.7.4. </span>1.8.4 Linux服务器高级防护篇</a><a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <p>我们还可以设计代码级别的WAF软件防火墙，主要是通过ngx_lua模块来实现的，由于LUA语言的性能是接近于C的，而且ngx_lua模块本身就是基于为Nginx开发的高性能的模块，所以性能方面表现良好。其可以实现如下功能的安全防护，具体如下。</p>
 <p>❑ 支持IP白名单和黑名单功能，直接拒绝黑名单的IP访问。</p>
 <p>❑ 支持URL白名单，对不需要过滤的URL进行定义。</p>
@@ -529,8 +583,8 @@ log）中，这个是由从服务器的I/O线程来负责的。</p>
 </pre></div>
 </div>
 </section>
-<section id="id19">
-<h4>WAF与网络防火墙的区别<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h4>
+<section id="id18">
+<h4>WAF与网络防火墙的区别<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h4>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>网络防火墙作为访问控制设备，主要工作在OSI模型的三、四层，基于IP报文进行检测。只对端口做限制，对TCP做封堵。
 
 其产品设计无须理解HTTP会话，这也就决定了其无法理解Web应用程序语言，如HTML、SQL等。因此，它不可能对HTTP通信进行输入验证或攻击规则分析。针对Web网站的恶意攻击，绝大部分都将封装为HTTP请求，从80或443端口顺利通过防火墙检测。
